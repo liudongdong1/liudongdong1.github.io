@@ -493,28 +493,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2021-09-14
+                    2021-06-14
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-06-21
+                    2021-07-04
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    7.5k
+                    9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    45 Min
+                    54 Min
                 </div>
                 
 
@@ -532,10 +532,10 @@
                 <blockquote>
 <p>论文对GNN模型分类如下：</p>
 <ul>
-<li>图卷积网络(Graph convolutional networks)和图注意力网络(graph attention networks)，因为涉及到传播步骤(propagation step)。</li>
-<li>图的空域网络(spatial-temporal networks)，因为该模型通常用在动态图(dynamic graph)上。</li>
+<li><code>图卷积网络(Graph convolutional networks)</code>和<code>图注意力网络(graph attention networks)</code>，因为涉及到传播步骤(propagation step)。</li>
+<li><code>图的空域网络(spatial-temporal networks)</code>，因为该模型通常用在动态图(dynamic graph)上。</li>
 <li>图的自编码(auto-encoder)，因为该模型通常使用无监督学习(unsupervised)的方式。</li>
-<li>图生成网络(generative networks)，因为是生成式网络。</li>
+<li><code>图生成网络(generative networks)</code>，因为是生成式网络。</li>
 </ul>
 </blockquote>
 <p>$$<br>\mathbf{h}<em>{v}=f\left(\mathbf{x}</em>{v}, \mathbf{x}<em>{c o[v]}, \mathbf{h}</em>{n e[v]}, \mathbf{x}_{n e[v]}\right)\label{eq:1}<br>$$</p>
@@ -2015,6 +2015,342 @@ plt<span class="token punctuation">.</span>figure<span class="token punctuation"
 draw_molecule<span class="token punctuation">(</span>mol<span class="token punctuation">)</span>
 <span class="token comment" spellcheck="true">#&lt;class 'torch_geometric.data.data.Data'> Data(edge_attr=[76, 3], edge_index=[2, 76], x=[34, 14], y=[1])</span>
 <span class="token comment" spellcheck="true">#&lt;class 'networkx.classes.digraph.DiGraph'></span></code></pre>
+<h3 id="6-Demo"><a href="#6-Demo" class="headerlink" title="6. Demo"></a>6. Demo</h3><h4 id="1-Customed-dataset"><a href="#1-Customed-dataset" class="headerlink" title=".1. Customed dataset"></a>.1. Customed dataset</h4><ul>
+<li>dataset generate</li>
+</ul>
+<blockquote>
+<ul>
+<li><p>10 graphs and 30 nodes per graph with random edges connections</p>
+</li>
+<li><p>number of node feature = 3</p>
+</li>
+<li><p>number of edge feature = 1</p>
+</li>
+<li><p>node’s classification and graph classification</p>
+<p>  Adj [num_graph, num_node, num_node] be the adjacent matrices (sparse)<br>  node_feature [num_graph, num_node, num_node_feature]<br>  edge_feature [num_graph, num_node, num_node] (sparse)</p>
+</li>
+</ul>
+</blockquote>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> torch
+<span class="token keyword">from</span> torch_geometric<span class="token punctuation">.</span>data <span class="token keyword">import</span> InMemoryDataset
+<span class="token keyword">from</span> torch_geometric<span class="token punctuation">.</span>data <span class="token keyword">import</span> Data
+<span class="token keyword">import</span> torch_geometric<span class="token punctuation">.</span>utils <span class="token keyword">as</span> ut
+np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>seed<span class="token punctuation">(</span><span class="token number">42</span><span class="token punctuation">)</span>
+
+num_graph <span class="token operator">=</span> <span class="token number">10</span>
+num_node <span class="token operator">=</span> <span class="token number">50</span>
+num_node_features <span class="token operator">=</span> <span class="token number">3</span>
+num_edge_features <span class="token operator">=</span> <span class="token number">1</span>
+
+Adj <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>rand<span class="token punctuation">(</span>num_graph<span class="token punctuation">,</span> num_node<span class="token punctuation">,</span> num_node<span class="token punctuation">)</span>
+Adj<span class="token punctuation">[</span>Adj <span class="token operator">>=</span> <span class="token number">0.8</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+Adj<span class="token punctuation">[</span>Adj <span class="token operator">&lt;=</span> <span class="token number">0.8</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">False</span>
+node_feature <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>rand<span class="token punctuation">(</span>num_graph<span class="token punctuation">,</span> num_node<span class="token punctuation">,</span> num_node_features<span class="token punctuation">)</span>
+edge_feature <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>rand<span class="token punctuation">(</span>num_graph<span class="token punctuation">,</span> num_node<span class="token punctuation">,</span> num_node<span class="token punctuation">)</span> <span class="token operator">*</span> Adj
+
+graph_label <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>rand<span class="token punctuation">(</span>num_graph<span class="token punctuation">)</span>
+graph_label<span class="token punctuation">[</span>graph_label<span class="token operator">></span><span class="token number">0.5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
+graph_label<span class="token punctuation">[</span>graph_label<span class="token operator">&lt;</span><span class="token number">0.5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+graph_label <span class="token operator">=</span> graph_label<span class="token punctuation">.</span>astype<span class="token punctuation">(</span>int<span class="token punctuation">)</span>
+
+node_label <span class="token operator">=</span> np<span class="token punctuation">.</span> random<span class="token punctuation">.</span>rand<span class="token punctuation">(</span>num_graph<span class="token punctuation">,</span> num_node<span class="token punctuation">)</span>
+node_label<span class="token punctuation">[</span>node_label<span class="token operator">></span><span class="token number">0.5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
+node_label<span class="token punctuation">[</span>node_label<span class="token operator">&lt;</span><span class="token number">0.5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+node_label <span class="token operator">=</span> node_label<span class="token punctuation">.</span>astype<span class="token punctuation">(</span>int<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>Adj<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> edge_feature<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> node_feature<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+<p><img src="../../../../picture/image-20210621114008066.png" alt="image-20210621114008066"></p>
+<h4 id="2-Graph-Classification"><a href="#2-Graph-Classification" class="headerlink" title=".2. Graph Classification"></a>.2. Graph Classification</h4><blockquote>
+<p>一个graph数据对应一个Data， 可以将多个graph存储到一个data文件里面，也可以将每个graph存在对应单独的data文件里面。</p>
+</blockquote>
+<ul>
+<li>multi-graph&amp;one data</li>
+</ul>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">GraphDatasetInMem</span><span class="token punctuation">(</span>InMemoryDataset<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Graph classification 
+    """</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> root<span class="token punctuation">,</span> transform<span class="token operator">=</span>None<span class="token punctuation">,</span> pre_transform<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        super<span class="token punctuation">(</span>GraphDatasetInMem<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span>root<span class="token punctuation">,</span>transform<span class="token punctuation">,</span> pre_transform<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>data<span class="token punctuation">,</span> self<span class="token punctuation">.</span>slices <span class="token operator">=</span> torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span>self<span class="token punctuation">.</span>processed_paths<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+    @property
+    <span class="token keyword">def</span> <span class="token function">raw_file_names</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+    @property
+    <span class="token keyword">def</span> <span class="token function">processed_file_names</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span>r<span class="token string">'.\GraphDatasetInMem.dataset'</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">download</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+
+    <span class="token keyword">def</span> <span class="token function">process</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        data_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true"># graph classification need to define data_list for multiple graph</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>num_graph<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            source_nodes<span class="token punctuation">,</span> target_nodes <span class="token operator">=</span> np<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span>Adj<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            source_nodes <span class="token operator">=</span> source_nodes<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            target_nodes <span class="token operator">=</span> target_nodes<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+            edge_index <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>np<span class="token punctuation">.</span>concatenate<span class="token punctuation">(</span><span class="token punctuation">(</span>source_nodes<span class="token punctuation">,</span> target_nodes<span class="token punctuation">)</span><span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>long<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># edge_index should be long type</span>
+
+            edge_weight <span class="token operator">=</span> edge_feature<span class="token punctuation">[</span>i<span class="token punctuation">,</span> source_nodes<span class="token punctuation">,</span> target_nodes<span class="token punctuation">]</span>
+            edge_weight <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>edge_weight<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> num_edge_features<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>float<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># edge_index should be float</span>
+            type
+
+            x <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>node_feature<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>float<span class="token punctuation">)</span> 
+
+            <span class="token comment" spellcheck="true"># y should be long type, graph label should not be a 0-dimesion tensor</span>
+            <span class="token comment" spellcheck="true"># use [graph_label[i]] ranther than graph_label[i]</span>
+            y <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token punctuation">[</span>graph_label<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>long<span class="token punctuation">)</span> 
+
+            data <span class="token operator">=</span> Data<span class="token punctuation">(</span>x<span class="token operator">=</span>x<span class="token punctuation">,</span> edge_index<span class="token operator">=</span>edge_index<span class="token punctuation">,</span> y<span class="token operator">=</span>y<span class="token punctuation">,</span> edge_attr<span class="token operator">=</span>edge_weight<span class="token punctuation">)</span>
+            data_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+
+        data<span class="token punctuation">,</span> slices <span class="token operator">=</span> self<span class="token punctuation">.</span>collate<span class="token punctuation">(</span>data_list<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># Here used to be [data] for one graph</span>
+        torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> slices<span class="token punctuation">)</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>processed_paths<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true">#usage</span>
+dataset_graph_InMem <span class="token operator">=</span> GraphDatasetInMem<span class="token punctuation">(</span>root<span class="token operator">=</span><span class="token string">'./'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>dataset_graph_InMem<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>dataset_graph_InMem<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#output</span>
+<span class="token comment" spellcheck="true">#Data(edge_attr=[504, 1], edge_index=[2, 504], x=[50, 3], y=[1])</span>
+<span class="token comment" spellcheck="true">#Data(edge_attr=[495, 1], edge_index=[2, 495], x=[50, 3], y=[1])</span></code></pre>
+<ul>
+<li>one graph one pt file</li>
+</ul>
+<blockquote>
+<p>区别在于：没有data, slices = self.collate(data_list) # Here used to be [data] for one graph，但是有以下函数：</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">get</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> idx<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        data <span class="token operator">=</span> torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span>osp<span class="token punctuation">.</span>join<span class="token punctuation">(</span>self<span class="token punctuation">.</span>processed_dir<span class="token punctuation">,</span> <span class="token string">'graphDataset1_{}.pt'</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> data</code></pre>
+</blockquote>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">GraphDataset_1</span><span class="token punctuation">(</span>Dataset<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Graph classification 
+    """</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> root<span class="token punctuation">,</span> transform<span class="token operator">=</span>None<span class="token punctuation">,</span> pre_transform<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        super<span class="token punctuation">(</span>GraphDataset_1<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span>root<span class="token punctuation">,</span>transform<span class="token punctuation">,</span> pre_transform<span class="token punctuation">)</span>
+
+    @property
+    <span class="token keyword">def</span> <span class="token function">raw_file_names</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+    @property
+    <span class="token keyword">def</span> <span class="token function">processed_file_names</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span>r<span class="token string">'.\GraphDataset1_0.pt'</span><span class="token punctuation">,</span> r<span class="token string">'.\GraphDataset1_1.pt'</span><span class="token punctuation">,</span> r<span class="token string">'.\GraphDataset1_2.pt'</span><span class="token punctuation">,</span> r<span class="token string">'.\GraphDataset1_3.pt'</span><span class="token punctuation">,</span> r<span class="token string">'.\GraphDataset1_4.pt'</span><span class="token punctuation">,</span> r<span class="token string">'.\GraphDataset1_5.pt'</span><span class="token punctuation">,</span> r<span class="token string">'.\GraphDataset1_6.pt'</span><span class="token punctuation">,</span> r<span class="token string">'.\GraphDataset1_7.pt'</span><span class="token punctuation">,</span> r<span class="token string">'.\GraphDataset1_8.pt'</span><span class="token punctuation">,</span> r<span class="token string">'.\GraphDataset1_9.pt'</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">download</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+
+    <span class="token keyword">def</span> <span class="token function">process</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true">#data_list = [] # graph classification need to define data_list for multiple graph</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>num_graph<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            source_nodes<span class="token punctuation">,</span> target_nodes <span class="token operator">=</span> np<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span>Adj<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            source_nodes <span class="token operator">=</span> source_nodes<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            target_nodes <span class="token operator">=</span> target_nodes<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+            edge_index <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>np<span class="token punctuation">.</span>concatenate<span class="token punctuation">(</span><span class="token punctuation">(</span>source_nodes<span class="token punctuation">,</span> target_nodes<span class="token punctuation">)</span><span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>long<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># edge_index should be long type</span>
+
+            edge_weight <span class="token operator">=</span> edge_feature<span class="token punctuation">[</span>i<span class="token punctuation">,</span> source_nodes<span class="token punctuation">,</span> target_nodes<span class="token punctuation">]</span>
+            edge_weight <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>edge_weight<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> num_edge_features<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>float<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># edge_index should be float</span>
+            type
+
+            x <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>node_feature<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>float<span class="token punctuation">)</span> 
+
+            <span class="token comment" spellcheck="true"># y should be long type, graph label should not be a 0-dimesion tensor</span>
+            <span class="token comment" spellcheck="true"># use [graph_label[i]] ranther than graph_label[i]</span>
+            y <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token punctuation">[</span>graph_label<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>long<span class="token punctuation">)</span> 
+
+            data <span class="token operator">=</span> Data<span class="token punctuation">(</span>x<span class="token operator">=</span>x<span class="token punctuation">,</span> edge_index<span class="token operator">=</span>edge_index<span class="token punctuation">,</span> y<span class="token operator">=</span>y<span class="token punctuation">,</span> edge_attr<span class="token operator">=</span>edge_weight<span class="token punctuation">)</span>
+            <span class="token comment" spellcheck="true">#data_list.append(data)</span>
+            <span class="token comment" spellcheck="true"># save one graph per time</span>
+            torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>data<span class="token punctuation">,</span> osp<span class="token punctuation">.</span>join<span class="token punctuation">(</span>self<span class="token punctuation">.</span>processed_dir<span class="token punctuation">,</span> <span class="token string">'graphDataset1_{}.pt'</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">len</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> len<span class="token punctuation">(</span>self<span class="token punctuation">.</span>processed_file_names<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">get</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> idx<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        data <span class="token operator">=</span> torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span>osp<span class="token punctuation">.</span>join<span class="token punctuation">(</span>self<span class="token punctuation">.</span>processed_dir<span class="token punctuation">,</span> <span class="token string">'graphDataset1_{}.pt'</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> data
+
+<span class="token comment" spellcheck="true"># usage</span>
+dataset_graph_1 <span class="token operator">=</span> GraphDataset_1<span class="token punctuation">(</span>root<span class="token operator">=</span><span class="token string">'./'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>dataset_graph_1<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>dataset_graph_1<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#Data(edge_attr=[504, 1], edge_index=[2, 504], x=[50, 3], y=[1])</span>
+<span class="token comment" spellcheck="true">#Data(edge_attr=[495, 1], edge_index=[2, 495], x=[50, 3], y=[1])</span></code></pre>
+<h4 id="3-Node-Classification"><a href="#3-Node-Classification" class="headerlink" title=".3. Node Classification"></a>.3. Node Classification</h4><ul>
+<li>in on graph</li>
+</ul>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> os<span class="token punctuation">.</span>path <span class="token keyword">as</span> osp
+<span class="token keyword">from</span> torch_geometric<span class="token punctuation">.</span>data <span class="token keyword">import</span> Dataset
+<span class="token keyword">class</span> <span class="token class-name">NodeDatasetInMem</span><span class="token punctuation">(</span>InMemoryDataset<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    node classification in one graph
+    Should define the mask for training, validation and test
+    """</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> root<span class="token punctuation">,</span> num_train_per_class<span class="token operator">=</span><span class="token number">15</span><span class="token punctuation">,</span> num_val<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">,</span> num_test<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">,</span> transform<span class="token operator">=</span>None<span class="token punctuation">,</span> pre_transform<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>num_train_per_class <span class="token operator">=</span> num_train_per_class
+        self<span class="token punctuation">.</span>num_val <span class="token operator">=</span> num_val
+        self<span class="token punctuation">.</span>num_test <span class="token operator">=</span> num_test
+        super<span class="token punctuation">(</span>NodeDatasetInMem<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span>root<span class="token punctuation">,</span>transform<span class="token punctuation">,</span> pre_transform<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>data<span class="token punctuation">,</span> self<span class="token punctuation">.</span>slices <span class="token operator">=</span> torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span>self<span class="token punctuation">.</span>processed_paths<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+    @property
+    <span class="token keyword">def</span> <span class="token function">raw_file_names</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+    @property
+    <span class="token keyword">def</span> <span class="token function">processed_file_names</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span>r<span class="token string">'.\NodeDatasetInMem.dataset'</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">download</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+
+    <span class="token keyword">def</span> <span class="token function">process</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        num_train_per_class <span class="token operator">=</span> self<span class="token punctuation">.</span>num_train_per_class
+        num_val <span class="token operator">=</span> self<span class="token punctuation">.</span>num_val
+        num_test <span class="token operator">=</span> self<span class="token punctuation">.</span>num_test
+        <span class="token comment" spellcheck="true">#data_list = []  # node classification do not neet to define data_list just data (one graph)</span>
+        i<span class="token operator">=</span><span class="token number">0</span>
+        source_nodes<span class="token punctuation">,</span> target_nodes <span class="token operator">=</span> np<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span>Adj<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        source_nodes <span class="token operator">=</span> source_nodes<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        target_nodes <span class="token operator">=</span> target_nodes<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+        edge_index <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>np<span class="token punctuation">.</span>concatenate<span class="token punctuation">(</span><span class="token punctuation">(</span>source_nodes<span class="token punctuation">,</span> target_nodes<span class="token punctuation">)</span><span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>long<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># edge_index should be long type</span>
+
+        edge_weight <span class="token operator">=</span> edge_feature<span class="token punctuation">[</span>i<span class="token punctuation">,</span> source_nodes<span class="token punctuation">,</span> target_nodes<span class="token punctuation">]</span>
+        edge_weight <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>edge_weight<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> num_edge_features<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>float<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># edge_index should be float</span>
+        type
+        train_mask <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>num_node<span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>bool<span class="token punctuation">)</span>
+        val_mask <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>num_node<span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>bool<span class="token punctuation">)</span>
+        test_mask <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>num_node<span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>bool<span class="token punctuation">)</span>
+
+        label <span class="token operator">=</span> node_label<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span>
+        <span class="token punctuation">[</span>org_class_0_ind<span class="token punctuation">]</span> <span class="token operator">=</span>  np<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span>label <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> 
+        org_class_0_ind <span class="token operator">=</span> org_class_0_ind<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        perm_class_0_ind <span class="token operator">=</span> org_class_0_ind<span class="token punctuation">[</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>permutation<span class="token punctuation">(</span>org_class_0_ind<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+
+        <span class="token punctuation">[</span>org_class_1_ind<span class="token punctuation">]</span> <span class="token operator">=</span>  np<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span>label <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> 
+        org_class_1_ind <span class="token operator">=</span> org_class_1_ind<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        perm_class_1_ind <span class="token operator">=</span> org_class_1_ind<span class="token punctuation">[</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>permutation<span class="token punctuation">(</span>org_class_1_ind<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+
+
+        train_ind <span class="token operator">=</span> np<span class="token punctuation">.</span>concatenate<span class="token punctuation">(</span><span class="token punctuation">(</span>perm_class_0_ind<span class="token punctuation">[</span><span class="token punctuation">:</span>num_train_per_class<span class="token punctuation">]</span><span class="token punctuation">,</span> perm_class_1_ind<span class="token punctuation">[</span><span class="token punctuation">:</span>num_train_per_class<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+        train_mask<span class="token punctuation">[</span>train_ind<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+
+        <span class="token punctuation">[</span>remaining<span class="token punctuation">]</span> <span class="token operator">=</span> np<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span><span class="token operator">~</span>train_mask<span class="token punctuation">)</span>
+        remaining <span class="token operator">=</span> remaining<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+        val_mask<span class="token punctuation">[</span>remaining<span class="token punctuation">[</span><span class="token punctuation">:</span>num_val<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+        test_mask<span class="token punctuation">[</span>remaining<span class="token punctuation">[</span>num_val<span class="token punctuation">:</span>num_val<span class="token operator">+</span>num_test<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+
+        train_mask <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>train_mask<span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>bool<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># mask should be long type</span>
+        val_mask <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>val_mask<span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>bool<span class="token punctuation">)</span>
+        test_mask <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>test_mask<span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>bool<span class="token punctuation">)</span>
+
+        x <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>node_feature<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>float<span class="token punctuation">)</span> 
+        y <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>node_label<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>long<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># y should be long type</span>
+
+        data <span class="token operator">=</span> Data<span class="token punctuation">(</span>x<span class="token operator">=</span>x<span class="token punctuation">,</span> edge_index<span class="token operator">=</span>edge_index<span class="token punctuation">,</span> y<span class="token operator">=</span>y<span class="token punctuation">,</span> edge_attr<span class="token operator">=</span>edge_weight<span class="token punctuation">,</span> train_mask <span class="token operator">=</span> train_mask<span class="token punctuation">,</span> val_mask <span class="token operator">=</span> val_mask<span class="token punctuation">,</span> test_mask <span class="token operator">=</span> test_mask<span class="token punctuation">)</span>
+
+        data<span class="token punctuation">,</span> slices <span class="token operator">=</span> self<span class="token punctuation">.</span>collate<span class="token punctuation">(</span><span class="token punctuation">[</span>data<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> slices<span class="token punctuation">)</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>processed_paths<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+ <span class="token comment" spellcheck="true">#output</span>
+dataset_node_InMem <span class="token operator">=</span> NodeDatasetInMem<span class="token punctuation">(</span>root<span class="token operator">=</span><span class="token string">'./'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>dataset_node_InMem<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>dataset_node_InMem<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true">#tensor([1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1,0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1,1, 1])</span>
+<span class="token comment" spellcheck="true">#torch.Size([50])</span></code></pre>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">NodeDataset</span><span class="token punctuation">(</span>Dataset<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    node classification in one graph
+    Should define the mask for training, validation and test
+    """</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> root<span class="token punctuation">,</span> num_train_per_class<span class="token operator">=</span><span class="token number">15</span><span class="token punctuation">,</span> num_val<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">,</span> num_test<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">,</span> transform<span class="token operator">=</span>None<span class="token punctuation">,</span> pre_transform<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>num_train_per_class <span class="token operator">=</span> num_train_per_class
+        self<span class="token punctuation">.</span>num_val <span class="token operator">=</span> num_val
+        self<span class="token punctuation">.</span>num_test <span class="token operator">=</span> num_test
+        super<span class="token punctuation">(</span>NodeDataset<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span>root<span class="token punctuation">,</span>transform<span class="token punctuation">,</span> pre_transform<span class="token punctuation">)</span>
+        <span class="token comment" spellcheck="true"># Do not load the data and slices here</span>
+        <span class="token comment" spellcheck="true">#self.data, self.slices = torch.load(self.processed_paths[0])</span>
+
+    @property
+    <span class="token keyword">def</span> <span class="token function">raw_file_names</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+    @property
+    <span class="token keyword">def</span> <span class="token function">processed_file_names</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span>r<span class="token string">'./NodeDataset_0.pt'</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">download</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+
+    <span class="token keyword">def</span> <span class="token function">process</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        num_train_per_class <span class="token operator">=</span> self<span class="token punctuation">.</span>num_train_per_class
+        num_val <span class="token operator">=</span> self<span class="token punctuation">.</span>num_val
+        num_test <span class="token operator">=</span> self<span class="token punctuation">.</span>num_test
+        <span class="token comment" spellcheck="true">#data_list = []  # node classification do not neet to define data_list just data (one graph)</span>
+        i<span class="token operator">=</span><span class="token number">0</span>
+        source_nodes<span class="token punctuation">,</span> target_nodes <span class="token operator">=</span> np<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span>Adj<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        source_nodes <span class="token operator">=</span> source_nodes<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        target_nodes <span class="token operator">=</span> target_nodes<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+        edge_index <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>np<span class="token punctuation">.</span>concatenate<span class="token punctuation">(</span><span class="token punctuation">(</span>source_nodes<span class="token punctuation">,</span> target_nodes<span class="token punctuation">)</span><span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>long<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># edge_index should be long type</span>
+
+        edge_weight <span class="token operator">=</span> edge_feature<span class="token punctuation">[</span>i<span class="token punctuation">,</span> source_nodes<span class="token punctuation">,</span> target_nodes<span class="token punctuation">]</span>
+        edge_weight <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>edge_weight<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> num_edge_features<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>float<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># edge_index should be float</span>
+        type
+        train_mask <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>num_node<span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>bool<span class="token punctuation">)</span>
+        val_mask <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>num_node<span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>bool<span class="token punctuation">)</span>
+        test_mask <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>num_node<span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>bool<span class="token punctuation">)</span>
+
+        label <span class="token operator">=</span> node_label<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span>
+        <span class="token punctuation">[</span>org_class_0_ind<span class="token punctuation">]</span> <span class="token operator">=</span>  np<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span>label <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> 
+        org_class_0_ind <span class="token operator">=</span> org_class_0_ind<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        perm_class_0_ind <span class="token operator">=</span> org_class_0_ind<span class="token punctuation">[</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>permutation<span class="token punctuation">(</span>org_class_0_ind<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+
+        <span class="token punctuation">[</span>org_class_1_ind<span class="token punctuation">]</span> <span class="token operator">=</span>  np<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span>label <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> 
+        org_class_1_ind <span class="token operator">=</span> org_class_1_ind<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        perm_class_1_ind <span class="token operator">=</span> org_class_1_ind<span class="token punctuation">[</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>permutation<span class="token punctuation">(</span>org_class_1_ind<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+
+
+        train_ind <span class="token operator">=</span> np<span class="token punctuation">.</span>concatenate<span class="token punctuation">(</span><span class="token punctuation">(</span>perm_class_0_ind<span class="token punctuation">[</span><span class="token punctuation">:</span>num_train_per_class<span class="token punctuation">]</span><span class="token punctuation">,</span> perm_class_1_ind<span class="token punctuation">[</span><span class="token punctuation">:</span>num_train_per_class<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+        train_mask<span class="token punctuation">[</span>train_ind<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+
+        <span class="token punctuation">[</span>remaining<span class="token punctuation">]</span> <span class="token operator">=</span> np<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span><span class="token operator">~</span>train_mask<span class="token punctuation">)</span>
+        remaining <span class="token operator">=</span> remaining<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+        val_mask<span class="token punctuation">[</span>remaining<span class="token punctuation">[</span><span class="token punctuation">:</span>num_val<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+        test_mask<span class="token punctuation">[</span>remaining<span class="token punctuation">[</span>num_val<span class="token punctuation">:</span>num_val<span class="token operator">+</span>num_test<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+
+        train_mask <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>train_mask<span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>bool<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># mask should be long type</span>
+        val_mask <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>val_mask<span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>bool<span class="token punctuation">)</span>
+        test_mask <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>test_mask<span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>bool<span class="token punctuation">)</span>
+
+        x <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>node_feature<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>float<span class="token punctuation">)</span> 
+        y <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>node_label<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>long<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># y should be long type</span>
+
+        data <span class="token operator">=</span> Data<span class="token punctuation">(</span>x<span class="token operator">=</span>x<span class="token punctuation">,</span> edge_index<span class="token operator">=</span>edge_index<span class="token punctuation">,</span> y<span class="token operator">=</span>y<span class="token punctuation">,</span> edge_attr<span class="token operator">=</span>edge_weight<span class="token punctuation">,</span> train_mask <span class="token operator">=</span> train_mask<span class="token punctuation">,</span> val_mask <span class="token operator">=</span> val_mask<span class="token punctuation">,</span> test_mask <span class="token operator">=</span> test_mask<span class="token punctuation">)</span>
+        <span class="token comment" spellcheck="true"># Directly save the data in order as .pt form</span>
+        torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>data<span class="token punctuation">,</span> osp<span class="token punctuation">.</span>join<span class="token punctuation">(</span>self<span class="token punctuation">.</span>processed_dir<span class="token punctuation">,</span> <span class="token string">'NodeDataset_{}.pt'</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">len</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> len<span class="token punctuation">(</span>self<span class="token punctuation">.</span>processed_file_names<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">get</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> idx<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        data <span class="token operator">=</span> torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span>osp<span class="token punctuation">.</span>join<span class="token punctuation">(</span>self<span class="token punctuation">.</span>processed_dir<span class="token punctuation">,</span> <span class="token string">'NodeDataset_{}.pt'</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> data
+   <span class="token comment" spellcheck="true">#</span>
+dataset_node <span class="token operator">=</span> NodeDataset<span class="token punctuation">(</span>root<span class="token operator">=</span><span class="token string">'./'</span><span class="token punctuation">)</span>
+dataset_node<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token comment" spellcheck="true">#Data(edge_attr=[504, 1], edge_index=[2, 504], test_mask=[50], train_mask=[50], val_mask=[50], x=[50, 3], y=[50])</span></code></pre>
 <h3 id="Resouce"><a href="#Resouce" class="headerlink" title="Resouce"></a>Resouce</h3><ul>
 <li><a href="https://github.com/rusty1s/pytorch_geometric" target="_blank" rel="noopener">pytorch_geometric11.3k </a> <a href="https://pytorch-geometric.readthedocs.io/en/latest/notes/colabs.html" target="_blank" rel="noopener">pytorch_geometric11.3k_demo</a></li>
 <li><a href="https://github.com/benedekrozemberczki/pytorch_geometric_temporal" target="_blank" rel="noopener">pytorch_geometric_temporal</a>  : A Temporal Extension Library for PyTorch Geometric</li>
@@ -2026,6 +2362,7 @@ draw_molecule<span class="token punctuation">(</span>mol<span class="token punct
 <li><a href="https://colab.research.google.com/drive/1D45E5bUK3gQ40YpZo65ozs7hg5l-eo_U?usp=sharing" target="_blank" rel="noopener">Point Cloud Classification with Graph Neural Networks</a></li>
 <li><a href="https://colab.research.google.com/drive/1fLJbFPz0yMCQg81DdCP5I8jXw9LoggKO?usp=sharing" target="_blank" rel="noopener">Explaining GNN Model Predictions using Captum</a></li>
 <li><a href="http://htmlpreview.github.io/?https://github.com/rusty1s/rusty1s.github.io/blob/master/pyg_notebook.html" target="_blank" rel="noopener">Fast Graph Representation</a></li>
+<li><a href="https://github.com/GQ93/Pytorch-geometric-notes/blob/master/costumed_graph_datasets.ipynb" target="_blank" rel="noopener">custom dataset</a> </li>
 </ul>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -2070,7 +2407,7 @@ draw_molecule<span class="token punctuation">(</span>mol<span class="token punct
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://liudongdong1.github.io/2021/09/14/shi-kong-shu-ju/gnn/pytorchgnn/">https://liudongdong1.github.io/2021/09/14/shi-kong-shu-ju/gnn/pytorchgnn/</a>
+                    <a href="https://liudongdong1.github.io/2021/06/14/shi-kong-shu-ju/gnn/pytorchgnn/">https://liudongdong1.github.io/2021/06/14/shi-kong-shu-ju/gnn/pytorchgnn/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -2281,33 +2618,29 @@ draw_molecule<span class="token punctuation">(</span>mol<span class="token punct
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;Current
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2021/09/14/shi-kong-shu-ju/gnn/pytorchgnn/">
+                <a href="/2021/06/14/shi-kong-shu-ju/gnn/pytorch3d/">
                     <div class="card-image">
                         
-                        <img src="https://cdn.pixabay.com/photo/2021/05/19/14/31/dandelion-6266230__340.jpg" class="responsive-img" alt="PytorchGNN">
+                        <img src="https://cdn.pixabay.com/photo/2021/03/19/04/49/kid-6106557__340.jpg" class="responsive-img" alt="Pytorch3D">
                         
-                        <span class="card-title">PytorchGNN</span>
+                        <span class="card-title">Pytorch3D</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-论文对GNN模型分类如下：
-
-图卷积网络(Graph convolutional networks)和图注意力网络(graph attention networks)，因为涉及到传播步骤(propagation step)。
-图的空域网络
+Chaton, Thomas, et al. “Torch-Points3D: A Modular Multi-Task Frameworkfor Reproducible Deep Learning on 3D Point Clouds
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-14
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-14
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -2320,7 +2653,6 @@ draw_molecule<span class="token punctuation">(</span>mol<span class="token punct
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -2343,41 +2675,51 @@ draw_molecule<span class="token punctuation">(</span>mol<span class="token punct
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/21/shi-kong-shu-ju/gnn/gnn-review/">
+                <a href="/2021/06/13/shi-jue-ai/pictureop/lightestdetection/">
                     <div class="card-image">
                         
+                        <img src="https://cdn.pixabay.com/photo/2016/05/16/15/40/texture-1395982__340.jpg" class="responsive-img" alt="LightestDetection">
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="时空数据/GNN/GNN_Review">
-                        
-                        <span class="card-title">时空数据/GNN/GNN_Review</span>
+                        <span class="card-title">LightestDetection</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            GNN: Review of Method and Applications
+                            
+minMaxLoc寻找矩阵(一维数组当作向量,用Mat定义) 中最小值和最大值的位置. 
 
-https://github.com/thunlp/GNNPapers
+1. BrightArea
+import numpy as np
+import argparse
+import cv2
 
-
-
-
-GNN模型概览
-
-在该节中，首先提出原始的图神经网络问题以及处理方法，然后介绍各
+# construct 
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-13
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            liudongdong
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%A7%86%E8%A7%89AI/" class="post-category">
+                                    视觉AI
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/opencv/">
+                        <span class="chip bg-color">opencv</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -2576,7 +2918,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">708.1k</span>&nbsp;字
+                class="white-color">718.6k</span>&nbsp;字
             
             
             
