@@ -504,21 +504,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-07-04
+                    2021-07-24
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    2.2k
+                    3.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    8 Min
+                    12 Min
                 </div>
                 
 
@@ -536,7 +536,7 @@
                 <h3 id="0-执行过程"><a href="#0-执行过程" class="headerlink" title="0. 执行过程"></a>0. 执行过程</h3><ul>
 <li>查询语句的执行流程如下：权限校验（如果命中缓存）—&gt;查询缓存—&gt;分析器—&gt;优化器—&gt;权限校验—&gt;执行器—&gt;引擎</li>
 <li>更新语句执行流程如下：分析器—-&gt;权限校验—-&gt;执行器—&gt;引擎—redo log(prepare 状态)—&gt;binlog—&gt;redo log(commit状态)</li>
-<li><strong>连接器：</strong>身份认证和权限相关(登录 MySQL 的时候)。</li>
+<li><strong>连接器：</strong>身份认证和权限相关(登录 MySQL 的时候)。<img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210709233330122.png" alt=""></li>
 <li><strong>查询缓存：</strong>执行查询语句的时候，会先查询缓存（MySQL 8.0 版本后移除，因为这个功能不太实用）。</li>
 <li><strong>分析器：</strong> 没有命中缓存的话，SQL 语句就会经过分析器，分析器说白了就是要先看你的 SQL 语句要干嘛，再检查你的 SQL 语句语法是否正确。</li>
 <li><strong>优化器：</strong>按照 MySQL 认为最优的方案去执行。</li>
@@ -547,17 +547,39 @@
 <li><strong>Server 层</strong>：主要包括连接器、查询缓存、分析器、优化器、执行器等，所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图，函数等，还有一个通用的日志模块 binglog 日志模块。</li>
 <li><strong>存储引擎</strong>： 主要负责数据的存储和读取，采用可以替换的插件式架构，支持 InnoDB、MyISAM、Memory 等多个存储引擎，其中 InnoDB 引擎有自有的日志模块 redolog 模块。<strong>现在最常用的存储引擎是 InnoDB，它从 MySQL 5.5.5 版本开始就被当做默认存储引擎了。</strong></li>
 </ul>
-<h3 id="1-存储引擎"><a href="#1-存储引擎" class="headerlink" title="1. 存储引擎"></a>1. 存储引擎</h3><p><strong>查看 MySQL 提供的所有存储引擎</strong></p>
-<pre class=" language-sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">show</span> engines<span class="token punctuation">;</span></code></pre>
-<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/mysql-engines.png" alt=""></p>
+<h3 id="1-数据类型"><a href="#1-数据类型" class="headerlink" title="1. 数据类型"></a>1. 数据类型</h3><ul>
+<li><code>整型</code>： TINYINT, SMALLINT, MEDIUMINT, INT, BIGINT 分别使用 8, 16, 24, 32, 64 位存储空间，一般情况下越小的列越好。</li>
+<li><code>浮点数</code>: FLOAT 和 DOUBLE 为浮点类型，DECIMAL 为高精度小数类型。CPU 原生支持浮点运算，但是不支持 DECIMAl 类型的计算，因此 DECIMAL 的计算比浮点类型需要更高的代价。</li>
+<li><code>字符串：</code>主要有 CHAR 和 VARCHAR 两种类型，一种是定长的，一种是变长的。VARCHAR 这种变长类型能够节省空间，因为只需要存储必要的内容。但是在执行 UPDATE 时可能会使行变得比原来长，当超出一个页所能容纳的大小时，就要执行额外的操作。MyISAM 会将行拆成不同的片段存储，而 InnoDB 则需要分裂页来使行放进页内。<code>VARCHAR 会保留字符串末尾的空格</code>，而 <code>CHAR 会删除</code>。</li>
+<li><code>时间日期</code>： <ul>
+<li><strong>DATETIME:</strong>从 1001 年到 9999 年的日期和时间，精度为秒，使用 8 字节的存储空间。与时区无关。</li>
+<li><strong>TIMESTAMP:</strong>从 1970 年 1 月 1 日午夜(格林威治时间)以来的秒数，使用 4 个字节，只能表示从 1970 年 到 2038 年。<code>和时区有关.</code></li>
+<li>MySQL 提供了<code>FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期</code>，并提供了 <code>UNIX_TIMESTAMP() 函数把日期转换为 UNIX 时间戳</code>。</li>
+</ul>
+</li>
+<li><strong>BLOB</strong>和<strong>TEXT</strong>都是为存储很大的数据而设计的数据类型，分别采用<code>二进制</code>和<code>字符方式</code>存储。</li>
+</ul>
+<h3 id="2-存储引擎"><a href="#2-存储引擎" class="headerlink" title="2. 存储引擎"></a>2. 存储引擎</h3><h4 id="1-InnoDB"><a href="#1-InnoDB" class="headerlink" title=".1. InnoDB"></a>.1. InnoDB</h4><ul>
+<li>MySQL 默认的事务型存储引擎，<strong>只有在需要它不支持的特性时，才考虑使用其它存储引擎</strong>。</li>
+<li>实现了四个标准的隔离级别，默认级别是可重复读(REPEATABLE READ)。在可重复读隔离级别下，通过多版本并发控制(MVCC)+ 间隙锁(Next-Key Locking)防止幻影读。</li>
+</ul>
+<h4 id="2-MyISAM"><a href="#2-MyISAM" class="headerlink" title=".2. MyISAM"></a>.2. MyISAM</h4><ul>
+<li>不支持事务, 不支持行级锁，</li>
+</ul>
+<p><strong>查看 MySQL 提供的所有存储引擎</strong></p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show engines;</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="../../../../pictures/mysql-engines.png" alt=""></p>
 <p>从上图我们可以查看出 MySQL 当前默认的存储引擎是 InnoDB，并且在 5.7 版本所有的存储引擎中只有 InnoDB 是事务性存储引擎，也就是说只有 InnoDB 支持事务。</p>
 <p><strong>查看 MySQL 当前默认的存储引擎</strong></p>
 <p>我们也可以通过下面的命令查看默认的存储引擎。</p>
-<pre class=" language-sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'%storage_engine%'</span><span class="token punctuation">;</span></code></pre>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like '%storage_engine%';</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>查看表的存储引擎</strong></p>
-<pre class=" language-sql"><code class="language-sql"><span class="token keyword">show</span> <span class="token keyword">table</span> <span class="token keyword">status</span> <span class="token operator">like</span> <span class="token string">"table_name"</span> <span class="token punctuation">;</span></code></pre>
-<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.png" alt="查看表的存储引擎"></p>
-<h3 id="2-锁机制-amp-锁算法"><a href="#2-锁机制-amp-锁算法" class="headerlink" title="2. 锁机制&amp;锁算法"></a>2. 锁机制&amp;锁算法</h3><p><strong>MyISAM 和 InnoDB 存储引擎使用的锁：</strong></p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">table</span> <span class="keyword">status</span> <span class="keyword">like</span> <span class="string">"table_name"</span> ;</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="../../../../pictures/%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.png" alt=""></p>
+<h3 id="3-索引机制-B-树"><a href="#3-索引机制-B-树" class="headerlink" title="3. 索引机制(B+树)"></a>3. 索引机制(B+树)</h3><h3 id="4-锁机制-amp-锁算法"><a href="#4-锁机制-amp-锁算法" class="headerlink" title="4. 锁机制&amp;锁算法"></a>4. 锁机制&amp;锁算法</h3><p><strong>MyISAM 和 InnoDB 存储引擎使用的锁：</strong></p>
 <ul>
 <li>MyISAM 采用表级锁(table-level locking)。</li>
 <li>InnoDB 支持行级锁(row-level locking)和表级锁,默认为行级锁</li>
@@ -573,22 +595,23 @@
 <li>Gap lock：间隙锁，锁定一个范围，不包括记录本身</li>
 <li>Next-key lock：record+gap临键锁，锁定一个范围，包含记录本身</li>
 </ul>
-<h3 id="3-查询缓存"><a href="#3-查询缓存" class="headerlink" title="3. 查询缓存"></a>3. 查询缓存</h3><p><code>my.cnf</code> 加入以下配置，重启 MySQL 开启查询缓存</p>
-<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">query_cache_type</span><span class="token punctuation">=</span><span class="token attr-value">1</span>
-<span class="token attr-name">query_cache_size</span><span class="token punctuation">=</span><span class="token attr-value">600000</span></code></pre>
+<h3 id="6-查询缓存"><a href="#6-查询缓存" class="headerlink" title="6. 查询缓存"></a>6. 查询缓存</h3><p><code>my.cnf</code> 加入以下配置，重启 MySQL 开启查询缓存</p>
+<figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">query_cache_type</span>=<span class="string">1</span></span><br><span class="line"><span class="attr">query_cache_size</span>=<span class="string">600000</span></span><br></pre></td></tr></tbody></table></figure>
+
 <p>MySQL 执行以下命令也可以开启查询缓存</p>
-<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">set</span> <span class="token attr-value">global  query_cache_type=1;</span>
-<span class="token attr-name">set</span> <span class="token attr-value">global  query_cache_size=600000;</span></code></pre>
+<figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">set</span> <span class="string">global  query_cache_type=1;</span></span><br><span class="line"><span class="attr">set</span> <span class="string">global  query_cache_size=600000;</span></span><br></pre></td></tr></tbody></table></figure>
+
 <p>如上，<strong>开启查询缓存后在同样的查询条件以及数据情况下，会直接在缓存中返回结果</strong>。这里的查询条件包括查询本身、当前要查询的数据库、客户端协议版本号等一些可能影响结果的信息。因此任何两个查询在任何字符上的不同都会导致缓存不命中。此外，如果查询中包含任何用户自定义函数、存储函数、用户变量、临时表、MySQL 库中的系统表，其查询结果也不会被缓存。</p>
 <p>缓存建立之后，MySQL 的查询缓存系统会跟踪查询中涉及的每张表，如果这些表（数据或结构）发生变化，那么和这张表相关的所有缓存数据都将失效。</p>
 <p><strong>缓存虽然能够提升数据库的查询性能，但是缓存同时也带来了额外的开销，每次查询后都要做一次缓存操作，失效后还要销毁。</strong> 因此，开启查询缓存要谨慎，尤其对于写密集的应用来说更是如此。如果开启，要注意合理控制缓存空间大小，一般来说其大小设置为几十 MB 比较合适。此外，<strong>还可以通过 sql_cache 和 sql_no_cache 来控制某个查询语句是否需要缓存：</strong></p>
-<pre class=" language-sql"><code class="language-sql"><span class="token keyword">select</span> sql_no_cache <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">from</span> usr<span class="token punctuation">;</span></code></pre>
-<h3 id="4-连接池"><a href="#4-连接池" class="headerlink" title="4. 连接池"></a>4. 连接池</h3><ul>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sql_no_cache <span class="keyword">count</span>(*) <span class="keyword">from</span> usr;</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="6-连接池"><a href="#6-连接池" class="headerlink" title="6. 连接池"></a>6. 连接池</h3><ul>
 <li><a href="https://www.fangzhipeng.com/javainterview/2019/07/15/mysql-connector-pool.html" target="_blank" rel="noopener">数据库：数据库连接池原理详解与自定义连接池实现</a></li>
 <li><a href="http://blog.itpub.net/9403012/viewspace-111794/" target="_blank" rel="noopener">基于JDBC的数据库连接池技术研究与应用</a></li>
 <li><a href="https://juejin.im/post/5b7944c6e51d4538c86cf195" target="_blank" rel="noopener">数据库连接池技术详解</a></li>
 </ul>
-<h3 id="5-日期存储"><a href="#5-日期存储" class="headerlink" title="5. 日期存储"></a>5. 日期存储</h3><ul>
+<h3 id="7-日期存储"><a href="#7-日期存储" class="headerlink" title="7. 日期存储"></a>7. 日期存储</h3><ul>
 <li>不能用字符串存储日期：字符串占用的空间更大！字符串存储的日期效率比较低（逐个字符进行比对），<code>无法用日期相关的 API 进行计算和比较</code>。</li>
 </ul>
 <h4 id="1-Timestamp-amp-Datetime"><a href="#1-Timestamp-amp-Datetime" class="headerlink" title=".1. Timestamp &amp;Datetime"></a>.1. Timestamp &amp;Datetime</h4><ul>
@@ -598,39 +621,26 @@
 </li>
 </ul>
 <p>建表 SQL 语句：</p>
-<pre class=" language-sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token punctuation">`</span>time_zone_test<span class="token punctuation">`</span> <span class="token punctuation">(</span>
-  <span class="token punctuation">`</span>id<span class="token punctuation">`</span> <span class="token keyword">bigint</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
-  <span class="token punctuation">`</span>date_time<span class="token punctuation">`</span> <span class="token keyword">datetime</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
-  <span class="token punctuation">`</span>time_stamp<span class="token punctuation">`</span> <span class="token keyword">timestamp</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CURRENT_TIMESTAMP</span> <span class="token keyword">ON</span> <span class="token keyword">UPDATE</span> <span class="token keyword">CURRENT_TIMESTAMP</span><span class="token punctuation">,</span>
-  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>id<span class="token punctuation">`</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8<span class="token punctuation">;</span></code></pre>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`time_zone_test`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`date_time`</span> datetime <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`time_stamp`</span> <span class="built_in">timestamp</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></tbody></table></figure>
+
 <p>插入数据：</p>
-<pre class=" language-sql"><code class="language-sql"><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> time_zone_test<span class="token punctuation">(</span>date_time<span class="token punctuation">,</span>time_stamp<span class="token punctuation">)</span> <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> time_zone_test(date_time,time_stamp) <span class="keyword">VALUES</span>(<span class="keyword">NOW</span>(),<span class="keyword">NOW</span>());</span><br></pre></td></tr></tbody></table></figure>
+
 <p>查看数据：</p>
-<pre class=" language-sql"><code class="language-sql"><span class="token keyword">select</span> date_time<span class="token punctuation">,</span>time_stamp <span class="token keyword">from</span> time_zone_test<span class="token punctuation">;</span></code></pre>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> date_time,time_stamp <span class="keyword">from</span> time_zone_test;</span><br></pre></td></tr></tbody></table></figure>
+
 <p>结果：</p>
-<pre><code>+---------------------+---------------------+
-| date_time           | time_stamp          |
-+---------------------+---------------------+
-| 2020-01-11 09:53:32 | 2020-01-11 09:53:32 |
-+---------------------+---------------------+</code></pre><p>修改当前会话的时区:</p>
-<pre class=" language-sql"><code class="language-sql"><span class="token keyword">set</span> time_zone<span class="token operator">=</span><span class="token string">'+8:00'</span><span class="token punctuation">;</span></code></pre>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+---------------------+---------------------+</span><br><span class="line">| date_time           | time_stamp          |</span><br><span class="line">+---------------------+---------------------+</span><br><span class="line">| 2020-01-11 09:53:32 | 2020-01-11 09:53:32 |</span><br><span class="line">+---------------------+---------------------+</span><br></pre></td></tr></tbody></table></figure>
+
+<p>修改当前会话的时区:</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">time_zone</span>=<span class="string">'+8:00'</span>;</span><br></pre></td></tr></tbody></table></figure>
+
 <p>再次查看数据：</p>
-<pre><code>+---------------------+---------------------+
-| date_time           | time_stamp          |
-+---------------------+---------------------+
-| 2020-01-11 09:53:32 | 2020-01-11 17:53:32 |
-+---------------------+---------------------+</code></pre><p><strong>扩展：一些关于 MySQL 时区设置的一个常用 sql 命令</strong></p>
-<pre class=" language-sql"><code class="language-sql"><span class="token comment" spellcheck="true"># 查看当前会话时区</span>
-<span class="token keyword">SELECT</span> @<span class="token variable">@session.time_zone</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true"># 设置当前会话时区</span>
-<span class="token keyword">SET</span> time_zone <span class="token operator">=</span> <span class="token string">'Europe/Helsinki'</span><span class="token punctuation">;</span>
-<span class="token keyword">SET</span> time_zone <span class="token operator">=</span> <span class="token string">"+00:00"</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true"># 数据库全局时区设置</span>
-<span class="token keyword">SELECT</span> @<span class="token variable">@global.time_zone</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true"># 设置全局时区</span>
-<span class="token keyword">SET</span> <span class="token keyword">GLOBAL</span> time_zone <span class="token operator">=</span> <span class="token string">'+8:00'</span><span class="token punctuation">;</span>
-<span class="token keyword">SET</span> <span class="token keyword">GLOBAL</span> time_zone <span class="token operator">=</span> <span class="token string">'Europe/Helsinki'</span><span class="token punctuation">;</span></code></pre>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+---------------------+---------------------+</span><br><span class="line">| date_time           | time_stamp          |</span><br><span class="line">+---------------------+---------------------+</span><br><span class="line">| 2020-01-11 09:53:32 | 2020-01-11 17:53:32 |</span><br><span class="line">+---------------------+---------------------+</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>扩展：一些关于 MySQL 时区设置的一个常用 sql 命令</strong></p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看当前会话时区</span></span><br><span class="line"><span class="keyword">SELECT</span> @@session.time_zone;</span><br><span class="line"><span class="comment"># 设置当前会话时区</span></span><br><span class="line"><span class="keyword">SET</span> <span class="keyword">time_zone</span> = <span class="string">'Europe/Helsinki'</span>;</span><br><span class="line"><span class="keyword">SET</span> <span class="keyword">time_zone</span> = <span class="string">"+00:00"</span>;</span><br><span class="line"><span class="comment"># 数据库全局时区设置</span></span><br><span class="line"><span class="keyword">SELECT</span> @@global.time_zone;</span><br><span class="line"><span class="comment"># 设置全局时区</span></span><br><span class="line"><span class="keyword">SET</span> <span class="keyword">GLOBAL</span> <span class="keyword">time_zone</span> = <span class="string">'+8:00'</span>;</span><br><span class="line"><span class="keyword">SET</span> <span class="keyword">GLOBAL</span> <span class="keyword">time_zone</span> = <span class="string">'Europe/Helsinki'</span>;</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li><p>Timestamp 只需要使用 4 个字节的存储空间，但是 DateTime 需要耗费 8 个字节的存储空间。但是，这样同样造成了一个问题，Timestamp 表示的时间范围更小。</p>
 <ul>
@@ -642,26 +652,44 @@
 </blockquote>
 </li>
 </ul>
-<p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624183128485.png" alt="image-20210624183128485"></p>
+<p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624183128485.png" alt=""></p>
 <h4 id="2-数值型时间戳"><a href="#2-数值型时间戳" class="headerlink" title=".2. 数值型时间戳"></a>.2. 数值型时间戳</h4><ul>
 <li>这种存储方式的具有 Timestamp 类型的所具有一些优点，并且使用它的进行日期排序以及对比等操作的效率会更高，跨系统也很方便，毕竟只是存放的数值。缺点也很明显，就是数据的可读性太差了，你无法直观的看到具体时间。</li>
 <li>时间戳的定义是从一个基准时间开始算起，这个基准时间是「1970-1-1 00:00:00 +0:00」，从这个时间开始，用整数表示，以秒计时，随着时间的流逝这个时间整数不断增加。这样一来，我只需要一个数值，就可以完美地表示时间了，而且这个数值是一个绝对数值，即无论的身处地球的任何角落，这个表示时间的时间戳，都是一样的，生成的数值都是一样的，并且没有时区的概念，所以在系统的中时间的传输中，都不需要进行额外的转换了，只有在显示给用户的时候，才转换为字符串格式的本地时间。</li>
 </ul>
-<pre class=" language-sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">select</span> UNIX_TIMESTAMP<span class="token punctuation">(</span><span class="token string">'2020-01-11 09:53:32'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">+</span><span class="token comment" spellcheck="true">---------------------------------------+</span>
-<span class="token operator">|</span> UNIX_TIMESTAMP<span class="token punctuation">(</span><span class="token string">'2020-01-11 09:53:32'</span><span class="token punctuation">)</span> <span class="token operator">|</span>
-<span class="token operator">+</span><span class="token comment" spellcheck="true">---------------------------------------+</span>
-<span class="token operator">|</span>                            <span class="token number">1578707612</span> <span class="token operator">|</span>
-<span class="token operator">+</span><span class="token comment" spellcheck="true">---------------------------------------+</span>
-<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select UNIX_TIMESTAMP('2020-01-11 09:53:32');</span><br><span class="line">+<span class="comment">---------------------------------------+</span></span><br><span class="line">| UNIX_TIMESTAMP('2020-01-11 09:53:32') |</span><br><span class="line">+<span class="comment">---------------------------------------+</span></span><br><span class="line">|                            1578707612 |</span><br><span class="line">+<span class="comment">---------------------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> FROM_UNIXTIME(<span class="number">1578707612</span>);</span><br><span class="line">+<span class="comment">---------------------------+</span></span><br><span class="line">| FROM_UNIXTIME(1578707612) |</span><br><span class="line">+<span class="comment">---------------------------+</span></span><br><span class="line">| 2020-01-11 09:53:32       |</span><br><span class="line">+<span class="comment">---------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></tbody></table></figure>
 
-mysql<span class="token operator">></span> <span class="token keyword">select</span> FROM_UNIXTIME<span class="token punctuation">(</span><span class="token number">1578707612</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">+</span><span class="token comment" spellcheck="true">---------------------------+</span>
-<span class="token operator">|</span> FROM_UNIXTIME<span class="token punctuation">(</span><span class="token number">1578707612</span><span class="token punctuation">)</span> <span class="token operator">|</span>
-<span class="token operator">+</span><span class="token comment" spellcheck="true">---------------------------+</span>
-<span class="token operator">|</span> <span class="token number">2020</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">11</span> <span class="token number">09</span>:<span class="token number">53</span>:<span class="token number">32</span>       <span class="token operator">|</span>
-<span class="token operator">+</span><span class="token comment" spellcheck="true">---------------------------+</span>
-<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span></code></pre>
+<h3 id="8-查询性能优化"><a href="#8-查询性能优化" class="headerlink" title="8. 查询性能优化"></a>8. 查询性能优化</h3><h4 id="1-切分大查询"><a href="#1-切分大查询" class="headerlink" title=".1. 切分大查询"></a>.1. 切分大查询</h4><blockquote>
+<p>一个大查询如果一次性执行的话，可能一次锁住很多数据、占满整个事务日志、耗尽系统资源、阻塞很多小的但重要的查询。</p>
+</blockquote>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DELEFT FROM messages WHERE <span class="keyword">create</span> &lt; <span class="keyword">DATE_SUB</span>(<span class="keyword">NOW</span>(), <span class="built_in">INTERVAL</span> <span class="number">3</span> <span class="keyword">MONTH</span>);</span><br><span class="line"></span><br><span class="line">%修改后</span><br><span class="line">rows_affected = 0</span><br><span class="line"><span class="keyword">do</span> {</span><br><span class="line">    rows_affected = do_query(</span><br><span class="line">    <span class="string">"DELETE FROM messages WHERE create  &lt; DATE_SUB(NOW(), INTERVAL 3 MONTH) LIMIT 10000"</span>)</span><br><span class="line">} <span class="keyword">while</span> rows_affected &gt; <span class="number">0</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-分解大查询"><a href="#2-分解大查询" class="headerlink" title=".2. 分解大查询"></a>.2. 分解大查询</h4><blockquote>
+<p>将一个大连接查询分解成对每一个表进行一次单表查询，然后将结果在应用程序中进行关联，这样做的好处有:</p>
+<ul>
+<li><code>让缓存更高效</code>。对于连接查询，如果其中一个表发生变化，那么整个查询缓存就无法使用。而分解后的多个查询，即使其中一个表发生变化，对其它表的查询缓存依然可以使用。</li>
+<li><code>分解成多个单表查询</code>，这些单表查询的缓存结果更可能被其它查询使用到，从而减少冗余记录的查询。</li>
+<li><code>减少锁竞争</code>；</li>
+<li><code>在应用层进行连接</code>，可以更容易对数据库进行拆分，从而更容易做到高性能和可伸缩。</li>
+<li>查<code>询本身效率也可能会有所提升</code>。例如下面的例子中，使用 IN() 代替连接查询，可以让 MySQL 按照 ID 顺序进行查询，这可能比随机的连接要更高效。</li>
+</ul>
+</blockquote>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tab</span><br><span class="line"><span class="keyword">JOIN</span> tag_post <span class="keyword">ON</span> tag_post.tag_id=tag.id</span><br><span class="line"><span class="keyword">JOIN</span> post <span class="keyword">ON</span> tag_post.post_id=post.id</span><br><span class="line"><span class="keyword">WHERE</span> tag.tag=<span class="string">'mysql'</span>;</span><br><span class="line"></span><br><span class="line">%修改后</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tag <span class="keyword">WHERE</span> tag=<span class="string">'mysql'</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tag_post <span class="keyword">WHERE</span> tag_id=<span class="number">1234</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> post <span class="keyword">WHERE</span> post.id <span class="keyword">IN</span> (<span class="number">123</span>,<span class="number">456</span>,<span class="number">567</span>,<span class="number">9098</span>,<span class="number">8904</span>);</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="9-主从复制-amp-读写分离"><a href="#9-主从复制-amp-读写分离" class="headerlink" title="9. 主从复制&amp;读写分离"></a>9. 主从复制&amp;读写分离</h3><h4 id="1-主从复制"><a href="#1-主从复制" class="headerlink" title=".1. 主从复制"></a>.1. 主从复制</h4><blockquote>
+<p>主要涉及三个线程: binlog 线程、I/O 线程和 SQL 线程。</p>
+<ul>
+<li><strong>binlog 线程</strong> : 负责将主服务器上的数据更改写入二进制日志中。</li>
+<li><strong>I/O 线程</strong> : 负责从主服务器上读取二进制日志，并写入从服务器的中继日志中。</li>
+<li><strong>SQL 线程</strong> : 负责读取中继日志并重放其中的 SQL 语句。</li>
+</ul>
+</blockquote>
+<p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210709232849857.png" alt=""></p>
+<h4 id="2-读写分离"><a href="#2-读写分离" class="headerlink" title=".2. 读写分离"></a>.2. 读写分离</h4><ul>
+<li>主从服务器负责各自的读和写，极大程度缓解了锁的争用；</li>
+<li>从服务器可以使用 MyISAM，提升查询性能以及节约系统开销；</li>
+<li>增加冗余，提高可用性。</li>
+</ul>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -924,23 +952,23 @@ mysql<span class="token operator">></span> <span class="token keyword">select</s
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2021/06/16/yu-yan-kuang-jia/java/annotation-jpa/">
+                <a href="/2021/06/16/yu-yan-kuang-jia/framework/springboot/springrelative/">
                     <div class="card-image">
                         
-                        <img src="https://cdn.pixabay.com/photo/2021/05/06/10/28/cygnets-6233080__340.jpg" class="responsive-img" alt="Annotation_JPA">
+                        <img src="https://cdn.pixabay.com/photo/2021/06/08/11/27/mushrooms-6320451__340.jpg" class="responsive-img" alt="SpringRelative">
                         
-                        <span class="card-title">Annotation_JPA</span>
+                        <span class="card-title">SpringRelative</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            JPA基本注解@Entity
-@Entity 标注用于实体类声明语句之前，指出该Java 类为实体类，将映射到指定的数据库表。如声明一个实体类 Custom，它将映射到数据库中的 Custom 表上。
+                            
+Spring 是一种轻量级开发框架，旨在提高开发人员的开发效率以及系统的可维护性。Spring 官网：https://spring.io/。
 
-元数据属性说明：
 
-name： 表名
+1. Spring IOC&amp;AOP.1. IOC
+IoC（Inverse of Co
                         
                     </div>
                     <div class="publish-info">
@@ -966,8 +994,12 @@ name： 表名
                         <span class="chip bg-color">java</span>
                     </a>
                     
-                    <a href="/tags/spring/">
-                        <span class="chip bg-color">spring</span>
+                    <a href="/tags/Framework/">
+                        <span class="chip bg-color">Framework</span>
+                    </a>
+                    
+                    <a href="/tags/springboot/">
+                        <span class="chip bg-color">springboot</span>
                     </a>
                     
                 </div>
@@ -981,19 +1013,23 @@ name： 表名
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/16/visualization/toolsrelative/">
+                <a href="/2021/06/16/shi-kong-shu-ju/database/mongodbrelative/">
                     <div class="card-image">
                         
-                        <img src="https://cdn.pixabay.com/photo/2015/01/21/14/14/imac-606765__340.jpg" class="responsive-img" alt="ToolsRelative">
                         
-                        <span class="card-title">ToolsRelative</span>
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="MongoDBRelative">
+                        
+                        <span class="card-title">MongoDBRelative</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1. Tkinter-Designer
-Tkinter Designer was created to speed up the GUI-development process in Python. It uses the well-kno
+                            
+MongoDB是面向文档的NoSQL数据库，用于大量数据存储。MongoDB是一个在2000年代中期问世的数据库。属于NoSQL数据库的类别。
+
+
+From: https://www.pdai.tech/md/db/nosql-mongo
                         
                     </div>
                     <div class="publish-info">
@@ -1004,8 +1040,8 @@ Tkinter Designer was created to speed up the GUI-development process in Python. 
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Visualization/" class="post-category">
-                                    Visualization
+                            <a href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE/" class="post-category">
+                                    时空数据
                                 </a>
                             
                             
@@ -1015,8 +1051,16 @@ Tkinter Designer was created to speed up the GUI-development process in Python. 
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/tools/">
-                        <span class="chip bg-color">tools</span>
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
+                    </a>
+                    
+                    <a href="/tags/Database/">
+                        <span class="chip bg-color">Database</span>
+                    </a>
+                    
+                    <a href="/tags/mysql/">
+                        <span class="chip bg-color">mysql</span>
                     </a>
                     
                 </div>
@@ -1217,7 +1261,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">718.6k</span>&nbsp;字
+                class="white-color">923.3k</span>&nbsp;字
             
             
             

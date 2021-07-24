@@ -496,21 +496,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-06-21
+                    2021-07-24
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    722
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    4 Min
+                    6 Min
                 </div>
                 
 
@@ -525,196 +525,28 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> torch 
-<span class="token keyword">import</span> torchvision
-<span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">import</span> torchvision<span class="token punctuation">.</span>transforms <span class="token keyword">as</span> transforms
+                <blockquote>
+<p>autograd 包为张量上的所有操作提供了自动求导机制。它是一个在运行时定义(define-by-run）的框架，这意味着反向传播是根据代码如何运行来决定的，并且每次迭代可以是不同的.</p>
+</blockquote>
+<h3 id="1-概念介绍"><a href="#1-概念介绍" class="headerlink" title="1. 概念介绍"></a>1. 概念介绍</h3><blockquote>
+<p>torch.Tensor 是这个包的核心类。如果设置它的属性 .requires_grad 为 True，那么autograd将会追踪对于该张量的所有操作。当完成计算后可以<code>通过调用 .backward()，来自动计算所有的梯度</code>。这个<code>张量的所有梯度将会自动累加到.grad属性</code>. </p>
+<ul>
+<li><p>为了<code>防止跟踪历史记录(和使用内存）</code>，可以<code>将代码块包装在 with torch.no_grad(): 中</code>。在评估模型时特别有用，因为模型可能具有 requires_grad = True 的可训练的参数，但是我们不需要在此过程中对他们进行梯度计算。</p>
+</li>
+<li><p>只需要定义 <code>forward</code> 函数，<code>backward</code>函数会在使用<code>autograd</code>时自动定义，<code>backward</code>函数用来计算导数。我们可以在 <code>forward</code> 函数中使用任何针对张量的操作和计算。</p>
+</li>
+<li><p><code>torch.Tensor</code> - 一个多维数组，支持诸如<code>backward()</code>等的自动求导操作，同时也保存了张量的梯度。</p>
+</li>
+<li><p><code>nn.Module</code> - 神经网络模块。是一种方便封装参数的方式，具有将参数移动到GPU、导出、加载等功能。</p>
+</li>
+<li><p><code>nn.Parameter</code> - 张量的一种，当它作为一个属性分配给一个<code>Module</code>时，它会被自动注册为一个参数。</p>
+</li>
+<li><p><code>autograd.Function</code> - 实现了自动求导前向和反向传播的定义，每个<code>Tensor</code>至少创建一个<code>Function</code>节点，该节点连接到创建<code>Tensor</code>的函数并对其历史进行编码。</p>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch </span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torchvision.transforms <span class="keyword">as</span> transforms</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"><span class="comment">#                         Table of Contents                          #</span></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. Basic autograd example 1               (Line 25 to 39)</span></span><br><span class="line"><span class="comment"># 2. Basic autograd example 2               (Line 46 to 83)</span></span><br><span class="line"><span class="comment"># 3. Loading data from numpy                (Line 90 to 97)</span></span><br><span class="line"><span class="comment"># 4. Input pipline                          (Line 104 to 129)</span></span><br><span class="line"><span class="comment"># 5. Input pipline for custom dataset       (Line 136 to 156)</span></span><br><span class="line"><span class="comment"># 6. Pretrained model                       (Line 163 to 176)</span></span><br><span class="line"><span class="comment"># 7. Save and load model                    (Line 183 to 189) </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"><span class="comment">#                     1. Basic autograd example 1                    #</span></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create tensors.</span></span><br><span class="line">x = torch.tensor(<span class="number">1.</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">w = torch.tensor(<span class="number">2.</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">b = torch.tensor(<span class="number">3.</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build a computational graph.</span></span><br><span class="line">y = w * x + b    <span class="comment"># y = 2 * x + 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Compute gradients.</span></span><br><span class="line">y.backward()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print out the gradients.</span></span><br><span class="line">print(x.grad)    <span class="comment"># x.grad = 2 </span></span><br><span class="line">print(w.grad)    <span class="comment"># w.grad = 1 </span></span><br><span class="line">print(b.grad)    <span class="comment"># b.grad = 1 </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"><span class="comment">#                    2. Basic autograd example 2                     #</span></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create tensors of shape (10, 3) and (10, 2).</span></span><br><span class="line">x = torch.randn(<span class="number">10</span>, <span class="number">3</span>)</span><br><span class="line">y = torch.randn(<span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build a fully connected layer.</span></span><br><span class="line">linear = nn.Linear(<span class="number">3</span>, <span class="number">2</span>)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">'w: '</span>, linear.weight)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">'b: '</span>, linear.bias)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build loss function and optimizer.</span></span><br><span class="line">criterion = nn.MSELoss()</span><br><span class="line">optimizer = torch.optim.SGD(linear.parameters(), lr=<span class="number">0.01</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Forward pass.</span></span><br><span class="line">pred = linear(x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Compute loss.</span></span><br><span class="line">loss = criterion(pred, y)</span><br><span class="line">print(<span class="string">'loss: '</span>, loss.item())</span><br><span class="line"></span><br><span class="line"><span class="comment"># Backward pass.</span></span><br><span class="line">loss.backward()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print out the gradients.</span></span><br><span class="line"><span class="keyword">print</span> (<span class="string">'dL/dw: '</span>, linear.weight.grad) </span><br><span class="line"><span class="keyword">print</span> (<span class="string">'dL/db: '</span>, linear.bias.grad)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1-step gradient descent.</span></span><br><span class="line">optimizer.step()</span><br><span class="line"></span><br><span class="line"><span class="comment"># You can also perform gradient descent at the low level.</span></span><br><span class="line"><span class="comment"># linear.weight.data.sub_(0.01 * linear.weight.grad.data)</span></span><br><span class="line"><span class="comment"># linear.bias.data.sub_(0.01 * linear.bias.grad.data)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Print out the loss after 1-step gradient descent.</span></span><br><span class="line">pred = linear(x)</span><br><span class="line">loss = criterion(pred, y)</span><br><span class="line">print(<span class="string">'loss after 1 step optimization: '</span>, loss.item())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"><span class="comment">#                     3. Loading data from numpy                     #</span></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a numpy array.</span></span><br><span class="line">x = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Convert the numpy array to a torch tensor.</span></span><br><span class="line">y = torch.from_numpy(x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Convert the torch tensor to a numpy array.</span></span><br><span class="line">z = y.numpy()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"><span class="comment">#                         4. Input pipeline                           #</span></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Download and construct CIFAR-10 dataset.</span></span><br><span class="line">train_dataset = torchvision.datasets.CIFAR10(root=<span class="string">'../../data/'</span>,</span><br><span class="line">                                             train=<span class="literal">True</span>, </span><br><span class="line">                                             transform=transforms.ToTensor(),</span><br><span class="line">                                             download=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Fetch one data pair (read data from disk).</span></span><br><span class="line">image, label = train_dataset[<span class="number">0</span>]</span><br><span class="line"><span class="keyword">print</span> (image.size())</span><br><span class="line"><span class="keyword">print</span> (label)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Data loader (this provides queues and threads in a very simple way).</span></span><br><span class="line">train_loader = torch.utils.data.DataLoader(dataset=train_dataset,</span><br><span class="line">                                           batch_size=<span class="number">64</span>, </span><br><span class="line">                                           shuffle=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># When iteration starts, queue and thread start to load data from files.</span></span><br><span class="line">data_iter = iter(train_loader)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Mini-batch images and labels.</span></span><br><span class="line">images, labels = data_iter.next()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Actual usage of the data loader is as below.</span></span><br><span class="line"><span class="keyword">for</span> images, labels <span class="keyword">in</span> train_loader:</span><br><span class="line">    <span class="comment"># Training code should be written here.</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"><span class="comment">#                5. Input pipeline for custom dataset                 #</span></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># You should build your custom dataset as below.</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomDataset</span><span class="params">(torch.utils.data.Dataset)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># TODO</span></span><br><span class="line">        <span class="comment"># 1. Initialize file paths or a list of file names. </span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, index)</span>:</span></span><br><span class="line">        <span class="comment"># TODO</span></span><br><span class="line">        <span class="comment"># 1. Read one data from file (e.g. using numpy.fromfile, PIL.Image.open).</span></span><br><span class="line">        <span class="comment"># 2. Preprocess the data (e.g. torchvision.Transform).</span></span><br><span class="line">        <span class="comment"># 3. Return a data pair (e.g. image and label).</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># You should change 0 to the total size of your dataset.</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span> </span><br><span class="line"></span><br><span class="line"><span class="comment"># You can then use the prebuilt data loader. </span></span><br><span class="line">custom_dataset = CustomDataset()</span><br><span class="line">train_loader = torch.utils.data.DataLoader(dataset=custom_dataset,</span><br><span class="line">                                           batch_size=<span class="number">64</span>, </span><br><span class="line">                                           shuffle=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"><span class="comment">#                        6. Pretrained model                         #</span></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Download and load the pretrained ResNet-18.</span></span><br><span class="line">resnet = torchvision.models.resnet18(pretrained=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># If you want to finetune only the top layer of the model, set as below.</span></span><br><span class="line"><span class="keyword">for</span> param <span class="keyword">in</span> resnet.parameters():</span><br><span class="line">    param.requires_grad = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Replace the top layer for finetuning.</span></span><br><span class="line">resnet.fc = nn.Linear(resnet.fc.in_features, <span class="number">100</span>)  <span class="comment"># 100 is an example.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Forward pass.</span></span><br><span class="line">images = torch.randn(<span class="number">64</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>)</span><br><span class="line">outputs = resnet(images)</span><br><span class="line"><span class="keyword">print</span> (outputs.size())     <span class="comment"># (64, 100)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"><span class="comment">#                      7. Save and load the model                    #</span></span><br><span class="line"><span class="comment"># ================================================================== #</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Save and load the entire model.</span></span><br><span class="line">torch.save(resnet, <span class="string">'model.ckpt'</span>)</span><br><span class="line">model = torch.load(<span class="string">'model.ckpt'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Save and load only the model parameters (recommended).</span></span><br><span class="line">torch.save(resnet.state_dict(), <span class="string">'params.ckpt'</span>)</span><br><span class="line">resnet.load_state_dict(torch.load(<span class="string">'params.ckpt'</span>))</span><br></pre></td></tr></tbody></table></figure>
 
-
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-<span class="token comment" spellcheck="true">#                         Table of Contents                          #</span>
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-
-<span class="token comment" spellcheck="true"># 1. Basic autograd example 1               (Line 25 to 39)</span>
-<span class="token comment" spellcheck="true"># 2. Basic autograd example 2               (Line 46 to 83)</span>
-<span class="token comment" spellcheck="true"># 3. Loading data from numpy                (Line 90 to 97)</span>
-<span class="token comment" spellcheck="true"># 4. Input pipline                          (Line 104 to 129)</span>
-<span class="token comment" spellcheck="true"># 5. Input pipline for custom dataset       (Line 136 to 156)</span>
-<span class="token comment" spellcheck="true"># 6. Pretrained model                       (Line 163 to 176)</span>
-<span class="token comment" spellcheck="true"># 7. Save and load model                    (Line 183 to 189) </span>
-
-
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-<span class="token comment" spellcheck="true">#                     1. Basic autograd example 1                    #</span>
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-
-<span class="token comment" spellcheck="true"># Create tensors.</span>
-x <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">.</span><span class="token punctuation">,</span> requires_grad<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-w <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">.</span><span class="token punctuation">,</span> requires_grad<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-b <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">.</span><span class="token punctuation">,</span> requires_grad<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Build a computational graph.</span>
-y <span class="token operator">=</span> w <span class="token operator">*</span> x <span class="token operator">+</span> b    <span class="token comment" spellcheck="true"># y = 2 * x + 3</span>
-
-<span class="token comment" spellcheck="true"># Compute gradients.</span>
-y<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Print out the gradients.</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>grad<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># x.grad = 2 </span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>w<span class="token punctuation">.</span>grad<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># w.grad = 1 </span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span>grad<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># b.grad = 1 </span>
-
-
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-<span class="token comment" spellcheck="true">#                    2. Basic autograd example 2                     #</span>
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-
-<span class="token comment" spellcheck="true"># Create tensors of shape (10, 3) and (10, 2).</span>
-x <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
-y <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Build a fully connected layer.</span>
-linear <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">'w: '</span><span class="token punctuation">,</span> linear<span class="token punctuation">.</span>weight<span class="token punctuation">)</span>
-<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">'b: '</span><span class="token punctuation">,</span> linear<span class="token punctuation">.</span>bias<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Build loss function and optimizer.</span>
-criterion <span class="token operator">=</span> nn<span class="token punctuation">.</span>MSELoss<span class="token punctuation">(</span><span class="token punctuation">)</span>
-optimizer <span class="token operator">=</span> torch<span class="token punctuation">.</span>optim<span class="token punctuation">.</span>SGD<span class="token punctuation">(</span>linear<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> lr<span class="token operator">=</span><span class="token number">0.01</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Forward pass.</span>
-pred <span class="token operator">=</span> linear<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Compute loss.</span>
-loss <span class="token operator">=</span> criterion<span class="token punctuation">(</span>pred<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'loss: '</span><span class="token punctuation">,</span> loss<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Backward pass.</span>
-loss<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Print out the gradients.</span>
-<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">'dL/dw: '</span><span class="token punctuation">,</span> linear<span class="token punctuation">.</span>weight<span class="token punctuation">.</span>grad<span class="token punctuation">)</span> 
-<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">'dL/db: '</span><span class="token punctuation">,</span> linear<span class="token punctuation">.</span>bias<span class="token punctuation">.</span>grad<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># 1-step gradient descent.</span>
-optimizer<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># You can also perform gradient descent at the low level.</span>
-<span class="token comment" spellcheck="true"># linear.weight.data.sub_(0.01 * linear.weight.grad.data)</span>
-<span class="token comment" spellcheck="true"># linear.bias.data.sub_(0.01 * linear.bias.grad.data)</span>
-
-<span class="token comment" spellcheck="true"># Print out the loss after 1-step gradient descent.</span>
-pred <span class="token operator">=</span> linear<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-loss <span class="token operator">=</span> criterion<span class="token punctuation">(</span>pred<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'loss after 1 step optimization: '</span><span class="token punctuation">,</span> loss<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-<span class="token comment" spellcheck="true">#                     3. Loading data from numpy                     #</span>
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-
-<span class="token comment" spellcheck="true"># Create a numpy array.</span>
-x <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Convert the numpy array to a torch tensor.</span>
-y <span class="token operator">=</span> torch<span class="token punctuation">.</span>from_numpy<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Convert the torch tensor to a numpy array.</span>
-z <span class="token operator">=</span> y<span class="token punctuation">.</span>numpy<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-<span class="token comment" spellcheck="true">#                         4. Input pipeline                           #</span>
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-
-<span class="token comment" spellcheck="true"># Download and construct CIFAR-10 dataset.</span>
-train_dataset <span class="token operator">=</span> torchvision<span class="token punctuation">.</span>datasets<span class="token punctuation">.</span>CIFAR10<span class="token punctuation">(</span>root<span class="token operator">=</span><span class="token string">'../../data/'</span><span class="token punctuation">,</span>
-                                             train<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> 
-                                             transform<span class="token operator">=</span>transforms<span class="token punctuation">.</span>ToTensor<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-                                             download<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Fetch one data pair (read data from disk).</span>
-image<span class="token punctuation">,</span> label <span class="token operator">=</span> train_dataset<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-<span class="token keyword">print</span> <span class="token punctuation">(</span>image<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span> <span class="token punctuation">(</span>label<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Data loader (this provides queues and threads in a very simple way).</span>
-train_loader <span class="token operator">=</span> torch<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>data<span class="token punctuation">.</span>DataLoader<span class="token punctuation">(</span>dataset<span class="token operator">=</span>train_dataset<span class="token punctuation">,</span>
-                                           batch_size<span class="token operator">=</span><span class="token number">64</span><span class="token punctuation">,</span> 
-                                           shuffle<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># When iteration starts, queue and thread start to load data from files.</span>
-data_iter <span class="token operator">=</span> iter<span class="token punctuation">(</span>train_loader<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Mini-batch images and labels.</span>
-images<span class="token punctuation">,</span> labels <span class="token operator">=</span> data_iter<span class="token punctuation">.</span>next<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Actual usage of the data loader is as below.</span>
-<span class="token keyword">for</span> images<span class="token punctuation">,</span> labels <span class="token keyword">in</span> train_loader<span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true"># Training code should be written here.</span>
-    <span class="token keyword">pass</span>
-
-
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-<span class="token comment" spellcheck="true">#                5. Input pipeline for custom dataset                 #</span>
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-
-<span class="token comment" spellcheck="true"># You should build your custom dataset as below.</span>
-<span class="token keyword">class</span> <span class="token class-name">CustomDataset</span><span class="token punctuation">(</span>torch<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>data<span class="token punctuation">.</span>Dataset<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token comment" spellcheck="true"># TODO</span>
-        <span class="token comment" spellcheck="true"># 1. Initialize file paths or a list of file names. </span>
-        <span class="token keyword">pass</span>
-    <span class="token keyword">def</span> <span class="token function">__getitem__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token comment" spellcheck="true"># TODO</span>
-        <span class="token comment" spellcheck="true"># 1. Read one data from file (e.g. using numpy.fromfile, PIL.Image.open).</span>
-        <span class="token comment" spellcheck="true"># 2. Preprocess the data (e.g. torchvision.Transform).</span>
-        <span class="token comment" spellcheck="true"># 3. Return a data pair (e.g. image and label).</span>
-        <span class="token keyword">pass</span>
-    <span class="token keyword">def</span> <span class="token function">__len__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token comment" spellcheck="true"># You should change 0 to the total size of your dataset.</span>
-        <span class="token keyword">return</span> <span class="token number">0</span> 
-
-<span class="token comment" spellcheck="true"># You can then use the prebuilt data loader. </span>
-custom_dataset <span class="token operator">=</span> CustomDataset<span class="token punctuation">(</span><span class="token punctuation">)</span>
-train_loader <span class="token operator">=</span> torch<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>data<span class="token punctuation">.</span>DataLoader<span class="token punctuation">(</span>dataset<span class="token operator">=</span>custom_dataset<span class="token punctuation">,</span>
-                                           batch_size<span class="token operator">=</span><span class="token number">64</span><span class="token punctuation">,</span> 
-                                           shuffle<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-
-
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-<span class="token comment" spellcheck="true">#                        6. Pretrained model                         #</span>
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-
-<span class="token comment" spellcheck="true"># Download and load the pretrained ResNet-18.</span>
-resnet <span class="token operator">=</span> torchvision<span class="token punctuation">.</span>models<span class="token punctuation">.</span>resnet18<span class="token punctuation">(</span>pretrained<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># If you want to finetune only the top layer of the model, set as below.</span>
-<span class="token keyword">for</span> param <span class="token keyword">in</span> resnet<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    param<span class="token punctuation">.</span>requires_grad <span class="token operator">=</span> <span class="token boolean">False</span>
-
-<span class="token comment" spellcheck="true"># Replace the top layer for finetuning.</span>
-resnet<span class="token punctuation">.</span>fc <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>resnet<span class="token punctuation">.</span>fc<span class="token punctuation">.</span>in_features<span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 100 is an example.</span>
-
-<span class="token comment" spellcheck="true"># Forward pass.</span>
-images <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">224</span><span class="token punctuation">,</span> <span class="token number">224</span><span class="token punctuation">)</span>
-outputs <span class="token operator">=</span> resnet<span class="token punctuation">(</span>images<span class="token punctuation">)</span>
-<span class="token keyword">print</span> <span class="token punctuation">(</span>outputs<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>     <span class="token comment" spellcheck="true"># (64, 100)</span>
-
-
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-<span class="token comment" spellcheck="true">#                      7. Save and load the model                    #</span>
-<span class="token comment" spellcheck="true"># ================================================================== #</span>
-
-<span class="token comment" spellcheck="true"># Save and load the entire model.</span>
-torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>resnet<span class="token punctuation">,</span> <span class="token string">'model.ckpt'</span><span class="token punctuation">)</span>
-model <span class="token operator">=</span> torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">'model.ckpt'</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Save and load only the model parameters (recommended).</span>
-torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>resnet<span class="token punctuation">.</span>state_dict<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'params.ckpt'</span><span class="token punctuation">)</span>
-resnet<span class="token punctuation">.</span>load_state_dict<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">'params.ckpt'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1022,7 +854,7 @@ resnet<span class="token punctuation">.</span>load_state_dict<span class="token 
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/05/17/yu-yan-kuang-jia/java/effectjava-generic/">
+                <a href="/2021/05/17/yu-yan-kuang-jia/java/effectvejava/effectjava-generic/">
                     <div class="card-image">
                         
                         <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210521113459.png" class="responsive-img" alt="EffectJava_generic">
@@ -1264,7 +1096,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">718.6k</span>&nbsp;字
+                class="white-color">923.3k</span>&nbsp;字
             
             
             

@@ -496,21 +496,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-06-21
+                    2021-07-09
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    849
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    3 Min
+                    5 Min
                 </div>
                 
 
@@ -526,170 +526,29 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>单例模式也就是保证一个类只有一个实例的一种实现方法罢了(设计模式其实就是帮助我们解决实际开发过程中的方法, 该方法是为了降低对象之间的耦合度,确保一个类只有一个实例,并提供一个全局访问点。</p>
+<p>单例模式也就是保证一个类只有一个实例的一种实现方法罢了(设计模式其实就是帮助我们解决实际开发过程中的方法, 该方法是为了降低对象之间的耦合度,<code>确保一个类只有一个实例,并提供一个全局访问点</code>。</p>
+<ul>
+<li>有<code>频繁实例化然后销毁</code>的情况，也就是频繁的 new 对象，可以考虑单例模式；</li>
+<li><code>创建对象时耗时过多或者耗资源过多</code>，但又<code>经常用到的对象</code>；</li>
+<li><code>频繁访问 IO 资源的对象</code>，例如数据库连接池或访问本地文件；</li>
+<li>有状态的工具类对象。 </li>
+<li>网站的计数器，一般也是采用单例模式实现，否则难以同步。 </li>
+<li>应用程序的日志应用，一般都何用单例模式实现，这一般是由于共享的日志文件一直处于打开状态，因为只能有一个实例去操作，否则内容不好追加。 </li>
+<li>一些方法的封装里面都是用静态函数，但类不是静态类。</li>
+</ul>
 </blockquote>
-<h4 id="1-枚举模式"><a href="#1-枚举模式" class="headerlink" title="1. 枚举模式"></a>1. 枚举模式</h4><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//借助JDK1.5中添加的枚举来实现单例模式。不仅能避免多线程同步问题，而且还能防止反序列化重新创建新的对象</span>
-<span class="token keyword">public</span> <span class="token keyword">enum</span> SingletonEnum <span class="token punctuation">{</span>
-    instance<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token function">SingletonEnum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">whateverMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h4 id="2-内部类"><a href="#2-内部类" class="headerlink" title="2. 内部类"></a>2. 内部类</h4><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
- * &lt;p>
- * 这种方式跟饿汉式方式采用的机制类似，但又有不同。
- * 两者都是采用了类装载的机制来保证初始化实例时只有一个线程。
- * 不同的地方:
- * 在饿汉式方式是只要Singleton类被装载就会实例化,
- * 内部类是在需要实例化时，调用getInstance方法，才会装载SingletonHolder类
- * &lt;p>
- * 优点：避免了线程不安全，延迟加载，效率高。
- */</span>
+<blockquote>
+<p>单例模式在<code>多线程的 应用场合下必须小心使用</code>。如果当唯一实例尚未创建时，有两个线程同时调用创建方法，那么它们同时没有检测到唯一实例的存在，从而同时各自创建了一个实例， 这样就有两个实例被构造出来，从而违反了单例模式中实例唯一的原则。 解决这个问题的办法是<code>为指示类是否已经实例化的变量提供一个互斥锁</code>.</p>
+<p>  1.<code>不适用于变化的对象</code>，如果同一类型的对象总是要在不同的用例场景发生变化，单例就会引起数据的错误，不能保存彼此的状态。<br>  2.由于单利模式中没有抽象层，因此<code>单例类的扩展</code>有很大的困难。<br>  3.单例类的职责过重，在一定程度上违背了“单一职责原则”。<br>  4.滥用单例将带来一些负面问题，如<code>为了节省资源将数据库连接池对象设计为的单例类，可能会导致共享连接池对象的程序过多而出现连接池溢出</code>；<code>如果实例化的对象长时间不被利用</code>，<code>系统会认为是垃圾而被回收</code>，这将导致对象状态的丢失。 </p>
+</blockquote>
+<h4 id="1-枚举模式"><a href="#1-枚举模式" class="headerlink" title="1. 枚举模式"></a>1. 枚举模式</h4><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//借助JDK1.5中添加的枚举来实现单例模式。不仅能避免多线程同步问题，而且还能防止反序列化重新创建新的对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> SingletonEnum {</span><br><span class="line">    instance;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SingletonEnum</span><span class="params">()</span> </span>{ }</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">whateverMethod</span><span class="params">()</span> </span>{}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SingletonIn</span> <span class="token punctuation">{</span>
+<h4 id="2-内部类"><a href="#2-内部类" class="headerlink" title="2. 内部类"></a>2. 内部类</h4><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * 这种方式跟饿汉式方式采用的机制类似，但又有不同。</span></span><br><span class="line"><span class="comment"> * 两者都是采用了类装载的机制来保证初始化实例时只有一个线程。</span></span><br><span class="line"><span class="comment"> * 不同的地方:</span></span><br><span class="line"><span class="comment"> * 在饿汉式方式是只要Singleton类被装载就会实例化,</span></span><br><span class="line"><span class="comment"> * 内部类是在需要实例化时，调用getInstance方法，才会装载SingletonHolder类</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * 优点：避免了线程不安全，延迟加载，效率高。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonIn</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SingletonIn</span><span class="params">()</span> </span>{</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonInHodler</span> </span>{</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> SingletonIn singletonIn = <span class="keyword">new</span> SingletonIn();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SingletonIn <span class="title">getSingletonIn</span><span class="params">()</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> SingletonInHodler.singletonIn;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token keyword">private</span> <span class="token function">SingletonIn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
+<h4 id="3-双重校验锁"><a href="#3-双重校验锁" class="headerlink" title="3. 双重校验锁"></a>3. 双重校验锁</h4><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonLanHan</span> </span>{</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 6.单例模式懒汉式双重校验锁[推荐用]</span></span><br><span class="line"><span class="comment">     * 懒汉式变种,属于懒汉式的最好写法,保证了:延迟加载和线程安全</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> SingletonLanHan singletonLanHanFour;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SingletonLanHan <span class="title">getSingletonLanHanFour</span><span class="params">()</span> </span>{</span><br><span class="line">        <span class="keyword">if</span> (singletonLanHanFour == <span class="keyword">null</span>) {</span><br><span class="line">            <span class="keyword">synchronized</span> (SingletonLanHan<span class="class">.<span class="keyword">class</span>) </span>{</span><br><span class="line">                <span class="keyword">if</span> (singletonLanHanFour == <span class="keyword">null</span>) {</span><br><span class="line">                    singletonLanHanFour = <span class="keyword">new</span> SingletonLanHan();</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> singletonLanHanFour;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">SingletonInHodler</span> <span class="token punctuation">{</span>
-        <span class="token keyword">private</span> <span class="token keyword">static</span> SingletonIn singletonIn <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SingletonIn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+<h4 id="4-实现片段"><a href="#4-实现片段" class="headerlink" title="4. 实现片段"></a>4. 实现片段</h4><h4 id="4-1-c"><a href="#4-1-c" class="headerlink" title="4.1. c#"></a>4.1. c#</h4><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line">//--------代码片段一：  同时创建多个线程去创建这个对象实例的时候, 会被多次创建</span><br><span class="line">public class Singleton</span><br><span class="line">{</span><br><span class="line">    private Sington() { }</span><br><span class="line">    private static Singleton _Singleton = null;</span><br><span class="line">    public static Singleton CreateInstance()</span><br><span class="line">    {</span><br><span class="line">        if (_Singleton == null)</span><br><span class="line">        {</span><br><span class="line">            Console.WriteLine("被创建");</span><br><span class="line">            _Singleton = new Singleton();</span><br><span class="line">        }</span><br><span class="line">        return _Singleton;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">//--------代码片段二：  同步锁为了达到预期的效果, 也是损耗了性能的</span><br><span class="line">public class Singleton</span><br><span class="line">{</span><br><span class="line">    private Sington() { }</span><br><span class="line">    private static Singleton _Singleton = null;</span><br><span class="line">    private static object Singleton_Lock = new object(); //锁同步</span><br><span class="line">    public static Singleton CreateInstance()</span><br><span class="line">    {</span><br><span class="line">        lock (Singleton_Lock)</span><br><span class="line">        {</span><br><span class="line">            Console.WriteLine("路过");</span><br><span class="line">            if (_Singleton == null)</span><br><span class="line">            {</span><br><span class="line">                Console.WriteLine("被创建");</span><br><span class="line">                _Singleton = new Singleton();</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        return _Singleton;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">//测试代码</span><br><span class="line">TaskFactory taskFactory = new TaskFactory();</span><br><span class="line">List&lt;Task&gt; taskList = new List&lt;Task&gt;();</span><br><span class="line"></span><br><span class="line">for (int i = 0; i &lt; 5; i++)</span><br><span class="line">{</span><br><span class="line">    taskList.Add(taskFactory.StartNew(() =&gt;</span><br><span class="line">                                      {</span><br><span class="line">                                          Singleton singleton = Singleton.CreateInstance(); </span><br><span class="line">                                      }));</span><br><span class="line">} </span><br><span class="line">//--------优化代码片段三：</span><br><span class="line">public class Singleton</span><br><span class="line">{</span><br><span class="line">    private static Singleton _Singleton = null;</span><br><span class="line">    private static object Singleton_Lock = new object();</span><br><span class="line">    public static Singleton CreateInstance()</span><br><span class="line">    {</span><br><span class="line">        if (_Singleton == null) //双if +lock</span><br><span class="line">        {</span><br><span class="line">            lock (Singleton_Lock)</span><br><span class="line">            {</span><br><span class="line">                Console.WriteLine("路过。");</span><br><span class="line">                if (_Singleton == null)</span><br><span class="line">                {</span><br><span class="line">                    Console.WriteLine("被创建。");</span><br><span class="line">                    _Singleton = new Singleton();</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        return _Singleton;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">//---------代码片段四： 使用静态变量</span><br><span class="line">//由CLR保证，在程序第一次使用该类之前被调用，而且只调用一次</span><br><span class="line">//PS: 但是他的缺点也很明显, 在程序初始化后, 静态对象就被CLR构造了, 哪怕你没用</span><br><span class="line">public sealed class Singleton</span><br><span class="line">{</span><br><span class="line">    private Singleton() { }</span><br><span class="line"></span><br><span class="line">    private static readonly Singleton singleInstance = new Singleton();</span><br><span class="line"></span><br><span class="line">    public static Singleton GetInstance</span><br><span class="line">    {</span><br><span class="line">        get</span><br><span class="line">        {</span><br><span class="line">            return singleInstance;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">//-------------代码片段四： 使用静态函数</span><br><span class="line">//静态构造函数：只能有一个，无参数的，程序无法调用 。</span><br><span class="line">public class SingletonSecond</span><br><span class="line">{</span><br><span class="line">    private static SingletonSecond _SingletonSecond = null;</span><br><span class="line">    static SingletonSecond()</span><br><span class="line">    {</span><br><span class="line">        _SingletonSecond = new SingletonSecond();</span><br><span class="line">    }</span><br><span class="line">    public static SingletonSecond CreateInstance()</span><br><span class="line">    {</span><br><span class="line">        return _SingletonSecond;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">//------------代码片段五： 延迟加载 </span><br><span class="line">//通常用于将对象的初始化延迟到需要时。因此，延迟加载的主要目标是按需加载对象，或者您可以根据需要说出对象。</span><br><span class="line">public sealed class Singleton</span><br><span class="line">{</span><br><span class="line">    private Singleton(){}</span><br><span class="line">    private static readonly Lazy&lt;Singleton&gt; Instancelock =</span><br><span class="line">        new Lazy&lt;Singleton&gt;(() =&gt; new Singleton());</span><br><span class="line">    public static Singleton GetInstance</span><br><span class="line">    {</span><br><span class="line">        get</span><br><span class="line">        {</span><br><span class="line">            return Instancelock.Value;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token keyword">public</span> <span class="token keyword">static</span> SingletonIn <span class="token function">getSingletonIn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> SingletonInHodler<span class="token punctuation">.</span>singletonIn<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h4 id="3-双重校验锁"><a href="#3-双重校验锁" class="headerlink" title="3. 双重校验锁"></a>3. 双重校验锁</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SingletonLanHan</span> <span class="token punctuation">{</span>
-<span class="token comment" spellcheck="true">/**
-     * 6.单例模式懒汉式双重校验锁[推荐用]
-     * 懒汉式变种,属于懒汉式的最好写法,保证了:延迟加载和线程安全
-     */</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> SingletonLanHan singletonLanHanFour<span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> SingletonLanHan <span class="token function">getSingletonLanHanFour</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>singletonLanHanFour <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>SingletonLanHan<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span>singletonLanHanFour <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                    singletonLanHanFour <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SingletonLanHan</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token punctuation">}</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span> singletonLanHanFour<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h4 id="4-实现片段"><a href="#4-实现片段" class="headerlink" title="4. 实现片段"></a>4. 实现片段</h4><h4 id="4-1-c"><a href="#4-1-c" class="headerlink" title="4.1. c#"></a>4.1. c#</h4><pre class=" language-c#"><code class="language-c#">//--------代码片段一：  同时创建多个线程去创建这个对象实例的时候, 会被多次创建
-public class Singleton
-{
-    private Sington() { }
-    private static Singleton _Singleton = null;
-    public static Singleton CreateInstance()
-    {
-        if (_Singleton == null)
-        {
-            Console.WriteLine("被创建");
-            _Singleton = new Singleton();
-        }
-        return _Singleton;
-    }
-}
-//--------代码片段二：  同步锁为了达到预期的效果, 也是损耗了性能的
-public class Singleton
-{
-    private Sington() { }
-    private static Singleton _Singleton = null;
-    private static object Singleton_Lock = new object(); //锁同步
-    public static Singleton CreateInstance()
-    {
-        lock (Singleton_Lock)
-        {
-            Console.WriteLine("路过");
-            if (_Singleton == null)
-            {
-                Console.WriteLine("被创建");
-                _Singleton = new Singleton();
-            }
-        }
-        return _Singleton;
-    }
-}
-//测试代码
-TaskFactory taskFactory = new TaskFactory();
-List<Task> taskList = new List<Task>();
-
-for (int i = 0; i < 5; i++)
-{
-    taskList.Add(taskFactory.StartNew(() =>
-                                      {
-                                          Singleton singleton = Singleton.CreateInstance(); 
-                                      }));
-} 
-//--------优化代码片段三：
-public class Singleton
-{
-    private static Singleton _Singleton = null;
-    private static object Singleton_Lock = new object();
-    public static Singleton CreateInstance()
-    {
-        if (_Singleton == null) //双if +lock
-        {
-            lock (Singleton_Lock)
-            {
-                Console.WriteLine("路过。");
-                if (_Singleton == null)
-                {
-                    Console.WriteLine("被创建。");
-                    _Singleton = new Singleton();
-                }
-            }
-        }
-        return _Singleton;
-    }
-}
-//---------代码片段四： 使用静态变量
-//由CLR保证，在程序第一次使用该类之前被调用，而且只调用一次
-//PS: 但是他的缺点也很明显, 在程序初始化后, 静态对象就被CLR构造了, 哪怕你没用
-public sealed class Singleton
-{
-    private Singleton() { }
-
-    private static readonly Singleton singleInstance = new Singleton();
-
-    public static Singleton GetInstance
-    {
-        get
-        {
-            return singleInstance;
-        }
-    }
-}
-//-------------代码片段四： 使用静态函数
-//静态构造函数：只能有一个，无参数的，程序无法调用 。
-public class SingletonSecond
-{
-    private static SingletonSecond _SingletonSecond = null;
-    static SingletonSecond()
-    {
-        _SingletonSecond = new SingletonSecond();
-    }
-    public static SingletonSecond CreateInstance()
-    {
-        return _SingletonSecond;
-    }
-}
-//------------代码片段五： 延迟加载 
-//通常用于将对象的初始化延迟到需要时。因此，延迟加载的主要目标是按需加载对象，或者您可以根据需要说出对象。
-public sealed class Singleton
-{
-    private Singleton(){}
-    private static readonly Lazy<Singleton> Instancelock =
-        new Lazy<Singleton>(() => new Singleton());
-    public static Singleton GetInstance
-    {
-        get
-        {
-            return Instancelock.Value;
-        }
-    }
-}</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1001,20 +860,19 @@ public sealed class Singleton
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/02/yu-yan-kuang-jia/designpattern/delegation/">
+                <a href="/2021/03/02/yu-yan-kuang-jia/designpattern/adaptionmode/">
                     <div class="card-image">
                         
-                        <img src="https://cdn.pixabay.com/photo/2021/06/15/13/20/banded-demoiselle-6338620__340.jpg" class="responsive-img" alt="Delegation">
+                        <img src="https://cdn.stocksnap.io/img-thumbs/280h/laptop-keyboard_NSTHHXBQTL.jpg" class="responsive-img" alt="AdaptionMode">
                         
-                        <span class="card-title">Delegation</span>
+                        <span class="card-title">AdaptionMode</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-主要是由一个委托对象委托给另一个对象去做它的工作。这里面需要用protocol协议实现，协议有requested必要方法，和option可选方法两种，协议提供编程接口，给调用者实现协议中的方法。
-实现不同页面间的数据交互，可以用在页面跳转
+将一个类的接口转换成客户期望的另一个接口，适配器让原本接口不兼容的类可以相互合作。这个定义还好，说适配器的功能就是把一个接口转成另一个接口。适配器模式可分为对象适配器和类适配器两种，在对象适配器模式中，适配器与适配者之间是关联关系；在类适
                         
                     </div>
                     <div class="publish-info">
@@ -1036,8 +894,12 @@ public sealed class Singleton
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Delegation/">
-                        <span class="chip bg-color">Delegation</span>
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/spring/">
+                        <span class="chip bg-color">spring</span>
                     </a>
                     
                 </div>
@@ -1238,7 +1100,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">718.6k</span>&nbsp;字
+                class="white-color">923.3k</span>&nbsp;字
             
             
             

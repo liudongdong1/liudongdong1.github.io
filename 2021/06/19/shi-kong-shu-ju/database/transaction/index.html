@@ -504,7 +504,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-07-04
+                    2021-07-09
                 </div>
                 
 
@@ -549,9 +549,9 @@
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624181759533.png" alt="避免脏读"></p>
 <ul>
 <li><strong>丢失修改（Lost to modify）:</strong> 指在一个事务读取一个数据时，另外一个事务也访问了该数据，那么在第一个事务中修改了这个数据后，第二个事务也修改了这个数据。这样第一个事务内的修改结果就被丢失，因此称为丢失修改。    例如：事务1读取某表中的数据A=20，事务2也读取A=20，事务1修改A=A-1，事务2也修改A=A-1，最终结果A=19，事务1的修改被丢失。</li>
-<li><strong>不可重复读（Unrepeatableread）:</strong> 指在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。<img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624181824421.png" alt="image-20210624181824421"></li>
+<li><strong>不可重复读（Unrepeatableread）:</strong> 指在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。<img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624181824421.png" alt=""></li>
 </ul>
-<p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624181839009.png" alt="image-20210624181839009"></p>
+<p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624181839009.png" alt=""></p>
 <ul>
 <li><strong>幻读（Phantom read）:</strong> 幻读与不可重复读类似。它发生在一个事务（T1）读取了几行数据，接着另一个并发事务（T2）插入了一些数据时。在随后的查询中，第一个事务（T1）就会发现多了一些原本不存在的记录，就好像发生了幻觉一样，所以称为幻读。</li>
 </ul>
@@ -559,51 +559,17 @@
 <ul>
 <li>使用<code>TransactionTemplate</code> 进行编程式事务管理的示例代码如下：</li>
 </ul>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Autowired</span>
-<span class="token keyword">private</span> TransactionTemplate transactionTemplate<span class="token punctuation">;</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> TransactionTemplate transactionTemplate;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testTransaction</span><span class="params">()</span> </span>{</span><br><span class="line"></span><br><span class="line">        transactionTemplate.execute(<span class="keyword">new</span> TransactionCallbackWithoutResult() {</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doInTransactionWithoutResult</span><span class="params">(TransactionStatus transactionStatus)</span> </span>{</span><br><span class="line"></span><br><span class="line">                <span class="keyword">try</span> {</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// ....  业务代码</span></span><br><span class="line">                } <span class="keyword">catch</span> (Exception e){</span><br><span class="line">                    <span class="comment">//回滚</span></span><br><span class="line">                    transactionStatus.setRollbackOnly();</span><br><span class="line">                }</span><br><span class="line"></span><br><span class="line">            }</span><br><span class="line">        });</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-        transactionTemplate<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TransactionCallbackWithoutResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token annotation punctuation">@Override</span>
-            <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">doInTransactionWithoutResult</span><span class="token punctuation">(</span>TransactionStatus transactionStatus<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-                <span class="token keyword">try</span> <span class="token punctuation">{</span>
-
-                    <span class="token comment" spellcheck="true">// ....  业务代码</span>
-                <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span><span class="token punctuation">{</span>
-                    <span class="token comment" spellcheck="true">//回滚</span>
-                    transactionStatus<span class="token punctuation">.</span><span class="token function">setRollbackOnly</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token punctuation">}</span>
-
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
 <ul>
 <li>使用 <code>TransactionManager</code> 进行编程式事务管理的示例代码如下：</li>
 </ul>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Autowired</span>
-<span class="token keyword">private</span> PlatformTransactionManager transactionManager<span class="token punctuation">;</span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> PlatformTransactionManager transactionManager;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testTransaction</span><span class="params">()</span> </span>{</span><br><span class="line"></span><br><span class="line">  TransactionStatus status = transactionManager.getTransaction(<span class="keyword">new</span> DefaultTransactionDefinition());</span><br><span class="line">          <span class="keyword">try</span> {</span><br><span class="line">               <span class="comment">// ....  业务代码</span></span><br><span class="line">              transactionManager.commit(status);</span><br><span class="line">          } <span class="keyword">catch</span> (Exception e) {</span><br><span class="line">              transactionManager.rollback(status);</span><br><span class="line">          }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-  TransactionStatus status <span class="token operator">=</span> transactionManager<span class="token punctuation">.</span><span class="token function">getTransaction</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DefaultTransactionDefinition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-          <span class="token keyword">try</span> <span class="token punctuation">{</span>
-               <span class="token comment" spellcheck="true">// ....  业务代码</span>
-              transactionManager<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span><span class="token punctuation">;</span>
-          <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-              transactionManager<span class="token punctuation">.</span><span class="token function">rollback</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span><span class="token punctuation">;</span>
-          <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
 <h4 id="2-声明式事务管理"><a href="#2-声明式事务管理" class="headerlink" title=".2. 声明式事务管理"></a>.2. 声明式事务管理</h4><p>推荐使用（代码侵入性最小），实际是通过 AOP 实现（基于<code>@Transactional</code> 的全注解方式使用最多）。</p>
 <p>使用 <code>@Transactional</code>注解进行事务管理的示例代码如下：</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>propagation<span class="token operator">=</span>propagation<span class="token punctuation">.</span>PROPAGATION_REQUIRED<span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> aMethod <span class="token punctuation">{</span>
-  <span class="token comment" spellcheck="true">//do something</span>
-  B b <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  C c <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">C</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  b<span class="token punctuation">.</span><span class="token function">bMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  c<span class="token punctuation">.</span><span class="token function">cMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span>(propagation=propagation.PROPAGATION_REQUIRED)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> aMethod {</span><br><span class="line">  <span class="comment">//do something</span></span><br><span class="line">  B b = <span class="keyword">new</span> B();</span><br><span class="line">  C c = <span class="keyword">new</span> C();</span><br><span class="line">  b.bMethod();</span><br><span class="line">  c.cMethod();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="3-事务管理接口"><a href="#3-事务管理接口" class="headerlink" title="3. 事务管理接口"></a>3. 事务管理接口</h3><ul>
 <li><strong><code>PlatformTransactionManager</code></strong>： （平台）事务管理器，Spring 事务策略的核心。</li>
 <li><strong><code>TransactionDefinition</code></strong>： 事务定义信息(事务隔离级别、传播行为、超时、只读、回滚规则)。</li>
@@ -613,59 +579,18 @@
 <p><strong><code>PlatformTransactionManager</code> 接口的具体实现如下:</strong></p>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/ae964c2c-7289-441c-bddd-511161f51ee1.png" alt=""></p>
 <p><code>PlatformTransactionManager</code>接口中定义了三个方法：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>transaction<span class="token punctuation">;</span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.transaction;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.lang.Nullable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PlatformTransactionManager</span> </span>{</span><br><span class="line">    <span class="comment">//获得事务</span></span><br><span class="line">    <span class="function">TransactionStatus <span class="title">getTransaction</span><span class="params">(@Nullable TransactionDefinition var1)</span> <span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line">    <span class="comment">//提交事务</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">commit</span><span class="params">(TransactionStatus var1)</span> <span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line">    <span class="comment">//回滚事务</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">rollback</span><span class="params">(TransactionStatus var1)</span> <span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>Nullable<span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">PlatformTransactionManager</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">//获得事务</span>
-    TransactionStatus <span class="token function">getTransaction</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Nullable</span> TransactionDefinition var1<span class="token punctuation">)</span> <span class="token keyword">throws</span> TransactionException<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">//提交事务</span>
-    <span class="token keyword">void</span> <span class="token function">commit</span><span class="token punctuation">(</span>TransactionStatus var1<span class="token punctuation">)</span> <span class="token keyword">throws</span> TransactionException<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">//回滚事务</span>
-    <span class="token keyword">void</span> <span class="token function">rollback</span><span class="token punctuation">(</span>TransactionStatus var1<span class="token punctuation">)</span> <span class="token keyword">throws</span> TransactionException<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
 <h4 id="2-TransactionDefinition"><a href="#2-TransactionDefinition" class="headerlink" title=".2. TransactionDefinition"></a>.2. TransactionDefinition</h4><p>事务管理器接口 <strong><code>PlatformTransactionManager</code></strong> 通过 <strong><code>getTransaction(TransactionDefinition definition)</code></strong> 方法来得到一个事务，这个方法里面的参数是 <strong><code>TransactionDefinition</code></strong> 类 ，这个类就定义了一些基本的事务属性。</p>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/a616b84d-9eea-4ad1-b4fc-461ff05e951d.png" alt=""></p>
 <p><code>TransactionDefinition</code> 接口中定义了 5 个方法以及一些表示事务属性的常量比如隔离级别、传播行为等等。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>transaction<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>Nullable<span class="token punctuation">;</span>
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">TransactionDefinition</span> <span class="token punctuation">{</span>
-    <span class="token keyword">int</span> PROPAGATION_REQUIRED <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> PROPAGATION_SUPPORTS <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> PROPAGATION_MANDATORY <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> PROPAGATION_REQUIRES_NEW <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> PROPAGATION_NOT_SUPPORTED <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> PROPAGATION_NEVER <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> PROPAGATION_NESTED <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> ISOLATION_DEFAULT <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> ISOLATION_READ_UNCOMMITTED <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> ISOLATION_READ_COMMITTED <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> ISOLATION_REPEATABLE_READ <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> ISOLATION_SERIALIZABLE <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> TIMEOUT_DEFAULT <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 返回事务的传播行为，默认值为 REQUIRED。</span>
-    <span class="token keyword">int</span> <span class="token function">getPropagationBehavior</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">//返回事务的隔离级别，默认值是 DEFAULT</span>
-    <span class="token keyword">int</span> <span class="token function">getIsolationLevel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 返回事务的超时时间，默认值为-1。如果超过该时间限制但事务还没有完成，则自动回滚事务。</span>
-    <span class="token keyword">int</span> <span class="token function">getTimeout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 返回是否为只读事务，默认值为 false</span>
-    <span class="token keyword">boolean</span> <span class="token function">isReadOnly</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token annotation punctuation">@Nullable</span>
-    String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.transaction;</span><br><span class="line"><span class="keyword">import</span> org.springframework.lang.Nullable;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">TransactionDefinition</span> </span>{</span><br><span class="line">    <span class="keyword">int</span> PROPAGATION_REQUIRED = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> PROPAGATION_SUPPORTS = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> PROPAGATION_MANDATORY = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> PROPAGATION_REQUIRES_NEW = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">int</span> PROPAGATION_NOT_SUPPORTED = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">int</span> PROPAGATION_NEVER = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">int</span> PROPAGATION_NESTED = <span class="number">6</span>;</span><br><span class="line">    <span class="keyword">int</span> ISOLATION_DEFAULT = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> ISOLATION_READ_UNCOMMITTED = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> ISOLATION_READ_COMMITTED = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> ISOLATION_REPEATABLE_READ = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">int</span> ISOLATION_SERIALIZABLE = <span class="number">8</span>;</span><br><span class="line">    <span class="keyword">int</span> TIMEOUT_DEFAULT = -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 返回事务的传播行为，默认值为 REQUIRED。</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getPropagationBehavior</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//返回事务的隔离级别，默认值是 DEFAULT</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getIsolationLevel</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 返回事务的超时时间，默认值为-1。如果超过该时间限制但事务还没有完成，则自动回滚事务。</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getTimeout</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 返回是否为只读事务，默认值为 false</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isReadOnly</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="function">String <span class="title">getName</span><span class="params">()</span></span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <h4 id="3-TransactionStatus-事务状态"><a href="#3-TransactionStatus-事务状态" class="headerlink" title=".3. TransactionStatus:事务状态"></a>.3. TransactionStatus:事务状态</h4><p><code>TransactionStatus</code>接口用来记录事务的状态 该接口定义了一组方法,用来获取或判断事务的相应状态信息。</p>
 <p><code>PlatformTransactionManager.getTransaction(…)</code>方法返回一个 <code>TransactionStatus</code> 对象。</p>
 <p><strong>TransactionStatus 接口接口内容如下：</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">TransactionStatus</span><span class="token punctuation">{</span>
-    <span class="token keyword">boolean</span> <span class="token function">isNewTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 是否是新的事务</span>
-    <span class="token keyword">boolean</span> <span class="token function">hasSavepoint</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 是否有恢复点</span>
-    <span class="token keyword">void</span> <span class="token function">setRollbackOnly</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 设置为只回滚</span>
-    <span class="token keyword">boolean</span> <span class="token function">isRollbackOnly</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 是否为只回滚</span>
-    <span class="token keyword">boolean</span> isCompleted<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 是否已完成</span>
-<span class="token punctuation">}</span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">TransactionStatus</span></span>{</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isNewTransaction</span><span class="params">()</span></span>; <span class="comment">// 是否是新的事务</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasSavepoint</span><span class="params">()</span></span>; <span class="comment">// 是否有恢复点</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setRollbackOnly</span><span class="params">()</span></span>;  <span class="comment">// 设置为只回滚</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isRollbackOnly</span><span class="params">()</span></span>; <span class="comment">// 是否为只回滚</span></span><br><span class="line">    <span class="keyword">boolean</span> isCompleted; <span class="comment">// 是否已完成</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="4-事务属性"><a href="#4-事务属性" class="headerlink" title="4. 事务属性"></a>4. 事务属性</h3><blockquote>
 <p>当事务方法被另一个事务方法调用时，必须指定事务应该如何传播。例如：方法可能继续在现有事务中运行，也可能开启一个新事务，并在自己的事务中运行。</p>
 </blockquote>
@@ -676,39 +601,13 @@
 <li>如果外部方法开启事务并且被<code>Propagation.REQUIRED</code>的话，所有<code>Propagation.REQUIRED</code>修饰的内部方法和外部方法均属于同一事务 ，只要一个方法回滚，整个事务均回滚。</li>
 </ol>
 <p>举个例子：如果我们上面的<code>aMethod()</code>和<code>bMethod()</code>使用的都是<code>PROPAGATION_REQUIRED</code>传播行为的话，两者使用的就是同一个事务，只要其中一个方法回滚，整个事务均回滚。</p>
-<pre class=" language-java"><code class="language-java">Class <span class="token class-name">A</span> <span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>propagation<span class="token operator">=</span>propagation<span class="token punctuation">.</span>PROPAGATION_REQUIRED<span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> aMethod <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">//do something</span>
-        B b <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        b<span class="token punctuation">.</span><span class="token function">bMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Class A {</span><br><span class="line">    <span class="meta">@Transactional</span>(propagation=propagation.PROPAGATION_REQUIRED)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> aMethod {</span><br><span class="line">        <span class="comment">//do something</span></span><br><span class="line">        B b = <span class="keyword">new</span> B();</span><br><span class="line">        b.bMethod();</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Class B {</span><br><span class="line">    <span class="meta">@Transactional</span>(propagation=propagation.PROPAGATION_REQUIRED)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> bMethod {</span><br><span class="line">       <span class="comment">//do something</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-Class <span class="token class-name">B</span> <span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>propagation<span class="token operator">=</span>propagation<span class="token punctuation">.</span>PROPAGATION_REQUIRED<span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> bMethod <span class="token punctuation">{</span>
-       <span class="token comment" spellcheck="true">//do something</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
 <p><strong><code>2.TransactionDefinition.PROPAGATION_REQUIRES_NEW</code></strong></p>
 <p>创建一个新的事务，如果当前存在事务，则把当前事务挂起。也就是说不管外部方法是否开启事务，<code>Propagation.REQUIRES_NEW</code>修饰的内部方法会新开启自己的事务，且开启的事务相互独立，互不干扰。</p>
 <p>举个例子：如果我们上面的<code>bMethod()</code>使用<code>PROPAGATION_REQUIRES_NEW</code>事务传播行为修饰，<code>aMethod</code>还是用<code>PROPAGATION_REQUIRED</code>修饰的话。如果<code>aMethod()</code>发生异常回滚，<code>bMethod()</code>不会跟着回滚，因为 <code>bMethod()</code>开启了独立的事务。但是，如果 <code>bMethod()</code>抛出了未被捕获的异常并且这个异常满足事务回滚规则的话,<code>aMethod()</code>同样也会回滚，因为这个异常被 <code>aMethod()</code>的事务管理机制检测到了。</p>
-<pre class=" language-java"><code class="language-java">Class <span class="token class-name">A</span> <span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>propagation<span class="token operator">=</span>propagation<span class="token punctuation">.</span>PROPAGATION_REQUIRED<span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> aMethod <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">//do something</span>
-        B b <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        b<span class="token punctuation">.</span><span class="token function">bMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Class A {</span><br><span class="line">    <span class="meta">@Transactional</span>(propagation=propagation.PROPAGATION_REQUIRED)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> aMethod {</span><br><span class="line">        <span class="comment">//do something</span></span><br><span class="line">        B b = <span class="keyword">new</span> B();</span><br><span class="line">        b.bMethod();</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Class B {</span><br><span class="line">    <span class="meta">@Transactional</span>(propagation=propagation.REQUIRES_NEW)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> bMethod {</span><br><span class="line">       <span class="comment">//do something</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-Class <span class="token class-name">B</span> <span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>propagation<span class="token operator">=</span>propagation<span class="token punctuation">.</span>REQUIRES_NEW<span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> bMethod <span class="token punctuation">{</span>
-       <span class="token comment" spellcheck="true">//do something</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
 <p><strong>3.<code>TransactionDefinition.PROPAGATION_NESTED</code></strong>:</p>
 <p>如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于<code>TransactionDefinition.PROPAGATION_REQUIRED</code>。也就是说：</p>
 <ol>
@@ -717,26 +616,8 @@ Class <span class="token class-name">B</span> <span class="token punctuation">{<
 </ol>
 <p>这里还是简单举个例子：</p>
 <p>如果 <code>aMethod()</code> 回滚的话，<code>bMethod()</code>和<code>bMethod2()</code>都要回滚，而<code>bMethod()</code>回滚的话，并不会造成 <code>aMethod()</code> 和<code>bMethod()2</code>回滚。</p>
-<pre class=" language-java"><code class="language-java">Class <span class="token class-name">A</span> <span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>propagation<span class="token operator">=</span>propagation<span class="token punctuation">.</span>PROPAGATION_REQUIRED<span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> aMethod <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">//do something</span>
-        B b <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        b<span class="token punctuation">.</span><span class="token function">bMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        b<span class="token punctuation">.</span><span class="token function">bMethod2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Class A {</span><br><span class="line">    <span class="meta">@Transactional</span>(propagation=propagation.PROPAGATION_REQUIRED)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> aMethod {</span><br><span class="line">        <span class="comment">//do something</span></span><br><span class="line">        B b = <span class="keyword">new</span> B();</span><br><span class="line">        b.bMethod();</span><br><span class="line">        b.bMethod2();</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Class B {</span><br><span class="line">    <span class="meta">@Transactional</span>(propagation=propagation.PROPAGATION_NESTED)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> bMethod {</span><br><span class="line">       <span class="comment">//do something</span></span><br><span class="line">    }</span><br><span class="line">    <span class="meta">@Transactional</span>(propagation=propagation.PROPAGATION_NESTED)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> bMethod2 {</span><br><span class="line">       <span class="comment">//do something</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-Class <span class="token class-name">B</span> <span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>propagation<span class="token operator">=</span>propagation<span class="token punctuation">.</span>PROPAGATION_NESTED<span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> bMethod <span class="token punctuation">{</span>
-       <span class="token comment" spellcheck="true">//do something</span>
-    <span class="token punctuation">}</span>
-    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>propagation<span class="token operator">=</span>propagation<span class="token punctuation">.</span>PROPAGATION_NESTED<span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> bMethod2 <span class="token punctuation">{</span>
-       <span class="token comment" spellcheck="true">//do something</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
 <p><strong>4.<code>TransactionDefinition.PROPAGATION_MANDATORY</code></strong></p>
 <p>如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。（mandatory：强制性）</p>
 <p><strong>若是错误的配置以下 3 种事务传播行为，事务将不会发生回滚，这里不对照案例讲解了，使用的很少。</strong></p>
@@ -747,30 +628,11 @@ Class <span class="token class-name">B</span> <span class="token punctuation">{<
 </ul>
 <p>更多关于事务传播行为的内容请看这篇文章：<a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247486668&amp;idx=2&amp;sn=0381e8c836442f46bdc5367170234abb&amp;chksm=cea24307f9d5ca11c96943b3ccfa1fc70dc97dd87d9c540388581f8fe6d805ff548dff5f6b5b&amp;token=1776990505&amp;lang=zh_CN#rd" target="_blank" rel="noopener">《太难了~面试官让我结合案例讲讲自己对 Spring 事务传播行为的理解。》</a></p>
 <h4 id="1-事务隔离级别"><a href="#1-事务隔离级别" class="headerlink" title=".1. 事务隔离级别"></a>.1. 事务隔离级别</h4><p><code>TransactionDefinition</code> 接口中定义了五个表示隔离级别的常量：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">TransactionDefinition</span> <span class="token punctuation">{</span>
-    <span class="token keyword">int</span> ISOLATION_DEFAULT <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> ISOLATION_READ_UNCOMMITTED <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> ISOLATION_READ_COMMITTED <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> ISOLATION_REPEATABLE_READ <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> ISOLATION_SERIALIZABLE <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">TransactionDefinition</span> </span>{</span><br><span class="line">    <span class="keyword">int</span> ISOLATION_DEFAULT = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> ISOLATION_READ_UNCOMMITTED = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> ISOLATION_READ_COMMITTED = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> ISOLATION_REPEATABLE_READ = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">int</span> ISOLATION_SERIALIZABLE = <span class="number">8</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <p>和事务传播行为这块一样，为了方便使用，Spring 也相应地定义了一个枚举类：<code>Isolation</code></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">enum</span> Isolation <span class="token punctuation">{</span>
-    <span class="token function">DEFAULT</span><span class="token punctuation">(</span>TransactionDefinition<span class="token punctuation">.</span>ISOLATION_DEFAULT<span class="token punctuation">)</span><span class="token punctuation">,</span>
-<span class="token function">READ_UNCOMMITTED</span><span class="token punctuation">(</span>TransactionDefinition<span class="token punctuation">.</span>ISOLATION_READ_UNCOMMITTED<span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token function">READ_COMMITTED</span><span class="token punctuation">(</span>TransactionDefinition<span class="token punctuation">.</span>ISOLATION_READ_COMMITTED<span class="token punctuation">)</span><span class="token punctuation">,</span>
-<span class="token function">REPEATABLE_READ</span><span class="token punctuation">(</span>TransactionDefinition<span class="token punctuation">.</span>ISOLATION_REPEATABLE_READ<span class="token punctuation">)</span><span class="token punctuation">,</span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Isolation {</span><br><span class="line">	DEFAULT(TransactionDefinition.ISOLATION_DEFAULT),</span><br><span class="line">READ_UNCOMMITTED(TransactionDefinition.ISOLATION_READ_UNCOMMITTED),</span><br><span class="line">	READ_COMMITTED(TransactionDefinition.ISOLATION_READ_COMMITTED),</span><br><span class="line">REPEATABLE_READ(TransactionDefinition.ISOLATION_REPEATABLE_READ),</span><br><span class="line"></span><br><span class="line">	SERIALIZABLE(TransactionDefinition.ISOLATION_SERIALIZABLE);</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> value;</span><br><span class="line">	Isolation(<span class="keyword">int</span> value) {</span><br><span class="line">		<span class="keyword">this</span>.value = value;</span><br><span class="line">	}</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">value</span><span class="params">()</span> </span>{</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token function">SERIALIZABLE</span><span class="token punctuation">(</span>TransactionDefinition<span class="token punctuation">.</span>ISOLATION_SERIALIZABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> value<span class="token punctuation">;</span>
-    <span class="token function">Isolation</span><span class="token punctuation">(</span><span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span></code></pre>
 <p>下面我依次对每一种事务隔离级别进行介绍：</p>
 <ul>
 <li><strong><code>TransactionDefinition.ISOLATION_DEFAULT</code></strong> :使用后端数据库默认的隔离级别，MySQL 默认采用的 <code>REPEATABLE_READ</code> 隔离级别 Oracle 默认采用的 <code>READ_COMMITTED</code> 隔离级别.</li>
@@ -780,23 +642,11 @@ Class <span class="token class-name">B</span> <span class="token punctuation">{<
 <li><strong><code>TransactionDefinition.ISOLATION_SERIALIZABLE</code></strong> : 最高的隔离级别，完全服从 ACID 的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，<strong>该级别可以防止脏读、不可重复读以及幻读</strong>。但是这将严重影响程序的性能。通常情况下也不会用到该级别。</li>
 </ul>
 <p>MySQL InnoDB 存储引擎的默认支持的隔离级别是 <strong>REPEATABLE-READ（可重读）</strong>。我们可以通过<code>SELECT @@tx_isolation;</code>命令来查看，MySQL 8.0 该命令改为<code>SELECT @@transaction_isolation;</code></p>
-<pre class=" language-sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> @<span class="token variable">@tx_isolation</span><span class="token punctuation">;</span>
-<span class="token operator">+</span><span class="token comment" spellcheck="true">-----------------+</span>
-<span class="token operator">|</span> @<span class="token variable">@tx_isolation</span>  <span class="token operator">|</span>
-<span class="token operator">+</span><span class="token comment" spellcheck="true">-----------------+</span>
-<span class="token operator">|</span> <span class="token keyword">REPEATABLE</span><span class="token operator">-</span><span class="token keyword">READ</span> <span class="token operator">|</span>
-<span class="token operator">+</span><span class="token comment" spellcheck="true">-----------------+</span></code></pre>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br><span class="line">+<span class="comment">-----------------+</span></span><br><span class="line">| @@tx_isolation  |</span><br><span class="line">+<span class="comment">-----------------+</span></span><br><span class="line">| REPEATABLE-READ |</span><br><span class="line">+<span class="comment">-----------------+</span></span><br></pre></td></tr></tbody></table></figure>
+
 <h4 id="2-事务超时属性"><a href="#2-事务超时属性" class="headerlink" title=".2. 事务超时属性"></a>.2. 事务超时属性</h4><p>所谓事务超时，就是指一个事务所允许执行的最长时间，如果超过该时间限制但事务还没有完成，则自动回滚事务。在 <code>TransactionDefinition</code> 中以 int 的值来表示超时时间，其单位是秒，默认值为-1。</p>
-<h4 id="3-事务只读属性"><a href="#3-事务只读属性" class="headerlink" title=".3. 事务只读属性"></a>.3. 事务只读属性</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>transaction<span class="token punctuation">;</span>
+<h4 id="3-事务只读属性"><a href="#3-事务只读属性" class="headerlink" title=".3. 事务只读属性"></a>.3. 事务只读属性</h4><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.transaction;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.lang.Nullable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">TransactionDefinition</span> </span>{</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">// 返回是否为只读事务，默认值为 false</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isReadOnly</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>Nullable<span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">TransactionDefinition</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-    <span class="token comment" spellcheck="true">// 返回是否为只读事务，默认值为 false</span>
-    <span class="token keyword">boolean</span> <span class="token function">isReadOnly</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token punctuation">}</span></code></pre>
 <p>对于只有读取数据查询的事务，可以指定事务类型为 readonly，即只读事务。只读事务不涉及数据的修改，数据库会提供一些优化手段，适合用在有多条数据库查询操作的方法中。</p>
 <p>拿 MySQL 的 innodb 举例子，根据官网 <a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-autocommit-commit-rollback.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/innodb-autocommit-commit-rollback.html</a> 描述：</p>
 <blockquote>
@@ -812,42 +662,16 @@ Class <span class="token class-name">B</span> <span class="token punctuation">{<
 <h4 id="4-事务回滚规则"><a href="#4-事务回滚规则" class="headerlink" title=".4. 事务回滚规则"></a>.4. 事务回滚规则</h4><p>这些规则定义了哪些异常会导致事务回滚而哪些不会。默认情况下，事务只有遇到运行期异常（RuntimeException 的子类）时才会回滚，Error 也会导致事务回滚，但是，在遇到检查型（Checked）异常时不会回滚。</p>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/f6c6f0aa-0f26-49e1-84b3-7f838c7379d1.png" alt=""></p>
 <p>如果你想要回滚你定义的特定的异常类型的话，可以这样：</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor<span class="token operator">=</span> MyException<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span>(rollbackFor= MyException<span class="class">.<span class="keyword">class</span>)</span></span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="4-Transactional-注解使用详解"><a href="#4-Transactional-注解使用详解" class="headerlink" title="4. @Transactional 注解使用详解"></a>4. @Transactional 注解使用详解</h3><h4 id="1-Transactional-的作用范围"><a href="#1-Transactional-的作用范围" class="headerlink" title=".1. @Transactional 的作用范围"></a>.1. <code>@Transactional</code> 的作用范围</h4><ol>
 <li><strong>方法</strong> ：推荐将注解使用于方法上，不过需要注意的是：<strong>该注解只能应用到 public 方法上，否则不生效。</strong></li>
 <li><strong>类</strong> ：如果这个注解使用在类上的话，表明该注解对该类中所有的 public 方法都生效。</li>
 <li><strong>接口</strong> ：不推荐在接口上使用。</li>
 </ol>
 <h4 id="2-Transactional-的常用配置参数"><a href="#2-Transactional-的常用配置参数" class="headerlink" title=".2. @Transactional 的常用配置参数"></a>.2. <code>@Transactional</code> 的常用配置参数</h4><p><code>@Transactional</code>注解源码如下，里面包含了基本事务属性的配置：</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token punctuation">{</span>ElementType<span class="token punctuation">.</span>TYPE<span class="token punctuation">,</span> ElementType<span class="token punctuation">.</span>METHOD<span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span>RetentionPolicy<span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Inherited</span>
-<span class="token annotation punctuation">@Documented</span>
-<span class="token keyword">public</span> @<span class="token keyword">interface</span> <span class="token class-name">Transactional</span> <span class="token punctuation">{</span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>({ElementType.TYPE, ElementType.METHOD})</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Transactional {</span><br><span class="line"></span><br><span class="line">	<span class="meta">@AliasFor</span>(<span class="string">"transactionManager"</span>)</span><br><span class="line">	<span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@AliasFor</span>(<span class="string">"value"</span>)</span><br><span class="line">	<span class="function">String <span class="title">transactionManager</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">	<span class="function">Propagation <span class="title">propagation</span><span class="params">()</span> <span class="keyword">default</span> Propagation.REQUIRED</span>;</span><br><span class="line"></span><br><span class="line">	<span class="function">Isolation <span class="title">isolation</span><span class="params">()</span> <span class="keyword">default</span> Isolation.DEFAULT</span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">timeout</span><span class="params">()</span> <span class="keyword">default</span> TransactionDefinition.TIMEOUT_DEFAULT</span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">readOnly</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line"></span><br><span class="line">	Class&lt;? extends Throwable&gt;[] rollbackFor() <span class="keyword">default</span> {};</span><br><span class="line"></span><br><span class="line">	String[] rollbackForClassName() <span class="keyword">default</span> {};</span><br><span class="line"></span><br><span class="line">	Class&lt;? extends Throwable&gt;[] noRollbackFor() <span class="keyword">default</span> {};</span><br><span class="line"></span><br><span class="line">	String[] noRollbackForClassName() <span class="keyword">default</span> {};</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token annotation punctuation">@AliasFor</span><span class="token punctuation">(</span><span class="token string">"transactionManager"</span><span class="token punctuation">)</span>
-    String <span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">""</span><span class="token punctuation">;</span>
-
-    <span class="token annotation punctuation">@AliasFor</span><span class="token punctuation">(</span><span class="token string">"value"</span><span class="token punctuation">)</span>
-    String <span class="token function">transactionManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">""</span><span class="token punctuation">;</span>
-
-    Propagation <span class="token function">propagation</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> Propagation<span class="token punctuation">.</span>REQUIRED<span class="token punctuation">;</span>
-
-    Isolation <span class="token function">isolation</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> Isolation<span class="token punctuation">.</span>DEFAULT<span class="token punctuation">;</span>
-
-    <span class="token keyword">int</span> <span class="token function">timeout</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> TransactionDefinition<span class="token punctuation">.</span>TIMEOUT_DEFAULT<span class="token punctuation">;</span>
-
-    <span class="token keyword">boolean</span> <span class="token function">readOnly</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-
-    Class<span class="token operator">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">Throwable</span><span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">rollbackFor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-    String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">rollbackForClassName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-    Class<span class="token operator">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">Throwable</span><span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">noRollbackFor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-    String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">noRollbackForClassName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token punctuation">}</span></code></pre>
 <p><strong><code>@Transactional</code> 的常用配置参数总结：</strong></p>
 <table>
 <thead>
@@ -882,27 +706,8 @@ Class <span class="token class-name">B</span> <span class="token punctuation">{<
 <p><code>@Transactional</code> 的工作机制是基于 AOP 实现的，AOP 又是使用动态代理实现的。如果目标对象实现了接口，默认情况下会采用 JDK 的动态代理，如果目标对象没有实现了接口,会使用 CGLIB 动态代理。</p>
 </blockquote>
 <p>多提一嘴：<code>createAopProxy()</code> 方法 决定了是使用 JDK 还是 Cglib 来做动态代理，源码如下：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DefaultAopProxyFactory</span> <span class="token keyword">implements</span> <span class="token class-name">AopProxyFactory</span><span class="token punctuation">,</span> Serializable <span class="token punctuation">{</span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultAopProxyFactory</span> <span class="keyword">implements</span> <span class="title">AopProxyFactory</span>, <span class="title">Serializable</span> </span>{</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> AopProxy <span class="title">createAopProxy</span><span class="params">(AdvisedSupport config)</span> <span class="keyword">throws</span> AopConfigException </span>{</span><br><span class="line">		<span class="keyword">if</span> (config.isOptimize() || config.isProxyTargetClass() || hasNoUserSuppliedProxyInterfaces(config)) {</span><br><span class="line">			Class&lt;?&gt; targetClass = config.getTargetClass();</span><br><span class="line">			<span class="keyword">if</span> (targetClass == <span class="keyword">null</span>) {</span><br><span class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> AopConfigException(<span class="string">"TargetSource cannot determine target class: "</span> +</span><br><span class="line">						<span class="string">"Either an interface or a target is required for proxy creation."</span>);</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">if</span> (targetClass.isInterface() || Proxy.isProxyClass(targetClass)) {</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">new</span> JdkDynamicAopProxy(config);</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> ObjenesisCglibAopProxy(config);</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">else</span> {</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> JdkDynamicAopProxy(config);</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">  .......</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> AopProxy <span class="token function">createAopProxy</span><span class="token punctuation">(</span>AdvisedSupport config<span class="token punctuation">)</span> <span class="token keyword">throws</span> AopConfigException <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>config<span class="token punctuation">.</span><span class="token function">isOptimize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> config<span class="token punctuation">.</span><span class="token function">isProxyTargetClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token function">hasNoUserSuppliedProxyInterfaces</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> targetClass <span class="token operator">=</span> config<span class="token punctuation">.</span><span class="token function">getTargetClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>targetClass <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">AopConfigException</span><span class="token punctuation">(</span><span class="token string">"TargetSource cannot determine target class: "</span> <span class="token operator">+</span>
-                        <span class="token string">"Either an interface or a target is required for proxy creation."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>targetClass<span class="token punctuation">.</span><span class="token function">isInterface</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> Proxy<span class="token punctuation">.</span><span class="token function">isProxyClass</span><span class="token punctuation">(</span>targetClass<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">JdkDynamicAopProxy</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ObjenesisCglibAopProxy</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">else</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">JdkDynamicAopProxy</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-<span class="token punctuation">}</span></code></pre>
 <p>如果一个类或者一个类中的 public 方法上被标注<code>@Transactional</code> 注解的话，Spring 容器就会在启动的时候为其创建一个代理类，在调用被<code>@Transactional</code> 注解的 public 方法的时候，实际调用的是，<code>TransactionInterceptor</code> 类中的 <code>invoke()</code>方法。这个方法的作用就是在目标方法之前开启事务，方法执行过程中如果遇到异常的时候回滚事务，方法调用完成之后提交事务。</p>
 <blockquote>
 <p><code>TransactionInterceptor</code> 类中的 <code>invoke()</code>方法内部实际调用的是 <code>TransactionAspectSupport</code> 类的 <code>invokeWithinTransaction()</code>方法。由于新版本的 Spring 对这部分重写很大，而且用到了很多响应式编程的知识，这里就不列源码了。</p>
@@ -910,18 +715,8 @@ Class <span class="token class-name">B</span> <span class="token punctuation">{<
 <h4 id="4-Spring-AOP-自调用问题"><a href="#4-Spring-AOP-自调用问题" class="headerlink" title=".4. Spring AOP 自调用问题"></a>.4. Spring AOP 自调用问题</h4><p>若同一类中的其他没有 <code>@Transactional</code> 注解的方法内部调用有 <code>@Transactional</code> 注解的方法，有<code>@Transactional</code> 注解的方法的事务会失效。</p>
 <p>这是由于<code>Spring AOP</code>代理的原因造成的，因为只有当 <code>@Transactional</code> 注解的方法在类以外被调用的时候，Spring 事务管理才生效。</p>
 <p><code>MyService</code> 类中的<code>method1()</code>调用<code>method2()</code>就会导致<code>method2()</code>的事务失效。</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyService</span> <span class="token punctuation">{</span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyService</span> </span>{</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>{</span><br><span class="line">     method2();</span><br><span class="line">     <span class="comment">//......</span></span><br><span class="line">}</span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span> </span>{</span><br><span class="line">     <span class="comment">//......</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">method1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-     <span class="token function">method2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-     <span class="token comment" spellcheck="true">//......</span>
-<span class="token punctuation">}</span>
-<span class="token annotation punctuation">@Transactional</span>
- <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">method2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-     <span class="token comment" spellcheck="true">//......</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
 <p>解决办法就是避免同一类中自调用或者使用 AspectJ 取代 Spring AOP 代理。</p>
 <h4 id="5-Transactional-的使用注意事项总结"><a href="#5-Transactional-的使用注意事项总结" class="headerlink" title=".5. @Transactional 的使用注意事项总结"></a>.5. <code>@Transactional</code> 的使用注意事项总结</h4><ol>
 <li><code>@Transactional</code> 注解只有作用到 public 方法上事务才生效，不推荐在接口上使用；</li>
@@ -1256,37 +1051,39 @@ Class <span class="token class-name">B</span> <span class="token punctuation">{<
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/16/yu-yan-kuang-jia/website-architecture/">
+                <a href="/2021/06/19/writing/latex/02-latex-de-an-zhuang-pei-zhi/">
                     <div class="card-image">
                         
-                        <img src="https://cdn.pixabay.com/photo/2021/04/09/22/03/strawberries-6165597__340.jpg" class="responsive-img" alt="SpringRelative">
+                        <img src="https://cdn.pixabay.com/photo/2015/01/08/18/26/man-593333__340.jpg" class="responsive-img" alt="LaTex 的安装配置">
                         
-                        <span class="card-title">SpringRelative</span>
+                        <span class="card-title">LaTex 的安装配置</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1. 大型网站架构演化
-2. 大型架构模式
-3. 大型网站核心架构要素
-4. 瞬时响应:网站的高性能架构
-5. 万无一失:网站的高可用架构
-6. 永无止境:网站的伸缩性架构
-7. 随机应变:网站的可扩展性架构
-8. 固若金汤:网站的安全机构
+                            
+from https://github.com/qinnian/LaTeX
+
+一、TeXLive 下载
+TeXLive下载（官网）
+
+TeXLive下载（清华大学镜像）
+
+TeXLive下载（百度网盘） 提取码：zb7b 
+二、TeXLi
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-16
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-19
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AF%AD%E8%A8%80%E6%A1%86%E6%9E%B6/" class="post-category">
-                                    语言框架
+                            <a href="/categories/writing/" class="post-category">
+                                    writing
                                 </a>
                             
                             
@@ -1296,12 +1093,8 @@ Class <span class="token class-name">B</span> <span class="token punctuation">{<
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
-                    </a>
-                    
-                    <a href="/tags/video/">
-                        <span class="chip bg-color">video</span>
+                    <a href="/tags/latex/">
+                        <span class="chip bg-color">latex</span>
                     </a>
                     
                 </div>
@@ -1502,7 +1295,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">718.6k</span>&nbsp;字
+                class="white-color">923.3k</span>&nbsp;字
             
             
             
