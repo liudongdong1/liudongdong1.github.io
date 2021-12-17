@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="NetworkRelative, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="NetworkRelative, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -497,6 +519,10 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -504,12 +530,12 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    2.4k
+                    2.3k
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -529,148 +555,45 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="1-网络连接"><a href="#1-网络连接" class="headerlink" title="1. 网络连接"></a>1. 网络连接</h3><pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#查看网卡信息</span>
-sudo lshw <span class="token operator">-</span><span class="token keyword">class</span> <span class="token class-name">network</span>
-<span class="token comment" spellcheck="true"># error Networking disabled</span>
-sudo service network<span class="token operator">-</span>manager stop
-sudo rm <span class="token operator">/</span>var<span class="token operator">/</span>lib<span class="token operator">/</span>NetworkManager<span class="token operator">/</span>NetworkManager<span class="token punctuation">.</span>state
-sudo service network<span class="token operator">-</span>manager start
-<span class="token comment" spellcheck="true"># 方式二： 是否启用该网卡</span>
-sudo ifconfig ens33 up  <span class="token comment" spellcheck="true">#ens33 为网卡的logic name; ifconfig 查看</span>
-sudo dhclient ens33 <span class="token comment" spellcheck="true"># 动态获取ip一次</span>
-ifconfig <span class="token operator">-</span>a <span class="token comment" spellcheck="true">#查看IP</span>
-<span class="token comment" spellcheck="true"># ----------网卡配置方式</span>
-sudo vi <span class="token operator">/</span>etc<span class="token operator">/</span>network<span class="token operator">/</span>interfaces
-sudo <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>networking restart  <span class="token comment" spellcheck="true">#修完完成生效</span>
-<span class="token comment" spellcheck="true"># 动态DHCP</span>
-并用下面的行来替换有关eth0的行<span class="token punctuation">:</span>
-<span class="token comment" spellcheck="true"># The primary network interface - use DHCP to find our address</span>
-auto eth0
-iface eth0 inet dhcp
-<span class="token comment" spellcheck="true">#静态ip地址</span>
-auto eth0  
-iface eth0 inet static  
-address <span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">3.90</span>  
-gateway <span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">3.1</span>  
-netmask <span class="token number">255.255</span><span class="token punctuation">.</span><span class="token number">255.0</span>  
-<span class="token comment" spellcheck="true">#network 192.168.3.0  </span>
-<span class="token comment" spellcheck="true">#broadcast 192.168.3.255 </span>
-<span class="token comment" spellcheck="true">#设置虚拟ip</span>
-auto eth0<span class="token punctuation">:</span><span class="token number">1</span>  
-iface eth0<span class="token punctuation">:</span><span class="token number">1</span> inet static  
-address <span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">1.60</span>  
-netmask <span class="token number">255.255</span><span class="token punctuation">.</span><span class="token number">255.0</span>  
-network x<span class="token punctuation">.</span>x<span class="token punctuation">.</span>x<span class="token punctuation">.</span>x  
-broadcast x<span class="token punctuation">.</span>x<span class="token punctuation">.</span>x<span class="token punctuation">.</span>x  
-gateway x<span class="token punctuation">.</span>x<span class="token punctuation">.</span>x<span class="token punctuation">.</span>x </code></pre>
-<h3 id="2-ssh-免密登录"><a href="#2-ssh-免密登录" class="headerlink" title="2. ssh 免密登录"></a>2. ssh 免密登录</h3><pre class=" language-shell"><code class="language-shell">#  生成公钥-私钥文件对
-ssh-keygen  #如果生成过了，就可以不需要操作，在C:/Users/dell/.ssh/id_rsa， Linux待查
-#将公钥拷贝到服务器端， 并存储到 authorized_keys; 如果没有该目录则创建；
-cat id_rsa.pub >> ~/.ssh/authorized_keys  
-#在服务器端做必要的ssh配置
-vim /etc/ssh/sshd_config
-##RSAAuthentication yes
-##PubkeyAuthentication yes
-##PermitRootLogin yes
-service ssh restart
-passwd root</code></pre>
+                <h3 id="1-网络连接"><a href="#1-网络连接" class="headerlink" title="1. 网络连接"></a>1. 网络连接</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看网卡信息</span></span><br><span class="line">sudo lshw -<span class="class"><span class="keyword">class</span> <span class="title">network</span></span></span><br><span class="line"><span class="class"># <span class="title">error</span> <span class="title">Networking</span> <span class="title">disabled</span></span></span><br><span class="line"><span class="class"><span class="title">sudo</span> <span class="title">service</span> <span class="title">network</span>-<span class="title">manager</span> <span class="title">stop</span></span></span><br><span class="line"><span class="class"><span class="title">sudo</span> <span class="title">rm</span> /<span class="title">var</span>/<span class="title">lib</span>/<span class="title">NetworkManager</span>/<span class="title">NetworkManager</span>.<span class="title">state</span></span></span><br><span class="line"><span class="class"><span class="title">sudo</span> <span class="title">service</span> <span class="title">network</span>-<span class="title">manager</span> <span class="title">start</span></span></span><br><span class="line"><span class="class"># 方式二： 是否启用该网卡</span></span><br><span class="line">sudo ifconfig ens33 up  #ens33 为网卡的logic name; ifconfig 查看</span><br><span class="line">sudo dhclient ens33 <span class="comment"># 动态获取ip一次</span></span><br><span class="line">ifconfig -a <span class="comment">#查看IP</span></span><br><span class="line"><span class="comment"># ----------网卡配置方式</span></span><br><span class="line">sudo vi /etc/network/interfaces</span><br><span class="line">sudo /etc/init.d/networking restart  <span class="comment">#修完完成生效</span></span><br><span class="line"><span class="comment"># 动态DHCP</span></span><br><span class="line">并用下面的行来替换有关eth0的行:</span><br><span class="line"><span class="comment"># The primary network interface - use DHCP to find our address</span></span><br><span class="line">auto eth0</span><br><span class="line">iface eth0 inet dhcp</span><br><span class="line"><span class="comment">#静态ip地址</span></span><br><span class="line">auto eth0  </span><br><span class="line">iface eth0 inet static  </span><br><span class="line">address <span class="number">192.168</span><span class="number">.3</span><span class="number">.90</span>  </span><br><span class="line">gateway <span class="number">192.168</span><span class="number">.3</span><span class="number">.1</span>  </span><br><span class="line">netmask <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span>  </span><br><span class="line"><span class="comment">#network 192.168.3.0  </span></span><br><span class="line"><span class="comment">#broadcast 192.168.3.255 </span></span><br><span class="line"><span class="comment">#设置虚拟ip</span></span><br><span class="line">auto eth0:<span class="number">1</span>  </span><br><span class="line">iface eth0:<span class="number">1</span> inet static  </span><br><span class="line">address <span class="number">192.168</span><span class="number">.1</span><span class="number">.60</span>  </span><br><span class="line">netmask <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span>  </span><br><span class="line">network x.x.x.x  </span><br><span class="line">broadcast x.x.x.x  </span><br><span class="line">gateway x.x.x.x</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-ssh-免密登录"><a href="#2-ssh-免密登录" class="headerlink" title="2. ssh 免密登录"></a>2. ssh 免密登录</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">  生成公钥-私钥文件对</span></span><br><span class="line">ssh-keygen  #如果生成过了，就可以不需要操作，在C:/Users/dell/.ssh/id_rsa， Linux待查</span><br><span class="line"><span class="meta">#</span><span class="bash">将公钥拷贝到服务器端， 并存储到 authorized_keys; 如果没有该目录则创建；</span></span><br><span class="line">cat id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys  </span><br><span class="line"><span class="meta">#</span><span class="bash">在服务器端做必要的ssh配置</span></span><br><span class="line">vim /etc/ssh/sshd_config</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#RSAAuthentication yes</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#PubkeyAuthentication yes</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#PermitRootLogin yes</span></span></span><br><span class="line">service ssh restart</span><br><span class="line">passwd root</span><br></pre></td></tr></tbody></table></figure>
+
 <blockquote>
 <p>通过设置~/.ssh/config文件实现不同服务器用不同私钥文件的需求</p>
 <p><code>ssh root@host -p port -i path</code></p>
 </blockquote>
-<pre class=" language-text"><code class="language-text">Host alpine  #指定登录别名
-    HostName 192.168.52.129   #指定IP或者HOST
-    User root  #指定用户名
-    IdentityFile C:/Users/liudongdong/.ssh/id_rsa   #指定私钥文件</code></pre>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host alpine  #指定登录别名</span><br><span class="line">    HostName 192.168.52.129   #指定IP或者HOST</span><br><span class="line">    User root  #指定用户名</span><br><span class="line">    IdentityFile C:/Users/liudongdong/.ssh/id_rsa   #指定私钥文件</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="3-VNC"><a href="#3-VNC" class="headerlink" title="3. VNC"></a>3. VNC</h3><p>1.开启ssh，并允许root密码登录</p>
-<pre class=" language-python"><code class="language-python">apt install openssh<span class="token operator">-</span>server ssh
-vi <span class="token operator">/</span>etc<span class="token operator">/</span>ssh<span class="token operator">/</span>sshd_config
-UsePAM yes
-PermitRootLogin yes
-PasswordAuthentication yes
-<span class="token comment" spellcheck="true">#修改以上配置</span>
-systemctl enable ssh <span class="token operator">&amp;</span><span class="token operator">&amp;</span> systemctl restart ssh
-<span class="token comment" spellcheck="true">#此时可以用root 密码登录ssh</span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">apt install openssh-server ssh</span><br><span class="line">vi /etc/ssh/sshd_config</span><br><span class="line">UsePAM yes</span><br><span class="line">PermitRootLogin yes</span><br><span class="line">PasswordAuthentication yes</span><br><span class="line"><span class="comment">#修改以上配置</span></span><br><span class="line">systemctl enable ssh &amp;&amp; systemctl restart ssh</span><br><span class="line"><span class="comment">#此时可以用root 密码登录ssh</span></span><br></pre></td></tr></tbody></table></figure>
+
 <p>2.开启屏幕共享</p>
 <p>打开Settings –&gt; Screen Sharing –&gt;激活并设置密码</p>
 <p>#如果没有Screen Sharing选项，可能是vino没有安装，尝试apt install vino 安装</p>
 <p>#激活后，用netstat -tulp | grep 59,查看端口是否监听590X</p>
 <p>#如果正常，可以尝试用vnc连接，可能会出现“no security type suitable for RFB3.3”的错误。第3步就是解决这个问题。</p>
-<pre class=" language-shell"><code class="language-shell">gsettings set org.gnome.Vino require-encryption false</code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gsettings set org.gnome.Vino require-encryption false</span><br></pre></td></tr></tbody></table></figure>
+
 <blockquote>
 <p><a href="https://askubuntu.com/questions/1070520/screen-sharing-no-network-selected-for-sharing-problem-in-unity-control-center" target="_blank" rel="noopener">Screen-Sharing “no network selected for sharing” problem in unity control cent    1er (18.04)</a></p>
 </blockquote>
-<pre class=" language-shell"><code class="language-shell">vim /etc/NetworkManager/NetworkManager.conf
-[ifupdown]
-managed=true
-sudo touch /etc/NetworkManager/conf.d/10-globally-manage-devices.conf</code></pre>
-<h3 id="4-网络命令-netstat-top"><a href="#4-网络命令-netstat-top" class="headerlink" title="4. 网络命令 netstat ,top"></a>4. 网络命令 netstat ,top</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># net-tools   包括ifconfig,netstat 等网络工具</span>
-top: <span class="token comment" spellcheck="true">#查看电脑个进程占用资源情况  b 高亮显示当前进程.</span>
-<span class="token function">netstat</span> -a :Listing all ports <span class="token punctuation">(</span>both TCP and UDP<span class="token punctuation">)</span> using option.
-<span class="token function">netstat</span> -l <span class="token keyword">:</span> active listening ports connections
-<span class="token function">netstat</span> -s <span class="token keyword">:</span> displays statistics by protocol
-<span class="token function">netstat</span> -i <span class="token keyword">:</span> show the network interface
-<span class="token function">netstat</span> -r <span class="token keyword">:</span> show the routing
-<span class="token function">netstat</span> -ie <span class="token keyword">:</span> like <span class="token function">ifconfig</span>
-<span class="token function">netstat</span> -ap <span class="token operator">|</span> <span class="token function">grep</span> http <span class="token keyword">:</span> <span class="token function">find</span> the listening program
-<span class="token comment" spellcheck="true">#查找程序是否运行</span>
-<span class="token comment" spellcheck="true">#pgrep command – Looks through the currently running bash processes on Linux and lists the process IDs (PID) on screen.</span>
-pgrep nginx
-<span class="token comment" spellcheck="true">#pidof command – Find the process ID of a running program on Linux or Unix-like system</span>
-pidof nginx
-<span class="token comment" spellcheck="true">#ps command – Get information about the currently running Linux or Unix processes, including their process identification numbers (PIDs).</span>
-<span class="token function">ps</span> aux <span class="token operator">|</span> <span class="token function">grep</span> nginx</code></pre>
-<h3 id="5-设置代理"><a href="#5-设置代理" class="headerlink" title="5. 设置代理"></a>5. 设置代理</h3><pre class=" language-shell"><code class="language-shell">set | grep -i all_proxy
-# Unset socks proxy
-unset all_proxy     #根据上个命令输出决定是否用大写还是小写
-unset ALL_PROXY      #系统中的设置还在
-# Install missing dependencies:
-pip install pysocks
-# Reset proxy
-source ~/.bashrc</code></pre>
-<h3 id="6-文件下载"><a href="#6-文件下载" class="headerlink" title="6. 文件下载"></a>6. 文件下载</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">wget</span> -O  <span class="token comment" spellcheck="true">#下载并以不同的文件名保存</span>
-<span class="token function">wget</span> -b <span class="token comment" spellcheck="true">#后台下载   tail -f wget-log  查看下载速度</span>
-<span class="token function">wget</span> –spider url <span class="token comment" spellcheck="true">#测试下载链接是否可用等等</span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/NetworkManager/NetworkManager.conf</span><br><span class="line">[ifupdown]</span><br><span class="line">managed=true</span><br><span class="line">sudo touch /etc/NetworkManager/conf.d/10-globally-manage-devices.conf</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="4-网络命令-netstat-top"><a href="#4-网络命令-netstat-top" class="headerlink" title="4. 网络命令 netstat ,top"></a>4. 网络命令 netstat ,top</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># net-tools   包括ifconfig,netstat 等网络工具</span></span><br><span class="line">top: <span class="comment">#查看电脑个进程占用资源情况  b 高亮显示当前进程.</span></span><br><span class="line">netstat -a :Listing all ports (both TCP and UDP) using option.</span><br><span class="line">netstat -l : active listening ports connections</span><br><span class="line">netstat -s : displays statistics by protocol</span><br><span class="line">netstat -i : show the network interface</span><br><span class="line">netstat -r : show the routing</span><br><span class="line">netstat -ie : like ifconfig</span><br><span class="line">netstat -ap | grep http : find the listening program</span><br><span class="line"><span class="comment">#查找程序是否运行</span></span><br><span class="line"><span class="comment">#pgrep command – Looks through the currently running bash processes on Linux and lists the process IDs (PID) on screen.</span></span><br><span class="line">pgrep nginx</span><br><span class="line"><span class="comment">#pidof command – Find the process ID of a running program on Linux or Unix-like system</span></span><br><span class="line">pidof nginx</span><br><span class="line"><span class="comment">#ps command – Get information about the currently running Linux or Unix processes, including their process identification numbers (PIDs).</span></span><br><span class="line">ps aux | grep nginx</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="5-设置代理"><a href="#5-设置代理" class="headerlink" title="5. 设置代理"></a>5. 设置代理</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set | grep -i all_proxy</span><br><span class="line"><span class="meta">#</span><span class="bash"> Unset socks proxy</span></span><br><span class="line">unset all_proxy     #根据上个命令输出决定是否用大写还是小写</span><br><span class="line">unset ALL_PROXY      #系统中的设置还在</span><br><span class="line"><span class="meta">#</span><span class="bash"> Install missing dependencies:</span></span><br><span class="line">pip install pysocks</span><br><span class="line"><span class="meta">#</span><span class="bash"> Reset proxy</span></span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="6-文件下载"><a href="#6-文件下载" class="headerlink" title="6. 文件下载"></a>6. 文件下载</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget -O  <span class="comment">#下载并以不同的文件名保存</span></span><br><span class="line">wget -b <span class="comment">#后台下载   tail -f wget-log  查看下载速度</span></span><br><span class="line">wget –spider url <span class="comment">#测试下载链接是否可用等等</span></span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="7-文件夹共享"><a href="#7-文件夹共享" class="headerlink" title="7. 文件夹共享"></a>7. 文件夹共享</h3><p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20200828150147.png" alt=""></p>
 <blockquote>
 <p>访问目录： /mnt/hgfs/winshare </p>
 </blockquote>
-<h3 id="7-SCP文件互传"><a href="#7-SCP文件互传" class="headerlink" title="7. SCP文件互传"></a>7. SCP文件互传</h3><pre class=" language-shell"><code class="language-shell">#本地复制到远程
-scp local_file remote_username@remote_ip:remote_folder  #复制目录
-scp -r local_folder remote_username@remote_ip:remote_folder  #复制文件
-#scp 命令将服务器上文件拷贝至本地
-# tar -cvf script.tar script 打包文件
-scp remote_username@remote_ip:remote_folder local_file   #复制目录
-scp -P port file_name user@ip:/dir_name
-ssh -p xx  user@ip    #区别记忆一下</code></pre>
-<h3 id="8-Fpt-amp-Samba文件传输"><a href="#8-Fpt-amp-Samba文件传输" class="headerlink" title="8. Fpt&amp;Samba文件传输"></a>8. Fpt&amp;<strong>Samba</strong>文件传输</h3><pre class=" language-shell"><code class="language-shell">apt install -y vsftpd
-#ftpd 配置文件/etc/vsftpd/vsftpd.conf
-service vsftpd start
-service vsftpd status
-#重启fpt
-systemctl restart vsftpd
-systemctl enable vsftpd
-#配置文件内容
-listen=[YES|NO]              是否以独立运行的方式监听服务
-listen_address=IP地址        设置要监听的IP地址
-listen_port=21               设置FTP服务的监听端口
-download_enable＝[YES|NO]    是否允许下载文件
-userlist_enable=[YES|NO]     设置用户列表为“允许”还是“禁止”操作
-userlist_deny=[YES|NO]      设置用户列表为“允许”还是“禁止”操作
-max_clients=0                最大客户端连接数，0为不限制
-max_per_ip=0                 同一IP地址的最大连接数，0为不限制
-anonymous_enable=[YES|NO]    是否允许匿名用户访问
-anon_upload_enable=[YES|NO]  是否允许匿名用户上传文件
-anon_umask=022               匿名用户上传文件的umask值
-anon_root=/var/ftp           匿名用户的FTP根目录
-anon_mkdir_write_enable=[YES|NO]    是否允许匿名用户创建目录
-anon_other_write_enable=[YES|NO]    是否开放匿名用户的其他写入权限（包括重命名、删除等操作权限）
-anon_max_rate=0                     匿名用户的最大传输速率（字节/秒），0为不限制
-local_enable=[YES|NO]               是否允许本地用户登录FTP
-local_umask=022                     本地用户上传文件的umask值
-local_root=/var/ftp                 本地用户的FTP根目录
-chroot_local_user=[YES|NO]          是否将用户权限禁锢在FTP目录，以确保安全
-local_max_rate=0                    本地用户最大传输速率（字节/秒），0为不限制</code></pre>
+<h3 id="7-SCP文件互传"><a href="#7-SCP文件互传" class="headerlink" title="7. SCP文件互传"></a>7. SCP文件互传</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">本地复制到远程</span></span><br><span class="line">scp local_file remote_username@remote_ip:remote_folder  #复制目录</span><br><span class="line">scp -r local_folder remote_username@remote_ip:remote_folder  #复制文件</span><br><span class="line"><span class="meta">#</span><span class="bash">scp 命令将服务器上文件拷贝至本地</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tar -cvf script.tar script 打包文件</span></span><br><span class="line">scp remote_username@remote_ip:remote_folder local_file   #复制目录</span><br><span class="line">scp -P port file_name user@ip:/dir_name</span><br><span class="line">ssh -p xx  user@ip    #区别记忆一下</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="8-Fpt-amp-Samba文件传输"><a href="#8-Fpt-amp-Samba文件传输" class="headerlink" title="8. Fpt&amp;Samba文件传输"></a>8. Fpt&amp;<strong>Samba</strong>文件传输</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">apt install -y vsftpd</span><br><span class="line"><span class="meta">#</span><span class="bash">ftpd 配置文件/etc/vsftpd/vsftpd.conf</span></span><br><span class="line">service vsftpd start</span><br><span class="line">service vsftpd status</span><br><span class="line"><span class="meta">#</span><span class="bash">重启fpt</span></span><br><span class="line">systemctl restart vsftpd</span><br><span class="line">systemctl enable vsftpd</span><br><span class="line"><span class="meta">#</span><span class="bash">配置文件内容</span></span><br><span class="line">listen=[YES|NO]              是否以独立运行的方式监听服务</span><br><span class="line">listen_address=IP地址        设置要监听的IP地址</span><br><span class="line">listen_port=21               设置FTP服务的监听端口</span><br><span class="line">download_enable＝[YES|NO]    是否允许下载文件</span><br><span class="line">userlist_enable=[YES|NO]     设置用户列表为“允许”还是“禁止”操作</span><br><span class="line">userlist_deny=[YES|NO]      设置用户列表为“允许”还是“禁止”操作</span><br><span class="line">max_clients=0                最大客户端连接数，0为不限制</span><br><span class="line">max_per_ip=0                 同一IP地址的最大连接数，0为不限制</span><br><span class="line">anonymous_enable=[YES|NO]    是否允许匿名用户访问</span><br><span class="line">anon_upload_enable=[YES|NO]  是否允许匿名用户上传文件</span><br><span class="line">anon_umask=022               匿名用户上传文件的umask值</span><br><span class="line">anon_root=/var/ftp           匿名用户的FTP根目录</span><br><span class="line">anon_mkdir_write_enable=[YES|NO]    是否允许匿名用户创建目录</span><br><span class="line">anon_other_write_enable=[YES|NO]    是否开放匿名用户的其他写入权限（包括重命名、删除等操作权限）</span><br><span class="line">anon_max_rate=0                     匿名用户的最大传输速率（字节/秒），0为不限制</span><br><span class="line">local_enable=[YES|NO]               是否允许本地用户登录FTP</span><br><span class="line">local_umask=022                     本地用户上传文件的umask值</span><br><span class="line">local_root=/var/ftp                 本地用户的FTP根目录</span><br><span class="line">chroot_local_user=[YES|NO]          是否将用户权限禁锢在FTP目录，以确保安全</span><br><span class="line">local_max_rate=0                    本地用户最大传输速率（字节/秒），0为不限制</span><br></pre></td></tr></tbody></table></figure>
+
 <blockquote>
 <ul>
 <li>使用方式一：Mobaterm 使用sftp 连接，使用ftp的时候，上传有问题：<strong>Error EElFTPSError: Data channel transfer error (error code is 10054)</strong></li>
@@ -681,76 +604,22 @@ local_max_rate=0                    本地用户最大传输速率（字节/秒�
 <ul>
 <li><strong>Samba</strong></li>
 </ul>
-<pre class=" language-shell"><code class="language-shell">sudo apt install samba samba-common-bin
-sudo nano /etc/samba/smb.conf
-sudo /etc/init.d/smbd restart
-#添加用户和密码
-sudo smbpasswd -a pi
-#密码： 123456
-#window 上输入 ：   \\192.168.2.104\pi</code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install samba samba-common-bin</span><br><span class="line">sudo nano /etc/samba/smb.conf</span><br><span class="line">sudo /etc/init.d/smbd restart</span><br><span class="line"><span class="meta">#</span><span class="bash">添加用户和密码</span></span><br><span class="line">sudo smbpasswd -a pi</span><br><span class="line"><span class="meta">#</span><span class="bash">密码： 123456</span></span><br><span class="line"><span class="meta">#</span><span class="bash">window 上输入 ：   \\192.168.2.104\pi</span></span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200508170115935.png" alt=""></p>
 <ul>
 <li>samba 配置文件详解： <a href="https://blog.csdn.net/ma111000522/article/details/75949065" target="_blank" rel="noopener">https://blog.csdn.net/ma111000522/article/details/75949065</a></li>
 <li>案例： <a href="https://www.cnblogs.com/kevingrace/p/5569993.html" target="_blank" rel="noopener">https://www.cnblogs.com/kevingrace/p/5569993.html</a></li>
 </ul>
-<h3 id="9-网速测量speedtest"><a href="#9-网速测量speedtest" class="headerlink" title="9. 网速测量speedtest"></a>9. 网速测量speedtest</h3><pre class=" language-shell"><code class="language-shell">git clone https://github.com/sivel/speedtest-cli.git
-cd speedtest-cli
-python speedtest.py
-#具体可以看下readme操作，可以通过pip 方式安装</code></pre>
-<h3 id="10-V2Ray-安装"><a href="#10-V2Ray-安装" class="headerlink" title="10. V2Ray 安装"></a>10. V2Ray 安装</h3><pre class=" language-shell"><code class="language-shell">#然后编辑`/etc/v2ray/config.json`文件
-service v2ray stop 
-service v2ray start 
-service v2ray status
-#https://github.com/FelisCatus/SwitchyOmega/wiki/GFWList</code></pre>
+<h3 id="9-网速测量speedtest"><a href="#9-网速测量speedtest" class="headerlink" title="9. 网速测量speedtest"></a>9. 网速测量speedtest</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/sivel/speedtest-cli.git</span><br><span class="line">cd speedtest-cli</span><br><span class="line">python speedtest.py</span><br><span class="line"><span class="meta">#</span><span class="bash">具体可以看下readme操作，可以通过pip 方式安装</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="10-V2Ray-安装"><a href="#10-V2Ray-安装" class="headerlink" title="10. V2Ray 安装"></a>10. V2Ray 安装</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">然后编辑`/etc/v2ray/config.json`文件</span></span><br><span class="line">service v2ray stop </span><br><span class="line">service v2ray start </span><br><span class="line">service v2ray status</span><br><span class="line"><span class="meta">#</span><span class="bash">https://github.com/FelisCatus/SwitchyOmega/wiki/GFWList</span></span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li><h3 id="v2ray-go-sh脚本阅读记录"><a href="#v2ray-go-sh脚本阅读记录" class="headerlink" title="#v2ray/go.sh脚本阅读记录"></a>#v2ray/go.sh脚本阅读记录</h3></li>
 </ul>
-<pre class=" language-bash"><code class="language-bash">$<span class="token comment" spellcheck="true"># 表示执行脚本传入参数的个数</span>
-<span class="token variable">$*</span>  表示执行脚本传入参数列表
-$$ 表示进程id
-<span class="token variable">$@</span>表示执行脚本传入所有参数
-<span class="token variable">$0</span> 表示执行脚本名称
-<span class="token variable">$1</span> 表示第一个参数
-<span class="token variable">$2</span> 表示第二个参数
-<span class="token variable">$?</span> 表示脚本执行状态0正常，其他表示有错误
-<span class="token comment" spellcheck="true">#提取文件到某个位置函数  </span>
-<span class="token comment" spellcheck="true">#获取系统本版/检查版本更新   getVersion()/checkUpdate()</span>
-<span class="token comment" spellcheck="true">#检查系统架构  SysArch()</span>
-<span class="token comment" spellcheck="true">#获得系统 install update 指令   'command -v apt-get' 判断系统是否有apt-get 指令</span>
-<span class="token comment" spellcheck="true">#prompt 颜色设置  colorEcho()</span>
-<span class="token comment" spellcheck="true">#下载文件   downloadv2ray()</span>
-<span class="token comment" spellcheck="true"># echo $VER | head -n 1 | cut -d " " -f2`  </span>
-<span class="token comment" spellcheck="true">#关闭或启动软件  stopV2ray() startV2ray() 通过检查systemctl/service 命令</span>
-<span class="token comment" spellcheck="true">#copy 文件  copyFile()</span>
-<span class="token comment" spellcheck="true">#添加执行权限 makeExecutable()</span>
-<span class="token comment" spellcheck="true"># help() 帮助提示框</span>
-installInitScript<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> -n <span class="token string">"<span class="token variable">${SYSTEMCTL_CMD}</span>"</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token keyword">then</span>
-        <span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token operator">!</span> -f <span class="token string">"/etc/systemd/system/v2ray.service"</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-            <span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token operator">!</span> -f <span class="token string">"/lib/systemd/system/v2ray.service"</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-                <span class="token function">cp</span> <span class="token string">"<span class="token variable">${VSRC_ROOT}</span>/systemd/v2ray.service"</span> <span class="token string">"/etc/systemd/system/"</span>
-                systemctl <span class="token function">enable</span> v2ray.service
-            <span class="token keyword">fi</span>
-        <span class="token keyword">fi</span>
-        <span class="token keyword">return</span>
-    <span class="token keyword">elif</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> -n <span class="token string">"<span class="token variable">${SERVICE_CMD}</span>"</span> <span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token operator">!</span> -f <span class="token string">"/etc/init.d/v2ray"</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-        installSoftware <span class="token string">"daemon"</span> <span class="token operator">||</span> <span class="token keyword">return</span> <span class="token variable">$?</span>
-        <span class="token function">cp</span> <span class="token string">"<span class="token variable">${VSRC_ROOT}</span>/systemv/v2ray"</span> <span class="token string">"/etc/init.d/v2ray"</span>
-        <span class="token function">chmod</span> +x <span class="token string">"/etc/init.d/v2ray"</span>
-        update-rc.d v2ray defaults
-    <span class="token keyword">fi</span>
-    <span class="token keyword">return</span>
-<span class="token punctuation">}</span>
-<span class="token function">sed</span> -i <span class="token string">"s/10086/<span class="token variable">${PORT}</span>/g"</span> <span class="token string">"/etc/v2ray/config.json"</span>  <span class="token comment" spellcheck="true">#学习这个指令</span>
-downloadV2Ray <span class="token operator">||</span> <span class="token keyword">return</span> <span class="token variable">$?</span>
-installV2Ray<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#包括下载到那个目录,copy了那些文件,如何根据配置文件进行配置的</span>
-remove<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span># 卸载停止服务,把安转时写入的文件全部删除  
-    /etc/systemd/system/v2ray.service   
-    /usr/bin/v2ray
-    /lib/systemd/system/v2ray.service
-    /etc/init.d/v2ray
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$#</span> 表示执行脚本传入参数的个数</span><br><span class="line">$*  表示执行脚本传入参数列表</span><br><span class="line">$$ 表示进程id</span><br><span class="line"><span class="variable">$@</span>表示执行脚本传入所有参数</span><br><span class="line"><span class="variable">$0</span> 表示执行脚本名称</span><br><span class="line"><span class="variable">$1</span> 表示第一个参数</span><br><span class="line"><span class="variable">$2</span> 表示第二个参数</span><br><span class="line">$? 表示脚本执行状态0正常，其他表示有错误</span><br><span class="line"><span class="comment">#提取文件到某个位置函数  </span></span><br><span class="line"><span class="comment">#获取系统本版/检查版本更新   getVersion()/checkUpdate()</span></span><br><span class="line"><span class="comment">#检查系统架构  SysArch()</span></span><br><span class="line"><span class="comment">#获得系统 install update 指令   'command -v apt-get' 判断系统是否有apt-get 指令</span></span><br><span class="line"><span class="comment">#prompt 颜色设置  colorEcho()</span></span><br><span class="line"><span class="comment">#下载文件   downloadv2ray()</span></span><br><span class="line"><span class="comment"># echo $VER | head -n 1 | cut -d " " -f2`  </span></span><br><span class="line"><span class="comment">#关闭或启动软件  stopV2ray() startV2ray() 通过检查systemctl/service 命令</span></span><br><span class="line"><span class="comment">#copy 文件  copyFile()</span></span><br><span class="line"><span class="comment">#添加执行权限 makeExecutable()</span></span><br><span class="line"><span class="comment"># help() 帮助提示框</span></span><br><span class="line"><span class="function"><span class="title">installInitScript</span></span>(){</span><br><span class="line">    <span class="keyword">if</span> [[ -n <span class="string">"<span class="variable">${SYSTEMCTL_CMD}</span>"</span> ]];<span class="keyword">then</span></span><br><span class="line">        <span class="keyword">if</span> [[ ! -f <span class="string">"/etc/systemd/system/v2ray.service"</span> ]]; <span class="keyword">then</span></span><br><span class="line">            <span class="keyword">if</span> [[ ! -f <span class="string">"/lib/systemd/system/v2ray.service"</span> ]]; <span class="keyword">then</span></span><br><span class="line">                cp <span class="string">"<span class="variable">${VSRC_ROOT}</span>/systemd/v2ray.service"</span> <span class="string">"/etc/systemd/system/"</span></span><br><span class="line">                systemctl <span class="built_in">enable</span> v2ray.service</span><br><span class="line">            <span class="keyword">fi</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">        <span class="built_in">return</span></span><br><span class="line">    <span class="keyword">elif</span> [[ -n <span class="string">"<span class="variable">${SERVICE_CMD}</span>"</span> ]] &amp;&amp; [[ ! -f <span class="string">"/etc/init.d/v2ray"</span> ]]; <span class="keyword">then</span></span><br><span class="line">        installSoftware <span class="string">"daemon"</span> || <span class="built_in">return</span> $?</span><br><span class="line">        cp <span class="string">"<span class="variable">${VSRC_ROOT}</span>/systemv/v2ray"</span> <span class="string">"/etc/init.d/v2ray"</span></span><br><span class="line">        chmod +x <span class="string">"/etc/init.d/v2ray"</span></span><br><span class="line">        update-rc.d v2ray defaults</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="built_in">return</span></span><br><span class="line">}</span><br><span class="line">sed -i <span class="string">"s/10086/<span class="variable">${PORT}</span>/g"</span> <span class="string">"/etc/v2ray/config.json"</span>  <span class="comment">#学习这个指令</span></span><br><span class="line">downloadV2Ray || <span class="built_in">return</span> $?</span><br><span class="line">installV2Ray()  <span class="comment">#包括下载到那个目录,copy了那些文件,如何根据配置文件进行配置的</span></span><br><span class="line"><span class="function"><span class="title">remove</span></span>() {<span class="comment"># 卸载停止服务,把安转时写入的文件全部删除  </span></span><br><span class="line">	/etc/systemd/system/v2ray.service   </span><br><span class="line">	/usr/bin/v2ray</span><br><span class="line">	/lib/systemd/system/v2ray.service</span><br><span class="line">	/etc/init.d/v2ray</span><br><span class="line">	</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token punctuation">}</span></code></pre>
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20200828215528.png" alt=""></p>
 <p>注意端口需要和json文件配置的一样</p>
 <p>1.FTP代理</p>
@@ -768,13 +637,8 @@ remove<span class="token punctuation">(</span><span class="token punctuation">)<
 <blockquote>
 <p>PAC模式就是会在你连接网站的时候读取PAC文件里的规则，来确定你访问的网站有没有被墙，如果符合，那就会使用代理服务器连接网站，而PAC列表一般都是从GFWList更新的。GFWList定期会更新被墙的网站（不过一般挺慢的）。</p>
 </blockquote>
-<h3 id="11-修改github-DNS"><a href="#11-修改github-DNS" class="headerlink" title="11. 修改github DNS"></a>11. 修改github DNS</h3><pre class=" language-shell"><code class="language-shell">#https://www.linuxidc.com/Linux/2019-05/158461.htm
-#github
-219.76.4.4 github-cloud.s3.amazonaws.com
-192.30.253.112 github.com
-151.101.185.194 github.global.ssl.fastly.net
-ldd@ldd:~/v2ray$ sudo vim /etc/hosts
-ldd@ldd:~/v2ray$ sudo /etc/init.d/networking restart </code></pre>
+<h3 id="11-修改github-DNS"><a href="#11-修改github-DNS" class="headerlink" title="11. 修改github DNS"></a>11. 修改github DNS</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">https://www.linuxidc.com/Linux/2019-05/158461.htm</span></span><br><span class="line"><span class="meta">#</span><span class="bash">github</span></span><br><span class="line">219.76.4.4 github-cloud.s3.amazonaws.com</span><br><span class="line">192.30.253.112 github.com</span><br><span class="line">151.101.185.194 github.global.ssl.fastly.net</span><br><span class="line">ldd@ldd:~/v2ray$ sudo vim /etc/hosts</span><br><span class="line">ldd@ldd:~/v2ray$ sudo /etc/init.d/networking restart</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="13-防火墙"><a href="#13-防火墙" class="headerlink" title="13. 防火墙"></a>13. 防火墙</h3><blockquote>
 <p>查询防火墙状态   :   [root@localhost ~]# service  iptables status<br>停止防火墙  :       [root@localhost ~]# service  iptables stop<br>启动防火墙  :       [root@localhost ~]# service  iptables start<br>重启防火墙  :       [root@localhost ~]# service  iptables restart<br>永久关闭防火墙   :   [root@localhost ~]# chkconfig  iptables off<br>永久关闭后启用   :   [root@localhost ~]# chkconfig  iptables on</p>
 </blockquote>
@@ -1015,7 +879,7 @@ ldd@ldd:~/v2ray$ sudo /etc/init.d/networking restart </code></pre>
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -1068,10 +932,7 @@ ldd@ldd:~/v2ray$ sudo /etc/init.d/networking restart </code></pre>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Linux 命令链接  lnsudo ln -sf /usr/bin/g++-8 /usr/bin/g++
-ln - make links between files
-SYNOPSIS
-       ln [OPTION]... [-T] 
+                            Linux 命令链接  ln1234567sudo ln -sf /usr/bin/g++-8 /usr/bin/g++ln - make links between filesSYNOPSIS       ln [OPTION]... [
                         
                     </div>
                     <div class="publish-info">
@@ -1112,21 +973,30 @@ SYNOPSIS
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/03/16/ruan-jian-gong-ju/linux/cudakerneldowload/">
+                <a href="/2020/03/16/ruan-jian-gong-ju/linux/vim/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/73.jpeg" class="responsive-img" alt="CudaKernelDownload">
+                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/77.jpeg" class="responsive-img" alt="Vim">
                         
-                        <span class="card-title">CudaKernelDownload</span>
+                        <span class="card-title">Vim</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1. NVIDIA显卡驱动 cuda方法一：apt 方式安装
- #驱动安装
- sudo ubuntu-drivers devices  查看系统支持的显卡设备并下载
-#**系统设置** > **细节**窗口，你会发现Ubuntu正在使用Nv
+                            
+:set ff=unix 或 :set fileformat=unix   设置shell 文件编码
+:set nu  # 显示行号
+
+1.移动光标
+
+j：向下
+20j： 向下移动 20 行
+k：向上
+h：向左
+l：向右
+0：到行首
+^：
                         
                     </div>
                     <div class="publish-info">
@@ -1147,10 +1017,6 @@ SYNOPSIS
                 </div>
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/OperationSystem/">
-                        <span class="chip bg-color">OperationSystem</span>
-                    </a>
                     
                     <a href="/tags/Linux/">
                         <span class="chip bg-color">Linux</span>
@@ -1354,7 +1220,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1378,7 +1244,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1399,10 +1265,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1511,6 +1373,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

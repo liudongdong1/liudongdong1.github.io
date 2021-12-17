@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="linuxfont, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="linuxfont, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -493,19 +515,23 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2020-11-17
+                    2021-05-14
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    854
+                    849
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -525,77 +551,12 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="1-查看-amp-安装-amp-显示字体"><a href="#1-查看-amp-安装-amp-显示字体" class="headerlink" title="1. 查看&amp;安装&amp;显示字体"></a>1. 查看&amp;安装&amp;显示字体</h3><pre class=" language-python"><code class="language-python">cat <span class="token operator">/</span>proc<span class="token operator">/</span>version
-fc<span class="token operator">-</span>list <span class="token punctuation">:</span>lang<span class="token operator">=</span>zh<span class="token operator">-</span>cn   <span class="token comment" spellcheck="true">#显示中文字体</span>
-sudo apt install <span class="token operator">-</span>y <span class="token operator">-</span><span class="token operator">-</span>force<span class="token operator">-</span>yes <span class="token operator">-</span><span class="token operator">-</span>no<span class="token operator">-</span>install<span class="token operator">-</span>recommends fonts<span class="token operator">-</span>wqy<span class="token operator">-</span>microhei  <span class="token comment" spellcheck="true">#下载安装字体</span>
-sudo apt install <span class="token operator">-</span>y <span class="token operator">-</span><span class="token operator">-</span>force<span class="token operator">-</span>yes <span class="token operator">-</span><span class="token operator">-</span>no<span class="token operator">-</span>install<span class="token operator">-</span>recommends ttf<span class="token operator">-</span>wqy<span class="token operator">-</span>zenhei</code></pre>
-<h3 id="2-词云绘制"><a href="#2-词云绘制" class="headerlink" title="2. 词云绘制"></a>2. 词云绘制</h3><pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># coding:utf-8</span>
-<span class="token keyword">import</span> jieba  <span class="token comment" spellcheck="true"># 分词</span>
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt  <span class="token comment" spellcheck="true"># 数据可视化</span>
-<span class="token keyword">from</span> wordcloud <span class="token keyword">import</span> WordCloud<span class="token punctuation">,</span> ImageColorGenerator<span class="token punctuation">,</span> STOPWORDS  <span class="token comment" spellcheck="true"># 词云</span>
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np  <span class="token comment" spellcheck="true"># 科学计算</span>
-<span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image  <span class="token comment" spellcheck="true"># 处理图片</span>
-<span class="token keyword">def</span> <span class="token function">draw_cloud</span><span class="token punctuation">(</span>text<span class="token punctuation">,</span> graph<span class="token punctuation">,</span> save_name<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    textfile <span class="token operator">=</span> open<span class="token punctuation">(</span>text<span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 读取文本内容</span>
-    wordlist <span class="token operator">=</span> jieba<span class="token punctuation">.</span>cut<span class="token punctuation">(</span>textfile<span class="token punctuation">,</span> cut_all<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 中文分词</span>
-    space_list <span class="token operator">=</span> <span class="token string">" "</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>wordlist<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 连接词语</span>
-    backgroud <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>graph<span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 背景轮廓图</span>
-    mywordcloud <span class="token operator">=</span> WordCloud<span class="token punctuation">(</span>background_color<span class="token operator">=</span><span class="token string">"white"</span><span class="token punctuation">,</span>  <span class="token comment" spellcheck="true"># 背景颜色</span>
-                            mask<span class="token operator">=</span>backgroud<span class="token punctuation">,</span>  <span class="token comment" spellcheck="true"># 写字用的背景图，从背景图取颜色</span>
-                            max_words<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">,</span>  <span class="token comment" spellcheck="true"># 最大词语数量</span>
-                            stopwords<span class="token operator">=</span>STOPWORDS<span class="token punctuation">,</span>  <span class="token comment" spellcheck="true"># 停用词</span>
-                            font_path<span class="token operator">=</span><span class="token string">"simkai.ttf"</span><span class="token punctuation">,</span>  <span class="token comment" spellcheck="true"># 字体</span>
-                            max_font_size<span class="token operator">=</span><span class="token number">200</span><span class="token punctuation">,</span>  <span class="token comment" spellcheck="true"># 最大字体尺寸</span>
-                            random_state<span class="token operator">=</span><span class="token number">50</span><span class="token punctuation">,</span>  <span class="token comment" spellcheck="true"># 随机角度</span>
-                            scale<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span>
-                            collocations<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span>  <span class="token comment" spellcheck="true"># 避免重复单词</span>
-                            <span class="token punctuation">)</span>
-    mywordcloud <span class="token operator">=</span> mywordcloud<span class="token punctuation">.</span>generate<span class="token punctuation">(</span>space_list<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 生成词云</span>
-    ImageColorGenerator<span class="token punctuation">(</span>backgroud<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 生成词云的颜色</span>
-    plt<span class="token punctuation">.</span>imsave<span class="token punctuation">(</span>save_name<span class="token punctuation">,</span> mywordcloud<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 保存图片</span>
-    plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>mywordcloud<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 显示词云</span>
-    plt<span class="token punctuation">.</span>axis<span class="token punctuation">(</span><span class="token string">"off"</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 关闭保存</span>
-    plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
-    draw_cloud<span class="token punctuation">(</span>text<span class="token operator">=</span><span class="token string">"government.txt"</span><span class="token punctuation">,</span> graph<span class="token operator">=</span><span class="token string">"china_map.jpg"</span><span class="token punctuation">,</span> save_name<span class="token operator">=</span><span class="token string">'2019政府工作报告词云.png'</span><span class="token punctuation">)</span></code></pre>
-<pre class=" language-python"><code class="language-python">font_path <span class="token punctuation">:</span> string
-<span class="token comment" spellcheck="true"># 字体路径，需要展现什么字体就把该字体路径+后缀名写上，如：font_path = '黑体.ttf'</span>
-width <span class="token punctuation">:</span> int <span class="token punctuation">(</span>default<span class="token operator">=</span><span class="token number">400</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># 输出的画布宽度，默认为400像素</span>
-height <span class="token punctuation">:</span> int <span class="token punctuation">(</span>default<span class="token operator">=</span><span class="token number">200</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># 输出的画布高度，默认为200像素</span>
-prefer_horizontal <span class="token punctuation">:</span> float <span class="token punctuation">(</span>default<span class="token operator">=</span><span class="token number">0.90</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># 词语水平方向排版出现的频率，默认 0.9 （所以词语垂直方向排版出现频率为 0.1 ）</span>
-mask <span class="token punctuation">:</span> nd<span class="token operator">-</span>array <span class="token operator">or</span> None <span class="token punctuation">(</span>default<span class="token operator">=</span>None<span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># 如果参数为空，则使用二维遮罩绘制词云。如果 mask 非空，设置的宽高值将被忽略，遮罩形状被 mask 取代。除全白（#FFFFFF）的部分将不会绘制，其余部分会用于绘制词云。</span>
-<span class="token comment" spellcheck="true"># 如：bg_pic = imread('读取一张图片.png')，背景图片的画布一定要设置为白色（#FFFFFF），然后显示的形状为不是白色的其他颜色。可以用ps工具将自己要显示的形状复制到一个纯白色的画布上再保存，就ok了。</span>
-scale <span class="token punctuation">:</span> float <span class="token punctuation">(</span>default<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span> 
-<span class="token comment" spellcheck="true"># 按照比例进行放大画布，如设置为1.5，则长和宽都是原来画布的1.5倍。</span>
-min_font_size <span class="token punctuation">:</span> int <span class="token punctuation">(</span>default<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span> 
-<span class="token comment" spellcheck="true"># 显示的最小的字体大小</span>
-font_step <span class="token punctuation">:</span> int <span class="token punctuation">(</span>default<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># 字体步长，如果步长大于1，会加快运算但是可能导致结果出现较大的误差。</span>
-max_words <span class="token punctuation">:</span> number <span class="token punctuation">(</span>default<span class="token operator">=</span><span class="token number">200</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># 要显示的词的最大个数</span>
-stopwords <span class="token punctuation">:</span> set of strings <span class="token operator">or</span> None
-<span class="token comment" spellcheck="true"># 设置需要屏蔽的词，如果为空，则使用内置的STOPWORDS</span>
-background_color <span class="token punctuation">:</span> color value <span class="token punctuation">(</span>default<span class="token operator">=</span>”black”<span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># 背景颜色，如background_color='white',背景颜色为白色。</span>
-max_font_size <span class="token punctuation">:</span> int <span class="token operator">or</span> None <span class="token punctuation">(</span>default<span class="token operator">=</span>None<span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># 显示的最大的字体大小</span>
-mode <span class="token punctuation">:</span> string <span class="token punctuation">(</span>default<span class="token operator">=</span>”RGB”<span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># 当参数为“RGBA”并且background_color不为空时，背景为透明。</span>
-relative_scaling <span class="token punctuation">:</span> float <span class="token punctuation">(</span>default<span class="token operator">=</span><span class="token punctuation">.</span><span class="token number">5</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># 词频和字体大小的关联性</span>
-color_func <span class="token punctuation">:</span> callable<span class="token punctuation">,</span> default<span class="token operator">=</span>None
-<span class="token comment" spellcheck="true"># 生成新颜色的函数，如果为空，则使用 self.color_func</span>
-regexp <span class="token punctuation">:</span> string <span class="token operator">or</span> None <span class="token punctuation">(</span>optional<span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># 使用正则表达式分隔输入的文本</span>
-collocations <span class="token punctuation">:</span> bool<span class="token punctuation">,</span> default<span class="token operator">=</span><span class="token boolean">True</span>
-<span class="token comment" spellcheck="true"># 是否包括两个词的搭配</span>
-colormap <span class="token punctuation">:</span> string <span class="token operator">or</span> matplotlib colormap<span class="token punctuation">,</span> default<span class="token operator">=</span>”viridis”
-<span class="token comment" spellcheck="true"># 给每个单词随机分配颜色，若指定color_func，则忽略该方法。</span>
-wordcloud参数详解</code></pre>
+                <h3 id="1-查看-amp-安装-amp-显示字体"><a href="#1-查看-amp-安装-amp-显示字体" class="headerlink" title="1. 查看&amp;安装&amp;显示字体"></a>1. 查看&amp;安装&amp;显示字体</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/version</span><br><span class="line">fc-list :lang=zh-cn   <span class="comment">#显示中文字体</span></span><br><span class="line">sudo apt install -y --force-yes --no-install-recommends fonts-wqy-microhei  <span class="comment">#下载安装字体</span></span><br><span class="line">sudo apt install -y --force-yes --no-install-recommends ttf-wqy-zenhei</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-词云绘制"><a href="#2-词云绘制" class="headerlink" title="2. 词云绘制"></a>2. 词云绘制</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> jieba  <span class="comment"># 分词</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt  <span class="comment"># 数据可视化</span></span><br><span class="line"><span class="keyword">from</span> wordcloud <span class="keyword">import</span> WordCloud, ImageColorGenerator, STOPWORDS  <span class="comment"># 词云</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np  <span class="comment"># 科学计算</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image  <span class="comment"># 处理图片</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw_cloud</span><span class="params">(text, graph, save_name)</span>:</span></span><br><span class="line">    textfile = open(text).read()  <span class="comment"># 读取文本内容</span></span><br><span class="line">    wordlist = jieba.cut(textfile, cut_all=<span class="literal">False</span>)  <span class="comment"># 中文分词</span></span><br><span class="line">    space_list = <span class="string">" "</span>.join(wordlist)  <span class="comment"># 连接词语</span></span><br><span class="line">    backgroud = np.array(Image.open(graph))  <span class="comment"># 背景轮廓图</span></span><br><span class="line">    mywordcloud = WordCloud(background_color=<span class="string">"white"</span>,  <span class="comment"># 背景颜色</span></span><br><span class="line">                            mask=backgroud,  <span class="comment"># 写字用的背景图，从背景图取颜色</span></span><br><span class="line">                            max_words=<span class="number">100</span>,  <span class="comment"># 最大词语数量</span></span><br><span class="line">                            stopwords=STOPWORDS,  <span class="comment"># 停用词</span></span><br><span class="line">                            font_path=<span class="string">"simkai.ttf"</span>,  <span class="comment"># 字体</span></span><br><span class="line">                            max_font_size=<span class="number">200</span>,  <span class="comment"># 最大字体尺寸</span></span><br><span class="line">                            random_state=<span class="number">50</span>,  <span class="comment"># 随机角度</span></span><br><span class="line">                            scale=<span class="number">2</span>,</span><br><span class="line">                            collocations=<span class="literal">False</span>,  <span class="comment"># 避免重复单词</span></span><br><span class="line">                            )</span><br><span class="line">    mywordcloud = mywordcloud.generate(space_list)  <span class="comment"># 生成词云</span></span><br><span class="line">    ImageColorGenerator(backgroud)  <span class="comment"># 生成词云的颜色</span></span><br><span class="line">    plt.imsave(save_name, mywordcloud)  <span class="comment"># 保存图片</span></span><br><span class="line">    plt.imshow(mywordcloud)  <span class="comment"># 显示词云</span></span><br><span class="line">    plt.axis(<span class="string">"off"</span>)  <span class="comment"># 关闭保存</span></span><br><span class="line">    plt.show()</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    draw_cloud(text=<span class="string">"government.txt"</span>, graph=<span class="string">"china_map.jpg"</span>, save_name=<span class="string">'2019政府工作报告词云.png'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">font_path : string</span><br><span class="line"><span class="comment"># 字体路径，需要展现什么字体就把该字体路径+后缀名写上，如：font_path = '黑体.ttf'</span></span><br><span class="line">width : int (default=<span class="number">400</span>)</span><br><span class="line"><span class="comment"># 输出的画布宽度，默认为400像素</span></span><br><span class="line">height : int (default=<span class="number">200</span>)</span><br><span class="line"><span class="comment"># 输出的画布高度，默认为200像素</span></span><br><span class="line">prefer_horizontal : float (default=<span class="number">0.90</span>)</span><br><span class="line"><span class="comment"># 词语水平方向排版出现的频率，默认 0.9 （所以词语垂直方向排版出现频率为 0.1 ）</span></span><br><span class="line">mask : nd-array <span class="keyword">or</span> <span class="literal">None</span> (default=<span class="literal">None</span>)</span><br><span class="line"><span class="comment"># 如果参数为空，则使用二维遮罩绘制词云。如果 mask 非空，设置的宽高值将被忽略，遮罩形状被 mask 取代。除全白（#FFFFFF）的部分将不会绘制，其余部分会用于绘制词云。</span></span><br><span class="line"><span class="comment"># 如：bg_pic = imread('读取一张图片.png')，背景图片的画布一定要设置为白色（#FFFFFF），然后显示的形状为不是白色的其他颜色。可以用ps工具将自己要显示的形状复制到一个纯白色的画布上再保存，就ok了。</span></span><br><span class="line">scale : float (default=<span class="number">1</span>) </span><br><span class="line"><span class="comment"># 按照比例进行放大画布，如设置为1.5，则长和宽都是原来画布的1.5倍。</span></span><br><span class="line">min_font_size : int (default=<span class="number">4</span>) </span><br><span class="line"><span class="comment"># 显示的最小的字体大小</span></span><br><span class="line">font_step : int (default=<span class="number">1</span>)</span><br><span class="line"><span class="comment"># 字体步长，如果步长大于1，会加快运算但是可能导致结果出现较大的误差。</span></span><br><span class="line">max_words : number (default=<span class="number">200</span>)</span><br><span class="line"><span class="comment"># 要显示的词的最大个数</span></span><br><span class="line">stopwords : set of strings <span class="keyword">or</span> <span class="literal">None</span></span><br><span class="line"><span class="comment"># 设置需要屏蔽的词，如果为空，则使用内置的STOPWORDS</span></span><br><span class="line">background_color : color value (default=”black”)</span><br><span class="line"><span class="comment"># 背景颜色，如background_color='white',背景颜色为白色。</span></span><br><span class="line">max_font_size : int <span class="keyword">or</span> <span class="literal">None</span> (default=<span class="literal">None</span>)</span><br><span class="line"><span class="comment"># 显示的最大的字体大小</span></span><br><span class="line">mode : string (default=”RGB”)</span><br><span class="line"><span class="comment"># 当参数为“RGBA”并且background_color不为空时，背景为透明。</span></span><br><span class="line">relative_scaling : float (default=<span class="number">.5</span>)</span><br><span class="line"><span class="comment"># 词频和字体大小的关联性</span></span><br><span class="line">color_func : callable, default=<span class="literal">None</span></span><br><span class="line"><span class="comment"># 生成新颜色的函数，如果为空，则使用 self.color_func</span></span><br><span class="line">regexp : string <span class="keyword">or</span> <span class="literal">None</span> (optional)</span><br><span class="line"><span class="comment"># 使用正则表达式分隔输入的文本</span></span><br><span class="line">collocations : bool, default=<span class="literal">True</span></span><br><span class="line"><span class="comment"># 是否包括两个词的搭配</span></span><br><span class="line">colormap : string <span class="keyword">or</span> matplotlib colormap, default=”viridis”</span><br><span class="line"><span class="comment"># 给每个单词随机分配颜色，若指定color_func，则忽略该方法。</span></span><br><span class="line">wordcloud参数详解</span><br></pre></td></tr></tbody></table></figure>
+
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -808,7 +769,7 @@ wordcloud参数详解</code></pre>
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -1135,7 +1096,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1159,7 +1120,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1180,10 +1141,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1292,6 +1249,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="PictureCompress, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="PictureCompress, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -493,19 +515,23 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2020-11-11
+                    2021-05-14
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    561
+                    666
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -526,135 +552,10 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200814165610056.png" alt=""></p>
-<h2 id="1-鲁班图片压缩算法"><a href="#1-鲁班图片压缩算法" class="headerlink" title="1. 鲁班图片压缩算法"></a>1. 鲁班图片压缩算法</h2><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
-<span class="token keyword">import</span> os
-<span class="token keyword">from</span> shutil <span class="token keyword">import</span> copyfile
-<span class="token keyword">from</span> math <span class="token keyword">import</span> ceil
-<span class="token keyword">class</span> <span class="token class-name">Luban</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> ignoreBy<span class="token operator">=</span><span class="token number">102400</span><span class="token punctuation">,</span> quality<span class="token operator">=</span><span class="token number">60</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>ignoreBy <span class="token operator">=</span> ignoreBy
-        self<span class="token punctuation">.</span>quality <span class="token operator">=</span> quality
-    <span class="token keyword">def</span> <span class="token function">setPath</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> path<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>path <span class="token operator">=</span> path
-    <span class="token keyword">def</span> <span class="token function">setTargetDir</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> foldername<span class="token operator">=</span><span class="token string">"target"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>dir<span class="token punctuation">,</span> self<span class="token punctuation">.</span>filename <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>split<span class="token punctuation">(</span>self<span class="token punctuation">.</span>path<span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>targetDir <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>self<span class="token punctuation">.</span>dir<span class="token punctuation">,</span> foldername<span class="token punctuation">)</span>
-        <span class="token keyword">if</span> <span class="token operator">not</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span>self<span class="token punctuation">.</span>targetDir<span class="token punctuation">)</span><span class="token punctuation">:</span> 
-            os<span class="token punctuation">.</span>makedirs<span class="token punctuation">(</span>self<span class="token punctuation">.</span>targetDir<span class="token punctuation">)</span>  
-        self<span class="token punctuation">.</span>targetPath <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>self<span class="token punctuation">.</span>targetDir<span class="token punctuation">,</span> <span class="token string">"c_"</span><span class="token operator">+</span>self<span class="token punctuation">.</span>filename<span class="token punctuation">)</span>   
-    <span class="token keyword">def</span> <span class="token function">load</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>img <span class="token operator">=</span> Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>self<span class="token punctuation">.</span>path<span class="token punctuation">)</span>
-        <span class="token keyword">if</span> self<span class="token punctuation">.</span>img<span class="token punctuation">.</span>mode <span class="token operator">==</span> <span class="token string">"RGB"</span><span class="token punctuation">:</span> 
-            self<span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token string">"JPEG"</span>
-        <span class="token keyword">elif</span> self<span class="token punctuation">.</span>img<span class="token punctuation">.</span>mode <span class="token operator">==</span> <span class="token string">"RGBA"</span><span class="token punctuation">:</span> 
-            self<span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token string">"PNG"</span>
-        <span class="token keyword">else</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true"># 其他的图片就转成JPEG</span>
-            self<span class="token punctuation">.</span>img <span class="token operator">==</span> img<span class="token punctuation">.</span>convert<span class="token punctuation">(</span><span class="token string">"RGB"</span><span class="token punctuation">)</span>
-            self<span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token string">"JPEG"</span>
-    <span class="token keyword">def</span> <span class="token function">computeScale</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token comment" spellcheck="true"># 计算缩小的倍数</span>
-        srcWidth<span class="token punctuation">,</span> srcHeight <span class="token operator">=</span> self<span class="token punctuation">.</span>img<span class="token punctuation">.</span>size 
-        srcWidth <span class="token operator">=</span> srcWidth <span class="token operator">+</span> <span class="token number">1</span> <span class="token keyword">if</span> srcWidth <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token keyword">else</span> srcWidth
-        srcHeight <span class="token operator">=</span> srcHeight <span class="token operator">+</span> <span class="token number">1</span> <span class="token keyword">if</span> srcHeight <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token keyword">else</span> srcHeight
-        longSide <span class="token operator">=</span> max<span class="token punctuation">(</span>srcWidth<span class="token punctuation">,</span> srcHeight<span class="token punctuation">)</span>
-        shortSide <span class="token operator">=</span> min<span class="token punctuation">(</span>srcWidth<span class="token punctuation">,</span> srcHeight<span class="token punctuation">)</span>
-        scale <span class="token operator">=</span> shortSide <span class="token operator">/</span> longSide
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>scale <span class="token operator">&lt;=</span> <span class="token number">1</span> <span class="token operator">and</span> scale <span class="token operator">></span> <span class="token number">0.5625</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>longSide <span class="token operator">&lt;</span> <span class="token number">1664</span><span class="token punctuation">)</span><span class="token punctuation">:</span> 
-                <span class="token keyword">return</span> <span class="token number">1</span>
-            <span class="token keyword">elif</span> <span class="token punctuation">(</span>longSide <span class="token operator">&lt;</span> <span class="token number">4990</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-                <span class="token keyword">return</span> <span class="token number">2</span>
-            <span class="token keyword">elif</span> <span class="token punctuation">(</span>longSide <span class="token operator">></span> <span class="token number">4990</span> <span class="token operator">and</span> longSide <span class="token operator">&lt;</span> <span class="token number">10240</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-                <span class="token keyword">return</span> <span class="token number">4</span>
-            <span class="token keyword">else</span><span class="token punctuation">:</span>
-                <span class="token keyword">return</span> max<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> longSide <span class="token operator">//</span> <span class="token number">1280</span><span class="token punctuation">)</span>
-        <span class="token keyword">elif</span> <span class="token punctuation">(</span>scale <span class="token operator">&lt;=</span> <span class="token number">0.5625</span> <span class="token operator">and</span> scale <span class="token operator">></span> <span class="token number">0.5</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-            <span class="token keyword">return</span> max<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> longSide <span class="token operator">//</span> <span class="token number">1280</span><span class="token punctuation">)</span>
-        <span class="token keyword">else</span><span class="token punctuation">:</span> 
-            <span class="token keyword">return</span> ceil<span class="token punctuation">(</span>longSide <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">1280.0</span> <span class="token operator">/</span> scale<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token keyword">def</span> <span class="token function">compress</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>setTargetDir<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token comment" spellcheck="true"># 先调整大小，再调整品质</span>
-        <span class="token keyword">if</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>getsize<span class="token punctuation">(</span>self<span class="token punctuation">.</span>path<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> self<span class="token punctuation">.</span>ignoreBy<span class="token punctuation">:</span>
-            copyfile<span class="token punctuation">(</span>self<span class="token punctuation">.</span>path<span class="token punctuation">,</span> self<span class="token punctuation">.</span>targetPath<span class="token punctuation">)</span>
-        <span class="token keyword">else</span><span class="token punctuation">:</span>
-            self<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token punctuation">)</span> 
-            scale <span class="token operator">=</span> self<span class="token punctuation">.</span>computeScale<span class="token punctuation">(</span><span class="token punctuation">)</span>
-            srcWidth<span class="token punctuation">,</span> srcHeight <span class="token operator">=</span> self<span class="token punctuation">.</span>img<span class="token punctuation">.</span>size
-            cache <span class="token operator">=</span> self<span class="token punctuation">.</span>img<span class="token punctuation">.</span>resize<span class="token punctuation">(</span><span class="token punctuation">(</span>srcWidth<span class="token operator">//</span>scale<span class="token punctuation">,</span> srcHeight<span class="token operator">//</span>scale<span class="token punctuation">)</span><span class="token punctuation">,</span> Image<span class="token punctuation">.</span>ANTIALIAS<span class="token punctuation">)</span>  
-            cache<span class="token punctuation">.</span>save<span class="token punctuation">(</span>self<span class="token punctuation">.</span>targetPath<span class="token punctuation">,</span> self<span class="token punctuation">.</span>type<span class="token punctuation">,</span> quality<span class="token operator">=</span>self<span class="token punctuation">.</span>quality<span class="token punctuation">)</span>
-<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
-    path <span class="token operator">=</span> r<span class="token string">"C:\Users\William Chen\Documents\GitHub\Luban-Py\test.jpg"</span>
-    compressor <span class="token operator">=</span> Luban<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    compressor<span class="token punctuation">.</span>setPath<span class="token punctuation">(</span>path<span class="token punctuation">)</span>
-    compressor<span class="token punctuation">.</span>compress<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<pre class=" language-c++"><code class="language-c++">+(void)zipNSDataWithImage:(UIImage *)sourceImage imageBlock:(ImageBlock)block{
-    //进行图像尺寸的压缩
-    CGSize imageSize = sourceImage.size;//取出要压缩的image尺寸
-    CGFloat width = imageSize.width;    //图片宽度
-    CGFloat height = imageSize.height;  //图片高度
+<h2 id="1-鲁班图片压缩算法"><a href="#1-鲁班图片压缩算法" class="headerlink" title="1. 鲁班图片压缩算法"></a>1. 鲁班图片压缩算法</h2><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> shutil <span class="keyword">import</span> copyfile</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> ceil</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Luban</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, ignoreBy=<span class="number">102400</span>, quality=<span class="number">60</span>)</span>:</span></span><br><span class="line">        self.ignoreBy = ignoreBy</span><br><span class="line">        self.quality = quality</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setPath</span><span class="params">(self, path)</span>:</span></span><br><span class="line">        self.path = path</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setTargetDir</span><span class="params">(self, foldername=<span class="string">"target"</span>)</span>:</span></span><br><span class="line">        self.dir, self.filename = os.path.split(self.path)</span><br><span class="line">        self.targetDir = os.path.join(self.dir, foldername)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(self.targetDir): </span><br><span class="line">            os.makedirs(self.targetDir)  </span><br><span class="line">        self.targetPath = os.path.join(self.targetDir, <span class="string">"c_"</span>+self.filename)   </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">load</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.img = Image.open(self.path)</span><br><span class="line">        <span class="keyword">if</span> self.img.mode == <span class="string">"RGB"</span>: </span><br><span class="line">            self.type = <span class="string">"JPEG"</span></span><br><span class="line">        <span class="keyword">elif</span> self.img.mode == <span class="string">"RGBA"</span>: </span><br><span class="line">            self.type = <span class="string">"PNG"</span></span><br><span class="line">        <span class="keyword">else</span>: <span class="comment"># 其他的图片就转成JPEG</span></span><br><span class="line">            self.img == img.convert(<span class="string">"RGB"</span>)</span><br><span class="line">            self.type = <span class="string">"JPEG"</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">computeScale</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 计算缩小的倍数</span></span><br><span class="line">        srcWidth, srcHeight = self.img.size </span><br><span class="line">        srcWidth = srcWidth + <span class="number">1</span> <span class="keyword">if</span> srcWidth % <span class="number">2</span> == <span class="number">1</span> <span class="keyword">else</span> srcWidth</span><br><span class="line">        srcHeight = srcHeight + <span class="number">1</span> <span class="keyword">if</span> srcHeight % <span class="number">2</span> == <span class="number">1</span> <span class="keyword">else</span> srcHeight</span><br><span class="line">        longSide = max(srcWidth, srcHeight)</span><br><span class="line">        shortSide = min(srcWidth, srcHeight)</span><br><span class="line">        scale = shortSide / longSide</span><br><span class="line">        <span class="keyword">if</span> (scale &lt;= <span class="number">1</span> <span class="keyword">and</span> scale &gt; <span class="number">0.5625</span>):</span><br><span class="line">            <span class="keyword">if</span> (longSide &lt; <span class="number">1664</span>): </span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> (longSide &lt; <span class="number">4990</span>):</span><br><span class="line">                <span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">            <span class="keyword">elif</span> (longSide &gt; <span class="number">4990</span> <span class="keyword">and</span> longSide &lt; <span class="number">10240</span>):</span><br><span class="line">                <span class="keyword">return</span> <span class="number">4</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> max(<span class="number">1</span>, longSide // <span class="number">1280</span>)</span><br><span class="line">        <span class="keyword">elif</span> (scale &lt;= <span class="number">0.5625</span> <span class="keyword">and</span> scale &gt; <span class="number">0.5</span>):</span><br><span class="line">            <span class="keyword">return</span> max(<span class="number">1</span>, longSide // <span class="number">1280</span>)</span><br><span class="line">        <span class="keyword">else</span>: </span><br><span class="line">            <span class="keyword">return</span> ceil(longSide / (<span class="number">1280.0</span> / scale))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">compress</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.setTargetDir()</span><br><span class="line">        <span class="comment"># 先调整大小，再调整品质</span></span><br><span class="line">        <span class="keyword">if</span> os.path.getsize(self.path) &lt;= self.ignoreBy:</span><br><span class="line">            copyfile(self.path, self.targetPath)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.load() </span><br><span class="line">            scale = self.computeScale()</span><br><span class="line">            srcWidth, srcHeight = self.img.size</span><br><span class="line">            cache = self.img.resize((srcWidth//scale, srcHeight//scale), Image.ANTIALIAS)  </span><br><span class="line">            cache.save(self.targetPath, self.type, quality=self.quality)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    path = <span class="string">r"C:\Users\William Chen\Documents\GitHub\Luban-Py\test.jpg"</span></span><br><span class="line">    compressor = Luban()</span><br><span class="line">    compressor.setPath(path)</span><br><span class="line">    compressor.compress()</span><br></pre></td></tr></tbody></table></figure>
 
-    CGFloat scale = height/width;
-    //0.宽高比例大于8
-    if (scale > 8.0 || scale < 1/8.) {
-        if (scale > 8.0) {
-            if (width > 1080) {
-                width = 1080;
-                height = width * scale;
-            }else {
-                //不压缩
-            }
-        }else {
-            if (height > 1080.) {
-                height = 1080;
-                width = height / scale;
-            }else {
-                //不压缩
-            }
-        }
-        //1.宽高大于1080(宽高比不按照2来算，按照1来算)
-    }else if (width>1080 && height>1080) {
-        if (height > width) {
-            CGFloat scale = height/width;
-            width = 1080;
-            height = width*scale;
-        }else{
-            CGFloat scale = width/height;
-            height = 1080;
-            width = height*scale;
-        }
-        //2.宽大于1080高小于1080
-    }else if(width>1080 && height<1080){
-        CGFloat scale = height/width;
-        width = 1080;
-        height = width*scale;
-        //3.宽小于1080高大于1080
-    }else if(width<1080 && height>1080){
-        CGFloat scale = width/height;
-        height = 1080;
-        width = height*scale;
-        //4.宽高都小于1080
-    }else{
-    }
-    UIGraphicsBeginImageContext(CGSizeMake(width, height));
-    [sourceImage drawInRect:CGRectMake(0,0,width,height)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">+(<span class="keyword">void</span>)zipNSDataWithImage:(UIImage *)sourceImage imageBlock:(ImageBlock)block{</span><br><span class="line">    <span class="comment">//进行图像尺寸的压缩</span></span><br><span class="line">    CGSize imageSize = sourceImage.<span class="built_in">size</span>;<span class="comment">//取出要压缩的image尺寸</span></span><br><span class="line">    CGFloat <span class="built_in">width</span> = imageSize.<span class="built_in">width</span>;    <span class="comment">//图片宽度</span></span><br><span class="line">    CGFloat <span class="built_in">height</span> = imageSize.<span class="built_in">height</span>;  <span class="comment">//图片高度</span></span><br><span class="line">    </span><br><span class="line">    CGFloat scale = <span class="built_in">height</span>/<span class="built_in">width</span>;</span><br><span class="line">    <span class="comment">//0.宽高比例大于8</span></span><br><span class="line">    <span class="keyword">if</span> (scale &gt; <span class="number">8.0</span> || scale &lt; <span class="number">1</span>/<span class="number">8.</span>) {</span><br><span class="line">        <span class="keyword">if</span> (scale &gt; <span class="number">8.0</span>) {</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">width</span> &gt; <span class="number">1080</span>) {</span><br><span class="line">                <span class="built_in">width</span> = <span class="number">1080</span>;</span><br><span class="line">                <span class="built_in">height</span> = <span class="built_in">width</span> * scale;</span><br><span class="line">            }<span class="keyword">else</span> {</span><br><span class="line">                <span class="comment">//不压缩</span></span><br><span class="line">            }</span><br><span class="line">        }<span class="keyword">else</span> {</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">height</span> &gt; <span class="number">1080.</span>) {</span><br><span class="line">                <span class="built_in">height</span> = <span class="number">1080</span>;</span><br><span class="line">                <span class="built_in">width</span> = <span class="built_in">height</span> / scale;</span><br><span class="line">            }<span class="keyword">else</span> {</span><br><span class="line">                <span class="comment">//不压缩</span></span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">//1.宽高大于1080(宽高比不按照2来算，按照1来算)</span></span><br><span class="line">    }<span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">width</span>&gt;<span class="number">1080</span> &amp;&amp; <span class="built_in">height</span>&gt;<span class="number">1080</span>) {</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">height</span> &gt; <span class="built_in">width</span>) {</span><br><span class="line">            CGFloat scale = <span class="built_in">height</span>/<span class="built_in">width</span>;</span><br><span class="line">            <span class="built_in">width</span> = <span class="number">1080</span>;</span><br><span class="line">            <span class="built_in">height</span> = <span class="built_in">width</span>*scale;</span><br><span class="line">        }<span class="keyword">else</span>{</span><br><span class="line">            CGFloat scale = <span class="built_in">width</span>/<span class="built_in">height</span>;</span><br><span class="line">            <span class="built_in">height</span> = <span class="number">1080</span>;</span><br><span class="line">            <span class="built_in">width</span> = <span class="built_in">height</span>*scale;</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">//2.宽大于1080高小于1080</span></span><br><span class="line">    }<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">width</span>&gt;<span class="number">1080</span> &amp;&amp; <span class="built_in">height</span>&lt;<span class="number">1080</span>){</span><br><span class="line">        CGFloat scale = <span class="built_in">height</span>/<span class="built_in">width</span>;</span><br><span class="line">        <span class="built_in">width</span> = <span class="number">1080</span>;</span><br><span class="line">        <span class="built_in">height</span> = <span class="built_in">width</span>*scale;</span><br><span class="line">        <span class="comment">//3.宽小于1080高大于1080</span></span><br><span class="line">    }<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">width</span>&lt;<span class="number">1080</span> &amp;&amp; <span class="built_in">height</span>&gt;<span class="number">1080</span>){</span><br><span class="line">        CGFloat scale = <span class="built_in">width</span>/<span class="built_in">height</span>;</span><br><span class="line">        <span class="built_in">height</span> = <span class="number">1080</span>;</span><br><span class="line">        <span class="built_in">width</span> = <span class="built_in">height</span>*scale;</span><br><span class="line">        <span class="comment">//4.宽高都小于1080</span></span><br><span class="line">    }<span class="keyword">else</span>{</span><br><span class="line">    }</span><br><span class="line">    UIGraphicsBeginImageContext(CGSizeMake(<span class="built_in">width</span>, <span class="built_in">height</span>));</span><br><span class="line">    [sourceImage drawInRect:CGRectMake(<span class="number">0</span>,<span class="number">0</span>,<span class="built_in">width</span>,<span class="built_in">height</span>)];</span><br><span class="line">    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">    UIGraphicsEndImageContext();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//进行图像的画面质量压缩,统一按0.5压缩</span></span><br><span class="line">    NSData *data=UIImageJPEGRepresentation(newImage, <span class="number">0.5</span>);</span><br><span class="line"><span class="comment">//    if (data.length&gt;100*1024) {</span></span><br><span class="line"><span class="comment">//        if (data.length&gt;1024*1024) {//1M以及以上</span></span><br><span class="line"><span class="comment">//            data=UIImageJPEGRepresentation(newImage, 0.5);</span></span><br><span class="line"><span class="comment">//        }else if (data.length&gt;512*1024) {//0.5M-1M</span></span><br><span class="line"><span class="comment">//            data=UIImageJPEGRepresentation(newImage, 0.8);</span></span><br><span class="line"><span class="comment">//        }else {</span></span><br><span class="line"><span class="comment">//            //0.25M-0.5M</span></span><br><span class="line"><span class="comment">//            data=UIImageJPEGRepresentation(newImage, 0.9);</span></span><br><span class="line"><span class="comment">//        }</span></span><br><span class="line"><span class="comment">//    }</span></span><br><span class="line">    block(data);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    //进行图像的画面质量压缩,统一按0.5压缩
-    NSData *data=UIImageJPEGRepresentation(newImage, 0.5);
-//    if (data.length>100*1024) {
-//        if (data.length>1024*1024) {//1M以及以上
-//            data=UIImageJPEGRepresentation(newImage, 0.5);
-//        }else if (data.length>512*1024) {//0.5M-1M
-//            data=UIImageJPEGRepresentation(newImage, 0.8);
-//        }else {
-//            //0.25M-0.5M
-//            data=UIImageJPEGRepresentation(newImage, 0.9);
-//        }
-//    }
-    block(data);
-}</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -867,7 +768,7 @@
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -972,8 +873,7 @@ NLTK 是一款著名的 Python 自然语言处理(Natural Language Processing, N
                             
 数据增强中的一些基本操作，例如裁剪图片大小，图片正则话标准化处理，图片数据转tensor向量，图片随机裁剪，旋转，过滤，图片锐化，以及图片模糊等。
 
-1. Resizeclass Resize(object):
-    def __ini
+1. Resize123456789101112class Resize(object)
                         
                     </div>
                     <div class="publish-info">
@@ -1197,7 +1097,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1221,7 +1121,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1242,10 +1142,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1354,6 +1250,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

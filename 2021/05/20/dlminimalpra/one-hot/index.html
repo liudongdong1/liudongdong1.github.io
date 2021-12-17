@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="One-hot, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="One-hot, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -493,6 +515,10 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -500,12 +526,12 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
                     1.8k
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -529,22 +555,8 @@
 <li><code>离散特征的取值之间没有大小的意义</code>，比如color：[red,blue],那么就使用one-hot编码</li>
 <li><code>离散特征的取值有大小的意义</code>，比如size:[X,XL,XXL],那么就使用<code>数值的映射</code>{X:1,XL:2,XXL:3}</li>
 </ol>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd
-df <span class="token operator">=</span> pd<span class="token punctuation">.</span>DataFrame<span class="token punctuation">(</span><span class="token punctuation">[</span>
-            <span class="token punctuation">[</span><span class="token string">'green'</span><span class="token punctuation">,</span> <span class="token string">'M'</span><span class="token punctuation">,</span> <span class="token number">10.1</span><span class="token punctuation">,</span> <span class="token string">'class1'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> 
-            <span class="token punctuation">[</span><span class="token string">'red'</span><span class="token punctuation">,</span> <span class="token string">'L'</span><span class="token punctuation">,</span> <span class="token number">13.5</span><span class="token punctuation">,</span> <span class="token string">'class2'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> 
-            <span class="token punctuation">[</span><span class="token string">'blue'</span><span class="token punctuation">,</span> <span class="token string">'XL'</span><span class="token punctuation">,</span> <span class="token number">15.3</span><span class="token punctuation">,</span> <span class="token string">'class1'</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.DataFrame([</span><br><span class="line">            [<span class="string">'green'</span>, <span class="string">'M'</span>, <span class="number">10.1</span>, <span class="string">'class1'</span>], </span><br><span class="line">            [<span class="string">'red'</span>, <span class="string">'L'</span>, <span class="number">13.5</span>, <span class="string">'class2'</span>], </span><br><span class="line">            [<span class="string">'blue'</span>, <span class="string">'XL'</span>, <span class="number">15.3</span>, <span class="string">'class1'</span>]])</span><br><span class="line"> </span><br><span class="line">df.columns = [<span class="string">'color'</span>, <span class="string">'size'</span>, <span class="string">'prize'</span>, <span class="string">'class label'</span>]</span><br><span class="line"> </span><br><span class="line">size_mapping = {</span><br><span class="line">           <span class="string">'XL'</span>: <span class="number">3</span>,</span><br><span class="line">           <span class="string">'L'</span>: <span class="number">2</span>,</span><br><span class="line">           <span class="string">'M'</span>: <span class="number">1</span>}</span><br><span class="line">df[<span class="string">'size'</span>] = df[<span class="string">'size'</span>].map(size_mapping)</span><br><span class="line"> </span><br><span class="line">class_mapping = {label:idx <span class="keyword">for</span> idx,label <span class="keyword">in</span> enumerate(set(df[<span class="string">'class label'</span>]))}</span><br><span class="line">df[<span class="string">'class label'</span>] = df[<span class="string">'class label'</span>].map(class_mapping)</span><br></pre></td></tr></tbody></table></figure>
 
-df<span class="token punctuation">.</span>columns <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'color'</span><span class="token punctuation">,</span> <span class="token string">'size'</span><span class="token punctuation">,</span> <span class="token string">'prize'</span><span class="token punctuation">,</span> <span class="token string">'class label'</span><span class="token punctuation">]</span>
-
-size_mapping <span class="token operator">=</span> <span class="token punctuation">{</span>
-           <span class="token string">'XL'</span><span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
-           <span class="token string">'L'</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
-           <span class="token string">'M'</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">}</span>
-df<span class="token punctuation">[</span><span class="token string">'size'</span><span class="token punctuation">]</span> <span class="token operator">=</span> df<span class="token punctuation">[</span><span class="token string">'size'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>map<span class="token punctuation">(</span>size_mapping<span class="token punctuation">)</span>
-
-class_mapping <span class="token operator">=</span> <span class="token punctuation">{</span>label<span class="token punctuation">:</span>idx <span class="token keyword">for</span> idx<span class="token punctuation">,</span>label <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>set<span class="token punctuation">(</span>df<span class="token punctuation">[</span><span class="token string">'class label'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
-df<span class="token punctuation">[</span><span class="token string">'class label'</span><span class="token punctuation">]</span> <span class="token operator">=</span> df<span class="token punctuation">[</span><span class="token string">'class label'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>map<span class="token punctuation">(</span>class_mapping<span class="token punctuation">)</span></code></pre>
 <h3 id="2-One-hot"><a href="#2-One-hot" class="headerlink" title="2. One-hot"></a>2. One-hot</h3><blockquote>
 <p>独热编码即 One-Hot 编码，又称一位有效编码，其方法是使用N位状态寄存器来对N个状态进行编码，每个状态都由他独立的寄存器位，并且在任意时候，其中只有一位有效。</p>
 <ul>
@@ -562,24 +574,13 @@ df<span class="token punctuation">[</span><span class="token string">'class labe
 <li><strong>计算top N准确度</strong></li>
 </ul>
 </blockquote>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> sklearn <span class="token keyword">import</span> preprocessing
-enc <span class="token operator">=</span> preprocessing<span class="token punctuation">.</span>OneHotEncoder<span class="token punctuation">(</span><span class="token punctuation">)</span>
-enc<span class="token punctuation">.</span>fit<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># fit来学习编码 数据矩阵是4*3，即4个数据，3个特征维度， 每一个特征维度都单独进行onehot编码</span>
-enc<span class="token punctuation">.</span>transform<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>toarray<span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># 进行编码</span>
-<span class="token comment" spellcheck="true">#输出 array([[ 1., 0., 0., 1., 0., 0., 0., 0., 1.]])</span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing</span><br><span class="line">enc = preprocessing.OneHotEncoder()</span><br><span class="line">enc.fit([[<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>]])    <span class="comment"># fit来学习编码 数据矩阵是4*3，即4个数据，3个特征维度， 每一个特征维度都单独进行onehot编码</span></span><br><span class="line">enc.transform([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>]]).toarray()    <span class="comment"># 进行编码</span></span><br><span class="line"><span class="comment">#输出 array([[ 1., 0., 0., 1., 0., 0., 0., 0., 1.]])</span></span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>数值类别</li>
 </ul>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>preprocessing <span class="token keyword">import</span> OneHotEncoder
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>preprocessing <span class="token keyword">import</span> LabelEncoder
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>preprocessing <span class="token keyword">import</span> LabelBinarizer
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>preprocessing <span class="token keyword">import</span> MultiLabelBinarizer
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> OneHotEncoder</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelBinarizer</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MultiLabelBinarizer</span><br><span class="line"></span><br><span class="line">testdata = pd.DataFrame({<span class="string">'pet'</span>: [<span class="string">'cat'</span>, <span class="string">'dog'</span>, <span class="string">'dog'</span>, <span class="string">'fish'</span>],                         </span><br><span class="line"><span class="string">'age'</span>: [<span class="number">4</span> , <span class="number">6</span>, <span class="number">3</span>, <span class="number">3</span>],                         </span><br><span class="line"><span class="string">'salary'</span>:[<span class="number">4</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">1</span>]})</span><br><span class="line">OneHotEncoder(sparse = <span class="literal">False</span>).fit_transform( testdata[[<span class="string">'age'</span>]] )</span><br></pre></td></tr></tbody></table></figure>
 
-testdata <span class="token operator">=</span> pd<span class="token punctuation">.</span>DataFrame<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">'pet'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'cat'</span><span class="token punctuation">,</span> <span class="token string">'dog'</span><span class="token punctuation">,</span> <span class="token string">'dog'</span><span class="token punctuation">,</span> <span class="token string">'fish'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>                         
-<span class="token string">'age'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">4</span> <span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span>                         
-<span class="token string">'salary'</span><span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-OneHotEncoder<span class="token punctuation">(</span>sparse <span class="token operator">=</span> <span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fit_transform<span class="token punctuation">(</span> testdata<span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token string">'age'</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token punctuation">)</span></code></pre>
 <ul>
 <li>字符串编码</li>
 </ul>
@@ -589,12 +590,8 @@ OneHotEncoder<span class="token punctuation">(</span>sparse <span class="token o
 <li>方法二<code>直接用 LabelBinarizer() 进行二值化</code></li>
 </ul>
 </blockquote>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># 方法一: LabelEncoder() + OneHotEncoder()</span>
-a <span class="token operator">=</span> LabelEncoder<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fit_transform<span class="token punctuation">(</span>testdata<span class="token punctuation">[</span><span class="token string">'pet'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-OneHotEncoder<span class="token punctuation">(</span> sparse<span class="token operator">=</span><span class="token boolean">False</span> <span class="token punctuation">)</span><span class="token punctuation">.</span>fit_transform<span class="token punctuation">(</span>a<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 注意: 这里把 a 用 reshape 转换成 2-D array</span>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一: LabelEncoder() + OneHotEncoder()</span></span><br><span class="line">a = LabelEncoder().fit_transform(testdata[<span class="string">'pet'</span>])</span><br><span class="line">OneHotEncoder( sparse=<span class="literal">False</span> ).fit_transform(a.reshape(<span class="number">-1</span>,<span class="number">1</span>)) <span class="comment"># 注意: 这里把 a 用 reshape 转换成 2-D array</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二: 直接用 LabelBinarizer()</span></span><br><span class="line">LabelBinarizer().fit_transform(testdata[<span class="string">'pet'</span>])</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token comment" spellcheck="true"># 方法二: 直接用 LabelBinarizer()</span>
-LabelBinarizer<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fit_transform<span class="token punctuation">(</span>testdata<span class="token punctuation">[</span><span class="token string">'pet'</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <h3 id="3-LabelEncoding"><a href="#3-LabelEncoding" class="headerlink" title="3. LabelEncoding"></a>3. LabelEncoding</h3><blockquote>
 <p>Label Encoding是使用字典的方式，将<code>每个类别标签与不断增加的整数相关联</code>，即生成一个名为class_的实例数组的索引。</p>
 <ul>
@@ -607,20 +604,13 @@ LabelBinarizer<span class="token punctuation">(</span><span class="token punctua
 <blockquote>
 <p><code>只是将文本转化为数值，并没有解决文本特征的问题</code>：所有的标签都变成了数字，算法模型直接将根据其距离来考虑相似的数字，而不考虑标签的具体含义。使用该方法处理后的数据适合支持类别性质的算法模型，如LightGBM.</p>
 </blockquote>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>preprocessing <span class="token keyword">import</span> LabelEncoder
-le <span class="token operator">=</span> LabelEncoder<span class="token punctuation">(</span><span class="token punctuation">)</span>
-city_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"paris"</span><span class="token punctuation">,</span> <span class="token string">"paris"</span><span class="token punctuation">,</span> <span class="token string">"tokyo"</span><span class="token punctuation">,</span> <span class="token string">"amsterdam"</span><span class="token punctuation">]</span>
-le<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>city_list<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>le<span class="token punctuation">.</span>classes_<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 输出为：['amsterdam' 'paris' 'tokyo']</span>
-city_list_le <span class="token operator">=</span> le<span class="token punctuation">.</span>transform<span class="token punctuation">(</span>city_list<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 进行Encode</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>city_list_le<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 输出为：[1 1 2 0]</span>
-city_list_new <span class="token operator">=</span> le<span class="token punctuation">.</span>inverse_transform<span class="token punctuation">(</span>city_list_le<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 进行decode</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>city_list_new<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 输出为：['paris' 'paris' 'tokyo' 'amsterdam']</span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder</span><br><span class="line">le = LabelEncoder()</span><br><span class="line">city_list = [<span class="string">"paris"</span>, <span class="string">"paris"</span>, <span class="string">"tokyo"</span>, <span class="string">"amsterdam"</span>]</span><br><span class="line">le.fit(city_list)</span><br><span class="line">print(le.classes_)  <span class="comment"># 输出为：['amsterdam' 'paris' 'tokyo']</span></span><br><span class="line">city_list_le = le.transform(city_list)  <span class="comment"># 进行Encode</span></span><br><span class="line">print(city_list_le)  <span class="comment"># 输出为：[1 1 2 0]</span></span><br><span class="line">city_list_new = le.inverse_transform(city_list_le)  <span class="comment"># 进行decode</span></span><br><span class="line">print(city_list_new) <span class="comment"># 输出为：['paris' 'paris' 'tokyo' 'amsterdam']</span></span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="4-Ordinal-Encoding"><a href="#4-Ordinal-Encoding" class="headerlink" title="4. Ordinal Encoding"></a>4. Ordinal Encoding</h3><blockquote>
 <p>对于一个具有<code>m个category的Feature，我们将其对应地映射到 [0,m-1] 的整数</code>。当然 Ordinal Encoding 更<code>适用于 Ordinal Feature，即各个特征有内在的顺序</code>。例如对于<code>”学历”这样的类别，”学士”、”硕士”、”博士”</code>可以很自然地编码成 [0,2]，因为它们内在就含有这样的逻辑顺序。</p>
 </blockquote>
-<pre class=" language-python"><code class="language-python">ord_map <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'Gen 1'</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'Gen 2'</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">'Gen 3'</span><span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'Gen 4'</span><span class="token punctuation">:</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token string">'Gen 5'</span><span class="token punctuation">:</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token string">'Gen 6'</span><span class="token punctuation">:</span> <span class="token number">6</span><span class="token punctuation">}</span>
-df<span class="token punctuation">[</span><span class="token string">'GenerationLabel'</span><span class="token punctuation">]</span> <span class="token operator">=</span> df<span class="token punctuation">[</span><span class="token string">'Generation'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>map<span class="token punctuation">(</span>gord_map<span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ord_map = {<span class="string">'Gen 1'</span>: <span class="number">1</span>, <span class="string">'Gen 2'</span>: <span class="number">2</span>, <span class="string">'Gen 3'</span>: <span class="number">3</span>, <span class="string">'Gen 4'</span>: <span class="number">4</span>, <span class="string">'Gen 5'</span>: <span class="number">5</span>, <span class="string">'Gen 6'</span>: <span class="number">6</span>}</span><br><span class="line">df[<span class="string">'GenerationLabel'</span>] = df[<span class="string">'Generation'</span>].map(gord_map)</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="5-Frequency-Encoding-Count-Encoding"><a href="#5-Frequency-Encoding-Count-Encoding" class="headerlink" title="5. Frequency Encoding/Count Encoding"></a>5. Frequency Encoding/Count Encoding</h3><blockquote>
 <p>将类别特征替换为训练集中的计数（一般是根据训练集来进行计数，属于统计编码的一种，统计编码，就是用类别的统计特征来代替原始类别，比如类别A在训练集中出现了100次则编码为100）。这个方法对离群值很敏感，所以结果可以归一化或者转换一下（例如使用对数变换）。未知类别可以替换为1。</p>
 </blockquote>
@@ -635,33 +625,8 @@ df<span class="token punctuation">[</span><span class="token string">'Generation
 <li>使用<code>LabelEncoder会以为两个相近的数字比两个较远的数字更为相似一些</code>，为了解决这个问题，使用独热编码，即OneHot编码，得到的输出结果默认是稀疏矩阵，可以使用toarray()方法完成转换。</li>
 </ul>
 </blockquote>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>preprocessing <span class="token keyword">import</span> LabelEncoder<span class="token punctuation">,</span> LabelBinarizer<span class="token punctuation">,</span> OneHotEncoder
-test_data <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">,</span> <span class="token string">"d"</span><span class="token punctuation">,</span> <span class="token string">"a"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder, LabelBinarizer, OneHotEncoder</span><br><span class="line">test_data = np.array([<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"a"</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#[0 1 2 3 0]  LabelEncoder 产生结果为连续性特征</span></span><br><span class="line">print(LabelEncoder().fit_transform(test_data))</span><br><span class="line"></span><br><span class="line"><span class="comment">#LabelBinarizer 直接返回numpy数组，可以通过使用sparse_output=True给LabelBinarizer构造函数，可以得到稀疏矩阵。</span></span><br><span class="line"><span class="comment">#[[1 0 0 0]</span></span><br><span class="line"><span class="comment">#[0 1 0 0]</span></span><br><span class="line"><span class="comment">#[0 0 1 0]</span></span><br><span class="line"><span class="comment">#[0 0 0 1]</span></span><br><span class="line"><span class="comment">#[1 0 0 0]]</span></span><br><span class="line">print(LabelBinarizer().fit_transform(test_data))</span><br><span class="line"></span><br><span class="line">print(OneHotEncoder().fit_transform(test_data.reshape(<span class="number">-1</span>, <span class="number">1</span>)))  <span class="comment"># 输出是一个SciPy稀疏矩阵</span></span><br><span class="line">print(OneHotEncoder().fit_transform(test_data.reshape(<span class="number">-1</span>, <span class="number">1</span>)).toarray())    <span class="comment"># 转换成一个密集的NumPy数组 结果如下</span></span><br><span class="line"><span class="comment">#(0, 0) 1.0</span></span><br><span class="line"><span class="comment">#(1, 1) 1.0</span></span><br><span class="line"><span class="comment">#(2, 2) 1.0</span></span><br><span class="line"><span class="comment">#(3, 3) 1.0</span></span><br><span class="line"><span class="comment">#(4, 0) 1.0</span></span><br><span class="line"><span class="comment">#[[1. 0. 0. 0.]</span></span><br><span class="line"><span class="comment">#[0. 1. 0. 0.]</span></span><br><span class="line"><span class="comment">#[0. 0. 1. 0.]</span></span><br><span class="line"><span class="comment">#[0. 0. 0. 1.]</span></span><br><span class="line"><span class="comment">#[1. 0. 0. 0.]]</span></span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token comment" spellcheck="true">#[0 1 2 3 0]  LabelEncoder 产生结果为连续性特征</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>LabelEncoder<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fit_transform<span class="token punctuation">(</span>test_data<span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true">#LabelBinarizer 直接返回numpy数组，可以通过使用sparse_output=True给LabelBinarizer构造函数，可以得到稀疏矩阵。</span>
-<span class="token comment" spellcheck="true">#[[1 0 0 0]</span>
-<span class="token comment" spellcheck="true">#[0 1 0 0]</span>
-<span class="token comment" spellcheck="true">#[0 0 1 0]</span>
-<span class="token comment" spellcheck="true">#[0 0 0 1]</span>
-<span class="token comment" spellcheck="true">#[1 0 0 0]]</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>LabelBinarizer<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fit_transform<span class="token punctuation">(</span>test_data<span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-<span class="token keyword">print</span><span class="token punctuation">(</span>OneHotEncoder<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fit_transform<span class="token punctuation">(</span>test_data<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 输出是一个SciPy稀疏矩阵</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>OneHotEncoder<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fit_transform<span class="token punctuation">(</span>test_data<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>toarray<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># 转换成一个密集的NumPy数组 结果如下</span>
-<span class="token comment" spellcheck="true">#(0, 0) 1.0</span>
-<span class="token comment" spellcheck="true">#(1, 1) 1.0</span>
-<span class="token comment" spellcheck="true">#(2, 2) 1.0</span>
-<span class="token comment" spellcheck="true">#(3, 3) 1.0</span>
-<span class="token comment" spellcheck="true">#(4, 0) 1.0</span>
-<span class="token comment" spellcheck="true">#[[1. 0. 0. 0.]</span>
-<span class="token comment" spellcheck="true">#[0. 1. 0. 0.]</span>
-<span class="token comment" spellcheck="true">#[0. 0. 1. 0.]</span>
-<span class="token comment" spellcheck="true">#[0. 0. 0. 1.]</span>
-<span class="token comment" spellcheck="true">#[1. 0. 0. 0.]]</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -874,7 +839,7 @@ test_data <span class="token operator">=</span> np<span class="token punctuation
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -1204,7 +1169,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1228,7 +1193,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1249,10 +1214,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1361,6 +1322,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

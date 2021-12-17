@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="RFIDSetting, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="RFIDSetting, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -464,12 +486,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/RFID/">
-                                <span class="chip bg-color">RFID</span>
-                            </a>
-                        
                             <a href="/tags/demo/">
                                 <span class="chip bg-color">demo</span>
+                            </a>
+                        
+                            <a href="/tags/RFID/">
+                                <span class="chip bg-color">RFID</span>
                             </a>
                         
                     </div>
@@ -497,6 +519,10 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -504,17 +530,17 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    1.4k
+                    1.8k
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    8 Min
+                    11 Min
                 </div>
                 
 
@@ -591,46 +617,24 @@
 <blockquote>
 <p>the observed tag data is stored in Reader memory and a report of all observed tags is sent only when commanded by the client application;</p>
 </blockquote>
-<pre class=" language-c#"><code class="language-c#">// wait until the tag query has ended before sending the tag report
-settings.Report.Mode=ReportMode.WaitForQuery;
-Reader.ApplySettings(settings);
-//Read tags for 5 seconds
-TagReport tagReport=Reader.QueryTags(5)</code></pre>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// wait until the tag query has ended before sending the tag report</span><br><span class="line">settings.Report.Mode=ReportMode.WaitForQuery;</span><br><span class="line">Reader.ApplySettings(settings);</span><br><span class="line">//Read tags for 5 seconds</span><br><span class="line">TagReport tagReport=Reader.QueryTags(5)</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li><strong>Asynchronously</strong></li>
 </ul>
 <blockquote>
 <p>the reader report reach tag to the client application, as soon as it is observed.</p>
 </blockquote>
-<pre class=" language-c#"><code class="language-c#">//send a tag report for every tag read
-settings.Report.Mode=ReportMode.Individual;
-//assign the TagsReported handler, this specifies which function to call when tags reports are avaible;
-Reader.TagsReport+=new EventHandler<TagsReportedEventArgs>(OnTagsReported);
-Reader.Start();
-//wait for the user to press enter
-Console.WriteLine("Press enter when done.");
-Console.ReadLine();
-Reader.Stop();
-Reader.Disconnect();
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//send a tag report for every tag read</span><br><span class="line">settings.Report.Mode=ReportMode.Individual;</span><br><span class="line">//assign the TagsReported handler, this specifies which function to call when tags reports are avaible;</span><br><span class="line">Reader.TagsReport+=new EventHandler&lt;TagsReportedEventArgs&gt;(OnTagsReported);</span><br><span class="line">Reader.Start();</span><br><span class="line">//wait for the user to press enter</span><br><span class="line">Console.WriteLine("Press enter when done.");</span><br><span class="line">Console.ReadLine();</span><br><span class="line">Reader.Stop();</span><br><span class="line">Reader.Disconnect();</span><br><span class="line"></span><br><span class="line">static void OnTagsReported(object sender, TagsReportedEventArgs args){</span><br><span class="line">    //This function is called asynchronously when tag reports are available,loop through each tag in the report and print the data</span><br><span class="line">    foreach(Tag tag in args.TagReport.Tags){</span><br><span class="line">        //Todo</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-static void OnTagsReported(object sender, TagsReportedEventArgs args){
-    //This function is called asynchronously when tag reports are available,loop through each tag in the report and print the data
-    foreach(Tag tag in args.TagReport.Tags){
-        //Todo
-    }
-}</code></pre>
 <ul>
 <li><strong>using periodic trigger</strong></li>
 </ul>
 <blockquote>
 <p>During polling, the reader initiates a scan for tags for a specified period of time and then waits for a set period before scanning again, which is sufficient and reduces both network and RF congestion.</p>
 </blockquote>
-<pre class=" language-c#"><code class="language-c#">settings.Report.Mode=ReportMode.Individual;
-// Reading tags for 5 seconds every 10 seconds
-settings.AutoStart.Mode=AutoStartMode.Periodic;
-settings.AutoStart.PeriodInMs=10000;
-settings.AutoStop.Mode=AutoStopMode.duration;
-settings.AutoStop.DurationInMs=5000;</code></pre>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">settings.Report.Mode=ReportMode.Individual;</span><br><span class="line">// Reading tags for 5 seconds every 10 seconds</span><br><span class="line">settings.AutoStart.Mode=AutoStartMode.Periodic;</span><br><span class="line">settings.AutoStart.PeriodInMs=10000;</span><br><span class="line">settings.AutoStop.Mode=AutoStopMode.duration;</span><br><span class="line">settings.AutoStop.DurationInMs=5000;</span><br></pre></td></tr></tbody></table></figure>
+
 <h4 id="2-5-Filter"><a href="#2-5-Filter" class="headerlink" title="2.5. Filter"></a>2.5. Filter</h4><h5 id="2-5-1-SingleTag"><a href="#2-5-1-SingleTag" class="headerlink" title="2.5.1. SingleTag"></a>2.5.1. SingleTag</h5><blockquote>
 <p>using GEN 2 filtering, either EPC, User, TID or a combination of these to read certain tags based on their data;</p>
 <ul>
@@ -638,149 +642,52 @@ settings.AutoStop.DurationInMs=5000;</code></pre>
 <li>configure the reader that it commands only tags matching the filter to response while the others will stay silent;</li>
 </ul>
 </blockquote>
-<pre class=" language-c#"><code class="language-c#">// setup a tag filter only the tags that match this filter will respond;
-settings.Filters.Mode=TagFilterMode.OnlyFilter1;
-//apply the filger to the EPC memory bank
-settings.Filters.TagFilter1.MemoryBand=MemoryBank.Epc;
-// start matching at address 0*20, since the first 32-bits of the EPC memory bank are the CRC and control bits;
-settings.Filters.TagFilter1.BitPointer=0x20;
-//our filter is 16-bits long(the first word of the EPC)
-settings.Filters.TagFilter1.BitCount=16;
-//only match tags with EPCs that start with 3008
-settings.Filters.TagFilter1.TagMask="3008";
-//include tags that match this filter, and alternatively,we could exlude tags that match the filter
-settings.Filters.TagFilter1.FilterOp=TagFilterOp.Match;</code></pre>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// setup a tag filter only the tags that match this filter will respond;</span><br><span class="line">settings.Filters.Mode=TagFilterMode.OnlyFilter1;</span><br><span class="line">//apply the filger to the EPC memory bank</span><br><span class="line">settings.Filters.TagFilter1.MemoryBand=MemoryBank.Epc;</span><br><span class="line">// start matching at address 0*20, since the first 32-bits of the EPC memory bank are the CRC and control bits;</span><br><span class="line">settings.Filters.TagFilter1.BitPointer=0x20;</span><br><span class="line">//our filter is 16-bits long(the first word of the EPC)</span><br><span class="line">settings.Filters.TagFilter1.BitCount=16;</span><br><span class="line">//only match tags with EPCs that start with 3008</span><br><span class="line">settings.Filters.TagFilter1.TagMask="3008";</span><br><span class="line">//include tags that match this filter, and alternatively,we could exlude tags that match the filter</span><br><span class="line">settings.Filters.TagFilter1.FilterOp=TagFilterOp.Match;</span><br></pre></td></tr></tbody></table></figure>
+
 <h5 id="2-5-2-User-Memory"><a href="#2-5-2-User-Memory" class="headerlink" title="2.5.2. User Memory"></a>2.5.2. User Memory</h5><blockquote>
 <p>the Impinj Monza 4 tags offer up to 512 bits of user memory, query the user memory using exception handling.</p>
 </blockquote>
-<pre class=" language-c#"><code class="language-c#">//Define how we want to perform the read
-ReadUserMemoryParams readParams=new ReadUserMemoryParams();
-//use antenna #1
-readParams.AntennaPortNumber=1;
-//No access password required for this tag
-readParams.AccessPassword=null;
-//start reading from the base of user memory(address 0)
-readParams.WordPointer=0;
-//read 32 words of user memory(512 bits)
-readParams.WordCount=32;
-//read the first tag we see,or choose a specific tag by EPC or other identifier;
-readParams.Target=null;
-readParams.TimeoutInMs=5000;
-//Perform the read and check the results
-ReadUserMemoryResult result=Reader.ReadUserMemory(readParams);
-if(result.ReadResult.Result==AccessResult.Success){
-    //todo
-}
-Reader.Disconnect();</code></pre>
-<h5 id="2-5-2-Read-Serialized-TID"><a href="#2-5-2-Read-Serialized-TID" class="headerlink" title="2.5.2. Read Serialized TID"></a>2.5.2. Read Serialized TID</h5><pre class=" language-c#"><code class="language-c#">static string ReadTid(string epc){
-    //Read the TID memory bank
-    ReadTidMemoryParams readParams=new ReadTidMemoryParams();
-    // No password set
-    readParams.AccessPassword=null;
-    readParams.AntennaPortNUmber=0;
-    readParams.TargetTag=epc;
-    readParams.WordCount=2;
-    readParams.TimeoutInMs=5000;
-    ReadTidMemoryResult result=Reader.ReadTidMemory(readParams);
-    return result.ReadResult.ReadData;
-}
-settings.Report.IncludeAntennaPortNumber=true;
-settings.Report.IncludeSerializedTid=true;
-settings.Report.Mode=ReportMode.Individual;
-Reader.ApplySettings(settings);
-TagReport tagReport=Reader.QueryTags(5);
-foreach(Tag tag in tagReport.Tags){
-    if(tag.IsSerialzedTidPresent){
-        tid=tag.SerializedTid;
-    }else{
-        tid=ReadTid(tag.Epc);
-    }
-}
-Reader.Disconnect();</code></pre>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//Define how we want to perform the read</span><br><span class="line">ReadUserMemoryParams readParams=new ReadUserMemoryParams();</span><br><span class="line">//use antenna #1</span><br><span class="line">readParams.AntennaPortNumber=1;</span><br><span class="line">//No access password required for this tag</span><br><span class="line">readParams.AccessPassword=null;</span><br><span class="line">//start reading from the base of user memory(address 0)</span><br><span class="line">readParams.WordPointer=0;</span><br><span class="line">//read 32 words of user memory(512 bits)</span><br><span class="line">readParams.WordCount=32;</span><br><span class="line">//read the first tag we see,or choose a specific tag by EPC or other identifier;</span><br><span class="line">readParams.Target=null;</span><br><span class="line">readParams.TimeoutInMs=5000;</span><br><span class="line">//Perform the read and check the results</span><br><span class="line">ReadUserMemoryResult result=Reader.ReadUserMemory(readParams);</span><br><span class="line">if(result.ReadResult.Result==AccessResult.Success){</span><br><span class="line">	//todo</span><br><span class="line">}</span><br><span class="line">Reader.Disconnect();</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="2-5-2-Read-Serialized-TID"><a href="#2-5-2-Read-Serialized-TID" class="headerlink" title="2.5.2. Read Serialized TID"></a>2.5.2. Read Serialized TID</h5><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">static string ReadTid(string epc){</span><br><span class="line">	//Read the TID memory bank</span><br><span class="line">	ReadTidMemoryParams readParams=new ReadTidMemoryParams();</span><br><span class="line">	// No password set</span><br><span class="line">	readParams.AccessPassword=null;</span><br><span class="line">	readParams.AntennaPortNUmber=0;</span><br><span class="line">	readParams.TargetTag=epc;</span><br><span class="line">	readParams.WordCount=2;</span><br><span class="line">	readParams.TimeoutInMs=5000;</span><br><span class="line">	ReadTidMemoryResult result=Reader.ReadTidMemory(readParams);</span><br><span class="line">	return result.ReadResult.ReadData;</span><br><span class="line">}</span><br><span class="line">settings.Report.IncludeAntennaPortNumber=true;</span><br><span class="line">settings.Report.IncludeSerializedTid=true;</span><br><span class="line">settings.Report.Mode=ReportMode.Individual;</span><br><span class="line">Reader.ApplySettings(settings);</span><br><span class="line">TagReport tagReport=Reader.QueryTags(5);</span><br><span class="line">foreach(Tag tag in tagReport.Tags){</span><br><span class="line">    if(tag.IsSerialzedTidPresent){</span><br><span class="line">        tid=tag.SerializedTid;</span><br><span class="line">    }else{</span><br><span class="line">        tid=ReadTid(tag.Epc);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">Reader.Disconnect();</span><br></pre></td></tr></tbody></table></figure>
+
 <h4 id="2-6-Tag-Access"><a href="#2-6-Tag-Access" class="headerlink" title="2.6. Tag Access"></a>2.6. Tag Access</h4><blockquote>
 <p>covers modifying tag data including writing and locking of EPC, user memory and passwords, killing a tag;</p>
 </blockquote>
 <ul>
 <li><strong>program EPC</strong></li>
 </ul>
-<pre class=" language-c#"><code class="language-c#">epcParams.NewEpc="new EPC";
-ProgramEpcParams epcParams=new ProgramEpcParams();
-ProgramEpcResult result=Reader.ProgramEpc(epcParams);
-if(result.WriteResult.Result==AccessResult.Success){
-    TagReport report=Reader.QueryTags(2);
-}</code></pre>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">epcParams.NewEpc="new EPC";</span><br><span class="line">ProgramEpcParams epcParams=new ProgramEpcParams();</span><br><span class="line">ProgramEpcResult result=Reader.ProgramEpc(epcParams);</span><br><span class="line">if(result.WriteResult.Result==AccessResult.Success){</span><br><span class="line">	TagReport report=Reader.QueryTags(2);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li><strong>user memory</strong></li>
 </ul>
-<pre class=" language-c#"><code class="language-c#">ProgramUserBlockParams writeParams=new ProgramUserBlockParams();
-writeParams.NewUserBlock="new user data";
-ProgramUserBlockResult result=Reader.ProgramUserBlock(writeParams);
-if(result.WriteResult.Result==AccessResult.Success){
-    #pass;
-}</code></pre>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ProgramUserBlockParams writeParams=new ProgramUserBlockParams();</span><br><span class="line">writeParams.NewUserBlock="new user data";</span><br><span class="line">ProgramUserBlockResult result=Reader.ProgramUserBlock(writeParams);</span><br><span class="line">if(result.WriteResult.Result==AccessResult.Success){</span><br><span class="line">	#pass;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li><strong>Kill Tags</strong></li>
 </ul>
-<pre class=" language-c#"><code class="language-c#">ProgramKillPasswordParams pwParams=new ProgramKillPasswordParams();
-pwParams.TargetTag=TARGET_TAG;
-pwParams.NewKillPassword=NEW_KILL_PW; #new kill password
-ProgramKillPasswordResult pwResult=Reader.ProgramKillPassword(pwParams);
-if(pwResult.WriteResult.Result==AccessResult.Success){
-    #todo
-    KillTagParams killParmas=new KillTagParams();
-    killTagResult killResult=Reader.KillTag(killParams);
-    if(killResult.KillResult.Result==AccessResult.Success){
-    #todo
-    }
-}</code></pre>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ProgramKillPasswordParams pwParams=new ProgramKillPasswordParams();</span><br><span class="line">pwParams.TargetTag=TARGET_TAG;</span><br><span class="line">pwParams.NewKillPassword=NEW_KILL_PW; #new kill password</span><br><span class="line">ProgramKillPasswordResult pwResult=Reader.ProgramKillPassword(pwParams);</span><br><span class="line">if(pwResult.WriteResult.Result==AccessResult.Success){</span><br><span class="line">	#todo</span><br><span class="line">	KillTagParams killParmas=new KillTagParams();</span><br><span class="line">	killTagResult killResult=Reader.KillTag(killParams);</span><br><span class="line">	if(killResult.KillResult.Result==AccessResult.Success){</span><br><span class="line">	#todo</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="3-GPIO"><a href="#3-GPIO" class="headerlink" title="3. GPIO"></a>3. GPIO</h3><blockquote>
 <p>The inputs <code>allow external devices to trigger the reader,</code> like light sensors, motion detectors, pressure mats etc. The output allow the reader to affect external devices such as access gates, indicator lights, conveyors .etc.</p>
 </blockquote>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210121114751541.png" alt=""></p>
-<pre class=" language-c#"><code class="language-c#">Settings settings=Reader.QueryFactorySettings();
-settings.Report.IncludeAntennaPortNumber=true;
-settings.Report.Mode=ReportMode.Individual;
-// starting reading tags when GPI #1 goes high
-settings.GPis[1].IsEnable=true;
-settings.GPis[1].DebounceInMs=50;
-settings.AutoStart.Mode=AutoStartMode.GpiTrigger;
-settings.AutoStart.GpiPortNumber=1;
-settings.AutoStart.GpiLevel=true;
-//stop reading tags when gpi #1 goes low
-settings.AutoStop.Mode=AutoStopMode.GpiTrigger;
-settings.AutoStop.GpiPortNUmber=1;
-settings.AutoStop.GpiLevel=false;
-reader.ApplySettings(settings);</code></pre>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Settings settings=Reader.QueryFactorySettings();</span><br><span class="line">settings.Report.IncludeAntennaPortNumber=true;</span><br><span class="line">settings.Report.Mode=ReportMode.Individual;</span><br><span class="line">// starting reading tags when GPI #1 goes high</span><br><span class="line">settings.GPis[1].IsEnable=true;</span><br><span class="line">settings.GPis[1].DebounceInMs=50;</span><br><span class="line">settings.AutoStart.Mode=AutoStartMode.GpiTrigger;</span><br><span class="line">settings.AutoStart.GpiPortNumber=1;</span><br><span class="line">settings.AutoStart.GpiLevel=true;</span><br><span class="line">//stop reading tags when gpi #1 goes low</span><br><span class="line">settings.AutoStop.Mode=AutoStopMode.GpiTrigger;</span><br><span class="line">settings.AutoStop.GpiPortNUmber=1;</span><br><span class="line">settings.AutoStop.GpiLevel=false;</span><br><span class="line">reader.ApplySettings(settings);</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="4-Subscribe"><a href="#4-Subscribe" class="headerlink" title="4. Subscribe"></a>4. Subscribe</h3><ul>
 <li><strong>Subscribe to reader events</strong></li>
 </ul>
-<pre class=" language-c#"><code class="language-c#">Reader.GpiChanged+=new EventHandler<GpiChangedEventArgs>(OnGpiEvent);
-Reader.AntennaChanged+=new EventHandler<AntennaChangedEventArgs>(OnAntennaEvent);
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Reader.GpiChanged+=new EventHandler&lt;GpiChangedEventArgs&gt;(OnGpiEvent);</span><br><span class="line">Reader.AntennaChanged+=new EventHandler&lt;AntennaChangedEventArgs&gt;(OnAntennaEvent);</span><br><span class="line"></span><br><span class="line">static void OnGpiEvent(object sender, GpiChangedEventArgs args){</span><br><span class="line">	//todo</span><br><span class="line">}</span><br><span class="line">static void OnAntennaEvent(object sender, AntennaChangedEventArgs args){</span><br><span class="line">	//Todo</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-static void OnGpiEvent(object sender, GpiChangedEventArgs args){
-    //todo
-}
-static void OnAntennaEvent(object sender, AntennaChangedEventArgs args){
-    //Todo
-}</code></pre>
 <ul>
 <li><strong>Power Ramp</strong></li>
 </ul>
 <blockquote>
 <p>find the lowest power level that still finds all tags, the transmit power is steadily increased.</p>
 </blockquote>
-<pre class=" language-c#"><code class="language-c#">FeatureSet features=Reader.QueryFeatureSet();
-minTx=features.TxPowers.Entries.First().Dbm;
-maxTx=features.TxPowers.Entries.Last().Dbm;
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">FeatureSet features=Reader.QueryFeatureSet();</span><br><span class="line">minTx=features.TxPowers.Entries.First().Dbm;</span><br><span class="line">maxTx=features.TxPowers.Entries.Last().Dbm;</span><br><span class="line"></span><br><span class="line">for(double power=minTx; power&lt;=maxTx; power+=1.0){</span><br><span class="line">	settings.Antennas[1].TxPowerInDbm=power;</span><br><span class="line">	Reader.ApplySettings(settings);</span><br><span class="line">	TagReport report=Reader.QueryTags(2);</span><br><span class="line">	foreach(Tag tag in report.Tags){</span><br><span class="line">		//todo</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-for(double power=minTx; power<=maxTx; power+=1.0){
-    settings.Antennas[1].TxPowerInDbm=power;
-    Reader.ApplySettings(settings);
-    TagReport report=Reader.QueryTags(2);
-    foreach(Tag tag in report.Tags){
-        //todo
-    }
-}</code></pre>
 <h3 id="5-Classes"><a href="#5-Classes" class="headerlink" title="5. Classes"></a>5. Classes</h3><p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210121123636833.png" alt=""></p>
 <h4 id="5-1-methods"><a href="#5-1-methods" class="headerlink" title="5.1. methods"></a>5.1. methods</h4><ul>
 <li>void Connect(string readerIp);  void Disconnect();  void Start(); void Stop();</li>
@@ -917,12 +824,12 @@ for(double power=minTx; power<=maxTx; power+=1.0){
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/RFID/">
-                                    <span class="chip bg-color">RFID</span>
-                                </a>
-                            
                                 <a href="/tags/demo/">
                                     <span class="chip bg-color">demo</span>
+                                </a>
+                            
+                                <a href="/tags/RFID/">
+                                    <span class="chip bg-color">RFID</span>
                                 </a>
                             
                         </div>
@@ -1052,7 +959,7 @@ for(double power=minTx; power<=maxTx; power+=1.0){
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -1094,23 +1001,21 @@ for(double power=minTx; power<=maxTx; power+=1.0){
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2021/01/09/shi-jue-ai/dataglove/leapmotionapp/">
+                <a href="/2021/01/09/shi-kong-shu-ju/retrieve/imageretrieval/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133311.png" class="responsive-img" alt="LeapmotionApp">
+                        <img src="https://cdn.stocksnap.io/img-thumbs/280h/VTRBWVOXY6.jpg" class="responsive-img" alt="ImageRetrieval">
                         
-                        <span class="card-title">LeapmotionApp</span>
+                        <span class="card-title">ImageRetrieval</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1. air mouse
+                            
+给定一个包含特定实例(例如特定目标、场景、建筑等)的查询图像，图像检索旨在从数据库图像中找到包含相同实例的图像。但由于不同图像的拍摄视角、光照、或遮挡情况不同，如何设计出能应对这些类内差异的有效且高效的图像检索算法仍是一项研究难题。
 
-https://github.com/search?q=leap+motion+air+mouse&amp;type=Repositories
-2. Slides presentation
-
-https://gi
+1
                         
                     </div>
                     <div class="publish-info">
@@ -1132,8 +1037,8 @@ https://gi
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/leap-motion/">
-                        <span class="chip bg-color">leap motion</span>
+                    <a href="/tags/retrieval/">
+                        <span class="chip bg-color">retrieval</span>
                     </a>
                     
                 </div>
@@ -1159,11 +1064,7 @@ https://gi
                     <div class="summary block-with-text">
                         
                             
-1. docker 从0搭建hadoop，spark# 拉取并进入ubuntu镜像
-docker pull daocloud.io/ubuntu
-docker run -it daocloud.io/ubuntu  /bin/bash
-
-
+1. docker 从0搭建hadoop，spark123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051
                         
                     </div>
                     <div class="publish-info">
@@ -1387,7 +1288,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1411,7 +1312,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1432,10 +1333,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1544,6 +1441,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

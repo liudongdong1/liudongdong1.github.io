@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="synchronized, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="synchronized, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -497,6 +519,10 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -504,17 +530,17 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    4.2k
+                    4.6k
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    18 Min
+                    21 Min
                 </div>
                 
 
@@ -541,13 +567,8 @@
 <li>同一时刻，同一实例的多个synchronized方法最多只能有一个被访问。</li>
 </ul>
 </blockquote>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Java3y</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 修饰普通方法，此时用的锁是Java3y对象(内置锁)</span>
-    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 关注公众号Java3y</span>
-        <span class="token comment" spellcheck="true">// doSomething</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Java3y</span> </span>{</span><br><span class="line">    <span class="comment">// 修饰普通方法，此时用的锁是Java3y对象(内置锁)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>{</span><br><span class="line">        <span class="comment">// 关注公众号Java3y</span></span><br><span class="line">        <span class="comment">// doSomething</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <h4 id="2-修饰代码块或方法（对象锁）"><a href="#2-修饰代码块或方法（对象锁）" class="headerlink" title=".2. 修饰代码块或方法（对象锁）"></a>.2. 修饰代码块或方法（对象锁）</h4><blockquote>
 <p>调用此对象的同步方法或进入其同步区域时，就必须先获得对象锁。如果此对象的对象锁已被其他调用者占用，则需要等待此锁被释放。（方法锁也是对象锁） 　</p>
 <p><code>java的所有对象都含有1个互斥锁，这个锁由JVM自动获取和释放</code>。线程进入synchronized方法的时候获取该对象的锁，当然如果已经有线程获取了这个对象的锁，那么当前线程会等待；synchronized方法正常返回或者抛异常而终止，<code>JVM会自动释放对象锁</code>。这里也体现了用synchronized来加锁的1个好处，<strong>方法抛异常的时候，锁仍然可以由JVM来自动释放。</strong>　</p>
@@ -556,50 +577,13 @@
 <li><strong>只有使用同一实例的线程才会受锁的影响，多个实例调用同一方法也不会受影响。</strong></li>
 </ul>
 </blockquote>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span>
-<span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 对象锁：形式1(方法锁)</span>
-    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">Method1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"我是对象锁也是方法锁"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">try</span>
-        <span class="token punctuation">{</span>
-            Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment" spellcheck="true">// 对象锁：形式2（代码块形式）</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Method2</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"我是对象锁"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">try</span>
-            <span class="token punctuation">{</span>
-                Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
- ｝</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>{</span><br><span class="line">    <span class="comment">// 对象锁：形式1(方法锁)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">Method1</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        System.out.println(<span class="string">"我是对象锁也是方法锁"</span>);</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        {</span><br><span class="line">            Thread.sleep(<span class="number">500</span>);</span><br><span class="line">        } <span class="keyword">catch</span> (InterruptedException e)</span><br><span class="line">        {</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 对象锁：形式2（代码块形式）</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Method2</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>)</span><br><span class="line">        {</span><br><span class="line">            System.out.println(<span class="string">"我是对象锁"</span>);</span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            {</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            } <span class="keyword">catch</span> (InterruptedException e)</span><br><span class="line">            {</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"> ｝</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>随便使用一个对象作为锁不建议使用,<strong>客户端锁</strong></li>
 </ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Java3y</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 使用object作为锁(任何对象都有对应的锁标记，object也不例外)</span>
-    <span class="token keyword">private</span> Object object <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 修饰代码块，此时用的锁是自己创建的锁Object</span>
-        <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            <span class="token comment" spellcheck="true">// 关注公众号Java3y</span>
-            <span class="token comment" spellcheck="true">// doSomething</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Java3y</span> </span>{</span><br><span class="line">    <span class="comment">// 使用object作为锁(任何对象都有对应的锁标记，object也不例外)</span></span><br><span class="line">    <span class="keyword">private</span> Object object = <span class="keyword">new</span> Object();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>{</span><br><span class="line">        <span class="comment">// 修饰代码块，此时用的锁是自己创建的锁Object</span></span><br><span class="line">        <span class="keyword">synchronized</span> (object){</span><br><span class="line">            <span class="comment">// 关注公众号Java3y</span></span><br><span class="line">            <span class="comment">// doSomething</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <h4 id="3-修饰静态方法"><a href="#3-修饰静态方法" class="headerlink" title=".3. 修饰静态方法"></a>.3. 修饰静态方法</h4><blockquote>
 <ul>
 <li><p>一个class不论被实例化多少次，其中的静态方法和静态变量在内存中都<strong>只有一份</strong></p>
@@ -610,233 +594,24 @@
 </li>
 </ul>
 </blockquote>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span>
-<span class="token punctuation">{</span>
-　　 <span class="token comment" spellcheck="true">// 类锁：形式1</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">Method1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>＂我是类锁一号＂<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">try</span>
-        <span class="token punctuation">{</span>
-            Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment" spellcheck="true">// 类锁：形式2</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> Method２<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>Test<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>＂我是类锁二号＂<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">try</span>
-            <span class="token punctuation">{</span>
-                Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>{</span><br><span class="line">　　 <span class="comment">// 类锁：形式1</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">Method1</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        System.out.println(＂我是类锁一号＂);</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        {</span><br><span class="line">            Thread.sleep(<span class="number">500</span>);</span><br><span class="line">        } <span class="keyword">catch</span> (InterruptedException e)</span><br><span class="line">        {</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 类锁：形式2</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> Method２()</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">synchronized</span> (Test<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">        </span>{</span><br><span class="line">            System.out.println(＂我是类锁二号＂);</span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            {</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            } <span class="keyword">catch</span> (InterruptedException e)</span><br><span class="line">            {</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">｝</span><br></pre></td></tr></tbody></table></figure>
 
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-｝</code></pre>
-<h4 id="4-类锁和对象锁不冲突"><a href="#4-类锁和对象锁不冲突" class="headerlink" title=".4. 类锁和对象锁不冲突"></a>.4. 类锁和对象锁不冲突</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SynchoronizedDemo</span> <span class="token punctuation">{</span>
+<h4 id="4-类锁和对象锁不冲突"><a href="#4-类锁和对象锁不冲突" class="headerlink" title=".4. 类锁和对象锁不冲突"></a>.4. 类锁和对象锁不冲突</h4><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SynchoronizedDemo</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="comment">//synchronized修饰非静态方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">function</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>{</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;<span class="number">3</span>; i++) {</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            System.out.println(<span class="string">"function running..."</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">//synchronized修饰静态方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">staticFunction</span><span class="params">()</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> InterruptedException </span>{</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) {</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            System.out.println(<span class="string">"Static function running..."</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line">        <span class="keyword">final</span> SynchoronizedDemo demo = <span class="keyword">new</span> SynchoronizedDemo();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建线程执行静态方法</span></span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(() -&gt; {</span><br><span class="line">            <span class="keyword">try</span> {</span><br><span class="line">                staticFunction();</span><br><span class="line">            } <span class="keyword">catch</span> (InterruptedException e) {</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            }</span><br><span class="line">        });</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建线程执行实例方法</span></span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(() -&gt; {</span><br><span class="line">            <span class="keyword">try</span> {</span><br><span class="line">                demo.function();</span><br><span class="line">            } <span class="keyword">catch</span> (InterruptedException e) {</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            }</span><br><span class="line">        });</span><br><span class="line">        <span class="comment">// 启动</span></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token comment" spellcheck="true">//synchronized修饰非静态方法</span>
-    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span><span class="token number">3</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"function running..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment" spellcheck="true">//synchronized修饰静态方法</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">staticFunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Static function running..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">final</span> SynchoronizedDemo demo <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SynchoronizedDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">// 创建线程执行静态方法</span>
-        Thread t1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
-            <span class="token keyword">try</span> <span class="token punctuation">{</span>
-                <span class="token function">staticFunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">// 创建线程执行实例方法</span>
-        Thread t2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
-            <span class="token keyword">try</span> <span class="token punctuation">{</span>
-                demo<span class="token punctuation">.</span><span class="token function">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 启动</span>
-        t1<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        t2<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
 <h3 id="2-Lock"><a href="#2-Lock" class="headerlink" title="2. Lock"></a>2. Lock</h3><blockquote>
 <p>在多线程环境中，多个线程可能会同时访问同一个资源，为了避免访问发生冲突，可以根据访问的复杂程度采取不同的措施，原子操作适用于简单的单个操作，无锁算法适用于相对简单的一连串操作，而线程锁适用于复杂的一连串操作</p>
 </blockquote>
 <h4 id="2-1-Lock用法"><a href="#2-1-Lock用法" class="headerlink" title="2.1. Lock用法"></a>2.1. Lock用法</h4><h5 id="1-锁对象"><a href="#1-锁对象" class="headerlink" title=".1. 锁对象"></a>.1. 锁对象</h5><blockquote>
 <p>main方法中，创建了一个对象testlock对象，线程1执行该对象的DoWorkWithLock方法，因为死锁（5s后释放），造成lock(this)无法释放，则导致了方法MotherCallYouDinner，DoWorkWithLock在线程2中无法被调用，直到lock(this)释放，lock(testlock)才能继续执行，可以这么理解，由于锁定的同一个对象，线程1释放了锁定的对象，其它线程才能访问。</p>
 </blockquote>
-<pre class=" language-c#"><code class="language-c#">using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using System.Linq;</span><br><span class="line">using System.Text;</span><br><span class="line">using System.Threading;</span><br><span class="line">using System.Threading.Tasks;</span><br><span class="line"></span><br><span class="line">namespace LockTest</span><br><span class="line">{</span><br><span class="line">    class Program</span><br><span class="line">    {</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        {</span><br><span class="line">            TestLock testlock = new TestLock();</span><br><span class="line">            Thread th = new Thread(() =&gt;</span><br><span class="line">            {</span><br><span class="line">                //模拟死锁：造成死锁，使lock无法释放，在i=5时，跳出死循环，释放lock</span><br><span class="line">                testlock.DoWorkWithLock();</span><br><span class="line">            });</span><br><span class="line">            th.Start();</span><br><span class="line">            Thread.Sleep(1000);</span><br><span class="line">            Thread th2 = new Thread(() =&gt;</span><br><span class="line">            {</span><br><span class="line">                //这个地方你可能会有疑惑，但存在这种情况，比如你封装的dll，对其它开发人员不是可见的</span><br><span class="line">                //开发人员很有可能在他的逻辑中，加上一个lock保证方法同时被一个线程调用，但这时有其它的线程正在调用该方法，</span><br><span class="line">                //但并没有释放，死锁了，那么在这里就不会被执行，除非上面的线程释放了lock锁定的对象。这里的lock也可以理解为一个标识，线程1被锁定的对象</span><br><span class="line">                //是否已经被释放，</span><br><span class="line">                //如果没有释放，则无法继续访问lock块中的代码。</span><br><span class="line">                lock (testlock)</span><br><span class="line">                {</span><br><span class="line">                    // 如果该对象中lock(this)不释放（testlock与this指的是同一个对象），则其它线程如果调用该方法，则会出现直到lock(this)释放后才能继续调用。</span><br><span class="line">                    testlock.MotherCallYouDinner();</span><br><span class="line">                    testlock.DoWorkWithLock();</span><br><span class="line">                }</span><br><span class="line">            });</span><br><span class="line">            th2.Start();</span><br><span class="line">            Console.Read();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    class TestLock</span><br><span class="line">    {</span><br><span class="line">        public static readonly object objLock = new object();</span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        ///  该方法，希望某人在工作的时候，其它人不要打扰（希望只有一个线程在执行)</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        /// &lt;param name="methodIndex"&gt;&lt;/param&gt;</span><br><span class="line">        public void DoWorkWithLock()</span><br><span class="line">        {</span><br><span class="line">            //锁当前对象</span><br><span class="line">            lock (this)</span><br><span class="line">            {</span><br><span class="line">                Console.WriteLine("lock this");</span><br><span class="line">                int i = 0;</span><br><span class="line">                while (true)</span><br><span class="line">                {</span><br><span class="line">                    Console.WriteLine("At work, do not disturb...,Thread id is " + Thread.CurrentThread.ManagedThreadId.ToString());</span><br><span class="line">                    Thread.Sleep(1000);</span><br><span class="line">                    if (i == 5)</span><br><span class="line">                    {</span><br><span class="line">                        break;</span><br><span class="line">                    }</span><br><span class="line">                    Console.WriteLine(i.ToString());</span><br><span class="line">                    i++;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            Console.WriteLine("lock dispose");</span><br><span class="line">        }</span><br><span class="line">        public void MotherCallYouDinner()</span><br><span class="line">        {</span><br><span class="line">            Console.WriteLine("Your mother call you to home for dinner.");</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-namespace LockTest
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            TestLock testlock = new TestLock();
-            Thread th = new Thread(() =>
-            {
-                //模拟死锁：造成死锁，使lock无法释放，在i=5时，跳出死循环，释放lock
-                testlock.DoWorkWithLock();
-            });
-            th.Start();
-            Thread.Sleep(1000);
-            Thread th2 = new Thread(() =>
-            {
-                //这个地方你可能会有疑惑，但存在这种情况，比如你封装的dll，对其它开发人员不是可见的
-                //开发人员很有可能在他的逻辑中，加上一个lock保证方法同时被一个线程调用，但这时有其它的线程正在调用该方法，
-                //但并没有释放，死锁了，那么在这里就不会被执行，除非上面的线程释放了lock锁定的对象。这里的lock也可以理解为一个标识，线程1被锁定的对象
-                //是否已经被释放，
-                //如果没有释放，则无法继续访问lock块中的代码。
-                lock (testlock)
-                {
-                    // 如果该对象中lock(this)不释放（testlock与this指的是同一个对象），则其它线程如果调用该方法，则会出现直到lock(this)释放后才能继续调用。
-                    testlock.MotherCallYouDinner();
-                    testlock.DoWorkWithLock();
-                }
-            });
-            th2.Start();
-            Console.Read();
-        }
-    }
-
-    class TestLock
-    {
-        public static readonly object objLock = new object();
-        /// <summary>
-        ///  该方法，希望某人在工作的时候，其它人不要打扰（希望只有一个线程在执行)
-        /// </summary>
-        /// <param name="methodIndex"></param>
-        public void DoWorkWithLock()
-        {
-            //锁当前对象
-            lock (this)
-            {
-                Console.WriteLine("lock this");
-                int i = 0;
-                while (true)
-                {
-                    Console.WriteLine("At work, do not disturb...,Thread id is " + Thread.CurrentThread.ManagedThreadId.ToString());
-                    Thread.Sleep(1000);
-                    if (i == 5)
-                    {
-                        break;
-                    }
-                    Console.WriteLine(i.ToString());
-                    i++;
-                }
-            }
-            Console.WriteLine("lock dispose");
-        }
-        public void MotherCallYouDinner()
-        {
-            Console.WriteLine("Your mother call you to home for dinner.");
-        }
-    }
-}</code></pre>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210308105950668.png" alt=""></p>
 <h5 id="2-锁静态私有变量"><a href="#2-锁静态私有变量" class="headerlink" title=".2. 锁静态私有变量"></a>.2. 锁静态私有变量</h5><blockquote>
 <p>将lock(this)更换为锁定私有的静态对象，线程2执行了，首先输出了“Your mother call you to home for dinner.”，同时实现了DoWorkWithLock方法中lock的代码块当前只被一个线程执行，直到lcok（objlock）被释放。因为锁定的对象，外部不能访问，线程2不再关心lock（this）是不是已经释放，都会执行，当然也保证了方法DoWorkWithLock同时被一个线程访问。</p>
 </blockquote>
-<pre class=" language-c#"><code class="language-c#">using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using System.Linq;</span><br><span class="line">using System.Text;</span><br><span class="line">using System.Threading;</span><br><span class="line">using System.Threading.Tasks;</span><br><span class="line"></span><br><span class="line">namespace LockTest</span><br><span class="line">{</span><br><span class="line">    class Program</span><br><span class="line">    {</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        {</span><br><span class="line">            TestLock testlock = new TestLock();</span><br><span class="line">            Thread th = new Thread(() =&gt;</span><br><span class="line">            {</span><br><span class="line">                //模拟死锁：造成死锁，使lock无法释放，在i=5时，跳出死循环，释放lock</span><br><span class="line">                testlock.DoWorkWithLock();</span><br><span class="line">            });</span><br><span class="line">            th.Start();</span><br><span class="line">            Thread.Sleep(1000);</span><br><span class="line">            Thread th2 = new Thread(() =&gt;</span><br><span class="line">            {</span><br><span class="line"></span><br><span class="line">                lock (testlock)</span><br><span class="line">                {</span><br><span class="line">                    testlock.MotherCallYouDinner();</span><br><span class="line">                    testlock.DoWorkWithLock();</span><br><span class="line">                }</span><br><span class="line">            });</span><br><span class="line">            th2.Start();</span><br><span class="line">            Console.Read();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    class TestLock</span><br><span class="line">    {</span><br><span class="line">        private static readonly object objLock = new object();</span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        ///  该方法，希望某人在工作的时候，其它人不要打扰（希望只有一个线程在执行)</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        /// &lt;param name="methodIndex"&gt;&lt;/param&gt;</span><br><span class="line">        public void DoWorkWithLock()</span><br><span class="line">        {</span><br><span class="line">            //锁</span><br><span class="line">            lock (objLock)</span><br><span class="line">            {</span><br><span class="line">                Console.WriteLine("lock this");</span><br><span class="line">                int i = 0;</span><br><span class="line">                while (true)</span><br><span class="line">                {</span><br><span class="line">                    Console.WriteLine("At work, do not disturb...,Thread id is " + Thread.CurrentThread.ManagedThreadId.ToString());</span><br><span class="line">                    Thread.Sleep(1000);</span><br><span class="line">                    if (i == 5)</span><br><span class="line">                    {</span><br><span class="line">                        break;</span><br><span class="line">                    }</span><br><span class="line">                    Console.WriteLine(i.ToString());</span><br><span class="line">                    i++;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            Console.WriteLine("lock dispose");</span><br><span class="line">        }</span><br><span class="line">        public void MotherCallYouDinner()</span><br><span class="line">        {</span><br><span class="line">            Console.WriteLine("Your mother call you to home for dinner.");</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-namespace LockTest
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            TestLock testlock = new TestLock();
-            Thread th = new Thread(() =>
-            {
-                //模拟死锁：造成死锁，使lock无法释放，在i=5时，跳出死循环，释放lock
-                testlock.DoWorkWithLock();
-            });
-            th.Start();
-            Thread.Sleep(1000);
-            Thread th2 = new Thread(() =>
-            {
-
-                lock (testlock)
-                {
-                    testlock.MotherCallYouDinner();
-                    testlock.DoWorkWithLock();
-                }
-            });
-            th2.Start();
-            Console.Read();
-        }
-    }
-
-    class TestLock
-    {
-        private static readonly object objLock = new object();
-        /// <summary>
-        ///  该方法，希望某人在工作的时候，其它人不要打扰（希望只有一个线程在执行)
-        /// </summary>
-        /// <param name="methodIndex"></param>
-        public void DoWorkWithLock()
-        {
-            //锁
-            lock (objLock)
-            {
-                Console.WriteLine("lock this");
-                int i = 0;
-                while (true)
-                {
-                    Console.WriteLine("At work, do not disturb...,Thread id is " + Thread.CurrentThread.ManagedThreadId.ToString());
-                    Thread.Sleep(1000);
-                    if (i == 5)
-                    {
-                        break;
-                    }
-                    Console.WriteLine(i.ToString());
-                    i++;
-                }
-            }
-            Console.WriteLine("lock dispose");
-        }
-        public void MotherCallYouDinner()
-        {
-            Console.WriteLine("Your mother call you to home for dinner.");
-        }
-    }
-}</code></pre>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210308110059148.png" alt=""></p>
 <h5 id="3-总结"><a href="#3-总结" class="headerlink" title=".3.总结"></a>.3.总结</h5><p>1、避免使用lock(this)，因为无法保证你提供的方法，在外部类中使用的时候，开发人员会不会锁定当前对象。</p>
 <blockquote>
@@ -852,162 +627,8 @@ namespace LockTest
 <p>自旋锁（Spinlock）是最简单的线程锁，基于原子操作实现，它使用一个数值来表示锁是否已经被获取，0表示未被获取，1表示已经获取，获取锁时会先使用原子操作设置数值为1，然后检查修改前的值是否为0，如果为0则代表获取成功，否则继续重试直到成功为止，释放锁时会设置数值为0，其他正在获取锁的线程会在下一次重试时成功获取，使用原子操作的原因是，它可以保证多个线程同时把数值0修改到1时，只有一个线程可以观察到修改前的值为0，其他线程观察到修改前的值为1。</p>
 <p>自旋锁保护的代码应该在非常短的时间内执行完毕，如果代码长时间运行则其他需要获取锁的线程会不断重试并占用逻辑核心，影响其他线程运行。</p>
 </blockquote>
-<pre class=" language-c#"><code class="language-c#">using System;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.Text;</span><br><span class="line">using System.Threading;</span><br><span class="line">using System.Threading.Tasks;</span><br><span class="line"></span><br><span class="line">namespace Sample5_5_spinlock_timeout</span><br><span class="line">{</span><br><span class="line">    class Program</span><br><span class="line">    {</span><br><span class="line">        private static int _TaskNum = 3;</span><br><span class="line">        private static Task[] _Tasks;</span><br><span class="line">        private static StringBuilder _StrBlder;</span><br><span class="line">        private const int RUN_LOOP = 50;</span><br><span class="line">        private static SpinLock m_spinlock;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        private static void Work1(int TaskID)</span><br><span class="line">        {</span><br><span class="line">            int i = 0;</span><br><span class="line">            string log = "";</span><br><span class="line">            bool lockToken = false;</span><br><span class="line">            while (i &lt; RUN_LOOP)</span><br><span class="line">            {</span><br><span class="line">                log = String.Format("Time: {0}  Task : #{1}  Value: {2}  =====\n",</span><br><span class="line">                                  DateTime.Now.TimeOfDay, TaskID, i);</span><br><span class="line">                i++;</span><br><span class="line">                try</span><br><span class="line">                {</span><br><span class="line">                    lockToken = false;</span><br><span class="line">                    m_spinlock.TryEnter(2000, ref lockToken);</span><br><span class="line">                    if (!lockToken)</span><br><span class="line">                    {</span><br><span class="line">                        Console.WriteLine("Work1 TIMEOUT!! Will throw Exception");</span><br><span class="line">                        throw new TimeoutException("Work1 TIMEOUT!!");</span><br><span class="line">                    }</span><br><span class="line">                    System.Threading.Thread.Sleep(5000);</span><br><span class="line">                    _StrBlder.Append(log);</span><br><span class="line">                }</span><br><span class="line">                finally</span><br><span class="line">                {</span><br><span class="line">                    if (lockToken)</span><br><span class="line">                        m_spinlock.Exit(false);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        private static void Work2(int TaskID)</span><br><span class="line">        {</span><br><span class="line">            int i = 0;</span><br><span class="line">            string log = "";</span><br><span class="line">            bool lockToken = false;</span><br><span class="line"></span><br><span class="line">            while (i &lt; RUN_LOOP)</span><br><span class="line">            {</span><br><span class="line">                log = String.Format("Time: {0}  Task : #{1}  Value: {2}  *****\n",</span><br><span class="line">                                  DateTime.Now.TimeOfDay, TaskID, i);</span><br><span class="line">                i++;</span><br><span class="line">                try</span><br><span class="line">                {</span><br><span class="line">                    lockToken = false;</span><br><span class="line">                    m_spinlock.TryEnter(2000, ref lockToken);</span><br><span class="line">                    if (!lockToken)</span><br><span class="line">                    {</span><br><span class="line">                        Console.WriteLine("Work2 TIMEOUT!! Will throw Exception");</span><br><span class="line">                        throw new TimeoutException("Work2 TIMEOUT!!");</span><br><span class="line">                    }</span><br><span class="line"></span><br><span class="line">                    _StrBlder.Append(log);</span><br><span class="line">                }</span><br><span class="line">                finally</span><br><span class="line">                {</span><br><span class="line">                    if (lockToken)</span><br><span class="line">                        m_spinlock.Exit(false);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        private static void Work3(int TaskID)</span><br><span class="line">        {</span><br><span class="line">            int i = 0;</span><br><span class="line">            string log = "";</span><br><span class="line">            bool lockToken = false;</span><br><span class="line"></span><br><span class="line">            while (i &lt; RUN_LOOP)</span><br><span class="line">            {</span><br><span class="line">                log = String.Format("Time: {0}  Task : #{1}  Value: {2}  ~~~~~\n",</span><br><span class="line">                                  DateTime.Now.TimeOfDay, TaskID, i);</span><br><span class="line">                i++;</span><br><span class="line">                try</span><br><span class="line">                {</span><br><span class="line">                    lockToken = false;</span><br><span class="line">                    m_spinlock.TryEnter(2000, ref lockToken);</span><br><span class="line">                    if (!lockToken)</span><br><span class="line">                    {</span><br><span class="line">                        Console.WriteLine("Work3 TIMEOUT!! Will throw Exception");</span><br><span class="line">                        throw new TimeoutException("Work3 TIMEOUT!!");</span><br><span class="line">                    }</span><br><span class="line">                    _StrBlder.Append(log);</span><br><span class="line">                }</span><br><span class="line">                finally</span><br><span class="line">                {</span><br><span class="line">                    if (lockToken)</span><br><span class="line">                        m_spinlock.Exit(false);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        {</span><br><span class="line">            _Tasks = new Task[_TaskNum];</span><br><span class="line">            _StrBlder = new StringBuilder();</span><br><span class="line">            m_spinlock = new SpinLock();</span><br><span class="line"></span><br><span class="line">            _Tasks[0] = Task.Factory.StartNew((num) =&gt;</span><br><span class="line">            {</span><br><span class="line">                var taskid = (int)num;</span><br><span class="line">                Work1(taskid);</span><br><span class="line">            }, 0);</span><br><span class="line"></span><br><span class="line">            _Tasks[1] = Task.Factory.StartNew((num) =&gt;</span><br><span class="line">            {</span><br><span class="line">                var taskid = (int)num;</span><br><span class="line">                Work2(taskid);</span><br><span class="line">            }, 1);</span><br><span class="line"></span><br><span class="line">            _Tasks[2] = Task.Factory.StartNew((num) =&gt;</span><br><span class="line">            {</span><br><span class="line">                var taskid = (int)num;</span><br><span class="line">                Work3(taskid);</span><br><span class="line">            }, 2);</span><br><span class="line"></span><br><span class="line">            var finalTask = Task.Factory.ContinueWhenAll(_Tasks, (tasks) =&gt;</span><br><span class="line">            {</span><br><span class="line">                Task.WaitAll(_Tasks);</span><br><span class="line">                Console.WriteLine("==========================================================");</span><br><span class="line">                Console.WriteLine("All Phase is completed");</span><br><span class="line">                Console.WriteLine("==========================================================");</span><br><span class="line">                Console.WriteLine(_StrBlder);</span><br><span class="line">            });</span><br><span class="line"></span><br><span class="line">            try</span><br><span class="line">            {</span><br><span class="line">                finalTask.Wait();</span><br><span class="line">            }</span><br><span class="line">            catch (AggregateException aex)</span><br><span class="line">            {</span><br><span class="line">                Console.WriteLine("Task failed And Canceled" + aex.ToString());</span><br><span class="line">            }</span><br><span class="line">            finally</span><br><span class="line">            {</span><br><span class="line">            }</span><br><span class="line">            Console.ReadLine();</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-namespace Sample5_5_spinlock_timeout
-{
-    class Program
-    {
-        private static int _TaskNum = 3;
-        private static Task[] _Tasks;
-        private static StringBuilder _StrBlder;
-        private const int RUN_LOOP = 50;
-        private static SpinLock m_spinlock;
-
-
-        private static void Work1(int TaskID)
-        {
-            int i = 0;
-            string log = "";
-            bool lockToken = false;
-            while (i < RUN_LOOP)
-            {
-                log = String.Format("Time: {0}  Task : #{1}  Value: {2}  =====\n",
-                                  DateTime.Now.TimeOfDay, TaskID, i);
-                i++;
-                try
-                {
-                    lockToken = false;
-                    m_spinlock.TryEnter(2000, ref lockToken);
-                    if (!lockToken)
-                    {
-                        Console.WriteLine("Work1 TIMEOUT!! Will throw Exception");
-                        throw new TimeoutException("Work1 TIMEOUT!!");
-                    }
-                    System.Threading.Thread.Sleep(5000);
-                    _StrBlder.Append(log);
-                }
-                finally
-                {
-                    if (lockToken)
-                        m_spinlock.Exit(false);
-                }
-            }
-        }
-
-        private static void Work2(int TaskID)
-        {
-            int i = 0;
-            string log = "";
-            bool lockToken = false;
-
-            while (i < RUN_LOOP)
-            {
-                log = String.Format("Time: {0}  Task : #{1}  Value: {2}  *****\n",
-                                  DateTime.Now.TimeOfDay, TaskID, i);
-                i++;
-                try
-                {
-                    lockToken = false;
-                    m_spinlock.TryEnter(2000, ref lockToken);
-                    if (!lockToken)
-                    {
-                        Console.WriteLine("Work2 TIMEOUT!! Will throw Exception");
-                        throw new TimeoutException("Work2 TIMEOUT!!");
-                    }
-
-                    _StrBlder.Append(log);
-                }
-                finally
-                {
-                    if (lockToken)
-                        m_spinlock.Exit(false);
-                }
-            }
-        }
-
-        private static void Work3(int TaskID)
-        {
-            int i = 0;
-            string log = "";
-            bool lockToken = false;
-
-            while (i < RUN_LOOP)
-            {
-                log = String.Format("Time: {0}  Task : #{1}  Value: {2}  ~~~~~\n",
-                                  DateTime.Now.TimeOfDay, TaskID, i);
-                i++;
-                try
-                {
-                    lockToken = false;
-                    m_spinlock.TryEnter(2000, ref lockToken);
-                    if (!lockToken)
-                    {
-                        Console.WriteLine("Work3 TIMEOUT!! Will throw Exception");
-                        throw new TimeoutException("Work3 TIMEOUT!!");
-                    }
-                    _StrBlder.Append(log);
-                }
-                finally
-                {
-                    if (lockToken)
-                        m_spinlock.Exit(false);
-                }
-            }
-        }
-
-        static void Main(string[] args)
-        {
-            _Tasks = new Task[_TaskNum];
-            _StrBlder = new StringBuilder();
-            m_spinlock = new SpinLock();
-
-            _Tasks[0] = Task.Factory.StartNew((num) =>
-            {
-                var taskid = (int)num;
-                Work1(taskid);
-            }, 0);
-
-            _Tasks[1] = Task.Factory.StartNew((num) =>
-            {
-                var taskid = (int)num;
-                Work2(taskid);
-            }, 1);
-
-            _Tasks[2] = Task.Factory.StartNew((num) =>
-            {
-                var taskid = (int)num;
-                Work3(taskid);
-            }, 2);
-
-            var finalTask = Task.Factory.ContinueWhenAll(_Tasks, (tasks) =>
-            {
-                Task.WaitAll(_Tasks);
-                Console.WriteLine("==========================================================");
-                Console.WriteLine("All Phase is completed");
-                Console.WriteLine("==========================================================");
-                Console.WriteLine(_StrBlder);
-            });
-
-            try
-            {
-                finalTask.Wait();
-            }
-            catch (AggregateException aex)
-            {
-                Console.WriteLine("Task failed And Canceled" + aex.ToString());
-            }
-            finally
-            {
-            }
-            Console.ReadLine();
-        }
-
-    }
-}</code></pre>
 <h5 id="2-互斥锁Monitor-amp-Mutex"><a href="#2-互斥锁Monitor-amp-Mutex" class="headerlink" title=".2. 互斥锁Monitor&amp;Mutex"></a>.2. <a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.threading.monitor.tryenter?view=net-5.0" target="_blank" rel="noopener">互斥锁Monitor&amp;Mutex</a></h5><blockquote>
 <p><a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.threading.monitor.tryenter?view=net-5.0#System_Threading_Monitor_TryEnter_System_Object_System_TimeSpan_System_Boolean__" target="_blank" rel="noopener">TryEnter(Object, TimeSpan, Boolean)</a>  Attempts, for the specified amount of time, to acquire an exclusive lock on the specified object, and atomically sets a value that indicates whether the lock was taken.</p>
 <ul>
@@ -1028,310 +649,21 @@ namespace Sample5_5_spinlock_timeout
 <ul>
 <li>Monitor使用</li>
 </ul>
-<pre class=" language-c#"><code class="language-c#">using System;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-namespace Sample5_3_monitor_lock_timeout
-{
-    class Program
-    {
-        private static int _TaskNum = 3;
-        private static Task[] _Tasks;
-        private static StringBuilder _StrBlder;
-        private const int RUN_LOOP = 50;
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.Text;</span><br><span class="line">using System.Threading;</span><br><span class="line">using System.Threading.Tasks;</span><br><span class="line">namespace Sample5_3_monitor_lock_timeout</span><br><span class="line">{</span><br><span class="line">    class Program</span><br><span class="line">    {</span><br><span class="line">        private static int _TaskNum = 3;</span><br><span class="line">        private static Task[] _Tasks;</span><br><span class="line">        private static StringBuilder _StrBlder;</span><br><span class="line">        private const int RUN_LOOP = 50;</span><br><span class="line"></span><br><span class="line">        private static void Work1(int TaskID)</span><br><span class="line">        {</span><br><span class="line">            int i = 0;</span><br><span class="line">            string log = "";</span><br><span class="line">            bool lockToken = false;</span><br><span class="line">            while (i &lt; RUN_LOOP)</span><br><span class="line">            {</span><br><span class="line">                log = String.Format("Time: {0}  Task : #{1}  Value: {2}  =====\n",</span><br><span class="line">                                  DateTime.Now.TimeOfDay, TaskID, i);</span><br><span class="line">                i++;</span><br><span class="line">                try</span><br><span class="line">                {</span><br><span class="line">                    lockToken = false;</span><br><span class="line">                    Monitor.TryEnter(_StrBlder, 2000, ref lockToken);</span><br><span class="line">                    if (!lockToken)</span><br><span class="line">                    {</span><br><span class="line">                        Console.WriteLine("Work1 TIMEOUT!! Will throw Exception");</span><br><span class="line">                        throw new TimeoutException("Work1 TIMEOUT!!");</span><br><span class="line">                    }</span><br><span class="line">                    System.Threading.Thread.Sleep(5000);</span><br><span class="line">                    _StrBlder.Append(log);</span><br><span class="line">                }</span><br><span class="line">                finally</span><br><span class="line">                {</span><br><span class="line">                    if (lockToken)</span><br><span class="line">                        Monitor.Exit(_StrBlder);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        private static void Work2(int TaskID)</span><br><span class="line">        {</span><br><span class="line">            int i = 0;</span><br><span class="line">            string log = "";</span><br><span class="line">            bool lockToken = false;</span><br><span class="line"></span><br><span class="line">            while (i &lt; RUN_LOOP)</span><br><span class="line">            {</span><br><span class="line">                log = String.Format("Time: {0}  Task : #{1}  Value: {2}  *****\n",</span><br><span class="line">                                  DateTime.Now.TimeOfDay, TaskID, i);</span><br><span class="line">                i++;</span><br><span class="line">                try</span><br><span class="line">                {</span><br><span class="line">                    lockToken = false;</span><br><span class="line">                    Monitor.TryEnter(_StrBlder, 2000, ref lockToken);</span><br><span class="line">                    if (!lockToken)</span><br><span class="line">                    {</span><br><span class="line">                        Console.WriteLine("Work2 TIMEOUT!! Will throw Exception");</span><br><span class="line">                        throw new TimeoutException("Work2 TIMEOUT!!");</span><br><span class="line">                    }</span><br><span class="line"></span><br><span class="line">                    _StrBlder.Append(log);</span><br><span class="line">                }</span><br><span class="line">                finally</span><br><span class="line">                {</span><br><span class="line">                    if (lockToken)</span><br><span class="line">                        Monitor.Exit(_StrBlder);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        private static void Work3(int TaskID)</span><br><span class="line">        {</span><br><span class="line">            int i = 0;</span><br><span class="line">            string log = "";</span><br><span class="line">            bool lockToken = false;</span><br><span class="line"></span><br><span class="line">            while (i &lt; RUN_LOOP)</span><br><span class="line">            {</span><br><span class="line">                log = String.Format("Time: {0}  Task : #{1}  Value: {2}  ~~~~~\n",</span><br><span class="line">                                  DateTime.Now.TimeOfDay, TaskID, i);</span><br><span class="line">                i++;</span><br><span class="line">                try</span><br><span class="line">                {</span><br><span class="line">                    lockToken = false;</span><br><span class="line">                    Monitor.TryEnter(_StrBlder, 2000, ref lockToken);</span><br><span class="line">                    if (!lockToken)</span><br><span class="line">                    {</span><br><span class="line">                        Console.WriteLine("Work3 TIMEOUT!! Will throw Exception");</span><br><span class="line">                        throw new TimeoutException("Work3 TIMEOUT!!");</span><br><span class="line">                    }</span><br><span class="line">                    _StrBlder.Append(log);</span><br><span class="line">                }</span><br><span class="line">                finally</span><br><span class="line">                {</span><br><span class="line">                    if (lockToken)</span><br><span class="line">                        Monitor.Exit(_StrBlder);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        {</span><br><span class="line">            _Tasks = new Task[_TaskNum];</span><br><span class="line">            _StrBlder = new StringBuilder();</span><br><span class="line"></span><br><span class="line">            _Tasks[0] = Task.Factory.StartNew((num) =&gt;</span><br><span class="line">            {</span><br><span class="line">                var taskid = (int)num;</span><br><span class="line">                Work1(taskid);</span><br><span class="line">            }, 0);</span><br><span class="line"></span><br><span class="line">            _Tasks[1] = Task.Factory.StartNew((num) =&gt;</span><br><span class="line">            {</span><br><span class="line">                var taskid = (int)num;</span><br><span class="line">                Work2(taskid);</span><br><span class="line">            }, 1);</span><br><span class="line"></span><br><span class="line">            _Tasks[2] = Task.Factory.StartNew((num) =&gt;</span><br><span class="line">            {</span><br><span class="line">                var taskid = (int)num;</span><br><span class="line">                Work3(taskid);</span><br><span class="line">            }, 2);</span><br><span class="line"></span><br><span class="line">            var finalTask = Task.Factory.ContinueWhenAll(_Tasks, (tasks) =&gt;</span><br><span class="line">            {</span><br><span class="line">                Task.WaitAll(_Tasks);</span><br><span class="line">                Console.WriteLine("==========================================================");</span><br><span class="line">                Console.WriteLine("All Phase is completed");</span><br><span class="line">                Console.WriteLine("==========================================================");</span><br><span class="line">                Console.WriteLine(_StrBlder);</span><br><span class="line">            });</span><br><span class="line"></span><br><span class="line">            try</span><br><span class="line">            {</span><br><span class="line">                finalTask.Wait();</span><br><span class="line">            }</span><br><span class="line">            catch (AggregateException aex)</span><br><span class="line">            {</span><br><span class="line">                Console.WriteLine("Task failed And Canceled" + aex.ToString());</span><br><span class="line">            }</span><br><span class="line">            finally</span><br><span class="line">            {</span><br><span class="line">            }</span><br><span class="line">            Console.ReadLine();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-        private static void Work1(int TaskID)
-        {
-            int i = 0;
-            string log = "";
-            bool lockToken = false;
-            while (i < RUN_LOOP)
-            {
-                log = String.Format("Time: {0}  Task : #{1}  Value: {2}  =====\n",
-                                  DateTime.Now.TimeOfDay, TaskID, i);
-                i++;
-                try
-                {
-                    lockToken = false;
-                    Monitor.TryEnter(_StrBlder, 2000, ref lockToken);
-                    if (!lockToken)
-                    {
-                        Console.WriteLine("Work1 TIMEOUT!! Will throw Exception");
-                        throw new TimeoutException("Work1 TIMEOUT!!");
-                    }
-                    System.Threading.Thread.Sleep(5000);
-                    _StrBlder.Append(log);
-                }
-                finally
-                {
-                    if (lockToken)
-                        Monitor.Exit(_StrBlder);
-                }
-            }
-        }
-
-        private static void Work2(int TaskID)
-        {
-            int i = 0;
-            string log = "";
-            bool lockToken = false;
-
-            while (i < RUN_LOOP)
-            {
-                log = String.Format("Time: {0}  Task : #{1}  Value: {2}  *****\n",
-                                  DateTime.Now.TimeOfDay, TaskID, i);
-                i++;
-                try
-                {
-                    lockToken = false;
-                    Monitor.TryEnter(_StrBlder, 2000, ref lockToken);
-                    if (!lockToken)
-                    {
-                        Console.WriteLine("Work2 TIMEOUT!! Will throw Exception");
-                        throw new TimeoutException("Work2 TIMEOUT!!");
-                    }
-
-                    _StrBlder.Append(log);
-                }
-                finally
-                {
-                    if (lockToken)
-                        Monitor.Exit(_StrBlder);
-                }
-            }
-        }
-
-        private static void Work3(int TaskID)
-        {
-            int i = 0;
-            string log = "";
-            bool lockToken = false;
-
-            while (i < RUN_LOOP)
-            {
-                log = String.Format("Time: {0}  Task : #{1}  Value: {2}  ~~~~~\n",
-                                  DateTime.Now.TimeOfDay, TaskID, i);
-                i++;
-                try
-                {
-                    lockToken = false;
-                    Monitor.TryEnter(_StrBlder, 2000, ref lockToken);
-                    if (!lockToken)
-                    {
-                        Console.WriteLine("Work3 TIMEOUT!! Will throw Exception");
-                        throw new TimeoutException("Work3 TIMEOUT!!");
-                    }
-                    _StrBlder.Append(log);
-                }
-                finally
-                {
-                    if (lockToken)
-                        Monitor.Exit(_StrBlder);
-                }
-            }
-        }
-
-        static void Main(string[] args)
-        {
-            _Tasks = new Task[_TaskNum];
-            _StrBlder = new StringBuilder();
-
-            _Tasks[0] = Task.Factory.StartNew((num) =>
-            {
-                var taskid = (int)num;
-                Work1(taskid);
-            }, 0);
-
-            _Tasks[1] = Task.Factory.StartNew((num) =>
-            {
-                var taskid = (int)num;
-                Work2(taskid);
-            }, 1);
-
-            _Tasks[2] = Task.Factory.StartNew((num) =>
-            {
-                var taskid = (int)num;
-                Work3(taskid);
-            }, 2);
-
-            var finalTask = Task.Factory.ContinueWhenAll(_Tasks, (tasks) =>
-            {
-                Task.WaitAll(_Tasks);
-                Console.WriteLine("==========================================================");
-                Console.WriteLine("All Phase is completed");
-                Console.WriteLine("==========================================================");
-                Console.WriteLine(_StrBlder);
-            });
-
-            try
-            {
-                finalTask.Wait();
-            }
-            catch (AggregateException aex)
-            {
-                Console.WriteLine("Task failed And Canceled" + aex.ToString());
-            }
-            finally
-            {
-            }
-            Console.ReadLine();
-        }
-    }
-}</code></pre>
 <h5 id="3-混合锁"><a href="#3-混合锁" class="headerlink" title=".3. 混合锁"></a>.3. 混合锁</h5><blockquote>
 <p>混合锁的特征是在获取锁失败后像自旋锁一样重试一定的次数，超过一定次数之后（.NET Core 2.1 是30次）再安排当前进程进入等待状态</p>
 <p>混合锁的好处是，如果第一次获取锁失败，但其他线程马上释放了锁，当前线程在下一轮重试可以获取成功，不需要执行毫秒级的线程调度处理；而如果其他线程在短时间内没有释放锁，线程会在超过重试次数之后进入等待状态，以避免消耗 CPU 资源，因此混合锁适用于大部分场景</p>
 </blockquote>
-<pre class=" language-c#"><code class="language-c#">internal sealed class SimpleHybridLock : IDisposable
-    {
-        //基元用户模式构造使用
-        private int m_waiters = 0;
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">internal sealed class SimpleHybridLock : IDisposable</span><br><span class="line">    {</span><br><span class="line">        //基元用户模式构造使用</span><br><span class="line">        private int m_waiters = 0;</span><br><span class="line"></span><br><span class="line">        //基元内核模式构造</span><br><span class="line">        private AutoResetEvent m_waiterLock = new AutoResetEvent(false);</span><br><span class="line"></span><br><span class="line">        public void Enter()</span><br><span class="line">        {</span><br><span class="line">            //指出该线程想要获得锁</span><br><span class="line">            if (Equals(Interlocked.Increment(ref m_waiters), 1))</span><br><span class="line">            {</span><br><span class="line">                //无竞争，直接返回</span><br><span class="line">                return;</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            //另一个线程拥有锁（发生竞争），使这个线程等待</span><br><span class="line">            //线程会阻塞，但不会在CPU上“自旋”，从而节省CPU</span><br><span class="line">            //这里产生较大的性能影响（用户模式与内核模式之间转换）</span><br><span class="line">            //待WaitOne返回后，这个线程拿到锁</span><br><span class="line">            m_waiterLock.WaitOne();</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        public void Leave()</span><br><span class="line">        {</span><br><span class="line">            //该线程准备释放锁</span><br><span class="line">            if (Equals(Interlocked.Decrement(ref m_waiters), 0))</span><br><span class="line">            {</span><br><span class="line">                //无线程等待，直接返回</span><br><span class="line">                return;</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            //有线程等待则唤醒其中一个</span><br><span class="line">            //这里产生较大的性能影响（用户模式与内核模式之间转换）</span><br><span class="line">            m_waiterLock.Set();</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        public void Dispose()</span><br><span class="line">        {</span><br><span class="line">            m_waiterLock.Dispose();</span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
 
-        //基元内核模式构造
-        private AutoResetEvent m_waiterLock = new AutoResetEvent(false);
-
-        public void Enter()
-        {
-            //指出该线程想要获得锁
-            if (Equals(Interlocked.Increment(ref m_waiters), 1))
-            {
-                //无竞争，直接返回
-                return;
-            }
-
-            //另一个线程拥有锁（发生竞争），使这个线程等待
-            //线程会阻塞，但不会在CPU上“自旋”，从而节省CPU
-            //这里产生较大的性能影响（用户模式与内核模式之间转换）
-            //待WaitOne返回后，这个线程拿到锁
-            m_waiterLock.WaitOne();
-        }
-
-        public void Leave()
-        {
-            //该线程准备释放锁
-            if (Equals(Interlocked.Decrement(ref m_waiters), 0))
-            {
-                //无线程等待，直接返回
-                return;
-            }
-
-            //有线程等待则唤醒其中一个
-            //这里产生较大的性能影响（用户模式与内核模式之间转换）
-            m_waiterLock.Set();
-        }
-
-        public void Dispose()
-        {
-            m_waiterLock.Dispose();
-        }
-    }</code></pre>
 <h5 id="4-读写锁-ReaderWriterLock"><a href="#4-读写锁-ReaderWriterLock" class="headerlink" title=".4. 读写锁(ReaderWriterLock )"></a>.4. 读写锁(ReaderWriterLock )</h5><blockquote>
 <p>支持单个写线程和多个读线程的锁。该锁的作用主要是解决并发读的性能问题，使用该锁，可以大大提高数据并发访问的性能，只有在写时，才会阻塞所有的读锁。</p>
 </blockquote>
-<pre class=" language-c#"><code class="language-c#">using System.Collections.Generic;
-using System.Windows;
-using System.Threading;
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections.Generic;</span><br><span class="line">using System.Windows;</span><br><span class="line">using System.Threading;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">namespace FYSTest</span><br><span class="line">{</span><br><span class="line">&nbsp; &nbsp; public partial class MainWindow : Window</span><br><span class="line">&nbsp; &nbsp; {</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; List&lt;int&gt; list = new List&lt;int&gt;();</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; private ReaderWriterLock _rwlock = new ReaderWriterLock();</span><br><span class="line"></span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; public MainWindow()</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; {</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; InitializeComponent();</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Thread ThRead = new Thread(new ThreadStart(Read));</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ThRead.IsBackground = true;</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Thread ThRead2 = new Thread(new ThreadStart(Read));</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ThRead2.IsBackground = true;</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Thread ThWrite = new Thread(new ThreadStart(Write));</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ThWrite.IsBackground = true;</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ThRead.Start();</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ThRead2.Start();</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ThWrite.Start();</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; }</span><br><span class="line"></span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; private void Read()</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; {</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; while (true)</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //使用一个 System.Int32 超时值获取读线程锁。</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; _rwlock.AcquireReaderLock(100);</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; try</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (list.Count &gt; 0)</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int result = list[list.Count - 1];</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; finally</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //减少锁计数,释放锁</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; _rwlock.ReleaseReaderLock();</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; }</span><br><span class="line"></span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; int WriteCount = 0;//写次数</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; private void Write()</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; {</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; while (true)</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //使用一个 System.Int32 超时值获取写线程锁。</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; _rwlock.AcquireWriterLock(100);</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; try</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; list.Add(WriteCount++);</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; finally</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //减少写线程锁上的锁计数，释放写锁</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; _rwlock.ReleaseWriterLock();</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span><br><span class="line">&nbsp; &nbsp; &nbsp; &nbsp; }</span><br><span class="line">&nbsp; &nbsp; }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
+<h3 id="3-SemaphoreSlim"><a href="#3-SemaphoreSlim" class="headerlink" title="3. SemaphoreSlim"></a>3. SemaphoreSlim</h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.Threading;</span><br><span class="line"></span><br><span class="line">namespace CallnernawbawceKairwemwhejeene</span><br><span class="line">{</span><br><span class="line">    class Program</span><br><span class="line">    {</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        {</span><br><span class="line">            var semaphoreSlim = new SemaphoreSlim(10, 10);</span><br><span class="line"></span><br><span class="line">            for (int i = 0; i &lt; 1000; i++)</span><br><span class="line">            {</span><br><span class="line">                var n = i;</span><br><span class="line">                _autoResetEvent.WaitOne();</span><br><span class="line">                new Thread(() =&gt; { GeregelkunoNeawhikarcee(semaphoreSlim, n); }).Start();</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            Console.Read();</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        private static readonly AutoResetEvent _autoResetEvent = new AutoResetEvent(true);</span><br><span class="line"></span><br><span class="line">        private static void GeregelkunoNeawhikarcee(SemaphoreSlim semaphoreSlim, int n)</span><br><span class="line">        {</span><br><span class="line">            Console.WriteLine($"{n} 进入");</span><br><span class="line">            _autoResetEvent.Set();</span><br><span class="line"></span><br><span class="line">            semaphoreSlim.Wait();</span><br><span class="line">            Console.WriteLine(n);</span><br><span class="line"></span><br><span class="line">            Thread.Sleep(TimeSpan.FromSeconds(1));</span><br><span class="line">            semaphoreSlim.Release();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-namespace FYSTest
-{
-    public partial class MainWindow : Window
-    {
-        List<int> list = new List<int>();
-        private ReaderWriterLock _rwlock = new ReaderWriterLock();
-
-        public MainWindow()
-        {
-            InitializeComponent();
-            Thread ThRead = new Thread(new ThreadStart(Read));
-            ThRead.IsBackground = true;
-            Thread ThRead2 = new Thread(new ThreadStart(Read));
-            ThRead2.IsBackground = true;
-            Thread ThWrite = new Thread(new ThreadStart(Write));
-            ThWrite.IsBackground = true;
-            ThRead.Start();
-            ThRead2.Start();
-            ThWrite.Start();
-        }
-
-        private void Read()
-        {
-            while (true)
-            {
-                //使用一个 System.Int32 超时值获取读线程锁。
-                _rwlock.AcquireReaderLock(100);
-                try
-                {
-                    if (list.Count > 0)
-                    {
-                        int result = list[list.Count - 1];
-                    }
-                }
-                finally
-                {
-                    //减少锁计数,释放锁
-                    _rwlock.ReleaseReaderLock();
-                }
-            }
-        }
-
-        int WriteCount = 0;//写次数
-        private void Write()
-        {
-            while (true)
-            {
-                //使用一个 System.Int32 超时值获取写线程锁。
-                _rwlock.AcquireWriterLock(100);
-                try
-                {
-                    list.Add(WriteCount++);
-                }
-                finally
-                {
-                    //减少写线程锁上的锁计数，释放写锁
-                    _rwlock.ReleaseWriterLock();
-                }
-            }
-        }
-    }
-}</code></pre>
-<h3 id="3-SemaphoreSlim"><a href="#3-SemaphoreSlim" class="headerlink" title="3. SemaphoreSlim"></a>3. SemaphoreSlim</h3><pre class=" language-c#"><code class="language-c#">using System;
-using System.Threading;
-
-namespace CallnernawbawceKairwemwhejeene
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            var semaphoreSlim = new SemaphoreSlim(10, 10);
-
-            for (int i = 0; i < 1000; i++)
-            {
-                var n = i;
-                _autoResetEvent.WaitOne();
-                new Thread(() => { GeregelkunoNeawhikarcee(semaphoreSlim, n); }).Start();
-            }
-
-            Console.Read();
-        }
-
-        private static readonly AutoResetEvent _autoResetEvent = new AutoResetEvent(true);
-
-        private static void GeregelkunoNeawhikarcee(SemaphoreSlim semaphoreSlim, int n)
-        {
-            Console.WriteLine($"{n} 进入");
-            _autoResetEvent.Set();
-
-            semaphoreSlim.Wait();
-            Console.WriteLine(n);
-
-            Thread.Sleep(TimeSpan.FromSeconds(1));
-            semaphoreSlim.Release();
-        }
-    }
-}</code></pre>
 <h3 id="4-学习资源"><a href="#4-学习资源" class="headerlink" title="4. 学习资源"></a>4. 学习资源</h3><ul>
 <li><p><a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.threading.monitor.tryenter?view=net-5.0" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.threading.monitor.tryenter?view=net-5.0</a></p>
 </li>
@@ -1556,7 +888,7 @@ namespace CallnernawbawceKairwemwhejeene
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -1598,20 +930,25 @@ namespace CallnernawbawceKairwemwhejeene
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2021/05/12/yu-yan-kuang-jia/designpattern/prototypemode/">
+                <a href="/2021/05/12/yu-yan-kuang-jia/designpattern/she-ji-mo-shi/strategymode/">
                     <div class="card-image">
                         
-                        <img src="https://cdn.stocksnap.io/img-thumbs/280h/FGW3XGA04R.jpg" class="responsive-img" alt="PrototypeMode">
+                        <img src="https://cdn.pixabay.com/photo/2020/10/05/10/29/horse-5628882__340.jpg" class="responsive-img" alt="StrategyMode">
                         
-                        <span class="card-title">PrototypeMode</span>
+                        <span class="card-title">StrategyMode</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-原型模式（Prototype Pattern）是用于创建重复的对象，同时又能保证性能。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。
-与通过对一个类进行实例化来构造新对象不同的是，原型模式是通过拷贝一个现有对象生成新对
+1、封装变化（把可能变化的代码封装起来）
+2、多用组合，少用继承（我们使用组合的方式，为客户设置了算法）
+3、针对接口编程，不针对实现（对于Role类的设计完全的针对角色，和技能的实现没有关系）
+
+1.案例介绍
+
+每个角色对应一个名字，每
                         
                     </div>
                     <div class="publish-info">
@@ -1888,7 +1225,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1912,7 +1249,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1933,10 +1270,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -2045,6 +1378,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

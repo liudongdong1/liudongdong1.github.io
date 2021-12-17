@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="BlinkDetection, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="BlinkDetection, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -497,6 +519,10 @@
                 </div>
                 
 
+                <!-- 
+                <i class="fa fa-pencil"></i> Author: liudongdong
+                 -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -504,12 +530,12 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
                     1.1k
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -532,301 +558,13 @@
                 <h3 id="1-眨眼检测"><a href="#1-眨眼检测" class="headerlink" title="1. 眨眼检测"></a>1. 眨眼检测</h3><ul>
 <li>使用dlib库 眨眼检测</li>
 </ul>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># import the necessary packages</span>
-<span class="token keyword">from</span> scipy<span class="token punctuation">.</span>spatial <span class="token keyword">import</span> distance <span class="token keyword">as</span> dist
-<span class="token keyword">from</span> imutils<span class="token punctuation">.</span>video <span class="token keyword">import</span> FileVideoStream
-<span class="token keyword">from</span> imutils<span class="token punctuation">.</span>video <span class="token keyword">import</span> VideoStream
-<span class="token keyword">from</span> imutils <span class="token keyword">import</span> face_utils
-<span class="token keyword">import</span> argparse
-<span class="token keyword">import</span> imutils
-<span class="token keyword">import</span> time
-<span class="token keyword">import</span> dlib
-<span class="token keyword">import</span> cv2
-<span class="token keyword">import</span> os
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># import the necessary packages</span></span><br><span class="line"><span class="keyword">from</span> scipy.spatial <span class="keyword">import</span> distance <span class="keyword">as</span> dist</span><br><span class="line"><span class="keyword">from</span> imutils.video <span class="keyword">import</span> FileVideoStream</span><br><span class="line"><span class="keyword">from</span> imutils.video <span class="keyword">import</span> VideoStream</span><br><span class="line"><span class="keyword">from</span> imutils <span class="keyword">import</span> face_utils</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> imutils</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> dlib</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">eye_aspect_ratio</span><span class="params">(eye)</span>:</span></span><br><span class="line">    <span class="comment"># compute the euclidean distances between the two sets of</span></span><br><span class="line">    <span class="comment"># vertical eye landmarks (x, y)-coordinates</span></span><br><span class="line">    A = dist.euclidean(eye[<span class="number">1</span>], eye[<span class="number">5</span>])</span><br><span class="line">    B = dist.euclidean(eye[<span class="number">2</span>], eye[<span class="number">4</span>])</span><br><span class="line">    <span class="comment"># compute the euclidean distance between the horizontal</span></span><br><span class="line">    <span class="comment"># eye landmark (x, y)-coordinates</span></span><br><span class="line">    C = dist.euclidean(eye[<span class="number">0</span>], eye[<span class="number">3</span>])</span><br><span class="line">    <span class="comment"># compute the eye aspect ratio</span></span><br><span class="line">    ear = (A + B) / (<span class="number">2.0</span> * C)</span><br><span class="line">    <span class="comment"># return the eye aspect ratio</span></span><br><span class="line">    <span class="keyword">return</span> ear</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">threshold = <span class="number">0.27</span></span><br><span class="line">shape_predictor = os.path.join(</span><br><span class="line">    <span class="string">'backend'</span>, <span class="string">"shape_predictor_68_face_landmarks.dat"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Eye_Detector</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        EYE_AR_THRESH = threshold</span><br><span class="line">        self.detector = dlib.get_frontal_face_detector()</span><br><span class="line">        self.predictor = dlib.shape_predictor(shape_predictor)</span><br><span class="line">        (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS[<span class="string">"left_eye"</span>]</span><br><span class="line">        (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS[<span class="string">"right_eye"</span>]</span><br><span class="line">        self.index = [lStart, lEnd, rStart, rEnd]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">calculate_ear</span><span class="params">(self, frame)</span>:</span></span><br><span class="line">        lStart, lEnd, rStart, rEnd = self.index</span><br><span class="line">        detector, predictor = self.detector, self.predictor</span><br><span class="line">        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)</span><br><span class="line">        <span class="comment"># detect faces in the grayscale frame</span></span><br><span class="line">        rects = detector(gray, <span class="number">0</span>)</span><br><span class="line">        <span class="comment"># loop over the face detections</span></span><br><span class="line">        ear = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> rect <span class="keyword">in</span> rects:</span><br><span class="line">            <span class="comment"># determine the facial landmarks for the face region, then</span></span><br><span class="line">            <span class="comment"># convert the facial landmark (x, y)-coordinates to a NumPy</span></span><br><span class="line">            <span class="comment"># array</span></span><br><span class="line">            shape = predictor(gray, rect)</span><br><span class="line">            shape = face_utils.shape_to_np(shape)</span><br><span class="line">            <span class="comment"># extract the left and right eye coordinates, then use the</span></span><br><span class="line">            <span class="comment"># coordinates to compute the eye aspect ratio for both eyes</span></span><br><span class="line">            leftEye = shape[lStart:lEnd]</span><br><span class="line">            rightEye = shape[rStart:rEnd]</span><br><span class="line">            leftEAR = eye_aspect_ratio(leftEye)</span><br><span class="line">            rightEAR = eye_aspect_ratio(rightEye)</span><br><span class="line">            <span class="comment"># average the eye aspect ratio together for both eyes</span></span><br><span class="line">            ear = (leftEAR + rightEAR) / <span class="number">2.0</span></span><br><span class="line">        <span class="keyword">return</span> ear</span><br></pre></td></tr></tbody></table></figure>
 
-
-<span class="token keyword">def</span> <span class="token function">eye_aspect_ratio</span><span class="token punctuation">(</span>eye<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true"># compute the euclidean distances between the two sets of</span>
-    <span class="token comment" spellcheck="true"># vertical eye landmarks (x, y)-coordinates</span>
-    A <span class="token operator">=</span> dist<span class="token punctuation">.</span>euclidean<span class="token punctuation">(</span>eye<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> eye<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    B <span class="token operator">=</span> dist<span class="token punctuation">.</span>euclidean<span class="token punctuation">(</span>eye<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> eye<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true"># compute the euclidean distance between the horizontal</span>
-    <span class="token comment" spellcheck="true"># eye landmark (x, y)-coordinates</span>
-    C <span class="token operator">=</span> dist<span class="token punctuation">.</span>euclidean<span class="token punctuation">(</span>eye<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> eye<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true"># compute the eye aspect ratio</span>
-    ear <span class="token operator">=</span> <span class="token punctuation">(</span>A <span class="token operator">+</span> B<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">2.0</span> <span class="token operator">*</span> C<span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true"># return the eye aspect ratio</span>
-    <span class="token keyword">return</span> ear
-
-
-threshold <span class="token operator">=</span> <span class="token number">0.27</span>
-shape_predictor <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>
-    <span class="token string">'backend'</span><span class="token punctuation">,</span> <span class="token string">"shape_predictor_68_face_landmarks.dat"</span><span class="token punctuation">)</span>
-
-
-<span class="token keyword">class</span> <span class="token class-name">Eye_Detector</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        EYE_AR_THRESH <span class="token operator">=</span> threshold
-        self<span class="token punctuation">.</span>detector <span class="token operator">=</span> dlib<span class="token punctuation">.</span>get_frontal_face_detector<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>predictor <span class="token operator">=</span> dlib<span class="token punctuation">.</span>shape_predictor<span class="token punctuation">(</span>shape_predictor<span class="token punctuation">)</span>
-        <span class="token punctuation">(</span>lStart<span class="token punctuation">,</span> lEnd<span class="token punctuation">)</span> <span class="token operator">=</span> face_utils<span class="token punctuation">.</span>FACIAL_LANDMARKS_IDXS<span class="token punctuation">[</span><span class="token string">"left_eye"</span><span class="token punctuation">]</span>
-        <span class="token punctuation">(</span>rStart<span class="token punctuation">,</span> rEnd<span class="token punctuation">)</span> <span class="token operator">=</span> face_utils<span class="token punctuation">.</span>FACIAL_LANDMARKS_IDXS<span class="token punctuation">[</span><span class="token string">"right_eye"</span><span class="token punctuation">]</span>
-        self<span class="token punctuation">.</span>index <span class="token operator">=</span> <span class="token punctuation">[</span>lStart<span class="token punctuation">,</span> lEnd<span class="token punctuation">,</span> rStart<span class="token punctuation">,</span> rEnd<span class="token punctuation">]</span>
-
-    <span class="token keyword">def</span> <span class="token function">calculate_ear</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> frame<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        lStart<span class="token punctuation">,</span> lEnd<span class="token punctuation">,</span> rStart<span class="token punctuation">,</span> rEnd <span class="token operator">=</span> self<span class="token punctuation">.</span>index
-        detector<span class="token punctuation">,</span> predictor <span class="token operator">=</span> self<span class="token punctuation">.</span>detector<span class="token punctuation">,</span> self<span class="token punctuation">.</span>predictor
-        gray <span class="token operator">=</span> cv2<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>frame<span class="token punctuation">,</span> cv2<span class="token punctuation">.</span>COLOR_BGR2GRAY<span class="token punctuation">)</span>
-        <span class="token comment" spellcheck="true"># detect faces in the grayscale frame</span>
-        rects <span class="token operator">=</span> detector<span class="token punctuation">(</span>gray<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-        <span class="token comment" spellcheck="true"># loop over the face detections</span>
-        ear <span class="token operator">=</span> <span class="token number">0</span>
-        <span class="token keyword">for</span> rect <span class="token keyword">in</span> rects<span class="token punctuation">:</span>
-            <span class="token comment" spellcheck="true"># determine the facial landmarks for the face region, then</span>
-            <span class="token comment" spellcheck="true"># convert the facial landmark (x, y)-coordinates to a NumPy</span>
-            <span class="token comment" spellcheck="true"># array</span>
-            shape <span class="token operator">=</span> predictor<span class="token punctuation">(</span>gray<span class="token punctuation">,</span> rect<span class="token punctuation">)</span>
-            shape <span class="token operator">=</span> face_utils<span class="token punctuation">.</span>shape_to_np<span class="token punctuation">(</span>shape<span class="token punctuation">)</span>
-            <span class="token comment" spellcheck="true"># extract the left and right eye coordinates, then use the</span>
-            <span class="token comment" spellcheck="true"># coordinates to compute the eye aspect ratio for both eyes</span>
-            leftEye <span class="token operator">=</span> shape<span class="token punctuation">[</span>lStart<span class="token punctuation">:</span>lEnd<span class="token punctuation">]</span>
-            rightEye <span class="token operator">=</span> shape<span class="token punctuation">[</span>rStart<span class="token punctuation">:</span>rEnd<span class="token punctuation">]</span>
-            leftEAR <span class="token operator">=</span> eye_aspect_ratio<span class="token punctuation">(</span>leftEye<span class="token punctuation">)</span>
-            rightEAR <span class="token operator">=</span> eye_aspect_ratio<span class="token punctuation">(</span>rightEye<span class="token punctuation">)</span>
-            <span class="token comment" spellcheck="true"># average the eye aspect ratio together for both eyes</span>
-            ear <span class="token operator">=</span> <span class="token punctuation">(</span>leftEAR <span class="token operator">+</span> rightEAR<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2.0</span>
-        <span class="token keyword">return</span> ear
-</code></pre>
 <ul>
 <li>使用socketio进行通信</li>
 </ul>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/env python3</span>
-<span class="token keyword">import</span> os
-<span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask<span class="token punctuation">,</span> render_template<span class="token punctuation">,</span> request
-<span class="token keyword">from</span> flask_socketio <span class="token keyword">import</span> SocketIO<span class="token punctuation">,</span> send<span class="token punctuation">,</span> emit
-<span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
-<span class="token keyword">import</span> base64
-<span class="token keyword">import</span> io
-<span class="token keyword">import</span> cv2
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">import</span> random
-<span class="token keyword">import</span> time
-<span class="token keyword">from</span> flask_sslify <span class="token keyword">import</span> SSLify
-<span class="token keyword">from</span> backend <span class="token keyword">import</span> Eye_Detector
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template, request</span><br><span class="line"><span class="keyword">from</span> flask_socketio <span class="keyword">import</span> SocketIO, send, emit</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> flask_sslify <span class="keyword">import</span> SSLify</span><br><span class="line"><span class="keyword">from</span> backend <span class="keyword">import</span> Eye_Detector</span><br><span class="line"></span><br><span class="line"><span class="comment"># ==================</span></span><br><span class="line"><span class="comment"># Initialize</span></span><br><span class="line"><span class="comment"># ==================</span></span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">socketio = SocketIO(app)</span><br><span class="line">player_list = []</span><br><span class="line">detector = Eye_Detector()</span><br><span class="line">SSLify(app)</span><br><span class="line"></span><br><span class="line"><span class="comment"># prevent cached responses(https://stackoverflow.com/questions/47376744/how-to-prevent-cached-response-flask-server-using-chrome)</span></span><br><span class="line"><span class="keyword">if</span> app.config[<span class="string">"DEBUG"</span>]:</span><br><span class="line"><span class="meta">    @app.after_request</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">after_request</span><span class="params">(response)</span>:</span></span><br><span class="line">        response.headers[<span class="string">"Cache-Control"</span>] = <span class="string">"no-cache, no-store, must-revalidate, public, max-age=0"</span></span><br><span class="line">        response.headers[<span class="string">"Expires"</span>] = <span class="number">0</span></span><br><span class="line">        response.headers[<span class="string">"Pragma"</span>] = <span class="string">"no-cache"</span></span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="comment"># ==================</span></span><br><span class="line"><span class="comment"># Utils Function</span></span><br><span class="line"><span class="comment"># ==================</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_by_id</span><span class="params">(_id)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Find element by id in the player_list.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">      _id: ID of this player.</span></span><br><span class="line"><span class="string">    Return:</span></span><br><span class="line"><span class="string">      index: The index of this player in the player list.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    filt = [i <span class="keyword">for</span> (i, item) <span class="keyword">in</span> enumerate(player_list) <span class="keyword">if</span> item[<span class="string">'id'</span>] == _id]</span><br><span class="line">    index = <span class="literal">None</span> <span class="keyword">if</span> len(filt) == <span class="number">0</span> <span class="keyword">else</span> filt[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">return</span> index</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_random_waiting</span><span class="params">(_id)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Randomly choose a 'waiting' player from the list.</span></span><br><span class="line"><span class="string">    But it can not choose itself(_id).</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">      _id: ID of this player.</span></span><br><span class="line"><span class="string">    Return:</span></span><br><span class="line"><span class="string">      index: The index of the chosen player in the player list.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    filt = [i <span class="keyword">for</span> (i, item) <span class="keyword">in</span> enumerate(player_list) <span class="keyword">if</span> (</span><br><span class="line">        item[<span class="string">'status'</span>] == <span class="string">'waiting'</span> <span class="keyword">and</span> item[<span class="string">'id'</span>] != _id)]</span><br><span class="line">    <span class="keyword">if</span> len(filt):</span><br><span class="line">        index = random.choice(filt)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        index = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> index</span><br><span class="line"></span><br><span class="line"><span class="comment"># ==================</span></span><br><span class="line"><span class="comment"># Socket-io</span></span><br><span class="line"><span class="comment"># ==================</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on('connect')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_connect</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Called when the client just connected.</span></span><br><span class="line"><span class="string">    Create a player and push it to the list.</span></span><br><span class="line"><span class="string">    Player:</span></span><br><span class="line"><span class="string">      id: Indentifier of the player.</span></span><br><span class="line"><span class="string">      status: 'idle', 'waiting', 'playing'.</span></span><br><span class="line"><span class="string">      ear: Eye aspect ratio.</span></span><br><span class="line"><span class="string">      rival: The rival's id.</span></span><br><span class="line"><span class="string">      startTime: The start time of the game.</span></span><br><span class="line"><span class="string">      end: Whether the game has ended. '1' means end, '0' means playing.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    client_id = request.args[<span class="string">'id'</span>]</span><br><span class="line">    index = find_by_id(client_id)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> index:</span><br><span class="line">        player_list.append({<span class="string">'id'</span>: client_id, <span class="string">'status'</span>: <span class="string">'idle'</span>,</span><br><span class="line">                            <span class="string">'ear'</span>: <span class="number">0</span>, <span class="string">'rival'</span>: <span class="literal">None</span>, <span class="string">'startTime'</span>: <span class="number">0</span>, <span class="string">'end'</span>: <span class="number">0</span>})</span><br><span class="line">    print(client_id, <span class="string">'connected !'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on('_disconnect')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_disconnect</span><span class="params">(message)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Called when the client just disconnected.</span></span><br><span class="line"><span class="string">    Delete the player from the list.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    client_id = message[<span class="string">'id'</span>]</span><br><span class="line">    index = find_by_id(client_id)</span><br><span class="line">    <span class="keyword">del</span> player_list[index]</span><br><span class="line">    print(client_id, <span class="string">'disconnected !'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on('set_player_wait')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_player_wait</span><span class="params">(message)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Set the player's status to 'waiting'.</span></span><br><span class="line"><span class="string">    And then Randomly match a player whose status is also 'waiting'.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">      id: ID of the player.</span></span><br><span class="line"><span class="string">    Emit:</span></span><br><span class="line"><span class="string">      get_rival: Tell the player its rival's id.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    client_id = message[<span class="string">'id'</span>]</span><br><span class="line">    curr_index = find_by_id(client_id)</span><br><span class="line">    player_list[curr_index][<span class="string">'status'</span>] = <span class="string">'waiting'</span></span><br><span class="line">    print(client_id, <span class="string">'set to waiting...'</span>)</span><br><span class="line">    <span class="comment"># look for rival</span></span><br><span class="line">    rival_index = find_random_waiting(client_id)</span><br><span class="line">    <span class="keyword">if</span> rival_index != <span class="literal">None</span>:</span><br><span class="line">        rival_id = player_list[rival_index][<span class="string">'id'</span>]</span><br><span class="line">        player_list[curr_index][<span class="string">'rival'</span>] = rival_id</span><br><span class="line">        player_list[curr_index][<span class="string">'status'</span>] = <span class="string">'playing'</span></span><br><span class="line"></span><br><span class="line">        player_list[rival_index][<span class="string">'rival'</span>] = client_id</span><br><span class="line">        player_list[rival_index][<span class="string">'status'</span>] = <span class="string">'playing'</span></span><br><span class="line"></span><br><span class="line">        emit(<span class="string">'get_rival'</span>, {<span class="string">'id'</span>: rival_id})</span><br><span class="line">        print(client_id, <span class="string">'find rival'</span>, rival_id)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on('set_player_startTime')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_player_startTime</span><span class="params">(message)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Set the player's startTime.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">      id: ID of the player.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    client_id = message[<span class="string">'id'</span>]</span><br><span class="line">    curr_index = find_by_id(client_id)</span><br><span class="line">    player_list[curr_index][<span class="string">'startTime'</span>] = time.time()</span><br><span class="line">    print(<span class="string">'startTime'</span>, player_list[curr_index])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on('send_image')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_image</span><span class="params">(message)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    1. Convert base64 string from client to np image.</span></span><br><span class="line"><span class="string">    2. Run 'Detector engine' to calculate its value.</span></span><br><span class="line"><span class="string">    3. Emit new player data to the player.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        uri: Base64 string from client.</span></span><br><span class="line"><span class="string">        id: ID of the player.</span></span><br><span class="line"><span class="string">    Emit:</span></span><br><span class="line"><span class="string">        get_arena_data: send arena status to the client including </span></span><br><span class="line"><span class="string">          EAR1: Eye aspect ratio of this player.</span></span><br><span class="line"><span class="string">          EAR2: Eye aspect ratio of its rival.</span></span><br><span class="line"><span class="string">          elapsed: Elapsed time since start.</span></span><br><span class="line"><span class="string">          end: Whether the game has ended.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># ===============</span></span><br><span class="line">    <span class="comment"># Process Base64</span></span><br><span class="line">    <span class="comment"># ===============</span></span><br><span class="line"></span><br><span class="line">    uri, _id = message[<span class="string">'uri'</span>], message[<span class="string">'id'</span>]</span><br><span class="line">    <span class="comment"># split header and body</span></span><br><span class="line">    img_data = uri.split(<span class="string">','</span>)[<span class="number">1</span>]</span><br><span class="line">    img_data = base64.b64decode(img_data)</span><br><span class="line">    image = Image.open(io.BytesIO(img_data))</span><br><span class="line">    <span class="comment"># bgr</span></span><br><span class="line">    array = np.array(image)</span><br><span class="line">    REJECT = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ===============</span></span><br><span class="line">    <span class="comment"># Set EAR</span></span><br><span class="line">    <span class="comment"># ===============</span></span><br><span class="line"></span><br><span class="line">    index = find_by_id(_id)</span><br><span class="line">    EAR1 = player_list[index][<span class="string">'ear'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># If the game has ended, we should not update the player.</span></span><br><span class="line">    <span class="keyword">if</span> player_list[index][<span class="string">'end'</span>] == <span class="number">0</span>:</span><br><span class="line">        EAR1 = detector.calculate_ear(array)</span><br><span class="line">        player_list[index][<span class="string">'ear'</span>] = EAR1</span><br><span class="line">        player_list[index][<span class="string">'uri'</span>] = uri</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Find rival's EAR.</span></span><br><span class="line">    rival_id = player_list[index][<span class="string">'rival'</span>]</span><br><span class="line">    rival_index = find_by_id(rival_id)</span><br><span class="line">    EAR2 = player_list[rival_index][<span class="string">'ear'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Calculat elapsed time</span></span><br><span class="line">    elapsed = time.time() - player_list[index][<span class="string">'startTime'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># EAR &lt; threshold is determined as 'blink'.</span></span><br><span class="line">    threshold = <span class="number">0.20</span></span><br><span class="line">    <span class="comment"># The first 3 second is not counted.</span></span><br><span class="line">    prepare_time = <span class="number">3</span></span><br><span class="line">    <span class="keyword">if</span> ((EAR1 &lt; threshold <span class="keyword">and</span> EAR1 &gt; <span class="number">0</span>) <span class="keyword">or</span> (EAR2 &lt; threshold <span class="keyword">and</span> EAR2 &gt; <span class="number">0</span>)) <span class="keyword">and</span> elapsed &gt; prepare_time:</span><br><span class="line">        <span class="comment"># The game end. Set player's status back to 'idle'.</span></span><br><span class="line">        player_list[index][<span class="string">'end'</span>] = <span class="number">1</span></span><br><span class="line">        player_list[index][<span class="string">'status'</span>] = <span class="string">'idle'</span></span><br><span class="line">        player_list[rival_index][<span class="string">'end'</span>] = <span class="number">1</span></span><br><span class="line">        player_list[rival_index][<span class="string">'status'</span>] = <span class="string">'idle'</span></span><br><span class="line">        emit(<span class="string">'get_arena_data'</span>, {<span class="string">'EAR1'</span>: EAR1, <span class="string">'EAR2'</span>: EAR2, <span class="string">'elapsed'</span>: elapsed, <span class="string">'end'</span>: <span class="number">1</span>,</span><br><span class="line">                                <span class="string">'uri1'</span>: player_list[index][<span class="string">'uri'</span>], <span class="string">'uri2'</span>: player_list[rival_index][<span class="string">'uri'</span>]})</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        emit(<span class="string">'get_arena_data'</span>, {<span class="string">'EAR1'</span>: EAR1,</span><br><span class="line">                                <span class="string">'EAR2'</span>: EAR2, <span class="string">'elapsed'</span>: elapsed, <span class="string">'end'</span>: <span class="number">0</span>})</span><br><span class="line"></span><br><span class="line"><span class="comment"># ==================</span></span><br><span class="line"><span class="comment"># Run flask</span></span><br><span class="line"><span class="comment"># ==================</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route("/")</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">'index.html'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    socketio.run(app, host=<span class="string">'0.0.0.0'</span>, port=<span class="number">3000</span>,</span><br><span class="line">                 keyfile=os.path.join(<span class="string">'backend'</span>, <span class="string">'server.key'</span>), certfile=os.path.join(<span class="string">'backend'</span>, <span class="string">'server.crt'</span>))</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token comment" spellcheck="true"># ==================</span>
-<span class="token comment" spellcheck="true"># Initialize</span>
-<span class="token comment" spellcheck="true"># ==================</span>
-
-app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
-socketio <span class="token operator">=</span> SocketIO<span class="token punctuation">(</span>app<span class="token punctuation">)</span>
-player_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-detector <span class="token operator">=</span> Eye_Detector<span class="token punctuation">(</span><span class="token punctuation">)</span>
-SSLify<span class="token punctuation">(</span>app<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># prevent cached responses(https://stackoverflow.com/questions/47376744/how-to-prevent-cached-response-flask-server-using-chrome)</span>
-<span class="token keyword">if</span> app<span class="token punctuation">.</span>config<span class="token punctuation">[</span><span class="token string">"DEBUG"</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
-    @app<span class="token punctuation">.</span>after_request
-    <span class="token keyword">def</span> <span class="token function">after_request</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        response<span class="token punctuation">.</span>headers<span class="token punctuation">[</span><span class="token string">"Cache-Control"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"no-cache, no-store, must-revalidate, public, max-age=0"</span>
-        response<span class="token punctuation">.</span>headers<span class="token punctuation">[</span><span class="token string">"Expires"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
-        response<span class="token punctuation">.</span>headers<span class="token punctuation">[</span><span class="token string">"Pragma"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"no-cache"</span>
-        <span class="token keyword">return</span> response
-
-<span class="token comment" spellcheck="true"># ==================</span>
-<span class="token comment" spellcheck="true"># Utils Function</span>
-<span class="token comment" spellcheck="true"># ==================</span>
-
-
-<span class="token keyword">def</span> <span class="token function">find_by_id</span><span class="token punctuation">(</span>_id<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">"""
-    Find element by id in the player_list.
-    Args:
-      _id: ID of this player.
-    Return:
-      index: The index of this player in the player list.
-    """</span>
-    filt <span class="token operator">=</span> <span class="token punctuation">[</span>i <span class="token keyword">for</span> <span class="token punctuation">(</span>i<span class="token punctuation">,</span> item<span class="token punctuation">)</span> <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>player_list<span class="token punctuation">)</span> <span class="token keyword">if</span> item<span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span> <span class="token operator">==</span> _id<span class="token punctuation">]</span>
-    index <span class="token operator">=</span> None <span class="token keyword">if</span> len<span class="token punctuation">(</span>filt<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token keyword">else</span> filt<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-    <span class="token keyword">return</span> index
-
-
-<span class="token keyword">def</span> <span class="token function">find_random_waiting</span><span class="token punctuation">(</span>_id<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">"""
-    Randomly choose a 'waiting' player from the list.
-    But it can not choose itself(_id).
-    Args:
-      _id: ID of this player.
-    Return:
-      index: The index of the chosen player in the player list.
-    """</span>
-    filt <span class="token operator">=</span> <span class="token punctuation">[</span>i <span class="token keyword">for</span> <span class="token punctuation">(</span>i<span class="token punctuation">,</span> item<span class="token punctuation">)</span> <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>player_list<span class="token punctuation">)</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>
-        item<span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'waiting'</span> <span class="token operator">and</span> item<span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span> <span class="token operator">!=</span> _id<span class="token punctuation">)</span><span class="token punctuation">]</span>
-    <span class="token keyword">if</span> len<span class="token punctuation">(</span>filt<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        index <span class="token operator">=</span> random<span class="token punctuation">.</span>choice<span class="token punctuation">(</span>filt<span class="token punctuation">)</span>
-    <span class="token keyword">else</span><span class="token punctuation">:</span>
-        index <span class="token operator">=</span> None
-    <span class="token keyword">return</span> index
-
-<span class="token comment" spellcheck="true"># ==================</span>
-<span class="token comment" spellcheck="true"># Socket-io</span>
-<span class="token comment" spellcheck="true"># ==================</span>
-
-
-@socketio<span class="token punctuation">.</span>on<span class="token punctuation">(</span><span class="token string">'connect'</span><span class="token punctuation">)</span>
-<span class="token keyword">def</span> <span class="token function">on_connect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">"""
-    Called when the client just connected.
-    Create a player and push it to the list.
-    Player:
-      id: Indentifier of the player.
-      status: 'idle', 'waiting', 'playing'.
-      ear: Eye aspect ratio.
-      rival: The rival's id.
-      startTime: The start time of the game.
-      end: Whether the game has ended. '1' means end, '0' means playing.
-    """</span>
-    client_id <span class="token operator">=</span> request<span class="token punctuation">.</span>args<span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span>
-    index <span class="token operator">=</span> find_by_id<span class="token punctuation">(</span>client_id<span class="token punctuation">)</span>
-    <span class="token keyword">if</span> <span class="token operator">not</span> index<span class="token punctuation">:</span>
-        player_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">'id'</span><span class="token punctuation">:</span> client_id<span class="token punctuation">,</span> <span class="token string">'status'</span><span class="token punctuation">:</span> <span class="token string">'idle'</span><span class="token punctuation">,</span>
-                            <span class="token string">'ear'</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">'rival'</span><span class="token punctuation">:</span> None<span class="token punctuation">,</span> <span class="token string">'startTime'</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">'end'</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span>client_id<span class="token punctuation">,</span> <span class="token string">'connected !'</span><span class="token punctuation">)</span>
-
-
-@socketio<span class="token punctuation">.</span>on<span class="token punctuation">(</span><span class="token string">'_disconnect'</span><span class="token punctuation">)</span>
-<span class="token keyword">def</span> <span class="token function">on_disconnect</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">"""
-    Called when the client just disconnected.
-    Delete the player from the list.
-    """</span>
-    client_id <span class="token operator">=</span> message<span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span>
-    index <span class="token operator">=</span> find_by_id<span class="token punctuation">(</span>client_id<span class="token punctuation">)</span>
-    <span class="token keyword">del</span> player_list<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span>client_id<span class="token punctuation">,</span> <span class="token string">'disconnected !'</span><span class="token punctuation">)</span>
-
-
-@socketio<span class="token punctuation">.</span>on<span class="token punctuation">(</span><span class="token string">'set_player_wait'</span><span class="token punctuation">)</span>
-<span class="token keyword">def</span> <span class="token function">set_player_wait</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">"""
-    Set the player's status to 'waiting'.
-    And then Randomly match a player whose status is also 'waiting'.
-    Args:
-      id: ID of the player.
-    Emit:
-      get_rival: Tell the player its rival's id.
-    """</span>
-    client_id <span class="token operator">=</span> message<span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span>
-    curr_index <span class="token operator">=</span> find_by_id<span class="token punctuation">(</span>client_id<span class="token punctuation">)</span>
-    player_list<span class="token punctuation">[</span>curr_index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'waiting'</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span>client_id<span class="token punctuation">,</span> <span class="token string">'set to waiting...'</span><span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true"># look for rival</span>
-    rival_index <span class="token operator">=</span> find_random_waiting<span class="token punctuation">(</span>client_id<span class="token punctuation">)</span>
-    <span class="token keyword">if</span> rival_index <span class="token operator">!=</span> None<span class="token punctuation">:</span>
-        rival_id <span class="token operator">=</span> player_list<span class="token punctuation">[</span>rival_index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span>
-        player_list<span class="token punctuation">[</span>curr_index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'rival'</span><span class="token punctuation">]</span> <span class="token operator">=</span> rival_id
-        player_list<span class="token punctuation">[</span>curr_index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'playing'</span>
-
-        player_list<span class="token punctuation">[</span>rival_index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'rival'</span><span class="token punctuation">]</span> <span class="token operator">=</span> client_id
-        player_list<span class="token punctuation">[</span>rival_index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'playing'</span>
-
-        emit<span class="token punctuation">(</span><span class="token string">'get_rival'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token string">'id'</span><span class="token punctuation">:</span> rival_id<span class="token punctuation">}</span><span class="token punctuation">)</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span>client_id<span class="token punctuation">,</span> <span class="token string">'find rival'</span><span class="token punctuation">,</span> rival_id<span class="token punctuation">)</span>
-
-
-@socketio<span class="token punctuation">.</span>on<span class="token punctuation">(</span><span class="token string">'set_player_startTime'</span><span class="token punctuation">)</span>
-<span class="token keyword">def</span> <span class="token function">set_player_startTime</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">"""
-    Set the player's startTime.
-    Args:
-      id: ID of the player.
-    """</span>
-    client_id <span class="token operator">=</span> message<span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span>
-    curr_index <span class="token operator">=</span> find_by_id<span class="token punctuation">(</span>client_id<span class="token punctuation">)</span>
-    player_list<span class="token punctuation">[</span>curr_index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'startTime'</span><span class="token punctuation">]</span> <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'startTime'</span><span class="token punctuation">,</span> player_list<span class="token punctuation">[</span>curr_index<span class="token punctuation">]</span><span class="token punctuation">)</span>
-
-
-@socketio<span class="token punctuation">.</span>on<span class="token punctuation">(</span><span class="token string">'send_image'</span><span class="token punctuation">)</span>
-<span class="token keyword">def</span> <span class="token function">send_image</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">"""
-    1. Convert base64 string from client to np image.
-    2. Run 'Detector engine' to calculate its value.
-    3. Emit new player data to the player.
-    Args:
-        uri: Base64 string from client.
-        id: ID of the player.
-    Emit:
-        get_arena_data: send arena status to the client including 
-          EAR1: Eye aspect ratio of this player.
-          EAR2: Eye aspect ratio of its rival.
-          elapsed: Elapsed time since start.
-          end: Whether the game has ended.
-    """</span>
-    <span class="token comment" spellcheck="true"># ===============</span>
-    <span class="token comment" spellcheck="true"># Process Base64</span>
-    <span class="token comment" spellcheck="true"># ===============</span>
-
-    uri<span class="token punctuation">,</span> _id <span class="token operator">=</span> message<span class="token punctuation">[</span><span class="token string">'uri'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> message<span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span>
-    <span class="token comment" spellcheck="true"># split header and body</span>
-    img_data <span class="token operator">=</span> uri<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
-    img_data <span class="token operator">=</span> base64<span class="token punctuation">.</span>b64decode<span class="token punctuation">(</span>img_data<span class="token punctuation">)</span>
-    image <span class="token operator">=</span> Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>io<span class="token punctuation">.</span>BytesIO<span class="token punctuation">(</span>img_data<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true"># bgr</span>
-    array <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>image<span class="token punctuation">)</span>
-    REJECT <span class="token operator">=</span> <span class="token number">0</span>
-
-    <span class="token comment" spellcheck="true"># ===============</span>
-    <span class="token comment" spellcheck="true"># Set EAR</span>
-    <span class="token comment" spellcheck="true"># ===============</span>
-
-    index <span class="token operator">=</span> find_by_id<span class="token punctuation">(</span>_id<span class="token punctuation">)</span>
-    EAR1 <span class="token operator">=</span> player_list<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'ear'</span><span class="token punctuation">]</span>
-
-    <span class="token comment" spellcheck="true"># If the game has ended, we should not update the player.</span>
-    <span class="token keyword">if</span> player_list<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'end'</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
-        EAR1 <span class="token operator">=</span> detector<span class="token punctuation">.</span>calculate_ear<span class="token punctuation">(</span>array<span class="token punctuation">)</span>
-        player_list<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'ear'</span><span class="token punctuation">]</span> <span class="token operator">=</span> EAR1
-        player_list<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'uri'</span><span class="token punctuation">]</span> <span class="token operator">=</span> uri
-
-    <span class="token comment" spellcheck="true"># Find rival's EAR.</span>
-    rival_id <span class="token operator">=</span> player_list<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'rival'</span><span class="token punctuation">]</span>
-    rival_index <span class="token operator">=</span> find_by_id<span class="token punctuation">(</span>rival_id<span class="token punctuation">)</span>
-    EAR2 <span class="token operator">=</span> player_list<span class="token punctuation">[</span>rival_index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'ear'</span><span class="token punctuation">]</span>
-
-    <span class="token comment" spellcheck="true"># Calculat elapsed time</span>
-    elapsed <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> player_list<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'startTime'</span><span class="token punctuation">]</span>
-
-    <span class="token comment" spellcheck="true"># EAR &lt; threshold is determined as 'blink'.</span>
-    threshold <span class="token operator">=</span> <span class="token number">0.20</span>
-    <span class="token comment" spellcheck="true"># The first 3 second is not counted.</span>
-    prepare_time <span class="token operator">=</span> <span class="token number">3</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>EAR1 <span class="token operator">&lt;</span> threshold <span class="token operator">and</span> EAR1 <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">or</span> <span class="token punctuation">(</span>EAR2 <span class="token operator">&lt;</span> threshold <span class="token operator">and</span> EAR2 <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">and</span> elapsed <span class="token operator">></span> prepare_time<span class="token punctuation">:</span>
-        <span class="token comment" spellcheck="true"># The game end. Set player's status back to 'idle'.</span>
-        player_list<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'end'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
-        player_list<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'idle'</span>
-        player_list<span class="token punctuation">[</span>rival_index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'end'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
-        player_list<span class="token punctuation">[</span>rival_index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'idle'</span>
-        emit<span class="token punctuation">(</span><span class="token string">'get_arena_data'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token string">'EAR1'</span><span class="token punctuation">:</span> EAR1<span class="token punctuation">,</span> <span class="token string">'EAR2'</span><span class="token punctuation">:</span> EAR2<span class="token punctuation">,</span> <span class="token string">'elapsed'</span><span class="token punctuation">:</span> elapsed<span class="token punctuation">,</span> <span class="token string">'end'</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-                                <span class="token string">'uri1'</span><span class="token punctuation">:</span> player_list<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'uri'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'uri2'</span><span class="token punctuation">:</span> player_list<span class="token punctuation">[</span>rival_index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'uri'</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-    <span class="token keyword">else</span><span class="token punctuation">:</span>
-        emit<span class="token punctuation">(</span><span class="token string">'get_arena_data'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token string">'EAR1'</span><span class="token punctuation">:</span> EAR1<span class="token punctuation">,</span>
-                                <span class="token string">'EAR2'</span><span class="token punctuation">:</span> EAR2<span class="token punctuation">,</span> <span class="token string">'elapsed'</span><span class="token punctuation">:</span> elapsed<span class="token punctuation">,</span> <span class="token string">'end'</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># ==================</span>
-<span class="token comment" spellcheck="true"># Run flask</span>
-<span class="token comment" spellcheck="true"># ==================</span>
-
-
-@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
-<span class="token keyword">def</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">return</span> render_template<span class="token punctuation">(</span><span class="token string">'index.html'</span><span class="token punctuation">)</span>
-
-
-<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
-    socketio<span class="token punctuation">.</span>run<span class="token punctuation">(</span>app<span class="token punctuation">,</span> host<span class="token operator">=</span><span class="token string">'0.0.0.0'</span><span class="token punctuation">,</span> port<span class="token operator">=</span><span class="token number">3000</span><span class="token punctuation">,</span>
-                 keyfile<span class="token operator">=</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token string">'backend'</span><span class="token punctuation">,</span> <span class="token string">'server.key'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> certfile<span class="token operator">=</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token string">'backend'</span><span class="token punctuation">,</span> <span class="token string">'server.crt'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1043,7 +781,7 @@ SSLify<span class="token punctuation">(</span>app<span class="token punctuation"
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -1085,25 +823,29 @@ SSLify<span class="token punctuation">(</span>app<span class="token punctuation"
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2020/05/30/solution/shu-mei-pai-che-pai-shi-bie/">
+                <a href="/2020/05/30/writing/logicconvey/mai-ken-xi-yi-shi/">
                     <div class="card-image">
                         
-                        <img src="https://cdn.pixabay.com/photo/2018/01/17/20/22/analytics-3088958__340.jpg" class="responsive-img" alt="树莓派车牌识别">
+                        <img src="https://cdn.pixabay.com/photo/2021/11/17/10/39/kangaroo-6803201__340.jpg" class="responsive-img" alt="麦肯锡意识">
                         
-                        <span class="card-title">树莓派车牌识别</span>
+                        <span class="card-title">麦肯锡意识</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-检测到车牌&amp;识别每个车牌边界框内的文本。
+                            1. 界定问题
+对MECE原则应用自如
+使用前辈经验，不要做重复劳动（由下而上思维）
+在第一次会议上解决问题
+透过表象看本质
+使用结构来强化思维，使用假设来进行决策
 
-1. 硬件设计
-
-2. 模型选择
-Yolo3: https://github.com/experiencor/keras-yolo3
-https://github.com/ThorPha
+2. 设计分析内容
+找到关键驱动因素
+以大局为重
+不要妄想烧干大海
+有时
                         
                     </div>
                     <div class="publish-info">
@@ -1114,8 +856,8 @@ https://github.com/ThorPha
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/solution/" class="post-category">
-                                    solution
+                            <a href="/categories/%E8%AF%AD%E8%A8%80%E6%A1%86%E6%9E%B6/" class="post-category">
+                                    语言框架
                                 </a>
                             
                             
@@ -1125,12 +867,12 @@ https://github.com/ThorPha
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/AIOT/">
-                        <span class="chip bg-color">AIOT</span>
+                    <a href="/tags/pytorch/">
+                        <span class="chip bg-color">pytorch</span>
                     </a>
                     
-                    <a href="/tags/CV/">
-                        <span class="chip bg-color">CV</span>
+                    <a href="/tags/AI/">
+                        <span class="chip bg-color">AI</span>
                     </a>
                     
                 </div>
@@ -1155,7 +897,7 @@ https://github.com/ThorPha
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1. 文件读写pd.read_csv(filepath_or_buffer, sep=’,’, delimiter=None, header=’infer’, names=None, index_col=None, usecols=None
+                            1. 文件读写1pd.read_csv(filepath_or_buffer, sep=’,’, delimiter=None, header=’infer’, names=None, index_col=None, usecols=Non
                         
                     </div>
                     <div class="publish-info">
@@ -1379,7 +1121,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1403,7 +1145,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1424,10 +1166,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1536,6 +1274,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

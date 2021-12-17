@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="PictureDataEnhance, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="PictureDataEnhance, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -493,19 +515,23 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2020-10-27
+                    2021-05-14
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
                     877
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -528,118 +554,25 @@
                 <blockquote>
 <p>数据增强中的一些基本操作，例如裁剪图片大小，图片正则话标准化处理，图片数据转tensor向量，图片随机裁剪，旋转，过滤，图片锐化，以及图片模糊等。</p>
 </blockquote>
-<h3 id="1-Resize"><a href="#1-Resize" class="headerlink" title="1. Resize"></a>1. Resize</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Resize</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> output_size<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>output_size <span class="token operator">=</span> output_size
+<h3 id="1-Resize"><a href="#1-Resize" class="headerlink" title="1. Resize"></a>1. Resize</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Resize</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, output_size)</span>:</span></span><br><span class="line">        self.output_size = output_size</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, X, Y)</span>:</span></span><br><span class="line">        _X = cv2.resize(X, self.output_size)</span><br><span class="line">        w, h = self.output_size</span><br><span class="line">        c = Y.shape[<span class="number">-1</span>]</span><br><span class="line">        _Y = np.zeros((h, w, c))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(Y.shape[<span class="number">-1</span>]):</span><br><span class="line">            _Y[..., i] = cv2.resize(Y[..., i], self.output_size)</span><br><span class="line">        <span class="keyword">return</span> _X, _Y</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> X<span class="token punctuation">,</span> Y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        _X <span class="token operator">=</span> cv2<span class="token punctuation">.</span>resize<span class="token punctuation">(</span>X<span class="token punctuation">,</span> self<span class="token punctuation">.</span>output_size<span class="token punctuation">)</span>
-        w<span class="token punctuation">,</span> h <span class="token operator">=</span> self<span class="token punctuation">.</span>output_size
-        c <span class="token operator">=</span> Y<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
-        _Y <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>h<span class="token punctuation">,</span> w<span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>Y<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-            _Y<span class="token punctuation">[</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> i<span class="token punctuation">]</span> <span class="token operator">=</span> cv2<span class="token punctuation">.</span>resize<span class="token punctuation">(</span>Y<span class="token punctuation">[</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> i<span class="token punctuation">]</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>output_size<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> _X<span class="token punctuation">,</span> _Y</code></pre>
 <h3 id="2-Clip"><a href="#2-Clip" class="headerlink" title="2. Clip"></a>2. Clip</h3><p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200814102802185.png" alt=""></p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Clip</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> mini<span class="token punctuation">,</span> maxi<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">if</span> maxi <span class="token keyword">is</span> None<span class="token punctuation">:</span>
-            self<span class="token punctuation">.</span>mini<span class="token punctuation">,</span> self<span class="token punctuation">.</span>maxi <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> mini
-        <span class="token keyword">else</span><span class="token punctuation">:</span>
-            self<span class="token punctuation">.</span>mini<span class="token punctuation">,</span> self<span class="token punctuation">.</span>maxi <span class="token operator">=</span> mini<span class="token punctuation">,</span> maxi
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Clip</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, mini, maxi=None)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> maxi <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            self.mini, self.maxi = <span class="number">0</span>, mini</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.mini, self.maxi = mini, maxi</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, X, Y)</span>:</span></span><br><span class="line">        mini_mask = np.where(X &lt; self.mini)</span><br><span class="line">        maxi_mask = np.where(X &gt; self.maxi)</span><br><span class="line">        X[mini_mask] = self.mini</span><br><span class="line">        X[maxi_mask] = self.maxi</span><br><span class="line">        <span class="keyword">return</span> X, Y</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> X<span class="token punctuation">,</span> Y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        mini_mask <span class="token operator">=</span> np<span class="token punctuation">.</span>where<span class="token punctuation">(</span>X <span class="token operator">&lt;</span> self<span class="token punctuation">.</span>mini<span class="token punctuation">)</span>
-        maxi_mask <span class="token operator">=</span> np<span class="token punctuation">.</span>where<span class="token punctuation">(</span>X <span class="token operator">></span> self<span class="token punctuation">.</span>maxi<span class="token punctuation">)</span>
-        X<span class="token punctuation">[</span>mini_mask<span class="token punctuation">]</span> <span class="token operator">=</span> self<span class="token punctuation">.</span>mini
-        X<span class="token punctuation">[</span>maxi_mask<span class="token punctuation">]</span> <span class="token operator">=</span> self<span class="token punctuation">.</span>maxi
-        <span class="token keyword">return</span> X<span class="token punctuation">,</span> Y</code></pre>
 <h3 id="3-Normalize-or-Standardize"><a href="#3-Normalize-or-Standardize" class="headerlink" title="3. Normalize or Standardize"></a>3. Normalize or Standardize</h3><p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200814102952673.png" alt=""></p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Normalize</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> axis<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>axis <span class="token operator">=</span> axis
-    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> X<span class="token punctuation">,</span> Y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        mini <span class="token operator">=</span> np<span class="token punctuation">.</span>min<span class="token punctuation">(</span>X<span class="token punctuation">,</span> self<span class="token punctuation">.</span>axis<span class="token punctuation">)</span>
-        maxi <span class="token operator">=</span> np<span class="token punctuation">.</span>max<span class="token punctuation">(</span>X<span class="token punctuation">,</span> self<span class="token punctuation">.</span>axis<span class="token punctuation">)</span>
-        X <span class="token operator">=</span> <span class="token punctuation">(</span>X <span class="token operator">-</span> mini<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span>maxi <span class="token operator">-</span> mini<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> X<span class="token punctuation">,</span> Y
-<span class="token keyword">class</span> <span class="token class-name">Standardize</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> axis<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>axis <span class="token operator">=</span> axis
-    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> X<span class="token punctuation">,</span> Y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        mean <span class="token operator">=</span>  np<span class="token punctuation">.</span>mean<span class="token punctuation">(</span>X<span class="token punctuation">,</span> self<span class="token punctuation">.</span>axis<span class="token punctuation">)</span>
-        std <span class="token operator">=</span> np<span class="token punctuation">.</span>std<span class="token punctuation">(</span>X<span class="token punctuation">,</span> self<span class="token punctuation">.</span>axis<span class="token punctuation">)</span>
-        X <span class="token operator">=</span> <span class="token punctuation">(</span>X <span class="token operator">-</span> mean<span class="token punctuation">)</span> <span class="token operator">/</span> std
-        <span class="token keyword">return</span> X<span class="token punctuation">,</span> Y</code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Normalize</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, axis=None)</span>:</span></span><br><span class="line">        self.axis = axis</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, X, Y)</span>:</span></span><br><span class="line">        mini = np.min(X, self.axis)</span><br><span class="line">        maxi = np.max(X, self.axis)</span><br><span class="line">        X = (X - mini) / (maxi - mini)</span><br><span class="line">        <span class="keyword">return</span> X, Y</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Standardize</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, axis=None)</span>:</span></span><br><span class="line">        self.axis = axis</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, X, Y)</span>:</span></span><br><span class="line">        mean =  np.mean(X, self.axis)</span><br><span class="line">        std = np.std(X, self.axis)</span><br><span class="line">        X = (X - mean) / std</span><br><span class="line">        <span class="keyword">return</span> X, Y</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="4-ToTensor"><a href="#4-ToTensor" class="headerlink" title="4. ToTensor"></a>4. ToTensor</h3><p>如果您使用的是<code>Pytorch</code>，则需要将图像转换为<code>Torch.Tensor</code>。 唯一需要注意的是，使用<code>Pytorch</code>，我们的图像维度中<strong>首先是通道</strong>，而不是最后是通道。 最后，我们还可以选择张量的<strong>输出类型</strong>。</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">ToTensor</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> X_type<span class="token operator">=</span>None<span class="token punctuation">,</span> Y_type<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token comment" spellcheck="true"># must bu torch types</span>
-        self<span class="token punctuation">.</span>X_type <span class="token operator">=</span> X_type
-        self<span class="token punctuation">.</span>Y_type <span class="token operator">=</span> Y_type
-    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> X<span class="token punctuation">,</span> Y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token comment" spellcheck="true"># swap color axis because</span>
-        <span class="token comment" spellcheck="true"># numpy img_shape: H x W x C</span>
-        <span class="token comment" spellcheck="true"># torch img_shape: C X H X W</span>
-        X <span class="token operator">=</span> X<span class="token punctuation">.</span>transpose<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        Y <span class="token operator">=</span> Y<span class="token punctuation">.</span>transpose<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token comment" spellcheck="true"># convert to tensor</span>
-        X <span class="token operator">=</span> torch<span class="token punctuation">.</span>from_numpy<span class="token punctuation">(</span>X<span class="token punctuation">)</span>
-        Y <span class="token operator">=</span> torch<span class="token punctuation">.</span>from_numpy<span class="token punctuation">(</span>Y<span class="token punctuation">)</span>
-        <span class="token keyword">if</span> self<span class="token punctuation">.</span>X_type <span class="token keyword">is</span> <span class="token operator">not</span> None<span class="token punctuation">:</span>
-            X <span class="token operator">=</span> X<span class="token punctuation">.</span>type<span class="token punctuation">(</span>self<span class="token punctuation">.</span>X_type<span class="token punctuation">)</span>
-        <span class="token keyword">if</span> self<span class="token punctuation">.</span>Y_type <span class="token keyword">is</span> <span class="token operator">not</span> None<span class="token punctuation">:</span>
-            Y <span class="token operator">=</span> Y<span class="token punctuation">.</span>type<span class="token punctuation">(</span>self<span class="token punctuation">.</span>Y_type<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> X<span class="token punctuation">,</span> Y</code></pre>
-<h3 id="5-Flip"><a href="#5-Flip" class="headerlink" title="5. Flip"></a>5. Flip</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Flip</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> X<span class="token punctuation">,</span> Y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">for</span> axis <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
-            <span class="token keyword">if</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>rand<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0.5</span><span class="token punctuation">:</span>
-                X <span class="token operator">=</span> np<span class="token punctuation">.</span>flip<span class="token punctuation">(</span>X<span class="token punctuation">,</span> axis<span class="token punctuation">)</span>
-                Y <span class="token operator">=</span> np<span class="token punctuation">.</span>flip<span class="token punctuation">(</span>Y<span class="token punctuation">,</span> axis<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> X<span class="token punctuation">,</span> Y</code></pre>
-<h3 id="6-Random-crop"><a href="#6-Random-crop" class="headerlink" title="6. Random crop"></a>6. Random crop</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Crop</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> min_size_ratio<span class="token punctuation">,</span> max_size_ratio<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>min_size_ratio <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>list<span class="token punctuation">(</span>min_size_ratio<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>max_size_ratio <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>list<span class="token punctuation">(</span>max_size_ratio<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ToTensor</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, X_type=None, Y_type=None)</span>:</span></span><br><span class="line">        <span class="comment"># must bu torch types</span></span><br><span class="line">        self.X_type = X_type</span><br><span class="line">        self.Y_type = Y_type</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, X, Y)</span>:</span></span><br><span class="line">        <span class="comment"># swap color axis because</span></span><br><span class="line">        <span class="comment"># numpy img_shape: H x W x C</span></span><br><span class="line">        <span class="comment"># torch img_shape: C X H X W</span></span><br><span class="line">        X = X.transpose((<span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line">        Y = Y.transpose((<span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line">        <span class="comment"># convert to tensor</span></span><br><span class="line">        X = torch.from_numpy(X)</span><br><span class="line">        Y = torch.from_numpy(Y)</span><br><span class="line">        <span class="keyword">if</span> self.X_type <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            X = X.type(self.X_type)</span><br><span class="line">        <span class="keyword">if</span> self.Y_type <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            Y = Y.type(self.Y_type)</span><br><span class="line">        <span class="keyword">return</span> X, Y</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> X<span class="token punctuation">,</span> Y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        size <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>X<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-        mini <span class="token operator">=</span> self<span class="token punctuation">.</span>min_size_ratio <span class="token operator">*</span> size
-        maxi <span class="token operator">=</span> self<span class="token punctuation">.</span>max_size_ratio <span class="token operator">*</span> size
-        <span class="token comment" spellcheck="true"># random size</span>
-        h <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span>mini<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> maxi<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-        w <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span>mini<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> maxi<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-        <span class="token comment" spellcheck="true"># random place</span>
-        shift_h <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> size<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">-</span> h<span class="token punctuation">)</span>
-        shift_w <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> size<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> w<span class="token punctuation">)</span>
-        X <span class="token operator">=</span> X<span class="token punctuation">[</span>shift_h<span class="token punctuation">:</span>shift_h<span class="token operator">+</span>h<span class="token punctuation">,</span> shift_w<span class="token punctuation">:</span>shift_w<span class="token operator">+</span>w<span class="token punctuation">]</span>
-        Y <span class="token operator">=</span> Y<span class="token punctuation">[</span>shift_h<span class="token punctuation">:</span>shift_h<span class="token operator">+</span>h<span class="token punctuation">,</span> shift_w<span class="token punctuation">:</span>shift_w<span class="token operator">+</span>w<span class="token punctuation">]</span>
+<h3 id="5-Flip"><a href="#5-Flip" class="headerlink" title="5. Flip"></a>5. Flip</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Flip</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, X, Y)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> axis <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">1</span>]:</span><br><span class="line">            <span class="keyword">if</span> np.random.rand(<span class="number">1</span>) &lt; <span class="number">0.5</span>:</span><br><span class="line">                X = np.flip(X, axis)</span><br><span class="line">                Y = np.flip(Y, axis)</span><br><span class="line">        <span class="keyword">return</span> X, Y</span><br></pre></td></tr></tbody></table></figure>
 
-        <span class="token keyword">return</span> X<span class="token punctuation">,</span> Y</code></pre>
-<h3 id="7-Filter"><a href="#7-Filter" class="headerlink" title="7. Filter"></a>7. Filter</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">CustomFilter</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> kernel<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>kernel <span class="token operator">=</span> kernel
+<h3 id="6-Random-crop"><a href="#6-Random-crop" class="headerlink" title="6. Random crop"></a>6. Random crop</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Crop</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, min_size_ratio, max_size_ratio=<span class="params">(<span class="number">1</span>, <span class="number">1</span>)</span>)</span>:</span></span><br><span class="line">        self.min_size_ratio = np.array(list(min_size_ratio))</span><br><span class="line">        self.max_size_ratio = np.array(list(max_size_ratio))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, X, Y)</span>:</span></span><br><span class="line">        size = np.array(X.shape[:<span class="number">2</span>])</span><br><span class="line">        mini = self.min_size_ratio * size</span><br><span class="line">        maxi = self.max_size_ratio * size</span><br><span class="line">        <span class="comment"># random size</span></span><br><span class="line">        h = np.random.randint(mini[<span class="number">0</span>], maxi[<span class="number">0</span>])</span><br><span class="line">        w = np.random.randint(mini[<span class="number">1</span>], maxi[<span class="number">1</span>])</span><br><span class="line">        <span class="comment"># random place</span></span><br><span class="line">        shift_h = np.random.randint(<span class="number">0</span>, size[<span class="number">0</span>] - h)</span><br><span class="line">        shift_w = np.random.randint(<span class="number">0</span>, size[<span class="number">1</span>] - w)</span><br><span class="line">        X = X[shift_h:shift_h+h, shift_w:shift_w+w]</span><br><span class="line">        Y = Y[shift_h:shift_h+h, shift_w:shift_w+w]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> X, Y</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> X<span class="token punctuation">,</span> Y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        X <span class="token operator">=</span> cv2<span class="token punctuation">.</span>filter2D<span class="token punctuation">(</span>X<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>kernel<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> X<span class="token punctuation">,</span> Y</code></pre>
-<h3 id="8-Sharpen"><a href="#8-Sharpen" class="headerlink" title="8. Sharpen"></a>8. Sharpen</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Sharpen</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> max_center<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>identity <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-                                  <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-                                  <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>sharpen <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>  <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-                                <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>  <span class="token number">4</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-                                <span class="token punctuation">[</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>  <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">4</span>
+<h3 id="7-Filter"><a href="#7-Filter" class="headerlink" title="7. Filter"></a>7. Filter</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomFilter</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, kernel)</span>:</span></span><br><span class="line">        self.kernel = kernel</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, X, Y)</span>:</span></span><br><span class="line">        X = cv2.filter2D(X, <span class="number">-1</span>, self.kernel)</span><br><span class="line">        <span class="keyword">return</span> X, Y</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> X<span class="token punctuation">,</span> Y<span class="token punctuation">)</span><span class="token punctuation">:</span>
+<h3 id="8-Sharpen"><a href="#8-Sharpen" class="headerlink" title="8. Sharpen"></a>8. Sharpen</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sharpen</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, max_center=<span class="number">4</span>)</span>:</span></span><br><span class="line">        self.identity = np.array([[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">                                  [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>],</span><br><span class="line">                                  [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]])</span><br><span class="line">        self.sharpen = np.array([[ <span class="number">0</span>, <span class="number">-1</span>,  <span class="number">0</span>],</span><br><span class="line">                                [<span class="number">-1</span>,  <span class="number">4</span>, <span class="number">-1</span>],</span><br><span class="line">                                [ <span class="number">0</span>, <span class="number">-1</span>,  <span class="number">0</span>]]) / <span class="number">4</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, X, Y)</span>:</span></span><br><span class="line"></span><br><span class="line">        sharp = self.sharpen * np.random.random() * self.max_center</span><br><span class="line">        kernel = self.identity + sharp</span><br><span class="line"></span><br><span class="line">        X = cv2.filter2D(X, <span class="number">-1</span>, kernel)</span><br><span class="line">        <span class="keyword">return</span> X, Y</span><br></pre></td></tr></tbody></table></figure>
 
-        sharp <span class="token operator">=</span> self<span class="token punctuation">.</span>sharpen <span class="token operator">*</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>random<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> self<span class="token punctuation">.</span>max_center
-        kernel <span class="token operator">=</span> self<span class="token punctuation">.</span>identity <span class="token operator">+</span> sharp
-
-        X <span class="token operator">=</span> cv2<span class="token punctuation">.</span>filter2D<span class="token punctuation">(</span>X<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> kernel<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> X<span class="token punctuation">,</span> Y</code></pre>
 <h3 id="9-Blur"><a href="#9-Blur" class="headerlink" title="9. Blur"></a>9. Blur</h3><blockquote>
 <p>本质上，它是一种<a href="http://en.wikipedia.org/wiki/Smoothing" target="_blank" rel="noopener">数据平滑技术</a>（data smoothing）；所谓”模糊”，可以理解成每一个像素都取周边像素的平均值。图像都是连续的，越靠近的点关系越密切，越远离的点关系越疏远。因此，加权平均更合理，距离越近的点权重越大，距离越远的点权重越小。权重的分配使用高斯模型；</p>
 </blockquote>
@@ -647,26 +580,8 @@
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027094436977.png" alt=""></p>
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027094542433.png" alt=""></p>
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027094506667.png" alt=""></p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">GaussianBlur</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> max_kernel<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>max_kernel <span class="token operator">=</span> max_kernel
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GaussianBlur</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, max_kernel=<span class="params">(<span class="number">7</span>, <span class="number">7</span>)</span>)</span>:</span></span><br><span class="line">        self.max_kernel = max_kernel</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, X, Y)</span>:</span></span><br><span class="line">        kernel_size = (</span><br><span class="line">            np.random.randint(<span class="number">1</span>, self.max_kernel[<span class="number">0</span>] + <span class="number">1</span>),</span><br><span class="line">            np.random.randint(<span class="number">1</span>, self.max_kernel[<span class="number">1</span>] + <span class="number">1</span>),</span><br><span class="line">        )</span><br><span class="line">        X = cv2.GaussianBlur(X, kernel_size, <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> X, Y</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">   高斯模糊处理</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GaussianBlurHandle</span><span class="params">(self,imagepath)</span>:</span></span><br><span class="line">    kernel_size=(<span class="number">5</span>,<span class="number">5</span>)</span><br><span class="line">    sigma=<span class="number">1.5</span></span><br><span class="line">    img=cv2.imread(imagepath)</span><br><span class="line">    img=cv2.GaussianBlur(img,kernel_size,sigma)</span><br><span class="line">    cv2.imwrite(<span class="string">"./temp/gaosi.png"</span>,img)</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> X<span class="token punctuation">,</span> Y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        kernel_size <span class="token operator">=</span> <span class="token punctuation">(</span>
-            np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>max_kernel<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>max_kernel<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        <span class="token punctuation">)</span>
-        X <span class="token operator">=</span> cv2<span class="token punctuation">.</span>GaussianBlur<span class="token punctuation">(</span>X<span class="token punctuation">,</span> kernel_size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-        <span class="token keyword">return</span> X<span class="token punctuation">,</span> Y
-<span class="token triple-quoted-string string">'''
-   高斯模糊处理
-'''</span>
-<span class="token keyword">def</span> <span class="token function">GaussianBlurHandle</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>imagepath<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    kernel_size<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span>
-    sigma<span class="token operator">=</span><span class="token number">1.5</span>
-    img<span class="token operator">=</span>cv2<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>imagepath<span class="token punctuation">)</span>
-    img<span class="token operator">=</span>cv2<span class="token punctuation">.</span>GaussianBlur<span class="token punctuation">(</span>img<span class="token punctuation">,</span>kernel_size<span class="token punctuation">,</span>sigma<span class="token punctuation">)</span>
-    cv2<span class="token punctuation">.</span>imwrite<span class="token punctuation">(</span><span class="token string">"./temp/gaosi.png"</span><span class="token punctuation">,</span>img<span class="token punctuation">)</span></code></pre>
 <p>转载：</p>
 <ul>
 <li><a href="https://zhuanlan.zhihu.com/p/158854758" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/158854758</a></li>
@@ -884,7 +799,7 @@
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -938,12 +853,7 @@
                     <div class="summary block-with-text">
                         
                             
-1. 鲁班图片压缩算法from PIL import Image
-import os
-from shutil import copyfile
-from math import ceil
-class Luban(object):
-    d
+1. 鲁班图片压缩算法123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585
                         
                     </div>
                     <div class="publish-info">
@@ -980,7 +890,7 @@ class Luban(object):
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/08/13/ruan-jian-gong-ju/linux/shelllearning/">
+                <a href="/2020/08/13/yu-yan-kuang-jia/shell/shelllearning/">
                     <div class="card-image">
                         
                         <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133729.png" class="responsive-img" alt="shellLearning">
@@ -994,15 +904,12 @@ class Luban(object):
                             1. 基本语法
 基本脚本：
 
-#!/bin/bash
-echo "Hello World !"
-# 注释内容
-chmod +x ./test.sh  #使脚本具有执行权限
-./test.sh  #执行脚本
+12345#!/bin/bashecho "Hello World !"# 注释内容chmod +x ./test.sh  #使脚本具有执行权限./test.sh  #执行脚本
+
 
 定义使用变量
 
-your_nam
+123456
                         
                     </div>
                     <div class="publish-info">
@@ -1226,7 +1133,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1250,7 +1157,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1271,10 +1178,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1383,6 +1286,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="GANIntroduce, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="GANIntroduce, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -493,6 +515,10 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -500,12 +526,12 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    684
+                    683
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -547,30 +573,17 @@
 <li><p>select a number of real images from the training set;</p>
 </li>
 <li><p>generate a number of fake images, by sampling random noise vectors and creating images from them using generator;</p>
-<pre class=" language-python"><code class="language-python"> <span class="token comment" spellcheck="true"># 随机生成均匀分布，上下边界为1和-1，输出Batch_size×100个样本</span>
- noise <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>uniform<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>size<span class="token operator">=</span><span class="token punctuation">(</span>Batch_size<span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span>      
- <span class="token comment" spellcheck="true">#抽取一个批量的真实照片</span>
- image_batch <span class="token operator">=</span> X_train<span class="token punctuation">[</span>index <span class="token operator">*</span> Batch_size<span class="token punctuation">:</span><span class="token punctuation">(</span>index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> Batch_size<span class="token punctuation">]</span>
- <span class="token comment" spellcheck="true">#生成的图片使用G对随机噪声进行推断</span>
- generated_images <span class="token operator">=</span> g<span class="token punctuation">.</span>predict<span class="token punctuation">(</span>noise<span class="token punctuation">,</span> verbose<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 随机生成均匀分布，上下边界为1和-1，输出Batch_size×100个样本</span></span><br><span class="line">noise = np.random.uniform(<span class="number">-1</span>,<span class="number">1</span>,size=(Batch_size,<span class="number">100</span>))      </span><br><span class="line"><span class="comment">#抽取一个批量的真实照片</span></span><br><span class="line">image_batch = X_train[index * Batch_size:(index + <span class="number">1</span>) * Batch_size]</span><br><span class="line"><span class="comment">#生成的图片使用G对随机噪声进行推断</span></span><br><span class="line">generated_images = g.predict(noise, verbose=<span class="number">0</span>)</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>train the discriminator for one or more epochs using both fake and real images, and update only the discriminator’s weights by labeling all the real images as 1 and the fake images as 0;<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010160249272.png" alt=""></p>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#将真实的图片和生成的图片以数组的形式拼接再一起，真实图片在上，生成图片在下</span>
-X <span class="token operator">=</span> np<span class="token punctuation">.</span>concatenate<span class="token punctuation">(</span><span class="token punctuation">(</span>image_batch<span class="token punctuation">,</span>generated_images<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">#生成真假标签，即一个包含两倍批量大小的列表，前一个批量均为1，代表真，后一个批量均为0，代表生成图片</span>
-y <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">*</span> Batch_size <span class="token operator">+</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">*</span> Batch_size
-<span class="token comment" spellcheck="true">#判别器的损失；在一个batch的数据上进行一次参数更新</span>
-d_loss <span class="token operator">=</span> d<span class="token punctuation">.</span>train_on_batch<span class="token punctuation">(</span>X<span class="token punctuation">,</span>y<span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将真实的图片和生成的图片以数组的形式拼接再一起，真实图片在上，生成图片在下</span></span><br><span class="line">X = np.concatenate((image_batch,generated_images))</span><br><span class="line"><span class="comment">#生成真假标签，即一个包含两倍批量大小的列表，前一个批量均为1，代表真，后一个批量均为0，代表生成图片</span></span><br><span class="line">y = [<span class="number">1</span>] * Batch_size + [<span class="number">0</span>] * Batch_size</span><br><span class="line"><span class="comment">#判别器的损失；在一个batch的数据上进行一次参数更新</span></span><br><span class="line">d_loss = d.train_on_batch(X,y)</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>Generate another number of fake images;</p>
-<pre class=" language-python"><code class="language-python"> <span class="token comment" spellcheck="true">#随机生成均匀分布噪声</span>
- noise <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>uniform<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token punctuation">(</span>Batch_size<span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#随机生成均匀分布噪声</span></span><br><span class="line">noise = np.random.uniform(<span class="number">-1</span>,<span class="number">1</span>,(Batch_size,<span class="number">100</span>))</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>train the full GAN model for one or more epochs using only fake images, and update only the generator’s weights by labeling all fake images as 1;<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010160430793.png" alt=""></p>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#固定D</span>
-d<span class="token punctuation">.</span>trainable <span class="token operator">=</span> <span class="token boolean">False</span>
-<span class="token comment" spellcheck="true">#计算生成器损失；在一个batch的数据上进行一次参数更新</span>
-g_loss <span class="token operator">=</span> d_on_g<span class="token punctuation">.</span>train_on_batch<span class="token punctuation">(</span>noise<span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">*</span>Batch_size<span class="token punctuation">)</span> </code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#固定D</span></span><br><span class="line">d.trainable = <span class="literal">False</span></span><br><span class="line"><span class="comment">#计算生成器损失；在一个batch的数据上进行一次参数更新</span></span><br><span class="line">g_loss = d_on_g.train_on_batch(noise,[<span class="number">1</span>]*Batch_size)</span><br></pre></td></tr></tbody></table></figure>
+
 </li>
 </ol>
 <h3 id="3-VAE-Variational-Autoencoders"><a href="#3-VAE-Variational-Autoencoders" class="headerlink" title="3. VAE(Variational Autoencoders)"></a>3. VAE(Variational Autoencoders)</h3><blockquote>
@@ -794,7 +807,7 @@ g_loss <span class="token operator">=</span> d_on_g<span class="token punctuatio
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -1135,7 +1148,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1159,7 +1172,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1180,10 +1193,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1292,6 +1301,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

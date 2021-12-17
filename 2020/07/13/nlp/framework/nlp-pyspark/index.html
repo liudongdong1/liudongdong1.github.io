@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="NLP_pyspark, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="NLP_pyspark, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -493,6 +515,10 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -500,12 +526,12 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    786
+                    775
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -537,42 +563,12 @@
 <h3 id="1-3-Pipelines"><a href="#1-3-Pipelines" class="headerlink" title="1.3. Pipelines"></a>1.3. Pipelines</h3><blockquote>
 <p><strong>Pipelines</strong> are a mechanism for combining multiple estimators and transformers in a single workflow. They allow multiple chained transformations along a Machine Learning task. </p>
 </blockquote>
-<pre><code>spark = SparkSession.builder \
-    .appName("Spark NLP")\
-    .master("local[4]")\
-    .config("spark.driver.memory","16G")\
-    .config("spark.driver.maxResultSize", "0") \
-    .config("spark.jars.packages", "com.johnsnowlabs.nlp:spark-nlp_2.11:2.6.3")\
-    .config("spark.kryoserializer.buffer.max", "1000M")\
-    .getOrCreate()</code></pre><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> sparknlp<span class="token punctuation">.</span>base <span class="token keyword">import</span> <span class="token operator">*</span>
-<span class="token keyword">from</span> sparknlp<span class="token punctuation">.</span>annotator <span class="token keyword">import</span> <span class="token operator">*</span>
-<span class="token keyword">from</span> pyspark<span class="token punctuation">.</span>ml <span class="token keyword">import</span> Pipeline
-documentAssembler <span class="token operator">=</span> DocumentAssembler<span class="token punctuation">(</span><span class="token punctuation">)</span> \
-    <span class="token punctuation">.</span>setInputCol<span class="token punctuation">(</span><span class="token string">"text"</span><span class="token punctuation">)</span> \
-    <span class="token punctuation">.</span>setOutputCol<span class="token punctuation">(</span><span class="token string">"document"</span><span class="token punctuation">)</span>
-sentenceDetector <span class="token operator">=</span> SentenceDetector<span class="token punctuation">(</span><span class="token punctuation">)</span> \
-    <span class="token punctuation">.</span>setInputCols<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"document"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> \
-    <span class="token punctuation">.</span>setOutputCol<span class="token punctuation">(</span><span class="token string">"Sentence"</span><span class="token punctuation">)</span>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">spark = SparkSession.builder \</span><br><span class="line">    .appName("Spark NLP")\</span><br><span class="line">    .master("local[4]")\</span><br><span class="line">    .config("spark.driver.memory","16G")\</span><br><span class="line">    .config("spark.driver.maxResultSize", "0") \</span><br><span class="line">    .config("spark.jars.packages", "com.johnsnowlabs.nlp:spark-nlp_2.11:2.6.3")\</span><br><span class="line">    .config("spark.kryoserializer.buffer.max", "1000M")\</span><br><span class="line">    .getOrCreate()</span><br></pre></td></tr></tbody></table></figure>
 
-regexTokenizer <span class="token operator">=</span> Tokenizer<span class="token punctuation">(</span><span class="token punctuation">)</span> \
-    <span class="token punctuation">.</span>setInputCols<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"sentence"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> \
-    <span class="token punctuation">.</span>setOutputCol<span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">)</span>
-finisher <span class="token operator">=</span> Finisher<span class="token punctuation">(</span><span class="token punctuation">)</span> \
-    <span class="token punctuation">.</span>setInputCols<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"token"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> \
-    <span class="token punctuation">.</span>setCleanAnnotations<span class="token punctuation">(</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sparknlp.base <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> sparknlp.annotator <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyspark.ml <span class="keyword">import</span> Pipeline</span><br><span class="line">documentAssembler = DocumentAssembler() \</span><br><span class="line">    .setInputCol(<span class="string">"text"</span>) \</span><br><span class="line">    .setOutputCol(<span class="string">"document"</span>)</span><br><span class="line">sentenceDetector = SentenceDetector() \</span><br><span class="line">    .setInputCols([<span class="string">"document"</span>]) \</span><br><span class="line">    .setOutputCol(<span class="string">"Sentence"</span>)</span><br><span class="line"></span><br><span class="line">regexTokenizer = Tokenizer() \</span><br><span class="line">    .setInputCols([<span class="string">"sentence"</span>]) \</span><br><span class="line">    .setOutputCol(<span class="string">"token"</span>)</span><br><span class="line">finisher = Finisher() \</span><br><span class="line">    .setInputCols([<span class="string">"token"</span>]) \</span><br><span class="line">    .setCleanAnnotations(<span class="literal">False</span>)</span><br><span class="line">    </span><br><span class="line">pipeline = Pipeline() \</span><br><span class="line">    .setStages([</span><br><span class="line">        documentAssembler,</span><br><span class="line">        sentenceDetector,</span><br><span class="line">        regexTokenizer,</span><br><span class="line">        finisher</span><br><span class="line">    ])</span><br></pre></td></tr></tbody></table></figure>
 
-pipeline <span class="token operator">=</span> Pipeline<span class="token punctuation">(</span><span class="token punctuation">)</span> \
-    <span class="token punctuation">.</span>setStages<span class="token punctuation">(</span><span class="token punctuation">[</span>
-        documentAssembler<span class="token punctuation">,</span>
-        sentenceDetector<span class="token punctuation">,</span>
-        regexTokenizer<span class="token punctuation">,</span>
-        finisher
-    <span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#-----        LightPipeline</span>
-<span class="token keyword">from</span> sparknlp<span class="token punctuation">.</span>base <span class="token keyword">import</span> LightPipeline
-explain_document_pipeline <span class="token operator">=</span> PretrainedPipeline<span class="token punctuation">(</span><span class="token string">"explain_document_ml"</span><span class="token punctuation">)</span>
-lightPipeline <span class="token operator">=</span> LightPipeline<span class="token punctuation">(</span>explain_document_pipeline<span class="token punctuation">.</span>model<span class="token punctuation">)</span>
-lightPipeline<span class="token punctuation">.</span>annotate<span class="token punctuation">(</span><span class="token string">"Hello world, please annotate my text"</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-----        LightPipeline</span></span><br><span class="line"><span class="keyword">from</span> sparknlp.base <span class="keyword">import</span> LightPipeline</span><br><span class="line">explain_document_pipeline = PretrainedPipeline(<span class="string">"explain_document_ml"</span>)</span><br><span class="line">lightPipeline = LightPipeline(explain_document_pipeline.model)</span><br><span class="line">lightPipeline.annotate(<span class="string">"Hello world, please annotate my text"</span>)</span><br></pre></td></tr></tbody></table></figure>
+
 <table>
 <thead>
 <tr>
@@ -665,16 +661,8 @@ lightPipeline<span class="token punctuation">.</span>annotate<span class="token 
 <td align="left"><code>dependency_parse</code></td>
 </tr>
 </tbody></table>
-<pre class=" language-scala"><code class="language-scala"><span class="token keyword">import</span> com<span class="token punctuation">.</span>johnsnowlabs<span class="token punctuation">.</span>nlp<span class="token punctuation">.</span>pretrained<span class="token punctuation">.</span>PretrainedPipeline
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>johnsnowlabs<span class="token punctuation">.</span>nlp<span class="token punctuation">.</span>SparkNLP
-SparkNLP<span class="token punctuation">.</span>version<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">val</span> testData <span class="token operator">=</span> spark<span class="token punctuation">.</span>createDataFrame<span class="token punctuation">(</span>Seq<span class="token punctuation">(</span>
-<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"Google has announced the release of a beta version of the popular TensorFlow machine learning library"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"The Paris metro will soon enter the 21st century, ditching single-use paper tickets for rechargeable electronic cards."</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>toDF<span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">,</span> <span class="token string">"text"</span><span class="token punctuation">)</span>
-<span class="token keyword">val</span> pipeline <span class="token operator">=</span> PretrainedPipeline<span class="token punctuation">(</span><span class="token string">"explain_document_ml"</span><span class="token punctuation">,</span> lang<span class="token operator">=</span><span class="token string">"en"</span><span class="token punctuation">)</span>
-<span class="token keyword">val</span> annotation <span class="token operator">=</span> pipeline<span class="token punctuation">.</span>transform<span class="token punctuation">(</span>testData<span class="token punctuation">)</span>
-annotation<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight scala"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.johnsnowlabs.nlp.pretrained.<span class="type">PretrainedPipeline</span></span><br><span class="line"><span class="keyword">import</span> com.johnsnowlabs.nlp.<span class="type">SparkNLP</span></span><br><span class="line"><span class="type">SparkNLP</span>.version()</span><br><span class="line"><span class="keyword">val</span> testData = spark.createDataFrame(<span class="type">Seq</span>(</span><br><span class="line">(<span class="number">1</span>, <span class="string">"Google has announced the release of a beta version of the popular TensorFlow machine learning library"</span>),</span><br><span class="line">(<span class="number">2</span>, <span class="string">"The Paris metro will soon enter the 21st century, ditching single-use paper tickets for rechargeable electronic cards."</span>)</span><br><span class="line">)).toDF(<span class="string">"id"</span>, <span class="string">"text"</span>)</span><br><span class="line"><span class="keyword">val</span> pipeline = <span class="type">PretrainedPipeline</span>(<span class="string">"explain_document_ml"</span>, lang=<span class="string">"en"</span>)</span><br><span class="line"><span class="keyword">val</span> annotation = pipeline.transform(testData)</span><br><span class="line">annotation.show()</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="2-Operation"><a href="#2-Operation" class="headerlink" title="2. Operation"></a>2. Operation</h3><h4 id="2-1-Annotation"><a href="#2-1-Annotation" class="headerlink" title="2.1. Annotation"></a>2.1. Annotation</h4><blockquote>
 <p>分词，命名实体识别，词性标注并称汉语词法分析“三姐妹”。词性标注即在给定的句子中判定每个词最合适的词性标记。词性标注的正确与否将会直接影响到后续的句法分析、语义分析，是中文信息处理的基础性课题之一。常用的词性标注模型有 N 元模型、隐马尔科夫模型、最大熵模型、基于决策树的模型等。</p>
 </blockquote>
@@ -682,65 +670,14 @@ annotation<span class="token punctuation">.</span>show<span class="token punctua
 <li>annotatorType, begin, end, result, metadata, embeddings;</li>
 </ul>
 <p><strong>【pretrained pipeline】</strong></p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> sparknlp
-sparknlp<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">from</span> sparknlp<span class="token punctuation">.</span>pretrained <span class="token keyword">import</span> PretrainedPipeline
-explain_document_pipeline <span class="token operator">=</span> PretrainedPipeline<span class="token punctuation">(</span><span class="token string">"explain_document_ml"</span><span class="token punctuation">)</span>
-annotations <span class="token operator">=</span> explain_document_pipeline<span class="token punctuation">.</span>annotate<span class="token punctuation">(</span><span class="token string">"We are very happy about SparkNLP"</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>annotations<span class="token punctuation">)</span>
-OUTPUT<span class="token punctuation">:</span>
-<span class="token punctuation">{</span>
-  <span class="token string">'stem'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'we'</span><span class="token punctuation">,</span> <span class="token string">'ar'</span><span class="token punctuation">,</span> <span class="token string">'veri'</span><span class="token punctuation">,</span> <span class="token string">'happi'</span><span class="token punctuation">,</span> <span class="token string">'about'</span><span class="token punctuation">,</span> <span class="token string">'sparknlp'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token string">'checked'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'We'</span><span class="token punctuation">,</span> <span class="token string">'are'</span><span class="token punctuation">,</span> <span class="token string">'very'</span><span class="token punctuation">,</span> <span class="token string">'happy'</span><span class="token punctuation">,</span> <span class="token string">'about'</span><span class="token punctuation">,</span> <span class="token string">'SparkNLP'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token string">'lemma'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'We'</span><span class="token punctuation">,</span> <span class="token string">'be'</span><span class="token punctuation">,</span> <span class="token string">'very'</span><span class="token punctuation">,</span> <span class="token string">'happy'</span><span class="token punctuation">,</span> <span class="token string">'about'</span><span class="token punctuation">,</span> <span class="token string">'SparkNLP'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token string">'document'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'We are very happy about SparkNLP'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token string">'pos'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'PRP'</span><span class="token punctuation">,</span> <span class="token string">'VBP'</span><span class="token punctuation">,</span> <span class="token string">'RB'</span><span class="token punctuation">,</span> <span class="token string">'JJ'</span><span class="token punctuation">,</span> <span class="token string">'IN'</span><span class="token punctuation">,</span> <span class="token string">'NNP'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token string">'token'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'We'</span><span class="token punctuation">,</span> <span class="token string">'are'</span><span class="token punctuation">,</span> <span class="token string">'very'</span><span class="token punctuation">,</span> <span class="token string">'happy'</span><span class="token punctuation">,</span> <span class="token string">'about'</span><span class="token punctuation">,</span> <span class="token string">'SparkNLP'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token string">'sentence'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'We are very happy about SparkNLP'</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sparknlp</span><br><span class="line">sparknlp.start()</span><br><span class="line"><span class="keyword">from</span> sparknlp.pretrained <span class="keyword">import</span> PretrainedPipeline</span><br><span class="line">explain_document_pipeline = PretrainedPipeline(<span class="string">"explain_document_ml"</span>)</span><br><span class="line">annotations = explain_document_pipeline.annotate(<span class="string">"We are very happy about SparkNLP"</span>)</span><br><span class="line">print(annotations)</span><br><span class="line">OUTPUT:</span><br><span class="line">{</span><br><span class="line">  <span class="string">'stem'</span>: [<span class="string">'we'</span>, <span class="string">'ar'</span>, <span class="string">'veri'</span>, <span class="string">'happi'</span>, <span class="string">'about'</span>, <span class="string">'sparknlp'</span>],</span><br><span class="line">  <span class="string">'checked'</span>: [<span class="string">'We'</span>, <span class="string">'are'</span>, <span class="string">'very'</span>, <span class="string">'happy'</span>, <span class="string">'about'</span>, <span class="string">'SparkNLP'</span>],</span><br><span class="line">  <span class="string">'lemma'</span>: [<span class="string">'We'</span>, <span class="string">'be'</span>, <span class="string">'very'</span>, <span class="string">'happy'</span>, <span class="string">'about'</span>, <span class="string">'SparkNLP'</span>],</span><br><span class="line">  <span class="string">'document'</span>: [<span class="string">'We are very happy about SparkNLP'</span>],</span><br><span class="line">  <span class="string">'pos'</span>: [<span class="string">'PRP'</span>, <span class="string">'VBP'</span>, <span class="string">'RB'</span>, <span class="string">'JJ'</span>, <span class="string">'IN'</span>, <span class="string">'NNP'</span>],</span><br><span class="line">  <span class="string">'token'</span>: [<span class="string">'We'</span>, <span class="string">'are'</span>, <span class="string">'very'</span>, <span class="string">'happy'</span>, <span class="string">'about'</span>, <span class="string">'SparkNLP'</span>],</span><br><span class="line">  <span class="string">'sentence'</span>: [<span class="string">'We are very happy about SparkNLP'</span>]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>【spark dataframes】</strong></p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> sparknlp
-sparknlp<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sparknlp</span><br><span class="line">sparknlp.start()</span><br><span class="line"></span><br><span class="line">sentences = [</span><br><span class="line">  [<span class="string">'Hello, this is an example sentence'</span>],</span><br><span class="line">  [<span class="string">'And this is a second sentence.'</span>]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># spark is the Spark Session automatically started by pyspark.</span></span><br><span class="line">data = spark.createDataFrame(sentences).toDF(<span class="string">"text"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Download the pretrained pipeline from Johnsnowlab's servers</span></span><br><span class="line">explain_document_pipeline = PretrainedPipeline(<span class="string">"explain_document_ml"</span>)</span><br><span class="line"><span class="comment"># Transform 'data' and store output in a new 'annotations_df' dataframe</span></span><br><span class="line">annotations_df = explain_document_pipeline.transform(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Show the results</span></span><br><span class="line">annotations_df.show()</span><br><span class="line"><span class="comment">#annotations_df.select("token").show(truncate=False)</span></span><br></pre></td></tr></tbody></table></figure>
 
-sentences <span class="token operator">=</span> <span class="token punctuation">[</span>
-  <span class="token punctuation">[</span><span class="token string">'Hello, this is an example sentence'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token punctuation">[</span><span class="token string">'And this is a second sentence.'</span><span class="token punctuation">]</span>
-<span class="token punctuation">]</span>
-
-<span class="token comment" spellcheck="true"># spark is the Spark Session automatically started by pyspark.</span>
-data <span class="token operator">=</span> spark<span class="token punctuation">.</span>createDataFrame<span class="token punctuation">(</span>sentences<span class="token punctuation">)</span><span class="token punctuation">.</span>toDF<span class="token punctuation">(</span><span class="token string">"text"</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Download the pretrained pipeline from Johnsnowlab's servers</span>
-explain_document_pipeline <span class="token operator">=</span> PretrainedPipeline<span class="token punctuation">(</span><span class="token string">"explain_document_ml"</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># Transform 'data' and store output in a new 'annotations_df' dataframe</span>
-annotations_df <span class="token operator">=</span> explain_document_pipeline<span class="token punctuation">.</span>transform<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Show the results</span>
-annotations_df<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">#annotations_df.select("token").show(truncate=False)</span></code></pre>
 <p><strong>【deal with just the resulting annotations】</strong></p>
-<pre class=" language-python"><code class="language-python">finisher <span class="token operator">=</span> Finisher<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>setInputCols<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"token"</span><span class="token punctuation">,</span> <span class="token string">"lemma"</span><span class="token punctuation">,</span> <span class="token string">"pos"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-explain_pipeline_model <span class="token operator">=</span> PretrainedPipeline<span class="token punctuation">(</span><span class="token string">"explain_document_ml"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>model
-pipeline <span class="token operator">=</span> Pipeline<span class="token punctuation">(</span><span class="token punctuation">)</span> \
-    <span class="token punctuation">.</span>setStages<span class="token punctuation">(</span><span class="token punctuation">[</span>
-        explain_pipeline_model<span class="token punctuation">,</span>
-        finisher
-        <span class="token punctuation">]</span><span class="token punctuation">)</span>
-sentences <span class="token operator">=</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">[</span><span class="token string">'Hello, this is an example sentence'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token punctuation">[</span><span class="token string">'And this is a second sentence.'</span><span class="token punctuation">]</span>
-<span class="token punctuation">]</span>
-data <span class="token operator">=</span> spark<span class="token punctuation">.</span>createDataFrame<span class="token punctuation">(</span>sentences<span class="token punctuation">)</span><span class="token punctuation">.</span>toDF<span class="token punctuation">(</span><span class="token string">"text"</span><span class="token punctuation">)</span>
-model <span class="token operator">=</span> pipeline<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
-annotations_finished_df <span class="token operator">=</span> model<span class="token punctuation">.</span>transform<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
-annotations_finished_df<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">'finished_token'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>show<span class="token punctuation">(</span>truncate<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
-OUTPUT<span class="token punctuation">:</span>
-<span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">+</span>
-<span class="token operator">|</span>finished_token                             <span class="token operator">|</span>
-<span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">+</span>
-<span class="token operator">|</span><span class="token punctuation">[</span>Hello<span class="token punctuation">,</span> <span class="token punctuation">,</span><span class="token punctuation">,</span> this<span class="token punctuation">,</span> <span class="token keyword">is</span><span class="token punctuation">,</span> an<span class="token punctuation">,</span> example<span class="token punctuation">,</span> sentence<span class="token punctuation">]</span><span class="token operator">|</span>
-<span class="token operator">|</span><span class="token punctuation">[</span>And<span class="token punctuation">,</span> this<span class="token punctuation">,</span> <span class="token keyword">is</span><span class="token punctuation">,</span> a<span class="token punctuation">,</span> second<span class="token punctuation">,</span> sentence<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">]</span>    <span class="token operator">|</span>
-<span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">+</span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">finisher = Finisher().setInputCols([<span class="string">"token"</span>, <span class="string">"lemma"</span>, <span class="string">"pos"</span>])</span><br><span class="line">explain_pipeline_model = PretrainedPipeline(<span class="string">"explain_document_ml"</span>).model</span><br><span class="line">pipeline = Pipeline() \</span><br><span class="line">    .setStages([</span><br><span class="line">        explain_pipeline_model,</span><br><span class="line">        finisher</span><br><span class="line">        ])</span><br><span class="line">sentences = [</span><br><span class="line">    [<span class="string">'Hello, this is an example sentence'</span>],</span><br><span class="line">    [<span class="string">'And this is a second sentence.'</span>]</span><br><span class="line">]</span><br><span class="line">data = spark.createDataFrame(sentences).toDF(<span class="string">"text"</span>)</span><br><span class="line">model = pipeline.fit(data)</span><br><span class="line">annotations_finished_df = model.transform(data)</span><br><span class="line">annotations_finished_df.select(<span class="string">'finished_token'</span>).show(truncate=<span class="literal">False</span>)</span><br><span class="line">OUTPUT:</span><br><span class="line">+-------------------------------------------+</span><br><span class="line">|finished_token                             |</span><br><span class="line">+-------------------------------------------+</span><br><span class="line">|[Hello, ,, this, <span class="keyword">is</span>, an, example, sentence]|</span><br><span class="line">|[And, this, <span class="keyword">is</span>, a, second, sentence, .]    |</span><br><span class="line">+-------------------------------------------+</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="1-3-Training-Dataset"><a href="#1-3-Training-Dataset" class="headerlink" title="1.3. Training Dataset"></a>1.3. Training Dataset</h3><h4 id="1-3-1-Pos-datasets"><a href="#1-3-1-Pos-datasets" class="headerlink" title="1.3.1. Pos datasets"></a>1.3.1. Pos datasets</h4><blockquote>
 <p>train a Part of Speech Tagger annotator;</p>
 </blockquote>
@@ -970,7 +907,7 @@ OUTPUT<span class="token punctuation">:</span>
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -1023,12 +960,7 @@ OUTPUT<span class="token punctuation">:</span>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1.代码片段1.1.导入配置import torch
-import torch.nn as nn
-import torchvision
-print(torch.__version__)
-print(torch.version.cuda)
-p
+                            1.代码片段1.1.导入配置1234567import torchimport torch.nn as nnimport torchvisionprint(torch.__version__)print(torch.version.cuda
                         
                     </div>
                     <div class="publish-info">
@@ -1065,23 +997,19 @@ p
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/07/13/shi-jue-ai/dataset-record/">
+                <a href="/2020/07/13/yu-yan-kuang-jia/sparkhadoop/pyspark/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/33.jpeg" class="responsive-img" alt="DataSet_Record">
+                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/4.jpeg" class="responsive-img" alt="PySpark">
                         
-                        <span class="card-title">DataSet_Record</span>
+                        <span class="card-title">PySpark</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-在以数据驱动的人工智能时代，本文用于平时学习或者阅读论文中所涉及到的开源数据集积累。dataset知识图谱
-
-More:https://www.codetd.com/article/7219369
-
-Dataset: https://ww
+Apart from real-time and batch processing, Apache Spark supports interactive queries and iterative algorithms. Using Py
                         
                     </div>
                     <div class="publish-info">
@@ -1092,8 +1020,8 @@ Dataset: https://ww
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%A7%86%E8%A7%89AI/" class="post-category">
-                                    视觉AI
+                            <a href="/categories/Framewrok/" class="post-category">
+                                    Framewrok
                                 </a>
                             
                             
@@ -1103,8 +1031,12 @@ Dataset: https://ww
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Dataset/">
-                        <span class="chip bg-color">Dataset</span>
+                    <a href="/tags/spark/">
+                        <span class="chip bg-color">spark</span>
+                    </a>
+                    
+                    <a href="/tags/stream/">
+                        <span class="chip bg-color">stream</span>
                     </a>
                     
                 </div>
@@ -1305,7 +1237,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1329,7 +1261,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1350,10 +1282,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1462,6 +1390,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

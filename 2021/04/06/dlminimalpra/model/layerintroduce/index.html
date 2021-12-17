@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="layerIntroduce, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="layerIntroduce, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -493,6 +515,10 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -500,12 +526,12 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    455
+                    447
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -534,41 +560,8 @@
 <p>功能：用于<code>对图像进行上采样</code>，<code>物体检测任务经常用到</code>（不可逆过程，转置卷积得到的图像与原图不相等）</p>
 </blockquote>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210516232024368.png" alt=""></p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> os
-<span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
-<span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
-<span class="token keyword">from</span> torchvision <span class="token keyword">import</span> transforms
-<span class="token keyword">from</span> matplotlib <span class="token keyword">import</span> pyplot <span class="token keyword">as</span> plt
-<span class="token keyword">from</span> tools<span class="token punctuation">.</span>common_tools <span class="token keyword">import</span> transform_invert<span class="token punctuation">,</span> set_seed
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> tools.common_tools <span class="keyword">import</span> transform_invert, set_seed</span><br><span class="line"> </span><br><span class="line">set_seed(<span class="number">1</span>)  <span class="comment"># 设置随机种子</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># ================================= load img ==================================</span></span><br><span class="line">path_img = os.path.join(os.path.dirname(os.path.abspath(__file__)), <span class="string">"lena.png"</span>)</span><br><span class="line">img = Image.open(path_img).convert(<span class="string">'RGB'</span>)  <span class="comment"># 0~255</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># convert to tensor</span></span><br><span class="line">img_transform = transforms.Compose([transforms.ToTensor()])</span><br><span class="line">img_tensor = img_transform(img)</span><br><span class="line">img_tensor.unsqueeze_(dim=<span class="number">0</span>)    <span class="comment"># C*H*W to B*C*H*W</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># ================================= create convolution layer ==================================</span></span><br><span class="line"><span class="comment"># ================ transposed</span></span><br><span class="line">flag = <span class="number">1</span></span><br><span class="line"><span class="comment"># flag = 0</span></span><br><span class="line"><span class="keyword">if</span> flag:</span><br><span class="line">    conv_layer = nn.ConvTranspose2d(<span class="number">3</span>, <span class="number">1</span>, <span class="number">3</span>, stride=<span class="number">2</span>)   <span class="comment"># input:(i, o, size)</span></span><br><span class="line">    nn.init.xavier_normal_(conv_layer.weight.data)</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># calculation</span></span><br><span class="line">    img_conv = conv_layer(img_tensor)</span><br><span class="line"> </span><br><span class="line">print(<span class="string">"卷积前尺寸:{}\n卷积后尺寸:{}"</span>.format(img_tensor.shape, img_conv.shape))</span><br><span class="line">img_conv = transform_invert(img_conv[<span class="number">0</span>, <span class="number">0</span>:<span class="number">1</span>, ...], img_transform)</span><br><span class="line">img_raw = transform_invert(img_tensor.squeeze(), img_transform)</span><br><span class="line">plt.subplot(<span class="number">122</span>).imshow(img_conv, cmap=<span class="string">'gray'</span>)</span><br><span class="line">plt.subplot(<span class="number">121</span>).imshow(img_raw)</span><br><span class="line">plt.show()</span><br></pre></td></tr></tbody></table></figure>
 
-set_seed<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 设置随机种子</span>
-
-<span class="token comment" spellcheck="true"># ================================= load img ==================================</span>
-path_img <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>dirname<span class="token punctuation">(</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>abspath<span class="token punctuation">(</span>__file__<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"lena.png"</span><span class="token punctuation">)</span>
-img <span class="token operator">=</span> Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>path_img<span class="token punctuation">)</span><span class="token punctuation">.</span>convert<span class="token punctuation">(</span><span class="token string">'RGB'</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 0~255</span>
-
-<span class="token comment" spellcheck="true"># convert to tensor</span>
-img_transform <span class="token operator">=</span> transforms<span class="token punctuation">.</span>Compose<span class="token punctuation">(</span><span class="token punctuation">[</span>transforms<span class="token punctuation">.</span>ToTensor<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-img_tensor <span class="token operator">=</span> img_transform<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
-img_tensor<span class="token punctuation">.</span>unsqueeze_<span class="token punctuation">(</span>dim<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># C*H*W to B*C*H*W</span>
-
-<span class="token comment" spellcheck="true"># ================================= create convolution layer ==================================</span>
-<span class="token comment" spellcheck="true"># ================ transposed</span>
-flag <span class="token operator">=</span> <span class="token number">1</span>
-<span class="token comment" spellcheck="true"># flag = 0</span>
-<span class="token keyword">if</span> flag<span class="token punctuation">:</span>
-    conv_layer <span class="token operator">=</span> nn<span class="token punctuation">.</span>ConvTranspose2d<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true"># input:(i, o, size)</span>
-    nn<span class="token punctuation">.</span>init<span class="token punctuation">.</span>xavier_normal_<span class="token punctuation">(</span>conv_layer<span class="token punctuation">.</span>weight<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true"># calculation</span>
-    img_conv <span class="token operator">=</span> conv_layer<span class="token punctuation">(</span>img_tensor<span class="token punctuation">)</span>
-
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"卷积前尺寸:{}\n卷积后尺寸:{}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>img_tensor<span class="token punctuation">.</span>shape<span class="token punctuation">,</span> img_conv<span class="token punctuation">.</span>shape<span class="token punctuation">)</span><span class="token punctuation">)</span>
-img_conv <span class="token operator">=</span> transform_invert<span class="token punctuation">(</span>img_conv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">:</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">,</span> img_transform<span class="token punctuation">)</span>
-img_raw <span class="token operator">=</span> transform_invert<span class="token punctuation">(</span>img_tensor<span class="token punctuation">.</span>squeeze<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> img_transform<span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>subplot<span class="token punctuation">(</span><span class="token number">122</span><span class="token punctuation">)</span><span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>img_conv<span class="token punctuation">,</span> cmap<span class="token operator">=</span><span class="token string">'gray'</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>subplot<span class="token punctuation">(</span><span class="token number">121</span><span class="token punctuation">)</span><span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>img_raw<span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210516232535321.png" alt=""></p>
 <h3 id="3-池化层"><a href="#3-池化层" class="headerlink" title="3. 池化层"></a>3. 池化层</h3><blockquote>
 <p>池化运算：对输入信号（图像）进行“收集”（多变少）并“总结”（max，mean），类似水池收集水资源。</p>
@@ -790,7 +783,7 @@ plt<span class="token punctuation">.</span>show<span class="token punctuation">(
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -1117,7 +1110,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1141,7 +1134,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1162,10 +1155,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1274,6 +1263,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

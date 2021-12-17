@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Gradle, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="Gradle, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -497,6 +519,10 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -504,12 +530,12 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
                     3.1k
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -543,12 +569,8 @@
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619184207482.png" alt=""></p>
 <p><code>Gradle 内置 Wrapper Task</code>，执行 Wrapper Task 就可以在项目目录中生成对应的目录文件。在项目根目录执行<code>gradle wrapper</code> 命令即可。之后根目录的文件结构如下</p>
 <p>复制</p>
-<pre class=" language-xml"><code class="language-xml">├── gradle
-│   └── wrapper
-│       ├── gradle-wrapper.jar
-│       └── gradle-wrapper.properties
-├── gradlew
-└── gradlew.bat</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">├── gradle</span><br><span class="line">│   └── wrapper</span><br><span class="line">│       ├── gradle-wrapper.jar</span><br><span class="line">│       └── gradle-wrapper.properties</span><br><span class="line">├── gradlew</span><br><span class="line">└── gradlew.bat</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>gradle-wrapper.jar ：<code>包含 Gradle 运行时的逻辑代码</code>。</li>
 <li>gradle-wrapper.properties ：负责<code>配置包装器运行时行为的属性文件</code></li>
@@ -556,11 +578,8 @@
 <li>gradlew.bat：Windows 平台下，用于<code>执行 Gradle 命令的包装器脚本</code>。</li>
 </ul>
 <p>查看<code>.properties</code>文件</p>
-<pre class=" language-xml"><code class="language-xml">distributionBase=GRADLE_USER_HOME
-distributionPath=wrapper/dists
-distributionUrl=https\://services.gradle.org/distributions/gradle-5.4.1-bin.zip
-zipStoreBase=GRADLE_USER_HOME
-zipStorePath=wrapper/dists</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">distributionBase=GRADLE_USER_HOME</span><br><span class="line">distributionPath=wrapper/dists</span><br><span class="line">distributionUrl=https\://services.gradle.org/distributions/gradle-5.4.1-bin.zip</span><br><span class="line">zipStoreBase=GRADLE_USER_HOME</span><br><span class="line">zipStorePath=wrapper/dists</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>distributionBase：<code>Gradle 解包后存储的主目录</code>。</li>
 <li>distributionPath：distributionBase <code>指定目录的子目录</code>。<code>distributionBase+distributionPath 为 Gradle 解包后的存放位置</code>。</li>
@@ -577,111 +596,18 @@ zipStorePath=wrapper/dists</code></pre>
 <ul>
 <li>build.gradle早期</li>
 </ul>
-<pre class=" language-json"><code class="language-json">//构建脚本（给脚本用的脚本）声明gradle脚本本身需要使用的资源
-buildscript <span class="token punctuation">{</span>
-    //存储一个属于gradle的变量，整个工程都能用，可通过gradle.ext.springBootVersion使用
-    ext <span class="token punctuation">{</span>
-        springBootVersion = '<span class="token number">2.1</span>.<span class="token number">2</span>.RELEASE'
-    <span class="token punctuation">}</span>
-    /*配置仓库地址，从而找到外部依赖
-    按照你在文件中(build.gradle<span class="token punctuation">)</span>仓库的顺序寻找所需依赖(如jar文件<span class="token punctuation">)</span>，
-    如果在某个仓库中找到了，那么将不再其它仓库中寻找
-    */
-    repositories <span class="token punctuation">{</span>
-        //mavenLocal(<span class="token punctuation">)</span>本地库，local repository($<span class="token punctuation">{</span>user.home<span class="token punctuation">}</span>/.m2/repository<span class="token punctuation">)</span>
-        mavenCentral(<span class="token punctuation">)</span>//maven的中央仓库
-        //阿里云Maven远程仓库
-        maven <span class="token punctuation">{</span> url <span class="token string">"http://maven.aliyun.com/nexus/content/groups/public/"</span> <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    /*配置springboot插件加载
-    */
-    dependencies <span class="token punctuation">{</span>
-        // classpath 声明说明了在执行其余的脚本时，ClassLoader 可以使用这些依赖项
-        classpath(<span class="token string">"org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-//使用以下插件
-apply plugin<span class="token operator">:</span> 'java'
-apply plugin<span class="token operator">:</span> 'org.springframework.boot'
-apply plugin<span class="token operator">:</span> 'io.spring.dependency-management'
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构建脚本（给脚本用的脚本）声明gradle脚本本身需要使用的资源</span></span><br><span class="line">buildscript {</span><br><span class="line">    <span class="comment">//存储一个属于gradle的变量，整个工程都能用，可通过gradle.ext.springBootVersion使用</span></span><br><span class="line">    ext {</span><br><span class="line">        springBootVersion = '2.1.2.RELEASE'</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">/*配置仓库地址，从而找到外部依赖</span></span><br><span class="line"><span class="comment">    按照你在文件中(build.gradle)仓库的顺序寻找所需依赖(如jar文件)，</span></span><br><span class="line"><span class="comment">    如果在某个仓库中找到了，那么将不再其它仓库中寻找</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    repositories {</span><br><span class="line">        <span class="comment">//mavenLocal()本地库，local repository(${user.home}/.m2/repository)</span></span><br><span class="line">        mavenCentral()//maven的中央仓库</span><br><span class="line">        <span class="comment">//阿里云Maven远程仓库</span></span><br><span class="line">        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">/*配置springboot插件加载</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    dependencies {</span><br><span class="line">        <span class="comment">// classpath 声明说明了在执行其余的脚本时，ClassLoader 可以使用这些依赖项</span></span><br><span class="line">        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="comment">//使用以下插件</span></span><br><span class="line">apply plugin: 'java'</span><br><span class="line">apply plugin: 'org.springframework.boot'</span><br><span class="line">apply plugin: 'io.spring.dependency-management'</span><br><span class="line"></span><br><span class="line">group = 'com.example'</span><br><span class="line">version = '0.0.1-SNAPSHOT'</span><br><span class="line">sourceCompatibility = '1.8'//jvm版本要求</span><br><span class="line"><span class="comment">// 定义仓库</span></span><br><span class="line">repositories {</span><br><span class="line">    maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}</span><br><span class="line">    maven{url 'https://mvnrepository.com/'}</span><br><span class="line">    mavenCentral()</span><br><span class="line">}</span><br><span class="line"><span class="comment">// 定义依赖:声明项目中需要哪些依赖</span></span><br><span class="line">dependencies {</span><br><span class="line">    compile  'org.springframework.boot:spring-boot-starter'</span><br><span class="line">    compile('org.springframework.boot:spring-boot-starter-web')//引入web模块，springmvc</span><br><span class="line">    compile  'org.springframework.boot:spring-boot-starter-test'</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-group = 'com.example'
-version = '<span class="token number">0.0</span>.<span class="token number">1</span>-SNAPSHOT'
-sourceCompatibility = '<span class="token number">1.8</span>'//jvm版本要求
-// 定义仓库
-repositories <span class="token punctuation">{</span>
-    maven<span class="token punctuation">{</span>url 'http<span class="token operator">:</span>//maven.aliyun.com/nexus/content/groups/public/'<span class="token punctuation">}</span>
-    maven<span class="token punctuation">{</span>url 'https<span class="token operator">:</span>//mvnrepository.com/'<span class="token punctuation">}</span>
-    mavenCentral(<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-// 定义依赖<span class="token operator">:</span>声明项目中需要哪些依赖
-dependencies <span class="token punctuation">{</span>
-    compile  'org.springframework.boot<span class="token operator">:</span>spring-boot-starter'
-    compile('org.springframework.boot<span class="token operator">:</span>spring-boot-starter-web'<span class="token punctuation">)</span>//引入web模块，springmvc
-    compile  'org.springframework.boot<span class="token operator">:</span>spring-boot-starter-test'
-<span class="token punctuation">}</span></code></pre>
 <ul>
 <li>build.gradle 新版本</li>
 </ul>
-<pre class=" language-json"><code class="language-json">//使用以下插件
-plugins <span class="token punctuation">{</span>
-    id 'org.springframework.boot' version '<span class="token number">2.3</span>.<span class="token number">0</span>.RELEASE'
-    id 'io.spring.dependency-management' version '<span class="token number">1.0</span>.<span class="token number">9</span>.RELEASE'
-    id 'java'
-<span class="token punctuation">}</span>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用以下插件</span></span><br><span class="line">plugins {</span><br><span class="line">    id 'org.springframework.boot' version '2.3.0.RELEASE'</span><br><span class="line">    id 'io.spring.dependency-management' version '1.0.9.RELEASE'</span><br><span class="line">    id 'java'</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">group = 'com.example'</span><br><span class="line">version = '0.0.1-SNAPSHOT'</span><br><span class="line">sourceCompatibility = '1.8' //jvm版本要求</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 定义仓库</span></span><br><span class="line">repositories {</span><br><span class="line">    maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}</span><br><span class="line">    maven{url 'https://mvnrepository.com/'}</span><br><span class="line">    mavenCentral()</span><br><span class="line">}</span><br><span class="line"><span class="comment">//存储一个属于gradle的变量，整个工程都能用，可通过gradle.ext.springBootVersion使用</span></span><br><span class="line">ext {</span><br><span class="line">    set('springCloudVersion', "Hoxton.SR4")</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 定义依赖:声明项目中需要哪些依赖</span></span><br><span class="line">dependencies {</span><br><span class="line">    implementation 'org.springframework.boot:spring-boot-starter-web'</span><br><span class="line">    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'</span><br><span class="line">    testImplementation('org.springframework.boot:spring-boot-starter-test') {</span><br><span class="line">        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">dependencyManagement {</span><br><span class="line">    imports {</span><br><span class="line">        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">test {</span><br><span class="line">    useJUnitPlatform()</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-group = 'com.example'
-version = '<span class="token number">0.0</span>.<span class="token number">1</span>-SNAPSHOT'
-sourceCompatibility = '<span class="token number">1.8</span>' //jvm版本要求
-
-// 定义仓库
-repositories <span class="token punctuation">{</span>
-    maven<span class="token punctuation">{</span>url 'http<span class="token operator">:</span>//maven.aliyun.com/nexus/content/groups/public/'<span class="token punctuation">}</span>
-    maven<span class="token punctuation">{</span>url 'https<span class="token operator">:</span>//mvnrepository.com/'<span class="token punctuation">}</span>
-    mavenCentral(<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-//存储一个属于gradle的变量，整个工程都能用，可通过gradle.ext.springBootVersion使用
-ext <span class="token punctuation">{</span>
-    set('springCloudVersion'<span class="token punctuation">,</span> <span class="token string">"Hoxton.SR4"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-// 定义依赖<span class="token operator">:</span>声明项目中需要哪些依赖
-dependencies <span class="token punctuation">{</span>
-    implementation 'org.springframework.boot<span class="token operator">:</span>spring-boot-starter-web'
-    implementation 'org.springframework.cloud<span class="token operator">:</span>spring-cloud-starter-openfeign'
-    testImplementation('org.springframework.boot<span class="token operator">:</span>spring-boot-starter-test'<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        exclude group<span class="token operator">:</span> 'org.junit.vintage'<span class="token punctuation">,</span> module<span class="token operator">:</span> 'junit-vintage-engine'
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-dependencyManagement <span class="token punctuation">{</span>
-    imports <span class="token punctuation">{</span>
-        mavenBom <span class="token string">"org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-test <span class="token punctuation">{</span>
-    useJUnitPlatform(<span class="token punctuation">)</span>
-<span class="token punctuation">}</span></code></pre>
 <ul>
 <li>Settings.gradle</li>
 </ul>
-<pre class=" language-json"><code class="language-json">//settings.gradles是模块Module配置文件，大多数setting.gradle的作用是为了配置子模块，
-//根目录下的setting.gradle脚本文件是针对module的全局配置
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//settings.gradles是模块Module配置文件，大多数setting.gradle的作用是为了配置子模块，</span></span><br><span class="line"><span class="comment">//根目录下的setting.gradle脚本文件是针对module的全局配置</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">//settings.gradle用于创建多Project的Gradle项目。Project在IDEA里对应Module模块。</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">//例如配置module名rootProject.name = 'project-root',为指定父模块的名称，</span></span><br><span class="line"><span class="comment">//include 'hello' 为指定包含哪些子模块</span></span><br><span class="line">------------------------</span><br><span class="line"><span class="comment">//平台根</span></span><br><span class="line">rootProject.name = 'project-root'</span><br><span class="line"><span class="comment">//包含子系统以及模块</span></span><br><span class="line">include ':project-core'</span><br><span class="line"><span class="comment">//Hello系统模块的加载</span></span><br><span class="line">include ':project-hello'</span><br><span class="line"><span class="comment">//World系统模块的加载</span></span><br><span class="line">include ':project-world'</span><br></pre></td></tr></tbody></table></figure>
 
-//settings.gradle用于创建多Project的Gradle项目。Project在IDEA里对应Module模块。
-
-//例如配置module名rootProject.name = 'project-root'<span class="token punctuation">,</span>为指定父模块的名称，
-//include 'hello' 为指定包含哪些子模块
-------------------------
-//平台根
-rootProject.name = 'project-root'
-//包含子系统以及模块
-include '<span class="token operator">:</span>project-core'
-//Hello系统模块的加载
-include '<span class="token operator">:</span>project-hello'
-//World系统模块的加载
-include '<span class="token operator">:</span>project-world'</code></pre>
 <h3 id="4-Android-Gradle"><a href="#4-Android-Gradle" class="headerlink" title="4. Android Gradle"></a>4. Android Gradle</h3><p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619194112903.png" alt=""></p>
 <blockquote>
 <p>Android Studio 中的每个项目包含一个或多个含有源代码文件和资源文件的模块，这些模块可以独立构建测试，模块类型包含以下几种</p>
@@ -706,33 +632,8 @@ include '<span class="token operator">:</span>project-world'</code></pre>
 <ul>
 <li>项目build.gradle</li>
 </ul>
-<pre class=" language-json"><code class="language-json">buildscript <span class="token punctuation">{</span>
-    ext.kotlin_version = '<span class="token number">1.3</span>.<span class="token number">10</span>'
-    repositories <span class="token punctuation">{</span>
-        mavenCentral(<span class="token punctuation">)</span>
-        google(<span class="token punctuation">)</span>
-        jcenter(<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-    dependencies <span class="token punctuation">{</span>
-        classpath 'com.android.tools.build<span class="token operator">:</span>gradle<span class="token operator">:</span><span class="token number">3.4</span>.<span class="token number">0</span>'
-        classpath <span class="token string">"org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"</span>
-        classpath <span class="token string">"org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">buildscript {</span><br><span class="line">    ext.kotlin_version = '1.3.10'</span><br><span class="line">    repositories {</span><br><span class="line">        mavenCentral()</span><br><span class="line">        google()</span><br><span class="line">        jcenter()</span><br><span class="line">    }</span><br><span class="line">    dependencies {</span><br><span class="line">        classpath 'com.android.tools.build:gradle:3.4.0'</span><br><span class="line">        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"</span><br><span class="line">        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">allprojects {</span><br><span class="line">    repositories {</span><br><span class="line">        google()</span><br><span class="line">        jcenter()</span><br><span class="line">        mavenCentral()</span><br><span class="line">        maven { url 'https://jitpack.io' }</span><br><span class="line">        maven { url "https://maven.google.com" }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">task clean(type: Delete) {</span><br><span class="line">    delete rootProject.buildDir</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-allprojects <span class="token punctuation">{</span>
-    repositories <span class="token punctuation">{</span>
-        google(<span class="token punctuation">)</span>
-        jcenter(<span class="token punctuation">)</span>
-        mavenCentral(<span class="token punctuation">)</span>
-        maven <span class="token punctuation">{</span> url 'https<span class="token operator">:</span>//jitpack.io' <span class="token punctuation">}</span>
-        maven <span class="token punctuation">{</span> url <span class="token string">"https://maven.google.com"</span> <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-task clean(type<span class="token operator">:</span> Delete<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    delete rootProject.buildDir
-<span class="token punctuation">}</span></code></pre>
 <table>
 <thead>
 <tr>
@@ -832,53 +733,8 @@ task clean(type<span class="token operator">:</span> Delete<span class="token pu
 <ul>
 <li>模块build.gradle</li>
 </ul>
-<pre class=" language-json"><code class="language-json">apply plugin<span class="token operator">:</span> 'com.android.application' // 引入 android gradle 插件
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: 'com.android.application' // 引入 android gradle 插件</span><br><span class="line"></span><br><span class="line">android { // 配置 android gradle plugin 需要的内容</span><br><span class="line">    compileSdkVersion 26</span><br><span class="line">    defaultConfig { // 版本，applicationId 等配置</span><br><span class="line">        applicationId "com.zy.easygradle"</span><br><span class="line">        minSdkVersion 19</span><br><span class="line">        targetSdkVersion 26</span><br><span class="line">        versionCode 1</span><br><span class="line">        versionName "1.0"</span><br><span class="line">    }</span><br><span class="line">    buildTypes { </span><br><span class="line">        release {</span><br><span class="line">            minifyEnabled false</span><br><span class="line">            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    compileOptions { // 指定 java 版本</span><br><span class="line">        sourceCompatibility 1.8</span><br><span class="line">        targetCompatibility 1.8</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// flavor 相关配置</span></span><br><span class="line">    flavorDimensions "size", "color"</span><br><span class="line">    productFlavors {</span><br><span class="line">        big {</span><br><span class="line">            dimension "size"</span><br><span class="line">        }</span><br><span class="line">        small {</span><br><span class="line">            dimension "size"</span><br><span class="line">        }</span><br><span class="line">        blue {</span><br><span class="line">            dimension "color"</span><br><span class="line">        }</span><br><span class="line">        red {</span><br><span class="line">            dimension "color"</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 项目需要的依赖</span></span><br><span class="line">dependencies {</span><br><span class="line">    implementation fileTree(dir: 'libs', include: ['*.jar']) // jar 包依赖</span><br><span class="line">    implementation 'com.android.support:appcompat-v7:26.1.0' // 远程仓库依赖</span><br><span class="line">    implementation 'com.android.support.constraint:constraint-layout:1.1.3'</span><br><span class="line">    implementation project(':module1') // 项目依赖</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-android <span class="token punctuation">{</span> // 配置 android gradle plugin 需要的内容
-    compileSdkVersion <span class="token number">26</span>
-    defaultConfig <span class="token punctuation">{</span> // 版本，applicationId 等配置
-        applicationId <span class="token string">"com.zy.easygradle"</span>
-        minSdkVersion <span class="token number">19</span>
-        targetSdkVersion <span class="token number">26</span>
-        versionCode <span class="token number">1</span>
-        versionName <span class="token string">"1.0"</span>
-    <span class="token punctuation">}</span>
-    buildTypes <span class="token punctuation">{</span> 
-        release <span class="token punctuation">{</span>
-            minifyEnabled <span class="token boolean">false</span>
-            proguardFiles getDefaultProguardFile('proguard-android.txt'<span class="token punctuation">)</span><span class="token punctuation">,</span> 'proguard-rules.pro'
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    compileOptions <span class="token punctuation">{</span> // 指定 java 版本
-        sourceCompatibility <span class="token number">1.8</span>
-        targetCompatibility <span class="token number">1.8</span>
-    <span class="token punctuation">}</span>
-
-    // flavor 相关配置
-    flavorDimensions <span class="token string">"size"</span><span class="token punctuation">,</span> <span class="token string">"color"</span>
-    productFlavors <span class="token punctuation">{</span>
-        big <span class="token punctuation">{</span>
-            dimension <span class="token string">"size"</span>
-        <span class="token punctuation">}</span>
-        small <span class="token punctuation">{</span>
-            dimension <span class="token string">"size"</span>
-        <span class="token punctuation">}</span>
-        blue <span class="token punctuation">{</span>
-            dimension <span class="token string">"color"</span>
-        <span class="token punctuation">}</span>
-        red <span class="token punctuation">{</span>
-            dimension <span class="token string">"color"</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-// 项目需要的依赖
-dependencies <span class="token punctuation">{</span>
-    implementation fileTree(dir<span class="token operator">:</span> 'libs'<span class="token punctuation">,</span> include<span class="token operator">:</span> <span class="token punctuation">[</span>'*.jar'<span class="token punctuation">]</span><span class="token punctuation">)</span> // jar 包依赖
-    implementation 'com.android.support<span class="token operator">:</span>appcompat-v7<span class="token operator">:</span><span class="token number">26.1</span>.<span class="token number">0</span>' // 远程仓库依赖
-    implementation 'com.android.support.constraint<span class="token operator">:</span>constraint-layout<span class="token operator">:</span><span class="token number">1.1</span>.<span class="token number">3</span>'
-    implementation project('<span class="token operator">:</span>module1'<span class="token punctuation">)</span> // 项目依赖
-<span class="token punctuation">}</span></code></pre>
 <blockquote>
 <p><code>application</code>，说明当前模块为一个应用程序模块，Gradle 的 Android 插件分为以下几种</p>
 <ul>
@@ -934,56 +790,14 @@ dependencies <span class="token punctuation">{</span>
 <li>配置阶段主要做的事情是对上一步创建的项目进行配置，这时候会执行 build.gradle 脚本，并且会生成要执行的 task</li>
 <li>执行阶段主要做的事情就是执行 task，进行主要的构建工作</li>
 </ul>
-<pre class=" language-java"><code class="language-java">gradle<span class="token punctuation">.</span><span class="token function">addBuildListener</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">BuildListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">void</span> <span class="token function">buildStarted</span><span class="token punctuation">(</span>Gradle gradle<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'构建开始'</span><span class="token punctuation">)</span>
-        <span class="token comment" spellcheck="true">// 这个回调一般不会调用，因为我们注册的时机太晚，注册的时候构建已经开始了，是 gradle 内部使用的</span>
-    <span class="token punctuation">}</span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">gradle.addBuildListener(<span class="keyword">new</span> BuildListener() {</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">buildStarted</span><span class="params">(Gradle gradle)</span> </span>{</span><br><span class="line">        println(<span class="string">'构建开始'</span>)</span><br><span class="line">        <span class="comment">// 这个回调一般不会调用，因为我们注册的时机太晚，注册的时候构建已经开始了，是 gradle 内部使用的</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">settingsEvaluated</span><span class="params">(Settings settings)</span> </span>{</span><br><span class="line">        println(<span class="string">'settings 文件解析完成'</span>)</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">projectsLoaded</span><span class="params">(Gradle gradle)</span> </span>{</span><br><span class="line">        println(<span class="string">'项目加载完成'</span>)</span><br><span class="line">        gradle.rootProject.subprojects.each { pro -&gt;</span><br><span class="line">            pro.beforeEvaluate {</span><br><span class="line">                println(<span class="string">"${pro.name} 项目配置之前调用"</span>)</span><br><span class="line">            }</span><br><span class="line">            pro.afterEvaluate{</span><br><span class="line">                println(<span class="string">"${pro.name} 项目配置之后调用"</span>)</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">projectsEvaluated</span><span class="params">(Gradle gradle)</span> </span>{</span><br><span class="line">        println(<span class="string">'项目解析完成'</span>)</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">buildFinished</span><span class="params">(BuildResult result)</span> </span>{</span><br><span class="line">        println(<span class="string">'构建完成'</span>)</span><br><span class="line">    }</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line">gradle.taskGraph.whenReady {</span><br><span class="line">    println(<span class="string">"task 图构建完成"</span>)</span><br><span class="line">}</span><br><span class="line">gradle.taskGraph.beforeTask {</span><br><span class="line">    println(<span class="string">"每个 task 执行前会调这个接口"</span>)</span><br><span class="line">}</span><br><span class="line">gradle.taskGraph.afterTask {</span><br><span class="line">    println(<span class="string">"每个 task 执行完成会调这个接口"</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">void</span> <span class="token function">settingsEvaluated</span><span class="token punctuation">(</span>Settings settings<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'settings 文件解析完成'</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">void</span> <span class="token function">projectsLoaded</span><span class="token punctuation">(</span>Gradle gradle<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'项目加载完成'</span><span class="token punctuation">)</span>
-        gradle<span class="token punctuation">.</span>rootProject<span class="token punctuation">.</span>subprojects<span class="token punctuation">.</span>each <span class="token punctuation">{</span> pro <span class="token operator">-</span><span class="token operator">></span>
-            pro<span class="token punctuation">.</span>beforeEvaluate <span class="token punctuation">{</span>
-                <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"${pro.name} 项目配置之前调用"</span><span class="token punctuation">)</span>
-            <span class="token punctuation">}</span>
-            pro<span class="token punctuation">.</span>afterEvaluate<span class="token punctuation">{</span>
-                <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"${pro.name} 项目配置之后调用"</span><span class="token punctuation">)</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">void</span> <span class="token function">projectsEvaluated</span><span class="token punctuation">(</span>Gradle gradle<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'项目解析完成'</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">void</span> <span class="token function">buildFinished</span><span class="token punctuation">(</span>BuildResult result<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'构建完成'</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span>
-
-gradle<span class="token punctuation">.</span>taskGraph<span class="token punctuation">.</span>whenReady <span class="token punctuation">{</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"task 图构建完成"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-gradle<span class="token punctuation">.</span>taskGraph<span class="token punctuation">.</span>beforeTask <span class="token punctuation">{</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"每个 task 执行前会调这个接口"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-gradle<span class="token punctuation">.</span>taskGraph<span class="token punctuation">.</span>afterTask <span class="token punctuation">{</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"每个 task 执行完成会调这个接口"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span></code></pre>
 <h3 id="6-gradle-plugin"><a href="#6-gradle-plugin" class="headerlink" title="6. gradle plugin"></a>6. <a href="https://www.cnblogs.com/mingfeng002/p/11751119.html" target="_blank" rel="noopener">gradle plugin</a></h3><p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619194703629.png" alt=""></p>
 <h3 id="7-Problem-Record"><a href="#7-Problem-Record" class="headerlink" title="7. Problem Record"></a>7. Problem Record</h3><blockquote>
 <p>重启出现如下问题   Gradle sync failed: Connection timed out: connect, Consult IDE log for more details (Help | Show Log) (53s 730ms)</p>
 </blockquote>
-<pre class=" language-java"><code class="language-java">distributionUrl<span class="token operator">=</span>https\<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>services<span class="token punctuation">.</span>gradle<span class="token punctuation">.</span>org<span class="token operator">/</span>distributions<span class="token operator">/</span>gradle<span class="token operator">-</span><span class="token number">4.0</span><span class="token operator">-</span>milestone<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>all<span class="token punctuation">.</span>zip</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">distributionUrl=https\:<span class="comment">//services.gradle.org/distributions/gradle-4.0-milestone-1-all.zip</span></span><br></pre></td></tr></tbody></table></figure>
+
 <p>通过网址：<a href="http://services.gradle.org/distributions/下载,下载之后把下载的文件直接复制到C:\Users\Administrator\.gradle\wrapper\dists\gradle-x.x-all\中时间最近的目录下，单击Android" target="_blank" rel="noopener">http://services.gradle.org/distributions/下载,下载之后把下载的文件直接复制到C:\Users\Administrator\.gradle\wrapper\dists\gradle-x.x-all\中时间最近的目录下，单击Android</a> Studio工具栏“Sync Project Gradle Files”或者重启Android Studio，问题就可以解决了。 <code>或者修改gradle版本也可以</code></p>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619195415495.png" alt=""></p>
 <h3 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h3><ul>
@@ -1220,7 +1034,7 @@ gradle<span class="token punctuation">.</span>taskGraph<span class="token punctu
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -1262,57 +1076,6 @@ gradle<span class="token punctuation">.</span>taskGraph<span class="token punctu
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2021/06/19/writing/latex/07latex-de-tu-pian-cha-ru/">
-                    <div class="card-image">
-                        
-                        <img src="https://cdn.pixabay.com/photo/2014/08/01/15/49/typewriter-407695__340.jpg" class="responsive-img" alt="LaTex 的图片插入">
-                        
-                        <span class="card-title">LaTex 的图片插入</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-LaTeX插入图片时，常用的图片格式有：png, pdf, jpg, eps。以上四种图片格式各有优劣，其中最为显著的差异是清晰度和图片文件大小。在清晰度方面：eps是清晰度最高的，其次是pdf和png，最后是jpg。
-
-图片命名中不要出
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-19
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/writing/" class="post-category">
-                                    writing
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/latex/">
-                        <span class="chip bg-color">latex</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
                 <a href="/2021/06/19/shi-kong-shu-ju/database/transaction/">
                     <div class="card-image">
                         
@@ -1329,9 +1092,9 @@ LaTeX插入图片时，常用的图片格式有：png, pdf, jpg, eps。以上四
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-19
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-19
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1357,6 +1120,57 @@ LaTeX插入图片时，常用的图片格式有：png, pdf, jpg, eps。以上四
                     
                     <a href="/tags/mysql/">
                         <span class="chip bg-color">mysql</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/06/19/writing/latex/01-latex-de-ji-ben-jie-shao/">
+                    <div class="card-image">
+                        
+                        <img src="https://cdn.pixabay.com/photo/2015/06/08/15/11/typewriter-801921__480.jpg" class="responsive-img" alt="LaTex 的基本介绍">
+                        
+                        <span class="card-title">LaTex 的基本介绍</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+from https://github.com/qinnian/LaTeX
+
+一、TEXTEX 是高德纳 (Donald E.Knuth) 开发的、以排版文字和数学公式为目的的一个计算机软件。高德纳从 1977 年开始开发 TEX ，以发
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/writing/" class="post-category">
+                                    writing
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/latex/">
+                        <span class="chip bg-color">latex</span>
                     </a>
                     
                 </div>
@@ -1557,7 +1371,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1581,7 +1395,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1602,10 +1416,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1714,6 +1524,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

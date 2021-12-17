@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="OpticalFlow, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="OpticalFlow, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -493,6 +515,10 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -500,12 +526,12 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
                     2k
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -570,27 +596,8 @@
 <blockquote>
 <p><code>低频分量（低频信号）代表着图像中亮度或者灰度值变化缓慢的区域</code>，也就是图像中大片平坦的区域，描述了图像的主要部分。<code>高频分量（高频信号）对应着图像变化剧烈的部分</code>，也就是图像的<code>边缘（轮廓）或者噪声</code>以及细节部分。将图像从灰度分布转化到频率分布（频谱图）上去观察图像的特征,图像进行二维傅立叶变换之后得到的<code>频谱图</code>，就是<code>图像梯度的分布图</code>。具体的，傅立叶频谱图上我们能看到<code>明暗不一的亮点</code>，实际是图像上<code>某一点与邻域点差异的强弱，即梯度的大小</code>。<code>如果一幅图像的各个位置的强度大小相等，则图像只存在低频分量</code>。从图像的频谱图上看，只有<code>一个主峰,且位于频率为零</code>的位置。 也就是说白色代表高频。</p>
 </blockquote>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
-img <span class="token operator">=</span> plt<span class="token punctuation">.</span>imread<span class="token punctuation">(</span><span class="token string">'../1.jpg'</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>subplot<span class="token punctuation">(</span><span class="token number">231</span><span class="token punctuation">)</span><span class="token punctuation">,</span>plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>img<span class="token punctuation">)</span><span class="token punctuation">,</span>plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">'picture'</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">#根据公式转成灰度图</span>
-img <span class="token operator">=</span> <span class="token number">0.2126</span> <span class="token operator">*</span> img<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">0.7152</span> <span class="token operator">*</span> img<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">0.0722</span> <span class="token operator">*</span> img<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span>
-<span class="token comment" spellcheck="true">#显示灰度图</span>
-plt<span class="token punctuation">.</span>subplot<span class="token punctuation">(</span><span class="token number">232</span><span class="token punctuation">)</span><span class="token punctuation">,</span>plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>img<span class="token punctuation">,</span><span class="token string">'gray'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">'original'</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">#进行傅立叶变换，并显示结果</span>
-fft2 <span class="token operator">=</span> np<span class="token punctuation">.</span>fft<span class="token punctuation">.</span>fft2<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>subplot<span class="token punctuation">(</span><span class="token number">233</span><span class="token punctuation">)</span><span class="token punctuation">,</span>plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>np<span class="token punctuation">.</span>abs<span class="token punctuation">(</span>fft2<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'gray'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">'fft2'</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">#将图像变换的原点移动到频域矩形的中心，并显示效果</span>
-shift2center <span class="token operator">=</span> np<span class="token punctuation">.</span>fft<span class="token punctuation">.</span>fftshift<span class="token punctuation">(</span>fft2<span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>subplot<span class="token punctuation">(</span><span class="token number">234</span><span class="token punctuation">)</span><span class="token punctuation">,</span>plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>np<span class="token punctuation">.</span>abs<span class="token punctuation">(</span>shift2center<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'gray'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">'shift2center'</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">#对傅立叶变换的结果进行对数变换，并显示效果</span>
-log_fft2 <span class="token operator">=</span> np<span class="token punctuation">.</span>log<span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> np<span class="token punctuation">.</span>abs<span class="token punctuation">(</span>fft2<span class="token punctuation">)</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>subplot<span class="token punctuation">(</span><span class="token number">235</span><span class="token punctuation">)</span><span class="token punctuation">,</span>plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>log_fft2<span class="token punctuation">,</span><span class="token string">'gray'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">'log_fft2'</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">#对中心化后的结果进行对数变换，并显示结果</span>
-log_shift2center <span class="token operator">=</span> np<span class="token punctuation">.</span>log<span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> np<span class="token punctuation">.</span>abs<span class="token punctuation">(</span>shift2center<span class="token punctuation">)</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>subplot<span class="token punctuation">(</span><span class="token number">236</span><span class="token punctuation">)</span><span class="token punctuation">,</span>plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>log_shift2center<span class="token punctuation">,</span><span class="token string">'gray'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">'log_shift2center'</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">img = plt.imread(<span class="string">'../1.jpg'</span>)</span><br><span class="line">plt.subplot(<span class="number">231</span>),plt.imshow(img),plt.title(<span class="string">'picture'</span>)</span><br><span class="line"><span class="comment">#根据公式转成灰度图</span></span><br><span class="line">img = <span class="number">0.2126</span> * img[:,:,<span class="number">0</span>] + <span class="number">0.7152</span> * img[:,:,<span class="number">1</span>] + <span class="number">0.0722</span> * img[:,:,<span class="number">2</span>]</span><br><span class="line"><span class="comment">#显示灰度图</span></span><br><span class="line">plt.subplot(<span class="number">232</span>),plt.imshow(img,<span class="string">'gray'</span>),plt.title(<span class="string">'original'</span>)</span><br><span class="line"><span class="comment">#进行傅立叶变换，并显示结果</span></span><br><span class="line">fft2 = np.fft.fft2(img)</span><br><span class="line">plt.subplot(<span class="number">233</span>),plt.imshow(np.abs(fft2),<span class="string">'gray'</span>),plt.title(<span class="string">'fft2'</span>)</span><br><span class="line"><span class="comment">#将图像变换的原点移动到频域矩形的中心，并显示效果</span></span><br><span class="line">shift2center = np.fft.fftshift(fft2)</span><br><span class="line">plt.subplot(<span class="number">234</span>),plt.imshow(np.abs(shift2center),<span class="string">'gray'</span>),plt.title(<span class="string">'shift2center'</span>)</span><br><span class="line"><span class="comment">#对傅立叶变换的结果进行对数变换，并显示效果</span></span><br><span class="line">log_fft2 = np.log(<span class="number">1</span> + np.abs(fft2))</span><br><span class="line">plt.subplot(<span class="number">235</span>),plt.imshow(log_fft2,<span class="string">'gray'</span>),plt.title(<span class="string">'log_fft2'</span>)</span><br><span class="line"><span class="comment">#对中心化后的结果进行对数变换，并显示结果</span></span><br><span class="line">log_shift2center = np.log(<span class="number">1</span> + np.abs(shift2center))</span><br><span class="line">plt.subplot(<span class="number">236</span>),plt.imshow(log_shift2center,<span class="string">'gray'</span>),plt.title(<span class="string">'log_shift2center'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201128155802727.png" alt=""></p>
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201128160050443.png" alt=""></p>
 <h4 id="2-5-神经动力学"><a href="#2-5-神经动力学" class="headerlink" title="2.5. 神经动力学"></a>2.5. 神经动力学</h4><blockquote>
@@ -828,7 +835,7 @@ plt<span class="token punctuation">.</span>show<span class="token punctuation">(
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -870,35 +877,31 @@ plt<span class="token punctuation">.</span>show<span class="token punctuation">(
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2020/11/12/yu-yan-kuang-jia/python/trycatch/">
+                <a href="/2020/11/07/aiot/android/android-fragment/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/bench-forest-trees-path.jpg" class="responsive-img" alt="Trycatch">
+                        <img src="https://cdn.stocksnap.io/img-thumbs/280h/WEG1K8H4IG.jpg" class="responsive-img" alt="Android_fragment">
                         
-                        <span class="card-title">Trycatch</span>
+                        <span class="card-title">Android_fragment</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1. try-catch 结构1.1. try-catch结构# 捕获指定异常
-try:    
-    f =open('我为什么是个文件.txt')
-    print(f.read())
-    f.close()
-except OS
+                            
+使用Fragment 我们可以把页面结构划分成几块，每块使用一个Fragment来管理。这样我们可以更加方便的在运行过程中动态地更新Activity中的用户界面，日后迭代更新、维护也是更加方便。 Fragment并不能单独使用，他需要嵌套
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-11-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-11-07
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AF%AD%E8%A8%80%E6%A1%86%E6%9E%B6/" class="post-category">
-                                    语言框架
+                            <a href="/categories/AIOT/" class="post-category">
+                                    AIOT
                                 </a>
                             
                             
@@ -908,8 +911,8 @@ except OS
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/python/">
-                        <span class="chip bg-color">python</span>
+                    <a href="/tags/Android/">
+                        <span class="chip bg-color">Android</span>
                     </a>
                     
                 </div>
@@ -937,7 +940,9 @@ except OS
                             1. Introduce
 https://github.com/ultralytics/yolov5  
 
-pip install -r requirements.txt
+1pip install -r requirements.txt
+
+
 
 
 
@@ -945,7 +950,7 @@ Model
 APval
 APtest
 AP50
-SpeedGP
+Spee
                         
                     </div>
                     <div class="publish-info">
@@ -1169,7 +1174,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1193,7 +1198,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1214,10 +1219,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1326,6 +1327,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

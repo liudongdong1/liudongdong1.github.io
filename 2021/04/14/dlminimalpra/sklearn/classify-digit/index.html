@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Classify_digit, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="Classify_digit, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -493,6 +515,10 @@
                 </div>
                 
 
+                <!-- 
+                <i class="fa fa-pencil"></i> Author: liudongdong
+                 -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -500,12 +526,12 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    887
+                    857
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -528,192 +554,12 @@
                 <blockquote>
 <p>To apply a classifier on this data, we need to flatten the images, turning each 2-D array of grayscale values from shape (8, 8) into shape (64,). Subsequently, the entire dataset will be of shape (n_samples, n_features), where n_samples is the number of images and n_features is the total number of pixels in each image. label没有用onehot编码。</p>
 </blockquote>
-<h3 id="1-Digit-Demo"><a href="#1-Digit-Demo" class="headerlink" title="1. Digit Demo"></a>1. Digit Demo</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
+<h3 id="1-Digit-Demo"><a href="#1-Digit-Demo" class="headerlink" title="1. Digit Demo"></a>1. Digit Demo</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Import datasets, classifiers and performance metrics</span></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets, svm, metrics</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"></span><br><span class="line">digits = datasets.load_digits()</span><br><span class="line"><span class="comment">#visualization</span></span><br><span class="line">_, axes = plt.subplots(nrows=<span class="number">1</span>, ncols=<span class="number">4</span>, figsize=(<span class="number">10</span>, <span class="number">3</span>))</span><br><span class="line"><span class="keyword">for</span> ax, image, label <span class="keyword">in</span> zip(axes, digits.images, digits.target):</span><br><span class="line">    ax.set_axis_off()</span><br><span class="line">    ax.imshow(image, cmap=plt.cm.gray_r, interpolation=<span class="string">'nearest'</span>)</span><br><span class="line">    ax.set_title(<span class="string">'Training: %i'</span> % label)</span><br><span class="line"></span><br><span class="line"><span class="comment"># flatten the images</span></span><br><span class="line">n_samples = len(digits.images)</span><br><span class="line">data = digits.images.reshape((n_samples, <span class="number">-1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a classifier: a support vector classifier</span></span><br><span class="line">clf = svm.SVC(gamma=<span class="number">0.001</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Split data into 50% train and 50% test subsets</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(</span><br><span class="line">    data, digits.target, test_size=<span class="number">0.5</span>, shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Learn the digits on the train subset</span></span><br><span class="line">clf.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Predict the value of the digit on the test subset</span></span><br><span class="line">predicted = clf.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="comment">#visualization result</span></span><br><span class="line">_, axes = plt.subplots(nrows=<span class="number">1</span>, ncols=<span class="number">4</span>, figsize=(<span class="number">10</span>, <span class="number">3</span>))</span><br><span class="line"><span class="keyword">for</span> ax, image, prediction <span class="keyword">in</span> zip(axes, X_test, predicted):</span><br><span class="line">    ax.set_axis_off()</span><br><span class="line">    image = image.reshape(<span class="number">8</span>, <span class="number">8</span>)</span><br><span class="line">    ax.imshow(image, cmap=plt.cm.gray_r, interpolation=<span class="string">'nearest'</span>)</span><br><span class="line">    ax.set_title(<span class="string">f'Prediction: <span class="subst">{prediction}</span>'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#打印和绘制混淆矩阵</span></span><br><span class="line">print(<span class="string">f"Classification report for classifier <span class="subst">{clf}</span>:\n"</span></span><br><span class="line">      <span class="string">f"<span class="subst">{metrics.classification_report(y_test, predicted)}</span>\n"</span>)</span><br><span class="line">disp = metrics.plot_confusion_matrix(clf, X_test, y_test)</span><br><span class="line">disp.figure_.suptitle(<span class="string">"Confusion Matrix"</span>)</span><br><span class="line">print(<span class="string">f"Confusion matrix:\n<span class="subst">{disp.confusion_matrix}</span>"</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token comment" spellcheck="true"># Import datasets, classifiers and performance metrics</span>
-<span class="token keyword">from</span> sklearn <span class="token keyword">import</span> datasets<span class="token punctuation">,</span> svm<span class="token punctuation">,</span> metrics
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span> train_test_split
+<h3 id="2-Parameters-Search"><a href="#2-Parameters-Search" class="headerlink" title="2. Parameters Search"></a>2. Parameters Search</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</span><br><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</span><br><span class="line"></span><br><span class="line">print(__doc__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Loading the Digits dataset</span></span><br><span class="line">digits = datasets.load_digits()</span><br><span class="line"></span><br><span class="line"><span class="comment"># To apply an classifier on this data, we need to flatten the image, to</span></span><br><span class="line"><span class="comment"># turn the data in a (samples, feature) matrix:</span></span><br><span class="line">n_samples = len(digits.images)</span><br><span class="line">X = digits.images.reshape((n_samples, <span class="number">-1</span>))</span><br><span class="line">y = digits.target</span><br><span class="line"></span><br><span class="line"><span class="comment"># Split the dataset in two equal parts</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(</span><br><span class="line">    X, y, test_size=<span class="number">0.5</span>, random_state=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set the parameters by cross-validation</span></span><br><span class="line">tuned_parameters = [{<span class="string">'kernel'</span>: [<span class="string">'rbf'</span>], <span class="string">'gamma'</span>: [<span class="number">1e-3</span>, <span class="number">1e-4</span>],</span><br><span class="line">                     <span class="string">'C'</span>: [<span class="number">1</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="number">1000</span>]},</span><br><span class="line">                    {<span class="string">'kernel'</span>: [<span class="string">'linear'</span>], <span class="string">'C'</span>: [<span class="number">1</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="number">1000</span>]}]</span><br><span class="line"></span><br><span class="line">scores = [<span class="string">'precision'</span>, <span class="string">'recall'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> score <span class="keyword">in</span> scores:</span><br><span class="line">    print(<span class="string">"# Tuning hyper-parameters for %s"</span> % score)</span><br><span class="line">    print()</span><br><span class="line"></span><br><span class="line">    clf = GridSearchCV(</span><br><span class="line">        SVC(), tuned_parameters, scoring=<span class="string">'%s_macro'</span> % score</span><br><span class="line">    )</span><br><span class="line">    clf.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"Best parameters set found on development set:"</span>)</span><br><span class="line">    print()</span><br><span class="line">    print(clf.best_params_)</span><br><span class="line">    print()</span><br><span class="line">    print(<span class="string">"Grid scores on development set:"</span>)</span><br><span class="line">    print()</span><br><span class="line">    means = clf.cv_results_[<span class="string">'mean_test_score'</span>]</span><br><span class="line">    stds = clf.cv_results_[<span class="string">'std_test_score'</span>]</span><br><span class="line">    <span class="keyword">for</span> mean, std, params <span class="keyword">in</span> zip(means, stds, clf.cv_results_[<span class="string">'params'</span>]):</span><br><span class="line">        print(<span class="string">"%0.3f (+/-%0.03f) for %r"</span></span><br><span class="line">              % (mean, std * <span class="number">2</span>, params))</span><br><span class="line">    print()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"Detailed classification report:"</span>)</span><br><span class="line">    print()</span><br><span class="line">    print(<span class="string">"The model is trained on the full development set."</span>)</span><br><span class="line">    print(<span class="string">"The scores are computed on the full evaluation set."</span>)</span><br><span class="line">    print()</span><br><span class="line">    y_true, y_pred = y_test, clf.predict(X_test)</span><br><span class="line">    print(classification_report(y_true, y_pred))</span><br><span class="line">    print()</span><br></pre></td></tr></tbody></table></figure>
 
-digits <span class="token operator">=</span> datasets<span class="token punctuation">.</span>load_digits<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">#visualization</span>
-_<span class="token punctuation">,</span> axes <span class="token operator">=</span> plt<span class="token punctuation">.</span>subplots<span class="token punctuation">(</span>nrows<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> ncols<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">,</span> figsize<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">for</span> ax<span class="token punctuation">,</span> image<span class="token punctuation">,</span> label <span class="token keyword">in</span> zip<span class="token punctuation">(</span>axes<span class="token punctuation">,</span> digits<span class="token punctuation">.</span>images<span class="token punctuation">,</span> digits<span class="token punctuation">.</span>target<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    ax<span class="token punctuation">.</span>set_axis_off<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    ax<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>image<span class="token punctuation">,</span> cmap<span class="token operator">=</span>plt<span class="token punctuation">.</span>cm<span class="token punctuation">.</span>gray_r<span class="token punctuation">,</span> interpolation<span class="token operator">=</span><span class="token string">'nearest'</span><span class="token punctuation">)</span>
-    ax<span class="token punctuation">.</span>set_title<span class="token punctuation">(</span><span class="token string">'Training: %i'</span> <span class="token operator">%</span> label<span class="token punctuation">)</span>
+<h3 id="3-Plot-Classification"><a href="#3-Plot-Classification" class="headerlink" title="3. Plot Classification"></a>3. Plot Classification</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">print(__doc__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Author: Alexandre Gramfort &lt;alexandre.gramfort@inria.fr&gt;</span></span><br><span class="line"><span class="comment"># License: BSD 3 clause</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</span><br><span class="line"><span class="keyword">from</span> sklearn.gaussian_process <span class="keyword">import</span> GaussianProcessClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.gaussian_process.kernels <span class="keyword">import</span> RBF</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">X = iris.data[:, <span class="number">0</span>:<span class="number">2</span>]  <span class="comment"># we only take the first two features for visualization</span></span><br><span class="line">y = iris.target</span><br><span class="line"></span><br><span class="line">n_features = X.shape[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">C = <span class="number">10</span></span><br><span class="line">kernel = <span class="number">1.0</span> * RBF([<span class="number">1.0</span>, <span class="number">1.0</span>])  <span class="comment"># for GPC</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create different classifiers.</span></span><br><span class="line">classifiers = {</span><br><span class="line">    <span class="string">'L1 logistic'</span>: LogisticRegression(C=C, penalty=<span class="string">'l1'</span>,</span><br><span class="line">                                      solver=<span class="string">'saga'</span>,</span><br><span class="line">                                      multi_class=<span class="string">'multinomial'</span>,</span><br><span class="line">                                      max_iter=<span class="number">10000</span>),</span><br><span class="line">    <span class="string">'L2 logistic (Multinomial)'</span>: LogisticRegression(C=C, penalty=<span class="string">'l2'</span>,</span><br><span class="line">                                                    solver=<span class="string">'saga'</span>,</span><br><span class="line">                                                    multi_class=<span class="string">'multinomial'</span>,</span><br><span class="line">                                                    max_iter=<span class="number">10000</span>),</span><br><span class="line">    <span class="string">'L2 logistic (OvR)'</span>: LogisticRegression(C=C, penalty=<span class="string">'l2'</span>,</span><br><span class="line">                                            solver=<span class="string">'saga'</span>,</span><br><span class="line">                                            multi_class=<span class="string">'ovr'</span>,</span><br><span class="line">                                            max_iter=<span class="number">10000</span>),</span><br><span class="line">    <span class="string">'Linear SVC'</span>: SVC(kernel=<span class="string">'linear'</span>, C=C, probability=<span class="literal">True</span>,</span><br><span class="line">                      random_state=<span class="number">0</span>),</span><br><span class="line">    <span class="string">'GPC'</span>: GaussianProcessClassifier(kernel)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">n_classifiers = len(classifiers)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">3</span> * <span class="number">2</span>, n_classifiers * <span class="number">2</span>))</span><br><span class="line">plt.subplots_adjust(bottom=<span class="number">.2</span>, top=<span class="number">.95</span>)</span><br><span class="line"></span><br><span class="line">xx = np.linspace(<span class="number">3</span>, <span class="number">9</span>, <span class="number">100</span>)</span><br><span class="line">yy = np.linspace(<span class="number">1</span>, <span class="number">5</span>, <span class="number">100</span>).T</span><br><span class="line">xx, yy = np.meshgrid(xx, yy)</span><br><span class="line">Xfull = np.c_[xx.ravel(), yy.ravel()]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> index, (name, classifier) <span class="keyword">in</span> enumerate(classifiers.items()):</span><br><span class="line">    classifier.fit(X, y)</span><br><span class="line"></span><br><span class="line">    y_pred = classifier.predict(X)</span><br><span class="line">    accuracy = accuracy_score(y, y_pred)</span><br><span class="line">    print(<span class="string">"Accuracy (train) for %s: %0.1f%% "</span> % (name, accuracy * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># View probabilities:</span></span><br><span class="line">    probas = classifier.predict_proba(Xfull)</span><br><span class="line">    n_classes = np.unique(y_pred).size</span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(n_classes):</span><br><span class="line">        plt.subplot(n_classifiers, n_classes, index * n_classes + k + <span class="number">1</span>)</span><br><span class="line">        plt.title(<span class="string">"Class %d"</span> % k)</span><br><span class="line">        <span class="keyword">if</span> k == <span class="number">0</span>:</span><br><span class="line">            plt.ylabel(name)</span><br><span class="line">        imshow_handle = plt.imshow(probas[:, k].reshape((<span class="number">100</span>, <span class="number">100</span>)),</span><br><span class="line">                                   extent=(<span class="number">3</span>, <span class="number">9</span>, <span class="number">1</span>, <span class="number">5</span>), origin=<span class="string">'lower'</span>)</span><br><span class="line">        plt.xticks(())</span><br><span class="line">        plt.yticks(())</span><br><span class="line">        idx = (y_pred == k)</span><br><span class="line">        <span class="keyword">if</span> idx.any():</span><br><span class="line">            plt.scatter(X[idx, <span class="number">0</span>], X[idx, <span class="number">1</span>], marker=<span class="string">'o'</span>, c=<span class="string">'w'</span>, edgecolor=<span class="string">'k'</span>)</span><br><span class="line"></span><br><span class="line">ax = plt.axes([<span class="number">0.15</span>, <span class="number">0.04</span>, <span class="number">0.7</span>, <span class="number">0.05</span>])</span><br><span class="line">plt.title(<span class="string">"Probability"</span>)</span><br><span class="line">plt.colorbar(imshow_handle, cax=ax, orientation=<span class="string">'horizontal'</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token comment" spellcheck="true"># flatten the images</span>
-n_samples <span class="token operator">=</span> len<span class="token punctuation">(</span>digits<span class="token punctuation">.</span>images<span class="token punctuation">)</span>
-data <span class="token operator">=</span> digits<span class="token punctuation">.</span>images<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span>n_samples<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Create a classifier: a support vector classifier</span>
-clf <span class="token operator">=</span> svm<span class="token punctuation">.</span>SVC<span class="token punctuation">(</span>gamma<span class="token operator">=</span><span class="token number">0.001</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Split data into 50% train and 50% test subsets</span>
-X_train<span class="token punctuation">,</span> X_test<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> y_test <span class="token operator">=</span> train_test_split<span class="token punctuation">(</span>
-    data<span class="token punctuation">,</span> digits<span class="token punctuation">.</span>target<span class="token punctuation">,</span> test_size<span class="token operator">=</span><span class="token number">0.5</span><span class="token punctuation">,</span> shuffle<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Learn the digits on the train subset</span>
-clf<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>X_train<span class="token punctuation">,</span> y_train<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Predict the value of the digit on the test subset</span>
-predicted <span class="token operator">=</span> clf<span class="token punctuation">.</span>predict<span class="token punctuation">(</span>X_test<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true">#visualization result</span>
-_<span class="token punctuation">,</span> axes <span class="token operator">=</span> plt<span class="token punctuation">.</span>subplots<span class="token punctuation">(</span>nrows<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> ncols<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">,</span> figsize<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">for</span> ax<span class="token punctuation">,</span> image<span class="token punctuation">,</span> prediction <span class="token keyword">in</span> zip<span class="token punctuation">(</span>axes<span class="token punctuation">,</span> X_test<span class="token punctuation">,</span> predicted<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    ax<span class="token punctuation">.</span>set_axis_off<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    image <span class="token operator">=</span> image<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span>
-    ax<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>image<span class="token punctuation">,</span> cmap<span class="token operator">=</span>plt<span class="token punctuation">.</span>cm<span class="token punctuation">.</span>gray_r<span class="token punctuation">,</span> interpolation<span class="token operator">=</span><span class="token string">'nearest'</span><span class="token punctuation">)</span>
-    ax<span class="token punctuation">.</span>set_title<span class="token punctuation">(</span>f<span class="token string">'Prediction: {prediction}'</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true">#打印和绘制混淆矩阵</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">"Classification report for classifier {clf}:\n"</span>
-      f<span class="token string">"{metrics.classification_report(y_test, predicted)}\n"</span><span class="token punctuation">)</span>
-disp <span class="token operator">=</span> metrics<span class="token punctuation">.</span>plot_confusion_matrix<span class="token punctuation">(</span>clf<span class="token punctuation">,</span> X_test<span class="token punctuation">,</span> y_test<span class="token punctuation">)</span>
-disp<span class="token punctuation">.</span>figure_<span class="token punctuation">.</span>suptitle<span class="token punctuation">(</span><span class="token string">"Confusion Matrix"</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">"Confusion matrix:\n{disp.confusion_matrix}"</span><span class="token punctuation">)</span>
-
-plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<h3 id="2-Parameters-Search"><a href="#2-Parameters-Search" class="headerlink" title="2. Parameters Search"></a>2. Parameters Search</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> sklearn <span class="token keyword">import</span> datasets
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span> train_test_split
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span> GridSearchCV
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>metrics <span class="token keyword">import</span> classification_report
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>svm <span class="token keyword">import</span> SVC
-
-<span class="token keyword">print</span><span class="token punctuation">(</span>__doc__<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Loading the Digits dataset</span>
-digits <span class="token operator">=</span> datasets<span class="token punctuation">.</span>load_digits<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># To apply an classifier on this data, we need to flatten the image, to</span>
-<span class="token comment" spellcheck="true"># turn the data in a (samples, feature) matrix:</span>
-n_samples <span class="token operator">=</span> len<span class="token punctuation">(</span>digits<span class="token punctuation">.</span>images<span class="token punctuation">)</span>
-X <span class="token operator">=</span> digits<span class="token punctuation">.</span>images<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span>n_samples<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-y <span class="token operator">=</span> digits<span class="token punctuation">.</span>target
-
-<span class="token comment" spellcheck="true"># Split the dataset in two equal parts</span>
-X_train<span class="token punctuation">,</span> X_test<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> y_test <span class="token operator">=</span> train_test_split<span class="token punctuation">(</span>
-    X<span class="token punctuation">,</span> y<span class="token punctuation">,</span> test_size<span class="token operator">=</span><span class="token number">0.5</span><span class="token punctuation">,</span> random_state<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Set the parameters by cross-validation</span>
-tuned_parameters <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">{</span><span class="token string">'kernel'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'rbf'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'gamma'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">1e</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1e</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-                     <span class="token string">'C'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
-                    <span class="token punctuation">{</span><span class="token string">'kernel'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'linear'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'C'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">]</span>
-
-scores <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'precision'</span><span class="token punctuation">,</span> <span class="token string">'recall'</span><span class="token punctuation">]</span>
-
-<span class="token keyword">for</span> score <span class="token keyword">in</span> scores<span class="token punctuation">:</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"# Tuning hyper-parameters for %s"</span> <span class="token operator">%</span> score<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-    clf <span class="token operator">=</span> GridSearchCV<span class="token punctuation">(</span>
-        SVC<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> tuned_parameters<span class="token punctuation">,</span> scoring<span class="token operator">=</span><span class="token string">'%s_macro'</span> <span class="token operator">%</span> score
-    <span class="token punctuation">)</span>
-    clf<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>X_train<span class="token punctuation">,</span> y_train<span class="token punctuation">)</span>
-
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Best parameters set found on development set:"</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span>clf<span class="token punctuation">.</span>best_params_<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Grid scores on development set:"</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    means <span class="token operator">=</span> clf<span class="token punctuation">.</span>cv_results_<span class="token punctuation">[</span><span class="token string">'mean_test_score'</span><span class="token punctuation">]</span>
-    stds <span class="token operator">=</span> clf<span class="token punctuation">.</span>cv_results_<span class="token punctuation">[</span><span class="token string">'std_test_score'</span><span class="token punctuation">]</span>
-    <span class="token keyword">for</span> mean<span class="token punctuation">,</span> std<span class="token punctuation">,</span> params <span class="token keyword">in</span> zip<span class="token punctuation">(</span>means<span class="token punctuation">,</span> stds<span class="token punctuation">,</span> clf<span class="token punctuation">.</span>cv_results_<span class="token punctuation">[</span><span class="token string">'params'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"%0.3f (+/-%0.03f) for %r"</span>
-              <span class="token operator">%</span> <span class="token punctuation">(</span>mean<span class="token punctuation">,</span> std <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">,</span> params<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Detailed classification report:"</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The model is trained on the full development set."</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The scores are computed on the full evaluation set."</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    y_true<span class="token punctuation">,</span> y_pred <span class="token operator">=</span> y_test<span class="token punctuation">,</span> clf<span class="token punctuation">.</span>predict<span class="token punctuation">(</span>X_test<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span>classification_report<span class="token punctuation">(</span>y_true<span class="token punctuation">,</span> y_pred<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<h3 id="3-Plot-Classification"><a href="#3-Plot-Classification" class="headerlink" title="3. Plot Classification"></a>3. Plot Classification</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">print</span><span class="token punctuation">(</span>__doc__<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># Author: Alexandre Gramfort &lt;alexandre.gramfort@inria.fr></span>
-<span class="token comment" spellcheck="true"># License: BSD 3 clause</span>
-
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>metrics <span class="token keyword">import</span> accuracy_score
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>linear_model <span class="token keyword">import</span> LogisticRegression
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>svm <span class="token keyword">import</span> SVC
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>gaussian_process <span class="token keyword">import</span> GaussianProcessClassifier
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>gaussian_process<span class="token punctuation">.</span>kernels <span class="token keyword">import</span> RBF
-<span class="token keyword">from</span> sklearn <span class="token keyword">import</span> datasets
-
-iris <span class="token operator">=</span> datasets<span class="token punctuation">.</span>load_iris<span class="token punctuation">(</span><span class="token punctuation">)</span>
-X <span class="token operator">=</span> iris<span class="token punctuation">.</span>data<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>  <span class="token comment" spellcheck="true"># we only take the first two features for visualization</span>
-y <span class="token operator">=</span> iris<span class="token punctuation">.</span>target
-
-n_features <span class="token operator">=</span> X<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
-
-C <span class="token operator">=</span> <span class="token number">10</span>
-kernel <span class="token operator">=</span> <span class="token number">1.0</span> <span class="token operator">*</span> RBF<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># for GPC</span>
-
-<span class="token comment" spellcheck="true"># Create different classifiers.</span>
-classifiers <span class="token operator">=</span> <span class="token punctuation">{</span>
-    <span class="token string">'L1 logistic'</span><span class="token punctuation">:</span> LogisticRegression<span class="token punctuation">(</span>C<span class="token operator">=</span>C<span class="token punctuation">,</span> penalty<span class="token operator">=</span><span class="token string">'l1'</span><span class="token punctuation">,</span>
-                                      solver<span class="token operator">=</span><span class="token string">'saga'</span><span class="token punctuation">,</span>
-                                      multi_class<span class="token operator">=</span><span class="token string">'multinomial'</span><span class="token punctuation">,</span>
-                                      max_iter<span class="token operator">=</span><span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token string">'L2 logistic (Multinomial)'</span><span class="token punctuation">:</span> LogisticRegression<span class="token punctuation">(</span>C<span class="token operator">=</span>C<span class="token punctuation">,</span> penalty<span class="token operator">=</span><span class="token string">'l2'</span><span class="token punctuation">,</span>
-                                                    solver<span class="token operator">=</span><span class="token string">'saga'</span><span class="token punctuation">,</span>
-                                                    multi_class<span class="token operator">=</span><span class="token string">'multinomial'</span><span class="token punctuation">,</span>
-                                                    max_iter<span class="token operator">=</span><span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token string">'L2 logistic (OvR)'</span><span class="token punctuation">:</span> LogisticRegression<span class="token punctuation">(</span>C<span class="token operator">=</span>C<span class="token punctuation">,</span> penalty<span class="token operator">=</span><span class="token string">'l2'</span><span class="token punctuation">,</span>
-                                            solver<span class="token operator">=</span><span class="token string">'saga'</span><span class="token punctuation">,</span>
-                                            multi_class<span class="token operator">=</span><span class="token string">'ovr'</span><span class="token punctuation">,</span>
-                                            max_iter<span class="token operator">=</span><span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token string">'Linear SVC'</span><span class="token punctuation">:</span> SVC<span class="token punctuation">(</span>kernel<span class="token operator">=</span><span class="token string">'linear'</span><span class="token punctuation">,</span> C<span class="token operator">=</span>C<span class="token punctuation">,</span> probability<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
-                      random_state<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token string">'GPC'</span><span class="token punctuation">:</span> GaussianProcessClassifier<span class="token punctuation">(</span>kernel<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-n_classifiers <span class="token operator">=</span> len<span class="token punctuation">(</span>classifiers<span class="token punctuation">)</span>
-
-plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span>figsize<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">3</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">,</span> n_classifiers <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>subplots_adjust<span class="token punctuation">(</span>bottom<span class="token operator">=</span><span class="token punctuation">.</span><span class="token number">2</span><span class="token punctuation">,</span> top<span class="token operator">=</span><span class="token punctuation">.</span><span class="token number">95</span><span class="token punctuation">)</span>
-
-xx <span class="token operator">=</span> np<span class="token punctuation">.</span>linspace<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
-yy <span class="token operator">=</span> np<span class="token punctuation">.</span>linspace<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">.</span>T
-xx<span class="token punctuation">,</span> yy <span class="token operator">=</span> np<span class="token punctuation">.</span>meshgrid<span class="token punctuation">(</span>xx<span class="token punctuation">,</span> yy<span class="token punctuation">)</span>
-Xfull <span class="token operator">=</span> np<span class="token punctuation">.</span>c_<span class="token punctuation">[</span>xx<span class="token punctuation">.</span>ravel<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> yy<span class="token punctuation">.</span>ravel<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
-
-<span class="token keyword">for</span> index<span class="token punctuation">,</span> <span class="token punctuation">(</span>name<span class="token punctuation">,</span> classifier<span class="token punctuation">)</span> <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>classifiers<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    classifier<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>X<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
-
-    y_pred <span class="token operator">=</span> classifier<span class="token punctuation">.</span>predict<span class="token punctuation">(</span>X<span class="token punctuation">)</span>
-    accuracy <span class="token operator">=</span> accuracy_score<span class="token punctuation">(</span>y<span class="token punctuation">,</span> y_pred<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Accuracy (train) for %s: %0.1f%% "</span> <span class="token operator">%</span> <span class="token punctuation">(</span>name<span class="token punctuation">,</span> accuracy <span class="token operator">*</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true"># View probabilities:</span>
-    probas <span class="token operator">=</span> classifier<span class="token punctuation">.</span>predict_proba<span class="token punctuation">(</span>Xfull<span class="token punctuation">)</span>
-    n_classes <span class="token operator">=</span> np<span class="token punctuation">.</span>unique<span class="token punctuation">(</span>y_pred<span class="token punctuation">)</span><span class="token punctuation">.</span>size
-    <span class="token keyword">for</span> k <span class="token keyword">in</span> range<span class="token punctuation">(</span>n_classes<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        plt<span class="token punctuation">.</span>subplot<span class="token punctuation">(</span>n_classifiers<span class="token punctuation">,</span> n_classes<span class="token punctuation">,</span> index <span class="token operator">*</span> n_classes <span class="token operator">+</span> k <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
-        plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">"Class %d"</span> <span class="token operator">%</span> k<span class="token punctuation">)</span>
-        <span class="token keyword">if</span> k <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
-            plt<span class="token punctuation">.</span>ylabel<span class="token punctuation">(</span>name<span class="token punctuation">)</span>
-        imshow_handle <span class="token operator">=</span> plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>probas<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> k<span class="token punctuation">]</span><span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-                                   extent<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span> origin<span class="token operator">=</span><span class="token string">'lower'</span><span class="token punctuation">)</span>
-        plt<span class="token punctuation">.</span>xticks<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        plt<span class="token punctuation">.</span>yticks<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        idx <span class="token operator">=</span> <span class="token punctuation">(</span>y_pred <span class="token operator">==</span> k<span class="token punctuation">)</span>
-        <span class="token keyword">if</span> idx<span class="token punctuation">.</span>any<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-            plt<span class="token punctuation">.</span>scatter<span class="token punctuation">(</span>X<span class="token punctuation">[</span>idx<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> X<span class="token punctuation">[</span>idx<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> marker<span class="token operator">=</span><span class="token string">'o'</span><span class="token punctuation">,</span> c<span class="token operator">=</span><span class="token string">'w'</span><span class="token punctuation">,</span> edgecolor<span class="token operator">=</span><span class="token string">'k'</span><span class="token punctuation">)</span>
-
-ax <span class="token operator">=</span> plt<span class="token punctuation">.</span>axes<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0.15</span><span class="token punctuation">,</span> <span class="token number">0.04</span><span class="token punctuation">,</span> <span class="token number">0.7</span><span class="token punctuation">,</span> <span class="token number">0.05</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">"Probability"</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>colorbar<span class="token punctuation">(</span>imshow_handle<span class="token punctuation">,</span> cax<span class="token operator">=</span>ax<span class="token punctuation">,</span> orientation<span class="token operator">=</span><span class="token string">'horizontal'</span><span class="token punctuation">)</span>
-
-plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210522204703033.png" alt=""></p>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -927,7 +773,7 @@ plt<span class="token punctuation">.</span>show<span class="token punctuation">(
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -1041,8 +887,7 @@ plt<span class="token punctuation">.</span>show<span class="token punctuation">(
 
 cross_val_score
 
-from sklearn.model_selection import cross_val_score
-clf = svm.SVC(kernel='linear',
+12345678910111213from sklearn.model_selection import cross_val_scoreclf = svm.SVC(
                         
                     </div>
                     <div class="publish-info">
@@ -1064,12 +909,12 @@ clf = svm.SVC(kernel='linear',
                         <span class="chip bg-color">math</span>
                     </a>
                     
-                    <a href="/tags/sklearn/">
-                        <span class="chip bg-color">sklearn</span>
-                    </a>
-                    
                     <a href="/tags/algorithm/">
                         <span class="chip bg-color">algorithm</span>
+                    </a>
+                    
+                    <a href="/tags/sklearn/">
+                        <span class="chip bg-color">sklearn</span>
                     </a>
                     
                 </div>
@@ -1270,7 +1115,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1294,7 +1139,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1315,10 +1160,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1427,6 +1268,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

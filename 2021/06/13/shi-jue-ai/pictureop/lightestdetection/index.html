@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="LightestDetection, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="LightestDetection, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -493,6 +515,10 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -500,12 +526,12 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    599
+                    578
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -528,111 +554,10 @@
                 <blockquote>
 <p>minMaxLoc寻找矩阵(一维数组当作向量,用Mat定义) 中最小值和最大值的位置. </p>
 </blockquote>
-<h4 id="1-BrightArea"><a href="#1-BrightArea" class="headerlink" title="1. BrightArea"></a>1. BrightArea</h4><pre class=" language-python"><code class="language-python">
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">import</span> argparse
-<span class="token keyword">import</span> cv2
+<h4 id="1-BrightArea"><a href="#1-BrightArea" class="headerlink" title="1. BrightArea"></a>1. BrightArea</h4><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line"><span class="comment"># construct the argument parse and parse the arguments</span></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>, <span class="string">"--image"</span>, help = <span class="string">"path to the image file"</span>)</span><br><span class="line">ap.add_argument(<span class="string">"-r"</span>, <span class="string">"--radius"</span>, type = int,</span><br><span class="line">	help = <span class="string">"radius of Gaussian blur; must be odd"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line"><span class="comment"># load the image and convert it to grayscale</span></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line">orig = image.copy()</span><br><span class="line">gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)</span><br><span class="line"></span><br><span class="line"><span class="comment"># perform a naive attempt to find the (x, y) coordinates of</span></span><br><span class="line"><span class="comment"># the area of the image with the largest intensity value</span></span><br><span class="line">(minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(gray)</span><br><span class="line">cv2.circle(image, maxLoc, <span class="number">5</span>, (<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># display the results of the naive attempt</span></span><br><span class="line">cv2.imshow(<span class="string">"Naive"</span>, image)</span><br><span class="line"></span><br><span class="line"><span class="comment"># apply a Gaussian blur to the image then find the brightest</span></span><br><span class="line"><span class="comment"># region</span></span><br><span class="line">gray = cv2.GaussianBlur(gray, (args[<span class="string">"radius"</span>], args[<span class="string">"radius"</span>]), <span class="number">0</span>)</span><br><span class="line">(minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(gray)</span><br><span class="line">image = orig.copy()</span><br><span class="line">cv2.circle(image, maxLoc, args[<span class="string">"radius"</span>], (<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># display the results of our newly improved method</span></span><br><span class="line">cv2.imshow(<span class="string">"Robust"</span>, image)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token comment" spellcheck="true"># construct the argument parse and parse the arguments</span>
-ap <span class="token operator">=</span> argparse<span class="token punctuation">.</span>ArgumentParser<span class="token punctuation">(</span><span class="token punctuation">)</span>
-ap<span class="token punctuation">.</span>add_argument<span class="token punctuation">(</span><span class="token string">"-i"</span><span class="token punctuation">,</span> <span class="token string">"--image"</span><span class="token punctuation">,</span> help <span class="token operator">=</span> <span class="token string">"path to the image file"</span><span class="token punctuation">)</span>
-ap<span class="token punctuation">.</span>add_argument<span class="token punctuation">(</span><span class="token string">"-r"</span><span class="token punctuation">,</span> <span class="token string">"--radius"</span><span class="token punctuation">,</span> type <span class="token operator">=</span> int<span class="token punctuation">,</span>
-    help <span class="token operator">=</span> <span class="token string">"radius of Gaussian blur; must be odd"</span><span class="token punctuation">)</span>
-args <span class="token operator">=</span> vars<span class="token punctuation">(</span>ap<span class="token punctuation">.</span>parse_args<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<h4 id="2-mulipleBright"><a href="#2-mulipleBright" class="headerlink" title="2. mulipleBright"></a>2. mulipleBright</h4><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> imutils <span class="keyword">import</span> contours</span><br><span class="line"><span class="keyword">from</span> skimage <span class="keyword">import</span> measure</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> imutils</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line"><span class="comment"># construct the argument parse and parse the arguments</span></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>, <span class="string">"--image"</span>, required=<span class="literal">True</span>,</span><br><span class="line">	help=<span class="string">"path to the image file"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line"><span class="comment"># load the image, convert it to grayscale, and blur it</span></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line">gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)</span><br><span class="line">blurred = cv2.GaussianBlur(gray, (<span class="number">11</span>, <span class="number">11</span>), <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># threshold the image to reveal light regions in the</span></span><br><span class="line"><span class="comment"># blurred image</span></span><br><span class="line">thresh = cv2.threshold(blurred, <span class="number">200</span>, <span class="number">255</span>, cv2.THRESH_BINARY)[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># perform a series of erosions and dilations to remove</span></span><br><span class="line"><span class="comment"># any small blobs of noise from the thresholded image</span></span><br><span class="line">thresh = cv2.erode(thresh, <span class="literal">None</span>, iterations=<span class="number">2</span>)</span><br><span class="line">thresh = cv2.dilate(thresh, <span class="literal">None</span>, iterations=<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># perform a connected component analysis on the thresholded</span></span><br><span class="line"><span class="comment"># image, then initialize a mask to store only the "large"</span></span><br><span class="line"><span class="comment"># components</span></span><br><span class="line">labels = measure.label(thresh, neighbors=<span class="number">8</span>, background=<span class="number">0</span>)</span><br><span class="line">mask = np.zeros(thresh.shape, dtype=<span class="string">"uint8"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># loop over the unique components</span></span><br><span class="line"><span class="keyword">for</span> label <span class="keyword">in</span> np.unique(labels):</span><br><span class="line">	<span class="comment"># if this is the background label, ignore it</span></span><br><span class="line">	<span class="keyword">if</span> label == <span class="number">0</span>:</span><br><span class="line">		<span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># otherwise, construct the label mask and count the</span></span><br><span class="line">	<span class="comment"># number of pixels </span></span><br><span class="line">	labelMask = np.zeros(thresh.shape, dtype=<span class="string">"uint8"</span>)</span><br><span class="line">	labelMask[labels == label] = <span class="number">255</span></span><br><span class="line">	numPixels = cv2.countNonZero(labelMask)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># if the number of pixels in the component is sufficiently</span></span><br><span class="line">	<span class="comment"># large, then add it to our mask of "large blobs"</span></span><br><span class="line">	<span class="keyword">if</span> numPixels &gt; <span class="number">300</span>:</span><br><span class="line">		mask = cv2.add(mask, labelMask)</span><br><span class="line"></span><br><span class="line"><span class="comment"># find the contours in the mask, then sort them from left to</span></span><br><span class="line"><span class="comment"># right</span></span><br><span class="line">cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,</span><br><span class="line">	cv2.CHAIN_APPROX_SIMPLE)</span><br><span class="line">cnts = cnts[<span class="number">0</span>] <span class="keyword">if</span> imutils.is_cv2() <span class="keyword">else</span> cnts[<span class="number">1</span>]</span><br><span class="line">cnts = contours.sort_contours(cnts)[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># loop over the contours</span></span><br><span class="line"><span class="keyword">for</span> (i, c) <span class="keyword">in</span> enumerate(cnts):</span><br><span class="line">	<span class="comment"># draw the bright spot on the image</span></span><br><span class="line">	(x, y, w, h) = cv2.boundingRect(c)</span><br><span class="line">	((cX, cY), radius) = cv2.minEnclosingCircle(c)</span><br><span class="line">	cv2.circle(image, (int(cX), int(cY)), int(radius),</span><br><span class="line">		(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">3</span>)</span><br><span class="line">	cv2.putText(image, <span class="string">"#{}"</span>.format(i + <span class="number">1</span>), (x, y - <span class="number">15</span>),</span><br><span class="line">		cv2.FONT_HERSHEY_SIMPLEX, <span class="number">0.45</span>, (<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># show the output image</span></span><br><span class="line">cv2.imshow(<span class="string">"Image"</span>, image)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token comment" spellcheck="true"># load the image and convert it to grayscale</span>
-image <span class="token operator">=</span> cv2<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>args<span class="token punctuation">[</span><span class="token string">"image"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-orig <span class="token operator">=</span> image<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
-gray <span class="token operator">=</span> cv2<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>image<span class="token punctuation">,</span> cv2<span class="token punctuation">.</span>COLOR_BGR2GRAY<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># perform a naive attempt to find the (x, y) coordinates of</span>
-<span class="token comment" spellcheck="true"># the area of the image with the largest intensity value</span>
-<span class="token punctuation">(</span>minVal<span class="token punctuation">,</span> maxVal<span class="token punctuation">,</span> minLoc<span class="token punctuation">,</span> maxLoc<span class="token punctuation">)</span> <span class="token operator">=</span> cv2<span class="token punctuation">.</span>minMaxLoc<span class="token punctuation">(</span>gray<span class="token punctuation">)</span>
-cv2<span class="token punctuation">.</span>circle<span class="token punctuation">(</span>image<span class="token punctuation">,</span> maxLoc<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># display the results of the naive attempt</span>
-cv2<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"Naive"</span><span class="token punctuation">,</span> image<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># apply a Gaussian blur to the image then find the brightest</span>
-<span class="token comment" spellcheck="true"># region</span>
-gray <span class="token operator">=</span> cv2<span class="token punctuation">.</span>GaussianBlur<span class="token punctuation">(</span>gray<span class="token punctuation">,</span> <span class="token punctuation">(</span>args<span class="token punctuation">[</span><span class="token string">"radius"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> args<span class="token punctuation">[</span><span class="token string">"radius"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-<span class="token punctuation">(</span>minVal<span class="token punctuation">,</span> maxVal<span class="token punctuation">,</span> minLoc<span class="token punctuation">,</span> maxLoc<span class="token punctuation">)</span> <span class="token operator">=</span> cv2<span class="token punctuation">.</span>minMaxLoc<span class="token punctuation">(</span>gray<span class="token punctuation">)</span>
-image <span class="token operator">=</span> orig<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
-cv2<span class="token punctuation">.</span>circle<span class="token punctuation">(</span>image<span class="token punctuation">,</span> maxLoc<span class="token punctuation">,</span> args<span class="token punctuation">[</span><span class="token string">"radius"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># display the results of our newly improved method</span>
-cv2<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"Robust"</span><span class="token punctuation">,</span> image<span class="token punctuation">)</span>
-cv2<span class="token punctuation">.</span>waitKey<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span></code></pre>
-<h4 id="2-mulipleBright"><a href="#2-mulipleBright" class="headerlink" title="2. mulipleBright"></a>2. mulipleBright</h4><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> imutils <span class="token keyword">import</span> contours
-<span class="token keyword">from</span> skimage <span class="token keyword">import</span> measure
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">import</span> argparse
-<span class="token keyword">import</span> imutils
-<span class="token keyword">import</span> cv2
-
-<span class="token comment" spellcheck="true"># construct the argument parse and parse the arguments</span>
-ap <span class="token operator">=</span> argparse<span class="token punctuation">.</span>ArgumentParser<span class="token punctuation">(</span><span class="token punctuation">)</span>
-ap<span class="token punctuation">.</span>add_argument<span class="token punctuation">(</span><span class="token string">"-i"</span><span class="token punctuation">,</span> <span class="token string">"--image"</span><span class="token punctuation">,</span> required<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
-    help<span class="token operator">=</span><span class="token string">"path to the image file"</span><span class="token punctuation">)</span>
-args <span class="token operator">=</span> vars<span class="token punctuation">(</span>ap<span class="token punctuation">.</span>parse_args<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># load the image, convert it to grayscale, and blur it</span>
-image <span class="token operator">=</span> cv2<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>args<span class="token punctuation">[</span><span class="token string">"image"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-gray <span class="token operator">=</span> cv2<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>image<span class="token punctuation">,</span> cv2<span class="token punctuation">.</span>COLOR_BGR2GRAY<span class="token punctuation">)</span>
-blurred <span class="token operator">=</span> cv2<span class="token punctuation">.</span>GaussianBlur<span class="token punctuation">(</span>gray<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">11</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># threshold the image to reveal light regions in the</span>
-<span class="token comment" spellcheck="true"># blurred image</span>
-thresh <span class="token operator">=</span> cv2<span class="token punctuation">.</span>threshold<span class="token punctuation">(</span>blurred<span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> cv2<span class="token punctuation">.</span>THRESH_BINARY<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
-
-<span class="token comment" spellcheck="true"># perform a series of erosions and dilations to remove</span>
-<span class="token comment" spellcheck="true"># any small blobs of noise from the thresholded image</span>
-thresh <span class="token operator">=</span> cv2<span class="token punctuation">.</span>erode<span class="token punctuation">(</span>thresh<span class="token punctuation">,</span> None<span class="token punctuation">,</span> iterations<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
-thresh <span class="token operator">=</span> cv2<span class="token punctuation">.</span>dilate<span class="token punctuation">(</span>thresh<span class="token punctuation">,</span> None<span class="token punctuation">,</span> iterations<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># perform a connected component analysis on the thresholded</span>
-<span class="token comment" spellcheck="true"># image, then initialize a mask to store only the "large"</span>
-<span class="token comment" spellcheck="true"># components</span>
-labels <span class="token operator">=</span> measure<span class="token punctuation">.</span>label<span class="token punctuation">(</span>thresh<span class="token punctuation">,</span> neighbors<span class="token operator">=</span><span class="token number">8</span><span class="token punctuation">,</span> background<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
-mask <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>thresh<span class="token punctuation">.</span>shape<span class="token punctuation">,</span> dtype<span class="token operator">=</span><span class="token string">"uint8"</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># loop over the unique components</span>
-<span class="token keyword">for</span> label <span class="token keyword">in</span> np<span class="token punctuation">.</span>unique<span class="token punctuation">(</span>labels<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true"># if this is the background label, ignore it</span>
-    <span class="token keyword">if</span> label <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
-        <span class="token keyword">continue</span>
-
-    <span class="token comment" spellcheck="true"># otherwise, construct the label mask and count the</span>
-    <span class="token comment" spellcheck="true"># number of pixels </span>
-    labelMask <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>thresh<span class="token punctuation">.</span>shape<span class="token punctuation">,</span> dtype<span class="token operator">=</span><span class="token string">"uint8"</span><span class="token punctuation">)</span>
-    labelMask<span class="token punctuation">[</span>labels <span class="token operator">==</span> label<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">255</span>
-    numPixels <span class="token operator">=</span> cv2<span class="token punctuation">.</span>countNonZero<span class="token punctuation">(</span>labelMask<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true"># if the number of pixels in the component is sufficiently</span>
-    <span class="token comment" spellcheck="true"># large, then add it to our mask of "large blobs"</span>
-    <span class="token keyword">if</span> numPixels <span class="token operator">></span> <span class="token number">300</span><span class="token punctuation">:</span>
-        mask <span class="token operator">=</span> cv2<span class="token punctuation">.</span>add<span class="token punctuation">(</span>mask<span class="token punctuation">,</span> labelMask<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># find the contours in the mask, then sort them from left to</span>
-<span class="token comment" spellcheck="true"># right</span>
-cnts <span class="token operator">=</span> cv2<span class="token punctuation">.</span>findContours<span class="token punctuation">(</span>mask<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> cv2<span class="token punctuation">.</span>RETR_EXTERNAL<span class="token punctuation">,</span>
-    cv2<span class="token punctuation">.</span>CHAIN_APPROX_SIMPLE<span class="token punctuation">)</span>
-cnts <span class="token operator">=</span> cnts<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">if</span> imutils<span class="token punctuation">.</span>is_cv2<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">else</span> cnts<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
-cnts <span class="token operator">=</span> contours<span class="token punctuation">.</span>sort_contours<span class="token punctuation">(</span>cnts<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-
-<span class="token comment" spellcheck="true"># loop over the contours</span>
-<span class="token keyword">for</span> <span class="token punctuation">(</span>i<span class="token punctuation">,</span> c<span class="token punctuation">)</span> <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>cnts<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true"># draw the bright spot on the image</span>
-    <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> w<span class="token punctuation">,</span> h<span class="token punctuation">)</span> <span class="token operator">=</span> cv2<span class="token punctuation">.</span>boundingRect<span class="token punctuation">(</span>c<span class="token punctuation">)</span>
-    <span class="token punctuation">(</span><span class="token punctuation">(</span>cX<span class="token punctuation">,</span> cY<span class="token punctuation">)</span><span class="token punctuation">,</span> radius<span class="token punctuation">)</span> <span class="token operator">=</span> cv2<span class="token punctuation">.</span>minEnclosingCircle<span class="token punctuation">(</span>c<span class="token punctuation">)</span>
-    cv2<span class="token punctuation">.</span>circle<span class="token punctuation">(</span>image<span class="token punctuation">,</span> <span class="token punctuation">(</span>int<span class="token punctuation">(</span>cX<span class="token punctuation">)</span><span class="token punctuation">,</span> int<span class="token punctuation">(</span>cY<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> int<span class="token punctuation">(</span>radius<span class="token punctuation">)</span><span class="token punctuation">,</span>
-        <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
-    cv2<span class="token punctuation">.</span>putText<span class="token punctuation">(</span>image<span class="token punctuation">,</span> <span class="token string">"#{}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token operator">-</span> <span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        cv2<span class="token punctuation">.</span>FONT_HERSHEY_SIMPLEX<span class="token punctuation">,</span> <span class="token number">0.45</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true"># show the output image</span>
-cv2<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"Image"</span><span class="token punctuation">,</span> image<span class="token punctuation">)</span>
-cv2<span class="token punctuation">.</span>waitKey<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -845,7 +770,7 @@ cv2<span class="token punctuation">.</span>waitKey<span class="token punctuation
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -887,79 +812,24 @@ cv2<span class="token punctuation">.</span>waitKey<span class="token punctuation
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2021/06/14/ruan-jian-gong-ju/wordgentools/">
+                <a href="/2021/06/13/yu-yan-kuang-jia/ke-shi-hua/confusionmatrix/">
                     <div class="card-image">
                         
-                        <img src="https://cdn.stocksnap.io/img-thumbs/280h/J2EZQDXGOT.jpg" class="responsive-img" alt="WordGenTools">
+                        <img src="https://cdn.stocksnap.io/img-thumbs/280h/RP9VPMSKFG.jpg" class="responsive-img" alt="confusionmatrix">
                         
-                        <span class="card-title">WordGenTools</span>
+                        <span class="card-title">confusionmatrix</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            0. GoogleTransBasedFastArticle
-查了几个网页的版本，但是使用次数有限，基于google翻译，在Google Trans API 和 FastArtcle , 和文章伪原创工具，基于google翻译软件，在多个语
+                            1234567891011121314151617181920212223242526272829303132333435363738394041clc;clear;close all;classname = {'a','b','c','d
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-14
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-13
                         </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="post-category">
-                                    软件工具
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/AI/">
-                        <span class="chip bg-color">AI</span>
-                    </a>
-                    
-                    <a href="/tags/NLP/">
-                        <span class="chip bg-color">NLP</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/06/11/yu-yan-kuang-jia/java/datastructure/hutoollearning/">
-                    <div class="card-image">
-                        
-                        <img src="https://cdn.pixabay.com/photo/2015/12/04/14/05/code-1076536__480.jpg" class="responsive-img" alt="HutoolLearning">
-                        
-                        <span class="card-title">HutoolLearning</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-Hutool是一个小而全的Java工具类库，通过静态方法封装，降低相关API的学习成本，提高工作效率，使Java拥有函数式语言般的优雅，让Java语言也可以“甜甜的”。
-Hutool中的工具方法来自每个用户的精雕细琢，它涵盖了Java开发
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-11
-                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -975,12 +845,58 @@ Hutool中的工具方法来自每个用户的精雕细琢，它涵盖了Java开�
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
+                    <a href="/tags/visual/">
+                        <span class="chip bg-color">visual</span>
                     </a>
                     
-                    <a href="/tags/structure/">
-                        <span class="chip bg-color">structure</span>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/06/13/shi-kong-shu-ju/retrieve/meetingdirection/">
+                    <div class="card-image">
+                        
+                        <img src="https://cdn.stocksnap.io/img-thumbs/280h/NUSLXFZ4J6.jpg" class="responsive-img" alt="MeetingDirection">
+                        
+                        <span class="card-title">MeetingDirection</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+
+云数据库：除了Eric Brewer关于Kubernetes的keynote，还有一个关于云数据库的industry session。Amazon Aurora从理论和实践上证明公有云场景可以重构关系数据库底层架构，Vertica这样的
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-13
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE/" class="post-category">
+                                    时空数据
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/retrieve/">
+                        <span class="chip bg-color">retrieve</span>
                     </a>
                     
                 </div>
@@ -1181,7 +1097,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1205,7 +1121,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1226,10 +1142,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1338,6 +1250,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

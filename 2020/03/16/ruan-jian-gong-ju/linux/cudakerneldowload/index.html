@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CudaKernelDownload, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="CudaKernelDownload, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -497,6 +519,10 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -504,12 +530,12 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
                     5k
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -530,63 +556,21 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h3 id="1-NVIDIA显卡驱动-cuda"><a href="#1-NVIDIA显卡驱动-cuda" class="headerlink" title="1. NVIDIA显卡驱动 cuda"></a>1. NVIDIA显卡驱动 cuda</h3><p>方法一：apt 方式安装</p>
-<pre class=" language-shell"><code class="language-shell"> #驱动安装
- sudo ubuntu-drivers devices  查看系统支持的显卡设备并下载
-#**系统设置** > **细节**窗口，你会发现Ubuntu正在使用Nvidia显卡。
-lspci -k | grep -A 2 -i "VGA"
-software-properties-gtk
-nvidia-settings       #打开nvidia 设置软件页面
-sudo ubuntu-drivers autoinstall  #显示推荐的驱动
-sudo apt-get update   </code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"> #</span><span class="bash">驱动安装</span></span><br><span class="line"> sudo ubuntu-drivers devices  查看系统支持的显卡设备并下载</span><br><span class="line"><span class="meta">#</span><span class="bash">**系统设置** &gt; **细节**窗口，你会发现Ubuntu正在使用Nvidia显卡。</span></span><br><span class="line">lspci -k | grep -A 2 -i "VGA"</span><br><span class="line">software-properties-gtk</span><br><span class="line">nvidia-settings       #打开nvidia 设置软件页面</span><br><span class="line">sudo ubuntu-drivers autoinstall  #显示推荐的驱动</span><br><span class="line">sudo apt-get update</span><br></pre></td></tr></tbody></table></figure>
+
 <p>方法二：使用 PPA 第三方软件仓库安装最新版本</p>
 <blockquote>
 <p>添加 PPA 软件仓库：sudo add-apt-repository ppa:graphics-drivers/ppa，需要输入用户密码，按照提示还需要按下 Enter 键。<br>更新软件索引：sudo apt update<br>接下来的步骤同方法一，只是这样我们就可以选择安装最新版本的驱动程序了。</p>
 </blockquote>
 <p>方法三：官网最新版本安装</p>
-<pre class=" language-bash"><code class="language-bash">lspci <span class="token operator">|</span> <span class="token function">grep</span> -i nvidia  <span class="token comment" spellcheck="true">#verify you have a cuda-Capble GPU</span>
-<span class="token comment" spellcheck="true">#查看当前NVIDIA驱动版本</span>
-<span class="token function">sudo</span> dpkg --list <span class="token operator">|</span> <span class="token function">grep</span> nvidia-*
-<span class="token comment" spellcheck="true">#查看本机GPU</span>
-<span class="token function">uname</span> -r <span class="token comment" spellcheck="true">#current running kernel</span>
-<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> linux-headers-<span class="token variable"><span class="token variable">$(</span><span class="token function">uname</span> -r<span class="token variable">)</span></span> <span class="token comment" spellcheck="true"># the kernel headers and development packages</span>
-gcc --version      <span class="token comment" spellcheck="true">#是否安装gcc</span>
-<span class="token comment" spellcheck="true">#disable Nouveau  如果不适用nvida 驱动时需要改回</span>
-lsmod <span class="token operator">|</span> <span class="token function">grep</span> nouveau   <span class="token comment" spellcheck="true">#如果有输出则需要关闭</span>
-<span class="token comment" spellcheck="true">#创建文件  vim /etc/modprobe.d/blacklist-nouveau.conf</span>
-blacklist nouveau
-options nouveau modeset<span class="token operator">=</span>0
-<span class="token comment" spellcheck="true">#then regenerate the kernel</span>
-<span class="token function">sudo</span> update-initramfs -u
-<span class="token comment" spellcheck="true">#cuda 有俩中安装方式</span>
-    <span class="token comment" spellcheck="true"># 1: distribution-specific packages(RPM,Deb packages) recommended</span>
-    <span class="token comment" spellcheck="true"># 2: distribute-independent package(runfile package)  working across a wider set of linux distribution ,but doesn't update the native package management system</span>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">lspci | grep -i nvidia  <span class="comment">#verify you have a cuda-Capble GPU</span></span><br><span class="line"><span class="comment">#查看当前NVIDIA驱动版本</span></span><br><span class="line">sudo dpkg --list | grep nvidia-*</span><br><span class="line"><span class="comment">#查看本机GPU</span></span><br><span class="line">uname -r <span class="comment">#current running kernel</span></span><br><span class="line">sudo apt-get install linux-headers-$(uname -r) <span class="comment"># the kernel headers and development packages</span></span><br><span class="line">gcc --version      <span class="comment">#是否安装gcc</span></span><br><span class="line"><span class="comment">#disable Nouveau  如果不适用nvida 驱动时需要改回</span></span><br><span class="line">lsmod | grep nouveau   <span class="comment">#如果有输出则需要关闭</span></span><br><span class="line"><span class="comment">#创建文件  vim /etc/modprobe.d/blacklist-nouveau.conf</span></span><br><span class="line">blacklist nouveau</span><br><span class="line">options nouveau modeset=0</span><br><span class="line"><span class="comment">#then regenerate the kernel</span></span><br><span class="line">sudo update-initramfs -u</span><br><span class="line"><span class="comment">#cuda 有俩中安装方式</span></span><br><span class="line">	<span class="comment"># 1: distribution-specific packages(RPM,Deb packages) recommended</span></span><br><span class="line">	<span class="comment"># 2: distribute-independent package(runfile package)  working across a wider set of linux distribution ,but doesn't update the native package management system</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#download the nvidia toolkit</span></span><br><span class="line"><span class="comment"># http://develop.nvidia.com/cuda-downloads  包含 cuda 驱动和一些工具包括库,应用程序,示例程序等</span></span><br><span class="line"><span class="comment">#sample: 每一个toolkit 都有一个sample可以测试是够安装好</span></span><br><span class="line">$ cuda-install-samples-10.2.sh ~</span><br><span class="line">$ <span class="built_in">cd</span> ~/NVIDIA_CUDA-10.2_Samples/5_Simulations/nbody</span><br><span class="line">$ make</span><br><span class="line">$ ./nbody</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token comment" spellcheck="true">#download the nvidia toolkit</span>
-<span class="token comment" spellcheck="true"># http://develop.nvidia.com/cuda-downloads  包含 cuda 驱动和一些工具包括库,应用程序,示例程序等</span>
-<span class="token comment" spellcheck="true">#sample: 每一个toolkit 都有一个sample可以测试是够安装好</span>
-$ cuda-install-samples-10.2.sh ~
-$ <span class="token function">cd</span> ~/NVIDIA_CUDA-10.2_Samples/5_Simulations/nbody
-$ <span class="token function">make</span>
-$ ./nbody</code></pre>
 <p>删除：</p>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#卸载分俩种情况</span>
-<span class="token comment" spellcheck="true"># 1: 卸载通过 runfile  下载</span>
-sudo <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>cuda<span class="token operator">-</span>x<span class="token punctuation">.</span>y<span class="token operator">/</span>bin<span class="token operator">/</span>uninstall_cuda_x<span class="token punctuation">.</span>y<span class="token punctuation">.</span>pl
-<span class="token comment" spellcheck="true">#     卸载通过 runfile 下载的驱动</span>
-sudo <span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>nvidia<span class="token operator">-</span>uninstall
-<span class="token comment" spellcheck="true"># 2: 卸载通过deb/RPM 包下载的软件</span>
-sudo apt<span class="token operator">-</span>get <span class="token operator">-</span><span class="token operator">-</span>purge remove <span class="token operator">&lt;</span>package_name<span class="token operator">></span> <span class="token comment" spellcheck="true"># Ubuntu</span>
-<span class="token comment" spellcheck="true">#或者To remove CUDA Toolkit:</span>
-sudo apt purge <span class="token operator">-</span><span class="token operator">-</span>auto<span class="token operator">-</span>remove libcud<span class="token operator">*</span>
-sudo apt<span class="token operator">-</span>get <span class="token operator">-</span><span class="token operator">-</span>purge remove <span class="token string">"*cublas*"</span> <span class="token string">"cuda*"</span>
-<span class="token comment" spellcheck="true">#To remove NVIDIA Drivers:</span>
-$ sudo apt<span class="token operator">-</span>get <span class="token operator">-</span><span class="token operator">-</span>purge remove <span class="token string">"*nvidia*"</span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#卸载分俩种情况</span></span><br><span class="line"><span class="comment"># 1: 卸载通过 runfile  下载</span></span><br><span class="line">sudo /usr/local/cuda-x.y/bin/uninstall_cuda_x.y.pl</span><br><span class="line"><span class="comment">#     卸载通过 runfile 下载的驱动</span></span><br><span class="line">sudo /usr/bin/nvidia-uninstall</span><br><span class="line"><span class="comment"># 2: 卸载通过deb/RPM 包下载的软件</span></span><br><span class="line">sudo apt-get --purge remove &lt;package_name&gt; <span class="comment"># Ubuntu</span></span><br><span class="line"><span class="comment">#或者To remove CUDA Toolkit:</span></span><br><span class="line">sudo apt purge --auto-remove libcud*</span><br><span class="line">sudo apt-get --purge remove <span class="string">"*cublas*"</span> <span class="string">"cuda*"</span></span><br><span class="line"><span class="comment">#To remove NVIDIA Drivers:</span></span><br><span class="line">$ sudo apt-get --purge remove <span class="string">"*nvidia*"</span></span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191212213557977.png" alt=""></p>
-<pre class=" language-shell"><code class="language-shell">#---------- cudnn 有俩种安装方式， deb 安装，或者下载源代码替换 安装  推荐deb安装
-#ubuntu cudnn 安装教程 https://developer.nvidia.com/rdp/cudnn-download  cudnn其实是一些加速CUDA性能的库，首先按照解压放到CUDA的相应路径中
-然后把其中的lib64关联到环境变量当中
-#将三个deb文件都下载下同时安装，否则会报错
-sudo dpkg -i libcudnn7*.deb</code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">---------- cudnn 有俩种安装方式， deb 安装，或者下载源代码替换 安装  推荐deb安装</span></span><br><span class="line"><span class="meta">#</span><span class="bash">ubuntu cudnn 安装教程 https://developer.nvidia.com/rdp/cudnn-download  cudnn其实是一些加速CUDA性能的库，首先按照解压放到CUDA的相应路径中</span></span><br><span class="line">然后把其中的lib64关联到环境变量当中</span><br><span class="line"><span class="meta">#</span><span class="bash">将三个deb文件都下载下同时安装，否则会报错</span></span><br><span class="line">sudo dpkg -i libcudnn7*.deb</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191206194750114.png" alt=""></p>
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201107092240848.png" alt=""></p>
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191212224333748.png" alt=""></p>
@@ -594,44 +578,14 @@ sudo dpkg -i libcudnn7*.deb</code></pre>
 <p>如果nvcc –version 没有显示，可能是环境变量没有弄好。</p>
 </blockquote>
 <p>网上一个脚本</p>
-<pre class=" language-shell"><code class="language-shell"># WARNING: These steps seem to not work anymore!
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> WARNING: These steps seem to not work anymore!</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Purge existign CUDA first</span></span><br><span class="line">sudo apt --purge remove "cublas*" "cuda*"</span><br><span class="line">sudo apt --purge remove "nvidia*"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Install CUDA Toolkit 10</span></span><br><span class="line">wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-repo-ubuntu1804_10.0.130-1_amd64.deb</span><br><span class="line">sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub &amp;&amp; sudo apt update</span><br><span class="line">sudo dpkg -i cuda-repo-ubuntu1804_10.0.130-1_amd64.deb</span><br><span class="line"></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y cuda</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Install CuDNN 7 and NCCL 2</span></span><br><span class="line">wget https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb</span><br><span class="line">sudo dpkg -i nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb</span><br><span class="line"></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y libcudnn7 libcudnn7-dev libnccl2 libc-ares-dev</span><br><span class="line"></span><br><span class="line">sudo apt autoremove</span><br><span class="line">sudo apt upgrade</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Link libraries to standard locations</span></span><br><span class="line">sudo mkdir -p /usr/local/cuda-10.0/nccl/lib</span><br><span class="line">sudo ln -s /usr/lib/x86_64-linux-gnu/libnccl.so.2 /usr/local/cuda/nccl/lib/</span><br><span class="line">sudo ln -s /usr/lib/x86_64-linux-gnu/libcudnn.so.7 /usr/local/cuda-10.0/lib64/</span><br><span class="line"></span><br><span class="line">echo 'If everything worked fine, reboot now.'</span><br></pre></td></tr></tbody></table></figure>
 
-#!/bin/bash
-
-# Purge existign CUDA first
-sudo apt --purge remove "cublas*" "cuda*"
-sudo apt --purge remove "nvidia*"
-
-# Install CUDA Toolkit 10
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-repo-ubuntu1804_10.0.130-1_amd64.deb
-sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub && sudo apt update
-sudo dpkg -i cuda-repo-ubuntu1804_10.0.130-1_amd64.deb
-
-sudo apt update
-sudo apt install -y cuda
-
-# Install CuDNN 7 and NCCL 2
-wget https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
-sudo dpkg -i nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
-
-sudo apt update
-sudo apt install -y libcudnn7 libcudnn7-dev libnccl2 libc-ares-dev
-
-sudo apt autoremove
-sudo apt upgrade
-
-# Link libraries to standard locations
-sudo mkdir -p /usr/local/cuda-10.0/nccl/lib
-sudo ln -s /usr/lib/x86_64-linux-gnu/libnccl.so.2 /usr/local/cuda/nccl/lib/
-sudo ln -s /usr/lib/x86_64-linux-gnu/libcudnn.so.7 /usr/local/cuda-10.0/lib64/
-
-echo 'If everything worked fine, reboot now.'</code></pre>
 <ul>
 <li><strong>window上查看cuda版本</strong> </li>
 <li><a href="https://developer.nvidia.com/rdp/cudnn-archive" target="_blank" rel="noopener">https://developer.nvidia.com/rdp/cudnn-archive</a></li>
 </ul>
-<pre class=" language-shell"><code class="language-shell">nvcc --version   #使用命令
-#进入相应的目录  C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA</code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nvcc --version   #使用命令</span><br><span class="line"><span class="meta">#</span><span class="bash">进入相应的目录  C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA</span></span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="2-Linux-版本"><a href="#2-Linux-版本" class="headerlink" title="2. Linux 版本"></a>2. Linux 版本</h3><p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201117203235695.png" alt=""></p>
 <h3 id="3-Linux-启动过程"><a href="#3-Linux-启动过程" class="headerlink" title="3. Linux 启动过程"></a>3. Linux 启动过程</h3><p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201117204242635.png" alt=""></p>
 <ol>
@@ -689,12 +643,10 @@ echo 'If everything worked fine, reboot now.'</code></pre>
 <li><p><strong>modprobe</strong> :向Linux内核中加载摸块,能够处理 module 载入的相依问题.  <font color="red">modprobe会检查/lib/modules/<code>uname -r</code>下的所有模块，除了/etc/modprobe.conf配置文件和/etc/modprobe.d目录以外。所有/etc/modprobe.d/arch/目录下的文件将被忽略。</font></p>
 </li>
 <li><p><font color="red">unable to correct problems,you have held broken package</font>    </p>
-<pre class=" language-shell"><code class="language-shell">sudo apt install -f
-sudo aptitude install <packagename>  #get the detail information
-sudo apt update  | sudo apt upgrade
-sudo dpkg --configure -a
-sudo dpkg --get-selection | grep hold #get actual held packages
-dpkg --get-selections | grep linux-image  #产看内核文件有哪些</code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -f</span><br><span class="line">sudo aptitude install &lt;packagename&gt;  #get the detail information</span><br><span class="line">sudo apt update  | sudo apt upgrade</span><br><span class="line">sudo dpkg --configure -a</span><br><span class="line">sudo dpkg --get-selection | grep hold #get actual held packages</span><br><span class="line">dpkg --get-selections | grep linux-image  #产看内核文件有哪些</span><br></pre></td></tr></tbody></table></figure>
+
+
+
 </li>
 </ol>
 <ol start="12">
@@ -742,81 +694,38 @@ dpkg --get-selections | grep linux-image  #产看内核文件有哪些</code></p
 <li><p><font color="red"> 内核版本选择网址：kernel.org</font></p>
 </li>
 </ul>
-<pre class=" language-shell"><code class="language-shell">#无法进入图形页面时，可以查看系统启动日志
-cat /var/log/syslog | grep dkms
-#查看可用的内核
-apt-cache search linux-image
-#备份软件源
-sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-#添加一个源
-sudo vim /etc/apt/sources.list
-deb http://security.ubuntu.com/ubuntu trusty-security main
-sudo apt update
-#查看所有内核
-dpkg --get-selections| grep linux
-#安装指定版本内核
-sudo apt install 内核名称<linux-image-4.4.0-75-generic>
-dpkg -l | grep 内核名称<linux-image-extra-3.16.0-43-generic>  #查看是否安装成功
-#编辑grub 文件
-sudo vim /etc/default/grub
-# 这一行进行修改GRUB_DEFAULT=0
-GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 内核名称<5.0.0-36-generic>"
-Ubuntu,with Linux 5.3.0-25-generic
-#更新grub 引导
-sudo update-grub
-sudo reboot
-uname -r #查看当前版本是否安装正确
-#卸载内核
-sudo apt remove --purge 内核名称<linux-image-extra-3.16.0-43-generic>
-sudo dpkg --purge linux-image-4.19.0-041900-generic linux-image-unsigned-4.19.0-041900-generic
-sudo dpkg -P 内核名称  #通过deb包暗装的
-#关闭启动内核自动更新
-方式一：
-sudo apt-mark hold linux-image-generic linux-headers-generic
-sudo apt-mark unhold linux-image-generic linux-headers-generic
-方式二：
-修改系统配置文件， /etc/apt/apt/conf.d
-将10periodic，20auto-upgrades 配置中的1改为0
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">无法进入图形页面时，可以查看系统启动日志</span></span><br><span class="line">cat /var/log/syslog | grep dkms</span><br><span class="line"><span class="meta">#</span><span class="bash">查看可用的内核</span></span><br><span class="line">apt-cache search linux-image</span><br><span class="line"><span class="meta">#</span><span class="bash">备份软件源</span></span><br><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line"><span class="meta">#</span><span class="bash">添加一个源</span></span><br><span class="line">sudo vim /etc/apt/sources.list</span><br><span class="line">deb http://security.ubuntu.com/ubuntu trusty-security main</span><br><span class="line">sudo apt update</span><br><span class="line"><span class="meta">#</span><span class="bash">查看所有内核</span></span><br><span class="line">dpkg --get-selections| grep linux</span><br><span class="line"><span class="meta">#</span><span class="bash">安装指定版本内核</span></span><br><span class="line">sudo apt install 内核名称&lt;linux-image-4.4.0-75-generic&gt;</span><br><span class="line">dpkg -l | grep 内核名称&lt;linux-image-extra-3.16.0-43-generic&gt;  #查看是否安装成功</span><br><span class="line"><span class="meta">#</span><span class="bash">编辑grub 文件</span></span><br><span class="line">sudo vim /etc/default/grub</span><br><span class="line"><span class="meta">#</span><span class="bash"> 这一行进行修改GRUB_DEFAULT=0</span></span><br><span class="line">GRUB_DEFAULT="Advanced options for Ubuntu&gt;Ubuntu, with Linux 内核名称&lt;5.0.0-36-generic&gt;"</span><br><span class="line">Ubuntu,with Linux 5.3.0-25-generic</span><br><span class="line"><span class="meta">#</span><span class="bash">更新grub 引导</span></span><br><span class="line">sudo update-grub</span><br><span class="line">sudo reboot</span><br><span class="line">uname -r #查看当前版本是否安装正确</span><br><span class="line"><span class="meta">#</span><span class="bash">卸载内核</span></span><br><span class="line">sudo apt remove --purge 内核名称&lt;linux-image-extra-3.16.0-43-generic&gt;</span><br><span class="line">sudo dpkg --purge linux-image-4.19.0-041900-generic linux-image-unsigned-4.19.0-041900-generic</span><br><span class="line">sudo dpkg -P 内核名称  #通过deb包暗装的</span><br><span class="line"><span class="meta">#</span><span class="bash">关闭启动内核自动更新</span></span><br><span class="line">方式一：</span><br><span class="line">sudo apt-mark hold linux-image-generic linux-headers-generic</span><br><span class="line">sudo apt-mark unhold linux-image-generic linux-headers-generic</span><br><span class="line">方式二：</span><br><span class="line">修改系统配置文件， /etc/apt/apt/conf.d</span><br><span class="line">将10periodic，20auto-upgrades 配置中的1改为0</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除内核</span></span><br><span class="line">dpkg -l | grep linux-image #列出所有内核文件</span><br><span class="line"><span class="meta">#</span><span class="bash">删除指定内核</span></span><br><span class="line">dpkg -r --force-all 内核名称</span><br></pre></td></tr></tbody></table></figure>
 
-# 删除内核
-dpkg -l | grep linux-image #列出所有内核文件
-#删除指定内核
-dpkg -r --force-all 内核名称</code></pre>
 <p>使用指定版本内核  /boot 文件是内核相关的信息</p>
 <ul>
-<li><pre><code>grep menuentry /boot/grub/grub.cfg</code></pre></li>
-</ul>
-<p>例如文件如下:</p>
-<pre><code>if [ x"${feature_menuentry_id}" = xy ]; then
-  menuentry_id_option="--id"
-  menuentry_id_option=""
+<li><pre><code>grep menuentry /boot/grub/grub.cfg
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">例如文件如下:</span><br></pre></td></tr></tbody></table></figure>
+if [ x"${feature_menuentry_id}" = xy ]; then
+menuentry_id_option="--id"
+menuentry_id_option=""
 export menuentry_id_option
 menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-5bce3795-da96-4c6f-bed2-67d37185a77d' {
 submenu 'Ubuntu 高级选项' $menuentry_id_option 'gnulinux-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu，Linux 4.8.0-26-lowlatency' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-lowlatency-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu, with Linux 4.8.0-26-lowlatency (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-lowlatency-init-upstart-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu, with Linux 4.8.0-26-lowlatency (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-lowlatency-recovery-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu，Linux 4.8.0-26-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-generic-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu, with Linux 4.8.0-26-generic (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-generic-init-upstart-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu, with Linux 4.8.0-26-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-generic-recovery-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu，Linux 4.4.0-21-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-21-generic-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu, with Linux 4.4.0-21-generic (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-21-generic-init-upstart-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu, with Linux 4.4.0-21-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-21-generic-recovery-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+  menuentry 'Ubuntu，Linux 4.8.0-26-lowlatency' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-lowlatency-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+  menuentry 'Ubuntu, with Linux 4.8.0-26-lowlatency (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-lowlatency-init-upstart-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+  menuentry 'Ubuntu, with Linux 4.8.0-26-lowlatency (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-lowlatency-recovery-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+  menuentry 'Ubuntu，Linux 4.8.0-26-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-generic-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+  menuentry 'Ubuntu, with Linux 4.8.0-26-generic (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-generic-init-upstart-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+  menuentry 'Ubuntu, with Linux 4.8.0-26-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-generic-recovery-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+  menuentry 'Ubuntu，Linux 4.4.0-21-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-21-generic-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+  menuentry 'Ubuntu, with Linux 4.4.0-21-generic (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-21-generic-init-upstart-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+  menuentry 'Ubuntu, with Linux 4.4.0-21-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-21-generic-recovery-5bce3795-da96-4c6f-bed2-67d37185a77d' {
 menuentry 'Memory test (memtest86+)' {
-menuentry 'Memory test (memtest86+, serial console 115200)' {</code></pre><p>menuentry 代表一个内核, 从0开始记数字: 例如如果使用<strong>以4.4.0-21内核版本启动，则将文件/etc/default/grub中</strong></p>
-<pre><code>GRUB_DEFAULT=0 </code></pre><p>改为 </p>
-<pre><code>GRUB_DEFAULT=6</code></pre><p>或者改为</p>
-<pre><code>GRUB_DEFAULT=”Ubuntu，Linux 4.4.0-21-generic“</code></pre><ul>
-<li><strong>sudo update-grub</strong> 然后重启执行uname -r  查看系统内核</li>
+menuentry 'Memory test (memtest86+, serial console 115200)' {
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">menuentry 代表一个内核, 从0开始记数字: 例如如果使用**以4.4.0-21内核版本启动，则将文件/etc/default/grub中**</span><br></pre></td></tr></tbody></table></figure>
+GRUB_DEFAULT=0 
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">改为</span><br></pre></td></tr></tbody></table></figure>
+GRUB_DEFAULT=6
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">或者改为</span><br></pre></td></tr></tbody></table></figure>
+GRUB_DEFAULT=”Ubuntu，Linux 4.4.0-21-generic“
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- **sudo update-grub** 然后重启执行uname -r  查看系统内核</span><br><span class="line"></span><br><span class="line">1. &lt;font color=red&gt;Nouveau unknown chipset at install &lt;/font&gt;  显卡驱动问题</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br><span class="line">sudo ubuntu-drivers devices</span><br><span class="line">sudo apt install nvidia-xxx</span><br><span class="line">#如果没有NVIDIA驱动的话,</span><br></pre></td></tr></tbody></table></figure>
+</code></pre></li>
 </ul>
-<ol>
-<li><font color="red">Nouveau unknown chipset at install </font>  显卡驱动问题</li>
-</ol>
-<pre class=" language-shell"><code class="language-shell">sudo apt update
-sudo apt upgrade
-sudo ubuntu-drivers devices
-sudo apt install nvidia-xxx
-#如果没有NVIDIA驱动的话,  </code></pre>
 <h3 id="文件"><a href="#文件" class="headerlink" title="文件"></a><strong>文件</strong></h3><p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201117204818316.png" alt=""></p>
 <ul>
 <li><p><code>/boot 文件</code>:  系统内核文件 ,启动管理程序<code>grub 的目录</code></p>
@@ -1117,7 +1026,7 @@ sudo apt install nvidia-xxx
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -1159,27 +1068,25 @@ sudo apt install nvidia-xxx
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2020/03/16/ruan-jian-gong-ju/linux/networkrelative/">
+                <a href="/2020/03/18/ruan-jian-gong-ju/linux/environment/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/building-historical-columns.jpg" class="responsive-img" alt="NetworkRelative">
+                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201107135403594.png" class="responsive-img" alt="Environment">
                         
-                        <span class="card-title">NetworkRelative</span>
+                        <span class="card-title">Environment</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1. 网络连接#查看网卡信息
-sudo lshw -class network
-# error Networking disabled
-sudo service network-manager stop
-sudo rm /var/lib/N
+                            1. Linux 环境变量
+一、按照生命周期来分，Linux环境变量可以分为两类： 1、永久的：需要用户修改相关的配置文件，变量永久生效。 2、临时的：用户利用export命令，在当前终端下声明环境变量，关闭Shell终端失效。
+二、按照作
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-16
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-18
                         </span>
                         <span class="publish-author">
                             
@@ -1196,10 +1103,6 @@ sudo rm /var/lib/N
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/OperationSystem/">
-                        <span class="chip bg-color">OperationSystem</span>
-                    </a>
-                    
                     <a href="/tags/Linux/">
                         <span class="chip bg-color">Linux</span>
                     </a>
@@ -1215,30 +1118,18 @@ sudo rm /var/lib/N
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/03/16/ruan-jian-gong-ju/linux/vim/">
+                <a href="/2020/03/16/ruan-jian-gong-ju/linux/linux-operation/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/77.jpeg" class="responsive-img" alt="Vim">
+                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/petal-5044428.png" class="responsive-img" alt="Linux Operation">
                         
-                        <span class="card-title">Vim</span>
+                        <span class="card-title">Linux Operation</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-:set ff=unix 或 :set fileformat=unix   设置shell 文件编码
-:set nu  # 显示行号
-
-1.移动光标
-
-j：向下
-20j： 向下移动 20 行
-k：向上
-h：向左
-l：向右
-0：到行首
-^：
+                            Linux 命令链接  ln1234567sudo ln -sf /usr/bin/g++-8 /usr/bin/g++ln - make links between filesSYNOPSIS       ln [OPTION]... [
                         
                     </div>
                     <div class="publish-info">
@@ -1259,6 +1150,10 @@ l：向右
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/OperationSystem/">
+                        <span class="chip bg-color">OperationSystem</span>
+                    </a>
                     
                     <a href="/tags/Linux/">
                         <span class="chip bg-color">Linux</span>
@@ -1462,7 +1357,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1486,7 +1381,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1507,10 +1402,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1619,6 +1510,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

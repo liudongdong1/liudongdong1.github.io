@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="FFTNN, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="FFTNN, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -493,6 +515,10 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
@@ -500,12 +526,12 @@
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    375
+                    371
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -541,51 +567,13 @@
 <ul>
 <li>用傅里叶权重计算傅里叶变换</li>
 </ul>
-<pre class=" language-python"><code class="language-python">
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">y_real = y[:, :signal_length]</span><br><span class="line">y_imag = y[:, signal_length:]</span><br><span class="line">tvals = np.arange(signal_length).reshape([<span class="number">-1</span>, <span class="number">1</span>])</span><br><span class="line">freqs = np.arange(signal_length).reshape([<span class="number">1</span>, <span class="number">-1</span>])</span><br><span class="line">arg_vals = <span class="number">2</span> * np.pi * tvals * freqs / signal_length</span><br><span class="line">sinusoids = (y_real * np.cos(arg_vals) - y_imag * np.sin(arg_vals)) / signal_length</span><br><span class="line">reconstructed_signal = np.sum(sinusoids, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'rmse:'</span>, np.sqrt(np.mean((x - reconstructed_signal)**<span class="number">2</span>)))</span><br><span class="line">plt.subplot(<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">plt.plot(x[<span class="number">0</span>,:])</span><br><span class="line">plt.title(<span class="string">'Original signal'</span>)</span><br><span class="line">plt.subplot(<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">plt.plot(reconstructed_signal)</span><br><span class="line">plt.title(<span class="string">'Signal reconstructed from sinusoids after DFT'</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></tbody></table></figure>
 
-y_real <span class="token operator">=</span> y<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span>signal_length<span class="token punctuation">]</span>
-y_imag <span class="token operator">=</span> y<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> signal_length<span class="token punctuation">:</span><span class="token punctuation">]</span>
-tvals <span class="token operator">=</span> np<span class="token punctuation">.</span>arange<span class="token punctuation">(</span>signal_length<span class="token punctuation">)</span><span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-freqs <span class="token operator">=</span> np<span class="token punctuation">.</span>arange<span class="token punctuation">(</span>signal_length<span class="token punctuation">)</span><span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-arg_vals <span class="token operator">=</span> <span class="token number">2</span> <span class="token operator">*</span> np<span class="token punctuation">.</span>pi <span class="token operator">*</span> tvals <span class="token operator">*</span> freqs <span class="token operator">/</span> signal_length
-sinusoids <span class="token operator">=</span> <span class="token punctuation">(</span>y_real <span class="token operator">*</span> np<span class="token punctuation">.</span>cos<span class="token punctuation">(</span>arg_vals<span class="token punctuation">)</span> <span class="token operator">-</span> y_imag <span class="token operator">*</span> np<span class="token punctuation">.</span>sin<span class="token punctuation">(</span>arg_vals<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> signal_length
-reconstructed_signal <span class="token operator">=</span> np<span class="token punctuation">.</span>sum<span class="token punctuation">(</span>sinusoids<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
-
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'rmse:'</span><span class="token punctuation">,</span> np<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span>np<span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">(</span>x <span class="token operator">-</span> reconstructed_signal<span class="token punctuation">)</span><span class="token operator">**</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>subplot<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>plot<span class="token punctuation">(</span>x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">'Original signal'</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>subplot<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>plot<span class="token punctuation">(</span>reconstructed_signal<span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">'Signal reconstructed from sinusoids after DFT'</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>tight_layout<span class="token punctuation">(</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <ul>
 <li>用FFT来训练神经网络学习离散傅里叶变换</li>
 </ul>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> tensorflow <span class="token keyword">as</span> tf
-signal_length <span class="token operator">=</span> <span class="token number">32</span>
-<span class="token comment" spellcheck="true"># Initialise weight vector to train:</span>
-W_learned <span class="token operator">=</span> tf<span class="token punctuation">.</span>Variable<span class="token punctuation">(</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>random<span class="token punctuation">(</span><span class="token punctuation">[</span>signal_length<span class="token punctuation">,</span> <span class="token number">2</span> <span class="token operator">*</span> signal_length<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">0.5</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># Expected weights, for comparison:</span>
-W_expected <span class="token operator">=</span> create_fourier_weights<span class="token punctuation">(</span>signal_length<span class="token punctuation">)</span>
-losses <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-rmses <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true"># Generate a random signal each iteration:</span>
-    x <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>random<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> signal_length<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">0.5</span>
-    <span class="token comment" spellcheck="true"># Compute the expected result using the FFT:</span>
-    fft <span class="token operator">=</span> np<span class="token punctuation">.</span>fft<span class="token punctuation">.</span>fft<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-    y_true <span class="token operator">=</span> np<span class="token punctuation">.</span>hstack<span class="token punctuation">(</span><span class="token punctuation">[</span>fft<span class="token punctuation">.</span>real<span class="token punctuation">,</span> fft<span class="token punctuation">.</span>imag<span class="token punctuation">]</span><span class="token punctuation">)</span>
-    <span class="token keyword">with</span> tf<span class="token punctuation">.</span>GradientTape<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">as</span> tape<span class="token punctuation">:</span>
-        y_pred <span class="token operator">=</span> tf<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>x<span class="token punctuation">,</span> W_learned<span class="token punctuation">)</span>
-        loss <span class="token operator">=</span> tf<span class="token punctuation">.</span>reduce_sum<span class="token punctuation">(</span>tf<span class="token punctuation">.</span>square<span class="token punctuation">(</span>y_pred <span class="token operator">-</span> y_true<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true"># Train weights, via gradient descent:</span>
-    W_gradient <span class="token operator">=</span> tape<span class="token punctuation">.</span>gradient<span class="token punctuation">(</span>loss<span class="token punctuation">,</span> W_learned<span class="token punctuation">)</span>    
-    W_learned <span class="token operator">=</span> tf<span class="token punctuation">.</span>Variable<span class="token punctuation">(</span>W_learned <span class="token operator">-</span> <span class="token number">0.1</span> <span class="token operator">*</span> W_gradient<span class="token punctuation">)</span>
-    losses<span class="token punctuation">.</span>append<span class="token punctuation">(</span>loss<span class="token punctuation">)</span>
-    rmses<span class="token punctuation">.</span>append<span class="token punctuation">(</span>np<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span>np<span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">(</span>W_learned <span class="token operator">-</span> W_expected<span class="token punctuation">)</span><span class="token operator">**</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">signal_length = <span class="number">32</span></span><br><span class="line"><span class="comment"># Initialise weight vector to train:</span></span><br><span class="line">W_learned = tf.Variable(np.random.random([signal_length, <span class="number">2</span> * signal_length]) - <span class="number">0.5</span>)</span><br><span class="line"><span class="comment"># Expected weights, for comparison:</span></span><br><span class="line">W_expected = create_fourier_weights(signal_length)</span><br><span class="line">losses = []</span><br><span class="line">rmses = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">    <span class="comment"># Generate a random signal each iteration:</span></span><br><span class="line">    x = np.random.random([<span class="number">1</span>, signal_length]) - <span class="number">0.5</span></span><br><span class="line">    <span class="comment"># Compute the expected result using the FFT:</span></span><br><span class="line">    fft = np.fft.fft(x)</span><br><span class="line">    y_true = np.hstack([fft.real, fft.imag])</span><br><span class="line">    <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">        y_pred = tf.matmul(x, W_learned)</span><br><span class="line">        loss = tf.reduce_sum(tf.square(y_pred - y_true))</span><br><span class="line">    <span class="comment"># Train weights, via gradient descent:</span></span><br><span class="line">    W_gradient = tape.gradient(loss, W_learned)    </span><br><span class="line">    W_learned = tf.Variable(W_learned - <span class="number">0.1</span> * W_gradient)</span><br><span class="line">    losses.append(loss)</span><br><span class="line">    rmses.append(np.sqrt(np.mean((W_learned - W_expected)**<span class="number">2</span>)))</span><br></pre></td></tr></tbody></table></figure>
+
 <h4 id="2-学习链接"><a href="#2-学习链接" class="headerlink" title="2. 学习链接"></a>2. 学习链接</h4><ul>
 <li><a href="https://mp.weixin.qq.com/s/ONgOLzVX5I0TreV2yTNUTQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/ONgOLzVX5I0TreV2yTNUTQ</a></li>
 </ul>
@@ -801,7 +789,7 @@ rmses <span class="token operator">=</span> <span class="token punctuation">[</s
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -892,34 +880,34 @@ Perlin Noise is an extremely powerful algorithm that is used often in procedural
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/09/21/opensource/dlc-usage/">
+                <a href="/2020/09/28/ruan-jian-gong-ju/hexotypora/hexogallery/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20200921084437.png" class="responsive-img" alt="DeepCutLab_usage">
+                        <img src="https://images.unsplash.com/photo-1627996319060-cc7c5a7f7ac9?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxM3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60" class="responsive-img" alt="HexoGallery">
                         
-                        <span class="card-title">DeepCutLab_usage</span>
+                        <span class="card-title">HexoGallery</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-DeepLabCut is a software package for markerless pose estimation of animals performing various tasks. 
+                            From: https://juejin.cn/post/6891086750484004877#heading-8
+新建相册页面
+在站点的source文件夹下面新建一个gallery相册页面。
 
-Installation
-win
+1hexo new page galler
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-28
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Framework/" class="post-category">
-                                    Framework
+                            <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="post-category">
+                                    软件工具
                                 </a>
                             
                             
@@ -929,8 +917,8 @@ win
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/">
-                        <span class="chip bg-color">开源框架</span>
+                    <a href="/tags/Hexo/">
+                        <span class="chip bg-color">Hexo</span>
                     </a>
                     
                 </div>
@@ -1131,7 +1119,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1155,7 +1143,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1176,10 +1164,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1288,6 +1272,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

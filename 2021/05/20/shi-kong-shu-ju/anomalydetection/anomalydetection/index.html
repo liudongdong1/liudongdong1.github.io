@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="AnomalyDetection, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="AnomalyDetection, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -493,19 +515,23 @@
                 </div>
                 
 
+                <!-- 
+                    <i class="fa fa-pencil"></i> Author: liudongdong1
+                  -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-06-21
+                    2021-12-13
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    4.9k
+                    4.8k
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -590,63 +616,10 @@
 <p>正常的数据是遵循特定分布形式的，并且占了很大比例，而异常点的位置和正常点相比存在比较大的偏移。<strong>3 Sigma</strong> 方法。</p>
 </blockquote>
 <h6 id="1-标准差分布，-方差分析，卡方检验等"><a href="#1-标准差分布，-方差分析，卡方检验等" class="headerlink" title=".1. 标准差分布， 方差分析，卡方检验等"></a>.1. 标准差分布， 方差分析，卡方检验等</h6><p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210520231802510.png" alt=""></p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
-np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>seed<span class="token punctuation">(</span><span class="token number">42</span><span class="token punctuation">)</span>
-anomalies <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-normal <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-<span class="token comment" spellcheck="true"># 生成一些数据</span>
-data <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">50000</span><span class="token punctuation">)</span>  <span class="token operator">*</span> <span class="token number">20</span> <span class="token operator">+</span> <span class="token number">20</span>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">np.random.seed(<span class="number">42</span>)</span><br><span class="line">anomalies = []</span><br><span class="line">normal = []</span><br><span class="line"><span class="comment"># 生成一些数据</span></span><br><span class="line">data = np.random.randn(<span class="number">50000</span>)  * <span class="number">20</span> + <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在一维数据集上检测离群点的函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_anomalies</span><span class="params">(random_data)</span>:</span></span><br><span class="line">    <span class="comment"># 将上、下限设为3倍标准差</span></span><br><span class="line">    random_data_std = np.std(random_data)</span><br><span class="line">    random_data_mean = np.mean(random_data)</span><br><span class="line">    anomaly_cut_off = random_data_std * <span class="number">3</span></span><br><span class="line"></span><br><span class="line">    lower_limit  = random_data_mean - anomaly_cut_off </span><br><span class="line">    upper_limit = random_data_mean + anomaly_cut_off</span><br><span class="line">    print(<span class="string">"下限： "</span>,lower_limit)</span><br><span class="line">    print(<span class="string">"上限： "</span>,upper_limit)</span><br><span class="line">    <span class="comment"># 异常</span></span><br><span class="line">    <span class="keyword">for</span> outlier <span class="keyword">in</span> random_data:</span><br><span class="line">        <span class="keyword">if</span> outlier &gt; upper_limit <span class="keyword">or</span> outlier &lt; lower_limit:</span><br><span class="line">            anomalies.append(outlier)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            normal.append(outlier)</span><br><span class="line">    <span class="keyword">return</span> pd.DataFrame(anomalies,columns=[<span class="string">"异常值"</span>]),pd.DataFrame(normal,columns=[<span class="string">"正常值"</span>])</span><br><span class="line"></span><br><span class="line">anomalies,normal = find_anomalies(data)</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token comment" spellcheck="true"># 在一维数据集上检测离群点的函数</span>
-<span class="token keyword">def</span> <span class="token function">find_anomalies</span><span class="token punctuation">(</span>random_data<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true"># 将上、下限设为3倍标准差</span>
-    random_data_std <span class="token operator">=</span> np<span class="token punctuation">.</span>std<span class="token punctuation">(</span>random_data<span class="token punctuation">)</span>
-    random_data_mean <span class="token operator">=</span> np<span class="token punctuation">.</span>mean<span class="token punctuation">(</span>random_data<span class="token punctuation">)</span>
-    anomaly_cut_off <span class="token operator">=</span> random_data_std <span class="token operator">*</span> <span class="token number">3</span>
+<h6 id="2-四分图检测"><a href="#2-四分图检测" class="headerlink" title=".2. 四分图检测"></a>.2. 四分图检测</h6><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">np.random.seed(<span class="number">42</span>)</span><br><span class="line">anomalies = []</span><br><span class="line">normal = []</span><br><span class="line"><span class="comment"># 生成一些数据</span></span><br><span class="line">data = np.random.randn(<span class="number">50000</span>)  * <span class="number">20</span> + <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在一维数据集上检测离群点的函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_anomalies</span><span class="params">(random_data)</span>:</span></span><br><span class="line">    <span class="comment"># 将上、下限设为3倍标准差</span></span><br><span class="line">    iqr_25 = np.percentile(random_data, [<span class="number">25</span>])</span><br><span class="line">    iqr_75 = np.percentile(random_data, [<span class="number">75</span>])</span><br><span class="line"></span><br><span class="line">    lower_limit  = iqr_25 - <span class="number">1.5</span> * (iqr_75 - iqr_25) </span><br><span class="line">    upper_limit = iqr_25 + <span class="number">1.5</span> * (iqr_75 - iqr_25)</span><br><span class="line">    print(<span class="string">"下限： "</span>,lower_limit)</span><br><span class="line">    print(<span class="string">"上限： "</span>,upper_limit)</span><br><span class="line">    <span class="comment"># 异常</span></span><br><span class="line">    <span class="keyword">for</span> outlier <span class="keyword">in</span> random_data:</span><br><span class="line">        <span class="keyword">if</span> outlier &gt; upper_limit <span class="keyword">or</span> outlier &lt; lower_limit:</span><br><span class="line">            anomalies.append(outlier)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            normal.append(outlier)</span><br><span class="line">    <span class="keyword">return</span> pd.DataFrame(anomalies,columns=[<span class="string">"异常值"</span>]),pd.DataFrame(normal,columns=[<span class="string">"正常值"</span>])</span><br><span class="line"></span><br><span class="line">anomalies,normal = find_anomalies(data)</span><br></pre></td></tr></tbody></table></figure>
 
-    lower_limit  <span class="token operator">=</span> random_data_mean <span class="token operator">-</span> anomaly_cut_off 
-    upper_limit <span class="token operator">=</span> random_data_mean <span class="token operator">+</span> anomaly_cut_off
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"下限： "</span><span class="token punctuation">,</span>lower_limit<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"上限： "</span><span class="token punctuation">,</span>upper_limit<span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true"># 异常</span>
-    <span class="token keyword">for</span> outlier <span class="token keyword">in</span> random_data<span class="token punctuation">:</span>
-        <span class="token keyword">if</span> outlier <span class="token operator">></span> upper_limit <span class="token operator">or</span> outlier <span class="token operator">&lt;</span> lower_limit<span class="token punctuation">:</span>
-            anomalies<span class="token punctuation">.</span>append<span class="token punctuation">(</span>outlier<span class="token punctuation">)</span>
-        <span class="token keyword">else</span><span class="token punctuation">:</span>
-            normal<span class="token punctuation">.</span>append<span class="token punctuation">(</span>outlier<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> pd<span class="token punctuation">.</span>DataFrame<span class="token punctuation">(</span>anomalies<span class="token punctuation">,</span>columns<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"异常值"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>pd<span class="token punctuation">.</span>DataFrame<span class="token punctuation">(</span>normal<span class="token punctuation">,</span>columns<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"正常值"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-
-anomalies<span class="token punctuation">,</span>normal <span class="token operator">=</span> find_anomalies<span class="token punctuation">(</span>data<span class="token punctuation">)</span></code></pre>
-<h6 id="2-四分图检测"><a href="#2-四分图检测" class="headerlink" title=".2. 四分图检测"></a>.2. 四分图检测</h6><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
-np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>seed<span class="token punctuation">(</span><span class="token number">42</span><span class="token punctuation">)</span>
-anomalies <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-normal <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-<span class="token comment" spellcheck="true"># 生成一些数据</span>
-data <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">50000</span><span class="token punctuation">)</span>  <span class="token operator">*</span> <span class="token number">20</span> <span class="token operator">+</span> <span class="token number">20</span>
-
-<span class="token comment" spellcheck="true"># 在一维数据集上检测离群点的函数</span>
-<span class="token keyword">def</span> <span class="token function">find_anomalies</span><span class="token punctuation">(</span>random_data<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true"># 将上、下限设为3倍标准差</span>
-    iqr_25 <span class="token operator">=</span> np<span class="token punctuation">.</span>percentile<span class="token punctuation">(</span>random_data<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">25</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    iqr_75 <span class="token operator">=</span> np<span class="token punctuation">.</span>percentile<span class="token punctuation">(</span>random_data<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">75</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-
-    lower_limit  <span class="token operator">=</span> iqr_25 <span class="token operator">-</span> <span class="token number">1.5</span> <span class="token operator">*</span> <span class="token punctuation">(</span>iqr_75 <span class="token operator">-</span> iqr_25<span class="token punctuation">)</span> 
-    upper_limit <span class="token operator">=</span> iqr_25 <span class="token operator">+</span> <span class="token number">1.5</span> <span class="token operator">*</span> <span class="token punctuation">(</span>iqr_75 <span class="token operator">-</span> iqr_25<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"下限： "</span><span class="token punctuation">,</span>lower_limit<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"上限： "</span><span class="token punctuation">,</span>upper_limit<span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true"># 异常</span>
-    <span class="token keyword">for</span> outlier <span class="token keyword">in</span> random_data<span class="token punctuation">:</span>
-        <span class="token keyword">if</span> outlier <span class="token operator">></span> upper_limit <span class="token operator">or</span> outlier <span class="token operator">&lt;</span> lower_limit<span class="token punctuation">:</span>
-            anomalies<span class="token punctuation">.</span>append<span class="token punctuation">(</span>outlier<span class="token punctuation">)</span>
-        <span class="token keyword">else</span><span class="token punctuation">:</span>
-            normal<span class="token punctuation">.</span>append<span class="token punctuation">(</span>outlier<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> pd<span class="token punctuation">.</span>DataFrame<span class="token punctuation">(</span>anomalies<span class="token punctuation">,</span>columns<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"异常值"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>pd<span class="token punctuation">.</span>DataFrame<span class="token punctuation">(</span>normal<span class="token punctuation">,</span>columns<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"正常值"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-
-anomalies<span class="token punctuation">,</span>normal <span class="token operator">=</span> find_anomalies<span class="token punctuation">(</span>data<span class="token punctuation">)</span></code></pre>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210520233333173.png" alt=""></p>
 <h6 id="3-BOX-COX-转化"><a href="#3-BOX-COX-转化" class="headerlink" title=".3.  BOX-COX 转化"></a>.3.  BOX-COX 转化</h6><blockquote>
 <p>当原始数据的分布是有偏的，不满足正态分布时，可通过 BOX-COX 转化，在一定程度上修正分布的偏态。转换无需先验信息，但需要搜寻最优的参数λ。</p>
@@ -868,8 +841,8 @@ anomalies<span class="token punctuation">,</span>normal <span class="token opera
 <p>是一个R语言程序包，Twitter通常会在重大新闻和体育赛事期间用AnomalyDetection扫描入站流量，发现那些使用僵尸账号发送大量垃圾(营销)信息的机器人。</p>
 </blockquote>
 <h4 id="7-Metis时间序列异常检测"><a href="#7-Metis时间序列异常检测" class="headerlink" title=".7. Metis时间序列异常检测"></a>.7. Metis时间序列异常检测</h4><p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521111126834.png" alt=""></p>
-<p><img src="D:%5Cwork_OneNote%5CliudongdongBlog%5Csource%5Cpicture%5Chttps://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521111153239.png" alt=""></p>
-<p><img src="D:%5Cwork_OneNote%5CliudongdongBlog%5Csource%5Cpicture%5Cimage-20210521111202465.png" alt="率值"></p>
+<p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521111153239.png" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521111202465.png" alt="率值"></p>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521082850142.png" alt=""></p>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521082909922.png" alt=""></p>
 <h3 id="6-数据集"><a href="#6-数据集" class="headerlink" title="6. 数据集"></a>6. 数据集</h3><ul>
@@ -892,7 +865,7 @@ anomalies<span class="token punctuation">,</span>normal <span class="token opera
 <p>The dataset consists of real and synthetic time-series with tagged anomaly points. The dataset tests the detection accuracy of various anomaly-types including outliers and change-points.</p>
 </blockquote>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521083113842.png" alt=""></p>
-<p><img src="D:%5Cwork_OneNote%5CliudongdongBlog%5Csource%5Cpicture%5Cimage-20210521083129476.png" alt="image-20210521083129476"></p>
+<p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521083129476.png" alt="image-20210521083129476"></p>
 <h3 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h3><ul>
 <li><p><a href="https://zhuanlan.51cto.com/art/202101/641087.htm" target="_blank" rel="noopener">https://zhuanlan.51cto.com/art/202101/641087.htm</a></p>
 </li>
@@ -1151,7 +1124,7 @@ anomalies<span class="token punctuation">,</span>normal <span class="token opera
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -1479,7 +1452,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1503,7 +1476,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1524,10 +1497,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1636,6 +1605,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 

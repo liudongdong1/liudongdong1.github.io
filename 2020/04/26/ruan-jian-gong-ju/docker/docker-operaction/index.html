@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Docker Operaction, AIOT，Space&amp;Temporal Sequence Analysis，SpringBoot，liudongdong1 .etc">
+    <meta name="keywords" content="Docker Operaction, AIOT,Space&amp;Temporal Sequence Analysis,SpringBoot,liudongdong1,cloud">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -139,6 +139,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/gallery" class="waves-effect waves-light">
+      
+      <i class="fas fa-camera" style="zoom: 0.6;"></i>
+      
+      <span>Galleries</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			Friends
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/gallery" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-camera"></i>
+			
+			Galleries
 		</a>
           
         </li>
@@ -493,19 +515,23 @@
                 </div>
                 
 
+                <!-- 
+                <i class="fa fa-pencil"></i> Author: liudongdong
+                 -->
+
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-07-07
+                    2021-09-13
                 </div>
                 
 
-                
+                <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    2.2k
+                    2.3k
                 </div>
-                
+                 -->
 
                 
                 <div class="info-break-policy">
@@ -552,13 +578,13 @@
 </li>
 </ul>
 <h4 id="3-Docker-architecture"><a href="#3-Docker-architecture" class="headerlink" title=".3. Docker architecture:"></a>.3. Docker architecture:</h4><ul>
-<li><strong>docker daemon:</strong> listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes. </li>
+<li><strong>docker daemon:</strong><code>listens for Docker API requests and manages Docker objects</code>such as images, containers, networks, and volumes. </li>
 <li><strong>docker client:</strong> communicate with more than one daemon</li>
 <li><strong>docker registries</strong>: registry that stores docker images, like Docker Hub.</li>
 <li><strong>docker object</strong>:<ul>
-<li><strong>images:</strong> read-only template with instructions for creating docker container, by Dockerfile.</li>
-<li><strong>containers</strong>: a runnable instance of an image. isolated from other containers or host machine.</li>
-<li><strong>service:</strong> scale containers across multiple docker daemons</li>
+<li><strong>images:</strong> read-only template with instructions for <code>creating docker container</code>, by Dockerfile.</li>
+<li><strong>containers</strong>: a runnable instance of an image. <code>isolated from other containers or host machine</code>.</li>
+<li><strong>service:</strong> <code>scale containers across multiple docker daemons</code></li>
 </ul>
 </li>
 </ul>
@@ -575,7 +601,7 @@
 <figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> golang:<span class="number">1.7</span>.<span class="number">3</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /go/src/github.com/sparkdevo/href-counter/</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> go get -d -v golang.org/x/net/html</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> app.go    .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> alpine:latest</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apk --no-cache add ca-certificates</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /root/</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=0 /go/src/github.com/sparkdevo/href-counter/app .</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"./app"</span>]</span></span><br></pre></td></tr></tbody></table></figure>
 
 <blockquote>
-<p>个 Dockerfile 文件的特点是同时存在多个 FROM 指令，每个 FROM 指令代表一个 stage 的开始部分。我们可以把一个 stage 的产物拷贝到另一个 stage 中。本例中的第一个 stage 完成了应用程序的构建，内容和前面的 Dockerfile.build 是一样的。第二个 stage 中的 COPY 指令通过 –from=0 引用了第一个 stage ，并把应用程序拷贝到了当前 stage 中.</p>
+<p> Dockerfile 文件的特点是同时存在多个 FROM 指令，每个 FROM 指令代表一个 stage 的开始部分。我们可以把一个 stage 的产物拷贝到另一个 stage 中。本例中的第一个 stage 完成了应用程序的构建，内容和前面的 Dockerfile.build 是一样的。第二个 stage 中的 COPY 指令通过 –from=0 引用了第一个 stage ，并把应用程序拷贝到了当前 stage 中.</p>
 </blockquote>
 <ul>
 <li>multi-stage v2</li>
@@ -634,8 +660,12 @@
 </ul>
 <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apt-get install nvidia-container-runtime</span><br><span class="line">systemctl restart docker</span><br><span class="line">//或者</span><br><span class="line">sudo apt-get update &amp;&amp; sudo apt-get install -y nvidia-container-toolkit</span><br><span class="line">systemctl restart dockerd</span><br></pre></td></tr></tbody></table></figure>
 
-
-
+<ul>
+<li><pre><code>ERROR: for rabbitmq  Cannot start service rabbitmq: container "3b6c...0aba": already exists
+The container name "/my-postgres" is already in use by container
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; moved the project in an other directory. When I tryed to run `docker-compose up` it failed because of some conflicts. `docker system prune`</span><br><span class="line">&gt;</span><br><span class="line">&gt; ```shell</span><br><span class="line">&gt; docker-compose down</span><br><span class="line">&gt; docker-composo up -d</span><br><span class="line">&gt;</span><br></pre></td></tr></tbody></table></figure>
+</code></pre></li>
+</ul>
 <h2 id="登录pytorch环境的服务"><a href="#登录pytorch环境的服务" class="headerlink" title="登录pytorch环境的服务"></a>登录pytorch环境的服务</h2><ol start="0">
 <li><p>所需要安装环境： </p>
 <ul>
@@ -895,7 +925,7 @@
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -985,19 +1015,19 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/04/26/ruan-jian-gong-ju/anaconda/anaconda-operaction/">
+                <a href="/2020/04/26/dlminimalpra/model/alexnet/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/TIM截图20200426215319.png" class="responsive-img" alt="Anaconda Operaction">
+                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210512225816.png" class="responsive-img" alt="Alexnet">
                         
-                        <span class="card-title">Anaconda Operaction</span>
+                        <span class="card-title">Alexnet</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-专为数据科学和机器学习工作流程而设计，是一个开源包管理器，环境管理器，以及Python和R编程语言的分发。它通常用于大规模数据处理，科学计算和预测分析。pip install xxx ,在特定环境里使用pip，下载的包会存在特定环境的目录
+lexNet是2012年ILSVRC 2012（ImageNet Large Scale Visual Recognition Challenge）竞赛的冠军网络，分类准确率由传统方法的 70%+提升到 80%+。它是由Hinton和他的
                         
                     </div>
                     <div class="publish-info">
@@ -1019,8 +1049,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/DataScience/">
-                        <span class="chip bg-color">DataScience</span>
+                    <a href="/tags/alexnet/">
+                        <span class="chip bg-color">alexnet</span>
                     </a>
                     
                 </div>
@@ -1221,7 +1251,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">923.3k</span>&nbsp;字
+                class="white-color">1206.4k</span>&nbsp;字
             
             
             
@@ -1245,7 +1275,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/liudongdong1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/liudongdong1/" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
@@ -1266,10 +1296,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 
     <a href="https://blog.csdn.net/liudongdong19/" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/liudongdong19/" data-position="top" data-delay="50">
@@ -1378,6 +1404,7 @@ $(function () {
     
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
+    <!-- {% include '_custom/custom.swig' %} -->
 
 </body>
 
