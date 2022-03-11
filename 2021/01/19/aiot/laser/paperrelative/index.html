@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-09-30
+                    2022-01-25
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    741
+                    1.4k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    4 Min
+                    8 Min
                 </div>
                 
 
@@ -666,6 +666,97 @@
 <li><strong>system overview</strong>:</li>
 </ul>
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210119205131576.png" alt=""></p>
+<blockquote>
+<p>Sami S, Tan S R X, Sun B, et al. LAPD: Hidden Spy Camera Detection using Smartphone Time-of-Flight Sensors[C]//Proceedings of the 19th <strong>ACM Conference on Embedded Networked Sensor Systems</strong>. <strong>2021</strong>: 288-301. CCF_B</p>
+</blockquote>
+<hr>
+<h1 id="Paper-LAPD"><a href="#Paper-LAPD" class="headerlink" title="Paper:LAPD"></a>Paper:LAPD</h1><div align="center">
+<br>
+<b>LAPD: Hidden Spy Camera Detection using Smartphone Time-of-Flight Sensors</b>
+</div>
+
+<h4 id="Summary-1"><a href="#Summary-1" class="headerlink" title="Summary"></a>Summary</h4><ol>
+<li>Present LAPD, a novel hidden camera detection and localization system that leverages the time-of-flight sensor on commodity smartphones.</li>
+</ol>
+<h4 id="Research-Objective-1"><a href="#Research-Objective-1" class="headerlink" title="Research Objective"></a>Research Objective</h4><ul>
+<li><strong>Application Area</strong>: privacy preserve,  detect hidden spy cameras concealed in sensitive locations<ul>
+<li><strong>Purpose</strong>:  use smartphone to automatically detect and lcoalize hidden cameras.</li>
+<li><strong>Basic phenomenon:</strong> the hidden camera embedded in the object reflects the incoming laser pulses at a higher intensity than its surroundings due to an effect called lens-sensor-retro-reflection.( <code>when almost all light energy impacting an object is reflected directly back to the source</code>.)</li>
+</ul>
+</li>
+</ul>
+<h4 id="Proble-Statement-1"><a href="#Proble-Statement-1" class="headerlink" title="Proble Statement"></a>Proble Statement</h4><ul>
+<li>hidden cameras are difficult to find with naked eyes.</li>
+<li><strong>Goal</strong>: detect the presence and location of hidden cameras using only the information available from smartphones with ToF sensors.<ul>
+<li>accessibility: already-existing comodity smartphones with ToF sensors</li>
+<li>accuracy: correctly identify the presence and location of hidden cameras</li>
+<li>usability: automatically detect these hidden cameras with minimal user intervention.</li>
+</ul>
+</li>
+</ul>
+<p>previous work:</p>
+<ul>
+<li><code>specialized equipment</code> like commercial “hidden camera detectors” but<code>yield low detection rates</code><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220118223130718.png" alt=""></li>
+<li>analyze the wireless traffic that the cameras generate can <code>only detect the presence of the hidden cameras, except their locations.</code></li>
+<li>failed when the video record in local memory card.</li>
+</ul>
+<h4 id="Methods-1"><a href="#Methods-1" class="headerlink" title="Methods"></a>Methods</h4><ul>
+<li><strong>system overview</strong>:</li>
+</ul>
+<blockquote>
+<p>The user first uses LAPD to select a suspicious object. LAPD then guides them to determine the ideal scan distance, and scan the object for hidden cameras. During the scan, LAPD uses a computer vision and machine learning processing pipeline to detect reflections from hidden cameras while rejecting false positives</p>
+</blockquote>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220118220426147.png" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220121191628644.png" alt=""></p>
+<blockquote>
+<ul>
+<li><strong>Depth map:</strong> a ToF sensor captures depth information by emitting light from a laser, receiving its reflections, and storing the data in a two-dimensional depth map;</li>
+<li><strong>Depth map:</strong> a confidence measure of the estimated depth to indicate its accuracy and validity.</li>
+</ul>
+<p>LAPD utilizes both depth and intensity maps to identify high-intensity retro-reflections from cameras.</p>
+</blockquote>
+<ul>
+<li><strong>3D localization:</strong><ul>
+<li>using the smartphone’s camera and inertial sensors to perform Simultaneous Localization and Mapping of the environment, and tracks the smartphone’s position and orientation within it.</li>
+</ul>
+</li>
+<li><strong>Suspicious Object Selection:</strong><ul>
+<li>user draws a 2D bounding box with a center point around the object in the phone, and the phone using the transform function to tracking  the object in 3D space.</li>
+</ul>
+</li>
+<li><strong>Scan Distance Computation:</strong><ul>
+<li>first guides the user to move to within 20 cm of the object to saturate the ToF sensor。</li>
+<li>then asks them to gradually move further from the object</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220121191708778.png" alt=""></p>
+<p>【Challenge 1】<strong>different objects that embed the hidden cameras may cause varying reflectivity</strong></p>
+<blockquote>
+<ul>
+<li>To find ideal location<ul>
+<li>close: the ToF sensor will oversaturate</li>
+<li>faraway: insufficient light will reach the ToF sensor ahd hinder the obervation.</li>
+</ul>
+</li>
+<li>utilizes augmented reality to guide the user to move closer and further away from the object, calculating the ideal distance by determining the object’s reflectivity at various distance.</li>
+</ul>
+</blockquote>
+<p>【Challenge 2】<strong>ToF sensor hardware limitation (spatial, bit resolutions) limiting the amout of information for distinguishing reflectiosn from the hidden camera lens as opposed to other reflections from the surroundings</strong></p>
+<blockquote>
+<ul>
+<li>difficult to discern the shape, size and precise intensity of the reflections.</li>
+<li>design and implement a chain of filters including deep-learning-based filters that incorporate multi-modal information ( depth and reflection intensities) to eliminate false positives.</li>
+</ul>
+</blockquote>
+<p>【Challenge 3】<strong>the reflections are limited by camera optical properties (20 FoV)</strong></p>
+<ul>
+<li>implementing an FoV filter that eliminates remaining reflections or candidate hidden cameras, which appear highly reflective outside the constrained angle.</li>
+</ul>
+<h4 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h4><p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220121192018342.png" alt=""></p>
+<ul>
+<li>camera housings; hidden camera modules, lighting conditions, smartphone types.</li>
+</ul>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1209,7 +1300,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1195.6k</span>&nbsp;字
+                class="white-color">1267.2k</span>&nbsp;字
             
             
             

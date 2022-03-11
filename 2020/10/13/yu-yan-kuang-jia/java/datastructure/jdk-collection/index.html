@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-08-09
+                    2022-02-26
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    10.7k
+                    11.3k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    44 Min
+                    46 Min
                 </div>
                 
 
@@ -557,6 +557,36 @@
 <h4 id="2-HashSet"><a href="#2-HashSet" class="headerlink" title=".2. HashSet"></a>.2. HashSet</h4><blockquote>
 <p>基于哈希表实现，支持快速查找，但<code>不支持有序性操作</code>。并且<code>失去了元素的插入顺序信息</code>，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的。</p>
 </blockquote>
+<p>1)<code>HashSet实现了Set接口, 仅存储对象</code>; <code>HashMap实现了 Map接口, 存储的是键值对</code>.</p>
+<p>2) HashSet底层其实是用HashMap实现存储的, HashSet封装了一系列HashMap的方法. <code>依靠HashMap来存储元素值,(利用hashMap的key键进行存储), 而value值默认为Object对象</code>. 所以HashSet也不允许出现重复值, 判断标准和HashMap判断标准相同, 两个元素的hashCode相等并且通过equals()方法返回true。</p>
+<table>
+<thead>
+<tr>
+<th>HashMap</th>
+<th>HashSet</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HashMap实现了Map接口</td>
+<td>HashSet实现了Set接口</td>
+</tr>
+<tr>
+<td>HashMap储存键值对</td>
+<td>HashSet仅仅存储对象</td>
+</tr>
+<tr>
+<td>使用put()方法将元素放入map中</td>
+<td>使用add()方法将元素放入set中</td>
+</tr>
+<tr>
+<td>HashMap中使用键对象来计算hashcode值</td>
+<td>HashSet使用成员对象来计算hashcode值，对于两个对象来说hashcode可能相同，所以equals()方法用来判断对象的相等性，如果两个对象不同的话，那么返回false</td>
+</tr>
+<tr>
+<td>HashMap比较快，因为是使用唯一的键来获取对象</td>
+<td>HashSet较HashMap来说比较慢</td>
+</tr>
+</tbody></table>
 <h4 id="3-LinkedHashSet"><a href="#3-LinkedHashSet" class="headerlink" title=".3. LinkedHashSet"></a>.3. LinkedHashSet</h4><blockquote>
 <p>具有<code>HashSet 的查找效率</code>，且<code>内部使用双向链表</code>维护元素的插入顺序。</p>
 </blockquote>
@@ -1145,7 +1175,45 @@ E <span class="token function">unlink</span><span class="token punctuation">(</s
 <span class="token punctuation">}</span></code></pre>
 <h4 id="2-HashMap"><a href="#2-HashMap" class="headerlink" title=".2. HashMap"></a>.2. HashMap</h4><blockquote>
 <p><em>HashMap</em>实现了<em>Map</em>接口，即允许放入<code>key</code>为<code>null</code>的元素，也允许插入<code>value</code>为<code>null</code>的元素；除该类未实现同步外，其余跟<code>Hashtable</code>大致相同；跟<em>TreeMap</em>不同，<code>该容器不保证元素顺序</code>，根据需要该容器可能会对元素重新哈希，元素的顺序也会被重新打散，因此不同时间迭代同一个<em>HashMap</em>的顺序可能会不同。 根据对冲突的处理方式不同，哈希表有两种实现方式，一种<code>开放地址方式</code>（Open addressing），另一种是<code>冲突链表方式</code>（Separate chaining with linked lists）。<strong>Java *HashMap*采用的是冲突链表方式</strong>。 </p>
+<p>HashMap 的实例有两个参数影响其性能：“<strong>初始容量</strong>” 和 “<strong>加载因子</strong>”。容量 是哈希表中桶的数量，初始容量 只是哈希表在创建时的容量。加载因子 是哈希表在其容量自动增加之前可以达到多满的一种尺度。当哈希表中的条目数超出了加载因子与当前容量的乘积时，则要对该哈希表进行 rehash 操作（即重建内部数据结构），从而哈希表将具有大约两倍的桶数。</p>
 </blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">void</span>                 <span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+Object               <span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">boolean</span>              <span class="token function">containsKey</span><span class="token punctuation">(</span>Object key<span class="token punctuation">)</span>
+<span class="token keyword">boolean</span>              <span class="token function">containsValue</span><span class="token punctuation">(</span>Object value<span class="token punctuation">)</span>
+Set<span class="token operator">&lt;</span>Entry<span class="token operator">&lt;</span>K<span class="token punctuation">,</span> V<span class="token operator">>></span>     <span class="token function">entrySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+V                    <span class="token function">get</span><span class="token punctuation">(</span>Object key<span class="token punctuation">)</span>
+<span class="token keyword">boolean</span>              <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+Set<span class="token operator">&lt;</span>K<span class="token operator">></span>               <span class="token function">keySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+V                    <span class="token function">put</span><span class="token punctuation">(</span>K key<span class="token punctuation">,</span> V value<span class="token punctuation">)</span>
+<span class="token keyword">void</span>                 <span class="token function">putAll</span><span class="token punctuation">(</span>Map<span class="token operator">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">K</span><span class="token punctuation">,</span> <span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">V</span><span class="token operator">></span> map<span class="token punctuation">)</span>
+V                    <span class="token function">remove</span><span class="token punctuation">(</span>Object key<span class="token punctuation">)</span>
+<span class="token keyword">int</span>                  <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+Collection<span class="token operator">&lt;</span>V<span class="token operator">></span>        <span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//1. 遍历HashMap的键值对</span>
+<span class="token comment" spellcheck="true">// 假设map是HashMap对象</span>
+<span class="token comment" spellcheck="true">// map中的key是String类型，value是Integer类型</span>
+Integer integ <span class="token operator">=</span> null<span class="token punctuation">;</span>
+Iterator iter <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">entrySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span>iter<span class="token punctuation">.</span><span class="token function">hasNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Map<span class="token punctuation">.</span>Entry entry <span class="token operator">=</span> <span class="token punctuation">(</span>Map<span class="token punctuation">.</span>Entry<span class="token punctuation">)</span>iter<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 获取key</span>
+    key <span class="token operator">=</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>entry<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 获取value</span>
+    integ <span class="token operator">=</span> <span class="token punctuation">(</span>Integer<span class="token punctuation">)</span>entry<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//2. 遍历HashMap的键</span>
+<span class="token comment" spellcheck="true">// 假设map是HashMap对象</span>
+<span class="token comment" spellcheck="true">// map中的key是String类型，value是Integer类型</span>
+String key <span class="token operator">=</span> null<span class="token punctuation">;</span>
+Integer integ <span class="token operator">=</span> null<span class="token punctuation">;</span>
+Iterator iter <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">keySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>iter<span class="token punctuation">.</span><span class="token function">hasNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 获取key</span>
+    key <span class="token operator">=</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>iter<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 根据key，获取value</span>
+    integ <span class="token operator">=</span> <span class="token punctuation">(</span>Integer<span class="token punctuation">)</span>map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/HashMap_base.png" alt=""></p>
 <p>从上图容易看出，如果选择合适的哈希函数，<code>put()</code>和<code>get()</code>方法可以在常数时间内完成。但在对<em>HashMap</em>进行迭代时，需要遍历整个table以及后面跟的冲突链表。因此对于迭代比较频繁的场景，不宜将<em>HashMap</em>的初始大小设的过大。</p>
 <p>有两个参数可以影响<em>HashMap</em>的性能：初始容量（inital capacity）和负载系数（load factor）。初始容量指定了初始<code>table</code>的大小，负载系数用来指定自动扩容的临界值。当<code>entry</code>的数量超过<code>capacity*load_factor</code>时，容器将自动扩容并重新哈希。对于插入元素较多的场景，将初始容量设大可以减少重新哈希的次数。</p>
@@ -1599,21 +1667,24 @@ Vector读写性能可以和Collections.syn
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/10/13/dlminimalpra/model/resnet/">
+                <a href="/2020/10/13/yu-yan-kuang-jia/java/datastructure/jdk-collection0/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201129141316442.png" class="responsive-img" alt="Resnet">
+                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210510230128.png" class="responsive-img" alt="Collection">
                         
-                        <span class="card-title">Resnet</span>
+                        <span class="card-title">Collection</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            """
-ResNet(
-  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
-  (bn1): BatchNorm2d
+                            1. 集合类.1. 基本类
+数组（可以存储基本数据类型）是用来存现对象的一种容器，但是数组的长度固定，不适合在对象数量未知的情况下使用。
+集合（只能存储对象，对象类型可以不一样）的长度可变，可在多数情况下使用。
+
+
+
+Collection接
                         
                     </div>
                     <div class="publish-info">
@@ -1624,8 +1695,8 @@ ResNet(
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%A7%86%E8%A7%89AI/" class="post-category">
-                                    视觉AI
+                            <a href="/categories/%E8%AF%AD%E8%A8%80%E6%A1%86%E6%9E%B6/" class="post-category">
+                                    语言框架
                                 </a>
                             
                             
@@ -1635,8 +1706,8 @@ ResNet(
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Model/">
-                        <span class="chip bg-color">Model</span>
+                    <a href="/tags/collection/">
+                        <span class="chip bg-color">collection</span>
                     </a>
                     
                 </div>
@@ -1837,7 +1908,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1195.6k</span>&nbsp;字
+                class="white-color">1267.2k</span>&nbsp;字
             
             
             
