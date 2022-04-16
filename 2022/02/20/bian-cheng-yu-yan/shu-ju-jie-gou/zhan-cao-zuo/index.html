@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-04-02
+                    2022-04-04
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    2.5k
+                    3k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    11 Min
+                    13 Min
                 </div>
                 
 
@@ -912,6 +912,80 @@
         ans<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
     <span class="token punctuation">}</span> 
     ans<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//去除最后一个单词后的空格 </span>
+    <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="12-计算器-一"><a href="#12-计算器-一" class="headerlink" title="12.计算器 (一)"></a>12.<a href="https://www.nowcoder.com/practice/9b1fca7407954ba5a6f217e7c3537fed?tpId=117&amp;tqId=39585&amp;rp=1&amp;ru=/exam/oj&amp;qru=/exam/oj&amp;sourceUrl=%2Fexam%2Foj%3Ftab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D117&amp;difficulty=undefined&amp;judgeStatus=undefined&amp;tags=&amp;title=" target="_blank" rel="noopener"><strong>计算器 (一)</strong></a></h4><p>给定一个字符串形式的表达式 s ，请你实现一个计算器并返回结果。字符串中包含 + , - , (,) ，保证表达式合法。</p>
+<ul>
+<li>先初始化栈顶元素为 1 即表示 ‘+’</li>
+<li>当 c=’+’, 取栈顶元素为操作符</li>
+<li>当 c=’-‘，取栈顶元素为反</li>
+<li>当 c=’(‘，将此时的 op 进栈，</li>
+<li>当 c=’)’，已经用过的 op 出栈</li>
+<li>遇到数字，则计算数字，如果数字大于 9，则需要用 num 保存计算</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">calculate</span> <span class="token punctuation">(</span>String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> op<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+    Deque<span class="token operator">&lt;</span>Integer<span class="token operator">></span>ops<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//主要用于记录有括号时上一个操作符</span>
+    ops<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> res<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> num<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">char</span> c<span class="token operator">=</span>s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>c<span class="token operator">==</span><span class="token string">'+'</span><span class="token punctuation">)</span>op<span class="token operator">=</span>ops<span class="token punctuation">.</span><span class="token function">peekLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>c<span class="token operator">==</span><span class="token string">'-'</span><span class="token punctuation">)</span>op<span class="token operator">=</span><span class="token operator">-</span>ops<span class="token punctuation">.</span><span class="token function">peekLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>c<span class="token operator">==</span><span class="token string">'('</span><span class="token punctuation">)</span>ops<span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span>op<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>c<span class="token operator">==</span><span class="token string">')'</span><span class="token punctuation">)</span>ops<span class="token punctuation">.</span><span class="token function">removeLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>Character<span class="token punctuation">.</span><span class="token function">isDigit</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">int</span> j<span class="token operator">=</span>i<span class="token punctuation">;</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span>j<span class="token operator">&lt;</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&amp;&amp;</span>Character<span class="token punctuation">.</span><span class="token function">isDigit</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                num<span class="token operator">=</span>num<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token operator">-</span><span class="token string">'0'</span><span class="token punctuation">;</span>
+                j<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            i<span class="token operator">=</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+            res<span class="token operator">+=</span>op<span class="token operator">*</span>num<span class="token punctuation">;</span>
+            num<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="13-计算器-二"><a href="#13-计算器-二" class="headerlink" title="13. 计算器 (二)"></a>13. <strong><a href="https://leetcode-cn.com/problems/basic-calculator-ii/" target="_blank" rel="noopener">计算器 (二)</a></strong></h4><p>给定一个字符串形式的表达式 s ，请你实现一个计算器并返回结果，除法向下取整。字符串中包含 + , - , * , / , 保证表达式合法。</p>
+<p>具体来说，遍历字符串 s，并用变量 preSign记录每个数字之前的运算符，对于第一个数字，其之前的运算符视为加号。每次遍历到数字末尾时，根据preSign来决定计算方式：</p>
+<ul>
+<li>加号：将数字压入栈；</li>
+<li>减号：将数字的相反数压入栈；</li>
+<li>乘除号：计算数字与栈顶元素，并将栈顶元素替换为计算结果。</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">calculate</span><span class="token punctuation">(</span>String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Deque<span class="token operator">&lt;</span>Integer<span class="token operator">></span> stack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span> preSign <span class="token operator">=</span> <span class="token string">'+'</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> n <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>Character<span class="token punctuation">.</span><span class="token function">isDigit</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            num <span class="token operator">=</span> num <span class="token operator">*</span> <span class="token number">10</span> <span class="token operator">+</span> s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>Character<span class="token punctuation">.</span><span class="token function">isDigit</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token string">' '</span> <span class="token operator">||</span> i <span class="token operator">==</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">switch</span> <span class="token punctuation">(</span>preSign<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">case</span> <span class="token string">'+'</span><span class="token operator">:</span>
+                    stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token keyword">case</span> <span class="token string">'-'</span><span class="token operator">:</span>
+                    stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">-</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token keyword">case</span> <span class="token string">'*'</span><span class="token operator">:</span>
+                    stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token keyword">default</span><span class="token operator">:</span>
+                    stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">/</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            preSign <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            num <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">int</span> ans <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        ans <span class="token operator">+=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
     <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
 <script>
@@ -1457,7 +1531,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1349.7k</span>&nbsp;字
+                class="white-color">1413.5k</span>&nbsp;字
             
             
             

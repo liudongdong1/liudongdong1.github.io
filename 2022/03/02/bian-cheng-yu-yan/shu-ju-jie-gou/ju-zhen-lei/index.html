@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-04-02
+                    2022-04-04
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    1.3k
+                    1.7k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    5 Min
+                    8 Min
                 </div>
                 
 
@@ -704,6 +704,72 @@
             matrix<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="6-被围绕的区域"><a href="#6-被围绕的区域" class="headerlink" title="6. 被围绕的区域"></a><a href="https://www.nowcoder.com/practice/3946670643fe4ec2aedcc2be45aed1a9?tpId=117&amp;tqId=39451&amp;rp=1&amp;ru=/exam/oj&amp;qru=/exam/oj&amp;sourceUrl=%2Fexam%2Foj%3Ftab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D117&amp;difficulty=undefined&amp;judgeStatus=undefined&amp;tags=&amp;title=" target="_blank" rel="noopener">6. 被围绕的区域</a></h4><p>给定一个 n*m 大小的的矩阵，矩阵中由 ‘X’ 和 ‘O’ 构成，找到所有被 ‘X’ 围绕的区域，并将其用 ‘X’ 填充。</p>
+<p>例如：</p>
+<p>[[‘X’,’X’,’X’,’X’],</p>
+<p>[‘X’,’O’,’O’,’X’],</p>
+<p>[‘X’,’O’,’X’,’X’],</p>
+<p>[‘X’,’X’,’O’,’X’]]</p>
+<p>中间的三个 ‘O’ 被 ‘X’ 围绕，因此将其填充为 ‘X’ ，但第四行的 ‘O’ 下方没有被 ‘X’ 围绕，因此不改变，结果为</p>
+<p>[[‘X’,’X’,’X’,’X’],</p>
+<p>[‘X’,’X’,’X’,’X’],</p>
+<p>[‘X’,’X’,’X’,’X’],</p>
+<p>[‘X’,’X’,’O’,’X’]]</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">surroundedArea</span> <span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> board<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// write code here</span>
+    <span class="token keyword">int</span> n<span class="token operator">=</span>board<span class="token punctuation">.</span>length<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// n行</span>
+    <span class="token keyword">int</span> m<span class="token operator">=</span>board<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// m列</span>
+    <span class="token comment" spellcheck="true">// 最外层的'O'先标记为'A'，能和最外层直接相连的'O'也标记为'A'</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span>i<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 左边界</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span>i<span class="token punctuation">,</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 右边界</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>m<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 上边界</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 下边界</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">// 遍历整个矩阵，把'O'变为'X', 把'A'变为'O'</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>m<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>board<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">'O'</span><span class="token punctuation">)</span>
+                board<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">'X'</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>board<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">'A'</span><span class="token punctuation">)</span>
+                board<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">'O'</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> board<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> board<span class="token punctuation">,</span> <span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 不能超出边界</span>
+    <span class="token comment" spellcheck="true">// 注意最后一个条件不能写成board[x][y]=='X'，会进入死循环</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token operator">&lt;</span><span class="token number">0</span><span class="token operator">||</span>x<span class="token operator">>=</span>board<span class="token punctuation">.</span>length<span class="token operator">||</span>y<span class="token operator">&lt;</span><span class="token number">0</span><span class="token operator">||</span>y<span class="token operator">>=</span>board<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token operator">||</span>board<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span><span class="token operator">!=</span><span class="token string">'O'</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 遇到O就改为A</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>board<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">'O'</span><span class="token punctuation">)</span>
+        board<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">'A'</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 标记为A</span>
+    <span class="token function">dfs</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span>x<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//上</span>
+    <span class="token function">dfs</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span>x<span class="token punctuation">,</span>y<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//右</span>
+    <span class="token function">dfs</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span>x<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//下</span>
+    <span class="token function">dfs</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span>x<span class="token punctuation">,</span>y<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//左</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="7-杨辉三角-一"><a href="#7-杨辉三角-一" class="headerlink" title="7. 杨辉三角 (一)"></a>7. <strong>杨辉三角 (一)</strong></h4><p><img src="../../../../picture2022/image-20220404204008114.png" alt=""></p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">generate</span> <span class="token punctuation">(</span><span class="token keyword">int</span> num<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>num<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">,</span>j<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>num<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span>arr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span>j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;=</span>i<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">int</span> t1 <span class="token operator">=</span> j<span class="token operator">-</span><span class="token number">1</span><span class="token operator">&lt;</span><span class="token number">0</span><span class="token operator">?</span><span class="token number">0</span><span class="token operator">:</span>arr<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 注意边界判断</span>
+                <span class="token keyword">int</span> t2 <span class="token operator">=</span> j <span class="token operator">==</span> i<span class="token operator">?</span><span class="token number">0</span><span class="token operator">:</span>arr<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span>t2<span class="token operator">+</span>t1<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> arr<span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1246,7 +1312,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1349.7k</span>&nbsp;字
+                class="white-color">1413.5k</span>&nbsp;字
             
             
             

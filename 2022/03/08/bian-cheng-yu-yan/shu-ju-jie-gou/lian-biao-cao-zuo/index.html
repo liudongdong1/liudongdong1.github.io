@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-04-02
+                    2022-04-15
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    4.6k
+                    5.6k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    22 Min
+                    27 Min
                 </div>
                 
 
@@ -1405,6 +1405,202 @@ PriorityQueue<span class="token operator">&lt;</span>Status<span class="token op
         <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
+<h4 id="30-对链表进行插入排序"><a href="#30-对链表进行插入排序" class="headerlink" title="30. 对链表进行插入排序"></a>30. <a href="https://leetcode-cn.com/problems/insertion-sort-list/solution/" target="_blank" rel="noopener">对链表进行插入排序</a></h4><p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220404205757353.png" alt=""></p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> ListNode <span class="token function">insertionSortList</span><span class="token punctuation">(</span>ListNode head<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>head <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    ListNode dummyHead <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    dummyHead<span class="token punctuation">.</span>next <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    ListNode lastSorted <span class="token operator">=</span> head<span class="token punctuation">,</span> curr <span class="token operator">=</span> head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>curr <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>lastSorted<span class="token punctuation">.</span>val <span class="token operator">&lt;=</span> curr<span class="token punctuation">.</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            lastSorted <span class="token operator">=</span> lastSorted<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            ListNode prev <span class="token operator">=</span> dummyHead<span class="token punctuation">;</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>prev<span class="token punctuation">.</span>next<span class="token punctuation">.</span>val <span class="token operator">&lt;=</span> curr<span class="token punctuation">.</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                prev <span class="token operator">=</span> prev<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            lastSorted<span class="token punctuation">.</span>next <span class="token operator">=</span> curr<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+            curr<span class="token punctuation">.</span>next <span class="token operator">=</span> prev<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+            prev<span class="token punctuation">.</span>next <span class="token operator">=</span> curr<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        curr <span class="token operator">=</span> lastSorted<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> dummyHead<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="31-LRU-缓存"><a href="#31-LRU-缓存" class="headerlink" title="31.LRU 缓存"></a>31.<a href="https://leetcode-cn.com/problems/lru-cache/" target="_blank" rel="noopener">LRU 缓存</a></h4><p>一个缓存结构需要实现如下功能。</p>
+<ul>
+<li>set (key, value)：将记录 (key, value) 插入该结构</li>
+<li>get (key)：返回 key 对应的 value 值</li>
+</ul>
+<p>但是缓存结构中最多放 K 条记录，如果新的第 K+1 条记录要加入，就需要根据策略删掉一条记录，然后才能把新记录加入。这个策略为：在缓存结构的 K 条记录中，哪一个 key 从进入缓存结构的时刻开始，被调用 set 或者 get 的次数最少，就删掉这个 key 的记录；如果调用次数最少的 key 有多个，上次调用发生最早的 key 被删除。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">LFUCache</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">class</span> <span class="token class-name">Item</span> <span class="token punctuation">{</span>
+        Item l<span class="token punctuation">,</span> r<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> k<span class="token punctuation">,</span> v<span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token function">Item</span><span class="token punctuation">(</span><span class="token keyword">int</span> _k<span class="token punctuation">,</span> <span class="token keyword">int</span> _v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            k <span class="token operator">=</span> _k<span class="token punctuation">;</span>
+            v <span class="token operator">=</span> _v<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">class</span> <span class="token class-name">Bucket</span> <span class="token punctuation">{</span>
+        Bucket l<span class="token punctuation">,</span> r<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> idx<span class="token punctuation">;</span>
+        Item head<span class="token punctuation">,</span> tail<span class="token punctuation">;</span>
+        Map<span class="token operator">&lt;</span>Integer<span class="token punctuation">,</span> Item<span class="token operator">></span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token function">Bucket</span><span class="token punctuation">(</span><span class="token keyword">int</span> _idx<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            idx <span class="token operator">=</span> _idx<span class="token punctuation">;</span>
+            head <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Item</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            tail <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Item</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            head<span class="token punctuation">.</span>r <span class="token operator">=</span> tail<span class="token punctuation">;</span>
+            tail<span class="token punctuation">.</span>l <span class="token operator">=</span> head<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">void</span> <span class="token function">put</span><span class="token punctuation">(</span><span class="token keyword">int</span> key<span class="token punctuation">,</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            Item item <span class="token operator">=</span> null<span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                item <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// 更新值</span>
+                item<span class="token punctuation">.</span>v <span class="token operator">=</span> value<span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// 在原来的双向链表位置中移除</span>
+                item<span class="token punctuation">.</span>l<span class="token punctuation">.</span>r <span class="token operator">=</span> item<span class="token punctuation">.</span>r<span class="token punctuation">;</span>
+                item<span class="token punctuation">.</span>r<span class="token punctuation">.</span>l <span class="token operator">=</span> item<span class="token punctuation">.</span>l<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                item <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Item</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// 添加到哈希表中</span>
+                map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token comment" spellcheck="true">// 增加到双向链表头部</span>
+            item<span class="token punctuation">.</span>r <span class="token operator">=</span> head<span class="token punctuation">.</span>r<span class="token punctuation">;</span>
+            item<span class="token punctuation">.</span>l <span class="token operator">=</span> head<span class="token punctuation">;</span>
+            head<span class="token punctuation">.</span>r<span class="token punctuation">.</span>l <span class="token operator">=</span> item<span class="token punctuation">;</span>
+            head<span class="token punctuation">.</span>r <span class="token operator">=</span> item<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        Item <span class="token function">remove</span><span class="token punctuation">(</span><span class="token keyword">int</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                Item item <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// 从双向链表中移除</span>
+                item<span class="token punctuation">.</span>l<span class="token punctuation">.</span>r <span class="token operator">=</span> item<span class="token punctuation">.</span>r<span class="token punctuation">;</span>
+                item<span class="token punctuation">.</span>r<span class="token punctuation">.</span>l <span class="token operator">=</span> item<span class="token punctuation">.</span>l<span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// 从哈希表中移除</span>
+                map<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">return</span> item<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> null<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// never</span>
+        <span class="token punctuation">}</span>
+        Item <span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 从双向链表尾部找到待删除的节点</span>
+            Item item <span class="token operator">=</span> tail<span class="token punctuation">.</span>l<span class="token punctuation">;</span>
+            item<span class="token punctuation">.</span>l<span class="token punctuation">.</span>r <span class="token operator">=</span> item<span class="token punctuation">.</span>r<span class="token punctuation">;</span>
+            item<span class="token punctuation">.</span>r<span class="token punctuation">.</span>l <span class="token operator">=</span> item<span class="token punctuation">.</span>l<span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 从哈希表中移除</span>
+            map<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>item<span class="token punctuation">.</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> item<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">boolean</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> map<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    Map<span class="token operator">&lt;</span>Integer<span class="token punctuation">,</span> Bucket<span class="token operator">></span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Bucket head<span class="token punctuation">,</span> tail<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> n<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> cnt<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">LFUCache</span><span class="token punctuation">(</span><span class="token keyword">int</span> capacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        n <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
+        cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        head <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Bucket</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        tail <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Bucket</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        head<span class="token punctuation">.</span>r <span class="token operator">=</span> tail<span class="token punctuation">;</span>
+        tail<span class="token punctuation">.</span>l <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token keyword">int</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            Bucket cur <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            Bucket target <span class="token operator">=</span> null<span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token punctuation">.</span>r<span class="token punctuation">.</span>idx <span class="token operator">!=</span> cur<span class="token punctuation">.</span>idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+                <span class="token comment" spellcheck="true">// 目标桶空缺</span>
+                target <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Bucket</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                target<span class="token punctuation">.</span>r <span class="token operator">=</span> cur<span class="token punctuation">.</span>r<span class="token punctuation">;</span>
+                target<span class="token punctuation">.</span>l <span class="token operator">=</span> cur<span class="token punctuation">;</span>
+                cur<span class="token punctuation">.</span>r<span class="token punctuation">.</span>l <span class="token operator">=</span> target<span class="token punctuation">;</span>
+                cur<span class="token punctuation">.</span>r <span class="token operator">=</span> target<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                target <span class="token operator">=</span> cur<span class="token punctuation">.</span>r<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment" spellcheck="true">// 将当前键值对从当前桶移除，并加入新的桶</span>
+            Item remove <span class="token operator">=</span> cur<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            target<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>remove<span class="token punctuation">.</span>k<span class="token punctuation">,</span> remove<span class="token punctuation">.</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 更新当前键值对所在桶信息</span>
+            map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token comment" spellcheck="true">// 如果在移除掉当前键值对后，当前桶为空，则将当前桶删除（确保空间是 O(n) 的）</span>
+            <span class="token comment" spellcheck="true">// 也确保调用编号最小的桶的 clear 方法，能够有效移除掉一个元素</span>
+            <span class="token function">deleteIfEmpty</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">return</span> remove<span class="token punctuation">.</span>v<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> 
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">put</span><span class="token punctuation">(</span><span class="token keyword">int</span> key<span class="token punctuation">,</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 元素已存在，修改一下值</span>
+            Bucket cur <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            cur<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 调用一下 get 实现「使用次数」+ 1</span>
+            <span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 容器已满，需要先删除元素</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>cnt <span class="token operator">==</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">// 从第一个桶（编号最小、使用次数最小）中进行清除</span>
+                Bucket cur <span class="token operator">=</span> head<span class="token punctuation">.</span>r<span class="token punctuation">;</span>
+                Item clear <span class="token operator">=</span> cur<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                map<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>clear<span class="token punctuation">.</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                cnt<span class="token operator">--</span><span class="token punctuation">;</span>
+
+                <span class="token comment" spellcheck="true">// 如果在移除掉键值对后，当前桶为空，则将当前桶删除（确保空间是 O(n) 的）</span>
+                <span class="token comment" spellcheck="true">// 也确保调用编号最小的桶的 clear 方法，能够有效移除掉一个元素</span>
+                <span class="token function">deleteIfEmpty</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> 
+
+            <span class="token comment" spellcheck="true">// 需要将当前键值对增加到 1 号桶</span>
+            Bucket first <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+            <span class="token comment" spellcheck="true">// 如果 1 号桶不存在则创建</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>head<span class="token punctuation">.</span>r<span class="token punctuation">.</span>idx <span class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                first <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Bucket</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                first<span class="token punctuation">.</span>r <span class="token operator">=</span> head<span class="token punctuation">.</span>r<span class="token punctuation">;</span>
+                first<span class="token punctuation">.</span>l <span class="token operator">=</span> head<span class="token punctuation">;</span>
+                head<span class="token punctuation">.</span>r<span class="token punctuation">.</span>l <span class="token operator">=</span> first<span class="token punctuation">;</span>
+                head<span class="token punctuation">.</span>r <span class="token operator">=</span> first<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                first <span class="token operator">=</span> head<span class="token punctuation">.</span>r<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment" spellcheck="true">// 将键值对添加到 1 号桶</span>
+            first<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 更新键值对所在桶信息</span>
+            map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> first<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 计数器加一</span>
+            cnt<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">void</span> <span class="token function">deleteIfEmpty</span><span class="token punctuation">(</span>Bucket cur<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            cur<span class="token punctuation">.</span>l<span class="token punctuation">.</span>r <span class="token operator">=</span> cur<span class="token punctuation">.</span>r<span class="token punctuation">;</span>
+            cur<span class="token punctuation">.</span>r<span class="token punctuation">.</span>l <span class="token operator">=</span> cur<span class="token punctuation">.</span>l<span class="token punctuation">;</span>
+            cur <span class="token operator">=</span> null<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// help GC</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1958,7 +2154,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1349.7k</span>&nbsp;字
+                class="white-color">1413.5k</span>&nbsp;字
             
             
             
