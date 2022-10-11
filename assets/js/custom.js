@@ -2,7 +2,7 @@
  * Custom javascript for FixIt site.
  * @author @Kendrick https://lruihao.cn
  */
- const Docs = new (function () {
+const Docs = new (function () {
   /**
    * Rest in Peace. R.I.P 🕯️
    * @2022-3-28 [3.21-mu5735] 沉痛哀悼 132 名遇难同胞：东航航班失事，遇难者含旅客 123 人，机组 9 人
@@ -34,3 +34,9 @@
     // Docs.init();
   });
 })();
+
+// 点击显示隐藏文本
+document.querySelector('.hide-text .check').addEventListener('click', function () {
+  this.style.display = 'none';
+  document.querySelector('.hide-text .hide').style.display = 'inline'
+})
