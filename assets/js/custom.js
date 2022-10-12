@@ -1,6 +1,6 @@
 /**
  * Custom javascript for FixIt site.
- * @author @Kendrick https://lruihao.cn
+ * @author @Kendrick https://kendrickcheung.github.io/
  */
 const Docs = new (function () {
   /**

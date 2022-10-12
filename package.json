@@ -5,11 +5,16 @@
   "main": "index.js",
   "scripts": {
     "algolia": "atomic-algolia",
-    "build": "hugo -v --gc --minify",
     "server": "hugo server -D --disableFastRender --navigateToChanged",
     "server:production": "npm run server -- --environment production",
     "update:theme": "git submodule update --remote --merge themes/FixIt && git add . && git commit -m ':arrow_up: Chore(theme): update FixIt version'",
-    "qcloudcdn": "node .scripts/qcloudcdn.js $SECRET_ID $SECRET_KEY"
+    "qcloudcdn": "node .scripts/qcloudcdn.js $SECRET_ID $SECRET_KEY",
+    "dev:css": "npx tailwindcss -i input.css -o static/output.css -w",
+    "dev:hugo": "hugo server",
+    "dev": "run-p dev:*",
+    "build:css": "cross-env NODE_ENV=production npx tailwindcss -i input.css -o static/output.css -m",
+    "build:hugo": "hugo",
+    "build": "run-s build:*"
   },
   "repository": {
     "type": "git",
@@ -24,5 +29,12 @@
   "dependencies": {
     "atomic-algolia": "^0.3.19",
     "qcloud-cdn-node-sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13",
+    "tailwindcss": "^3.1.8"
   }
 }
