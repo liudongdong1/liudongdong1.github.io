@@ -36,7 +36,11 @@ const Docs = new (function () {
 })();
 
 // 点击显示隐藏文本
-document.querySelector('.hide-text .check').addEventListener('click', function () {
-  this.style.display = 'none';
-  document.querySelector('.hide-text .hide').style.display = 'inline'
-})
+function hideTextClick() {
+  this.querySelector('.check').style.display = 'none';
+  this.querySelector('.hide').style.display = 'inline'
+}
+var hideTextList = document.getElementsByClassName('hide-text');
+for (var i in hideTextList) {
+  hideTextList[i].onclick = hideTextClick;
+}
