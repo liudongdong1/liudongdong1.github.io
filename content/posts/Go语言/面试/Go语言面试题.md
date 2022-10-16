@@ -4,7 +4,7 @@ subtitle: ""
 date: 2022-10-13T20:36:11+08:00
 description: ""
 keywords: "Go语言，面试题"
-tags: ["zhihu","immersive-exercise","Golang"]
+tags: ["zhihu","interview","Golang"]
 categories: ["Programming"]
 ---
 
