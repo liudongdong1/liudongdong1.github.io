@@ -16,7 +16,7 @@ categories: ["Programming"]
 {{<hide-text hide="=是赋值变量，:=是定义变量">}}
 
 #### 🍈 指针的作用
-{{< admonition info "详情" false >}}
+{{< details "展开查看详情" >}}
 - 获取变量的值
 ```go
 import fmt
@@ -41,10 +41,10 @@ func swap(a,b *int){
 type A struct{}
 func (a *A) fun(){}
 ```
-{{< /admonition >}}
+{{< /details >}}
 
 #### 🍉 Go有异常类型吗
-{{< admonition info "详情" false >}}
+{{< details "展开查看详情" >}}
 有。 Go用error类型代替try...catch
 ```go
 _,err := funcDemo()
@@ -68,7 +68,7 @@ func New(text string) error {
   return &errorString{text}
 }
 ```
-{{< /admonition >}}
+{{< /details >}}
 
 #### 🍊 什么是协程(Goroutine)
 {{<hide-text hide="协程是*用户状态轻量级线程*，它是*线程调度的基本单位*">}}
@@ -371,7 +371,7 @@ var _ Codec = (*GobCodec)(nil)
 
 *一开始go从操作系统索取一大块内存作为内存池，并放在一个叫mheap的内存池进行管理，mheap将一整块内存切割为不同的区域，并将一部分内存切割为合适的大小。*
 
-![mhead内存池](/posts/Go语言/面试/mhead.jpg)
+![mhead内存池](/posts/Go语言/面试/img/mhead.jpg)
 
 **mcentral**
 
@@ -406,7 +406,7 @@ var _ Codec = (*GobCodec)(nil)
 {{< details "展开查看详情" >}}
 *Go里面GMP分别代表：G：goroutine，M：线程（真正在CPU上跑的），P：调度器。*
 
-{{< figure src="/posts/Go语言/面试/GMP模型.jpg" title="GMP模型" >}}
+{{< figure src="/posts/Go语言/面试/img/GMP模型.jpg" title="GMP模型" >}}
 
 *调度器是M和G之间桥梁。*
 
@@ -429,7 +429,7 @@ var _ Codec = (*GobCodec)(nil)
 
 #### 🥨 Go中GMP有哪些状态？
 {{< details "展开查看详情" >}}
-{{< figure src="/posts/Go语言/面试/GMP状态.jpg" title="GMP状态" >}}
+{{< figure src="/posts/Go语言/面试/img/GMP状态.jpg" title="GMP状态" >}}
 
 **G的状态：**
 
@@ -565,14 +565,14 @@ func Ping(ctx context.Context) error {
 {{< details "展开查看详情" >}}
 *基于go的远程过程调用。RPC 框架的目标就是让远程服务调用更加简单、透明，RPC 框架负责屏蔽底层的传输方式（TCP 或者 UDP）、序列化方式（XML/Json/ 二进制）和通信细节。服务调用者可以像调用本地接口一样调用远程的服务提供者，而不需要关心底层通信细节和调用过程。*
 
-{{< figure src="/posts/Go语言/面试/gRPC框架图.jpg" title="gRPC框架图" >}}
+{{< figure src="/posts/Go语言/面试/img/gRPC框架图.jpg" title="gRPC框架图" >}}
 {{< /details >}}
 
 #### 🍕 微服务了解吗？
 {{< details "展开查看详情" >}}
 *微服务是一种开发软件的架构和组织方法，其中软件由通过明确定义的 API 进行通信的小型独立服务组成。微服务架构使应用程序更易于扩展和更快地开发，从而加速创新并缩短新功能的上市时间。*
 
-{{< figure src="/posts/Go语言/面试/微服务示意图.jpg" title="微服务示意图" >}}
+{{< figure src="/posts/Go语言/面试/img/微服务示意图.jpg" title="微服务示意图" >}}
 
 > 参考资料：[什么是微服务？| AWS](https://aws.amazon.com/cn/microservices/)
 {{< /details >}}
@@ -583,11 +583,11 @@ func Ping(ctx context.Context) error {
 
 **客户端发现模式：**当我们使用客户端发现的时候，客户端负责决定可用服务实例的网络地址并且在集群中对请求负载均衡, 客户端访问服务登记表，也就是一个可用服务的数据库，然后客户端使用一种负载均衡算法选择一个可用的服务实例然后发起请求
 
-{{< figure src="/posts/Go语言/面试/客户端发现模式.jpg" title="客户端发现模式" >}}
+{{< figure src="/posts/Go语言/面试/img/客户端发现模式.jpg" title="客户端发现模式" >}}
 
 **服务端发现模式：**客户端通过负载均衡器向某个服务提出请求，负载均衡器查询服务注册表，并将请求转发到可用的服务实例。如同客户端发现，服务实例在服务注册表中注册或注销。
 
-{{< figure src="/posts/Go语言/面试/服务端发现模式.jpg" title="服务的发现模式" >}}
+{{< figure src="/posts/Go语言/面试/img/服务端发现模式.jpg" title="服务的发现模式" >}}
 
 > 参考资料：[「Chris Richardson 微服务系列」服务发现的可行方案以及实践案例](http://blog.daocloud.io/3289.html)
 {{< /details >}}
@@ -841,9 +841,9 @@ type eface struct {
 
 **Go反射有三大法则：**
 1. 反射从接口映射到反射对象；
-{{< figure src="/posts/Go语言/面试/法则1.jpg" title="法则1" >}}
+{{< figure src="/posts/Go语言/面试/img/法则1.jpg" title="法则1" >}}
 2. 反射从反射对象映射到接口值；
-{{< figure src="/posts/Go语言/面试/法则2.jpg" title="法则2" >}}
+{{< figure src="/posts/Go语言/面试/img/法则2.jpg" title="法则2" >}}
 3. 只有值可以修改(settable)，才可以修改反射对象。
 
 *Go反射基于上述三点实现。我们先从最核心的两个源文件入手type.go和value.go.*
