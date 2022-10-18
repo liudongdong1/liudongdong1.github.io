@@ -18,7 +18,7 @@ categories: ["Programming"]
 
 #### 🍒 1. 创建项目
 1. 创建项目文件夹`greetings`并用vscode打开该项目
-2. 创建文件夹`mymodule`并创建`greeting.go`文件
+2. 在根目录`greetings`下创建文件夹`mymodule`并创建`greeting.go`文件
 ```go
 package greeting
 
@@ -31,7 +31,7 @@ func Hello(name string) string {
     return message
 }
 ```
-3. 在根目录创建`hello.go`文件
+3. 在根目录`greetings`下创建`hello.go`文件
 ```go
 package main
 
