@@ -37,10 +37,21 @@ const Docs = new (function () {
 
 // 点击显示隐藏文本
 function hideTextClick() {
-  this.querySelector('.check').style.display = 'none';
-  this.querySelector('.hide').style.display = 'inline'
+  if (this.querySelector('.hide').style.display === 'inline') {
+    this.querySelector('.check').style.display = 'inline-block';
+    this.querySelector('.hide').style.display = 'none'
+  } else {
+    this.querySelector('.check').style.display = 'none';
+    this.querySelector('.hide').style.display = 'inline'
+  }
+
 }
 var hideTextList = document.getElementsByClassName('hide-text');
 for (var i in hideTextList) {
   hideTextList[i].onclick = hideTextClick;
+}
+
+var blankTextList = document.getElementsByClassName('blank-text');
+for (var i in blankTextList) {
+  blankTextList[i].onclick = hideTextClick;
 }
