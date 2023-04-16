@@ -526,21 +526,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-04-02
+                    2023-04-16
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    3.4k
+                    5.2k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    20 Min
+                    32 Min
                 </div>
                 
 
@@ -555,7 +555,8 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="1-OutputStream抽象类"><a href="#1-OutputStream抽象类" class="headerlink" title="1. OutputStream抽象类"></a>1. OutputStream抽象类</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">int</span> b<span class="token punctuation">)</span>
+                <p><img src="https://gitee.com/github-25970295/picture2023/raw/master/image-20230312100228460.png" alt=""></p>
+<h3 id="1-OutputStream抽象类"><a href="#1-OutputStream抽象类" class="headerlink" title="1. OutputStream抽象类"></a>1. OutputStream抽象类</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">int</span> b<span class="token punctuation">)</span>
 <span class="token comment" spellcheck="true">// 写入一个字节，可以看到这里的参数是一个 int 类型，对应上面的读方法，int 类型的 32 位，只有低 8 位才写入，高 24 位将舍弃。</span>
 <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">byte</span> b<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 <span class="token comment" spellcheck="true">// 将数组中的所有字节写入，和上面对应的 read() 方法类似，实际调用的也是下面的方法。</span>
@@ -699,7 +700,10 @@
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<h3 id="3-ByteArrayOutputStream"><a href="#3-ByteArrayOutputStream" class="headerlink" title="3. ByteArrayOutputStream"></a>3. ByteArrayOutputStream</h3><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+<h3 id="3-ByteArrayOutputStream"><a href="#3-ByteArrayOutputStream" class="headerlink" title="3. ByteArrayOutputStream"></a>3. ByteArrayOutputStream</h3><blockquote>
+<p>不知道最后数组或者缓冲区使用大小为多少，可以使用 ByteArrayOutputStream</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * This class implements an output stream in which the data is
  * written into a byte array. The buffer automatically grows as data
  * is written to it.
@@ -953,7 +957,10 @@
     <span class="token punctuation">}</span>
 
 <span class="token punctuation">}</span></code></pre>
-<h3 id="4-BufferedOuputStream"><a href="#4-BufferedOuputStream" class="headerlink" title="4. BufferedOuputStream"></a>4. BufferedOuputStream</h3><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+<h3 id="4-BufferedOuputStream"><a href="#4-BufferedOuputStream" class="headerlink" title="4. BufferedOuputStream"></a>4. BufferedOuputStream</h3><blockquote>
+<p>内部有个byte buf[]， 缓冲要写入的数据，写入数据大于buf数组时，通过父类FIlterOutputStream 写入到OutputStream中。</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * The class implements a buffered output stream. By setting up such
  * an output stream, an application can write bytes to the underlying
  * output stream without necessarily causing a call to the underlying
@@ -1215,25 +1222,391 @@
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+<h3 id="6-FileOutputStream"><a href="#6-FileOutputStream" class="headerlink" title="6. FileOutputStream"></a>6. FileOutputStream</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span>
+<span class="token keyword">class</span> <span class="token class-name">FileOutputStream</span> <span class="token keyword">extends</span> <span class="token class-name">OutputStream</span>
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/**
+     * The system dependent file descriptor.
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> FileDescriptor fd<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * True if the file is opened for append.
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> append<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * The associated channel, initialized lazily.
+     */</span>
+    <span class="token keyword">private</span> FileChannel channel<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * The path of the referenced file
+     * (null if the stream is created with a file descriptor)
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> String path<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> Object closeLock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">boolean</span> closed <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Creates a file output stream to write to the file with the
+     * specified name. A new &lt;code>FileDescriptor&lt;/code> object is
+     * created to represent this file connection.
+     * &lt;p>
+     * First, if there is a security manager, its &lt;code>checkWrite&lt;/code>
+     * method is called with &lt;code>name&lt;/code> as its argument.
+     * &lt;p>
+     * If the file exists but is a directory rather than a regular file, does
+     * not exist but cannot be created, or cannot be opened for any other
+     * reason then a &lt;code>FileNotFoundException&lt;/code> is thrown.
+     *
+     * @param      name   the system-dependent filename
+     * @exception  FileNotFoundException  if the file exists but is a directory
+     *                   rather than a regular file, does not exist but cannot
+     *                   be created, or cannot be opened for any other reason
+     * @exception  SecurityException  if a security manager exists and its
+     *               &lt;code>checkWrite&lt;/code> method denies write access
+     *               to the file.
+     * @see        java.lang.SecurityManager#checkWrite(java.lang.String)
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">FileOutputStream</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token keyword">throws</span> FileNotFoundException <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">(</span>name <span class="token operator">!=</span> null <span class="token operator">?</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Creates a file output stream to write to the file with the specified
+     * name.  If the second argument is &lt;code>true&lt;/code>, then
+     * bytes will be written to the end of the file rather than the beginning.
+     * A new &lt;code>FileDescriptor&lt;/code> object is created to represent this
+     * file connection.
+     * &lt;p>
+     * First, if there is a security manager, its &lt;code>checkWrite&lt;/code>
+     * method is called with &lt;code>name&lt;/code> as its argument.
+     * &lt;p>
+     * If the file exists but is a directory rather than a regular file, does
+     * not exist but cannot be created, or cannot be opened for any other
+     * reason then a &lt;code>FileNotFoundException&lt;/code> is thrown.
+     *
+     * @param     name        the system-dependent file name
+     * @param     append      if &lt;code>true&lt;/code>, then bytes will be written
+     *                   to the end of the file rather than the beginning
+     * @exception  FileNotFoundException  if the file exists but is a directory
+     *                   rather than a regular file, does not exist but cannot
+     *                   be created, or cannot be opened for any other reason.
+     * @exception  SecurityException  if a security manager exists and its
+     *               &lt;code>checkWrite&lt;/code> method denies write access
+     *               to the file.
+     * @see        java.lang.SecurityManager#checkWrite(java.lang.String)
+     * @since     JDK1.1
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">FileOutputStream</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> <span class="token keyword">boolean</span> append<span class="token punctuation">)</span>
+        <span class="token keyword">throws</span> FileNotFoundException
+    <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">(</span>name <span class="token operator">!=</span> null <span class="token operator">?</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">,</span> append<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Creates a file output stream to write to the file represented by
+     * the specified &lt;code>File&lt;/code> object. A new
+     * &lt;code>FileDescriptor&lt;/code> object is created to represent this
+     * file connection.
+     * &lt;p>
+     * First, if there is a security manager, its &lt;code>checkWrite&lt;/code>
+     * method is called with the path represented by the &lt;code>file&lt;/code>
+     * argument as its argument.
+     * &lt;p>
+     * If the file exists but is a directory rather than a regular file, does
+     * not exist but cannot be created, or cannot be opened for any other
+     * reason then a &lt;code>FileNotFoundException&lt;/code> is thrown.
+     *
+     * @param      file               the file to be opened for writing.
+     * @exception  FileNotFoundException  if the file exists but is a directory
+     *                   rather than a regular file, does not exist but cannot
+     *                   be created, or cannot be opened for any other reason
+     * @exception  SecurityException  if a security manager exists and its
+     *               &lt;code>checkWrite&lt;/code> method denies write access
+     *               to the file.
+     * @see        java.io.File#getPath()
+     * @see        java.lang.SecurityException
+     * @see        java.lang.SecurityManager#checkWrite(java.lang.String)
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">FileOutputStream</span><span class="token punctuation">(</span>File file<span class="token punctuation">)</span> <span class="token keyword">throws</span> FileNotFoundException <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">(</span>file<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Creates a file output stream to write to the file represented by
+     * the specified &lt;code>File&lt;/code> object. If the second argument is
+     * &lt;code>true&lt;/code>, then bytes will be written to the end of the file
+     * rather than the beginning. A new &lt;code>FileDescriptor&lt;/code> object is
+     * created to represent this file connection.
+     * &lt;p>
+     * First, if there is a security manager, its &lt;code>checkWrite&lt;/code>
+     * method is called with the path represented by the &lt;code>file&lt;/code>
+     * argument as its argument.
+     * &lt;p>
+     * If the file exists but is a directory rather than a regular file, does
+     * not exist but cannot be created, or cannot be opened for any other
+     * reason then a &lt;code>FileNotFoundException&lt;/code> is thrown.
+     *
+     * @param      file               the file to be opened for writing.
+     * @param     append      if &lt;code>true&lt;/code>, then bytes will be written
+     *                   to the end of the file rather than the beginning
+     * @exception  FileNotFoundException  if the file exists but is a directory
+     *                   rather than a regular file, does not exist but cannot
+     *                   be created, or cannot be opened for any other reason
+     * @exception  SecurityException  if a security manager exists and its
+     *               &lt;code>checkWrite&lt;/code> method denies write access
+     *               to the file.
+     * @see        java.io.File#getPath()
+     * @see        java.lang.SecurityException
+     * @see        java.lang.SecurityManager#checkWrite(java.lang.String)
+     * @since 1.4
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">FileOutputStream</span><span class="token punctuation">(</span>File file<span class="token punctuation">,</span> <span class="token keyword">boolean</span> append<span class="token punctuation">)</span>
+        <span class="token keyword">throws</span> FileNotFoundException
+    <span class="token punctuation">{</span>
+        String name <span class="token operator">=</span> <span class="token punctuation">(</span>file <span class="token operator">!=</span> null <span class="token operator">?</span> file<span class="token punctuation">.</span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        SecurityManager security <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">getSecurityManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>security <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            security<span class="token punctuation">.</span><span class="token function">checkWrite</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>name <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">NullPointerException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>file<span class="token punctuation">.</span><span class="token function">isInvalid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">FileNotFoundException</span><span class="token punctuation">(</span><span class="token string">"Invalid file path"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>fd <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileDescriptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        fd<span class="token punctuation">.</span><span class="token function">attach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>append <span class="token operator">=</span> append<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>path <span class="token operator">=</span> name<span class="token punctuation">;</span>
+
+        <span class="token function">open</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> append<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Creates a file output stream to write to the specified file
+     * descriptor, which represents an existing connection to an actual
+     * file in the file system.
+     * &lt;p>
+     * First, if there is a security manager, its &lt;code>checkWrite&lt;/code>
+     * method is called with the file descriptor &lt;code>fdObj&lt;/code>
+     * argument as its argument.
+     * &lt;p>
+     * If &lt;code>fdObj&lt;/code> is null then a &lt;code>NullPointerException&lt;/code>
+     * is thrown.
+     * &lt;p>
+     * This constructor does not throw an exception if &lt;code>fdObj&lt;/code>
+     * is {@link java.io.FileDescriptor#valid() invalid}.
+     * However, if the methods are invoked on the resulting stream to attempt
+     * I/O on the stream, an &lt;code>IOException&lt;/code> is thrown.
+     *
+     * @param      fdObj   the file descriptor to be opened for writing
+     * @exception  SecurityException  if a security manager exists and its
+     *               &lt;code>checkWrite&lt;/code> method denies
+     *               write access to the file descriptor
+     * @see        java.lang.SecurityManager#checkWrite(java.io.FileDescriptor)
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">FileOutputStream</span><span class="token punctuation">(</span>FileDescriptor fdObj<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        SecurityManager security <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">getSecurityManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>fdObj <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">NullPointerException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>security <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            security<span class="token punctuation">.</span><span class="token function">checkWrite</span><span class="token punctuation">(</span>fdObj<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>fd <span class="token operator">=</span> fdObj<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>append <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>path <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+        fd<span class="token punctuation">.</span><span class="token function">attach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Opens a file, with the specified name, for overwriting or appending.
+     * @param name name of file to be opened
+     * @param append whether the file is to be opened in append mode
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">open0</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> <span class="token keyword">boolean</span> append<span class="token punctuation">)</span>
+        <span class="token keyword">throws</span> FileNotFoundException<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// wrap native call to allow instrumentation</span>
+    <span class="token comment" spellcheck="true">/**
+     * Opens a file, with the specified name, for overwriting or appending.
+     * @param name name of file to be opened
+     * @param append whether the file is to be opened in append mode
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">open</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> <span class="token keyword">boolean</span> append<span class="token punctuation">)</span>
+        <span class="token keyword">throws</span> FileNotFoundException <span class="token punctuation">{</span>
+        <span class="token function">open0</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> append<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Writes the specified byte to this file output stream.
+     *
+     * @param   b   the byte to be written.
+     * @param   append   {@code true} if the write operation first
+     *     advances the position to the end of file
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">int</span> b<span class="token punctuation">,</span> <span class="token keyword">boolean</span> append<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Writes the specified byte to this file output stream. Implements
+     * the &lt;code>write&lt;/code> method of &lt;code>OutputStream&lt;/code>.
+     *
+     * @param      b   the byte to be written.
+     * @exception  IOException  if an I/O error occurs.
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token function">write</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> append<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Writes a sub array as a sequence of bytes.
+     * @param b the data to be written
+     * @param off the start offset in the data
+     * @param len the number of bytes that are written
+     * @param append {@code true} to first advance the position to the
+     *     end of file
+     * @exception IOException If an I/O error has occurred.
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">writeBytes</span><span class="token punctuation">(</span><span class="token keyword">byte</span> b<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">int</span> off<span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">,</span> <span class="token keyword">boolean</span> append<span class="token punctuation">)</span>
+        <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Writes &lt;code>b.length&lt;/code> bytes from the specified byte array
+     * to this file output stream.
+     *
+     * @param      b   the data.
+     * @exception  IOException  if an I/O error occurs.
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">byte</span> b<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token function">writeBytes</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> b<span class="token punctuation">.</span>length<span class="token punctuation">,</span> append<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Writes &lt;code>len&lt;/code> bytes from the specified byte array
+     * starting at offset &lt;code>off&lt;/code> to this file output stream.
+     *
+     * @param      b     the data.
+     * @param      off   the start offset in the data.
+     * @param      len   the number of bytes to write.
+     * @exception  IOException  if an I/O error occurs.
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">byte</span> b<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">int</span> off<span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token function">writeBytes</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> off<span class="token punctuation">,</span> len<span class="token punctuation">,</span> append<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Closes this file output stream and releases any system resources
+     * associated with this stream. This file output stream may no longer
+     * be used for writing bytes.
+     *
+     * &lt;p> If this stream has an associated channel then the channel is closed
+     * as well.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     *
+     * @revised 1.4
+     * @spec JSR-51
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>closeLock<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>closed<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            closed <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>channel <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            channel<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        fd<span class="token punctuation">.</span><span class="token function">closeAll</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Closeable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+               <span class="token function">close0</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+           <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Returns the file descriptor associated with this stream.
+     *
+     * @return  the &lt;code>FileDescriptor&lt;/code> object that represents
+     *          the connection to the file in the file system being used
+     *          by this &lt;code>FileOutputStream&lt;/code> object.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FileDescriptor
+     */</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> FileDescriptor <span class="token function">getFD</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>fd <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> fd<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IOException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Returns the unique {@link java.nio.channels.FileChannel FileChannel}
+     * object associated with this file output stream.
+     *
+     * &lt;p> The initial {@link java.nio.channels.FileChannel#position()
+     * position} of the returned channel will be equal to the
+     * number of bytes written to the file so far unless this stream is in
+     * append mode, in which case it will be equal to the size of the file.
+     * Writing bytes to this stream will increment the channel's position
+     * accordingly.  Changing the channel's position, either explicitly or by
+     * writing, will change this stream's file position.
+     *
+     * @return  the file channel associated with this file output stream
+     *
+     * @since 1.4
+     * @spec JSR-51
+     */</span>
+    <span class="token keyword">public</span> FileChannel <span class="token function">getChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>channel <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                channel <span class="token operator">=</span> FileChannelImpl<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> path<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> append<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> channel<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Cleans up the connection to the file, and ensures that the
+     * &lt;code>close&lt;/code> method of this file output stream is
+     * called when there are no more references to this stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FileInputStream#close()
+     */</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">finalize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>fd <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>fd <span class="token operator">==</span> FileDescriptor<span class="token punctuation">.</span>out <span class="token operator">||</span> fd <span class="token operator">==</span> FileDescriptor<span class="token punctuation">.</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">/* if fd is shared, the references in FileDescriptor
+                 * will ensure that finalizer is only called when
+                 * safe to do so. All references using the fd have
+                 * become unreachable. We can call close()
+                 */</span>
+                <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">close0</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">initIDs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">static</span> <span class="token punctuation">{</span>
+        <span class="token function">initIDs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span></code></pre>
+
             </div>
             <hr/>
 
@@ -1473,87 +1846,25 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2021/05/10/bian-cheng-yu-yan/java/datastructure/number/">
+                <a href="/2021/05/10/bian-cheng-yu-yan/java/effectvejava/exceptionhandle/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210510093856.png" class="responsive-img" alt="Number">
+                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210510093804.png" class="responsive-img" alt="ExceptionHandle">
                         
-                        <span class="card-title">Number</span>
+                        <span class="card-title">ExceptionHandle</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-8种基本数据类型并不支持面向对象的特征，它们既不是类，也不能调用方法。
-
-
-
-1. Number
-BigDecimal 和 BigInteger 用于高精度计算。AtomicInteger 和 AtomicLong 用于多线程应用程序。
-
+异常本质上是程序上的错误，包括程序逻辑错误和系统错误。比如使用空的引用、数组下标越界、内存溢出错误等. 错误在我们编写程序的过程中会经常发生，包括编译期间和运行期间的错误，在编译期间出现的错误有编译器帮助我们一起修正，然而运行期间的错误便
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2021-05-10
                         </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" class="post-category">
-                                    编程语言
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
-                    </a>
-                    
-                    <a href="/tags/datastructure/">
-                        <span class="chip bg-color">datastructure</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/05/10/bian-cheng-yu-yan/java/javaio/javaio/">
-                    <div class="card-image">
-                        
-                        <img src="https://cdn.pixabay.com/photo/2022/01/16/20/37/flowers-6943134__340.jpg" class="responsive-img" alt="JavaIO">
-                        
-                        <span class="card-title">JavaIO</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { retur
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-10
-                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1573,8 +1884,65 @@ BigDecimal 和 BigInteger 用于高精度计算。AtomicInteger 和 AtomicLong �
                         <span class="chip bg-color">java</span>
                     </a>
                     
-                    <a href="/tags/IO/">
-                        <span class="chip bg-color">IO</span>
+                    <a href="/tags/exception/">
+                        <span class="chip bg-color">exception</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/05/10/bian-cheng-yu-yan/python/socket/">
+                    <div class="card-image">
+                        
+                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210510110733.png" class="responsive-img" alt="Socket">
+                        
+                        <span class="card-title">Socket</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+socket屏蔽了各个协议的通信细节，使得程序员无需关注协议本身，直接使用socket提供的接口来进行互联的不同主机间的进程的通信。
+
+
+1.API.1.  socket 接口
+int socket(int protofamily, in
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" class="post-category">
+                                    编程语言
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/python/">
+                        <span class="chip bg-color">python</span>
+                    </a>
+                    
+                    <a href="/tags/socket/">
+                        <span class="chip bg-color">socket</span>
                     </a>
                     
                 </div>
@@ -1775,7 +2143,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

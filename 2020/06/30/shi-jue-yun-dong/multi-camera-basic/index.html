@@ -522,7 +522,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-12-14
+                    2023-01-01
                 </div>
                 
 
@@ -552,11 +552,11 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>利用计算机视觉技术对场景中的人进行智能分析是当前最重要的研究问题之一，但挑战仍未被完全解决，比如<font color="red">遮挡、运动模糊、尺度变化、光照变化、适应新场景的问题等。</font>具体任务包括<font color="red">人体检测、部件分割、姿态估计与跟踪、行为识别等</font>。</p>
+<p>利用计算机视觉技术对场景中的人进行智能分析是当前最重要的研究问题之一，但挑战仍未被完全解决，比如<font  color=red>遮挡、运动模糊、尺度变化、光照变化、适应新场景的问题等。</font>具体任务包括<font color=red>人体检测、部件分割、姿态估计与跟踪、行为识别等</font>。</p>
 </blockquote>
 <h2 id="1-目标跟踪"><a href="#1-目标跟踪" class="headerlink" title="1. 目标跟踪"></a>1. 目标跟踪</h2><p>FairMOT: A Simple Baseline for Multi-Object Tracking, arXiv 2020（代码已开源）<img src="C:/Users/dell/Pictures/%E5%9B%BE%E5%BA%8A/arduino-4916880__340.webp" alt="Object Tracking"></p>
-<p>​        给定一个视频作为输入，Multi-Object Tracking（MOT）需要完成两个任务：<font color="red">1）首先在每一帧进行人体检测，（2）然后将不同帧中相同的人进行关联从而得到每个人在视频中的轨迹。</font>当前大部分方法都会采用两个独立的模型分别完成检测和关联任务。这类方法在多个公开数据集上都取得了不错的结果，但在实际部署时，它们通常会面临可扩展能力较弱的问题，尤其是当视频中人数很多时（比如超市等人群密集的场景）为每个人单独经过一个网络提取 Re-ID 特征的成本就会线性增加，从而导致较大的延时。</p>
-<p>​        “特征共享”是提升模型扩展能力的常用思路。<font color="red">Track R-CNN [1] 对 Mask R-CNN 进行扩展，使用 roi-pool 从共享的特征图中获取候选框所对应的图像特征，并通过一个轻量的网络针对每一个候选框同时进行（1）检测框回归与分类，（2）前景 mask回归，（3）Re-ID 特征回归。</font>特征共享在一定程度上降低了计算量，跟踪的精度却比基于两阶段的方法明显变差，在实验中 Track R-CNN 的检测结果要好于我们的 FairMOT，但是发生 id switch (跟踪错误)的次数却是 FairMOT 的3倍还多。这个观察其实和更早期一个多任务学习的工作 UberNet 是一致的，也就是多个任务同时学习经常会得到比每个任务单独学习更差的精度。我们猜测造成 Track R-CNN 结果不佳的原因是 proposal 通常不会和物体的中心恰好对齐，参考下图中的左子图，因此在进行 roi-pool 操作时容易导致跟踪特征具有歧义。另外，该方法的速度仍然比较慢，大概是 FairMOT 的1/15。</p>
+<p>​        给定一个视频作为输入，Multi-Object Tracking（MOT）需要完成两个任务：<font color=red>1）首先在每一帧进行人体检测，（2）然后将不同帧中相同的人进行关联从而得到每个人在视频中的轨迹。</font>当前大部分方法都会采用两个独立的模型分别完成检测和关联任务。这类方法在多个公开数据集上都取得了不错的结果，但在实际部署时，它们通常会面临可扩展能力较弱的问题，尤其是当视频中人数很多时（比如超市等人群密集的场景）为每个人单独经过一个网络提取 Re-ID 特征的成本就会线性增加，从而导致较大的延时。</p>
+<p>​        “特征共享”是提升模型扩展能力的常用思路。<font color=red>Track R-CNN [1] 对 Mask R-CNN 进行扩展，使用 roi-pool 从共享的特征图中获取候选框所对应的图像特征，并通过一个轻量的网络针对每一个候选框同时进行（1）检测框回归与分类，（2）前景 mask回归，（3）Re-ID 特征回归。</font>特征共享在一定程度上降低了计算量，跟踪的精度却比基于两阶段的方法明显变差，在实验中 Track R-CNN 的检测结果要好于我们的 FairMOT，但是发生 id switch (跟踪错误)的次数却是 FairMOT 的3倍还多。这个观察其实和更早期一个多任务学习的工作 UberNet 是一致的，也就是多个任务同时学习经常会得到比每个任务单独学习更差的精度。我们猜测造成 Track R-CNN 结果不佳的原因是 proposal 通常不会和物体的中心恰好对齐，参考下图中的左子图，因此在进行 roi-pool 操作时容易导致跟踪特征具有歧义。另外，该方法的速度仍然比较慢，大概是 FairMOT 的1/15。</p>
 <blockquote>
 <p>FairMOT 会对每一个像素进行预测，预测其是否是物体的中心、物体的大小和以其为中心的图像区域的 Re-ID 特征。检测和跟踪两个任务都是以“当前像素”为中心，所以不存在对齐的问题，也不存在严重的顾此失彼的不公平问题。</p>
 </blockquote>
@@ -573,7 +573,7 @@
 <li>Fusing Wearable IMUs with Multi-View Images for Human Pose Estimation: A Geometric Approach, CVPR 2020（代码已开源）</li>
 </ul>
 <p>​        单摄像机三维姿态估计只能恢复出“以 root 节点为中心”的相对姿态，而无法推测其在世界坐标系下的绝对坐标。</p>
-<p>​         绝对姿态估计通常包括两个步骤：首先在每个摄像机下分别进行二维姿态估计，然后通过几何方法，比如<font color="red">三角测量（triangulation）或者图模型（pictorial structure model）等</font>，求得关节点的三维坐标。如果二维姿态是完全准确的，就可以无误差地恢复三维姿态。现实应用中，二维姿态检测并不可靠，尤其是存在遮挡的情况下，会给三维姿态估计带来较大的误差。</p>
+<p>​         绝对姿态估计通常包括两个步骤：首先在每个摄像机下分别进行二维姿态估计，然后通过几何方法，比如<font color=red>三角测量（triangulation）或者图模型（pictorial structure model）等</font>，求得关节点的三维坐标。如果二维姿态是完全准确的，就可以无误差地恢复三维姿态。现实应用中，二维姿态检测并不可靠，尤其是存在遮挡的情况下，会给三维姿态估计带来较大的误差。</p>
 <p>在发表在 CVPR’20 的一个工作中 [9]，我们提出一种新的几何方法将多视角下的摄像机和可穿戴式的惯性传感器（IMU）进行融合。惯性传感器的使用能够正确地估计那些在所有视角下都被遮挡的节点。该方法的一个优势是当摄像机的位姿发生变化时，不需要对模型进行调整，只需知道相机参数即可。该方法在 Total Capture 数据集上取得了最好的结果。</p>
 <h2 id="3-基础知识"><a href="#3-基础知识" class="headerlink" title="3. 基础知识"></a>3. 基础知识</h2><blockquote>
 <p>大幅面 多相机 视觉系统的需求越来越多，主要应用方向为大幅面高精度的定位与测量和场景拼接等。多相机视觉系统的难点在于多相机坐标系的统一. 可以分为两类，一是相机视野间无重叠部分，二是相机视野间有重叠部分。相机间无重叠部分的情况主要用于大幅面多相机高精度的定位和测量，相机间有重叠部分的情况主要用于场景的拼接等。</p>
@@ -613,25 +613,7 @@
 <li><a href="https://github.com/zhaobenx/Image-stitcher" target="_blank" rel="noopener">https://github.com/zhaobenx/Image-stitcher</a></li>
 <li><a href="https://github.com/samggggflynn/image-stitching-opencv" target="_blank" rel="noopener">https://github.com/samggggflynn/image-stitching-opencv</a></li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1161,7 +1143,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

@@ -530,14 +530,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-07-24
+                    2023-01-01
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    2.7k
+                    2.6k
                 </div>
                  -->
 
@@ -566,7 +566,7 @@
 <p>这里先使用最简单的思路去看待集群中的路由访问问题</p>
 </blockquote>
 <p>首先我们这里有三个客户端，以及有三个服务器。客户端首先访问的是一台负载均衡服务器，负载服务器不直接处理业务，而是把请求通过一定的算法，转交给内部的N台机器中的一台。 这里假设使用的是一个简单的计算方法：<code>机器编号=hash(ip) % 节点数量</code> 这里的节点数量配置为<strong>3</strong></p>
-<h3 id="集群中使用简单的Hash算法"><a href="#集群中使用简单的Hash算法" class="headerlink" title="集群中使用简单的Hash算法"></a>集群中使用简单的Hash算法</h3><p><img src="../../../../../picture/99d205ed54b5473d928168ad013977a0~tplv-k3u1fbpfcp-zoom-1.image" alt=""> 这个时候请求机器和对应服务器的访问关系是</p>
+<h3 id="集群中使用简单的Hash算法"><a href="#集群中使用简单的Hash算法" class="headerlink" title="集群中使用简单的Hash算法"></a>集群中使用简单的Hash算法</h3><p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/99d205ed54b5473d928168ad013977a0~tplv-k3u1fbpfcp-zoom-1.image" alt=""> 这个时候请求机器和对应服务器的访问关系是</p>
 <table>
 <thead>
 <tr>
@@ -588,7 +588,7 @@
 </tr>
 </tbody></table>
 <h3 id="集群中机器扩容，缩容，宕机"><a href="#集群中机器扩容，缩容，宕机" class="headerlink" title="集群中机器扩容，缩容，宕机"></a>集群中机器扩容，缩容，宕机</h3><p>一切看起来都那么的美好，直到有台机器蹦了。这里假定是Tomcat3挂了 </p>
-<p><img src="../../../../../picture/ebebb8d2d87d4820b27d2f01cdaf6724~tplv-k3u1fbpfcp-zoom-1.image" alt=""> 当这种情况发生的时候，负载均衡服务器，监测到了Tomcat3挂掉了，然后就调整自己的算法，<code>机器编号=hash(ip) % 节点数量</code> 这里的节点数量配置为2。这样虽然也能继续负载均衡功能，但是客户端和服务器之间的映射关系已经发生了比较大的变化了。新的映射关系已经变成这样了。</p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/ebebb8d2d87d4820b27d2f01cdaf6724~tplv-k3u1fbpfcp-zoom-1.image" alt=""> 当这种情况发生的时候，负载均衡服务器，监测到了Tomcat3挂掉了，然后就调整自己的算法，<code>机器编号=hash(ip) % 节点数量</code> 这里的节点数量配置为2。这样虽然也能继续负载均衡功能，但是客户端和服务器之间的映射关系已经发生了比较大的变化了。新的映射关系已经变成这样了。</p>
 <table>
 <thead>
 <tr>
@@ -613,7 +613,7 @@
 <h2 id="一致性Hash算法-今世"><a href="#一致性Hash算法-今世" class="headerlink" title="一致性Hash算法 - 今世"></a>一致性Hash算法 - 今世</h2><blockquote>
 <p>目前需要解决的一个问题是：如何<code>在机器扩容，机器缩容，机器宕机的情况下，让受影响的用户量最少</code></p>
 </blockquote>
-<h3 id="什么是一致性Hash算法？"><a href="#什么是一致性Hash算法？" class="headerlink" title="什么是一致性Hash算法？"></a>什么是一致性Hash算法？</h3><p><img src="../../../../../picture/666f29ac3aa3436789ef690233a94700~tplv-k3u1fbpfcp-zoom-1.image" alt=""></p>
+<h3 id="什么是一致性Hash算法？"><a href="#什么是一致性Hash算法？" class="headerlink" title="什么是一致性Hash算法？"></a>什么是一致性Hash算法？</h3><p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/666f29ac3aa3436789ef690233a94700~tplv-k3u1fbpfcp-zoom-1.image" alt=""></p>
 <ul>
 <li><strong>hash环</strong></li>
 </ul>
@@ -626,13 +626,13 @@
 <li><strong>确定客户端的路由</strong></li>
 </ul>
 <p>如何确定⼀个客户端路由到哪个服务器处理呢？ <code>按照逆时针⽅向找最近的服务器节点</code></p>
-<p><img src="../../../../../picture/5f7a0ca2745540ee891406d051df9571~tplv-k3u1fbpfcp-zoom-1.image" alt=""> 举个例</p>
-<h3 id="一致性Hash算法之机器扩容"><a href="#一致性Hash算法之机器扩容" class="headerlink" title="一致性Hash算法之机器扩容"></a>一致性Hash算法之机器扩容</h3><p><img src="../../../../../picture/8cf985862d044cd19befb020635d6418~tplv-k3u1fbpfcp-zoom-1.image" alt=""> </p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/5f7a0ca2745540ee891406d051df9571~tplv-k3u1fbpfcp-zoom-1.image" alt=""> 举个例</p>
+<h3 id="一致性Hash算法之机器扩容"><a href="#一致性Hash算法之机器扩容" class="headerlink" title="一致性Hash算法之机器扩容"></a>一致性Hash算法之机器扩容</h3><p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/8cf985862d044cd19befb020635d6418~tplv-k3u1fbpfcp-zoom-1.image" alt=""> </p>
 <p>这个时候，我们在增加了一台服务器，IP经过Hash之后，落在了2,3节点之间，变成了节点5。 那么此时，只有浏览器Ip Hash值落在 3-5之间，5-2之间的才收到影响，其他的所有的用户根本就不会收到影响。</p>
-<h3 id="一致性Hash算法之机器缩容"><a href="#一致性Hash算法之机器缩容" class="headerlink" title="一致性Hash算法之机器缩容"></a>一致性Hash算法之机器缩容</h3><p><img src="../../../../../picture/946914649c804e5e957ed10b63f3a6c6~tplv-k3u1fbpfcp-zoom-1.image" alt=""> 当我们机器3蹦了之后，原本浏览器Ip Hash值值在 2-3之间，3-4之间的。直接转移到顺时针的第一台机器，也就是节点4。此时其他的节点之间的机器访问地址不受影响</p>
-<h3 id="一致性Hash算法之虚拟节点"><a href="#一致性Hash算法之虚拟节点" class="headerlink" title="一致性Hash算法之虚拟节点"></a>一致性Hash算法之虚拟节点</h3><h4 id="数据倾斜问题"><a href="#数据倾斜问题" class="headerlink" title="数据倾斜问题"></a>数据倾斜问题</h4><p><img src="../../../../../picture/24163450b27749288cdcaf3437f57c1c~tplv-k3u1fbpfcp-zoom-1.image" alt=""> </p>
+<h3 id="一致性Hash算法之机器缩容"><a href="#一致性Hash算法之机器缩容" class="headerlink" title="一致性Hash算法之机器缩容"></a>一致性Hash算法之机器缩容</h3><p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/946914649c804e5e957ed10b63f3a6c6~tplv-k3u1fbpfcp-zoom-1.image" alt=""> 当我们机器3蹦了之后，原本浏览器Ip Hash值值在 2-3之间，3-4之间的。直接转移到顺时针的第一台机器，也就是节点4。此时其他的节点之间的机器访问地址不受影响</p>
+<h3 id="一致性Hash算法之虚拟节点"><a href="#一致性Hash算法之虚拟节点" class="headerlink" title="一致性Hash算法之虚拟节点"></a>一致性Hash算法之虚拟节点</h3><h4 id="数据倾斜问题"><a href="#数据倾斜问题" class="headerlink" title="数据倾斜问题"></a>数据倾斜问题</h4><p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/24163450b27749288cdcaf3437f57c1c~tplv-k3u1fbpfcp-zoom-1.image" alt=""> </p>
 <p>但是，⼀致性哈希算法在服务节点太少时，容易因为节点分部不均匀⽽造成数据倾斜问题。例如系统中只有两台服务器，其环分布如下，节点2只能负责⾮常⼩的⼀段，⼤量的客户端 请求落在了节点1上，这就是数据（请求)倾斜问题</p>
-<h4 id="虚拟节点"><a href="#虚拟节点" class="headerlink" title="虚拟节点"></a>虚拟节点</h4><p><img src="../../../../../picture/07f33b5d9f0247f0b61c95348df83971~tplv-k3u1fbpfcp-zoom-1.image" alt=""></p>
+<h4 id="虚拟节点"><a href="#虚拟节点" class="headerlink" title="虚拟节点"></a>虚拟节点</h4><p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/07f33b5d9f0247f0b61c95348df83971~tplv-k3u1fbpfcp-zoom-1.image" alt=""></p>
 <p>为了解决这种数据倾斜问题，⼀致性哈希算法引⼊了虚拟节点机制，即<code>对每⼀个服务节点计算多个哈希</code>，每个计算结果位置都放置⼀个此服务节点，称为<code>虚拟节点</code>。</p>
 <p>具体做法可以在服务器ip或主机名的后⾯<code>增加编号</code>来实现。⽐如，可以为每台服务器计算三个虚拟节点，于是可以分别计算每台机器的Hash值</p>
 <ul>
@@ -729,8 +729,8 @@
 
   // 处理虚拟节点
   for(int i = 0; i &lt; virtaulCount; i++) {
-    int virtualHash = Math.abs((tomcatServer + "#" + i).hashCode());
-    hashServerMap.put(virtualHash,"----由虚拟节点"+ i  + "映射过来的请求："+ tomcatServer);
+    int virtualHash = Math.abs((tomcatServer + &quot;#&quot; + i).hashCode());
+    hashServerMap.put(virtualHash,&quot;----由虚拟节点&quot;+ i  + &quot;映射过来的请求：&quot;+ tomcatServer);
   }
 }</code></pre><p>完整代码如下：</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConsistentHashWithVirtual</span> <span class="token punctuation">{</span>
@@ -797,7 +797,7 @@
 <ol>
 <li>github下载nginx⼀致性hash负载均衡模块 <a href="https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Freplay%2Fngx_http_consistent_hash">github.com/replay/ngx_…</a></li>
 </ol>
-<p><img src="../../../../../picture/c17af46c79a1425eaed538531c5bf610~tplv-k3u1fbpfcp-zoom-1.image" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/c17af46c79a1425eaed538531c5bf610~tplv-k3u1fbpfcp-zoom-1.image" alt=""></p>
 <ol>
 <li>将下载的压缩包上传到nginx服务器，并解压</li>
 <li>我们已经编译安装过nginx，此时进⼊当时nginx的源码⽬录，执⾏如下命令</li>
@@ -807,26 +807,8 @@ make
 make install
 复制代码</code></pre>
 <p>nginx.conf⽂件中配置 负载均衡策略</p>
-<p><img src="../../../../../picture/641e24765325463fadc91e3f26443771~tplv-k3u1fbpfcp-zoom-1.image" alt=""></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/641e24765325463fadc91e3f26443771~tplv-k3u1fbpfcp-zoom-1.image" alt=""></p>
+
             </div>
             <hr/>
 
@@ -1371,7 +1353,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

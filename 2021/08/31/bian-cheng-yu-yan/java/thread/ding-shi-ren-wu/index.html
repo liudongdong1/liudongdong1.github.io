@@ -526,14 +526,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-04-02
+                    2023-01-01
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    2.3k
+                    2.5k
                 </div>
                  -->
 
@@ -621,8 +621,10 @@
 <h4 id="2-Timer类"><a href="#2-Timer类" class="headerlink" title=".2. Timer类"></a>.2. Timer类</h4><p><code>Timer</code>类是jdk专门提供的定时器工具，用来在后台线程计划执行指定任务，在<code>java.util</code>包下，要跟<code>TimerTask</code>一起配合使用。<code>Timer</code>类其实是一个任务调度器，它里面包含了一个<code>TimerThread</code>线程，在这个线程中无限循环从<code>TaskQueue</code>中获取<code>TimerTask</code>（该类实现了Runnable接口），调用其<code>run</code>方法，就能异步执行定时任务。我们需要继承<code>TimerTask</code>类，实现它的<code>run</code>方法，在该方法中加上自己的业务逻辑。</p>
 <ul>
 <li>优点：非常<code>方便实现多个周期性的定时任务</code>，并且支<code>持延迟执行</code>，还支持<code>在指定时间之后</code>支持，功能还算强大。</li>
-<li>缺点：如果其中一个任务耗时非常长，会影响其他任务的执行。并且如果<code>TimerTask</code>抛出<code>RuntimeException</code>，<code>Timer</code>会停止所有任务的运行，所以阿里巴巴开发者规范中不建议使用它。</li>
+<li>缺点：如果其中一个任务耗时非常长，会影响其他任务的执行。并且如果<code>TimerTask</code>抛出<code>RuntimeException</code>，<code>Timer</code>会停止所有任务的运行。</li>
 </ul>
+<img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/Callable.png" style="zoom:67%;" />
+
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210831092852884.png" alt=""></p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TimerTest</span> <span class="token punctuation">{</span>
 
@@ -644,10 +646,11 @@
 <li><code>scheduleAtFixedRate(TimerTask task,Date firstTime,long period)</code>, 指定任务task在指定时间firstTime执行后，进行重复固定延迟频率peroid的执行</li>
 <li><code>scheduleAtFixedRate(TimerTask task, long delay, long period)</code>, 指定任务task 在指定延迟delay 后，进行重复固定延迟频率peroid的执行.</li>
 </ul>
-<h4 id="3-ScheduledExecutorService"><a href="#3-ScheduledExecutorService" class="headerlink" title=".3. ScheduledExecutorService"></a>.3. <a href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&amp;mid=2247487551&amp;idx=1&amp;sn=18f64ba49f3f0f9d8be9d1fdef8857d9&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">ScheduledExecutorService</a></h4><ul>
+<h4 id="3-ScheduledExecutorService"><a href="#3-ScheduledExecutorService" class="headerlink" title=".3. ScheduledExecutorService"></a>.3. <a href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect" target="_blank" rel="noopener">ScheduledExecutorService</a></h4><ul>
 <li>优点：基于多线程的定时任务，多个任务之间不会相关影响，支持周期性的执行任务，并且带延迟功能。</li>
 <li>缺点：不支持一些较复杂的定时规则。</li>
 </ul>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/Executors.png" alt="Executors"></p>
 <p><code>ScheduledExecutorService</code>是基于多线程的，设计的初衷是为了解决<code>Timer</code>单线程执行，多个任务之间会互相影响的问题。它主要包含4个方法：</p>
 <ul>
 <li><code>schedule(Runnable command,long delay,TimeUnit unit)</code>，带延迟时间的调度，只执行一次，调度之后可通过Future.get()阻塞直至任务执行完毕。</li>
@@ -655,7 +658,24 @@
 <li><code>scheduleAtFixedRate</code>，表示以固定频率执行的任务，如果当前任务耗时较多，超过定时周期period，则当前任务结束后会立即执行。</li>
 <li><code>scheduleWithFixedDelay</code>，表示以固定延时执行任务，延时是相对当前任务结束为起点计算开始时间。</li>
 </ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ScheduleExecutorTest</span> <span class="token punctuation">{</span>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/*
+ * 一、线程池：提供了一个线程队列，队列中保存着所有等待状态的线程。避免了创建与销毁额外开销，提高了响应的速度。
+ * 
+ * 二、线程池的体系结构：
+ *     java.util.concurrent.Executor : 负责线程的使用与调度的根接口
+ *         |--**ExecutorService 子接口: 线程池的主要接口
+ *             |--ThreadPoolExecutor 线程池的实现类
+ *             |--ScheduledExecutorService 子接口：负责线程的调度
+ *                 |--ScheduledThreadPoolExecutor ：继承 ThreadPoolExecutor， 实现 ScheduledExecutorService
+ * 
+ * 三、工具类 : Executors 
+ * ExecutorService newFixedThreadPool() : 创建固定大小的线程池
+ * ExecutorService newCachedThreadPool() : 缓存线程池，线程池的数量不固定，可以根据需求自动的更改数量。
+ * ExecutorService newSingleThreadExecutor() : 创建单个线程池。线程池中只有一个线程
+ * 
+ * ScheduledExecutorService newScheduledThreadPool() : 创建固定大小的线程，可以延迟或定时的执行任务。
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ScheduleExecutorTest</span> <span class="token punctuation">{</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         ScheduledExecutorService scheduledExecutorService <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newScheduledThreadPool</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         scheduledExecutorService<span class="token punctuation">.</span><span class="token function">scheduleAtFixedRate</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
@@ -736,7 +756,7 @@ ppublic <span class="token keyword">class</span> <span class="token class-name">
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <pre class=" language-xml"><code class="language-xml">sue.spring.quartz.cron=*/5 * * * * ?</code></pre>
-<h3 id="4-分布式定时任务"><a href="#4-分布式定时任务" class="headerlink" title="4. 分布式定时任务"></a>4. <a href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&amp;mid=2247487551&amp;idx=1&amp;sn=18f64ba49f3f0f9d8be9d1fdef8857d9&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">分布式定时任务</a></h3><h4 id="1-xxl-job"><a href="#1-xxl-job" class="headerlink" title=".1. xxl-job"></a>.1. <a href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&amp;mid=2247487551&amp;idx=1&amp;sn=18f64ba49f3f0f9d8be9d1fdef8857d9&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">xxl-job</a></h4><blockquote>
+<h3 id="4-分布式定时任务"><a href="#4-分布式定时任务" class="headerlink" title="4. 分布式定时任务"></a>4. <a href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect" target="_blank" rel="noopener">分布式定时任务</a></h3><h4 id="1-xxl-job"><a href="#1-xxl-job" class="headerlink" title=".1. xxl-job"></a>.1. <a href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect" target="_blank" rel="noopener">xxl-job</a></h4><blockquote>
 <p><code>xxl-job</code>是大众点评（许雪里）开发的一个分布式任务调度平台，其核心设计目标是开发迅速、学习简单、轻量级、易扩展。现已开放源代码并接入多家公司线上产品线，开箱即用。</p>
 <p><code>xxl-job</code>框架对<code>quartz</code>进行了扩展，使用<code>mysql</code>数据库存储数据，并且内置jetty作为<code>RPC</code>服务调用。</p>
 <ul>
@@ -745,7 +765,7 @@ ppublic <span class="token keyword">class</span> <span class="token class-name">
 </ul>
 </blockquote>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210831095238867.png" alt="image-20210831095238867"></p>
-<h4 id="2-elastic-job"><a href="#2-elastic-job" class="headerlink" title=".2. elastic-job"></a>.2. <a href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&amp;mid=2247487551&amp;idx=1&amp;sn=18f64ba49f3f0f9d8be9d1fdef8857d9&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">elastic-job</a></h4><blockquote>
+<h4 id="2-elastic-job"><a href="#2-elastic-job" class="headerlink" title=".2. elastic-job"></a>.2. <a href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect" target="_blank" rel="noopener">elastic-job</a></h4><blockquote>
 <p><code>elastic-job</code>是当当网开发的弹性分布式任务调度系统，功能丰富强大，采用zookeeper实现分布式协调，实现任务高可用以及分片。它是专门为高并发和复杂业务场景开发。</p>
 <p><code>elastic-job</code>目前是<code>apache</code>的<code>shardingsphere</code>项目下的一个子项目，官网地址：<a href="http://shardingsphere.apache.org/elasticjob/。" target="_blank" rel="noopener">http://shardingsphere.apache.org/elasticjob/。</a></p>
 <ul>
@@ -757,25 +777,7 @@ ppublic <span class="token keyword">class</span> <span class="token class-name">
 <h4 id="3-TBSchedule"><a href="#3-TBSchedule" class="headerlink" title=".3. TBSchedule"></a>.3. <a href="https://github.com/taobao/TBSchedule" target="_blank" rel="noopener">TBSchedule</a></h4><blockquote>
 <p>TBSchedule是阿里开发的一款分布式任务调度平台，旨在将调度作业从业务系统中分离出来，降低或者是消除和业务系统的耦合度，进行高效异步任务处理。</p>
 </blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1310,7 +1312,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

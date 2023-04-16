@@ -526,21 +526,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-08-09
+                    2023-03-12
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    3.8k
+                    5.6k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    17 Min
+                    28 Min
                 </div>
                 
 
@@ -1168,25 +1168,368 @@
 <span class="token punctuation">}</span>
 
 <span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+<h3 id="7-FileInputStream"><a href="#7-FileInputStream" class="headerlink" title="7. FileInputStream"></a>7. FileInputStream</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span>
+<span class="token keyword">class</span> <span class="token class-name">FileInputStream</span> <span class="token keyword">extends</span> <span class="token class-name">InputStream</span>
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/* File Descriptor - handle to the open file */</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> FileDescriptor fd<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * The path of the referenced file
+     * (null if the stream is created with a file descriptor)
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> String path<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> FileChannel channel <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> Object closeLock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">boolean</span> closed <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Creates a &lt;code>FileInputStream&lt;/code> by
+     * opening a connection to an actual file,
+     * the file named by the path name &lt;code>name&lt;/code>
+     * in the file system.  A new &lt;code>FileDescriptor&lt;/code>
+     * object is created to represent this file
+     * connection.
+     * &lt;p>
+     * First, if there is a security
+     * manager, its &lt;code>checkRead&lt;/code> method
+     * is called with the &lt;code>name&lt;/code> argument
+     * as its argument.
+     * &lt;p>
+     * If the named file does not exist, is a directory rather than a regular
+     * file, or for some other reason cannot be opened for reading then a
+     * &lt;code>FileNotFoundException&lt;/code> is thrown.
+     *
+     * @param      name   the system-dependent file name.
+     * @exception  FileNotFoundException  if the file does not exist,
+     *                   is a directory rather than a regular file,
+     *                   or for some other reason cannot be opened for
+     *                   reading.
+     * @exception  SecurityException      if a security manager exists and its
+     *               &lt;code>checkRead&lt;/code> method denies read access
+     *               to the file.
+     * @see        java.lang.SecurityManager#checkRead(java.lang.String)
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">FileInputStream</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token keyword">throws</span> FileNotFoundException <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">(</span>name <span class="token operator">!=</span> null <span class="token operator">?</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Creates a &lt;code>FileInputStream&lt;/code> by
+     * opening a connection to an actual file,
+     * the file named by the &lt;code>File&lt;/code>
+     * object &lt;code>file&lt;/code> in the file system.
+     * A new &lt;code>FileDescriptor&lt;/code> object
+     * is created to represent this file connection.
+     * &lt;p>
+     * First, if there is a security manager,
+     * its &lt;code>checkRead&lt;/code> method  is called
+     * with the path represented by the &lt;code>file&lt;/code>
+     * argument as its argument.
+     * &lt;p>
+     * If the named file does not exist, is a directory rather than a regular
+     * file, or for some other reason cannot be opened for reading then a
+     * &lt;code>FileNotFoundException&lt;/code> is thrown.
+     *
+     * @param      file   the file to be opened for reading.
+     * @exception  FileNotFoundException  if the file does not exist,
+     *                   is a directory rather than a regular file,
+     *                   or for some other reason cannot be opened for
+     *                   reading.
+     * @exception  SecurityException      if a security manager exists and its
+     *               &lt;code>checkRead&lt;/code> method denies read access to the file.
+     * @see        java.io.File#getPath()
+     * @see        java.lang.SecurityManager#checkRead(java.lang.String)
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">FileInputStream</span><span class="token punctuation">(</span>File file<span class="token punctuation">)</span> <span class="token keyword">throws</span> FileNotFoundException <span class="token punctuation">{</span>
+        String name <span class="token operator">=</span> <span class="token punctuation">(</span>file <span class="token operator">!=</span> null <span class="token operator">?</span> file<span class="token punctuation">.</span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        SecurityManager security <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">getSecurityManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>security <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            security<span class="token punctuation">.</span><span class="token function">checkRead</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>name <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">NullPointerException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>file<span class="token punctuation">.</span><span class="token function">isInvalid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">FileNotFoundException</span><span class="token punctuation">(</span><span class="token string">"Invalid file path"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        fd <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileDescriptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        fd<span class="token punctuation">.</span><span class="token function">attach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        path <span class="token operator">=</span> name<span class="token punctuation">;</span>
+        <span class="token function">open</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Creates a &lt;code>FileInputStream&lt;/code> by using the file descriptor
+     * &lt;code>fdObj&lt;/code>, which represents an existing connection to an
+     * actual file in the file system.
+     * &lt;p>
+     * If there is a security manager, its &lt;code>checkRead&lt;/code> method is
+     * called with the file descriptor &lt;code>fdObj&lt;/code> as its argument to
+     * see if it's ok to read the file descriptor. If read access is denied
+     * to the file descriptor a &lt;code>SecurityException&lt;/code> is thrown.
+     * &lt;p>
+     * If &lt;code>fdObj&lt;/code> is null then a &lt;code>NullPointerException&lt;/code>
+     * is thrown.
+     * &lt;p>
+     * This constructor does not throw an exception if &lt;code>fdObj&lt;/code>
+     * is {@link java.io.FileDescriptor#valid() invalid}.
+     * However, if the methods are invoked on the resulting stream to attempt
+     * I/O on the stream, an &lt;code>IOException&lt;/code> is thrown.
+     *
+     * @param      fdObj   the file descriptor to be opened for reading.
+     * @throws     SecurityException      if a security manager exists and its
+     *                 &lt;code>checkRead&lt;/code> method denies read access to the
+     *                 file descriptor.
+     * @see        SecurityManager#checkRead(java.io.FileDescriptor)
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">FileInputStream</span><span class="token punctuation">(</span>FileDescriptor fdObj<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        SecurityManager security <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">getSecurityManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>fdObj <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">NullPointerException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>security <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            security<span class="token punctuation">.</span><span class="token function">checkRead</span><span class="token punctuation">(</span>fdObj<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        fd <span class="token operator">=</span> fdObj<span class="token punctuation">;</span>
+        path <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">/*
+         * FileDescriptor is being shared by streams.
+         * Register this stream with FileDescriptor tracker.
+         */</span>
+        fd<span class="token punctuation">.</span><span class="token function">attach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Opens the specified file for reading.
+     * @param name the name of the file
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">open0</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token keyword">throws</span> FileNotFoundException<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// wrap native call to allow instrumentation</span>
+    <span class="token comment" spellcheck="true">/**
+     * Opens the specified file for reading.
+     * @param name the name of the file
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">open</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token keyword">throws</span> FileNotFoundException <span class="token punctuation">{</span>
+        <span class="token function">open0</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Reads a byte of data from this input stream. This method blocks
+     * if no input is yet available.
+     *
+     * @return     the next byte of data, or &lt;code>-1&lt;/code> if the end of the
+     *             file is reached.
+     * @exception  IOException  if an I/O error occurs.
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">read</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">read0</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">native</span> <span class="token keyword">int</span> <span class="token function">read0</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Reads a subarray as a sequence of bytes.
+     * @param b the data to be written
+     * @param off the start offset in the data
+     * @param len the number of bytes that are written
+     * @exception IOException If an I/O error has occurred.
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">native</span> <span class="token keyword">int</span> <span class="token function">readBytes</span><span class="token punctuation">(</span><span class="token keyword">byte</span> b<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">int</span> off<span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Reads up to &lt;code>b.length&lt;/code> bytes of data from this input
+     * stream into an array of bytes. This method blocks until some input
+     * is available.
+     *
+     * @param      b   the buffer into which the data is read.
+     * @return     the total number of bytes read into the buffer, or
+     *             &lt;code>-1&lt;/code> if there is no more data because the end of
+     *             the file has been reached.
+     * @exception  IOException  if an I/O error occurs.
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">read</span><span class="token punctuation">(</span><span class="token keyword">byte</span> b<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">readBytes</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> b<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Reads up to &lt;code>len&lt;/code> bytes of data from this input stream
+     * into an array of bytes. If &lt;code>len&lt;/code> is not zero, the method
+     * blocks until some input is available; otherwise, no
+     * bytes are read and &lt;code>0&lt;/code> is returned.
+     *
+     * @param      b     the buffer into which the data is read.
+     * @param      off   the start offset in the destination array &lt;code>b&lt;/code>
+     * @param      len   the maximum number of bytes read.
+     * @return     the total number of bytes read into the buffer, or
+     *             &lt;code>-1&lt;/code> if there is no more data because the end of
+     *             the file has been reached.
+     * @exception  NullPointerException If &lt;code>b&lt;/code> is &lt;code>null&lt;/code>.
+     * @exception  IndexOutOfBoundsException If &lt;code>off&lt;/code> is negative,
+     * &lt;code>len&lt;/code> is negative, or &lt;code>len&lt;/code> is greater than
+     * &lt;code>b.length - off&lt;/code>
+     * @exception  IOException  if an I/O error occurs.
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">read</span><span class="token punctuation">(</span><span class="token keyword">byte</span> b<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">int</span> off<span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">readBytes</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> off<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Skips over and discards &lt;code>n&lt;/code> bytes of data from the
+     * input stream.
+     *
+     * &lt;p>The &lt;code>skip&lt;/code> method may, for a variety of
+     * reasons, end up skipping over some smaller number of bytes,
+     * possibly &lt;code>0&lt;/code>. If &lt;code>n&lt;/code> is negative, the method
+     * will try to skip backwards. In case the backing file does not support
+     * backward skip at its current position, an &lt;code>IOException&lt;/code> is
+     * thrown. The actual number of bytes skipped is returned. If it skips
+     * forwards, it returns a positive value. If it skips backwards, it
+     * returns a negative value.
+     *
+     * &lt;p>This method may skip more bytes than what are remaining in the
+     * backing file. This produces no exception and the number of bytes skipped
+     * may include some number of bytes that were beyond the EOF of the
+     * backing file. Attempting to read from the stream after skipping past
+     * the end will result in -1 indicating the end of the file.
+     *
+     * @param      n   the number of bytes to be skipped.
+     * @return     the actual number of bytes skipped.
+     * @exception  IOException  if n is negative, if the stream does not
+     *             support seek, or if an I/O error occurs.
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">long</span> <span class="token function">skip</span><span class="token punctuation">(</span><span class="token keyword">long</span> n<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">skip0</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">native</span> <span class="token keyword">long</span> <span class="token function">skip0</span><span class="token punctuation">(</span><span class="token keyword">long</span> n<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Returns an estimate of the number of remaining bytes that can be read (or
+     * skipped over) from this input stream without blocking by the next
+     * invocation of a method for this input stream. Returns 0 when the file
+     * position is beyond EOF. The next invocation might be the same thread
+     * or another thread. A single read or skip of this many bytes will not
+     * block, but may read or skip fewer bytes.
+     *
+     * &lt;p> In some cases, a non-blocking read (or skip) may appear to be
+     * blocked when it is merely slow, for example when reading large
+     * files over slow networks.
+     *
+     * @return     an estimate of the number of remaining bytes that can be read
+     *             (or skipped over) from this input stream without blocking.
+     * @exception  IOException  if this file input stream has been closed by calling
+     *             {@code close} or an I/O error occurs.
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">available</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">available0</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">native</span> <span class="token keyword">int</span> <span class="token function">available0</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Closes this file input stream and releases any system resources
+     * associated with the stream.
+     *
+     * &lt;p> If this stream has an associated channel then the channel is closed
+     * as well.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     *
+     * @revised 1.4
+     * @spec JSR-51
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>closeLock<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>closed<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            closed <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>channel <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+           channel<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        fd<span class="token punctuation">.</span><span class="token function">closeAll</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Closeable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+               <span class="token function">close0</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+           <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Returns the &lt;code>FileDescriptor&lt;/code>
+     * object  that represents the connection to
+     * the actual file in the file system being
+     * used by this &lt;code>FileInputStream&lt;/code>.
+     *
+     * @return     the file descriptor object associated with this stream.
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FileDescriptor
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">final</span> FileDescriptor <span class="token function">getFD</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>fd <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> fd<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IOException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Returns the unique {@link java.nio.channels.FileChannel FileChannel}
+     * object associated with this file input stream.
+     *
+     * &lt;p> The initial {@link java.nio.channels.FileChannel#position()
+     * position} of the returned channel will be equal to the
+     * number of bytes read from the file so far.  Reading bytes from this
+     * stream will increment the channel's position.  Changing the channel's
+     * position, either explicitly or by reading, will change this stream's
+     * file position.
+     *
+     * @return  the file channel associated with this file input stream
+     *
+     * @since 1.4
+     * @spec JSR-51
+     */</span>
+    <span class="token keyword">public</span> FileChannel <span class="token function">getChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>channel <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                channel <span class="token operator">=</span> FileChannelImpl<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> path<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> channel<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">initIDs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">close0</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+
+    <span class="token keyword">static</span> <span class="token punctuation">{</span>
+        <span class="token function">initIDs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Ensures that the &lt;code>close&lt;/code> method of this file input stream is
+     * called when there are no more references to it.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FileInputStream#close()
+     */</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">finalize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>fd <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>  <span class="token punctuation">(</span>fd <span class="token operator">!=</span> FileDescriptor<span class="token punctuation">.</span>in<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">/* if fd is shared, the references in FileDescriptor
+             * will ensure that finalizer is only called when
+             * safe to do so. All references using the fd have
+             * become unreachable. We can call close()
+             */</span>
+            <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+
             </div>
             <hr/>
 
@@ -1480,7 +1823,7 @@ Iterator（抽象迭代器）： 具体迭代器需要实现的接口，提供�
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/05/10/bian-cheng-yu-yan/java/exceptionhandle/">
+                <a href="/2021/05/10/bian-cheng-yu-yan/java/effectvejava/exceptionhandle/">
                     <div class="card-image">
                         
                         <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210510093804.png" class="responsive-img" alt="ExceptionHandle">
@@ -1720,7 +2063,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

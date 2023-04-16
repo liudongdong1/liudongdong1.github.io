@@ -522,7 +522,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-05-14
+                    2022-11-07
                 </div>
                 
 
@@ -655,39 +655,39 @@ xdot <span class="token operator">&lt;</span><span class="token punctuation">(</
   --output graph<span class="token punctuation">)</span></code></pre>
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20200828200445.png" alt=""></p>
 <h3 id="2-2-Multi-build"><a href="#2-2-Multi-build" class="headerlink" title="2.2. Multi-build"></a>2.2. Multi-build</h3><pre><code>cc_library(
-    name = "hello-greet",
-    srcs = ["hello-greet.cc"],
-    hdrs = ["hello-greet.h"],
+    name = &quot;hello-greet&quot;,
+    srcs = [&quot;hello-greet.cc&quot;],
+    hdrs = [&quot;hello-greet.h&quot;],
 )
 
 cc_binary(
-    name = "hello-world",
-    srcs = ["hello-world.cc"],
+    name = &quot;hello-world&quot;,
+    srcs = [&quot;hello-world.cc&quot;],
     deps = [
-        ":hello-greet",
+        &quot;:hello-greet&quot;,
     ],
 )</code></pre><blockquote>
 <p>he <code>deps</code> attribute in the <code>hello-world</code> target tells Bazel that the <code>hello-greet</code> library is required to build the <code>hello-world</code> binary.</p>
 </blockquote>
 <h3 id="2-3-Multi-Package"><a href="#2-3-Multi-Package" class="headerlink" title="2.3. Multi-Package"></a>2.3. Multi-Package</h3><p>Take a look at the <code>lib/BUILD</code> file:</p>
 <pre><code>cc_library(
-    name = "hello-time",
-    srcs = ["hello-time.cc"],
-    hdrs = ["hello-time.h"],
-    visibility = ["//main:__pkg__"],
+    name = &quot;hello-time&quot;,
+    srcs = [&quot;hello-time.cc&quot;],
+    hdrs = [&quot;hello-time.h&quot;],
+    visibility = [&quot;//main:__pkg__&quot;],
 )</code></pre><p>And at the <code>main/BUILD</code> file:</p>
 <pre><code>cc_library(
-    name = "hello-greet",
-    srcs = ["hello-greet.cc"],
-    hdrs = ["hello-greet.h"],
+    name = &quot;hello-greet&quot;,
+    srcs = [&quot;hello-greet.cc&quot;],
+    hdrs = [&quot;hello-greet.h&quot;],
 )
 
 cc_binary(
-    name = "hello-world",
-    srcs = ["hello-world.cc"],
+    name = &quot;hello-world&quot;,
+    srcs = [&quot;hello-world.cc&quot;],
     deps = [
-        ":hello-greet",
-        "//lib:hello-time",
+        &quot;:hello-greet&quot;,
+        &quot;//lib:hello-time&quot;,
     ],
 )</code></pre><p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20200828201159.png" alt=""></p>
 <blockquote>
@@ -766,14 +766,14 @@ http_archive<span class="token punctuation">(</span>
     linkopts <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"-pthread"</span><span class="token punctuation">]</span>,
     visibility <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"//visibility:public"</span><span class="token punctuation">]</span>,
 <span class="token punctuation">)</span></code></pre>
-<pre><code>load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+<pre><code>load(&quot;@bazel_tools//tools/build_defs/repo:http.bzl&quot;, &quot;http_archive&quot;)
 
 http_archive(
-    name = "gtest",
-    url = "https://github.com/google/googletest/archive/release-1.7.0.zip",
-    sha256 = "b58cb7547a28b2c718d1e38aee18a3659c9e3ff52440297e965f5edffe34b6d0",
-    build_file = "@//:gtest.BUILD",
-    strip_prefix = "googletest-release-1.7.0",
+    name = &quot;gtest&quot;,
+    url = &quot;https://github.com/google/googletest/archive/release-1.7.0.zip&quot;,
+    sha256 = &quot;b58cb7547a28b2c718d1e38aee18a3659c9e3ff52440297e965f5edffe34b6d0&quot;,
+    build_file = &quot;@//:gtest.BUILD&quot;,
+    strip_prefix = &quot;googletest-release-1.7.0&quot;,
 )</code></pre><pre class=" language-bash"><code class="language-bash">cc_library<span class="token punctuation">(</span>
     name <span class="token operator">=</span> <span class="token string">"main"</span>,
     srcs <span class="token operator">=</span> glob<span class="token punctuation">(</span>
@@ -854,37 +854,19 @@ local_repository<span class="token punctuation">(</span>
     repo_mapping <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"@testrunner"</span> <span class="token keyword">:</span> <span class="token string">"@testrunner-v2"</span><span class="token punctuation">}</span>
 <span class="token punctuation">)</span></code></pre>
 <h3 id="3-7-Visibility"><a href="#3-7-Visibility" class="headerlink" title="3.7. Visibility"></a>3.7. Visibility</h3><ul>
-<li><code>"//visibility:public"</code>: Anyone can use this target. (May not be combined with any other specification.)</li>
-<li><code>"//visibility:private"</code>: Only targets in this package can use this target. (May not be combined with any other specification.)</li>
-<li><code>"//foo/bar:__pkg__"</code>: Grants access to targets defined in <code>//foo/bar</code> (but not its subpackages). Here, <code>__pkg__</code> is a special piece of syntax representing all of the targets in a package.</li>
-<li><code>"//foo/bar:__subpackages__"</code>: Grants access to targets defined in <code>//foo/bar</code>, or any of its direct or indirect subpackages. Again, <code>__subpackages__</code> is special syntax.</li>
-<li><code>"//foo/bar:my_package_group"</code>: Grants access to all of the packages named by the given <a href="https://docs.bazel.build/versions/master/be/functions.html#package_group" target="_blank" rel="noopener">package group</a>.<ul>
-<li>Package groups do not support the special <code>__pkg__</code> and <code>__subpackages__</code> syntax. Within a package group, <code>"//foo/bar"</code> is equivalent to <code>"//foo/bar:__pkg__"</code> and <code>"//foo/bar/..."</code> is equivalent to <code>"//foo/bar:__subpackages__"</code>.</li>
+<li><code>&quot;//visibility:public&quot;</code>: Anyone can use this target. (May not be combined with any other specification.)</li>
+<li><code>&quot;//visibility:private&quot;</code>: Only targets in this package can use this target. (May not be combined with any other specification.)</li>
+<li><code>&quot;//foo/bar:__pkg__&quot;</code>: Grants access to targets defined in <code>//foo/bar</code> (but not its subpackages). Here, <code>__pkg__</code> is a special piece of syntax representing all of the targets in a package.</li>
+<li><code>&quot;//foo/bar:__subpackages__&quot;</code>: Grants access to targets defined in <code>//foo/bar</code>, or any of its direct or indirect subpackages. Again, <code>__subpackages__</code> is special syntax.</li>
+<li><code>&quot;//foo/bar:my_package_group&quot;</code>: Grants access to all of the packages named by the given <a href="https://docs.bazel.build/versions/master/be/functions.html#package_group" target="_blank" rel="noopener">package group</a>.<ul>
+<li>Package groups do not support the special <code>__pkg__</code> and <code>__subpackages__</code> syntax. Within a package group, <code>&quot;//foo/bar&quot;</code> is equivalent to <code>&quot;//foo/bar:__pkg__&quot;</code> and <code>&quot;//foo/bar/...&quot;</code> is equivalent to <code>&quot;//foo/bar:__subpackages__&quot;</code>.</li>
 </ul>
 </li>
 </ul>
 <blockquote>
 <p><code>load</code> statements are currently not subject to visibility. It is possible to load a <code>bzl</code> file anywhere in the workspace.</p>
 </blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1120,7 +1102,7 @@ local_repository<span class="token punctuation">(</span>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2020/08/29/aiot/networktraffic/mqtt/">
+                <a href="/2020/08/29/kuang-jia-she-ji/iotframework/mqtt/">
                     <div class="card-image">
                         
                         <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/30.jpeg" class="responsive-img" alt="MQTT">
@@ -1409,7 +1391,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

@@ -526,7 +526,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-03-24
+                    2023-01-01
                 </div>
                 
 
@@ -561,15 +561,15 @@
 <li>JVM 虚拟机相当于<code>在操作系统之上建立的一个虚拟的计算机</code>。其中内存结构可以看出来，<code>jvm 中 pc 寄存器，栈，堆，元空间和常量池对应计算机的处理器和内存</code>。JVM 能操作所有操作系统，<code>向上提供统一接口，也就是 JavaAPI</code>，开发者只需要面向 JVM (JavaAPI) 编程，至于 JVM 是如何各种不同的操作系统打交道开发者完全不用管。</li>
 </ul>
 </blockquote>
-<p><img src="../../../../../picture2022/705292.jpg" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/705292.jpg" alt=""></p>
 <h4 id="1-操作系统-amp-CPU-amp-指令集"><a href="#1-操作系统-amp-CPU-amp-指令集" class="headerlink" title="1. 操作系统&amp;CPU&amp;指令集"></a>1. 操作系统&amp;CPU&amp;指令集</h4><blockquote>
 <p>首先操作系统还是普通的应用程序最终都得转化到<code>二进制代码才能够被 cpu 所处理</code>。而用高级语言编写的普通应用程序都必须经过编译器编译后成为二进制代码（指令）才能运行。而不同的 cpu 所实现的指令集不同，所以<code>不同的指令集对应的编译器也不尽相同</code>，编译器不同，相同的高级语言程序经过编译后所得到的二进制代码也不同。</p>
 </blockquote>
 <h4 id="2-内存操作"><a href="#2-内存操作" class="headerlink" title="2. 内存操作"></a>2. 内存操作</h4><blockquote>
 <p>内存首先是建立操作系统的内存模型，然后<code>其他内存模型都建立在操作系统的内存模型之上或者跟操作系统内存模型有关</code>。比如 JVM 的内存模型，当我们操作数据的时候，JVM 内存模型发生变化，从而控制操作系统，操作系统跟 CPU 之间完成非常复杂的沟通，然后得出结果，从 IO 送出信号。而这一切的一切在计算机内部都是所谓的二进制在运行，再向下一点，就是无数个高低电平的变化。</p>
 </blockquote>
-<p><img src="../../../../../picture2022/bb.jpeg" alt=""></p>
-<p><img src="../../../../../picture2022/bb-164810745219815.jpeg" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/bb.jpeg" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/bb-164810745219815.jpeg" alt=""></p>
 <blockquote>
 <p>从软件层面上， class 文件被加载进虚拟机后，<code>类信息会存放在方法区</code>，在实际运行的时候会<code>执行方法区中的代码</code>，在 <code>JVM 中所有的线程共享堆内存和方法区</code>，而<code>每个线程有自己独立的 Java 方法栈</code>，<code>本地方法栈（面向 native 方法）</code>，<code>PC 寄存器（存放线程执行位置）</code>，当调用一个方法的时候， Java 虚拟机会在当前线程对应的方法栈中压入一个栈帧，用来存放 Java 字节码操作数以及局部变量，这个方法执行完会弹出栈帧，一个线程会连续执行多个方法，对应不同的栈帧的压入和弹出，压入栈帧后就是 JVM 解释执行的过程了。</p>
 </blockquote>
@@ -577,14 +577,14 @@
 <p>现代计算机多采用<code>虚拟存储技术</code>，虚拟存储<code>让每个进程以为自己独占整个内存空间</code>，其实这个虚拟空间是主存和磁盘的抽象，这样的好处是，<code>每个进程拥有一致的虚拟地址空间，简化了内存管理，进程不需要和其他进程竞争内存空间</code>。</p>
 <p>因为他是独占的，也保护了各自进程不被其他进程破坏，另外，他<code>把主存看成磁盘的一个缓存，主存中仅保存活动的程序段和数据段</code>，<code>当主存中不存在数据的时候发生缺页中断，然后从磁盘加载进来</code>，当<code>物理内存不足的时候会发生 swap 到磁盘</code>。页表保存了虚拟地址和物理地址的映射，页表是一个数组，每个元素为一个页的映射关系，这个映射关系可能是和主存地址，也可能和磁盘，页表存储在主存，我们将存储在高速缓冲区 cache  中的页表称为快表 TLAB 。</p>
 </blockquote>
-<p><img src="../../../../../picture2022/bb-164810834107217.jpeg" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/bb-164810834107217.jpeg" alt=""></p>
 <h4 id="4-内存映射"><a href="#4-内存映射" class="headerlink" title="4. 内存映射"></a>4. 内存映射</h4><blockquote>
 <ul>
 <li>读取文件的流程为，先通过系统调用<code>从磁盘读取数据</code>，存入操作系统的<code>内核缓冲区</code>，然后在<code>从内核缓冲区拷贝到用户空间</code></li>
 <li>内存映射，是将<code>磁盘文件直接映射到用户的虚拟存储空间</code>中，通过<code>页表</code>维护虚拟地址到磁盘的映射</li>
 </ul>
 </blockquote>
-<p><img src="../../../../../picture2022/bb-164810856955419.jpeg" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/bb-164810856955419.jpeg" alt=""></p>
 <h4 id="5-线程模型"><a href="#5-线程模型" class="headerlink" title="5. 线程模型"></a>5. 线程模型</h4><p>在 <code>JVM 中的线程和内核线程是一一对应的</code>，线程的调度完全交给了内核，当调用 Thread.run 的时候，就会通过系统调用 fork () 创建一个内核线程，这个方法会在用户态和内核态之间进行切换，性能没有在用户态实现线程高，当然由于直接使用内核线程，所以能够创建的最大线程数也受内核控制。目前 Linux 上 的线程模型为 NPTL （ Native POSIX Thread Library），他使用一对一模式，兼容 POSIX 标准，没有使用管理线程，可以更好地在多核 CPU 上运行。</p>
 <p>对进程而言，就三种状态，<code>就绪，运行，阻塞</code>，而在 JVM 中，阻塞有四种类型，我们可以通过 jstack 生成 dump 文件查看线程的状态。</p>
 <ul>
@@ -596,25 +596,7 @@
 <h4 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h4><ul>
 <li><a href="https://www.yisu.com/zixun/583056.html" target="_blank" rel="noopener">https://www.yisu.com/zixun/583056.html</a></li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -869,7 +851,6 @@
 AI拟声: 5秒内克隆您的声音并生成任意语音内容 Clone a voice in 5 seconds to generate arbitrary speech in real-time
 
 
-        d
                         
                     </div>
                     <div class="publish-info">
@@ -917,32 +898,8 @@ AI拟声: 5秒内克隆您的声音并生成任意语音内容 Clone a voice in 
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1. 编译过程
-2. C语言关键字
-
-
-auto
-extern
-short
-while
-
-
-
-break
-float
-signed
-_Alignas
-
-
-case
-for
-sizeof
-_Alignof
-
-
-char
-goto
-static
+                            
+  d686cb0a25b96ced5ce99713a9124a672af07c4932ce8f6b254ba7b44eeb99d6b3b57ec73b47f733ffaeec88eb870596ecfabd697834dde559552
                         
                     </div>
                     <div class="publish-info">
@@ -1166,7 +1123,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

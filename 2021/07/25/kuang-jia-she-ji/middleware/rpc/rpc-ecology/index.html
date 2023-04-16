@@ -526,21 +526,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-07-29
+                    2023-01-01
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    5.5k
+                    6k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    20 Min
+                    21 Min
                 </div>
                 
 
@@ -579,6 +579,19 @@
 </ul>
 </blockquote>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210725122130536.png" alt=""></p>
+<ul>
+<li>服务消费者(Client 客户端)通过本地调用的方式调用服务。</li>
+<li>客户端存根(Client Stub)接收到调用请求后负责将方法、入参等信息序列化(组装)成能够进行网络传输的消息体。</li>
+<li>客户端存根(Client Stub)找到远程的服务地址，并且将消息通过网络发送给服务端。</li>
+<li>服务端存根(Server Stub)收到消息后进行解码(反序列化操作)。</li>
+<li>服务端存根(Server Stub)根据解码结果调用本地的服务进行相关处理</li>
+<li>服务端(Server)本地服务业务处理。</li>
+<li>处理结果返回给服务端存根(Server Stub)。</li>
+<li>服务端存根(Server Stub)序列化结果。</li>
+<li>服务端存根(Server Stub)将结果通过网络发送至消费方。</li>
+<li>客户端存根(Client Stub)接收到消息，并进行解码(反序列化)。</li>
+<li>服务消费方得到最终结果。</li>
+</ul>
 <h4 id="2-RPC概念"><a href="#2-RPC概念" class="headerlink" title="2. RPC概念"></a>2. RPC概念</h4><h5 id="1-组成结构"><a href="#1-组成结构" class="headerlink" title="1. 组成结构"></a>1. 组成结构</h5><blockquote>
 <ul>
 <li><p><code>RPC 服务方</code>通过<code>RpcServer 去导出（export）远程接口方法</code>，而<code>客户方通过 RpcClient 去引入(import)远程接口方法</code>。客户方像调用本地方法一样去调用远程接口方法，RPC 框架提供接口的代理实现，实际的调用将<code>委托给代理RpcProxy</code> 。<code>代理封装调用信息并将调用转交给RpcInvoker 去实际执行</code>。<code>在客户端的RpcInvoker 通过连接器RpcConnector 去维持与服务端的通道RpcChannel</code>，并使用<code>RpcProtocol 执行协议编码（encode）</code>并将编码后的请求消息通过通道发送给服务方。</p>
@@ -718,7 +731,7 @@ demo<span class="token punctuation">.</span><span class="token function">hi</spa
 <li>整个请求过程中，<code>Hystrix 组件负责处理服务超时熔断，Turbine 组件负责监控服务间的调用和熔断相关指标，Sleuth 组件负责调用链监控，ELK 负责日志分析。</code></li>
 </ul>
 <h5 id="5-gRPC"><a href="#5-gRPC" class="headerlink" title="5. gRPC"></a>5. gRPC</h5><p>先来看下 gRPC，它的原理是<code>通过 IDL（Interface Definition Language）文件定义服务接口的参数和返回值类型，然后通过代码生成程序生成服务端和客户端的具体实现代码</code>，这样在 gRPC 里，客户端应用可以像调用本地对象一样调用另一台服务器上对应的方法。</p>
-<p><img src="../../../../../../picture/16caf43c8e5b851e" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/16caf43c8e5b851e" alt=""></p>
 <p>它的主要特性包括三个方面。</p>
 <ul>
 <li>通信协议采用了<code>HTTP/2</code>，因为 HTTP/2 提供了<code>连接复用、双向流、服务器推送、请求优先级、首部压缩等机制</code></li>
@@ -726,12 +739,29 @@ demo<span class="token punctuation">.</span><span class="token function">hi</spa
 <li><code>多语言支持</code>，能够基于多种语言自动生成对应语言的客户端和服务端的代码。</li>
 </ul>
 <h5 id="6-Thrift"><a href="#6-Thrift" class="headerlink" title="6. Thrift"></a>6. Thrift</h5><p>再来看下 Thrift，<code>Thrift 是一种轻量级的跨语言 RPC 通信方案</code>，支持多达 25 种编程语言。为了支持多种语言，跟 gRPC 一样，Thrift 也有一套自己的接口定义语言 IDL，<code>可以通过代码生成器，生成各种编程语言的 Client 端和 Server 端的 SDK 代码</code>，这样就保证了不同语言之间可以相互通信。它的架构图可以用下图来描述。</p>
-<p><img src="../../../../../../picture/16caf43c8d711952" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/16caf43c8d711952" alt=""></p>
 <p>从这张图上可以看出 Thrift RPC 框架的特性。</p>
 <ul>
 <li><code>支持多种序列化格式</code>：如 Binary、Compact、JSON、Multiplexed 等。</li>
 <li><code>支持多种通信方式</code>：如 Socket、Framed、File、Memory、zlib 等。</li>
 <li><code>服务端支持多种处理方式</code>：如 Simple 、Thread Pool、Non-Blocking 等。</li>
+</ul>
+<h4 id="RPC-核心功能"><a href="#RPC-核心功能" class="headerlink" title="RPC  核心功能"></a>RPC  核心功能</h4><h5 id="1-服务寻址"><a href="#1-服务寻址" class="headerlink" title=".1. 服务寻址"></a>.1. 服务寻址</h5><blockquote>
+<ul>
+<li>如果是本地调用，被调用的方法在同一个进程内，操作系统或虚拟机可以地址空间找到;</li>
+<li>但是在远程调用中，这是行不通的，因为两个进程的地址空间是完全不一样的，并且也无法知道远端的进程在何处。</li>
+</ul>
+</blockquote>
+<p>要想实现远程调用，我们需要对服务消费者和服务提供者进行约束：</p>
+<ul>
+<li>在远程过程调用中<code>所有的函数都必须有一个ID</code>，这个 ID 在整套系统中是唯一确定的。</li>
+<li>服务消费者在做远程过程调用时，<code>发送的消息体中必须携带这个 ID</code>。</li>
+<li>服务消费者和服务提供者<code>分别维护一个函数和 ID 的对应表</code>。</li>
+</ul>
+<p>当服务消费者需要进行远程调用时，它就查一下这个表，找出对应的 ID，然后把它传给服务端，服务端也通过查表，来确定客户端需要调用的函数，然后执行相应函数的代码。要调用服务，首先你需要一个服务注册中心去查询对方服务都有哪些实例，然后根据负载均衡策略择优选一。</p>
+<p><img src="../../../../../blogimgv2022/f52de3a5c920b0baa36845f8719f810e.jpg" alt=""></p>
+<h5 id="2-数据编解码-序列化和反序列化"><a href="#2-数据编解码-序列化和反序列化" class="headerlink" title=".2. 数据编解码(序列化和反序列化)"></a>.2. <strong>数据编解码(序列化和反序列化)</strong></h5><h5 id="3-网络传输"><a href="#3-网络传输" class="headerlink" title=".3. 网络传输"></a>.3. 网络传输</h5><ul>
+<li>数据编解码和网络传输可以有多种组合方式，比如常见的有：HTTP+JSON, Dubbo 协议+TCP 等。</li>
 </ul>
 <h4 id="4-技术需求分析"><a href="#4-技术需求分析" class="headerlink" title="4. 技术需求分析"></a>4. 技术需求分析</h4><h5 id="1-服务定义"><a href="#1-服务定义" class="headerlink" title=".1. 服务定义"></a>.1. 服务定义</h5><blockquote>
 <p>RPC是一个两方（消费方和提供方）的通信调用关系，这需要在两方之间建立一个通信契约，服务定义就是实现这个目的。<code>服务定义的内容主要包括服务名、入参请求和出参响应</code>。</p>
@@ -853,25 +883,7 @@ Public <span class="token keyword">interface</span> <span class="token class-nam
 <li>Motan的技术文档 <a href="https://github.com/weibocom/motan/wiki" target="_blank" rel="noopener">https://github.com/weibocom/motan/wiki</a></li>
 <li><a href="https://gitee.com/huangyong/rpc" target="_blank" rel="noopener">https://gitee.com/huangyong/rpc</a></li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1130,9 +1142,6 @@ Collection/List/Set/Map
 
 
 
-
-
-        document.querySelectorAll('.github-emoji'
                         
                     </div>
                     <div class="publish-info">
@@ -1154,12 +1163,12 @@ Collection/List/Set/Map
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/skill/">
-                        <span class="chip bg-color">skill</span>
-                    </a>
-                    
                     <a href="/tags/java/">
                         <span class="chip bg-color">java</span>
+                    </a>
+                    
+                    <a href="/tags/skill/">
+                        <span class="chip bg-color">skill</span>
                     </a>
                     
                 </div>
@@ -1173,38 +1182,51 @@ Collection/List/Set/Map
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/25/shi-kong-shu-ju/retrieve/dtw-sequence-analysis/">
+                <a href="/2021/07/22/kuang-jia-she-ji/middleware/servicemesh/">
                     <div class="card-image">
                         
+                        <img src="https://cdn.stocksnap.io/img-thumbs/280h/46YBDQQ43I.jpg" class="responsive-img" alt="servicemesh">
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="时空数据/Retrieve/DTW-Sequence-Analysis">
-                        
-                        <span class="card-title">时空数据/Retrieve/DTW-Sequence-Analysis</span>
+                        <span class="card-title">servicemesh</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-level: SIGKDD  ACM
-author:Thanawin Rakthanmanon
-date:  August 12–16, 2012
-keyword:Sequence data matchingPaper: DTW
+From: https://zhuanlan.zhihu.com/p/61901608
 
-Sea
+
+微服务 (Microservices) 是一种软件架构风格，它是以专注于单一责任与功能的小型功能区块 (Small Building Blocks
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-25
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-22
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            liudongdong
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AF%AD%E8%A8%80%E6%A1%86%E6%9E%B6/" class="post-category">
+                                    语言框架
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Framework/">
+                        <span class="chip bg-color">Framework</span>
+                    </a>
+                    
+                    <a href="/tags/middleware/">
+                        <span class="chip bg-color">middleware</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -1403,7 +1425,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-11-04
+                    2023-04-08
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    2.1k
+                    2.8k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    8 Min
+                    12 Min
                 </div>
                 
 
@@ -683,6 +683,190 @@ pickle<span class="token punctuation">.</span>dump<span class="token punctuation
 <li><a href="https://github.com/KonstantinosAng/PyKinect2-Mapper-Functions/blob/master/mapper.py" target="_blank" rel="noopener">mapper.py</a></li>
 </ul>
 <p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610195517769.png" alt=""></p>
+<h4 id="2-pylibfreenect2"><a href="#2-pylibfreenect2" class="headerlink" title="2. pylibfreenect2"></a>2. pylibfreenect2</h4><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> open3d <span class="token keyword">as</span> o3d
+<span class="token keyword">import</span> cv2
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> sys
+<span class="token keyword">import</span> datetime
+
+<span class="token comment" spellcheck="true"># 导入 pylibfreenect2 库</span>
+<span class="token keyword">import</span> pylibfreenect2 <span class="token keyword">as</span> freenect2
+<span class="token keyword">from</span> pylibfreenect2 <span class="token keyword">import</span> FrameType<span class="token punctuation">,</span> Registration<span class="token punctuation">,</span> FrameListener
+
+<span class="token keyword">from</span> test_resnetv2 <span class="token keyword">import</span> <span class="token operator">*</span>
+
+
+<span class="token comment" spellcheck="true"># 定义颜色常量</span>
+BLUE <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span>
+GREEN <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+RED <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+WHITE <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span>
+BLACK <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">get_hand_3d_coordinates</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true"># 初始化 Kinect 传感器</span>
+    fn <span class="token operator">=</span> freenect2<span class="token punctuation">.</span>Freenect2<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    num_devices <span class="token operator">=</span> fn<span class="token punctuation">.</span>enumerateDevices<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> num_devices <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"No device connected!"</span><span class="token punctuation">)</span>
+        sys<span class="token punctuation">.</span>exit<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    serial <span class="token operator">=</span> fn<span class="token punctuation">.</span>getDeviceSerialNumber<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+    device <span class="token operator">=</span> fn<span class="token punctuation">.</span>openDevice<span class="token punctuation">(</span>serial<span class="token punctuation">)</span>
+    types <span class="token operator">=</span> FrameType<span class="token punctuation">.</span>Ir <span class="token operator">|</span> FrameType<span class="token punctuation">.</span>Depth <span class="token operator">|</span> FrameType<span class="token punctuation">.</span>Color
+    listener <span class="token operator">=</span> FrameListener<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    device<span class="token punctuation">.</span>setIrAndDepthFrameListener<span class="token punctuation">(</span>listener<span class="token punctuation">)</span>
+    device<span class="token punctuation">.</span>setColorFrameListener<span class="token punctuation">(</span>listener<span class="token punctuation">)</span>
+    device<span class="token punctuation">.</span>startStreams<span class="token punctuation">(</span><span class="token operator">*</span>types<span class="token punctuation">)</span>
+
+    <span class="token comment" spellcheck="true"># 初始化变量</span>
+    hand_3d_coordinates <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+    <span class="token comment" spellcheck="true"># 初始化 Open3D 点云</span>
+    pcd <span class="token operator">=</span> o3d<span class="token punctuation">.</span>geometry<span class="token punctuation">.</span>PointCloud<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token comment" spellcheck="true"># 初始化 Kinect 注册器</span>
+    registration <span class="token operator">=</span> Registration<span class="token punctuation">(</span>device<span class="token punctuation">.</span>getIrCameraParams<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> device<span class="token punctuation">.</span>getColorCameraParams<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    undistorted <span class="token operator">=</span> Frame<span class="token punctuation">(</span><span class="token number">512</span><span class="token punctuation">,</span> <span class="token number">424</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+    registered <span class="token operator">=</span> Frame<span class="token punctuation">(</span><span class="token number">512</span><span class="token punctuation">,</span> <span class="token number">424</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+    n <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token comment" spellcheck="true"># 循环处理帧数据</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true"># 获取深度数据</span>
+        frames <span class="token operator">=</span> listener<span class="token punctuation">.</span>waitForNewFrame<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        depth <span class="token operator">=</span> frames<span class="token punctuation">[</span><span class="token string">"depth"</span><span class="token punctuation">]</span>
+
+        <span class="token comment" spellcheck="true"># 获取彩色图像</span>
+        color <span class="token operator">=</span> frames<span class="token punctuation">[</span><span class="token string">"color"</span><span class="token punctuation">]</span>
+
+        <span class="token comment" spellcheck="true"># 将深度和彩色图像进行注册</span>
+        undistorted <span class="token operator">=</span> FrameType<span class="token punctuation">.</span>Depth
+        registered <span class="token operator">=</span> FrameType<span class="token punctuation">.</span>Color
+        registration<span class="token punctuation">.</span>apply<span class="token punctuation">(</span>color<span class="token punctuation">,</span> depth<span class="token punctuation">,</span> undistorted<span class="token punctuation">,</span> registered<span class="token punctuation">)</span>
+
+
+        depth_pixel <span class="token operator">=</span> depth<span class="token punctuation">.</span>asarray<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">20</span>
+        over_index <span class="token operator">=</span> depth_pixel <span class="token operator">></span> <span class="token number">72</span>
+        depth_pixel<span class="token punctuation">[</span>over_index<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+        cv2<span class="token punctuation">.</span>imwrite<span class="token punctuation">(</span><span class="token string">'/home/robot/Desktop/rh_workspace/workcoatdtest/data/input/0.png'</span><span class="token punctuation">,</span> depth_pixel<span class="token punctuation">)</span>
+        onepiece_data <span class="token operator">=</span> test_resnetv2<span class="token punctuation">.</span>testSingleImagefile
+
+        <span class="token comment" spellcheck="true"># 获取相机姿态</span>
+        pose <span class="token operator">=</span> registration<span class="token punctuation">.</span>getRegistration<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true"># 将彩色图像转换为 OpenCV 图像</span>
+        color_data <span class="token operator">=</span> registered<span class="token punctuation">.</span>asarray<span class="token punctuation">(</span>np<span class="token punctuation">.</span>uint8<span class="token punctuation">)</span>
+        color_data <span class="token operator">=</span> cv2<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>color_data<span class="token punctuation">,</span> cv2<span class="token punctuation">.</span>COLOR_BGR2RGB<span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true"># 获取深度图像的宽度和高度</span>
+        height<span class="token punctuation">,</span> width <span class="token operator">=</span> depth<span class="token punctuation">.</span>height<span class="token punctuation">,</span> depth<span class="token punctuation">.</span>width
+
+        <span class="token comment" spellcheck="true"># 创建空白图像</span>
+        blank_image <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>height<span class="token punctuation">,</span> width<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span> np<span class="token punctuation">.</span>uint8<span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true"># 阈值化深度图像</span>
+        threshold <span class="token operator">=</span> <span class="token number">2000</span>
+        ret<span class="token punctuation">,</span> thresholded <span class="token operator">=</span> cv2<span class="token punctuation">.</span>threshold<span class="token punctuation">(</span>depth<span class="token punctuation">.</span>asarray<span class="token punctuation">(</span>np<span class="token punctuation">.</span>float32<span class="token punctuation">)</span><span class="token punctuation">,</span> threshold<span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> cv2<span class="token punctuation">.</span>THRESH_BINARY<span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true"># 查找轮廓</span>
+        contours<span class="token punctuation">,</span> hierarchy <span class="token operator">=</span> cv2<span class="token punctuation">.</span>findContours<span class="token punctuation">(</span>thresholded<span class="token punctuation">.</span>astype<span class="token punctuation">(</span>np<span class="token punctuation">.</span>uint8<span class="token punctuation">)</span><span class="token punctuation">,</span> cv2<span class="token punctuation">.</span>RETR_TREE<span class="token punctuation">,</span> cv2<span class="token punctuation">.</span>CHAIN_APPROX_SIMPLE<span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true"># 找到最大的轮廓</span>
+        max_contour <span class="token operator">=</span> None
+        max_contour_area <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">for</span> contour <span class="token keyword">in</span> contours<span class="token punctuation">:</span>
+            area <span class="token operator">=</span> cv2<span class="token punctuation">.</span>contourArea<span class="token punctuation">(</span>contour<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> area <span class="token operator">></span> max_contour_area<span class="token punctuation">:</span>
+                max_contour <span class="token operator">=</span> contour
+                max_contour_area <span class="token operator">=</span> area
+
+        <span class="token comment" spellcheck="true"># 如果找到了手部轮廓</span>
+        <span class="token keyword">if</span> max_contour <span class="token keyword">is</span> <span class="token operator">not</span> None<span class="token punctuation">:</span>
+            <span class="token comment" spellcheck="true"># 获取手部轮廓的凸包</span>
+            hull <span class="token operator">=</span> cv2<span class="token punctuation">.</span>convexHull<span class="token punctuation">(</span>max_contour<span class="token punctuation">)</span>
+
+            <span class="token comment" spellcheck="true"># 画出手部轮廓和凸包</span>
+            cv2<span class="token punctuation">.</span>drawContours<span class="token punctuation">(</span>color_data<span class="token punctuation">,</span> <span class="token punctuation">[</span>max_contour<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> GREEN<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+            cv2<span class="token punctuation">.</span>drawContours<span class="token punctuation">(</span>color_data<span class="token punctuation">,</span> <span class="token punctuation">[</span>hull<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> BLUE<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+
+            <span class="token comment" spellcheck="true"># 获取凸包的顶点</span>
+            hull_points <span class="token operator">=</span> np<span class="token punctuation">.</span>squeeze<span class="token punctuation">(</span>hull<span class="token punctuation">)</span>
+
+            <span class="token comment" spellcheck="true"># 将凸包顶点转换为相机坐标系下的 3D 坐标</span>
+            points <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+            <span class="token keyword">for</span> point <span class="token keyword">in</span> hull_points<span class="token punctuation">:</span>
+                x <span class="token operator">=</span> point<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+                y <span class="token operator">=</span> point<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+                xyz <span class="token operator">=</span> registration<span class="token punctuation">.</span>getPointXYZ<span class="token punctuation">(</span>depth<span class="token punctuation">,</span> point<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> point<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                points<span class="token punctuation">.</span>append<span class="token punctuation">(</span>xyz<span class="token punctuation">)</span>
+
+            <span class="token comment" spellcheck="true"># 将点云数据转换为 Numpy 数组</span>
+            points <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>points<span class="token punctuation">)</span>
+
+            <span class="token comment" spellcheck="true"># 更新 Open3D 点云</span>
+            pcd<span class="token punctuation">.</span>points <span class="token operator">=</span> o3d<span class="token punctuation">.</span>utility<span class="token punctuation">.</span>Vector3dVector<span class="token punctuation">(</span>points<span class="token punctuation">)</span>
+
+            <span class="token comment" spellcheck="true"># 显示 Open3D 点云</span>
+            o3d<span class="token punctuation">.</span>visualization<span class="token punctuation">.</span>draw_geometries<span class="token punctuation">(</span><span class="token punctuation">[</span>pcd<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+            <span class="token comment" spellcheck="true"># 将手部 3D 坐标添加到列表中</span>
+            hand_3d_coordinates <span class="token operator">=</span> points<span class="token punctuation">.</span>tolist<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true"># 显示彩色图像</span>
+        cv2<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"Color"</span><span class="token punctuation">,</span> color_data<span class="token punctuation">)</span>
+        n <span class="token operator">+=</span> <span class="token number">1</span>
+        <span class="token comment" spellcheck="true"># 等待按下 ESC 键退出程序</span>
+        key <span class="token operator">=</span> cv2<span class="token punctuation">.</span>waitKey<span class="token punctuation">(</span>delay<span class="token operator">=</span><span class="token number">16</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> n <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+        <span class="token keyword">if</span> key <span class="token operator">==</span> ord<span class="token punctuation">(</span><span class="token string">'q'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+
+        <span class="token comment" spellcheck="true"># 释放帧数据</span>
+        listener<span class="token punctuation">.</span>release<span class="token punctuation">(</span>frames<span class="token punctuation">)</span>
+
+    <span class="token comment" spellcheck="true"># 停止 Kinect 传感器</span>
+    device<span class="token punctuation">.</span>stop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    device<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token comment" spellcheck="true"># 关闭所有窗口</span>
+    cv2<span class="token punctuation">.</span>destroyAllWindows<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token comment" spellcheck="true"># 返回肩部坐标， 手部 3D 坐标列表</span>
+    <span class="token keyword">return</span> onepiece_data<span class="token punctuation">,</span> hand_3d_coordinates
+
+
+<span class="token keyword">def</span> <span class="token function">test_get_hand_3d_coordinates</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true"># 调用 get_hand_3d_coordinates 函数</span>
+    onepiece_data<span class="token punctuation">,</span> hand_3d_coordinates <span class="token operator">=</span> get_hand_3d_coordinates<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token comment" spellcheck="true"># 打印手部 3D 坐标</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Hand 3D Coordinates:"</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>hand_3d_coordinates<span class="token punctuation">)</span>
+
+    <span class="token comment" spellcheck="true"># 打印肩部 3D 坐标</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Hand 3D Coordinates:"</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>hand_3d_coordinates<span class="token punctuation">)</span>
+
+    <span class="token comment" spellcheck="true"># 如果手部 3D 坐标不为空，则绘制点云</span>
+    <span class="token keyword">if</span> hand_3d_coordinates<span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true"># 创建 Open3D 点云</span>
+        pcd <span class="token operator">=</span> o3d<span class="token punctuation">.</span>geometry<span class="token punctuation">.</span>PointCloud<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true"># 将手部 3D 坐标转换为 Numpy 数组</span>
+        points <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>hand_3d_coordinates<span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true"># 更新 Open3D 点云</span>
+        pcd<span class="token punctuation">.</span>points <span class="token operator">=</span> o3d<span class="token punctuation">.</span>utility<span class="token punctuation">.</span>Vector3dVector<span class="token punctuation">(</span>points<span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true"># 显示 Open3D 点云</span>
+        o3d<span class="token punctuation">.</span>visualization<span class="token punctuation">.</span>draw_geometries<span class="token punctuation">(</span><span class="token punctuation">[</span>pcd<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    test_get_hand_3d_coordinates<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <h4 id="3-C-kinect2"><a href="#3-C-kinect2" class="headerlink" title="3. C++ kinect2"></a>3. C++ kinect2</h4><pre class=" language-c++"><code class="language-c++">#include <Windows.h>
 #include <iostream>
 #include <NuiApi.h>
@@ -1166,25 +1350,7 @@ void getSkeletonImage(cv::Mat & skeletonImg, cv::Mat & colorImg)
 <li>c++识别人体关键点：<a href="https://blog.csdn.net/hongbin_xu/article/details/80896424" target="_blank" rel="noopener">https://blog.csdn.net/hongbin_xu/article/details/80896424</a></li>
 <li>kinect bodyindex, color, depth绘制： <a href="https://blog.csdn.net/hongbin_xu/article/details/80907403" target="_blank" rel="noopener">https://blog.csdn.net/hongbin_xu/article/details/80907403</a></li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1739,7 +1905,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

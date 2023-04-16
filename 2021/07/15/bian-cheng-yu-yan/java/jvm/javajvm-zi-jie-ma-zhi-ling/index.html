@@ -526,14 +526,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-07-28
+                    2023-01-01
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    4.9k
+                    4.8k
                 </div>
                  -->
 
@@ -793,12 +793,12 @@ private void change(java.lang.String, java.lang.String[]);
        8: return
 }</code></pre>
 <p>这里main方法的字节码内容可以忽略，主要看这个change方法，下面用图来表示。</p>
-<p><img src="../../../../../picture/1" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1" alt=""></p>
 <p>这是刚进入这个方法的情况，这时候还没有执行方法的内容，局部变量表存了三个值，第一个是this指代这个类，在普通方法内之所以可以拿到外部的全局变量就是因为方法内部的局部变量表的第一个就是类的this，当获取外部变量时，先将这个this入栈<code>aload_0</code>，然后就可以获取到这个类所有的成员变量（也就是外部全局变量）了。 因为这个方法传进来了两个值，这里局部变量表存储的是这两个对象的引用，也就是在堆上的内存地址。</p>
-<p><img src="../../../../../picture/1-16274398099532" alt=""></p>
-<p>上面执行了<code>str = "newStrEdit";</code>这条语句，先ldc指令创建了newStrEdit（0xaaa）字符串入栈，然后<code>astore_1</code>指令将栈顶的值保存再局部变量1中，覆盖了原来的地址，所以这里对局部变量表的修改完全没有影响外面的值。</p>
-<p><img src="../../../../../picture/1-16274399820714" alt=""></p>
-<p>上面执行<code>array[0] = "newArrar1Edit";</code>这条语句，将array的地址入栈，再将要修改的数组下标0入栈，最后创建newArray1Edit字符串入栈。最后调用<code>aastore</code>指令将栈顶的引用型数值（newArray1Edit）、数组下标（0）、数组引用（0xfff）依次出栈，最后将数值存入对应的数组元素中，这里可以看到对这个数组的操作一直都是这个0xfff地址，这个地址和外面的array指向的是同一个数组对象，所以这里修改了，外界的那个array也就同样修改了内容。</p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532" alt=""></p>
+<p>上面执行了<code>str = &quot;newStrEdit&quot;;</code>这条语句，先ldc指令创建了newStrEdit（0xaaa）字符串入栈，然后<code>astore_1</code>指令将栈顶的值保存再局部变量1中，覆盖了原来的地址，所以这里对局部变量表的修改完全没有影响外面的值。</p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714" alt=""></p>
+<p>上面执行<code>array[0] = &quot;newArrar1Edit&quot;;</code>这条语句，将array的地址入栈，再将要修改的数组下标0入栈，最后创建newArray1Edit字符串入栈。最后调用<code>aastore</code>指令将栈顶的引用型数值（newArray1Edit）、数组下标（0）、数组引用（0xfff）依次出栈，最后将数值存入对应的数组元素中，这里可以看到对这个数组的操作一直都是这个0xfff地址，这个地址和外面的array指向的是同一个数组对象，所以这里修改了，外界的那个array也就同样修改了内容。</p>
 <h4 id="例二："><a href="#例二：" class="headerlink" title="例二："></a>例二：</h4><p>看过前面那个例子应该对局部变量表是什么有所了解，下面这个例子就不绘制上面那个图了。这个例子也是一个常见的面试题，判断<code>try-catch-finally-return</code>的执行顺序。finally是一个最终都会执行的代码块，finally里面的return会覆盖try和catch里面的return,同时在finally里面修改局部变量不会影响try和catch里面的局部变量值，除非trycatch里面返回的值是一个引用类型。</p>
 <pre class=" language-assembly"><code class="language-assembly"> public static void main(String[] args) {
         Main a=new Main();
@@ -904,30 +904,12 @@ args = [starttry]
       30: areturn
 复制代码</code></pre><p>可以很清楚的看到 调用append方法拼接“start”和“try”后，先调用了<code>toString()</code>方法然后将值存入局部变量2。这时候finally没有和上面那样复制一份变量，而是继续使用局部变量1的引用来继续append，最后的结果也存入了局部变量1中，最后返回的是局部变量2中的值<code>starttry</code>，但是要注意此时局部变量1中指向的StringBuilder的值却是<code>starttryfinally</code>，所以这也就是方法1中返回的值。</p>
 <h3 id="4-如何快捷查看字节码"><a href="#4-如何快捷查看字节码" class="headerlink" title="4.如何快捷查看字节码"></a>4.如何快捷查看字节码</h3><p>如果是ide的话，应该都可以，通过``Setting-&gt;Tools-&gt;External Tools进入 然后创建一个自定义的tools。</p>
-<p><img src="../../../../../picture/1-16274400287786" alt=""></p>
-<p><img src="../../../../../picture/1-16274400346418" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418" alt=""></p>
 <h3 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h3><ul>
 <li><a href="https://juejin.cn/post/6844903983002157070#heading-16" target="_blank" rel="noopener">https://juejin.cn/post/6844903983002157070#heading-16</a></li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1461,7 +1443,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

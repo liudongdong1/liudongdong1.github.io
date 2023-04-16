@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-12-26
+                    2023-04-16
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    2.8k
+                    3.7k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    12 Min
+                    15 Min
                 </div>
                 
 
@@ -851,25 +851,128 @@ after method send</code></pre><h5 id="2-CGLIB代理"><a href="#2-CGLIB代理" cl
 <p><strong>4.实际使用</strong></p>
 <pre class=" language-java"><code class="language-java">AliSmsService aliSmsService <span class="token operator">=</span> <span class="token punctuation">(</span>AliSmsService<span class="token punctuation">)</span> CglibProxyFactory<span class="token punctuation">.</span><span class="token function">getProxy</span><span class="token punctuation">(</span>AliSmsService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 aliSmsService<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"java"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+<ul>
+<li><a href="https://carsonho.blog.csdn.net/article/details/121920694" target="_blank" rel="noopener">https://carsonho.blog.csdn.net/article/details/121920694</a></li>
+</ul>
+<h3 id="Java-引用"><a href="#Java-引用" class="headerlink" title="Java 引用"></a>Java 引用</h3><ul>
+<li>Java 四种类型引用：强引用、软引用、弱引用、虚引用<ul>
+<li><a href="https://juejin.cn/post/6844903665241686029" target="_blank" rel="noopener">https://juejin.cn/post/6844903665241686029</a>   </li>
+</ul>
+</li>
+</ul>
+<p><img src="https://gitee.com/github-25970295/picture2023/raw/master/image-20230305211217521.png" alt=""></p>
+<p>当<strong>内存空间不足</strong>时，<code>Java</code>虚拟机宁愿抛出<code>OutOfMemoryError</code>错误，使程序<strong>异常终止</strong>，也不会靠随意<strong>回收</strong>具有<strong>强引用</strong>的<strong>对象</strong>来解决内存不足的问题。 如果强引用对象<strong>不使用时</strong>，需要弱化从而使<code>GC</code>能够回收</p>
+<pre class=" language-java"><code class="language-java">Object strongReference <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+strongReference <span class="token operator">=</span> null<span class="token punctuation">;</span></code></pre>
+<p>如果一个对象只具有<strong>软引用</strong>，则<strong>内存空间充足</strong>时，<strong>垃圾回收器</strong>就<strong>不会</strong>回收它；如果<strong>内存空间不足</strong>了，就会<strong>回收</strong>这些对象的内存。只要垃圾回收器没有回收它，该对象就可以被程序使用。</p>
+<ol>
+<li>如果一个网页在浏览结束时就进行内容的回收，则按后退查看前面浏览过的页面时，需要重新构建；</li>
+<li>如果将浏览过的网页存储到内存中会造成内存的大量浪费，甚至会造成内存溢出。</li>
+</ol>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 获取浏览器对象进行浏览</span>
+Browser browser <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Browser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 从后台程序加载浏览页面</span>
+BrowserPage page <span class="token operator">=</span> browser<span class="token punctuation">.</span><span class="token function">getPage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 将浏览完毕的页面置为软引用</span>
+SoftReference softReference <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SoftReference</span><span class="token punctuation">(</span>page<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 回退或者再次浏览此页面时</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>softReference<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 内存充足，还没有被回收器回收，直接获取缓存</span>
+    page <span class="token operator">=</span> softReference<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 内存不足，软引用的对象已经回收</span>
+    page <span class="token operator">=</span> browser<span class="token punctuation">.</span><span class="token function">getPage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 重新构建软引用</span>
+    softReference <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SoftReference</span><span class="token punctuation">(</span>page<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="String-amp-StringBuffer-amp-StringBuilder"><a href="#String-amp-StringBuffer-amp-StringBuilder" class="headerlink" title="String&amp;StringBuffer&amp;StringBuilder"></a>String&amp;StringBuffer&amp;StringBuilder</h3><p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/d8f107d1267915a462bde40c53046ccf.png" alt=""></p>
+<h3 id="基本类型-amp-包装类"><a href="#基本类型-amp-包装类" class="headerlink" title="基本类型&amp;包装类"></a>基本类型&amp;包装类</h3><p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/bbe4b4c9783cf6aa8c4a297fa5c71329.png" alt="img"></p>
+<h3 id="Java-集合"><a href="#Java-集合" class="headerlink" title="Java 集合"></a>Java 集合</h3><p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/dc9ac6e16d548e36f1863e8ef2aa6cee.png" alt=""></p>
+<h3 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h3><ul>
+<li><a href="https://carsonho.blog.csdn.net/article/details/121920694" target="_blank" rel="noopener">https://carsonho.blog.csdn.net/article/details/121920694</a></li>
+</ul>
+<h3 id="Try-amp-Catch-中的Return"><a href="#Try-amp-Catch-中的Return" class="headerlink" title="Try&amp;Catch 中的Return"></a>Try&amp;Catch 中的Return</h3><p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/9a92e8db3c09aa42f6994686b3350b36.png" alt=""></p>
+<ul>
+<li>finaly 中没有return</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+  * 情况1：try中有return、无抛出异常 
+  * 实际执行顺序：
+  *            1. 执行 try块语句
+  *            2. 执行 return后 的语句：得到结果result &amp; 保存下来
+  *            3. 执行 finally块语句：不影响上述保存的返回值，哪怕修改了变量的值
+  *            4. 执行 return，结束函数，返回result的值：依旧返回步骤2保存的结果
+  */</span>
+<span class="token keyword">try</span><span class="token punctuation">{</span> 
+    <span class="token comment" spellcheck="true">//代码无抛出异常 </span>
+    <span class="token keyword">return</span>  result<span class="token punctuation">;</span> 
+
+<span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>Exception e<span class="token punctuation">)</span><span class="token punctuation">{</span> 
+
+<span class="token punctuation">}</span><span class="token keyword">finally</span><span class="token punctuation">{</span> 
+    <span class="token comment" spellcheck="true">// finally代码 </span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/**
+  * 情况2：try中有return、抛出异常 、catch有return
+  * 实际执行顺序：
+  *            1. 执行 try块语句
+  *               2. 执行 throw 语句 ：此时已抛出异常，运行因异常而终止，故不执行return1
+  *            3. 执行 catch块语句 
+  *               4. 执行 return2后 的语句：得到结果result2 &amp; 保存下来
+  *             5. 执行 finally块语句：不影响上述保存的返回值，哪怕修改了变量的值
+  *             6. 执行 return2，结束函数，返回result2的值：依旧返回步骤4保存的结果   
+  */</span>
+<span class="token keyword">try</span><span class="token punctuation">{</span> 
+    <span class="token comment" spellcheck="true">//代码抛出异常 </span>
+    <span class="token keyword">throw</span> Exception<span class="token punctuation">;</span> 
+    return1  result1<span class="token punctuation">;</span> 
+
+<span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>Exception e<span class="token punctuation">)</span><span class="token punctuation">{</span> 
+    return2  result2<span class="token punctuation">;</span> 
+
+<span class="token punctuation">}</span><span class="token keyword">finally</span><span class="token punctuation">{</span> 
+    <span class="token comment" spellcheck="true">// finally代码 </span>
+<span class="token punctuation">}</span></code></pre>
+<ul>
+<li>finally 中包含return结果</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+  * 情况1：try &amp; catch中都无return、无抛出异常 &amp; finally中 有 return
+  * 实际执行顺序：
+  *            1. 执行 try块语句
+  *            2. 执行 finally块语句：会影响返回值
+  *            3. 执行 return，结束函数，返回result的值
+  */</span>
+<span class="token keyword">try</span><span class="token punctuation">{</span> 
+
+<span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>Exception e<span class="token punctuation">)</span><span class="token punctuation">{</span> 
+
+<span class="token punctuation">}</span><span class="token keyword">finally</span><span class="token punctuation">{</span> 
+    <span class="token keyword">return</span> result <span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/**
+  * 情况2：try / catch中任意1者 或 都有return（try中的return和catch中的return最多只有1个会执行）、finally中 有 return
+  * 实际执行顺序：
+  *            1. 执行 try块语句：设无抛出异常，则不执行catch语句 &amp; return2
+  *               2. 执行 return1 后 的语句：得到结果result &amp; 保存下来
+  *            3. 执行 finally块语句：不影响上述保存的返回值，哪怕修改了变量的值
+  *               4. 执行finally内的 return3 后语句：finally中的return会覆盖掉其它位置的return
+  *               5. 执行return3 ，结束函数，返回result3的值
+  */</span>
+<span class="token keyword">try</span><span class="token punctuation">{</span> 
+    <span class="token comment" spellcheck="true">//throw Exception; </span>
+    return1 result1<span class="token punctuation">;</span> 
+
+<span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> 
+    return2 result2<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span class="token keyword">finally</span><span class="token punctuation">{</span> 
+    return3 result3<span class="token punctuation">;</span> 
+<span class="token punctuation">}</span></code></pre>
+
             </div>
             <hr/>
 
@@ -1116,13 +1219,8 @@ aliSmsService<span class="token punctuation">.</span><span class="token function
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            0. 高频低频
-影响因素
-
-读写器发射功率越大，读写距离相应的也会增大。
-天线增益越大，波束宽度越小，则读写距离越远，范围越窄，读取的范围控制越好。
-标签芯片与读写器的灵敏度均能影响到读写距离，灵敏度越高，可读写距离就会越远。
-多标签环境下
+                            
+  d686cb0a25b96ced5ce99713a9124a672af07c4932ce8f6b254ba7b44eeb99d6a16a20f4eb73e4119526dacce319af95615a645a3f36c1190a434
                         
                     </div>
                     <div class="publish-info">
@@ -1404,7 +1502,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

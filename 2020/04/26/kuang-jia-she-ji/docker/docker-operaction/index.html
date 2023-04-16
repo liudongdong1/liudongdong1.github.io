@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-09-13
+                    2022-11-07
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    2.3k
+                    1.6k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    11 Min
+                    7 Min
                 </div>
                 
 
@@ -570,7 +570,7 @@
 <h4 id="2-Docker-Engine"><a href="#2-Docker-Engine" class="headerlink" title=".2.  Docker Engine"></a>.2.  Docker Engine</h4><ul>
 <li><p><em>Docker Engine</em> is a client-server application with these major components:</p>
 <ul>
-<li>A server which is a type of long-running program called a daemon process (the <code>dockerd</code> command).<font color="red"> cerates and manages docker objects, eg: images, containers, networks, volumes</font></li>
+<li>A server which is a type of long-running program called a daemon process (the <code>dockerd</code> command).<font color=red> cerates and manages docker objects, eg: images, containers, networks, volumes</font></li>
 <li>A REST API which specifies interfaces that programs can use to talk to the daemon and instruct it what to do.</li>
 <li>A command line interface (CLI) client (the <code>docker</code> command).</li>
 </ul>
@@ -589,19 +589,19 @@
 </li>
 </ul>
 <p><img src="https://docs.docker.com/engine/images/architecture.svg" alt="Docker Architecture Diagram"></p>
-<h4 id="4-dockerfiles"><a href="#4-dockerfiles" class="headerlink" title=".4. dockerfiles"></a>.4. dockerfiles</h4><pre class=" language-json"><code class="language-json"># Use the official image as a parent image.
-FROM node<span class="token operator">:</span>current-slim
+<h4 id="4-dockerfiles"><a href="#4-dockerfiles" class="headerlink" title=".4. dockerfiles"></a>.4. dockerfiles</h4><pre class=" language-shell"><code class="language-shell"># Use the official image as a parent image.
+FROM node:current-slim
 #ARG ND4J_CLASSIFIER   #ARG 指令是定义参数名称，以及定义其默认值。
 # Set the working directory.
 WORKDIR /usr/src/app
 # Copy the file from your host to your current location.
-COPY package.json .
+COPY package.json 
 # Run the command inside your image filesystem.
 RUN npm install
 # Inform Docker that the container is listening on the specified port at runtime.
-EXPOSE <span class="token number">8080</span>
+EXPOSE 8080
 # Run the specified command within the container.
-CMD <span class="token punctuation">[</span> <span class="token string">"npm"</span><span class="token punctuation">,</span> <span class="token string">"start"</span> <span class="token punctuation">]</span>
+CMD [ "npm", "start" ]
 # Copy the rest of your app's source code from your host to your image filesystem.
 COPY . .</code></pre>
 <ul>
@@ -643,7 +643,19 @@ CMD ["./app"]</code></pre>
 <blockquote>
 <p>第一个 stage 使用 as 语法命名为 builder，然后在后面的 stage 中通过名称 builder 进行引用 –from=builder。通过使用命名的 stage， Dockerfile 更容易阅读了。</p>
 </blockquote>
-<h4 id="5-compose-yml"><a href="#5-compose-yml" class="headerlink" title=".5. compose.yml"></a>.5. compose.yml</h4><pre class=" language-yml"><code class="language-yml">#docker-Compse的版本
+<h4 id="5-compose-yml"><a href="#5-compose-yml" class="headerlink" title=".5. compose.yml"></a>.5. compose.yml</h4><pre class=" language-shell"><code class="language-shell">FROM       # 基础镜像，一切从这里开始构建
+MAINTAINER #镜像是谁写的，姓名+邮箱
+RUN        # 镜像构建的时候需要运行的命令
+ADD        # 步添加内容
+WORKDIR    # 镜像的工作目录 
+VOLUME     # 挂载的目录
+EXPOSE     # 保留端口配置
+CMD        # 指定这个容器启动的时候要运行的命令
+ENTRYPOINT # 指定这个容器启动的时候要运行的命令，可以追加命令
+ONBUILD    # 当构建一个被继承 Dockerfile，这个时候就会运行onbuild
+COPY       # 类似add，将我们文件拷贝到镜像中
+ENV        # 构建的时候设置环境变量</code></pre>
+<pre class=" language-yml"><code class="language-yml">#docker-Compse的版本
 version: '3'
 #建立2个service 一个wordpress 一个 mysql  一个service代表一个container
 services:
@@ -697,39 +709,7 @@ services:   # 定义一组服务
         image: "mysql:5.7" # 指定镜像源的第二种方式，直接指定 image，这是是官方的 mysql 5.7版本
 networks: # 定义网络
     dev-local-network: # 网络名称，上面用到的网络就是这里定义的</code></pre>
-<h4 id="Docker-Command："><a href="#Docker-Command：" class="headerlink" title="Docker  Command："></a><a href="https://docs.docker.com/engine/reference/commandline/version/" target="_blank" rel="noopener">Docker  Command：</a></h4><pre class=" language-shell"><code class="language-shell">docker --version
-docker-compose --version
-docker-machine --version
-
-docker image pull imagename
-docker image ls
-# 查看镜像中内容
-docker inspect imageid
-docker image rm imagename
-
-docker container ls
-docker container stop [containername]
-docker start container_name/container_id
-#CMD  指定容器启动默认执行的命令
-#WORKDIR  指定 RUN,CMD,ENTRYPOINT 命令的工作目录
-#VOLUME 指定访问从容器内到主机上的目录
-$ docker run --name jstorm-zookeeper zookeeper:3.4 --rm -i -t /bin/bash
-# reuse 
-$ docker create --name jstorm-zookeeper zookeeper:3.4
-$ docker start jstorm-zookeeper
-
-docker logs [imagename] #输出log信息
-docker attach [imagename] #实时查看log信息
-docker exec [container] [command]  #类型运行Linux命令
-docker exec -it [containername] /bin/bash  #之后就进入镜像系统了
-docker pause [containername] #暂停容器中所有进程
-docker top/stats [containername]
-docker inspect [container]  #检查容器的状况
-docker history [container]  #查看各层创建的指令大小和哈希
-#使用IDEA 进行docker开发调试 https://www.jetbrains.com/help/idea/docker.html?_ga=2.188398497.841310605.1575127028-1592896884.1573744825#debug
-#https://hujb2000.gitbooks.io/docker-flow-evolution/content/cn/practice/dev/test/runtest.html
-#拉取镜像之后</code></pre>
-<h4 id="Tools"><a href="#Tools" class="headerlink" title="Tools:"></a>Tools:</h4><ul>
+<h2 id="2-调用摄像头画面到本地显示器"><a href="#2-调用摄像头画面到本地显示器" class="headerlink" title="2. 调用摄像头画面到本地显示器"></a>2. 调用摄像头画面到本地显示器</h2><ul>
 <li>Tools to manage, scale, and maintain containerized applications are called <em>orchestrators</em>, and the most common examples of these are <em>Kubernetes</em> and <em>Docker Swarm</em>.</li>
 </ul>
 <p>在host中运行摄像头等画面显示到本地显示器</p>
@@ -758,27 +738,39 @@ sudo gedit /etc/lightdm/lightdm.conf
 # add a line xserver-allow-tcp=true   但是ubuntu18.04中没有这个文件
 sudo systemctl restart lightdm
 xhost +</code></pre>
-<h4 id="Image-Repository"><a href="#Image-Repository" class="headerlink" title="Image Repository:"></a>Image Repository:</h4><ul>
+<h2 id="3-Image-Repository"><a href="#3-Image-Repository" class="headerlink" title="3.  Image Repository"></a>3.  Image Repository</h2><ul>
 <li>DockerHub：<a href="https://hub.docker.com/" target="_blank" rel="noopener">https://hub.docker.com/</a></li>
 <li>DaoCloud：<a href="https://hub.daocloud.io/" target="_blank" rel="noopener">https://hub.daocloud.io/</a></li>
 <li>Aliyun：<a href="https://dev.aliyun.com/search.html" target="_blank" rel="noopener">https://dev.aliyun.com/search…</a></li>
 </ul>
-<h2 id="nvidia-driver"><a href="#nvidia-driver" class="headerlink" title="nvidia-driver"></a>nvidia-driver</h2><pre class=" language-shell"><code class="language-shell">lspci -vv | grep -i nvidia  #检测驱动安装
-#安装NVIDIA Container Runtime
-sudo curl -s -L https://nvidia.github.io/nvidia-container-runtime/gpgkey | \
-  sudo apt-key add -
-distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-sudo curl -s -L https://nvidia.github.io/nvidia-container-runtime/$distribution/nvidia-container-runtime.list | \
-  sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list
-sudo apt-get update
-# 安装nividia-container
-apt-get install nvidia-container-runtime
-#开启docker 服务
-systemctl start docker && systemctl enable docker
-#验证gpu选项
-docker run --help | grep -i gpus
-docker run -it --rm --gpus all ubuntu nvidia-smi</code></pre>
-<h3 id="docker-ssh-server"><a href="#docker-ssh-server" class="headerlink" title="docker ssh server"></a>docker ssh server</h3><pre class=" language-shell"><code class="language-shell">apt-get install openssh-server
+<blockquote>
+<ul>
+<li>Busybox ：是一个集成了一百多个最常用 Linux 命令和工具的软件。L inux 工具里的瑞士军刀</li>
+</ul>
+</blockquote>
+<ul>
+<li>Alpine ： Alpine 操作系统是一个面向安全的轻型 Linux 发行版经典最小镜像，基于 busybox ，功能比 Busybox 完善。<blockquote>
+<ul>
+<li>Slim ： docker hub 中有些镜像有 slim 标识，都是瘦身了的镜像。也要优先选择</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h2 id="4-docker-amp-nivdia-docker-安装"><a href="#4-docker-amp-nivdia-docker-安装" class="headerlink" title="4. docker &amp; nivdia-docker 安装"></a>4. docker &amp; nivdia-docker 安装</h2><ul>
+<li><a href="./Nvidia-docker.md">./Nvidia-docker.md</a></li>
+</ul>
+<h3 id="2-设置源"><a href="#2-设置源" class="headerlink" title=".2. 设置源"></a>.2. 设置源</h3><pre class=" language-shell"><code class="language-shell">sudo yum-config-manager \
+    --add-repo \
+    https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo</code></pre>
+<h3 id="3-镜像加速"><a href="#3-镜像加速" class="headerlink" title=".3. 镜像加速"></a>.3. 镜像加速</h3><pre class=" language-shell"><code class="language-shell">sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{ 
+    "registry-mirrors": ["https://82m9ar63.mirror.aliyuncs.com"] 
+}
+EOF 
+sudo systemctl daemon-reload 
+sudo systemctl restart docker</code></pre>
+<h2 id="5-docker-ssh-server"><a href="#5-docker-ssh-server" class="headerlink" title="5. docker ssh server"></a>5. docker ssh server</h2><pre class=" language-shell"><code class="language-shell">apt-get install openssh-server
 vim  /etc/ssh/sshd_config
 #PermitRootLogin yes  
 #UsePAM no
@@ -790,19 +782,15 @@ ssh name@ip -p 9000</code></pre>
 sudo docker cp id_rsa.pub 317348660bba:/root
 sudo docker cp 317348660bba:/root id_rsa.pub 
 # 注意container 中文件路径书写</code></pre>
-<h4 id="Docker-Load-From-Local："><a href="#Docker-Load-From-Local：" class="headerlink" title="Docker Load From Local："></a>Docker Load From Local：</h4><p>将一个tar包load成一个image：docker load &lt; my.tar 或者</p>
-<pre class=" language-shell"><code class="language-shell">#将docker 镜像存储到本地
-docker save 镜像id -o 目录/my.tar
-docker load -i my.tar</code></pre>
 <h3 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h3><ul>
 <li><a href="https://www.cnblogs.com/hanfan/p/12403520.html" target="_blank" rel="noopener">Error response from daemon: Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io: no such host</a></li>
 </ul>
 <pre class=" language-shell"><code class="language-shell">vim /etc/resolv.conf
 nameserver 8.8.8.8</code></pre>
 <ul>
-<li><p><a href="https://hub.docker.com/r/pytorch/pytorch/tags?page=1&amp;ordering=last_updated" target="_blank" rel="noopener">pytorch relateve docker image</a></p>
+<li><p><a href="https://hub.docker.com/r/pytorch/pytorch/tags?page=1&ordering=last_updated" target="_blank" rel="noopener">pytorch relateve docker image</a></p>
 </li>
-<li><p><a href="https://hub.docker.com/r/pytorch/pytorch/tags?page=1&amp;ordering=last_updated" target="_blank" rel="noopener">docker container</a></p>
+<li><p><a href="https://hub.docker.com/r/pytorch/pytorch/tags?page=1&ordering=last_updated" target="_blank" rel="noopener">docker container</a></p>
 </li>
 <li><p>docker: Error response from daemon: could not select device driver “” with capabilities: [[gpu]].</p>
 </li>
@@ -813,39 +801,14 @@ systemctl restart docker
 sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
 systemctl restart dockerd</code></pre>
 <ul>
-<li><pre><code>ERROR: for rabbitmq  Cannot start service rabbitmq: container "3b6c...0aba": already exists
-The container name "/my-postgres" is already in use by container</code></pre></li>
+<li><pre><code>ERROR: for rabbitmq  Cannot start service rabbitmq: container &quot;3b6c...0aba&quot;: already exists
+The container name &quot;/my-postgres&quot; is already in use by container</code></pre></li>
 </ul>
 <blockquote>
 <p>moved the project in an other directory. When I tryed to run <code>docker-compose up</code> it failed because of some conflicts. <code>docker system prune</code></p>
 <pre class=" language-shell"><code class="language-shell">docker-compose down
 docker-composo up -d</code></pre>
 </blockquote>
-<h2 id="登录pytorch环境的服务"><a href="#登录pytorch环境的服务" class="headerlink" title="登录pytorch环境的服务"></a>登录pytorch环境的服务</h2><ol start="0">
-<li><p>所需要安装环境： </p>
-<ul>
-<li>openvpn： <a href="http://211.81.52.58:8888/VPN_Server/web/index.html" target="_blank" rel="noopener">下载地址</a>； 根据电脑类型下载相应的exe文件；</li>
-<li>openvpn导入配置文件ovpn：  <a href="http://211.81.52.58:8888/VPN_Server/web/index.html" target="_blank" rel="noopener">下载地址</a></li>
-</ul>
-</li>
-<li><p>ssh tank@****    ； 密码 tanklab</p>
-</li>
-<li><p>docker container ls   # 首先查看 container 容器是否运行，如果没有运行，运行以下命令</p>
-<pre class=" language-shell"><code class="language-shell">sudo docker run -itd --restart=always -p 10024:22 -v /home/tank/zjw/:/root/rfid --name rfid --gpus all pytorch/pytorch:1.7.0-cuda11.0-cudnn8-devel</code></pre>
-</li>
-<li><p>进入docker 容器 命令</p>
-<pre class=" language-shell"><code class="language-shell">sudo docker exec -it 317348660bba /bin/bash</code></pre>
-</li>
-</ol>
-<p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210116095339646.png" alt=""></p>
-<blockquote>
-<p>之前docker container 已经在运行了，所以可以直接远程登录;</p>
-<p>ssh root@**** -p 10024    #密码： tanklab</p>
-</blockquote>
-<p>项目文件夹所在云服务器目录： ~/zjw/;       项目所在docker 容器目录： /root/rfid/</p>
-<p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210116095637184.png" alt=""></p>
-<p>存在一个问题ssh进入找的python环境没有torch，经过分析应该是环境变量丢失的问题。</p>
-<p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210116132014806.png" alt=""></p>
 <h3 id="window10专业版安装"><a href="#window10专业版安装" class="headerlink" title="window10专业版安装"></a>window10专业版安装</h3><blockquote>
 <p> 控制面板&gt;程序和功能&gt;启用或关闭Windows功能 下找到Hyper-V：开启 Hyper-V 选项；</p>
 <p>docker 下载链接：<a href="https://docs.docker.com/docker-for-windows/install/" target="_blank" rel="noopener">https://docs.docker.com/docker-for-windows/install/</a>  具体安装说明。</p>
@@ -867,25 +830,7 @@ docker-composo up -d</code></pre>
 <ul>
 <li>allows you to <a href="http://ufoym.com/deepo/#Build" target="_blank" rel="noopener">customize your own environment</a> with Lego-like modules</li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1176,19 +1121,21 @@ new
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/04/26/shen-jing-wang-luo/model/alexnet/">
+                <a href="/2020/04/26/shen-jing-wang-luo/tensorflow/tensorboard/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210512225816.png" class="responsive-img" alt="Alexnet">
+                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210512141325.png" class="responsive-img" alt="tensorboard">
                         
-                        <span class="card-title">Alexnet</span>
+                        <span class="card-title">tensorboard</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-lexNet是2012年ILSVRC 2012（ImageNet Large Scale Visual Recognition Challenge）竞赛的冠军网络，分类准确率由传统方法的 70%+提升到 80%+。它是由Hinton和他的
+                            1. 仪表板
+Scalars 显示损失和指标在每个时期如何变化。 您还可以使用它来跟踪训练速度，学习率和其他标量值。
+Graphs 可帮助您可视化模型。 在这种情况下，将显示层的Keras图，这可以帮助您确保正确构建。
+Distributi
                         
                     </div>
                     <div class="publish-info">
@@ -1199,8 +1146,8 @@ lexNet是2012年ILSVRC 2012（ImageNet Large Scale Visual Recognition Challenge�
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="post-category">
-                                    软件工具
+                            <a href="/categories/DLMinimalPra/" class="post-category">
+                                    DLMinimalPra
                                 </a>
                             
                             
@@ -1210,8 +1157,8 @@ lexNet是2012年ILSVRC 2012（ImageNet Large Scale Visual Recognition Challenge�
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/alexnet/">
-                        <span class="chip bg-color">alexnet</span>
+                    <a href="/tags/tensorboard/">
+                        <span class="chip bg-color">tensorboard</span>
                     </a>
                     
                 </div>
@@ -1412,7 +1359,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

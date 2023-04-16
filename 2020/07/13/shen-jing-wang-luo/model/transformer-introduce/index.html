@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-05-14
+                    2022-11-07
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    1.5k
+                    1.4k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    9 Min
+                    8 Min
                 </div>
                 
 
@@ -558,15 +558,15 @@
 <li>代码讲解地址：<a href="http://nlp.seas.harvard.edu/2018/04/03/attention.html" target="_blank" rel="noopener">http://nlp.seas.harvard.edu/2018/04/03/attention.html</a></li>
 </ul>
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715201421532.png" alt=""></p>
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715172733519.png" style="zoom:50%;">
+<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715172733519.png" style="zoom:50%;" />
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715173110289.png" alt="image-20200715173110289" style="zoom:50%;">
+<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715173110289.png" alt="image-20200715173110289" style="zoom:50%;" />
 
 <h2 id="1-Embedding"><a href="#1-Embedding" class="headerlink" title="1. Embedding"></a>1. Embedding</h2><blockquote>
 <p>After embedding the words in our input sequence, each of them flows through each of the two layers of the encoder.</p>
 <p>The word in each position flows through its own path in the encoder. There are dependencies between these paths in the self-attention layer. The feed-forward layer does not have those dependencies, however, and thus the various paths can be executed in parallel while flowing through the feed-forward layer.</p>
 </blockquote>
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715173416418.png" style="zoom:50%;">
+<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715173416418.png" style="zoom:50%;" />
 
 <h2 id="2-Encode"><a href="#2-Encode" class="headerlink" title="2. Encode"></a>2. <strong>Encode</strong></h2><blockquote>
 <p>an encoder receives a list of vectors as input. It processes this list by passing these vectors into a ‘self-attention’ layer, then into a feed-forward neural network, then sends out the output upwards to the next encoder.</p>
@@ -574,14 +574,14 @@
 <ul>
 <li><p><strong>Self-Attention</strong></p>
 <ul>
-<li>create vectors from each of the encoder’s input vectors (in this case, the embedding of each word). <font color="red">For each word, we create a Query vector, a Key vector, and a Value vector.</font></li>
+<li>create vectors from each of the encoder’s input vectors (in this case, the embedding of each word). <font color=red>For each word, we create a Query vector, a Key vector, and a Value vector.</font></li>
 </ul>
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715174741652.png" style="zoom:50%;">
+<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715174741652.png" style="zoom:50%;" />
 
 <ul>
-<li>calculating self-attention is to calculate a score <font color="red">这一步具体是怎么实现的</font></li>
+<li>calculating self-attention is to calculate a score <font color=red>这一步具体是怎么实现的</font></li>
 </ul>
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715175054672.png" style="zoom:67%;">
+<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715175054672.png" style="zoom:67%;" />
 
 <blockquote>
 <p>Say we’re calculating the self-attention for the first word in this example, “Thinking”. We need to score each word of the input sentence against this word. The score determines how much focus to place on other parts of the input sentence as we encode a word at a certain position.</p>
@@ -589,7 +589,7 @@
 <ul>
 <li><strong>third and forth steps</strong> are to divide the scores by 8 (the square root of the dimension of the key vectors used in the paper – 64. This leads to having more stable gradients. There could be other possible values here, but this is the default), then pass the result through a softmax operation. Softmax normalizes the scores so they’re all positive and add up to 1.</li>
 </ul>
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20200831200422.png" style="zoom:67%;">
+<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20200831200422.png" style="zoom:67%;" />
 
 <ul>
 <li><strong>fifth step</strong> is to multiply each value vector by the softmax score (in preparation to sum them up). The intuition here is to keep intact the values of the word(s) we want to focus on, and drown-out irrelevant words (by multiplying them by tiny numbers like 0.001, for example).</li>
@@ -600,12 +600,12 @@
 <h2 id="3-Matrix-Calculation-of-Self-Attention"><a href="#3-Matrix-Calculation-of-Self-Attention" class="headerlink" title="3. Matrix Calculation of Self-Attention"></a>3. <strong>Matrix Calculation of Self-Attention</strong></h2><ul>
 <li><strong>the first step</strong> is to calculate the Query, Key, and Value matrices. We do that by packing our embeddings into a matrix X, and multiplying it by the weight matrices we’ve trained (WQ, WK, WV).</li>
 </ul>
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715175943680.png" alt="Every row in the X matrix corresponds to a word in the input sentence. We again see the difference in size of the embedding vector (512, or 4 boxes in the figure), and the q/k/v vectors (64, or 3 boxes in the figure)" style="zoom:67%;">
+<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715175943680.png" alt="Every row in the X matrix corresponds to a word in the input sentence. We again see the difference in size of the embedding vector (512, or 4 boxes in the figure), and the q/k/v vectors (64, or 3 boxes in the figure)" style="zoom:67%;" />
 
 <ul>
 <li>condense steps two through six in one formula to calculate the outputs of the self-attention layer.</li>
 </ul>
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715180124848.png" alt="The self-attention calculation in matrix form" style="zoom:67%;">
+<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715180124848.png" alt="The self-attention calculation in matrix form" style="zoom:67%;" />
 
 
 
@@ -617,11 +617,11 @@
 </ul>
 <blockquote>
 <ol>
-<li><font color="red">It expands the model’s ability to focus on different positions.</font> Yes, in the example above, z1 contains a little bit of every other encoding, but it could be dominated by the the actual word itself. It would be useful if we’re translating a sentence like “The animal didn’t cross the street because it was too tired”, we would want to know which word “it” refers to.</li>
-<li><font color="red">It gives the attention layer multiple “representation subspaces”.</font> As we’ll see next, with multi-headed attention we have not only one, but multiple sets of Query/Key/Value weight matrices (the Transformer uses eight attention heads, so we end up with eight sets for each encoder/decoder). Each of these sets is randomly initialized. Then, after training, each set is used to project the input embeddings (or vectors from lower encoders/decoders) into a different representation subspace.</li>
+<li><font color=red>It expands the model’s ability to focus on different positions.</font> Yes, in the example above, z1 contains a little bit of every other encoding, but it could be dominated by the the actual word itself. It would be useful if we’re translating a sentence like “The animal didn’t cross the street because it was too tired”, we would want to know which word “it” refers to.</li>
+<li><font color=red>It gives the attention layer multiple “representation subspaces”.</font> As we’ll see next, with multi-headed attention we have not only one, but multiple sets of Query/Key/Value weight matrices (the Transformer uses eight attention heads, so we end up with eight sets for each encoder/decoder). Each of these sets is randomly initialized. Then, after training, each set is used to project the input embeddings (or vectors from lower encoders/decoders) into a different representation subspace.</li>
 </ol>
 </blockquote>
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715180348165.png" style="zoom:67%;">
+<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715180348165.png" style="zoom:67%;" />
 
 <blockquote>
 <p>If we do the same self-attention calculation we outlined above, just eight different times with different weight matrices, we end up with eight different Z matrices</p>
@@ -637,7 +637,7 @@
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715180725827.png" alt=""></p>
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715180900704.png" alt=""></p>
 <blockquote>
-<p>As we encode the word “it”, <font color="red">one attention head</font> is focusing most on “the animal”, while another is focusing on “tired” – in a sense, the model’s representation of the word “it” bakes in some of the representation of both “animal” and “tired”.</p>
+<p>As we encode the word “it”, <font color=red>one attention head</font> is focusing most on “the animal”, while another is focusing on “tired” – in a sense, the model’s representation of the word “it” bakes in some of the representation of both “animal” and “tired”.</p>
 </blockquote>
 <p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715181015153.png" alt=""></p>
 <h2 id="5-Representing-The-Order-of-The-Sequence-Using-Positional-Encoding"><a href="#5-Representing-The-Order-of-The-Sequence-Using-Positional-Encoding" class="headerlink" title="5. Representing The Order of The Sequence Using Positional Encoding"></a>5. Representing The Order of The Sequence Using Positional Encoding</h2><blockquote>
@@ -690,8 +690,8 @@
 <p>Vaswani, Ashish, et al. “Attention is all you need.” <em>Advances in neural information processing systems</em>. 2017.  cited by 11535</p>
 </blockquote>
 <hr>
-<h1 id="Paper-Attention"><a href="#Paper-Attention" class="headerlink" title="Paper: Attention"></a>Paper: Attention</h1><div align="center">
-<br>
+<h1 id="Paper-Attention"><a href="#Paper-Attention" class="headerlink" title="Paper: Attention"></a>Paper: Attention</h1><div align=center>
+<br/>
 <b>Attention Is All You Need</b>
 </div>
 
@@ -740,25 +740,7 @@
 <li>each position in the encoder can attend to all positions in the previous layer of the encoder;</li>
 </ul>
 <p><strong>【Position-wise Feed-Forward Networks 】</strong><br>$$<br>FFN(x)=max(0,xW_1+b_1)W_2+b_2<br>$$</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -994,21 +976,23 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2020/07/13/shen-jing-wang-luo/model/siamesenetwork/">
+                <a href="/2020/07/13/shen-jing-wang-luo/model/similaritymetric/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201129135707833.png" class="responsive-img" alt="SiameseNetwork">
+                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133125.png" class="responsive-img" alt="SimilarityMetric">
                         
-                        <span class="card-title">SiameseNetwork</span>
+                        <span class="card-title">SimilarityMetric</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-Siamese Network 是一种神经网络的框架，用于评估两个输入样本的相似度，而不是具体的某种网络，就像seq2seq一样，具体实现上可以使用RNN也可以使用CNN。
+                            level: CVPRauthor:  Paul-Edouard Sarlindate:   2020keyword:
 
-1. Siamese Network1.Paperlevel:
+features matching; data association;
+
+
+Sarlin, Paul-Edouard
                         
                     </div>
                     <div class="publish-info">
@@ -1045,23 +1029,23 @@ Siamese Network 是一种神经网络的框架，用于评估两个输入样本�
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/07/13/shen-jing-wang-luo/model/similaritymetric/">
+                <a href="/2020/07/13/shi-jue-yun-dong/dataglove/sign-language-introduce/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133125.png" class="responsive-img" alt="SimilarityMetric">
+                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/clouds-in-sky-over-fields.jpg" class="responsive-img" alt="Sign_Language_Introduce">
                         
-                        <span class="card-title">SimilarityMetric</span>
+                        <span class="card-title">Sign_Language_Introduce</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            level: CVPRauthor:  Paul-Edouard Sarlindate:   2020keyword:
+                            
+手语是聋哑人士的主要沟通工具，它是利用手部和身体的动作来传达意义。虽然手语帮助它的使用者之间互相沟通，但聋哑人士与一般人的沟通却十分困难，这个沟通障碍是源于大部分人不懂得手语。
 
-features matching; data association;
 
-
-Sarlin, Paul-Edouard
+1. 手势&amp;&amp;手语
+手势：手的姿势 ，通
                         
                     </div>
                     <div class="publish-info">
@@ -1072,8 +1056,8 @@ Sarlin, Paul-Edouard
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Model/" class="post-category">
-                                    Model
+                            <a href="/categories/%E8%A7%86%E8%A7%89AI/" class="post-category">
+                                    视觉AI
                                 </a>
                             
                             
@@ -1083,8 +1067,8 @@ Sarlin, Paul-Edouard
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Similarity/">
-                        <span class="chip bg-color">Similarity</span>
+                    <a href="/tags/Sign-Language/">
+                        <span class="chip bg-color">Sign Language</span>
                     </a>
                     
                 </div>
@@ -1285,7 +1269,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-12-23
+                    2023-03-24
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    1.4k
+                    1.8k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    5 Min
+                    7 Min
                 </div>
                 
 
@@ -555,9 +555,9 @@
 <p>单例模式也就是保证一个类只有一个实例的一种实现方法罢了(设计模式其实就是帮助我们解决实际开发过程中的方法, 该方法是为了降低对象之间的耦合度,<code>确保一个类只有一个实例,并提供一个全局访问点</code>。</p>
 <ul>
 <li>有<code>频繁实例化然后销毁</code>的情况，也就是频繁的 new 对象，可以考虑单例模式；</li>
-<li><code>创建对象时耗时过多或者耗资源过多</code>，但又<code>经常用到的对象</code>；</li>
+<li><code>创建对象时耗时过多或者耗资源过多</code>，但又<code>经常用到的对象</code>；socket或者传感器对象</li>
 <li><code>频繁访问 IO 资源的对象</code>，例如数据库连接池或访问本地文件；</li>
-<li>有状态的工具类对象。 </li>
+<li>有状态的工具类对象——&gt; 无状态工具类</li>
 <li>网站的计数器，一般也是采用单例模式实现，否则难以同步。 </li>
 <li>应用程序的日志应用，一般都何用单例模式实现，这一般是由于共享的日志文件一直处于打开状态，因为只能有一个实例去操作，否则内容不好追加。 </li>
 <li>一些方法的封装里面都是用静态函数，但类不是静态类。</li>
@@ -568,12 +568,34 @@
 <p>  1.<code>不适用于变化的对象</code>，如果同一类型的对象总是要在不同的用例场景发生变化，单例就会引起数据的错误，不能保存彼此的状态。<br>  2.由于单利模式中没有抽象层，因此<code>单例类的扩展</code>有很大的困难。<br>  3.单例类的职责过重，在一定程度上违背了“单一职责原则”。<br>  4.滥用单例将带来一些负面问题，如<code>为了节省资源将数据库连接池对象设计为的单例类，可能会导致共享连接池对象的程序过多而出现连接池溢出</code>；<code>如果实例化的对象长时间不被利用</code>，<code>系统会认为是垃圾而被回收</code>，这将导致对象状态的丢失。 </p>
 </blockquote>
 <h4 id="1-枚举模式"><a href="#1-枚举模式" class="headerlink" title="1. 枚举模式"></a>1. 枚举模式</h4><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//借助JDK1.5中添加的枚举来实现单例模式。不仅能避免多线程同步问题，而且还能防止反序列化重新创建新的对象</span>
-<span class="token keyword">public</span> <span class="token keyword">enum</span> SingletonEnum <span class="token punctuation">{</span>
-    instance<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token function">SingletonEnum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">whateverMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StudentSingleton</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">enum</span> Singleton<span class="token punctuation">{</span>
+        INSTANCE<span class="token punctuation">;</span>
+
+        <span class="token keyword">private</span> <span class="token keyword">final</span> StudentSingleton instance<span class="token punctuation">;</span>
+
+        <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StudentSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> StudentSingleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> StudentSingleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> Singleton<span class="token punctuation">.</span>INSTANCE<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<h4 id="2-内部类"><a href="#2-内部类" class="headerlink" title="2. 内部类"></a>2. 内部类</h4><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+<h4 id="2-饿汉模式"><a href="#2-饿汉模式" class="headerlink" title="2. 饿汉模式"></a>2. 饿汉模式</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserSingleton</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token function">UserSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> UserSingleton instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UserSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> UserSingleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="2-内部类-优"><a href="#2-内部类-优" class="headerlink" title="2. 内部类(优)"></a>2. 内部类(优)</h4><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * &lt;p>
  * 这种方式跟饿汉式方式采用的机制类似，但又有不同。
  * 两者都是采用了类装载的机制来保证初始化实例时只有一个线程。
@@ -597,12 +619,17 @@
         <span class="token keyword">return</span> SingletonInHodler<span class="token punctuation">.</span>singletonIn<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
+<ul>
+<li>在类加载的时候，内部类是不会进行加载的。</li>
+<li>由于获取到的是StudentSingletonHolder 的静态成员变量，也只会初始化一次。所以又满足单例的要求。</li>
+</ul>
 <h4 id="3-双重校验锁"><a href="#3-双重校验锁" class="headerlink" title="3. 双重校验锁"></a>3. 双重校验锁</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SingletonLanHan</span> <span class="token punctuation">{</span>
 <span class="token comment" spellcheck="true">/**
      * 6.单例模式懒汉式双重校验锁[推荐用]
      * 懒汉式变种,属于懒汉式的最好写法,保证了:延迟加载和线程安全
      */</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> SingletonLanHan singletonLanHanFour<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token function">SingletonLanHan</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">volatile</span> SingletonLanHan singletonLanHanFour<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使用volatile关键字会强制将修改的值立即写入到主存。且禁止指令重排序</span>
 
     <span class="token keyword">public</span> <span class="token keyword">static</span> SingletonLanHan <span class="token function">getSingletonLanHanFour</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span>singletonLanHanFour <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -615,7 +642,21 @@
         <span class="token keyword">return</span> singletonLanHanFour<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<h4 id="4-实现片段"><a href="#4-实现片段" class="headerlink" title="4. 实现片段"></a>4. 实现片段</h4><h4 id="4-1-c"><a href="#4-1-c" class="headerlink" title="4.1. c#"></a>4.1. c#</h4><pre class=" language-c#"><code class="language-c#">//--------代码片段一：  同时创建多个线程去创建这个对象实例的时候, 会被多次创建
+<p>假设线程A执行到<code>sInstance = new Singleton()语句，这里看起来是一句代码，但实际上它并不是一个原子操作</code>，这句代码最终会被编译成多条汇编指令，它大致做了3件事情:<br>(1）给Singleton的实例分配内存;<br>(2）调用Singleton()的构造函数，初始化成员字段;<br>(3）将sInstance对象指向分配的内存空间（此时sInstance就不是null 了)。</p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221126095057580.png" alt=""></p>
+<h4 id="4-容器管理单例模式"><a href="#4-容器管理单例模式" class="headerlink" title="4. 容器管理单例模式"></a>4. 容器管理单例模式</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SingletonManager</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Object<span class="token operator">></span> objMap<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Object<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token function">SingletonManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">registerService</span><span class="token punctuation">(</span>String key<span class="token punctuation">,</span> Object instance<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>objMap<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            objMap<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>instance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> Object <span class="token function">getService</span><span class="token punctuation">(</span>String key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="4-实现片段"><a href="#4-实现片段" class="headerlink" title="4. 实现片段"></a>4. 实现片段</h4><h5 id="4-1-c"><a href="#4-1-c" class="headerlink" title="4.1. c#"></a>4.1. c#</h5><pre class=" language-c#"><code class="language-c#">//--------代码片段一：  同时创建多个线程去创建这个对象实例的时候, 会被多次创建
 public class Singleton
 {
     private Sington() { }
@@ -729,25 +770,43 @@ public sealed class Singleton
         }
     }
 }</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+<h4 id="5-单例懒加载模式"><a href="#5-单例懒加载模式" class="headerlink" title="5 单例懒加载模式"></a>5 单例懒加载模式</h4><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 使用静态内部类完成单例模式封装，避免线程安全问题，避免重复初始化成员属性  </span>
+<span class="token annotation punctuation">@Slf4j</span>  
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FilterIpUtil</span> <span class="token punctuation">{</span>  
+
+    <span class="token keyword">private</span> <span class="token function">FilterIpUtil</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+    <span class="token punctuation">}</span>  
+
+    <span class="token keyword">private</span> List<span class="token operator">&lt;</span>String<span class="token operator">></span> strings <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+
+    <span class="token comment" spellcheck="true">// 代码块在FilterIpUtil实例初始化时才会执行  </span>
+    <span class="token punctuation">{</span>  
+
+        <span class="token comment" spellcheck="true">// 在代码块中完成文件的第一次读写操作，后续不再读这个文件</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"FilterIpUtil init"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token keyword">try</span> <span class="token punctuation">(</span>InputStream resourceAsStream <span class="token operator">=</span> FilterIpUtil<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getResourceAsStream</span><span class="token punctuation">(</span><span class="token string">"filterIp.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+            <span class="token comment" spellcheck="true">// 将文件内容放到string集合中  </span>
+            IoUtil<span class="token punctuation">.</span><span class="token function">readUtf8Lines</span><span class="token punctuation">(</span>resourceAsStream<span class="token punctuation">,</span> strings<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+            log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token punctuation">}</span>  
+    <span class="token punctuation">}</span>  
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> FilterIpUtil <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token keyword">return</span> InnerClassInstance<span class="token punctuation">.</span>instance<span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+    <span class="token comment" spellcheck="true">// 使用内部类完成单例模式，由jvm保证线程安全  </span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">InnerClassInstance</span> <span class="token punctuation">{</span>  
+        <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> FilterIpUtil instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FilterIpUtil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+
+    <span class="token comment" spellcheck="true">// 判断集合中是否包含目标参数  </span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isFilter</span><span class="token punctuation">(</span>String arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token keyword">return</span> strings<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>arg<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+
+<span class="token punctuation">}</span></code></pre>
+
             </div>
             <hr/>
 
@@ -1279,7 +1338,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

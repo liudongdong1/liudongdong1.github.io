@@ -530,7 +530,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-07-24
+                    2022-11-07
                 </div>
                 
 
@@ -600,8 +600,8 @@
 </ul>
 <p><strong>Spring 实现单例的方式：</strong></p>
 <ul>
-<li>xml : <code>&lt;bean id="userService" class="top.snailclimb.UserService" scope="singleton"/&gt;</code></li>
-<li>注解：<code>@Scope(value = "singleton")</code></li>
+<li>xml : <code>&lt;bean id=&quot;userService&quot; class=&quot;top.snailclimb.UserService&quot; scope=&quot;singleton&quot;/&gt;</code></li>
+<li>注解：<code>@Scope(value = &quot;singleton&quot;)</code></li>
 </ul>
 <p><strong>Spring 通过 <code>ConcurrentHashMap</code> 实现单例注册表的特殊方式实现单例模式。Spring 实现单例的核心代码如下</strong></p>
 <pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 通过 ConcurrentHashMap（线程安全） 实现单例注册表</span>
@@ -742,7 +742,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p>当调用 <code>DemoPublisher</code> 的 <code>publish()</code> 方法的时候，比如 <code>demoPublisher.publish("你好")</code> ，控制台就会打印出:<code>接收到的信息是：你好</code> 。</p>
+<p>当调用 <code>DemoPublisher</code> 的 <code>publish()</code> 方法的时候，比如 <code>demoPublisher.publish(&quot;你好&quot;)</code> ，控制台就会打印出:<code>接收到的信息是：你好</code> 。</p>
 <h3 id="7-适配器模式"><a href="#7-适配器模式" class="headerlink" title="7. 适配器模式"></a>7. 适配器模式</h3><p>适配器模式(Adapter Pattern) 将一个接口转换成客户希望的另一个接口，适配器模式使接口不兼容的那些类可以一起工作，其别名为包装器(Wrapper)。</p>
 <h4 id="1-spring-AOP中的适配器模式"><a href="#1-spring-AOP中的适配器模式" class="headerlink" title="1. spring AOP中的适配器模式"></a>1. spring AOP中的适配器模式</h4><p>我们知道 Spring AOP 的实现是基于代理模式，但是 Spring AOP 的增强或通知(Advice)使用到了适配器模式，与之相关的接口是<code>AdvisorAdapter</code> 。Advice 常用的类型有：<code>BeforeAdvice</code>（目标方法调用前,前置通知）、<code>AfterAdvice</code>（目标方法调用后,后置通知）、<code>AfterReturningAdvice</code>(目标方法执行结束后，return之前)等等。每个类型Advice（通知）都有对应的拦截器:<code>MethodBeforeAdviceInterceptor</code>、<code>AfterReturningAdviceAdapter</code>、<code>AfterReturningAdviceInterceptor</code>。Spring预定义的通知要通过对应的适配器，适配成 <code>MethodInterceptor</code>接口(方法拦截器)类型的对象（如：<code>MethodBeforeAdviceInterceptor</code> 负责适配 <code>MethodBeforeAdvice</code>）。</p>
 <h4 id="2-spring-MVC中的适配器模式"><a href="#2-spring-MVC中的适配器模式" class="headerlink" title="2. spring MVC中的适配器模式"></a>2. spring MVC中的适配器模式</h4><p>在Spring MVC中，<code>DispatcherServlet</code> 根据请求信息调用 <code>HandlerMapping</code>，解析请求对应的 <code>Handler</code>。解析到对应的 <code>Handler</code>（也就是我们平常说的 <code>Controller</code> 控制器）后，开始由<code>HandlerAdapter</code> 适配器处理。<code>HandlerAdapter</code> 作为期望接口，具体的适配器实现类用于对目标类进行适配，<code>Controller</code> 作为需要适配的类。</p>
@@ -758,25 +758,7 @@
 <h3 id="8-装饰者模式"><a href="#8-装饰者模式" class="headerlink" title="8. 装饰者模式"></a>8. 装饰者模式</h3><p>装饰者模式可以动态地给对象添加一些额外的属性或行为。相比于使用继承，装饰者模式更加灵活。简单点儿说就是当我们需要修改原有的功能，但我们又不愿直接去修改原有的代码时，设计一个Decorator套在原有代码外面。其实在 JDK 中就有很多地方用到了装饰者模式，比如 <code>InputStream</code>家族，<code>InputStream</code> 类下有 <code>FileInputStream</code> (读取文件)、<code>BufferedInputStream</code> (增加缓存,使读取文件速度大大提升)等子类都在不修改<code>InputStream</code> 代码的情况下扩展了它的功能。</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/Decorator.jpg" alt="装饰者模式示意图"></p>
 <p>Spring 中配置 DataSource 的时候，DataSource 可能是不同的数据库和数据源。我们能否根据客户的需求在少修改原有类的代码下动态切换不同的数据源？这个时候就要用到装饰者模式(这一点我自己还没太理解具体原理)。Spring 中用到的包装器模式在类名上含有 <code>Wrapper</code>或者 <code>Decorator</code>。这些类基本上都是动态地给一个对象添加一些额外的职责</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1085,19 +1067,22 @@ name： 表名
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/14/shi-kong-shu-ju/gnn/pytorch3d/">
+                <a href="/2021/06/14/shi-kong-shu-ju/gnn/pytorchgnn/">
                     <div class="card-image">
                         
-                        <img src="https://cdn.pixabay.com/photo/2021/03/19/04/49/kid-6106557__340.jpg" class="responsive-img" alt="Pytorch3D">
+                        <img src="https://cdn.pixabay.com/photo/2021/05/19/14/31/dandelion-6266230__340.jpg" class="responsive-img" alt="PytorchGNN">
                         
-                        <span class="card-title">Pytorch3D</span>
+                        <span class="card-title">PytorchGNN</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-Chaton, Thomas, et al. “Torch-Points3D: A Modular Multi-Task Frameworkfor Reproducible Deep Learning on 3D Point Clouds
+论文对GNN模型分类如下：
+
+图卷积网络(Graph convolutional networks)和图注意力网络(graph attention networks)，因为涉及到传播步骤(propagation step)。
+图的空域网络
                         
                     </div>
                     <div class="publish-info">
@@ -1325,7 +1310,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

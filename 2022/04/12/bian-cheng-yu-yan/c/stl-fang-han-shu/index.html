@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-04-15
+                    2022-11-07
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    853
+                    6
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    3 Min
+                    1 Min
                 </div>
                 
 
@@ -551,162 +551,18 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <blockquote>
-<p>所谓的仿函数 (functor)，是通过<code>重载 () 运算符模拟函数形为的类</code>。因此，这里需要明确两点：</p>
-<ul>
-<li>仿函数不是函数，它是个类；</li>
-<li>仿函数重载了 () 运算符，使得它的对你可以像函数那样子调用。</li>
-</ul>
-</blockquote>
-<h3 id="1-仿函数可配接性"><a href="#1-仿函数可配接性" class="headerlink" title="1. 仿函数可配接性"></a>1. 仿函数可配接性</h3><blockquote>
-<p>STL 仿函数应该有能力被函数适配器修饰，就像积木一样串接，然而，为了拥有配接能力，每个仿函数都必须定义自己的<strong>函数参数类型和返回值类型</strong>，就像迭代器如果要融入整个 STL 大家庭，也必须按照规定定义自己的 5 个相应的类型一样。</p>
-</blockquote>
-<h4 id="1-unary-function"><a href="#1-unary-function" class="headerlink" title=".1. unary_function"></a>.1. unary_function</h4><blockquote>
-<p>用来呈现<code>一元函数的参数类型和返回值类型</code>，使用者实现对应的一元仿函数时只需继承这个类并进行事项即可。</p>
-</blockquote>
-<pre class=" language-c++"><code class="language-c++">Template<class Arg, class Result> //基类
-Struct unary_function
-{
-    Typedef Arg argument_type;
-    Typedef Result result_type;
-}
-
-//自定义的一元仿函数可以继承上类来获得类型定义
-Template<class T>
-Struct negate:public unary_function<T,T> //取反
-{
-    T operator()(const T& x)const {return –x;}
-};</code></pre>
-<h4 id="2-binary-function"><a href="#2-binary-function" class="headerlink" title=".2. binary_function"></a>.2. binary_function</h4><blockquote>
-<p>用来呈现二元函数的第一个参数类型、第二个参数类型和返回值类型。</p>
-</blockquote>
-<pre class=" language-c++"><code class="language-c++">Template<class Arg1, class Arg2, class Result>
-Struct binary_function
-{
-    Typedef Arg1 first_argument_type;
-    Typedef Arg2 second_argument_type;
-    Typedef Result result_type;
-};
-
-
-Template<class T>
-Struct plus: public binary_function<T,T,T>  //用法示例，加运算
-{
-    T operator()(const T& x, const T& y)const {return x+y ;}
-};</code></pre>
-<h3 id="2-几种仿函数"><a href="#2-几种仿函数" class="headerlink" title="2. 几种仿函数"></a>2. 几种仿函数</h3><h4 id="1-算术类仿函数"><a href="#1-算术类仿函数" class="headerlink" title=".1.算术类仿函数"></a>.1.算术类仿函数</h4><blockquote>
-<p>用于算术运算，包括加法：plus，减法：minus，乘法：multiplies，除法：divides，取模：modulus，取反：negate。</p>
-</blockquote>
-<pre class=" language-c++"><code class="language-c++">template <class T>
-struct plus : public binary_function<T, T, T> {
-    T operator()(const T& x, const T& y) const { return x + y; }
-};
-
-template <class T>
-struct multiplies : public binary_function<T, T, T> {
-    T operator()(const T& x, const T& y) const { return x * y; }
-};
-
-template <class T>
-struct divides : public binary_function<T, T, T> {
-    T operator()(const T& x, const T& y) const { return x / y; }
-};
-
-template <class T>
-struct minus : public binary_function<T, T, T> {
-    T operator()(const T& x, const T& y) const { return x - y; }
-};</code></pre>
-<h4 id="2-关系类仿函数"><a href="#2-关系类仿函数" class="headerlink" title=".2.关系类仿函数"></a>.2.关系类仿函数</h4><blockquote>
-<p>用于进行关系运算，包括等于：equal_to，不等于：not_equal_to，大于：greater，大于等于：greater_equal，小于：less，小于等于：less_equal。</p>
-</blockquote>
-<pre class=" language-c++"><code class="language-c++">template <class T>
-struct equal_to : public binary_function<T, T, bool> {
-    bool operator()(const T& x, const T& y) const { return x == y; }
-};
-
-template <class T>
-struct not_equal_to : public binary_function<T, T, bool> {
-    bool operator()(const T& x, const T& y) const { return x != y; }
-};
-
-template <class T>
-struct greater : public binary_function<T, T, bool> {
-    bool operator()(const T& x, const T& y) const { return x > y; }
-};</code></pre>
-<h4 id="3-逻辑类仿函数"><a href="#3-逻辑类仿函数" class="headerlink" title=".3. 逻辑类仿函数"></a>.3. 逻辑类仿函数</h4><blockquote>
-<p>提供几种逻辑运算，包括逻辑运算 and：logical_and，逻辑运算 or：logical_or，逻辑运算 not：logical_not。</p>
-</blockquote>
-<pre class=" language-c++"><code class="language-c++">template <class T>
-struct logical_or : public binary_function<T, T, bool> {
-    bool operator()(const T& x, const T& y) const { return x || y; }
-};
-
-template <class T>
-struct logical_and : public binary_function<T, T, bool> {
-    bool operator()(const T& x, const T& y) const { return x && y; }
-};
-
-template <class T>
-struct logical_not : public unary_function<T, bool> {
-    bool operator()(const T& x) const { return !x; }
-};</code></pre>
-<h4 id="4-证同-identity-、选择-select-、投射-project"><a href="#4-证同-identity-、选择-select-、投射-project" class="headerlink" title=".4.证同 (identity)、选择 (select)、投射 (project)"></a>.4.证同 (identity)、选择 (select)、投射 (project)</h4><blockquote>
-<p>证同用于返回本身；选择用于接受一个 pair, 返回第一个元素或第二个元素；投射传回第一参数，忽略第二参数或相反。</p>
-</blockquote>
-<pre class=" language-c++"><code class="language-c++">template <class T>
-struct identity : public unary_function<T, T> {
-  const T& operator()(const T& x) const { return x; }
-};
-
-// 选择第一个元素
-template <class Pair>
-struct select1st : public unary_function<Pair, typename Pair::first_type> {
-  const typename Pair::first_type& operator()(const Pair& x) const
-  {
-    return x.first;
-  }
-};
-// 选择第二个元素
-template <class Pair>
-struct select2nd : public unary_function<Pair, typename Pair::second_type> {
-  const typename Pair::second_type& operator()(const Pair& x) const
-  {
-    return x.second;
-  }
-};
-
-// 忽略第二个元素返回第一个元素
-template <class Arg1, class Arg2>
-struct project1st : public binary_function<Arg1, Arg2, Arg1> {
-  Arg1 operator()(const Arg1& x, const Arg2&) const { return x; }
-};
-// 忽略第一个元素返回第二个元素
-template <class Arg1, class Arg2>
-struct project2nd : public binary_function<Arg1, Arg2, Arg2> {
-  Arg2 operator()(const Arg1&, const Arg2& y) const { return y; }
-};</code></pre>
-<h3 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h3><ul>
-<li><a href="https://github.com/FunctionDou/STL" target="_blank" rel="noopener">https://github.com/FunctionDou/STL</a></li>
-</ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+                <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="36c2e24d5a746c6596fc9d0eb8d0f2aa82252dad0b4e721b2e68341b3bc4ce11">d686cb0a25b96ced5ce99713a9124a67a48f5aaf25ac9761f5fcc1d8e7f8118ee7bf1c15e92af99f57ef8d125203fe3ff7cadc59d3f7603ba516f4e32c4f46be3163eaf4214c025f27dbede6f182b28ce3a607ac2d333b70e90830c05c28c8ef5e6c4a149d72276096d1a218c2a69d004817705bb5dfcfbf95ff7b5b35de4ed28bb9cb51857d732d6b120128b9d059dcf796b092709d2fa6853e240d30eec4d7d7791f14fc65b033ef8dae3a138fba91dbce024d80631ba311f5846e2e7ccbc2790102d9a181945b914c47b4c2bc60758bde63d42094abf45a111efeb239053fd4d55f03160a14fdbceae67bcfcbc37a96296dbef25e0fbc730b16b9da5fdf9ca94441aa88a47e23acaa018804a63d3aaa1b144f0e6dbd29ef155f57f1bfa61b1afa18e61707ed348e4055612f82565123c79a5f348f39b8b3734e25b214314ebeea059fa42b805e70c6d2f779358599592e345cb5af7b921bd2af51d05a7b1757cf2f2b2b3d23a6a28bdea425f4fe7d4a2d1c1aab022273a996c9e8bfdb3c39ea48702108d850b513d372831557b8a06dc75c3d2f561af53f90800ee5d9c0f38f8aa56d53e7d3650ab133f46ad1469c947737f11eadec39cf4b33e47fbe0296c4574c83930d55826616bba0ed09032c267a2ffedbe8c4b6545ed053948123865f47722fb4fd8983cf6b979cabc5aa43a607f27c8c1351e50cfd7c4e030d84770bbc930b173bd03860a5626efbadabc311b5b37d14d1745d478536003843a6c2baed5fc5446f2ae3423ad100fa44265c8dfc787f033ae413101fac5ade3e103e9aaedd703b54aa7b3552dc9f8cb560b7bd2c47393dc71d9964c36cfe7d4ea435d59fb8fef48505e691da672bb7ff5cf2e16ad02c5cd14293632cc78c35c995e5bb27a38dd5857c0ae08a784267ba4a160679102ac55b6309f69512b22b04c341d3fd7037e0336ace799fc1a0a31fecc466370a87aa87270d593d380060ac6067a99b2c4bb33435b71c363df1a9cdd9fb5860a4785fb7cb11cb5d0a9c82ca85c8d812b9e39c9e8219aee5f8d86763ac303b2abcc35afbefc98f2035871016b97321f802e7831a9418ba00bafeb9fc1dff7ed828a0e3c97d39c3d979ef3d1ed34c7dbb97c80497f9cdf7537bdbd4b32ab15af6494e8bc624f182f9d0f170f3cdc93b424d7d9f65e63d89e1b9c5e10ab40642d81fce1f82955e97b8a3b513adc2bf4d406518a48148410d4a348ca58a3812485a19daf165fdfe6fd1c13c73ecc923f273ac49efe151a17c184b698f9e5239c6c9f8618305e82a6b572996534df05809bda6c20f7dc34c2cd22c00d32059926ead5f09de01ffb31ec8405e44e744cf3d3bd2027238e110def2fb598eb7ccb67a05fd5aac7f5a5a3854a9489524125313526480bdfcdc720937fc5b12e1150e09d7820a327ab1e658053066fc4af95276d95f23bcf6b259de1cc96d22e7170ea4fb2d438bf7ee27d7ee7c23a17e21d97c19235b70abd824e79923e206969081e178e82b323c2706befe270675cd96941ec7db95eed572574d93e2863f0b91fb3423d68149fa4efbae9ec67652105fe13fce0a993c93784b96bad813fe6a13e79cd7a07b10b078dfd2701855919fd51bfa73b42f81c3cf3747868d9c0a14803141ca8bb20bd4c189d594d2b41c4bed56a7cc9da299aacc1abe2ae93f2b01d9b5c71058d7278e6b7e2bc531f369671399fa1bf040f4ef021ff3de193a5f9e22b8938670d1847940e1a276949ad7c974f1e01f9e434a8354ac7662469a1399620013e349beda4f9f6fe9324e34e6f3854b36a414e6a1e226e014b3a99a6260e9c41c3f2117f2f75b103098895d5b9c604f4e5a383285b5ec8f7c8a42c9963be98d04dfcebc953900dcc54851506b5b4156d60065adca44620a59efcc574d6627a4bbff6638e89f41641d8cc6a2af5a018ecbf601dae19f07a4100154e757644e877f413d1f6f2f8d4ef0d70a125fd5218d50cbd08f7b8e3ecaff26a86a50faa3bc2544f881633c71748f5764eca6d6385cc945033f8dd57224c84f9a58b41fc23ddc9c899a23a4e8b093a4d277b790caa9c25af0cb312c965bc66e1cc6117607d0f236ab31dc954996e56b482e60dd4d367b2ed98a099bb17956f5c5fb5636c9f6a2591bf6154ee62f764fb9f4af23542785c4cad28bfb26230cd354335658b6532a12eff4b793099f335095f6d524b038da84ec6aae0f1fba7f9c50960087b1932ceeab07e3de5ed310d33d57620bc31e1bcd4b679200b15d7e9c243dd89690ab70563b1856ee810dc4a0847fa37d6f5c1f30d63844baf69e7824a78d40a66294b3edc7bbbac493882862b7858a13a43e8d8fc7e86acce870d5be16ae09ecae4028a9049262c5885e30e265789ef8ffe35c10570146f3fb64977bf9c19f568432a557520a236b8d6d319cd2ec0a0eb860cef58744b646361b80e9b15aeac9628eaf37308c9cb8997767925a3684f37df61f7e109e1d9b663f43f6ab0d5583fa2fbce5db4f18fcdb5c5425c93999b2591683f4ef92550da2c3b5118576ff21d7a5dfd21fa6464cf45bad3443633c4004969383c2e4c0fe758577ff287ff4ff1d01a131de0c2c8f0535cf9689dd37073871e10fe23d7df00f20630d3991b480e3d38dbecc21163097ad0bc323969d00ce6f2f3e06579c19a01b0b114a05d9df8052537c2ef477951637410ea0ddad55649c3d57bf53a1c29d100db128642423fbb079e365f36cda12011d3255521703f1521b8e692e8be25cb72ea81a6c109f2360ffc8a9c9c591839d31feda93bf06f6bccd3dbb97131b8932ce24a3b2d713ca4128db1779d10229eaa1a09da1ad65037ab3dedbc2bbff151a5b0e6e617eedcc764f5efc2efa793735fff9c7160e9ae4dd2b53ae55863225563ee3ff0cf299a5b795aa2354bc344225d7e2a7e3a712f11d1217cd0af4a932a229a79a435f0359a23cde87a23c7ca983d2a597e08a5971128e1995dde81cdb37455894e745e9ea67188436d58f1376921b0704c55c185d0117af5def4aba60e63d640f57997a3276d944129c278072e1fdca09716585870631b34da00f3221d22fb6e659a24645934903af00ed03387d9fdd984cd8acc285cb6246f62acadaefae5dbdd9e695a3334fdf902eee8b241df529662bc46dedbb3e2cad232ecb920cd461cb97c4281980871082205714bb22c606dc99ad1fe71bc868ff43f8ca247f082535f64294dc26c3f1fb1b713247170eff172bf2c9ac669913bfbc8269d0865a06be4956d0097dc4113f2dcdd22317032793f50d50f6a59a604292d800ba8ba33f8f6343000c2e790ba768cc94b9fe257a65103b6a4e042e608d3846413bf500690bd3a2a147f9359afb203ca7ca9a10d46c13a2067b845c3f2b3d0c3a38e9725479f4eff3e53ef547208a70f63880bec5ad72e575812f4732b85f8afefd5bf6648d76011366b89efdd55151a444ebbdcc7321c3d3e8088707040d3dd7d694a07f9806e362eb76f84136bb25568851a1939ec1fa4903ba3c6679adcf65f855e9bf5abc147a6887a5aa09f4bf04a5e7d1e68556c5ce59f77ddbab8d1d8db90e494fbae0d213031d8c33294445c2bc3c983022278333286b448e0c17495cf82e3a21aff13649f9021993dc66efc367939bf2c7e057695d63d74782b2775b9e763615e23147a1432d97852f5bfc360cdd25c17e944511254823a56013ad6f47483cc43f897631d5e4aa58941e577ab491291eeea9fcc70c8bc12565e8a47c12cae9ee5db0f2086e6b3210da7e40ff6bda9de05b1e64bf31689cc30e64c01a2210e6163fca082ba6a02f0f033c596444117bef615e78e3b31ae77f79e344a07f860a0065289961ffe7197fefa3d820bc7658c12b0080c2046c4e04209b2ded1e65ee115d9928a3993834199b27494f88838e0c35f13b9c5d8fff57404c0fd9d8bccdaa3be5539cd91cccf7f15848aaa0015cfd48677bdeecd51309c1fa448ff6a283217a900de280211f64f58121c3be7453c9edd145885c5651d88921f00598d7f8b63e1d500e31e03fdcb44441eb2d48f34af13bd6ac02386a992f3cc4e7fbe2f32b8b98c999078de9e59599e1b22e31cdf9cb2a447cc366b952fbb83a14b9e37d6bf7138cd16a82736a982f9e9571562edf5fabd970fa215ffe075f6421ed51030c20c3a3bb0372e5aab9605b8004b8a0a4521f6cc4cb64901ef59d00d5c0b64f73efab29d2168bc5d268bfeb53a986cfc6024fb0f2bfbaa59831679c9cf182e292697e955d1e0bb761d04d3d5dfe57d9197d059b2980ffe7ccfe5d441e8bb1c27331c9c186ecc9abc751cbe56d27b3ebe526e6b36bd3304bf9070dee2063d3d16d62825700d3151c2b8c49c6efb78ca02ea465875a5affded8c4525112d87c45a4aba3ea283159d8d7f9e0a562009a0b350efec819859f255b028229f0b93c9f2e27f8fa5a0ec4fd4223ace503b053d54318eb767e52b1f09c705ca49d7403f6a5bd65d328edbb7add97d5baaf47913c71d91b7ebd3f9e960608414ef62abb1a5565950a061c461b064053f6f2de93c358d9ebf1ed4285235f43335765c8acb1b6c6917e1e0fa93aa426793e751dca2fd27154a966ed02236c26301243e1807d145876855165e99b16280037c08347b4b9d71cf555beea357622afc6561546cb696cdb8c311d5449cc995c5a7f06679cfe19d7b7ff6ba5463075a76c626d3cb7ed05fa4a8b14e2874fb3679c4cb05842d8d3eb5cd9b2a2c710e6ef6b290f19fe442865b6c2af3cd60fd419b7555eb8387a7c7d0b09fc4d36c985970eaf5beb15b6b785c29d3c10c39256648e6e66de8f6d9cb07f42c5341b70913e0f243a3b11729491d712ecf6f612083f1c2992684e7db7a646e37b43c3ee00bef182aabcaac6e74ff335589a2e27069459ce5cd15806ae44c20c9438db657e24a2a6c3c39ee81f034be200e691cf587553850991269a0207305e9dab39eba966943327e11af192388b1c9b7e6bf716457eab5e7f89d9a607e67ce24fd29e2343a07a1ad60a43a78ec1ad8e21ce94b018d348a20178335926f0c27e2b3aab0ee29306cac4b94d6592690ea4b4dd7d245099ec94f17ee26936f8f898654585d69c6601d6a782f8129355c65d8c27c5e494a0662c80c0c56f011af18acc3436b961f2a95c2187d2ae37011ac47dc32d4b45eeb29b89e20c8ef18c8a157f89910effb265fdc392e37dbcbfd156699aa42e637fe3ee3715ebedf04f1b34633f5565b442ee735bcdc58f73eaee100e0d86ab932325e256b087359ede7a3c3658339aaedaf11b07ff29d735e9b83941fa166f76f15161a6936936127d3089301b85b199d953a5cbb7f5ae774a9fae48bdee2129604a994feb3d0928524fba2e86e6d400d8a3caedcb1a34b05e44df7e3be3cd2b61429193b1b8c034d6b2ae7116e56b369733a586c248ae1a23f540cd5437a305279466055bc31d8aa94a77d52653caced2f7de78ebabf42765c2e79d5b723197f6c182257e51018844064467fd08a19af7d475bc94d4ec6933bf5e7fb5739a38ba3747e3fc5d8e8cff63b190bb263cbca83c55009cb416f7267f66a39c3c662eb064060738e77d5700e1f247190157d695251634a91e788eebc8d9e0d8f3b8d663dd053596730ed1f73a1a5c98be0888a2c8cf925700338710adfa04be40811da1cdc387e1bd7b080a5c018959ddda5583c6dac7f43cdc8594b1208e2c6f83b4872eacc2df795f32d3aa6487e983c2f3dabc6253b8a65eb1a82e7d3c95d4ee6aeea61a0128e3f2c13bb49154ea3a1ae7306185441cd2221c4a4f049ec008ebc7941d76b2f12cefff3d0d6dd54fc17d99bab94164edaaac0c2733cbfae50a6c9f04d8f3a69c188b3ff8fc2951e41e5d3ff84ad95d92042d4ca5055ee0f0902b44d7cb9ab4524d5d8a79bf60f9f42b64815ac434d7316b5caaf84ed8d282d85b31899761f0a762f9d6e7512c281ed2833b2ea2c5b93d9fe8aa5bb79879fe75b1eedddf9d7c9cd9b2fe0c57f83fd7b32ce94c21256885eccfd07a1ac12b8daf2975f7827f257078b8a7c6363985a8861185ee4136cab7601873dedaba545be80a5495d6818892394f8cb151b0051a9912f1756ef4da14160a4184c34763ca070099d95fc15646aeb295cfc511e03eb46e31896730c5c68b8c3496556a299b9b6fde7ee23ffbca0633ef5b8ba09ecd13a90fe7e98ad6ad40e1cfca4d6f5986c1bf58d0e2bf6257968e72a3436f32b04c2850cf9f0627d24bd52b1ec7ae7136364220f21e60bfac8f1b8dd4ba01750b9f09eaea0e5a7778acfc1f6664244d25bd78265ed59f3faa084b49b809980ac284b64fed500b154d85170b248ecd11682e1b2062714b3224b6e1c4da141a9f6af9978fd3255e9578852f29e0a39f37ffcea25ed2399db650e5c6c7672acf1e0e1a9a4f35aa5af9125104ff35318a8a47f03e571d6d4ae2d382a42c5d1f4ba2e14f5969343e3db329f40577a7c9d044445ebba69954b75dd5d78c492cbf0d4d2aa855b3b3876c2bef1593f389e8a5149add18a10ecd772d1ee12beb25a0538805e98d4976501bbc4f1318eb0c450fe7f9c80e5a2e0d6793d8b5df7513eacaa898817fdaabd516713f9068bd94f2cf11b97182571077f99ccc7b7e646523071e4249b75280949163274f3516dac57b9902876d70627792e08868d4a3b56f0a0349a9a7e62cffbac262a42c50c88da7042ca043281202bbb5d0d1e26a690a2d6eb45b2ed55bffbcc4e47e3d67d5c97f7f03deb9fc7783dd79174db12d067dd2a1f9e295d7d3f67f4f571d83fc87c8ff64c419eeefc9eecfa638c7e9abcf5f71956b5ce50d94944e637424887c071e0df6338901a1ff4d66e4230c263a6d0c6d5b60a116f7abd1f3d1a16adf0a9b5f4ba0680db8cf77c3c770cdd9df57268af40c50acde361da23adcaf31c72de3c812b588036d0f2b0dbbba45a9630092e58acd1e9be258ef04de9875af83147bbee2f63aa3c34a712bb29706125348c4b329f2a6b086844929e924158423e858ca681314941518f1a1ea18960cee5d4c10eb0f8d5f5d7c4fe32e24dc0126a23b09dd1485eaa4322bba87e679d67da8b19804e584c0c3c19dbc68034ebc120c44cda90472cde83e8137d3b3c736eab13ca8155b0ea85553f77472e981aed0e9664b845a53fd421fbc98cbc978bea0b326c2075bf13b16cf930dbaff83b51299120171d6f1e009ce3a745bbf9dd89e2e604429c6db7c7f7f0c915f544c53bb818696080a46aff80a03d307dcbcb9e60022546a2bf45c9b8f702360f4809bc5b896ce63e4c25c09a36b42ffb079062b86397ea4248f58fc2211bdeaf300671b9d8a6710fc81827cd686ce0e2a727ac0591c98c6a75cdde4c0718db4036a24f64823f975654b430987288ab905e37cc69d3bb5835e4f8f94863c4889d8f0ab344108924e961c3c9ee841cc3a4c6c76a17b1a16503977b01fed060578be9637486770fb1f34907a94300ace2c0023d21940c89bf302e10b5969222c6a65425bab58563b8ff171a7ae4dc0909e92f90ed5c3fb011c226a24febf7dc8c97b10b44d5583360b450a039b235600ca427470840b9733d79821fdb2f9817d9765291da7ce73d57d8990a4e22aabb64079aac3b7ba5689322eec9db035478e2b25250ff2bbd951e7f7fd6aae1daa716e6379e362fd6f21fcb6f4982b419384aaeb6bf08eed9c587ec2e5d1d474f813aee7e384eff11ac8cc314e597ae4fddd66c8b7c3c6fcfe0c2a184360ec1a1f69dbb7f4798fcf2af89ec35068b9f81aa59c4790958ca79cf2026482d1a8a9ef3a0a2cb9595717b26e7325ebed9c9afe2c5d23e8f27409bfcb9ed6a40955a4a493ebc560b116f3c3eaa418f088d29f26af2626061de82f74278eeec9ad7b2b9dc26c53170eea65ce2bb958b41fcd03beed7fdf99702d6f75da0f397d3cd012e7254d8b28fa2fbfac9816667e2b41d976bdfadef48068c0457a55b20b045ae210970653fbbe618bccc093feef747abfe4e423afbb0e2634be610730579d1b6f0a64f50494a419da3751b108a2075f6113c161514def3279162c18a61195a10f96829be048faf26b00a6c0f196692f05bd481238a006c606acf0975e14b7a9f8ed99089fc96d2b5972baeca4e7772ecf5037b30c7bb1ce6de327dc0b6320584f63d0c26531cd624e9997c59779c7f4334ae7ecdd0368fd401432040e15e4bc99968776b5d0f38480880bbac38ccdd2e81efb6779f14d5f71e9937c059707d26dd84240f24420a91fbb7b8371658394e5d6bf369969e64394fc51376f821f8a09db4bb4714b350482306cc352ce6fbbc3060cd417a991ee96f5695599429e23cd7fc756e7528c614f350cd1b72bf84020f413fad24cc6346188a05ffbdd1c6a28e52d899746cebd8189ef27f70253bda8587cca7138382815c771476f1de6e0042293b60011ec4fcccd0ee037083a1b3bdf7d879cd6280f9fbd789ffa6592fec7692e9314d7255d8152806ec4ff23736b333fa0fce00cf569d2acc5f60d9bb0c2573624c190e90d16fd23f8a4b2796163e84f10a77d57ab7aeda6b7dacc5c20741131dd49b5191bb4e4b2a3c2ce6d3e1dff7f97b28f84514c4b9d5f5e5e4a606dc530727b99b6e0492b6d8dee58abc928d5e07b01a1633284a519020c7a38128a46a073e4ea3d90b0a61b4ae479fce4914157f88a3abd9a7302cb9b2575d6d4ad84308f54c29e6c2a4323e9f08776ec06a82e484db498242e1760f9ba953a77131a8de0c412b8895e841d4ac7d67a851c5a91dcead2b153481ae50de264339129be69d76fd8931ebde16885f979035239701a3d94ecbd8e8be42efbc96aeb8d5127f6b99fcff5753d59dfa2efdc17e744a5853e83ebf599a52a980d1600de9108bce0a240d761bc6549f29683191f958ab5e7862d8e73527355f494e1b46f5236a1b05c44b60ba525d3b3c073a840341b5749a580fbc1d821aed8043e3f04561e72c7baac4426af4dbf9839f8fc270d30a1a7b3f8174b49f434a1b037c46d4841376198c9d14cc6e63a4d306a0ba2c9b19d1c5de12fc38411adb4ff8db9cedc4a0f16718d6cf3e79818f8ca71db456089969f30ef979e7f19480d7cbb270fb5834f81edc713bdb1cef1b16a2553d76544e2da05818cd75f5a8d1077d5cfae5c6dd6238f52dc8897f6aaaa4e38507a0a19fdc2c46bf4d71164b27b53754a1b0e99a8aeccc3e599849c6785821e40e9dce555fed2560c8bfefebce016be4017bd70a24170a2d68e36e4eb498dd8e183cec94d17e62f68fa99ef01f30e5e45dad520bf47e3a2509bdfc56b9a23d8e18d4da6977a508b5a01ffdf2ee0530bd1b9dd1443359b55df992d332fb26a89129c7d5970e5a48217faaa6e42506b89992c036611e0682829a3e7f588801fbeff402a2211b6d33ff7bb6f387f81dd32c7a3047cee513a78b1d542bc5d1d31194cc28140c7621e3b91d5cd42f2cc8df7c3980ee54135f1a74b5d0f606b7e77634611f5aab7c96a564c68233e120ef6ef</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
             </div>
             <hr/>
 
@@ -1236,7 +1092,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

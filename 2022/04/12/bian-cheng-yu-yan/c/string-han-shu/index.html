@@ -356,7 +356,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.pixabay.com/photo/2022/01/21/15/32/subway-6955069__340.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-04-16
+                    2023-01-01
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    2k
+                    417
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    9 Min
+                    1 Min
                 </div>
                 
 
@@ -551,7 +551,66 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="一-string-的构造函数的形式"><a href="#一-string-的构造函数的形式" class="headerlink" title="一. string 的构造函数的形式"></a>一. string 的构造函数的形式</h2><ol>
+                <h2 id="字符串分布-amp-内存分配"><a href="#字符串分布-amp-内存分配" class="headerlink" title="字符串分布&amp;内存分配"></a>字符串分布&amp;内存分配</h2><ul>
+<li><a href="https://www.jianshu.com/p/6469fad4d5d5" target="_blank" rel="noopener">https://www.jianshu.com/p/6469fad4d5d5</a>  来自</li>
+</ul>
+<pre class=" language-c++"><code class="language-c++">#include <stdio.h>
+char *g="Hello";
+int main(int argc, char const *argv[])
+{
+    char s[]="Hello";
+    char *c="Hello";
+    printf("字符指针c的内存地址:%p\n",&c);
+    printf("数组s的内存地址:%p\n",&s);
+    printf("字符指针g的内存地址:%p\n",&g);
+    printf("字符指针c指向Hello的的内存地址: %p\n",&c[0]);
+    printf("字符指针g指向Hello的的内存地址: %p\n",&g[0]);
+    printf("变量s数组的Hello副本的内存地址:%p\n",&s[0]);
+    printf("Hello字面量的尺寸 %lu\n",sizeof("Hello"));
+
+    return 0;
+}</code></pre>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/webp.webp" alt=""></p>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/webp-16663192207423.webp" alt=""></p>
+<ul>
+<li><p>字符串传递指针情况：<a href="https://www.jianshu.com/p/f3fb85b1a647" target="_blank" rel="noopener">https://www.jianshu.com/p/f3fb85b1a647</a></p>
+</li>
+<li><p>C++ 字符串机制</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>c_str()</strong>是一个指针指向动态分配空间中的字符数组中第一个字符的地址。</p>
+<p><strong>size()</strong>包含字符串的长度。</p>
+<p><strong>capacity()</strong>包含当前可能存储在数组中的有效字符数(<code>额外的NUL字符不计算在内</code>)。</p>
+<p><strong>malloc内存分配</strong><br> 一个涉及到malloc内存管理程序的实现需要3个字段，每个字段都是三个不同指针：</p>
+<ul>
+<li>指向已分配内存的指针;</li>
+<li>字符串的逻辑大小(该字符串末尾是NUL字符);</li>
+<li>分配的内存大小（必须大于或等于逻辑大小);</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>C++的string对象底层其实就是malloc动态分配堆内存的机制; 虽然c_str()可以输出字符串首个字符的内存地址,但标准库cout操作会自动对c_str()的内部指针做解引操作,因此cout不能直接得出字符串的地址,而是打印对应的字符串。</p>
+</blockquote>
+<pre class=" language-c++"><code class="language-c++">int main(int argc, char const *argv[])
+{
+    string s("HELLO"); //直接初始化
+    cout<<"初始化时的状态:"<<endl;
+    cout<<"sizeof:"<<sizeof(s)<<endl;
+    cout<<"size:"<<s.size()<<endl;
+    cout<<"分配的内存尺寸(capacity):"<<s.capacity()<<endl;
+
+    for(size_t i=6;i<24;++i){
+        s.push_back('+');
+        cout<<i<<":"<<s<<endl;
+    }
+
+    cout<<"push_back('+')之后的内存尺寸是"<<endl;
+    cout<<"sizeof:"<<sizeof(s)<<endl;
+    cout<<"size:"<<s.size()<<endl;
+    cout<<"分配的内存尺寸(capacity):"<<s.capacity()<<endl;
+}</code></pre>
+<h2 id="一-string-的构造函数的形式"><a href="#一-string-的构造函数的形式" class="headerlink" title="一. string 的构造函数的形式"></a>一. string 的构造函数的形式</h2><ol>
 <li>string str：生成空字符串</li>
 <li>string s (str)：生成字符串为 str 的复制品</li>
 <li>string s (str, str_begin, str_len)：将字符串 str 中从下标 strbegin 开始、长度为 strlen 的部分作为字符串初值</li>
@@ -731,25 +790,7 @@ string <span class="token function">split</span><span class="token punctuation">
     student
     hello
     world</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1273,7 +1314,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

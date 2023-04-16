@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-04-03
+                    2022-11-07
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    5k
+                    4.2k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    21 Min
+                    18 Min
                 </div>
                 
 
@@ -551,8 +551,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="1-NVIDIA显卡驱动-cuda"><a href="#1-NVIDIA显卡驱动-cuda" class="headerlink" title="1. NVIDIA显卡驱动 cuda"></a>1. NVIDIA显卡驱动 cuda</h3><p>方法一：apt 方式安装</p>
-<pre class=" language-shell"><code class="language-shell"> #驱动安装
+                <h3 id="1-NVIDIA显卡驱动-cuda"><a href="#1-NVIDIA显卡驱动-cuda" class="headerlink" title="1. NVIDIA显卡驱动 cuda"></a>1. NVIDIA显卡驱动 cuda</h3><h4 id="1-apt-方式安装"><a href="#1-apt-方式安装" class="headerlink" title=".1.  apt 方式安装"></a>.1.  apt 方式安装</h4><pre class=" language-shell"><code class="language-shell"> #驱动安装
  sudo ubuntu-drivers devices  查看系统支持的显卡设备并下载
 #**系统设置** > **细节**窗口，你会发现Ubuntu正在使用Nvidia显卡。
 lspci -k | grep -A 2 -i "VGA"
@@ -560,38 +559,63 @@ software-properties-gtk
 nvidia-settings       #打开nvidia 设置软件页面
 sudo ubuntu-drivers autoinstall  #显示推荐的驱动
 sudo apt-get update   </code></pre>
-<p>方法二：使用 PPA 第三方软件仓库安装最新版本</p>
-<blockquote>
+<h4 id="2-使用-PPA-第三方软件仓库安装最新版本"><a href="#2-使用-PPA-第三方软件仓库安装最新版本" class="headerlink" title=".2. 使用 PPA 第三方软件仓库安装最新版本"></a>.2. 使用 PPA 第三方软件仓库安装最新版本</h4><blockquote>
 <p>添加 PPA 软件仓库：sudo add-apt-repository ppa:graphics-drivers/ppa，需要输入用户密码，按照提示还需要按下 Enter 键。<br>更新软件索引：sudo apt update<br>接下来的步骤同方法一，只是这样我们就可以选择安装最新版本的驱动程序了。</p>
 </blockquote>
-<p>方法三：官网最新版本安装</p>
+<h4 id="3-官网最新版本安装-推荐"><a href="#3-官网最新版本安装-推荐" class="headerlink" title=".3. 官网最新版本安装 推荐"></a>.3. 官网最新版本安装 推荐</h4><pre class=" language-shell"><code class="language-shell">#  1. 安装必要软件
+sudo apt-get update   #更新软件列表
+sudo apt-get install g++
+sudo apt-get install gcc
+sudo apt-get install make</code></pre>
 <pre class=" language-bash"><code class="language-bash">lspci <span class="token operator">|</span> <span class="token function">grep</span> -i nvidia  <span class="token comment" spellcheck="true">#verify you have a cuda-Capble GPU</span>
+<span class="token comment" spellcheck="true"># 2. 去官网下载对应的驱动https://www.nvidia.cn/Download/index.aspx?lang=cn</span>
 <span class="token comment" spellcheck="true">#查看当前NVIDIA驱动版本</span>
 <span class="token function">sudo</span> dpkg --list <span class="token operator">|</span> <span class="token function">grep</span> nvidia-*
 <span class="token comment" spellcheck="true">#查看本机GPU</span>
 <span class="token function">uname</span> -r <span class="token comment" spellcheck="true">#current running kernel</span>
 <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> linux-headers-<span class="token variable"><span class="token variable">$(</span><span class="token function">uname</span> -r<span class="token variable">)</span></span> <span class="token comment" spellcheck="true"># the kernel headers and development packages</span>
-gcc --version      <span class="token comment" spellcheck="true">#是否安装gcc</span>
-<span class="token comment" spellcheck="true">#disable Nouveau  如果不适用nvida 驱动时需要改回</span>
+<span class="token comment" spellcheck="true">#  3. 卸载原有驱动</span>
+<span class="token function">sudo</span> <span class="token function">apt-get</span> remove --purge nvidia*
+<span class="token comment" spellcheck="true">#  4.禁用nouveau(nouveau是通用的驱动程序)（必须）</span>
 lsmod <span class="token operator">|</span> <span class="token function">grep</span> nouveau   <span class="token comment" spellcheck="true">#如果有输出则需要关闭</span>
 <span class="token comment" spellcheck="true">#创建文件  vim /etc/modprobe.d/blacklist-nouveau.conf</span>
 blacklist nouveau
 options nouveau modeset<span class="token operator">=</span>0
-<span class="token comment" spellcheck="true">#then regenerate the kernel</span>
-<span class="token function">sudo</span> update-initramfs -u
-<span class="token comment" spellcheck="true">#cuda 有俩中安装方式</span>
-    <span class="token comment" spellcheck="true"># 1: distribution-specific packages(RPM,Deb packages) recommended</span>
-    <span class="token comment" spellcheck="true"># 2: distribute-independent package(runfile package)  working across a wider set of linux distribution ,but doesn't update the native package management system</span>
 
-<span class="token comment" spellcheck="true">#download the nvidia toolkit</span>
-<span class="token comment" spellcheck="true"># http://develop.nvidia.com/cuda-downloads  包含 cuda 驱动和一些工具包括库,应用程序,示例程序等</span>
-<span class="token comment" spellcheck="true">#sample: 每一个toolkit 都有一个sample可以测试是够安装好</span>
+<span class="token comment" spellcheck="true">#  5. regenerate the kernel</span>
+<span class="token function">sudo</span> update-initramfs -u
+<span class="token comment" spellcheck="true">#  6. 重启后在终端输入如下，没有任何输出表示屏蔽成功</span>
+lsmod <span class="token operator">|</span> <span class="token function">grep</span> nouveau
+
+<span class="token comment" spellcheck="true">#  7. 安装lightdm，lightdm是显示管理器，主要管理登录界面，ubuntu20.04、22.04需要自行安装,然后上下键选择lightdm即可</span>
+
+<span class="token comment" spellcheck="true">#（这一步也可以不安装lightdm，使用ubuntu20.04、22.04自带的gdm3显示管理器，直观的区别就是gdm3的登陆窗口在显示器正中间，而lightdm登录窗口在偏左边，正常使用没有区别。其他的区别这里不做探究；）</span>
+<span class="token comment" spellcheck="true">#（亲测需要注意的是，如果你有控制多屏显示的需要，gdm3可能更适合你，亲测使用lightdm设置多屏，可能会出现卡屏，死机，无法动弹情况，仅供参考）</span>
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> lightdm
+
+<span class="token comment" spellcheck="true">#  8. 进入终端</span>
+<span class="token function">sudo</span> telinit 3
+<span class="token comment" spellcheck="true">#  9. 禁用X-window服务,在终端输入</span>
+<span class="token function">sudo</span> /etc/init.d/lightdm stop或者（sudo <span class="token function">service</span> lightdm stop）
+<span class="token comment" spellcheck="true">#  10.   安装驱动</span>
+<span class="token function">sudo</span> <span class="token function">chmod</span> 777 NVIDIA-Linux-x86_64-430.26.run   <span class="token comment" spellcheck="true">#给你下载的驱动赋予可执行权限，才可以安装</span>
+
+<span class="token function">sudo</span> ./NVIDIA-Linux-x86_64-430.26.run （–no-opengl-files）   <span class="token comment" spellcheck="true">#安装</span>
+<span class="token comment" spellcheck="true">#–no-opengl-files 只安装驱动文件，不安装OpenGL文件。这个参数我亲测台式机不加没问题，笔记本不加有可能出现循环登录，也就是loop login。 看你自己需要把。</span>
+<span class="token comment" spellcheck="true">#  11. 安装结束后输入sudo  service  lightdm  start 重启x-window服务，即可自动进入登陆界面，不行的话，输入sudo reboot重启，再看看。（重启后不行，尝试在bios中去掉安全启动设置，改成 secure boot：disable）</span>
+nvidia-smi 
+nvidia-settings  <span class="token comment" spellcheck="true">#检查是否安装成功</span></code></pre>
+<pre><code>#cuda 有俩中安装方式
+    # 1: distribution-specific packages(RPM,Deb packages) recommended
+    # 2: distribute-independent package(runfile package)  working across a wider set of linux distribution ,but doesn&#39;t update the native package management system
+
+#download the nvidia toolkit
+# http://develop.nvidia.com/cuda-downloads  包含 cuda 驱动和一些工具包括库,应用程序,示例程序等
+#sample: 每一个toolkit 都有一个sample可以测试是够安装好
 $ cuda-install-samples-10.2.sh ~
-$ <span class="token function">cd</span> ~/NVIDIA_CUDA-10.2_Samples/5_Simulations/nbody
-$ <span class="token function">make</span>
-$ ./nbody</code></pre>
-<p>删除：</p>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#卸载分俩种情况</span>
+$ cd ~/NVIDIA_CUDA-10.2_Samples/5_Simulations/nbody
+$ make
+$ ./nbody</code></pre><h4 id="4-驱动删除"><a href="#4-驱动删除" class="headerlink" title=".4. 驱动删除"></a>.4. 驱动删除</h4><pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#卸载分俩种情况</span>
 <span class="token comment" spellcheck="true"># 1: 卸载通过 runfile  下载</span>
 sudo <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>cuda<span class="token operator">-</span>x<span class="token punctuation">.</span>y<span class="token operator">/</span>bin<span class="token operator">/</span>uninstall_cuda_x<span class="token punctuation">.</span>y<span class="token punctuation">.</span>pl
 <span class="token comment" spellcheck="true">#     卸载通过 runfile 下载的驱动</span>
@@ -603,8 +627,176 @@ sudo apt purge <span class="token operator">-</span><span class="token operator"
 sudo apt<span class="token operator">-</span>get <span class="token operator">-</span><span class="token operator">-</span>purge remove <span class="token string">"*cublas*"</span> <span class="token string">"cuda*"</span>
 <span class="token comment" spellcheck="true">#To remove NVIDIA Drivers:</span>
 $ sudo apt<span class="token operator">-</span>get <span class="token operator">-</span><span class="token operator">-</span>purge remove <span class="token string">"*nvidia*"</span></code></pre>
-<p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191212213557977.png" alt=""></p>
-<pre class=" language-shell"><code class="language-shell">#---------- cudnn 有俩种安装方式， deb 安装，或者下载源代码替换 安装  推荐deb安装
+<h3 id="2-Linux-内核与驱动版本"><a href="#2-Linux-内核与驱动版本" class="headerlink" title="2. Linux 内核与驱动版本"></a>2. Linux 内核与驱动版本</h3><h4 id="1-发行版本"><a href="#1-发行版本" class="headerlink" title=".1.  发行版本"></a>.1.  发行版本</h4><p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201117203235695.png" alt=""></p>
+<h4 id="2-Linux-启动过程"><a href="#2-Linux-启动过程" class="headerlink" title=".2. Linux 启动过程"></a>.2. Linux 启动过程</h4><p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201117204242635.png" alt=""></p>
+<ol>
+<li><p><code>内核引导</code>当计算机打开电源后，首先是<code>BIOS开机自检</code>，按照BIOS中设置的启动设备（通常是硬盘）来启动。<code>操作系统接管硬件</code>以后，首先<code>读入 /boot 目录下的内核文件</code>。</p>
+</li>
+<li><p><code>运行init</code>：init 进程是系统所有进程的起点，init 程序首先是需要读取配置文件 <code>/etc/inittab</code>。</p>
+</li>
+<li><p><code>运行级别</code>：ctrl+alt+F1–F6  切换到相应的终端</p>
+<p>运行级别0：系统停机状态，系统默认运行级别不能设为0，否则不能正常启动</p>
+<p>运行级别1：<code>单用户工作状态</code>，<code>root权限</code>，用于系统维护，禁止远程登陆`</p>
+<p>运行级别2：<code>多用户状态(没有NFS)</code></p>
+<p>运行级别3：<code>完全的多用户状态(有NFS)</code>，登陆后进入<code>控制台命令行模式</code></p>
+<p>运行级别4：系统未使用，保留</p>
+<p>运行级别5：<code>X11控制台</code>，登陆后进入<code>图形GUI模式</code></p>
+<p>运行级别6：系统正常关闭并重启，默认运行级别不能设为6，否则不能正常启动</p>
+</li>
+</ol>
+<blockquote>
+<p><code>shutdown –h 10 ‘This server will shutdown after 10 mins’</code>这个命令告诉大家，计算机将在10分钟后关机，并且会显示在登陆用户的当前屏幕中。</p>
+</blockquote>
+<h4 id="3-Grub文件"><a href="#3-Grub文件" class="headerlink" title=".3. Grub文件"></a>.3. Grub文件</h4><ul>
+<li>/boot/grub/grub.cfg 文件<ul>
+<li>官方文件只说/boot/grub/grub.cfg不要手工修改，这个文件是运行 update-grub自动生成的。要修改配置文件的只要打开/boot/grub/grub.cfg文件，找到想修改的地方，然后根据注释找到相应的 /etc/default/grub或/etc/grub.d/ (folder)进行修改。</li>
+<li>grub.cfg文件中主要包含两个部分，一部分是 各个启动项的定义，第二部分是启动界面的设置。你可以直接用gedit打开该文件看其中的内容。</li>
+</ul>
+</li>
+<li>/etc/grub.d/ 文件夹<ul>
+<li>定义各个启动项，其中的文件代表了一个或多个启动项，命名规范都是”两个数字<em>名称”，前面的两位数字确定这个或这多个启动项在启动界面的位置， 默认的 “00</em>“是预留给”00_header”的，”10_是预留给当前系统内核的，20_是预留给第三方程序的，除了这些你都可以使用，增加自己的，比如 05_ , 15_，数字越小越前面。</li>
+<li>执行前面说的”update-grub”或者update- grub2”命令之后，这个文件夹中的文件就是用于生成 grub.cfg 中启动项的定义的</li>
+</ul>
+</li>
+<li>/etc/default/grub 文件<ul>
+<li>启动界面的配置，比如默认的启动项，等待用户选择启动项的时间等。当执行前面说的”update-grub”或者update-grub2”命令之后，这个文件的内容就 用于生成 grub.cfg 中启动界面的设置。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-内核相关命令"><a href="#4-内核相关命令" class="headerlink" title=".4. 内核相关命令"></a>.4. 内核相关命令</h4><ol>
+<li><p><strong>file ‘which update-initramfs’</strong>  学会这个命令</p>
+<ul>
+<li>编译内核的最后一步执行make install时会调用update-initramfs，update-initramfs继而调用mkinitramfs生成initrd.img.  一个往临时initrd目录copy文件的繁琐过程，mkinitramfs则用脚本替代了手工操作</li>
+<li>1).在临时initrd目录下构建FHS规定的文件系统;2).按/etc/initramfs-tools/module和/etc/modules文件的配置，往lib/modules/目录拷贝模块，同时生成模块依赖文件modules.dep，以后内核启动后会从initramfs中(initrd.img被解压到内存中)按模块依赖关系modprobe模块;3).拷贝/etc/initramfs-tools/scripts和/usr/share/initramfs-tools/scripts下的配置文件到conf/目录下,以后内核启动，创建第一个进程init(initrd.img根目录下init.sh文件)会从conf/*读取配置，按一定的顺序加载模块/执行程序;4).模块的加载离不开modprobe工具集，因此需要拷贝modprobe工具集及其他工具到initrd目录结构下，同时解决这些工具的依赖关系(依赖的so文件的路径);5).所有步骤完成，调用cpio和gzip工具打包压缩临时initrd目录结构。</li>
+</ul>
+</li>
+<li><p><strong>nouveau</strong>(英语：<a href="https://baike.baidu.com/item/%2F" target="_blank" rel="noopener">/</a><a href="https://baike.baidu.com/item/n" target="_blank" rel="noopener">n</a>uːˈ<a href="https://baike.baidu.com/item/v" target="_blank" rel="noopener">v</a>oʊ<a href="https://baike.baidu.com/item/%2F" target="_blank" rel="noopener">/</a>) 是一个自由开放源代码CPU驱动程序，是为AMD的<a href="https://baike.baidu.com/item/CPU" target="_blank" rel="noopener">CPU</a>所编写，也可用于属于<a href="https://baike.baidu.com/item/系统芯片" target="_blank" rel="noopener">系统芯片</a>的<a href="https://baike.baidu.com/item/高通" target="_blank" rel="noopener">高通</a>系列.</p>
+<p>Nouveau的内核模块应该在系统启动时就已自动加载，如果没有的话：</p>
+<ul>
+<li>确保你的<a href="https://wiki.archlinux.org/index.php/Kernel_parameters" target="_blank" rel="noopener">内核参数</a>中没有<code>nomodeset</code> 或者 <code>vga=</code>， 因为Nouveau需要内核模式设置。</li>
+<li>另外，确保你没有在 modprobe 配置文件 <code>/etc/modprobe.d/</code> 或 <code>/usr/lib/modprobe.d/</code> 中屏蔽 Nouveau。</li>
+<li>检查 dmesg 中有没有 opcode 错误，如果有的话，将 <code>nouveau.config=NvBios=PRAMIN</code> 加入 <a href="https://wiki.archlinux.org/index.php/Kernel_parameters" target="_blank" rel="noopener">内核参数</a>禁止模块卸载</li>
+<li>Nouveau 驱动依赖<a href="https://wiki.archlinux.org/index.php/Kernel_mode_setting" target="_blank" rel="noopener">Kernel mode setting</a> (KMS)。当系统启动时，KMS 模块会在其它模块之后启用，所以显示的分辨率发生改变。</li>
+</ul>
+</li>
+<li><p><strong>dmesg</strong> 命令:用来显示开机信息, kernel会将开机信息存储在ring buffer中。开机时来不及查看信息，可利用dmesg来查看。开机信息亦保存在/var/log/dmesg</p>
+<p>1) dmesg 是一个显示内核缓冲区系统控制信息的工具;比如系统在启动时的信息会写到/var/log/</p>
+<p>2) dmesg 命令显示Linux内核的环形缓冲区信息，我们可以从中获得诸如系统架构、CPU、挂载的硬件，RAM等多个运行级别的大量的系统信息。当计算机启动时，系统内核（操作系统的核心部分）将会被加载到内存中。在加载的过程中会显示很多的信息，在这些信息中我们可以看到内核检测硬件设备</p>
+<p>3) dmesg 命令设备故障的诊断是非常重要的。在dmesg命令的帮助下进行硬件的连接或断开连接操作时，我们可以看到硬件的检测或者断开连接的信息</p>
+<p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191213212239267.png" alt="image-20191213212239267"></p>
+</li>
+<li><p>watch :  execute a program periodically, showing output fullscreen  <font color=red>watch “dmesg | tail -20” </font></p>
+</li>
+<li><p><strong>rmmod</strong>: 可删除不需要的模块。Linux操作系统的核心具有模块化的特性，因此在编译核心时，不需要把全部的功能都放入核心。</p>
+</li>
+<li><p><strong>lsmod</strong>: 显示内核中的模块作用同 <strong>cat /proc/devices</strong> </p>
+</li>
+<li><p><strong>modinfo</strong> 能查看模块的信息，通过查看模块信息来判定这个模块的用途；</p>
+</li>
+<li><p><strong>insmod</strong>: 向linux 内核中加载摸块  </p>
+</li>
+<li><p><strong>modprobe</strong> :向Linux内核中加载摸块,能够处理 module 载入的相依问题.  <font color=red>modprobe会检查/lib/modules/<code>uname -r</code>下的所有模块，除了/etc/modprobe.conf配置文件和/etc/modprobe.d目录以外。所有/etc/modprobe.d/arch/目录下的文件将被忽略。</font></p>
+</li>
+<li><p><font color=red>unable to correct problems,you have held broken package</font>    </p>
+<pre class=" language-shell"><code class="language-shell">sudo apt install -f
+sudo aptitude install <packagename>  #get the detail information
+sudo apt update  | sudo apt upgrade
+sudo dpkg --configure -a
+sudo dpkg --get-selection | grep hold #get actual held packages
+dpkg --get-selections | grep linux-image  #产看内核文件有哪些</code></pre>
+</li>
+</ol>
+<h4 id="5-内核降级"><a href="#5-内核降级" class="headerlink" title=".5. 内核降级"></a>.5. 内核降级</h4><p><strong>linux-image-</strong>: 内核镜像</p>
+<p><strong>linux-image-extra-</strong>: 额外的内核模块</p>
+<p><strong>linux-headers-</strong>: 内核头文件</p>
+<p>官网: <a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/" target="_blank" rel="noopener">https://kernel.ubuntu.com/~kernel-ppa/mainline/</a>  以及相应内核安装位置   <a href="https://www.kernel.org/" target="_blank" rel="noopener">查看稳定的内核</a></p>
+<p>安装4.19</p>
+<ul>
+<li><p>wget -c <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-headers-4.19.0-041900_4.19.0-041900.201810221809_all.deb" target="_blank" rel="noopener">http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-headers-4.19.0-041900_4.19.0-041900.201810221809_all.deb</a></p>
+</li>
+<li><p>wget -c <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-headers-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb" target="_blank" rel="noopener">http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-headers-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb</a></p>
+</li>
+<li><p>wget -c <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-image-unsigned-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb" target="_blank" rel="noopener">http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-image-unsigned-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb</a></p>
+</li>
+<li><p>wget -c <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-modules-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb" target="_blank" rel="noopener">http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-modules-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb</a></p>
+</li>
+<li><p>sudo dpkg -i *.deb</p>
+</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">#无法进入图形页面时，可以查看系统启动日志
+cat /var/log/syslog | grep dkms
+#查看可用的内核
+apt-cache search linux-image
+#备份软件源
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+#添加一个源
+sudo vim /etc/apt/sources.list
+deb http://security.ubuntu.com/ubuntu trusty-security main
+sudo apt update
+#查看所有内核
+dpkg --get-selections| grep linux
+#安装指定版本内核
+sudo apt install 内核名称<linux-image-4.4.0-75-generic>
+dpkg -l | grep 内核名称<linux-image-extra-3.16.0-43-generic>  #查看是否安装成功
+#编辑grub 文件
+sudo vim /etc/default/grub
+# 这一行进行修改GRUB_DEFAULT=0
+GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 内核名称<5.0.0-36-generic>"
+Ubuntu,with Linux 5.3.0-25-generic
+#更新grub 引导
+sudo update-grub
+sudo reboot
+uname -r #查看当前版本是否安装正确
+#卸载内核
+sudo apt remove --purge 内核名称<linux-image-extra-3.16.0-43-generic>
+sudo dpkg --purge linux-image-4.19.0-041900-generic linux-image-unsigned-4.19.0-041900-generic
+sudo dpkg -P 内核名称  #通过deb包暗装的
+#关闭启动内核自动更新
+方式一：
+sudo apt-mark hold linux-image-generic linux-headers-generic
+sudo apt-mark unhold linux-image-generic linux-headers-generic
+方式二：
+修改系统配置文件， /etc/apt/apt/conf.d
+将10periodic，20auto-upgrades 配置中的1改为0
+
+# 删除内核
+dpkg -l | grep linux-image #列出所有内核文件
+#删除指定内核
+dpkg -r --force-all 内核名称</code></pre>
+<p>使用指定版本内核  /boot 文件是内核相关的信息</p>
+<pre class=" language-shell"><code class="language-shell">grep menuentry /boot/grub/grub.cfg</code></pre>
+<p>例如文件如下:</p>
+<pre class=" language-shell"><code class="language-shell">if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+  menuentry_id_option=""
+export menuentry_id_option
+menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+submenu 'Ubuntu 高级选项' $menuentry_id_option 'gnulinux-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+    menuentry 'Ubuntu，Linux 4.8.0-26-lowlatency' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-lowlatency-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+    menuentry 'Ubuntu, with Linux 4.8.0-26-lowlatency (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-lowlatency-init-upstart-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+    menuentry 'Ubuntu, with Linux 4.8.0-26-lowlatency (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-lowlatency-recovery-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+    menuentry 'Ubuntu，Linux 4.8.0-26-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-generic-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+    menuentry 'Ubuntu, with Linux 4.8.0-26-generic (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-generic-init-upstart-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+    menuentry 'Ubuntu, with Linux 4.8.0-26-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-generic-recovery-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+    menuentry 'Ubuntu，Linux 4.4.0-21-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-21-generic-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+    menuentry 'Ubuntu, with Linux 4.4.0-21-generic (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-21-generic-init-upstart-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+    menuentry 'Ubuntu, with Linux 4.4.0-21-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-21-generic-recovery-5bce3795-da96-4c6f-bed2-67d37185a77d' {
+menuentry 'Memory test (memtest86+)' {
+menuentry 'Memory test (memtest86+, serial console 115200)' {</code></pre>
+<p>menuentry 代表一个内核, 从0开始记数字: 例如如果使用<strong>以4.4.0-21内核版本启动，则将文件/etc/default/grub中</strong></p>
+<pre class=" language-shell"><code class="language-shell">#GRUB_DEFAULT=0 
+GRUB_DEFAULT=”Ubuntu，Linux 4.4.0-21-generic“</code></pre>
+<ul>
+<li><strong>sudo update-grub</strong> 然后重启执行uname -r  查看系统内核</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">#禁止内核更新
+sudo apt-mark hold linux-image-5.3.0-42-generic
+sudo apt-mark hold linux-image-extra-5.3.0-42-generic
+
+#重启内核更新
+sudo apt-mark unhold linux-image-5.3.0-42-generic
+sudo apt-mark unhold linux-image-extra-5.3.0-42-generic</code></pre>
+<h4 id="6-cuda安装"><a href="#6-cuda安装" class="headerlink" title=".6. cuda安装"></a>.6. cuda安装</h4><pre class=" language-shell"><code class="language-shell">#---------- cudnn 有俩种安装方式， deb 安装，或者下载源代码替换 安装  推荐deb安装
 #ubuntu cudnn 安装教程 https://developer.nvidia.com/rdp/cudnn-download  cudnn其实是一些加速CUDA性能的库，首先按照解压放到CUDA的相应路径中
 然后把其中的lib64关联到环境变量当中
 #将三个deb文件都下载下同时安装，否则会报错
@@ -654,294 +846,30 @@ echo 'If everything worked fine, reboot now.'</code></pre>
 </ul>
 <pre class=" language-shell"><code class="language-shell">nvcc --version   #使用命令
 #进入相应的目录  C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA</code></pre>
-<h3 id="2-Linux-版本"><a href="#2-Linux-版本" class="headerlink" title="2. Linux 版本"></a>2. Linux 版本</h3><p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201117203235695.png" alt=""></p>
-<h3 id="3-Linux-启动过程"><a href="#3-Linux-启动过程" class="headerlink" title="3. Linux 启动过程"></a>3. Linux 启动过程</h3><p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201117204242635.png" alt=""></p>
-<ol>
-<li><p><code>内核引导</code>当计算机打开电源后，首先是<code>BIOS开机自检</code>，按照BIOS中设置的启动设备（通常是硬盘）来启动。<code>操作系统接管硬件</code>以后，首先<code>读入 /boot 目录下的内核文件</code>。</p>
-</li>
-<li><p><code>运行init</code>：init 进程是系统所有进程的起点，init 程序首先是需要读取配置文件 <code>/etc/inittab</code>。</p>
-</li>
-<li><p><code>运行级别</code>：ctrl+alt+F1–F6  切换到相应的终端</p>
-<p>运行级别0：系统停机状态，系统默认运行级别不能设为0，否则不能正常启动</p>
-<p>运行级别1：<code>单用户工作状态</code>，<code>root权限</code>，用于系统维护，禁止远程登陆`</p>
-<p>运行级别2：<code>多用户状态(没有NFS)</code></p>
-<p>运行级别3：<code>完全的多用户状态(有NFS)</code>，登陆后进入<code>控制台命令行模式</code></p>
-<p>运行级别4：系统未使用，保留</p>
-<p>运行级别5：<code>X11控制台</code>，登陆后进入<code>图形GUI模式</code></p>
-<p>运行级别6：系统正常关闭并重启，默认运行级别不能设为6，否则不能正常启动</p>
-</li>
-<li></li>
-</ol>
-<blockquote>
-<p><code>shutdown –h 10 ‘This server will shutdown after 10 mins’</code>这个命令告诉大家，计算机将在10分钟后关机，并且会显示在登陆用户的当前屏幕中。</p>
-</blockquote>
-<ol>
-<li></li>
-<li><p><strong>file ‘which update-initramfs’</strong>  学会这个命令</p>
+<h3 id="3-无线网卡驱动问题"><a href="#3-无线网卡驱动问题" class="headerlink" title="3. 无线网卡驱动问题"></a>3. 无线网卡驱动问题</h3><ul>
+<li>方式一：直接运行该命令</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">sudo apt-get update #更新软件源
+sudo apt install broadcom-sta-dkms
+#会提示有未能满足的依赖关系执行下面命令
+sudo apt --fix-broken install  #下载对应的模块</code></pre>
 <ul>
-<li>编译内核的最后一步执行make install时会调用update-initramfs，update-initramfs继而调用mkinitramfs生成initrd.img.  一个往临时initrd目录copy文件的繁琐过程，mkinitramfs则用脚本替代了手工操作</li>
-<li>1).在临时initrd目录下构建FHS规定的文件系统;2).按/etc/initramfs-tools/module和/etc/modules文件的配置，往lib/modules/目录拷贝模块，同时生成模块依赖文件modules.dep，以后内核启动后会从initramfs中(initrd.img被解压到内存中)按模块依赖关系modprobe模块;3).拷贝/etc/initramfs-tools/scripts和/usr/share/initramfs-tools/scripts下的配置文件到conf/目录下,以后内核启动，创建第一个进程init(initrd.img根目录下init.sh文件)会从conf/*读取配置，按一定的顺序加载模块/执行程序;4).模块的加载离不开modprobe工具集，因此需要拷贝modprobe工具集及其他工具到initrd目录结构下，同时解决这些工具的依赖关系(依赖的so文件的路径);5).所有步骤完成，调用cpio和gzip工具打包压缩临时initrd目录结构。</li>
+<li>无线网卡驱动列表：<a href="https://www.intel.com/content/www/us/en/support/articles/000005511/wireless.html" target="_blank" rel="noopener">https://www.intel.com/content/www/us/en/support/articles/000005511/wireless.html</a></li>
+<li>教程: <a href="https://www.1024sou.com/article/470920.html" target="_blank" rel="noopener">https://www.1024sou.com/article/470920.html</a></li>
 </ul>
-</li>
-<li><p><strong>nouveau</strong>(英语：<a href="https://baike.baidu.com/item/%2F" target="_blank" rel="noopener">/</a><a href="https://baike.baidu.com/item/n" target="_blank" rel="noopener">n</a>uːˈ<a href="https://baike.baidu.com/item/v" target="_blank" rel="noopener">v</a>oʊ<a href="https://baike.baidu.com/item/%2F" target="_blank" rel="noopener">/</a>) 是一个自由开放源代码CPU驱动程序，是为AMD的<a href="https://baike.baidu.com/item/CPU" target="_blank" rel="noopener">CPU</a>所编写，也可用于属于<a href="https://baike.baidu.com/item/系统芯片" target="_blank" rel="noopener">系统芯片</a>的<a href="https://baike.baidu.com/item/高通" target="_blank" rel="noopener">高通</a>系列.</p>
-<p>Nouveau的内核模块应该在系统启动时就已自动加载，如果没有的话：</p>
-<ul>
-<li>确保你的<a href="https://wiki.archlinux.org/index.php/Kernel_parameters" target="_blank" rel="noopener">内核参数</a>中没有<code>nomodeset</code> 或者 <code>vga=</code>， 因为Nouveau需要内核模式设置。</li>
-<li>另外，确保你没有在 modprobe 配置文件 <code>/etc/modprobe.d/</code> 或 <code>/usr/lib/modprobe.d/</code> 中屏蔽 Nouveau。</li>
-<li>检查 dmesg 中有没有 opcode 错误，如果有的话，将 <code>nouveau.config=NvBios=PRAMIN</code> 加入 <a href="https://wiki.archlinux.org/index.php/Kernel_parameters" target="_blank" rel="noopener">内核参数</a>禁止模块卸载</li>
-<li>Nouveau 驱动依赖<a href="https://wiki.archlinux.org/index.php/Kernel_mode_setting" target="_blank" rel="noopener">Kernel mode setting</a> (KMS)。当系统启动时，KMS 模块会在其它模块之后启用，所以显示的分辨率发生改变。</li>
+<pre class=" language-shell"><code class="language-shell"># 查看网卡类型
+lspci | grep -i net
+##驱动自动加载
+sudo modprobe e1000e
+##重启网卡（注意用ifconfig -a 确认自己网卡名字）
+##停止
+sudo ifconfig eth0 down
+##启动
+sudo ifconfig eth0 up</code></pre>
+<h3 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h3><ul>
+<li><a href="https://blog.csdn.net/hongyiWeng/article/details/121233439" target="_blank" rel="noopener">https://blog.csdn.net/hongyiWeng/article/details/121233439</a>  cuda10.2+ubuntu 18.04+kernel 4.19</li>
 </ul>
-</li>
-<li><p><strong>dmesg</strong> 命令:用来显示开机信息, kernel会将开机信息存储在ring buffer中。开机时来不及查看信息，可利用dmesg来查看。开机信息亦保存在/var/log/dmesg</p>
-<p>1) dmesg 是一个显示内核缓冲区系统控制信息的工具;比如系统在启动时的信息会写到/var/log/</p>
-<p>2) dmesg 命令显示Linux内核的环形缓冲区信息，我们可以从中获得诸如系统架构、CPU、挂载的硬件，RAM等多个运行级别的大量的系统信息。当计算机启动时，系统内核（操作系统的核心部分）将会被加载到内存中。在加载的过程中会显示很多的信息，在这些信息中我们可以看到内核检测硬件设备</p>
-<p>3) dmesg 命令设备故障的诊断是非常重要的。在dmesg命令的帮助下进行硬件的连接或断开连接操作时，我们可以看到硬件的检测或者断开连接的信息</p>
-<p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191213212239267.png" alt="image-20191213212239267"></p>
-</li>
-<li><p>watch :  execute a program periodically, showing output fullscreen  <font color="red">watch “dmesg | tail -20” </font></p>
-</li>
-<li><p><strong>rmmod</strong>: 可删除不需要的模块。Linux操作系统的核心具有模块化的特性，因此在编译核心时，不需要把全部的功能都放入核心。</p>
-</li>
-<li><p><strong>lsmod</strong>: 显示内核中的模块作用同 <strong>cat /proc/devices</strong> </p>
-</li>
-<li><p><strong>modinfo</strong> 能查看模块的信息，通过查看模块信息来判定这个模块的用途；</p>
-</li>
-<li><p><strong>insmod</strong>: 向linux 内核中加载摸块  </p>
-</li>
-<li><p><strong>modprobe</strong> :向Linux内核中加载摸块,能够处理 module 载入的相依问题.  <font color="red">modprobe会检查/lib/modules/<code>uname -r</code>下的所有模块，除了/etc/modprobe.conf配置文件和/etc/modprobe.d目录以外。所有/etc/modprobe.d/arch/目录下的文件将被忽略。</font></p>
-</li>
-<li><p><font color="red">unable to correct problems,you have held broken package</font>    </p>
-<pre class=" language-shell"><code class="language-shell">sudo apt install -f
-sudo aptitude install <packagename>  #get the detail information
-sudo apt update  | sudo apt upgrade
-sudo dpkg --configure -a
-sudo dpkg --get-selection | grep hold #get actual held packages
-dpkg --get-selections | grep linux-image  #产看内核文件有哪些</code></pre>
-</li>
-</ol>
-<ol start="12">
-<li><p>Grub2介绍</p>
-<ul>
-<li>/boot/grub/grub.cfg 文件<ul>
-<li>官方文件只说/boot/grub/grub.cfg不要手工修改，这个文件是运行 update-grub自动生成的。要修改配置文件的只要打开/boot/grub/grub.cfg文件，找到想修改的地方，然后根据注释找到相应的 /etc/default/grub或/etc/grub.d/ (folder)进行修改。</li>
-<li>grub.cfg文件中主要包含两个部分，一部分是 各个启动项的定义，第二部分是启动界面的设置。你可以直接用gedit打开该文件看其中的内容。</li>
-</ul>
-</li>
-<li>/etc/grub.d/ 文件夹<ul>
-<li>定义各个启动项，其中的文件代表了一个或多个启动项，命名规范都是”两个数字<em>名称”，前面的两位数字确定这个或这多个启动项在启动界面的位置， 默认的 “00</em>“是预留给”00_header”的，”10_是预留给当前系统内核的，20_是预留给第三方程序的，除了这些你都可以使用，增加自己的，比如 05_ , 15_，数字越小越前面。</li>
-<li>执行前面说的”update-grub”或者update- grub2”命令之后，这个文件夹中的文件就是用于生成 grub.cfg 中启动项的定义的</li>
-</ul>
-</li>
-<li>/etc/default/grub 文件<ul>
-<li>启动界面的配置，比如默认的启动项，等待用户选择启动项的时间等。当执行前面说的”update-grub”或者update-grub2”命令之后，这个文件的内容就 用于生成 grub.cfg 中启动界面的设置。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>内核降级</p>
-</li>
-</ol>
-<ul>
-<li><p><strong>linux-image-</strong>: 内核镜像</p>
-</li>
-<li><p><strong>linux-image-extra-</strong>: 额外的内核模块</p>
-</li>
-<li><p><strong>linux-headers-</strong>: 内核头文件</p>
-</li>
-<li><p><a href="https://www.kernel.org/" target="_blank" rel="noopener">https://www.kernel.org/</a>  查看稳定的内核</p>
-</li>
-<li><p>官网: <a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/" target="_blank" rel="noopener">https://kernel.ubuntu.com/~kernel-ppa/mainline/</a>  以及相应内核安装位置</p>
-</li>
-<li><p>安装4.19</p>
-<ul>
-<li>wget -c <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-headers-4.19.0-041900_4.19.0-041900.201810221809_all.deb" target="_blank" rel="noopener">http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-headers-4.19.0-041900_4.19.0-041900.201810221809_all.deb</a></li>
-</ul>
-<p>wget -c <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-headers-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb" target="_blank" rel="noopener">http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-headers-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb</a></p>
-<p>wget -c <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-image-unsigned-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb" target="_blank" rel="noopener">http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-image-unsigned-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb</a></p>
-<p>wget -c <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-modules-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb" target="_blank" rel="noopener">http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-modules-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb</a></p>
-<p>sudo dpkg -i *.deb</p>
-</li>
-<li><p><font color="red"> 内核版本选择网址：kernel.org</font></p>
-</li>
-</ul>
-<pre class=" language-shell"><code class="language-shell">#无法进入图形页面时，可以查看系统启动日志
-cat /var/log/syslog | grep dkms
-#查看可用的内核
-apt-cache search linux-image
-#备份软件源
-sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-#添加一个源
-sudo vim /etc/apt/sources.list
-deb http://security.ubuntu.com/ubuntu trusty-security main
-sudo apt update
-#查看所有内核
-dpkg --get-selections| grep linux
-#安装指定版本内核
-sudo apt install 内核名称<linux-image-4.4.0-75-generic>
-dpkg -l | grep 内核名称<linux-image-extra-3.16.0-43-generic>  #查看是否安装成功
-#编辑grub 文件
-sudo vim /etc/default/grub
-# 这一行进行修改GRUB_DEFAULT=0
-GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 内核名称<5.0.0-36-generic>"
-Ubuntu,with Linux 5.3.0-25-generic
-#更新grub 引导
-sudo update-grub
-sudo reboot
-uname -r #查看当前版本是否安装正确
-#卸载内核
-sudo apt remove --purge 内核名称<linux-image-extra-3.16.0-43-generic>
-sudo dpkg --purge linux-image-4.19.0-041900-generic linux-image-unsigned-4.19.0-041900-generic
-sudo dpkg -P 内核名称  #通过deb包暗装的
-#关闭启动内核自动更新
-方式一：
-sudo apt-mark hold linux-image-generic linux-headers-generic
-sudo apt-mark unhold linux-image-generic linux-headers-generic
-方式二：
-修改系统配置文件， /etc/apt/apt/conf.d
-将10periodic，20auto-upgrades 配置中的1改为0
 
-# 删除内核
-dpkg -l | grep linux-image #列出所有内核文件
-#删除指定内核
-dpkg -r --force-all 内核名称</code></pre>
-<p>使用指定版本内核  /boot 文件是内核相关的信息</p>
-<ul>
-<li><pre><code>grep menuentry /boot/grub/grub.cfg</code></pre></li>
-</ul>
-<p>例如文件如下:</p>
-<pre><code>if [ x"${feature_menuentry_id}" = xy ]; then
-  menuentry_id_option="--id"
-  menuentry_id_option=""
-export menuentry_id_option
-menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-submenu 'Ubuntu 高级选项' $menuentry_id_option 'gnulinux-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu，Linux 4.8.0-26-lowlatency' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-lowlatency-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu, with Linux 4.8.0-26-lowlatency (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-lowlatency-init-upstart-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu, with Linux 4.8.0-26-lowlatency (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-lowlatency-recovery-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu，Linux 4.8.0-26-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-generic-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu, with Linux 4.8.0-26-generic (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-generic-init-upstart-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu, with Linux 4.8.0-26-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-45-generic-recovery-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu，Linux 4.4.0-21-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-21-generic-advanced-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu, with Linux 4.4.0-21-generic (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-21-generic-init-upstart-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-    menuentry 'Ubuntu, with Linux 4.4.0-21-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.4.0-21-generic-recovery-5bce3795-da96-4c6f-bed2-67d37185a77d' {
-menuentry 'Memory test (memtest86+)' {
-menuentry 'Memory test (memtest86+, serial console 115200)' {</code></pre><p>menuentry 代表一个内核, 从0开始记数字: 例如如果使用<strong>以4.4.0-21内核版本启动，则将文件/etc/default/grub中</strong></p>
-<pre><code>GRUB_DEFAULT=0 </code></pre><p>改为 </p>
-<pre><code>GRUB_DEFAULT=6</code></pre><p>或者改为</p>
-<pre><code>GRUB_DEFAULT=”Ubuntu，Linux 4.4.0-21-generic“</code></pre><ul>
-<li><strong>sudo update-grub</strong> 然后重启执行uname -r  查看系统内核</li>
-</ul>
-<ol>
-<li><font color="red">Nouveau unknown chipset at install </font>  显卡驱动问题</li>
-</ol>
-<pre class=" language-shell"><code class="language-shell">sudo apt update
-sudo apt upgrade
-sudo ubuntu-drivers devices
-sudo apt install nvidia-xxx
-#如果没有NVIDIA驱动的话,  </code></pre>
-<h3 id="文件"><a href="#文件" class="headerlink" title="文件"></a><strong>文件</strong></h3><p><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201117204818316.png" alt=""></p>
-<ul>
-<li><p><code>/boot 文件</code>:  系统内核文件 ,启动管理程序<code>grub 的目录</code></p>
-<ul>
-<li>Initrd 文件,系统启动摸块的主要来源,系统启动所需加载的虚拟磁盘</li>
-<li>System.map 系统内核中的变量对应表</li>
-<li><code>vmlinuz 是启动过程系统实际所用的内核</code></li>
-<li>grub目录是启动管理程序的<ul>
-<li><code>grub.conf 文件 从哪个内核进入,启动时间等</code></li>
-</ul>
-</li>
-<li>kernel 主要负责的是北桥、南桥、CPU及内存，可见它们都是整个主机最重要的硬件核心部分，kernel如果处了问题，系统肯定无法启动起来。</li>
-<li><code>kernel、initrd和system module是依次加载的</code>。initrd包含一部分内核模块，主要是一些关键的外部硬件，如SATA、SCSI和USB等外设。它如果失败当然也会影响系统启动。而system module这些系统中的模块，是与支持和启动无很大关系的硬件有关，如果没有这些硬件设备的支持，系统也可以启动完成，只是存在功能上的缺失，如声卡、网卡、显卡等。</li>
-</ul>
-</li>
-<li><p><code>/lib</code> 标准程序设计库，又叫<code>动态链接共享库</code>，作用类似windows里的.dll文件</p>
-</li>
-<li><p><code>/sbin</code> 系统管理命令，这里存放的是系<code>统管理员使用的管理程序</code></p>
-</li>
-<li><p><code>/bin</code> 二进制可执行命令<br><code>/dev 设备特殊文件</code><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191213221715677.png" alt=""><br><code>/etc</code> 系统管理和配置文件<br>/etc/rc.d 启动的配置文件和脚本</p>
-</li>
-<li><p>/lost+found 这个目录平时是空的，系统非正常关机而留下“无家可归”的文件（windows下叫什么.chk）就在这里</p>
-</li>
-<li><p><code>/usr</code>其中包含：<br>/usr/x11r6 存放x window的目录<br>/usr/bin 众多的应用程序<br>/usr/sbin 超级用户的一些管理程序<br><strong>/usr/include linux下开发和编译应用程序所需要的头文件</strong><br><strong>/usr/lib 常用的动态链接库和软件包的配置文件</strong><br><strong>/usr/doc linux文档</strong> /usr/man 帮助文档  /usr/info<br><strong>/usr/src 源代码，linux内核的源代码就放在/usr/src/linux里</strong><br><strong>/usr/local/bin 本地增加的命令</strong><br><strong>/usr/local/lib 本地增加的库</strong></p>
-</li>
-</ul>
-<ul>
-<li><p>/var 包含系统一般运行时要改变的数据。通常这些数据所在的目录的大小是要经常变化<br>或扩充的。原来/ v a r目录中有些内容是在/ u s r中的，但为了保持/ u s r目录的相对稳定，就把那<br>些需要经常改变的目录放到/ v a r中了。每个系统是特定的，即不通过网络与其他计算机共享。</p>
-</li>
-<li><p><code>/var/log</code>:各种程序的日志( l o g )文件，尤其是login (/var/log/wtmp log纪录所有到系统的登录和注<br>销) 和syslog (/var/log/messages 纪录存储所有核心和系统程序信息)。/var/log 里的文件经常不<br>确定地增长，应该定期清除。</p>
-</li>
-</ul>
-<p>/proc文件系统<br>/proc 文件系统是一个伪的文件系统，就是说它是一个实际上不存在的目录，因而这是一<br>个非常特殊的目录。它并不存在于某个磁盘上，而是由核心在内存中产生。这个目录用于提<br>供关于系统的信息。下面说明一些最重要的文件和目录(/proc 文件系统在proc man页中有更详<br>细的说明)。</p>
-<ol>
-<li><p>/proc/x<br>关于进程x的信息目录，这一x是这一进程的标识号。每个进程在/proc 下有一个名为自<br>己进程号的目录。</p>
-</li>
-<li><p>/proc/cpuinfo<br>存放处理器( c p u )的信息，如c p u的类型、制造商、型号和性能等。</p>
-</li>
-<li><p>/proc/devices<br>当前运行的核心配置的设备驱动的列表。</p>
-</li>
-<li><p>/proc/dma<br>显示当前使用的d m a通道。</p>
-</li>
-<li><p>/proc/filesystems<br>核心配置的文件系统信息。</p>
-</li>
-<li><p>/proc/interrupts<br>显示被占用的中断信息和占用者的信息，以及被占用的数量。</p>
-</li>
-<li><p>/proc/ioports<br>当前使用的i / o端口。</p>
-</li>
-<li><p>/proc/kcore<br>系统物理内存映像。与物理内存大小完全一样，然而实际上没有占用这么多内存；它仅<br>仅是在程序访问它时才被创建。(注意：除非你把它拷贝到什么地方，否则/proc 下没有任何<br>东西占用任何磁盘空间。)</p>
-</li>
-<li><p>/proc/kmsg<br>核心输出的消息。也会被送到s y s l o g。</p>
-</li>
-<li><p>/proc/ksyms<br>核心符号表。</p>
-</li>
-<li><p>/proc/loadavg<br>系统“平均负载”； 3个没有意义的指示器指出系统当前的工作量。</p>
-</li>
-<li><p>/proc/meminfo<br>各种存储器使用信息，包括物理内存和交换分区( s w a p )。</p>
-</li>
-<li><p>/proc/modules<br>存放当前加载了哪些核心模块信息。</p>
-</li>
-<li><p>/proc/net<br>网络协议状态信息。</p>
-</li>
-<li><p>/proc/self<br>存放到查看/proc 的程序的进程目录的符号连接。当2个进程查看/proc 时，这将会是不同<br>的连接。这主要便于程序得到它自己的进程目录。</p>
-</li>
-<li><p>/proc/stat<br>系统的不同状态，例如，系统启动后页面发生错误的次数。</p>
-</li>
-<li><p>/proc/uptime<br>系统启动的时间长度。</p>
-</li>
-<li><p>/proc/version<br>核心版本。</p>
-</li>
-<li><p><strong>ACPI在</strong>BIOS和其他系统硬件中被实现，它就可以由操作系统所调用(触发)。</p>
-<p>ACPI可以实现的功能包括：</p>
-<p>系统电源管理（System power management）</p>
-<p>设备电源管理（Device power management）</p>
-<p>处理器电源管理（Processor power management）</p>
-<p>设备和处理器性能管理（Device and processor performance management）</p>
-<p>配置/即插即用（Configuration/Plug and Play）</p>
-<p>系统事件（System Event）</p>
-<p>电池管理（Battery management）</p>
-<p>温度管理（Thermal management）</p>
-<p><a href="https://baike.baidu.com/item/嵌入式控制器" target="_blank" rel="noopener">嵌入式控制器</a>（Embedded Controller）</p>
-<p>SMBus控制器（SMBus Controller</p>
-</li>
-</ol>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
             </div>
             <hr/>
 
@@ -1177,25 +1105,28 @@ sudo apt install nvidia-xxx
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2020/03/18/linux/environment/">
+                <a href="/2020/03/17/linux/cpu-wen-ti-pai-cha-ming-ling/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201107135403594.png" class="responsive-img" alt="Environment">
                         
-                        <span class="card-title">Environment</span>
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="CPU问题排查命令">
+                        
+                        <span class="card-title">CPU问题排查命令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1. Linux 环境变量
-一、按照生命周期来分，Linux环境变量可以分为两类： 1、永久的：需要用户修改相关的配置文件，变量永久生效。 2、临时的：用户利用export命令，在当前终端下声明环境变量，关闭Shell终端失效。
-二、按照作
+                            方法一
+
+top命令，然后按shift+p按照CPU排序 ，找到占用CPU过高的进程
+ps -mp pid -o THREAD,tid,time | sort -rn，获取线程信息，并找到占用CPU高的线程
+echo &#39;obase=
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-18
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-17
                         </span>
                         <span class="publish-author">
                             
@@ -1227,21 +1158,20 @@ sudo apt install nvidia-xxx
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/03/16/linux/linux-operation/">
+                <a href="/2020/03/16/linux/linux-wen-jian-xi-tong-posix/">
                     <div class="card-image">
                         
-                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/petal-5044428.png" class="responsive-img" alt="Linux Operation">
                         
-                        <span class="card-title">Linux Operation</span>
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Linux 文件系统">
+                        
+                        <span class="card-title">Linux 文件系统</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Linux 命令链接  lnsudo ln -sf /usr/bin/g++-8 /usr/bin/g++
-ln - make links between files
-SYNOPSIS
-       ln [OPTION]... [-T] 
+                            
+POSIX表示可移植操作系统接口（Portable Operating System Interface of UNIX，缩写为 POSIX ），POSIX标准定义了操作系统应该为应用程序提供的接口标准，是IEEE为要在各种UNIX操作系
                         
                     </div>
                     <div class="publish-info">
@@ -1465,7 +1395,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

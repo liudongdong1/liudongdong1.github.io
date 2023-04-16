@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2021-07-09
+                    2023-01-01
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    601
+                    1.4k
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    2 Min
+                    6 Min
                 </div>
                 
 
@@ -552,8 +552,19 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p>
-<p>在使用建造者模式的场景中，一般产品类和建造者类是比较稳定的，因此，将主要的业务逻辑封装在导演类中对整体而言可以取得比较好的稳定性。</p>
+<p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。<code>在构建的对象需要很多配置的时候可以考虑Builder模式，可以避免过多的set方法</code>，同时把配置过程从目标类里面隔离出来，代码结构更加清晰</p>
+<ul>
+<li><p><code>具体的set方法放在配置类的内部类Builder类中，并且每个set方法都返回自身</code>，以便进行链式调用</p>
+</li>
+<li><p><code>当初始化一个对象特别复杂时，如参数多，且很多参数都具有默认值时</code>, 否则每增加一个设置选项，都需要修改ImageLoader代码，违背开闭原则</p>
+</li>
+<li><p>相同的方法，不同的执行顺序，产生不同的事件结果时</p>
+</li>
+<li><p>多个部件或零件，都可以装配到一个对象中，但是产生的运行效果又不相同时</p>
+</li>
+<li><p>产品类非常复杂，或者产品类中的调用顺序不同产生了不同的作用，这个时候使用建造者模式非常合适</p>
+</li>
+</ul>
 </blockquote>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Computer</span> <span class="token punctuation">{</span>
     <span class="token keyword">private</span> String cpu<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//必须</span>
@@ -602,15 +613,20 @@
 <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 <span class="token punctuation">}</span></code></pre>
 <h3 id="3-builder-模式"><a href="#3-builder-模式" class="headerlink" title="3. builder 模式"></a>3. builder 模式</h3><p><img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210306121424477.png" alt=""></p>
+<ul>
+<li>Director类使用者使用组合方式直接和builder 基类进行打交道，通过开闭原则传入具体的builder实例，通过多态的方式构建不同的实例的builder类型</li>
+<li>ConcreteBuilder与产品打交道， ConcreteBuilder里面通过与产品类组合方式</li>
+<li>构建不同的实例。</li>
+</ul>
 <blockquote>
 <ul>
 <li>Product: 最终要生成的对象，例如 Product实例。</li>
-<li>Builder： 构建者的抽象基类（有时会使用接口代替）。其定义了构建Product的抽象步骤，其实体类需要实现这些步骤。其会包含一个用来返回最终产品的方法<code>Product getProduct()</code>。</li>
+<li>Builder： 构建者的<code>抽象基类</code>（有时会使用接口代替）。其定义了构建Product的抽象步骤，其实体类需要实现这些步骤。其会包含一个用来返回最终产品的方法<code>Product getProduct()</code>。</li>
 <li>ConcreteBuilder: <code>Builder的实现类</code>。</li>
 <li>Director: 决定<code>如何构建最终产品的算法</code>. 其会包含一个负责组装的方法<code>void Construct(Builder builder)</code>， 在这个方法中通过调用builder的方法，就可以设置builder，等设置完成后，就可以通过builder的 <code>getProduct()</code> 方法获得最终的产品。</li>
 </ul>
 </blockquote>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Product</span> <span class="token punctuation">{</span>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Product</span> <span class="token punctuation">{</span>
     <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
     <span class="token keyword">private</span> String type<span class="token punctuation">;</span>
     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">showProduct</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
@@ -663,25 +679,177 @@
         product2<span class="token punctuation">.</span><span class="token function">showProduct</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+<h3 id="4-Android-中相关实现"><a href="#4-Android-中相关实现" class="headerlink" title="4.  Android 中相关实现"></a>4.  Android 中相关实现</h3><h4 id="1-AlertDialog"><a href="#1-AlertDialog" class="headerlink" title=".1. AlertDialog"></a>.1. <a href="https://juejin.cn/post/6844903503219916807" target="_blank" rel="noopener">AlertDialog</a></h4><ol>
+<li>AlertDialog内部使用Builder设计模式，其内部类Builder每次构建返回自身，有利于链式调用，代码结构清晰</li>
+<li>AlertDialog的Builder掌握所有的Dialog参数配置工作，其具体配置由AlertController来实现</li>
+<li>AlertController是AlertDialog的重要实现类，用户配置的参数信息由内部静态类AlertParams来保存，其内部具体完成Dialog的装配工作</li>
+<li>Dialog的具体显示和消失逻辑由WindowManager来完成</li>
+<li>AlertDialog.Builder 同时扮演着builder，ConcreteBuilder，Director角色</li>
+</ol>
+<h4 id="2-WinowManagerService"><a href="#2-WinowManagerService" class="headerlink" title=".2. WinowManagerService"></a>.2. WinowManagerService</h4><ul>
+<li>todo？ 学习完整的调用过程，以及背后的原理</li>
+</ul>
+<p><img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221126134946193.png" alt="image-20221126134946193"></p>
+<h4 id="3-ImageLoader"><a href="#3-ImageLoader" class="headerlink" title=".3. ImageLoader"></a>.3. <a href="https://juejin.cn/post/6844903650783920135" target="_blank" rel="noopener">ImageLoader</a></h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ImageLoader</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//图片加载配置</span>
+    ImageLoaderConfig mConfig<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 图片缓存，依赖接口</span>
+    ImageCache mImageCache <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MemoryCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 线程池，线程数量为CPU的数量</span>
+    ExecutorService mExecutorService <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span>Runtime<span class="token punctuation">.</span><span class="token function">getRuntime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">availableProcessors</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//省略单例模式实现</span>
+
+    <span class="token comment" spellcheck="true">//初始化ImageLoader</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span>ImageLoaderConfig config<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        mConfig <span class="token operator">=</span> config<span class="token punctuation">;</span>
+        mImageCache <span class="token operator">=</span> mConfig<span class="token punctuation">.</span>mImageCache<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 显示图片
+     * @param imageUrl
+     * @param imageView
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">displayImage</span><span class="token punctuation">(</span>String imageUrl<span class="token punctuation">,</span> ImageView imageView<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Bitmap bitmap <span class="token operator">=</span> mImageCache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>imageUrl<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>bitmap <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            imageView<span class="token punctuation">.</span><span class="token function">setImageBitmap</span><span class="token punctuation">(</span>bitmap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">// 图片没有缓存，提交到线程池下载</span>
+        <span class="token function">submitLoadRequest</span><span class="token punctuation">(</span>imageUrl<span class="token punctuation">,</span> imageView<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 下载图片
+     * @param imageUrl
+     * @param imageView
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">submitLoadRequest</span><span class="token punctuation">(</span><span class="token keyword">final</span> String imageUrl<span class="token punctuation">,</span> <span class="token keyword">final</span> ImageView imageView<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        imageView<span class="token punctuation">.</span><span class="token function">setImageResource</span><span class="token punctuation">(</span>mConfig<span class="token punctuation">.</span>displayConfig<span class="token punctuation">.</span>loadingImageId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        imageView<span class="token punctuation">.</span><span class="token function">setTag</span><span class="token punctuation">(</span>imageUrl<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        mExecutorService<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                Bitmap bitmap <span class="token operator">=</span> <span class="token function">downloadImage</span><span class="token punctuation">(</span>imageUrl<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>bitmap <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    imageView<span class="token punctuation">.</span><span class="token function">setImageResource</span><span class="token punctuation">(</span>mConfig<span class="token punctuation">.</span>displayConfig<span class="token punctuation">.</span>loadingFailImageId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">return</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>imageUrl<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>imageView<span class="token punctuation">.</span><span class="token function">getTag</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    imageView<span class="token punctuation">.</span><span class="token function">setImageBitmap</span><span class="token punctuation">(</span>bitmap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                mImageCache<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>imageUrl<span class="token punctuation">,</span> bitmap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 下载图片
+     * @param imageUrl
+     * @return
+     */</span>
+    <span class="token keyword">private</span> Bitmap <span class="token function">downloadImage</span><span class="token punctuation">(</span>String imageUrl<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Bitmap bitmap <span class="token operator">=</span> null<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//省略下载部分代码</span>
+        <span class="token keyword">return</span> bitmap<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h5 id="1-ImageLoaderConfig"><a href="#1-ImageLoaderConfig" class="headerlink" title="1. ImageLoaderConfig"></a>1. ImageLoaderConfig</h5><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ImageLoaderConfig</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 图片缓存，依赖接口</span>
+    <span class="token keyword">public</span> ImageCache mImageCache <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MemoryCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//加载图片时的loading和加载失败的图片配置对象</span>
+    <span class="token keyword">public</span> DisplayConfig displayConfig <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DisplayConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//线程数量，默认为CPU数量+1；</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> threadCount <span class="token operator">=</span> Runtime<span class="token punctuation">.</span><span class="token function">getRuntime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">availableProcessors</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token function">ImageLoaderConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token comment" spellcheck="true">/**
+     * 配置类的Builder
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Builder</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 图片缓存，依赖接口</span>
+        ImageCache mImageCache <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MemoryCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">//加载图片时的loading和加载失败的图片配置对象</span>
+        DisplayConfig displayConfig <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DisplayConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">//线程数量，默认为CPU数量+1；</span>
+        <span class="token keyword">int</span> threadCount <span class="token operator">=</span> Runtime<span class="token punctuation">.</span><span class="token function">getRuntime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">availableProcessors</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">/**
+         * 设置线程数量
+         * @param count
+         * @return
+         */</span>
+        <span class="token keyword">public</span> Builder <span class="token function">setThreadCount</span><span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            threadCount <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">/**
+         * 设置图片缓存
+         * @param cache
+         * @return
+         */</span>
+        <span class="token keyword">public</span> Builder <span class="token function">setImageCache</span><span class="token punctuation">(</span>ImageCache cache<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            mImageCache <span class="token operator">=</span> cache<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">/**
+         * 设置图片加载中显示的图片
+         * @param resId
+         * @return
+         */</span>
+        <span class="token keyword">public</span> Builder <span class="token function">setLoadingPlaceholder</span><span class="token punctuation">(</span><span class="token keyword">int</span> resId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            displayConfig<span class="token punctuation">.</span>loadingImageId <span class="token operator">=</span> resId<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">/**
+         * 设置加载失败显示的图片
+         * @param resId
+         * @return
+         */</span>
+        <span class="token keyword">public</span> Builder <span class="token function">setLoadingFailPlaceholder</span><span class="token punctuation">(</span><span class="token keyword">int</span> resId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            displayConfig<span class="token punctuation">.</span>loadingFailImageId <span class="token operator">=</span> resId<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">void</span> <span class="token function">applyConfig</span><span class="token punctuation">(</span>ImageLoaderConfig config<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            config<span class="token punctuation">.</span>displayConfig <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>displayConfig<span class="token punctuation">;</span>
+            config<span class="token punctuation">.</span>mImageCache <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>mImageCache<span class="token punctuation">;</span>
+            config<span class="token punctuation">.</span>threadCount <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>threadCount<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">/**
+         * 根据已经设置好的属性创建配置对象
+         * @return
+         */</span>
+        <span class="token keyword">public</span> ImageLoaderConfig <span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            ImageLoaderConfig config <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ImageLoaderConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">applyConfig</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> config<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class=" language-java"><code class="language-java">ImageLoaderConfig config <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ImageLoaderConfig<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">setImageCache</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MemoryCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">setThreadCount</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+       <span class="token punctuation">.</span><span class="token function">setLoadingFailPlaceholder</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>drawable<span class="token punctuation">.</span>loading_fail<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">setLoadingPlaceholder</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>drawable<span class="token punctuation">.</span>loading<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ImageLoader<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
             </div>
             <hr/>
 
@@ -917,31 +1085,33 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2021/05/13/zi-ran-yu-yan/framework/framework-transformers/">
+                <a href="/2021/05/14/bian-cheng-yu-yan/java/effectvejava/innerclass/">
                     <div class="card-image">
                         
-                        <img src="https://cdn.stocksnap.io/img-thumbs/280h/DYRNHWZGAN.jpg" class="responsive-img" alt="Framework_Transformers">
+                        <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210521113523.png" class="responsive-img" alt="InnerClass">
                         
-                        <span class="card-title">Framework_Transformers</span>
+                        <span class="card-title">InnerClass</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-provides thousands of pretrained models to perform tasks on texts such as classification, information extraction, quest
+内部类是一个编译时的概念，一旦编译成功，就会成为完全不同的两类。对于一个名为outer的外部类和其内部定义的名为inner的内部类。编译完成后出现outer.class和outer$inner.class两类。
+
+1. 类型.1. 成员内
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-05-13
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-05-14
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/NLP/" class="post-category">
-                                    NLP
+                            <a href="/categories/%E8%AF%AD%E8%A8%80%E6%A1%86%E6%9E%B6/" class="post-category">
+                                    语言框架
                                 </a>
                             
                             
@@ -951,8 +1121,8 @@ provides thousands of pretrained models to perform tasks on texts such as classi
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/NLP/">
-                        <span class="chip bg-color">NLP</span>
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
                 </div>
@@ -1213,7 +1383,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

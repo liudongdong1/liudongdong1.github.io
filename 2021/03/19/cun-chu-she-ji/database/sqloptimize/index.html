@@ -522,7 +522,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-04-01
+                    2022-11-07
                 </div>
                 
 
@@ -601,7 +601,7 @@ UNSIGNED INT 0~4294967295</code></pre><p>VARCHAR(N) 中的 N 代表的是字符�
 <p>MySQL 内存临时表不支持 TEXT、BLOB 这样的大数据类型，如果查询中包含这样的数据，在排序等操作时，就不能使用内存临时表，必须使用磁盘临时表进行。而且对于这种数据，MySQL 还是要进行二次查询，会使 sql 性能变得很差，但是不是说一定不能使用这样的数据类型。</p>
 <p>如果一定要使用，建议把 BLOB 或是 TEXT 列分离到单独的扩展表中，查询时一定不要使用 select * 而只需要取出必要的列，不需要 TEXT 列的数据时不要对该列进行查询。</p>
 <p><strong>2、TEXT 或 BLOB 类型只能使用前缀索引</strong></p>
-<p>因为<a href="https://mp.weixin.qq.com/s?__biz=MzI4Njc5NjM1NQ==&amp;mid=2247487885&amp;idx=1&amp;sn=65b1bf5f7d4505502620179669a9c2df&amp;chksm=ebd62ea1dca1a7b7bf884bcd9d538d78ba064ee03c09436ca8e57873b1d98a55afd6d7884cfc&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">MySQL</a> 对索引字段长度是有限制的，所以 TEXT 类型只能使用前缀索引，并且 TEXT 列上是不能有默认值的</p>
+<p>因为<a href="https://mp.weixin.qq.com/s?__biz=MzI4Njc5NjM1NQ==&mid=2247487885&idx=1&sn=65b1bf5f7d4505502620179669a9c2df&chksm=ebd62ea1dca1a7b7bf884bcd9d538d78ba064ee03c09436ca8e57873b1d98a55afd6d7884cfc&scene=21#wechat_redirect" target="_blank" rel="noopener">MySQL</a> 对索引字段长度是有限制的，所以 TEXT 类型只能使用前缀索引，并且 TEXT 列上是不能有默认值的</p>
 <h3 id="3-避免使用-ENUM-类型"><a href="#3-避免使用-ENUM-类型" class="headerlink" title="3. 避免使用 ENUM 类型"></a>3. 避免使用 ENUM 类型</h3><p>修改 ENUM 值需要使用 ALTER 语句</p>
 <p><code>ENUM 类型的 ORDER BY 操作效率低，需要额外操作</code></p>
 <p>禁止使用数值作为 ENUM 的枚举值</p>
@@ -675,7 +675,7 @@ UNSIGNED INT 0~4294967295</code></pre><p>VARCHAR(N) 中的 N 代表的是字符�
 <p>只传参数，比传递 SQL 语句更高效。</p>
 <p>相同语句可以一次解析，多次使用，提高处理效率。</p>
 <h3 id="2-避免数据类型的隐式转换"><a href="#2-避免数据类型的隐式转换" class="headerlink" title="2. 避免数据类型的隐式转换"></a>2. 避免数据类型的隐式转换</h3><p><code>隐式转换会导致索引失效如:</code></p>
-<pre><code>select name,phone from customer where id = '111';</code></pre><h3 id="3-充分利用表上已经存在的索引"><a href="#3-充分利用表上已经存在的索引" class="headerlink" title="3. 充分利用表上已经存在的索引"></a>3. 充分利用表上已经存在的索引</h3><p>避免使用双%号的查询条件。如：<code>a like '%123%'</code>，（如果无前置%,只有后置%，是可以用到列上的索引的）</p>
+<pre><code>select name,phone from customer where id = &#39;111&#39;;</code></pre><h3 id="3-充分利用表上已经存在的索引"><a href="#3-充分利用表上已经存在的索引" class="headerlink" title="3. 充分利用表上已经存在的索引"></a>3. 充分利用表上已经存在的索引</h3><p>避免使用双%号的查询条件。如：<code>a like &#39;%123%&#39;</code>，（如果无前置%,只有后置%，是可以用到列上的索引的）</p>
 <p>一个 SQL 只能利用到复合索引中的一列进行范围查询。如：有 a,b,c 列的联合索引，在查询条件中有 a 列的范围查询，则在 b,c 列上的索引将不会被用到。</p>
 <p>在定义联合索引时，如果 a 列要用到范围查找的话，就要把 a 列放到联合索引的右侧，使用 left join 或 not exists 来优化 not in 操作，因为 not in 也通常会使用索引失效。</p>
 <h3 id="4-数据库设计时，应该要对以后扩展进行考虑"><a href="#4-数据库设计时，应该要对以后扩展进行考虑" class="headerlink" title="4. 数据库设计时，应该要对以后扩展进行考虑"></a>4. 数据库设计时，应该要对以后扩展进行考虑</h3><h3 id="5-程序连接不同的数据库使用不同的账号，禁止跨库查询"><a href="#5-程序连接不同的数据库使用不同的账号，禁止跨库查询" class="headerlink" title="5. 程序连接不同的数据库使用不同的账号，禁止跨库查询"></a>5. 程序连接不同的数据库使用不同的账号，禁止跨库查询</h3><ul>
@@ -683,15 +683,15 @@ UNSIGNED INT 0~4294967295</code></pre><p>VARCHAR(N) 中的 N 代表的是字符�
 <li>降低业务耦合度</li>
 <li>避免权限过大而产生的安全风险</li>
 </ul>
-<h3 id="6-禁止使用-SELECT-必须使用-SELECT-lt-字段列表-gt-查询"><a href="#6-禁止使用-SELECT-必须使用-SELECT-lt-字段列表-gt-查询" class="headerlink" title="6. 禁止使用 SELECT * 必须使用 SELECT <字段列表> 查询"></a>6. 禁止使用 SELECT * 必须使用 SELECT &lt;字段列表&gt; 查询</h3><p><strong>原因：</strong></p>
+<h3 id="6-禁止使用-SELECT-必须使用-SELECT-lt-字段列表-gt-查询"><a href="#6-禁止使用-SELECT-必须使用-SELECT-lt-字段列表-gt-查询" class="headerlink" title="6. 禁止使用 SELECT * 必须使用 SELECT &lt;字段列表&gt; 查询"></a>6. 禁止使用 SELECT * 必须使用 SELECT &lt;字段列表&gt; 查询</h3><p><strong>原因：</strong></p>
 <ul>
 <li>消耗更多的 CPU 和 IO 以网络带宽资源</li>
 <li>无法使用覆盖索引</li>
 <li>可减少表结构变更带来的影响</li>
 </ul>
 <h3 id="7-禁止使用不含字段列表的-INSERT-语句"><a href="#7-禁止使用不含字段列表的-INSERT-语句" class="headerlink" title="7. 禁止使用不含字段列表的 INSERT 语句"></a>7. 禁止使用不含字段列表的 INSERT 语句</h3><p>如：</p>
-<pre><code>insert into values ('a','b','c');</code></pre><p>应使用：</p>
-<pre><code>insert into t(c1,c2,c3) values ('a','b','c');</code></pre><h3 id="8-避免使用子查询，可以把子查询优化为-join-操作"><a href="#8-避免使用子查询，可以把子查询优化为-join-操作" class="headerlink" title="8. 避免使用子查询，可以把子查询优化为 join 操作"></a>8. 避免使用子查询，可以把子查询优化为 join 操作</h3><p>通常子查询在 in 子句中，且子查询中为简单 SQL(不包含 union、group by、order by、limit 从句) 时,才可以把子查询转化为关联查询进行优化。</p>
+<pre><code>insert into values (&#39;a&#39;,&#39;b&#39;,&#39;c&#39;);</code></pre><p>应使用：</p>
+<pre><code>insert into t(c1,c2,c3) values (&#39;a&#39;,&#39;b&#39;,&#39;c&#39;);</code></pre><h3 id="8-避免使用子查询，可以把子查询优化为-join-操作"><a href="#8-避免使用子查询，可以把子查询优化为-join-操作" class="headerlink" title="8. 避免使用子查询，可以把子查询优化为 join 操作"></a>8. 避免使用子查询，可以把子查询优化为 join 操作</h3><p>通常子查询在 in 子句中，且子查询中为简单 SQL(不包含 union、group by、order by、limit 从句) 时,才可以把子查询转化为关联查询进行优化。</p>
 <p><strong>子查询性能差的原因：</strong></p>
 <p>子查询的结果集无法使用索引，通常子查询的结果集会被存储到临时表中，不论是内存临时表还是磁盘临时表都不会存在索引，所以查询性能会受到一定的影响。特别是对于返回结果集比较大的子查询，其对查询性能的影响也就越大。</p>
 <p>由于子查询会产生大量的临时表也没有索引，所以会消耗过多的 CPU 和 IO 资源，产生大量的慢查询。</p>
@@ -705,8 +705,8 @@ UNSIGNED INT 0~4294967295</code></pre><p>VARCHAR(N) 中的 N 代表的是字符�
 <p>推荐在程序中获取一个随机值，然后从数据库中获取数据的方式。</p>
 <h3 id="13-WHERE-从句中禁止对列进行函数转换和计算"><a href="#13-WHERE-从句中禁止对列进行函数转换和计算" class="headerlink" title="13. WHERE 从句中禁止对列进行函数转换和计算"></a>13. WHERE 从句中禁止对列进行函数转换和计算</h3><p>对列进行函数转换或计算时会导致无法使用索引</p>
 <p><strong>不推荐：</strong></p>
-<pre><code>where date(create_time)='20190101'</code></pre><p><strong>推荐：</strong></p>
-<pre><code>where create_time &gt;= '20190101' and create_time &lt; '20190102'</code></pre><h3 id="14-在明显不会有重复值时使用-UNION-ALL-而不是-UNION"><a href="#14-在明显不会有重复值时使用-UNION-ALL-而不是-UNION" class="headerlink" title="14. 在明显不会有重复值时使用 UNION ALL 而不是 UNION"></a>14. 在明显不会有重复值时使用 UNION ALL 而不是 UNION</h3><ul>
+<pre><code>where date(create_time)=&#39;20190101&#39;</code></pre><p><strong>推荐：</strong></p>
+<pre><code>where create_time &gt;= &#39;20190101&#39; and create_time &lt; &#39;20190102&#39;</code></pre><h3 id="14-在明显不会有重复值时使用-UNION-ALL-而不是-UNION"><a href="#14-在明显不会有重复值时使用-UNION-ALL-而不是-UNION" class="headerlink" title="14. 在明显不会有重复值时使用 UNION ALL 而不是 UNION"></a>14. 在明显不会有重复值时使用 UNION ALL 而不是 UNION</h3><ul>
 <li>UNION 会把两个结果集的所有数据放到临时表中后再进行去重操作</li>
 <li>UNION ALL 不会再对结果集进行去重操作</li>
 </ul>
@@ -737,25 +737,7 @@ UNSIGNED INT 0~4294967295</code></pre><p>VARCHAR(N) 中的 N 代表的是字符�
 <li>程序使用数据库账号只能在一个 DB 下使用，不准跨库</li>
 <li>程序使用的账号原则上不准有 drop 权限</li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1054,19 +1036,8 @@ UNSIGNED INT 0~4294967295</code></pre><p>VARCHAR(N) 中的 N 代表的是字符�
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1.  产品经理
-识别并把握机遇
-
-你的消费者（用户）
-竞争对手的消费者（用户）
-行业趋势与分析
-你所在公司的管理层
-市场与销售的同事
-产品研发团队
-你公司的客服代表
-你公司的运营同事
-你自己对于市场与技术的经验直觉
-对这些信息进行评估，然
+                            
+  d686cb0a25b96ced5ce99713a9124a672af07c4932ce8f6b254ba7b44eeb99d609a12aec82debebc3c7c0ff2e6e5a292cacf877f813e28cdae2b5
                         
                     </div>
                     <div class="publish-info">
@@ -1290,7 +1261,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             

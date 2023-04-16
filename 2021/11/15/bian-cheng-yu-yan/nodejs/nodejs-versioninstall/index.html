@@ -522,21 +522,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-04-02
+                    2023-04-16
                 </div>
                 
 
                 <!-- 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    135
+                    825
                 </div>
                  -->
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    1 Min
+                    3 Min
                 </div>
                 
 
@@ -552,38 +552,171 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>A <a href="https://github.com/coreybutler/nvm-windows" target="_blank" rel="noopener">node.js version management utility</a> for Windows. Ironically written in Go.</p>
+<p>Node.js是基于Chrome JavaScript运行时建立的一个平台，实际上它是对Google Chrome V8引擎进行了封装，它主要用于创建快速的、可扩展的网络应用。Node.js采用<strong>事件驱动</strong>和<strong>非阻塞I/O模型</strong>，使其变得轻量和高效，非常适合构建运行在分布式设备的数据密集型的实时应用。运行于浏览器的JavaScript，浏览器就是JavaScript代码的解析器，而<strong>Node.js则是服务器端JavaScript的代码解析器</strong>，存在于服务器端的JavaScript代码由Node.js来解析和运行。</p>
+<p><code>npm，nodejs，cnpm 关系</code>：npm 是 Node.js 的包管理工具，所谓包管理工具可以理解为大佬们将一些常用的功能写成包并发布到 npm 市场上，然后别人通过 npm 直接安装即可使用（类似手机应用 app）。而因为 npm 在国内有一定限制，所以就需要用淘宝的镜像 cnpm，从而提高我们 npm 的下载安装速度（类似手机网络和 WIFI 下载手机应用 app）</p>
 </blockquote>
-<h3 id="1-使用记录"><a href="#1-使用记录" class="headerlink" title="1. 使用记录"></a>1. 使用记录</h3><pre class=" language-shell"><code class="language-shell">nvm use 14.0.0
+<h3 id="0-Nodejs-介绍"><a href="#0-Nodejs-介绍" class="headerlink" title="0. Nodejs 介绍"></a>0. Nodejs 介绍</h3><p><img src="https://gitee.com/github-25970295/picture2023/raw/master/6629b0d130ca43de9dc6fdbc7eeb4960tplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png" alt="Node-README-01.png"></p>
+<h3 id="1-Node-版本控制工具"><a href="#1-Node-版本控制工具" class="headerlink" title="1. Node 版本控制工具"></a>1. Node 版本控制工具</h3><h4 id="1-nvm-工具"><a href="#1-nvm-工具" class="headerlink" title="1. nvm 工具"></a>1. nvm 工具</h4><pre class=" language-shell"><code class="language-shell">nvm ls-remote --lts  #查看所有可以安装的LTS版本
+nvm use 14.0.0
 npm install -g yarn
 nvm use 12.0.1
-npm install -g yarn</code></pre>
-<h3 id="2-问题记录"><a href="#2-问题记录" class="headerlink" title="2. 问题记录"></a>2. 问题记录</h3><ul>
-<li>报错exit status 1 或 exit status 145</li>
+npm install -g yarn
+nvm uninstall 12.0.1
+nvm list [available] #显示已安装的列表。可选参数available，显示可安装的所有版本。list可简化为ls。
+NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node nvm install 6.10.2 #使用淘宝源安装
+
+nvm alias default v6.6.0  #设定默认的node版本 nvm alias default <版本号>
+nvm current #查看当前版本显示
+
+#删除时权限问题
+sudo chown -R $(whoami) "$NVM_DIR/versions/node/v6.6.0"
+sudo chmod -R u+w "$NVM_DIR/versions/node/v6.6.0"      </code></pre>
+<ul>
+<li>问题记录：报错exit status 1 或 exit status 145</li>
 </ul>
 <blockquote>
 <p>目录得全英文，不能有空格或者中文字符，需要管理员权限.</p>
 <p>之前下载的nodejs得删除掉。</p>
 </blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+<h4 id="2-n-工具"><a href="#2-n-工具" class="headerlink" title="2. n 工具"></a>2. n 工具</h4><h5 id="1-安装"><a href="#1-安装" class="headerlink" title=".1. 安装"></a>.1. 安装</h5><pre class=" language-shell"><code class="language-shell"># 使用 npm / yarn
+npm i -g n
+yarn global add n
+
+# 使用 brew
+brew install n</code></pre>
+<h5 id="2-版本查看"><a href="#2-版本查看" class="headerlink" title=".2. 版本查看"></a>.2. 版本查看</h5><pre class=" language-shell"><code class="language-shell"># 查看 n 版本
+n --version/-V
+
+# 查看 node 本地当前使用版本
+node --version/-v
+
+# 查看 node 远程版本
+n lsr/ls-remote [--all] // 默认20个，--all展示所有
+
+# 查看 n 管理的 node 版本
+n [ls/list/--all]
+
+#查看 Node.js 版本安装路径
+n which/bin <version></code></pre>
+<h5 id="3-node-安装"><a href="#3-node-安装" class="headerlink" title=".3. node 安装"></a>.3. node 安装</h5><pre class=" language-shell"><code class="language-shell"># 安装指定版本
+n [install/i] <version>
+# 安装稳定版本
+n lts/stable
+# 安装最新版本
+n latest/current
+# 安装文件中对应 node 版本 [.n-node-version, .node-version, .nvmrc, or package.json]
+n auto
+# 安装 package.json 对应 node 版本
+n engine
+# 通过发布流的代码名 例如[ boron, carbon]
+n boron/carbon
+
+
+# 删除当前版本
+n uninstall
+# 删除指定版本
+n rm/- <version>
+# 删除除当前版本之外的所有版本
+n prune
+
+
+# 使用指定 node 版本
+n run/use/as <version> [args...]
+# 先下载节点和npm，使用修改过的PATH执行命令
+n exec <vers> <cmd> [args...]</code></pre>
+<h3 id="3-NPM-amp-CNPM命令"><a href="#3-NPM-amp-CNPM命令" class="headerlink" title="3. NPM &amp; CNPM命令"></a>3. NPM &amp; CNPM命令</h3><ul>
+<li>淘宝CNPM 使用：<a href="https://npmmirror.com/" target="_blank" rel="noopener">https://npmmirror.com/</a></li>
+<li>npm 命令：<a href="https://bbs.huaweicloud.com/blogs/343692" target="_blank" rel="noopener">https://bbs.huaweicloud.com/blogs/343692</a></li>
+<li><a href="https://segmentfault.com/a/1190000022205162" target="_blank" rel="noopener">npm常用命令与操作篇</a>：<a href="https://segmentfault.com/a/1190000022205162" target="_blank" rel="noopener">https://segmentfault.com/a/1190000022205162</a></li>
+</ul>
+<pre class=" language-shell"><code class="language-shell"># 查看 npm 的版本 
+$ npm -v  //6.4.0 << 安装成功会返回版本号
+
+# 查看各个命令的简单用法
+$ npm -l 
+
+# 查看 npm 命令列表
+$ npm help
+
+# 查看 npm 的配置
+$ npm config list -l
+#创建模块
+$ npm init
+
+$ npm search <搜索词> [-g]
+
+ #当前项目安装的所有模块
+$npm list
+
+#列出全局安装的模块 带上[--depth 0] 不深入到包的支点 更简洁
+$ npm list -g --depth 0
+
+
+12.可以目录的形式来展现当前安装的所有node包
+npm list parseable=true
+
+13.查看包的依赖关系
+npm view moudleName dependencies
+
+14.查看包的源文件地址
+npm view moduleName repository.url
+
+15.查看包所依赖的Node的版本
+npm view moduleName engines
+
+9.查看node模块的package.json文件夹
+npm view moduleNames
+
+# 读取package.json里面的配置单安装  
+$ npm install 
+//可简写成 npm i
+
+# 默认安装指定模块的最新(@latest)版本
+$ npm install [<@scope>/]<name> 
+//eg:npm install gulp
+
+# 安装指定模块的指定版本
+$ npm install [<@scope>/]<name>@<version>
+//eg: npm install gulp@3.9.1
+
+# 安装指定指定版本范围内的模块
+$ npm install [<@scope>/]<name>@<version range>
+//eg: npm install vue@">=1.0.28 < 2.0.0"
+
+# 安装指定模块的指定标签 默认值为(@latest)
+$ npm install [<@scope>/]<name>@<tag>
+//eg:npm install sax@0.1.1
+
+# 通过Github代码库地址安装
+$ npm install <tarball url>
+//eg:npm install git://github.com/package/path.git
+
+#卸载当前项目或全局模块 
+$ npm uninstall <name> [-g] 
+
+#升级当前项目或全局的指定模块
+$ npm update <name> [-g] 
+//eg: npm update express 
+      npm update express -g
+
+$ npm run的参数。
+# 如果不加任何参数，直接运行，会列出package.json里面所有可以执行的脚本命令
+---package.json文件---
+"scripts": {
+  "test": "mocha test/"
+}
+
+-------终端-------
+$ npm run test -- anothertest.js
+# 等同于直接执行
+$ mocha test/ anothertest.js</code></pre>
+<pre class=" language-shell"><code class="language-shell">npm install -g cnpm --registry = https://registry.npmmirror.com
+
+cnpm install vue-router@4</code></pre>
+<h3 id="4-Resource"><a href="#4-Resource" class="headerlink" title="4.Resource"></a>4.Resource</h3><ul>
+<li><a href="https://www.jianshu.com/p/0cfeed299f2a" target="_blank" rel="noopener">https://www.jianshu.com/p/0cfeed299f2a</a></li>
+</ul>
+
             </div>
             <hr/>
 
@@ -819,34 +952,34 @@ npm install -g yarn</code></pre>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2021/11/19/cun-chu-she-ji/database/sqlite-python/">
+                <a href="/2021/11/15/android/huan-jing-gong-ju/androidstudio-gong-ju/">
                     <div class="card-image">
                         
-                        <img src="https://cdn.pixabay.com/photo/2021/12/19/10/42/old-6880626__340.jpg" class="responsive-img" alt="sqlite_python">
                         
-                        <span class="card-title">sqlite_python</span>
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="AndroidStudio_工具">
+                        
+                        <span class="card-title">AndroidStudio_工具</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-SQLite是一个进程内的库，实现了自给自足的、无服务器的、零配置的、事务性的SQL 数据库引擎。 它是一个零配置的数据库。
-
-1. sqlite 封装函数#!/usr/bin/env python3
-# -*- coding: utf-
+                            1. SDK 工具
+apkanalyzer：用于在构建过程完成后深入分析我们的 APK 组成。
+avdmanager：可让我们从命令行创建和管理 Android 虚拟设备 (AVD)。
+sdkmanager：可让我们查看、安装、更新和卸载 
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-19
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-15
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Storage/" class="post-category">
-                                    Storage
+                            <a href="/categories/AIOT/" class="post-category">
+                                    AIOT
                                 </a>
                             
                             
@@ -856,8 +989,8 @@ SQLite是一个进程内的库，实现了自给自足的、无服务器的、�
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Database/">
-                        <span class="chip bg-color">Database</span>
+                    <a href="/tags/Android/">
+                        <span class="chip bg-color">Android</span>
                     </a>
                     
                 </div>
@@ -871,7 +1004,7 @@ SQLite是一个进程内的库，实现了自给自足的、无服务器的、�
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/11/12/aiot/android/androidstandarddevelop/">
+                <a href="/2021/11/12/android/androidstandarddevelop/">
                     <div class="card-image">
                         
                         <img src="https://cdn.pixabay.com/photo/2019/08/25/08/17/modern-4428919__340.jpg" class="responsive-img" alt="AndroidStandardDevelop">
@@ -1111,7 +1244,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1415.5k</span>&nbsp;字
+                class="white-color">1314.9k</span>&nbsp;字
             
             
             
