@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Kubernetes-etcd使用 - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="etcd 是一个分布式的、可靠的 key-value 存储系统，它用于存储分布式系统中的关键数据，这个定义非常重要。 一个 etcd 集群，通常会由 3 个或者 5 个节点组成，多个节点之" /><meta name="keywords" content='Storage' /><meta itemprop="name" content="Kubernetes-etcd使用">
+<meta itemprop="description" content="etcd 是一个分布式的、可靠的 key-value 存储系统，它用于存储分布式系统中的关键数据，这个定义非常重要。 一个 etcd 集群，通常会由 3 个或者 5 个节点组成，多个节点之">
+<meta itemprop="dateModified" content="2023-09-24T17:00:04+08:00" />
+<meta itemprop="wordCount" content="1527"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Storage," /><meta property="og:title" content="Kubernetes-etcd使用" />
+<meta property="og:description" content="etcd 是一个分布式的、可靠的 key-value 存储系统，它用于存储分布式系统中的关键数据，这个定义非常重要。 一个 etcd 集群，通常会由 3 个或者 5 个节点组成，多个节点之" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/kubernetes_etcd%E4%BD%BF%E7%94%A8/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+
+<meta property="article:modified_time" content="2023-09-24T17:00:04+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="Kubernetes-etcd使用"/>
+<meta name="twitter:description" content="etcd 是一个分布式的、可靠的 key-value 存储系统，它用于存储分布式系统中的关键数据，这个定义非常重要。 一个 etcd 集群，通常会由 3 个或者 5 个节点组成，多个节点之"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/kubernetes_etcd%E4%BD%BF%E7%94%A8/" /><link rel="prev" href="liudongdong1.github.io/kubernets-pod/" /><link rel="next" href="liudongdong1.github.io/kubernetes-cluster-architecture/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Kubernetes-etcd使用",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/kubernetes_etcd%E4%BD%BF%E7%94%A8\/"
+    },"genre": "posts","keywords": "Storage","wordcount":  1527 ,
+    "url": "liudongdong1.github.io\/kubernetes_etcd%E4%BD%BF%E7%94%A8\/","dateModified": "2023-09-24T17:00:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>Kubernetes-etcd使用</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/storage/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div>
+      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01" >0001-01-01</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1527 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="Kubernetes-etcd使用">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg"
+    data-srcset="https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg, https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg 1.5x, https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg 2x"
+    data-sizes="auto"
+    alt="https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg"
+    title="https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#api">API</a></li>
+        <li><a href="#数据版本机制">数据版本机制</a></li>
+        <li><a href="#mvccstreaming-watch">MVCC&amp;Streaming watch</a></li>
+        <li><a href="#分布式租约--lease">分布式租约&ndash;lease</a></li>
+        <li><a href="#应用场景">应用场景</a></li>
+        <li><a href="#etcd-命令">etcd 命令</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><blockquote>
+<p>etcd 是一个<code>分布式的、可靠的 key-value 存储系统</code>，它用于存储分布式系统中的<code>关键数据</code>，这个定义非常重要。</p>
+<p>一个 etcd 集群，通常会由 3 个或者 5 个节点组成，多个节点之间通过 Raft 一致性算法的完成分布式一致性协同，算法会选举出一个主节点作为 leader，由 leader 负责数据的同步与数据的分发。当 leader 出现故障后系统会自动地选取另一个节点成为 leader，并重新完成数据的同步。客户端在多个节点中，仅需要选择其中的任意一个就可以完成数据的读写，内部的状态及数据协同由 etcd 自身完成。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec569c66ba18tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec569c66ba18tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp, https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec569c66ba18tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec569c66ba18tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec569c66ba18tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec569c66ba18tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"/></p>
+<h3 id="api">API</h3>
+<ul>
+<li>第一组是 Put 与 Delete。上图可以看到 put 与 delete 的操作都非常简单，只需要提供一个 key 和一个 value，就可以向集群中写入数据了，删除数据的时候只需要指定 key 即可；</li>
+<li>第二组是查询操作。etcd 支持两种类型的查询：第一种是指定单个 key 的查询，第二种是指定的一个 key 的范围；</li>
+<li>第三组是数据订阅。etcd 提供了 Watch 机制，我们可以利用 watch 实时订阅到 etcd 中增量的数据更新，watch 支持指定单个 key，也可以指定一个 key 的前缀，在实际应用场景中的通常会采用第二种形势；</li>
+<li>第四组事务操作。etcd 提供了一个简单的事务支持，用户可以通过指定一组条件满足时执行某些动作，当条件不成立的时候执行另一组操作，类似于代码中的 if else 语句，etcd 确保整个操作的原子性；</li>
+<li>第五组是 Leases 接口。Leases 接口是分布式系统中常用的一种设计模式，其用法后面会具体展开。</li>
+</ul>
+<h3 id="数据版本机制">数据版本机制</h3>
+<p>对于每一个 KeyValue 数据节点，etcd 中都记录了三个版本：</p>
+<ul>
+<li>第一个版本叫做 create_revision，是 KeyValue 在创建时对应的 revision；</li>
+<li>第二个叫做 mod_revision，是其数据被操作的时候对应的 revision；</li>
+<li>第三个 version 就是一个计数器，代表了 KeyValue 被修改了多少次。</li>
+</ul>
+<h3 id="mvccstreaming-watch">MVCC&amp;Streaming watch</h3>
+<p><code>etcd 中所有的数据都存储在一个 b+tree 中（灰色）</code>，该 b+tree 保存<code>在磁盘</code>中，并通过 mmap 的方式映射到内存用来支持快速的访问。<code>灰色的 b+tree 中维护着 revision 到 value 的映射关系</code>，支持通过 revision 查询对应的数据。因为 revision 是单调递增的，当我们<code>通过 watch 来订阅指定 revision 之后的数据时，仅需要订阅该 b+ tree 的数据变化即可</code>。</p>
+<p>在 etcd 中会运行一个<strong>周期性的 Compaction 的机制</strong>来清理历史数据，将一段时间之前的同一个 Key 的多个历史版本数据清理掉。最终的结果是灰色的 b+tree 依旧保持单调递增，但可能会出现一些空洞。</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56c2ade062tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56c2ade062tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp, https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56c2ade062tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56c2ade062tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56c2ade062tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56c2ade062tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"/></p>
+<h3 id="分布式租约--lease">分布式租约&ndash;lease</h3>
+<ul>
+<li>在分布式系统中需要去检测一个节点是否存活的时，就需要租约机制。</li>
+<li>如果希望这个租约永不过期，需要周期性的调用 KeeyAlive 方法刷新租约。比如说需要检测分布式系统中一个进程是否存活，可以<code>在进程中去创建一个租约，并在该进程中周期性的调用 KeepAlive 的方法</code>。如果一切正常，该节点的租约会一致保持，如果这个进程挂掉了，最终这个租约就会自动过期。</li>
+</ul>
+<h3 id="应用场景">应用场景</h3>
+<h4 id="元数据存储">元数据存储</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cacb26a0tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cacb26a0tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp, https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cacb26a0tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cacb26a0tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cacb26a0tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cacb26a0tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"/></p>
+<h4 id="服务发现">服务发现</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cdbaa6d2tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cdbaa6d2tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp, https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cdbaa6d2tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cdbaa6d2tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cdbaa6d2tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cdbaa6d2tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"/></p>
+<h4 id="分布式选举">分布式选举</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56ce76b1b6tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56ce76b1b6tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp, https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56ce76b1b6tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56ce76b1b6tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56ce76b1b6tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56ce76b1b6tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp"/></p>
+<h3 id="etcd-命令">etcd 命令</h3>
+<pre tabindex="0"><code>存储:
+    curl http://127.0.0.1:4001/v2/keys/testkey -XPUT -d value=&#39;testvalue&#39;
+    curl -s http://127.0.0.1:4001/v2/keys/message2 -XPUT -d value=&#39;hello etcd&#39; -d ttl=5
+
+获取:
+    curl http://127.0.0.1:4001/v2/keys/testkey
+
+查看版本:
+    curl  http://127.0.0.1:4001/version
+
+删除:
+    curl -s http://127.0.0.1:4001/v2/keys/testkey -XDELETE
+
+监视:
+    窗口1：curl -s http://127.0.0.1:4001/v2/keys/message2 -XPUT -d value=&#39;hello etcd 1&#39;
+          curl -s http://127.0.0.1:4001/v2/keys/message2?wait=true
+    窗口2：
+          curl -s http://127.0.0.1:4001/v2/keys/message2 -XPUT -d value=&#39;hello etcd 2&#39;
+
+自动创建key:
+    curl -s http://127.0.0.1:4001/v2/keys/message3 -XPOST -d value=&#39;hello etcd 1&#39;
+    curl -s &#39;http://127.0.0.1:4001/v2/keys/message3?recursive=true&amp;sorted=true&#39;
+
+创建目录：
+    curl -s http://127.0.0.1:4001/v2/keys/message8 -XPUT -d dir=true
+
+删除目录：
+    curl -s &#39;http://127.0.0.1:4001/v2/keys/message7?dir=true&#39; -XDELETE
+    curl -s &#39;http://127.0.0.1:4001/v2/keys/message7?recursive=true&#39; -XDELETE
+
+查看所有key:
+    curl -s http://127.0.0.1:4001/v2/keys/?recursive=true
+
+存储数据：
+    curl -s http://127.0.0.1:4001/v2/keys/file -XPUT --data-urlencode value@upfile
+
+
+使用etcdctl客户端：
+存储:
+    etcdctl set /liuyiling/testkey &#34;610&#34; --ttl &#39;100&#39;
+                                         --swap-with-value value
+
+获取：
+    etcdctl get /liuyiling/testkey
+
+更新：
+    etcdctl update /liuyiling/testkey &#34;world&#34; --ttl &#39;100&#39;
+
+删除：
+    etcdctl rm /liuyiling/testkey
+
+使用ca获取：
+etcdctl --cert-file=/etc/etcd/ssl/etcd.pem   --key-file=/etc/etcd/ssl/etcd-key.pem  --ca-file=/etc/etcd/ssl/ca.pem get /message
+
+目录管理：
+    etcdctl mk /liuyiling/testkey &#34;hello&#34;    类似set,但是如果key已经存在，报错
+
+    etcdctl mkdir /liuyiling 
+
+    etcdctl setdir /liuyiling  
+
+    etcdctl updatedir /liuyiling      
+
+    etcdctl rmdir /liuyiling    
+
+查看：
+    etcdctl ls --recursive
+
+监视：
+    etcdctl watch mykey  --forever         +    etcdctl update mykey &#34;hehe&#34;
+
+    #监视目录下所有节点的改变
+
+    etcdctl exec-watch --recursive /foo -- sh -c &#34;echo hi&#34;
+
+    etcdctl exec-watch mykey -- sh -c &#39;ls -al&#39;    +    etcdctl update mykey &#34;hehe&#34;
+
+    etcdctl member list
+
+
+集群启动步骤
+
+1.启动一个etcd，任意机器，如192.168.1.1:2379
+
+2.curl -X PUT http://192.168.1.1:2379/v2/keys/discovery/6c007a14875d53d9bf0ef5a6fc0257c817f0f222/_config/size -d value=3
+
+3.etcd -name machine1 -initial-advertise-peer-urls http://127.0.0.1:2380 -listen-peer-urls http://127.0.0.1:2380 -discovery http://192.168.1.1:2379/v2/keys/discovery/6c007a14875d53d9bf0ef5a6fc0257c817f0f222
+
+4.如果是在三台不同的服务器上，则重复上面的命令3次，否则重复上面的命令1次+下面的命令2次
+etcd -name machine2 -discovery http://192.168.1.1:2379/v2/keys/discovery/6c007a14875d53d9bf0ef5a6fc0257c817f0f222 -addr 127.0.0.1:2389 -bind-addr 127.0.0.1:2389 -peer-addr 127.0.0.1:2390 -peer-bind-addr 127.0.0.1:2390
+
+etcd -name machine3 -discovery http://192.168.1.1:2379/v2/keys/discovery/6c007a14875d53d9bf0ef5a6fc0257c817f0f222 -addr 127.0.0.1:2409 -bind-addr 127.0.0.1:2409 -peer-addr 127.0.0.1:2490 -peer-bind-addr 127.0.0.1:2490
+
+5.curl -L http://localhost:2379/v2/members | python -m json.tool
+</code></pre></div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-24&#32;17:00:04>更新于 2023-09-24&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/kubernetes_etcd%E4%BD%BF%E7%94%A8/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5c%e8%99%9a%e6%8b%9f%e5%8c%96%e6%8a%80%e6%9c%af%5cKubernetes_etcd%e4%bd%bf%e7%94%a8.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/kubernetes_etcd%E4%BD%BF%E7%94%A8/" data-title="Kubernetes-etcd使用" data-hashtags="Storage"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/kubernetes_etcd%E4%BD%BF%E7%94%A8/" data-hashtag="Storage"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/kubernetes_etcd%E4%BD%BF%E7%94%A8/" data-title="Kubernetes-etcd使用" data-image="https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/storage/">Storage</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/kubernets-pod/" class="prev" rel="prev" title="Kubernetes-Pod"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Kubernetes-Pod</a>
+      <a href="liudongdong1.github.io/kubernetes-cluster-architecture/" class="next" rel="next" title="Kubernetes-Cluster Architecture">Kubernetes-Cluster Architecture<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>数据密集型应用系统设计笔记-一致性共识 - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="不一致的现象是暂时的，最终会达到一致。是一个弱的保证。事务隔离性为了处理并发执行事务各种临界条件，而分布式一致性则主要针对延迟和故障等问题处" /><meta name="keywords" content='Storage' /><meta itemprop="name" content="数据密集型应用系统设计笔记-一致性共识">
+<meta itemprop="description" content="不一致的现象是暂时的，最终会达到一致。是一个弱的保证。事务隔离性为了处理并发执行事务各种临界条件，而分布式一致性则主要针对延迟和故障等问题处"><meta itemprop="datePublished" content="2022-03-20T23:31:56+00:00" />
+<meta itemprop="dateModified" content="2023-09-24T17:00:04+08:00" />
+<meta itemprop="wordCount" content="1262"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Storage," /><meta property="og:title" content="数据密集型应用系统设计笔记-一致性共识" />
+<meta property="og:description" content="不一致的现象是暂时的，最终会达到一致。是一个弱的保证。事务隔离性为了处理并发执行事务各种临界条件，而分布式一致性则主要针对延迟和故障等问题处" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0-%E4%B8%80%E8%87%B4%E6%80%A7%E5%85%B1%E8%AF%86/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-20T23:31:56+00:00" />
+<meta property="article:modified_time" content="2023-09-24T17:00:04+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="数据密集型应用系统设计笔记-一致性共识"/>
+<meta name="twitter:description" content="不一致的现象是暂时的，最终会达到一致。是一个弱的保证。事务隔离性为了处理并发执行事务各种临界条件，而分布式一致性则主要针对延迟和故障等问题处"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0-%E4%B8%80%E8%87%B4%E6%80%A7%E5%85%B1%E8%AF%86/" /><link rel="prev" href="liudongdong1.github.io/shell_history/" /><link rel="next" href="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "数据密集型应用系统设计笔记-一致性共识",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0-%E4%B8%80%E8%87%B4%E6%80%A7%E5%85%B1%E8%AF%86\/"
+    },"genre": "posts","keywords": "Storage","wordcount":  1262 ,
+    "url": "liudongdong1.github.io\/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0-%E4%B8%80%E8%87%B4%E6%80%A7%E5%85%B1%E8%AF%86\/","datePublished": "2022-03-20T23:31:56+00:00","dateModified": "2023-09-24T17:00:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title d-none">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content d-none" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>数据密集型应用系统设计笔记-一致性共识</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/storage/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div>
+      <div class="post-meta-line"><span title=2022-03-20&#32;23:31:56>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-20" >2022-03-20</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1262 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="数据密集型应用系统设计笔记-一致性共识">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="details toc d-none" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1可线性化">1.可线性化</a></li>
+        <li><a href="#2-顺序保证">2. 顺序保证</a></li>
+        <li><a href="#3-分布式事务与共识">3. 分布式事务与共识</a></li>
+        <li><a href="#4-支持容错的共识算法">4. 支持容错的共识算法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      data-password="0e891e1122e262ef2a6df73bee254b7b"
+      data-content="PGJsb2NrcXVf9edd4dfd294074428f6edc78da5b09898aa006b71d9b025b5bc3vdGU&#43;CjxwPuS4jeS4gOiHtOeahOeOsOixoeaYr&#43;aaguaXtueahO&#43;8jOacgOe7iOS8mui&#43;vuWIsOS4gOiHtOOAguaYr&#43;S4gOS4quW8seeahOS/neivgeOAguS6i&#43;WKoemalOemu&#43;aAp&#43;S4uuS6huWkhOeQhuW5tuWPkeaJp&#43;ihjOS6i&#43;WKoeWQhOenjeS4tOeVjOadoeS7tu&#43;8jOiAjOWIhuW4g&#43;W8j&#43;S4gOiHtOaAp&#43;WImeS4u&#43;imgemSiOWvueW7tui/n&#43;WSjOaVhemanOetiemXrumimOWkhOeQhuWNj&#43;iwg&#43;WJr&#43;acrOS5i&#43;mXtOeKtuaAgeOAgjwvcD4KPC9ibG9ja3F1b3RlPgo8aDMgaWQ9IjHlj6/nur/mgKfljJYiPjEu5Y&#43;v57q/5oCn5YyWPC9oMz4KPGJsb2NrcXVvdGU&#43;CjxwPuS4gOaXpuaWsOWAvOiiq&#43;WGmeWFpeaIluivu&#43;WPlu&#43;8jOaJgOacieWQjue7reeahOivu&#43;eci&#43;WIsOeahOmDveaYr&#43;acgOaWsOeahOWAvO&#43;8jOebtOWIsOWGjeasoeiiq&#43;imhuebluOAgiDooajnjrDnmoTlpb3lg4/lj6rmnInkuIDkuKrmlbDmja7lia/mnKzvvIzkuJTlhbbkuIrnmoTmiYDmnInmk43kvZzpg73mmK/ljp/lrZDnmoTjgII8L3A&#43;CjwvYmxvY2txdW90ZT4KPHVsPgo8bGk&#43;5Y&#43;v5Liy6KGM5YyW5pivPGNvZGU&#43;5LqL5Yqh55qE6ZqU56a75bGe5oCnPC9jb2RlPu&#43;8jOWFtuS4reavj&#43;S4quS6i&#43;WKoeWPr&#43;S7peivu&#43;WGmeWkmuS4quWvueixoSjooYzvvIzmlofmoaPvvIzorrDlvZXnrYnvvInjgILlroPnlKjmnaXnoa7kv53kuovliqHmiafooYznmoTnu5PmnpzkuI7kuLLooYzmiafooYzvvIjljbPmr4/mrKHmiafooYzkuIDkuKrkuovliqHvvInnmoTnu5Pmnpzlrozlhajnm7jlkIzvvIzljbPkvb/kuLLooYzmiafooYznmoTpobrluo/lj6/og73kuI7kuovliqHlrp7pmYXmiafooYzpobrluo/kuI3lkIwuPC9saT4KPGxpPuWPr&#43;e6v&#43;aAp&#43;WMluaYrzxjb2RlPuivu&#43;WGmeWvhOWtmOWZqO&#43;8iOWNleS4quWvueixoe&#43;8ieeahOacgOaWsOWAvOS/neivgTwvY29kZT7jgILlroPlubY8Y29kZT7kuI3opoHmsYLlsIbmk43kvZznu4TlkIjliLDkuovliqHkuK08L2NvZGU&#43;77yM5Zug5q2k5peg5rOV6YG/5YWN5YaZ5YC&#43;5pac562J6Zeu6aKY77yM6Zmk6Z2e6YeH5Y&#43;W5YW25LuW6aKd5aSW5o6q5pa977yI5aaC5a6e546w5a6e5L2T5YyW5Yay56qB77yJ44CCPC9saT4KPC91bD4KPHA&#43;PGltZw0KICAgIGNsYXNzPSJsYXp5bG9hZCINCiAgICBzcmM9Ii9saXVkb25nZG9uZzEuZ2l0aHViLmlvL3N2Zy9sb2FkaW5nLm1pbi5zdmciDQogICAgZGF0YS1zcmM9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzEwMzAxMDc1MC5wbmciDQogICAgZGF0YS1zcmNzZXQ9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzEwMzAxMDc1MC5wbmcsIGh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzEwMzAxMDc1MC5wbmcgMS41eCwgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjIwNDI3MTAzMDEwNzUwLnBuZyAyeCINCiAgICBkYXRhLXNpemVzPSJhdXRvIg0KICAgIGFsdD0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjIwNDI3MTAzMDEwNzUwLnBuZyINCiAgICB0aXRsZT0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjIwNDI3MTAzMDEwNzUwLnBuZyIvPjwvcD4KPGg0IGlkPSIxLee6v&#43;aAp&#43;WMluS&#43;nei1luadoeS7tiI&#43;LjEuIOe6v&#43;aAp&#43;WMluS&#43;nei1luadoeS7tjwvaDQ&#43;Cjx1bD4KPGxpPuWKoOmUgeS4juS4u&#43;iKgueCuemAieWPlu&#43;8muaJgOacieiKgueCuemDveW/hemhu&#43;WQjOaEj&#43;WTquS4quiKgueCueaMgeaciemUge&#43;8jOWQpuWImeS8muWHuueOsOiEkeijgueOsOixoTwvbGk&#43;CjxsaT7nuqbmnZ/kuI7llK/kuIDmgKfkv53or4E8L2xpPgo8bGk&#43;6Leo6YCa6YGT5pe26Ze05L6d6LWWPC9saT4KPC91bD4KPGg0IGlkPSIyLeWunueOsOe6v&#43;aAp&#43;WMluezu&#43;e7nyI&#43;LjIuIOWunueOsOe6v&#43;aAp&#43;WMluezu&#43;e7nzwvaDQ&#43;Cjx1bD4KPGxpPuS4u&#43;S7juWkjeWItu&#43;8muS7juS4u&#43;iKgueCueaIluiAheWQjOatpeabtOaWsOeahOS7juiKgueCueS4iuivu&#43;WPlu&#43;8jOWPr&#43;S7pea7oei2s&#43;e6v&#43;aAp&#43;WMljwvbGk&#43;CjxsaT7lhbHor4bnrpfms5XvvJo8L2xpPgo8bGk&#43;5aSa5Li75aSN5Yi277yI5LiN5Y&#43;v57q/5oCn5YyW77yJ77ya5peg5Li76IqC54K555qE57O757ufPC9saT4KPC91bD4KPGg0IGlkPSIzLee6v&#43;aAp&#43;WMlueahOS7o&#43;S7tyI&#43;LjMuIOe6v&#43;aAp&#43;WMlueahOS7o&#43;S7tzwvaDQ&#43;Cjx1bD4KPGxpPkNBUCDnkIborrrvvJog5aaC5p6c572R57uc5q2j5bi477yM57O757uf5Y&#43;v5Lul5ZCM5pe25L&#43;d6K&#43;B5LiA6Ie05oCn77yI57q/5oCn5YyW77yJ5ZKM5Y&#43;v55So5oCn77yb5aaC5p6c5LiA5pem5Y&#43;R6YCB572R57uc5pWF6Zqc77yM5b&#43;F6aG76YCJ5oup57q/5oCn77yI5LiA6Ie05oCn77yJ5oiW6ICF5Y&#43;v55So5oCn44CCPC9saT4KPGxpPuavj&#43;S4qkNQVeaguOmDveacieiHquW3seeLrOeri&#43;eahGNhY2hl5ZKM5a&#43;E5a2Y5Zmo77yM5YaF5a2Y6K6/6Zeu6aaW5YWI6L&#43;b5YWlY2FjaGXns7vnu5/vvIzmiYDmnInkv67mlLnpu5jorqTkvJrlvILmraXliLfmlrDliLDkuLvlrZjvvIznlLHkuo7orr/pl65jYWNoZeavlOiuv&#43;mXruS4u&#43;WtmOW/q&#43;eahOWkmu&#43;8jOmHh&#43;eUqOS6huW8guatpeWIt&#43;aWsOeJueaAp&#43;&#43;8jOS8muWvvOiHtOWHuueOsOWkmuS4quaVsOaNruWJr&#43;acrO&#43;8iOS4gOS4quWcqOS4u&#43;WtmO&#43;8jOWPpuWkluWHoOS4quWcqOS4jeWQjOe6p&#43;WIq&#43;eahGNhY2hl5Lit77yJPC9saT4KPC91bD4KPHA&#43;PGltZw0KICAgIGNsYXNzPSJsYXp5bG9hZCINCiAgICBzcmM9Ii9saXVkb25nZG9uZzEuZ2l0aHViLmlvL3N2Zy9sb2FkaW5nLm1pbi5zdmciDQogICAgZGF0YS1zcmM9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzEwNTMxNjIzNC5wbmciDQogICAgZGF0YS1zcmNzZXQ9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzEwNTMxNjIzNC5wbmcsIGh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzEwNTMxNjIzNC5wbmcgMS41eCwgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjIwNDI3MTA1MzE2MjM0LnBuZyAyeCINCiAgICBkYXRhLXNpemVzPSJhdXRvIg0KICAgIGFsdD0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjIwNDI3MTA1MzE2MjM0LnBuZyINCiAgICB0aXRsZT0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjIwNDI3MTA1MzE2MjM0LnBuZyIvPjwvcD4KPGgzIGlkPSIyLemhuuW6j&#43;S/neivgSI&#43;Mi4g6aG65bqP5L&#43;d6K&#43;BPC9oMz4KPHVsPgo8bGk&#43;6aG65bqP5ZKM5Zug5p6c5YWz57O777ya5Zug5p6c5YWz57O75a&#43;55LqL5Lu25pa95Yqg5LqG5p&#43;Q56eN6aG65bqP44CCPC9saT4KPGxpPuW6j&#43;WIl&#43;WPt&#43;aOkuW6j&#43;&#43;8muS9v&#43;eUqOW6j&#43;WIl&#43;WPt&#43;aIluaXtumXtOaIs&#43;adpeaOkuW6j&#43;S6i&#43;S7tuOAgjwvbGk&#43;CjxsaT7pnZ7lm6Dmnpzluo/liJflj5HnlJ/lmajvvJo8L2xpPgo8L3VsPgo8cD48aW1nDQogICAgY2xhc3M9Imxhenlsb2FkIg0KICAgIHNyYz0iL2xpdWRvbmdkb25nMS5naXRodWIuaW8vc3ZnL2xvYWRpbmcubWluLnN2ZyINCiAgICBkYXRhLXNyYz0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjIwNDI3MTEwNzUzMzYwLnBuZyINCiAgICBkYXRhLXNyY3NldD0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjIwNDI3MTEwNzUzMzYwLnBuZywgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjIwNDI3MTEwNzUzMzYwLnBuZyAxLjV4LCBodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMjA0MjcxMTA3NTMzNjAucG5nIDJ4Ig0KICAgIGRhdGEtc2l6ZXM9ImF1dG8iDQogICAgYWx0PSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMjA0MjcxMTA3NTMzNjAucG5nIg0KICAgIHRpdGxlPSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMjA0MjcxMTA3NTMzNjAucG5nIi8&#43;PC9wPgo8dWw&#43;CjxsaT5MYW1wb3J0IOaXtumXtOaIs&#43;&#43;8muavj&#43;S4quiKgueCuemDveacieS4gOS4quWUr&#43;S4gOagh&#43;ivhu&#43;8jOS4lOavj&#43;S4quiKgueCuemDveacieS4gOS4quiuoeaVsOWZqOadpeiusOW9leWQhOiHquW3suWkhOeQhueahOivt&#43;axguaAu&#43;aYr&#43;OAgkxhbXBvcnTml7bpl7TmiLPmmK/kuIDkuKrlgLzlr7nvvIjorqHmlbDlmajvvIzoioLngrlJRO&#43;8ie&#43;8jOaMieeFp&#43;iuoeaVsOWZqO&#43;8jOiKgueCuUlE5L6d5qyh5o6S5bqP77yI6ZyA6KaB5pS26ZuG5omA5pyJ55qE55So5oi36Ii56Iiw6K&#43;35rGC55qE77yM54S25ZCO5omN5Y&#43;v5Lul5q&#43;U6L6D5LuW5Lus55qE5pe26Ze05oiz77yJPC9saT4KPC91bD4KPHA&#43;PGltZw0KICAgIGNsYXNzPSJsYXp5bG9hZCINCiAgICBzcmM9Ii9saXVkb25nZG9uZzEuZ2l0aHViLmlvL3N2Zy9sb2FkaW5nLm1pbi5zdmciDQogICAgZGF0YS1zcmM9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzExMDk1MTUwOC5wbmciDQogICAgZGF0YS1zcmNzZXQ9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzExMDk1MTUwOC5wbmcsIGh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzExMDk1MTUwOC5wbmcgMS41eCwgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjIwNDI3MTEwOTUxNTA4LnBuZyAyeCINCiAgICBkYXRhLXNpemVzPSJhdXRvIg0KICAgIGFsdD0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjIwNDI3MTEwOTUxNTA4LnBuZyINCiAgICB0aXRsZT0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjIwNDI3MTEwOTUxNTA4LnBuZyIvPjwvcD4KPHVsPgo8bGk&#43;5YWo5bqP5YWz57O75bm/5pKt77ya77yIMe&#43;8ieWPr&#43;mdoOWPkemAge&#43;8jOayoeaciea2iOaBr&#43;S4ouWkse&#43;8jOS9huS4jeS/neivgeS9leaXtuWPkemAgeaIkOWKn&#43;OAgu&#43;8iDLvvInkuKXmoLzmnInluo/vvIzmtojmga/mgLvku6Xnm7jlkIznmoTpobrluo/lj5HpgIHliLDmr4/kuKroioLngrkKPHVsPgo8bGk&#43;5Yip55So5YWo5bqP5YWz57O75bm/5pKt5a6e546w57q/5oCn5YyW5a2Y5YKoPC9saT4KPGxpPuWIqeeUqOe6v&#43;aAp&#43;WMluWtmOWCqOWunueOsOWFqOW6j&#43;WFs&#43;ezu&#43;W5v&#43;aSrTwvbGk&#43;CjwvdWw&#43;CjwvbGk&#43;CjwvdWw&#43;CjxoMyBpZD0iMy3liIbluIPlvI/kuovliqHkuI7lhbHor4YiPjMuIOWIhuW4g&#43;W8j&#43;S6i&#43;WKoeS4juWFseivhjwvaDM&#43;CjxoNCBpZD0iMS3kuKTpmLbmrrXmj5DkuqQtMnBjIj4uMS4g5Lik6Zi25q615o&#43;Q5LqkIDJQQzwvaDQ&#43;CjxwPjxpbWcNCiAgICBjbGFzcz0ibGF6eWxvYWQiDQogICAgc3JjPSIvbGl1ZG9uZ2RvbmcxLmdpdGh1Yi5pby9zdmcvbG9hZGluZy5taW4uc3ZnIg0KICAgIGRhdGEtc3JjPSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMjA0MjcxMjI3Mjg3MjkucG5nIg0KICAgIGRhdGEtc3Jjc2V0PSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMjA0MjcxMjI3Mjg3MjkucG5nLCBodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMjA0MjcxMjI3Mjg3MjkucG5nIDEuNXgsIGh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzEyMjcyODcyOS5wbmcgMngiDQogICAgZGF0YS1zaXplcz0iYXV0byINCiAgICBhbHQ9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzEyMjcyODcyOS5wbmciDQogICAgdGl0bGU9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzEyMjcyODcyOS5wbmciLz48L3A&#43;Cjx1bD4KPGxpPuWmguaenOaJgOacieWPguS4juiAheWbnuetlOKAnOaYr&#43;KAne&#43;8jOihqOekuuS7luS7rOW3suWHhuWkh&#43;WlveaPkOS6pO&#43;8jOmCo&#43;S5iOWNj&#43;iwg&#43;iAheaOpeS4i&#43;adpeWcqOmYtuautSDkvJrlj5Hlh7rmj5DkuqTor7fmsYLvvIzmj5DkuqTlvIDlp4vlrp7pmYXmiafooYzjgII8L2xpPgo8bGk&#43;5aaC5p6c5pyJ5Lu75L2V5Y&#43;C5LiO6ICF5ZueIOKAnOWQpuKAne&#43;8jOWImeWNj&#43;iwg&#43;iAheWcqOmYtuautSDkuK3lkJHmiYDmnInoioLngrnlj5HpgIHmlL7lvIPor7fmsYLjgII8L2xpPgo8L3VsPgo8cD7ljY/osIPogIXlj5HnjrDmlYXpmpw8L3A&#43;CjxwPjxpbWcNCiAgICBjbGFzcz0ibGF6eWxvYWQiDQogICAgc3JjPSIvbGl1ZG9uZ2RvbmcxLmdpdGh1Yi5pby9zdmcvbG9hZGluZy5taW4uc3ZnIg0KICAgIGRhdGEtc3JjPSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMjA0MjcxMjM0MTkxODgucG5nIg0KICAgIGRhdGEtc3Jjc2V0PSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMjA0MjcxMjM0MTkxODgucG5nLCBodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMjA0MjcxMjM0MTkxODgucG5nIDEuNXgsIGh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzEyMzQxOTE4OC5wbmcgMngiDQogICAgZGF0YS1zaXplcz0iYXV0byINCiAgICBhbHQ9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzEyMzQxOTE4OC5wbmciDQogICAgdGl0bGU9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIyMDQyNzEyMzQxOTE4OC5wbmciLz48L3A&#43;CjxibG9ja3F1b3RlPgo8cD7lpoLmnpzotoXml7bkuYvlkI7mlbDmja7lupMx5Yaz5a6a5Y2V5pa56Z2i5Lit5q2i77yM5pyA57uI5bCG5LiO5a6M5oiQ5o&#43;Q5Lqk55qE5pWw5o2u5bqTMuS6p&#43;eUn&#43;S4jeS4gOiHtOOAguWQjOeQhu&#43;8jOWPguS4juiAheS5n&#43;S4jeiDveWNleaWuemdouWGs&#43;WumuaPkOS6pO&#43;8jOWboOS4uuWPr&#43;iDveacieS6m&#43;WPguS4juiAheaKleS6huWQpuWGs&#43;elqOWvvOiHtOWNj&#43;iwg&#43;iAheacgOe7iOeahOWGs&#43;WumuaYr&#43;aUvuW8g&#43;OAgjwvcD4KPC9ibG9ja3F1b3RlPgo8aDQgaWQ9IjIt5LiJ6Zi25q615o&#43;Q5LqkIj4uMi4g5LiJ6Zi25q615o&#43;Q5LqkPC9oND4KPHVsPgo8bGk&#43;M1BD5YGH5a6a5LiA5Liq5pyJ55WM55qE572R57uc5bu26L&#43;f5ZKM6IqC54K55Zyo6KeE5a6a5pe26Ze05YaF5ZON5bqU44CC6ICD6JmR5Yiw55uu5YmN5aSn5aSa5pWw5YW35pyJ5peg6ZmQ572R57uc5bu26L&#43;f5ZKM6L&#43;b56iL5pqC5YGc55qE5a6e6ZmF5oOF5Ya177yM5a6D5peg5rOV5L&#43;d6K&#43;B5Y6f5a2Q5oCn44CCPC9saT4KPGxpPumdnumYu&#43;WhnuaPkOS6pOS&#43;nei1luS4gOS4quWujOe&#43;jueahOaVhemanOajgOa1i&#43;WZqO&#43;8jOWNs&#43;acieS4gOS4qumdnuW4uOWPr&#43;mdoOeahOacuuWItuWPr&#43;S7peWIpOaWreWHuuiKgueCueaYr&#43;WQpuW3sue7j&#43;WllOa6g&#43;&#43;8jOS9huaYr&#43;S5n&#43;WPr&#43;iDveaYr&#43;e9kee7nOWOn&#43;WboOWvvOiHtOeahOOAgjwvbGk&#43;CjwvdWw&#43;CjxoNCBpZD0iMy1leGFjdGx5LW9uY2Ut5raI5oGv5aSE55CGIj4uMy4gRXhhY3RseS1vbmNlIOa2iOaBr&#43;WkhOeQhjwvaDQ&#43;CjxoMyBpZD0iNC3mlK/mjIHlrrnplJnnmoTlhbHor4bnrpfms5UiPjQuIOaUr&#43;aMgeWuuemUmeeahOWFseivhueul&#43;azlTwvaDM&#43;Cjx1bD4KPGxpPuWFseivhueul&#43;azleS4juWFqOW6j&#43;W5v&#43;aSre&#43;8miBWU1LvvIxQYXhvc&#43;&#43;8jFJhZnTvvIxaYWLjgII8L2xpPgo8bGk&#43;5Li75LuO6L6F5Yqp5LiO5YWx6K&#43;G77yaRXBvY2jkuI5RdW9ydW3jgII8L2xpPgo8L3VsPgo="
+    ><div class="fixit-decryptor-container">
+  <img class="fixit-decryptor-loading" src="/liudongdong1.github.io/svg/loading.min.svg" alt="decryptor loading" />
+  <label for="fixit-decryptor-input" title='密码'>
+    <input type="password" id="fixit-decryptor-input" class="d-none" placeholder="🔑 请输入密码" />
+  </label>
+  <button class="fixit-encryptor-btn d-none"><i class="fa-solid fa-lock" aria-hidden="true"></i> 重新加密</button>
+</div>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-24&#32;17:00:04>更新于 2023-09-24&nbsp;</span>
+      </div><div class="post-info-license d-none">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line d-none">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0-%E4%B8%80%E8%87%B4%E6%80%A7%E5%85%B1%E8%AF%86/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5c%e5%88%86%e5%b8%83%e5%bc%8f%e5%ad%98%e5%82%a8%5c%e6%95%b0%e6%8d%ae%e5%af%86%e9%9b%86%e5%9e%8b%e5%ba%94%e7%94%a8%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1%e7%ac%94%e8%ae%b0-%e4%b8%80%e8%87%b4%e6%80%a7%e5%85%b1%e8%af%86.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0-%E4%B8%80%E8%87%B4%E6%80%A7%E5%85%B1%E8%AF%86/" data-title="数据密集型应用系统设计笔记-一致性共识" data-hashtags="Storage"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0-%E4%B8%80%E8%87%B4%E6%80%A7%E5%85%B1%E8%AF%86/" data-hashtag="Storage"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0-%E4%B8%80%E8%87%B4%E6%80%A7%E5%85%B1%E8%AF%86/" data-title="数据密集型应用系统设计笔记-一致性共识"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/storage/">Storage</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/shell_history/" class="prev" rel="prev" title="shell_history"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>shell_history</a>
+      <a href="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="next" rel="next" title="面经_计算机网络">面经_计算机网络<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/core.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/enc-base64.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/md5.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/sha256.min.js" defer></script><script src="/liudongdong1.github.io/js/fixit-decryptor.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"encryption":{"all":true,"shortcode":false},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

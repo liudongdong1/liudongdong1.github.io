@@ -1,0 +1,75 @@
+---
+title: PMDK-libpmem案例
+date: 2022-05-30 14:00:04
+author: liudongdong1
+img: 
+cover: false
+categories: Storage
+password: liudongdong
+tags:
+  - Storage
+---
+
+> libpmem是一个低层次持久化内存的库，当需要持久化存储的时候，需要手到flush，所以通常开发者采用libpmemobj更方便。
+>
+> - addr pmem_map_file() // 创建持久化内存的文件，并将文件映射，得到指向文件的指针
+> - pmem_memcpy_persist() // 若地址是`指向持久化内存的数组`，则采用pmem_memcpy_persist进行持久化
+> - pmem_msync() // 若地址指向`普通易失性内存的数组`，则采用memcpy() 和 pmem_msync()进行持久化
+> - pmem_unmap() // `解除映射关系`
+> - 此处使用pmem_memcpy_persist()，不仅仅只是针对数组，还可以针对长字串等大内容的数据。
+
+```c
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <string.h>
+#include <libpmem.h>
+
+/* just copying 4k to pmem for this example */
+#define BUF_LEN 4096
+
+int main(int argc, char *argv[])
+{
+    char buf[BUF_LEN];
+    char *pmemaddr;
+    size_t mapped_len;
+    int is_pmem;
+
+    /* create a pmem file and memory map it */
+    if ((pmemaddr = pmem_map_file(argv[1], BUF_LEN,
+                PMEM_FILE_CREATE|PMEM_FILE_EXCL,
+                0666, &mapped_len, &is_pmem)) == NULL) {
+        perror("pmem_map_file");
+        exit(1);
+    }
+
+    printf("mapped_len: %d\n", (int)mapped_len);
+    printf("BUF_LEN   : %d\n", BUF_LEN);
+
+    for (unsigned int i = 0; i < mapped_len; ++i) {
+        buf[i] = 8;
+    }
+
+    /* write it to the pmem */
+    if (is_pmem) {
+        pmem_memcpy_persist(pmemaddr, buf, mapped_len);
+    } else {
+        memcpy(pmemaddr, buf, mapped_len);
+        pmem_msync(pmemaddr, mapped_len);
+    }
+
+    pmem_unmap(pmemaddr, mapped_len);
+
+    exit(0);
+}
+```
+
+```shell
+$ ./simple_copy pmem.002
+mapped_len: 4096
+BUF_LEN   : 4096
+```
+

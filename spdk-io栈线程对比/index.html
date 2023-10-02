@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>SPDK_IO栈&amp;线程对比 - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="IO栈对比 无论使用传统内核NVMe驱动，还是使用vhost，虚拟机内部的IO处理流程都是一样的：IO请求下发时需要从用户态应用程序中切换到内" /><meta name="keywords" content='Storage, Framework' /><meta itemprop="name" content="SPDK_IO栈&amp;线程对比">
+<meta itemprop="description" content="IO栈对比 无论使用传统内核NVMe驱动，还是使用vhost，虚拟机内部的IO处理流程都是一样的：IO请求下发时需要从用户态应用程序中切换到内"><meta itemprop="datePublished" content="2022-05-29T16:00:04+00:00" />
+<meta itemprop="dateModified" content="2023-09-24T17:03:31+08:00" />
+<meta itemprop="wordCount" content="1369"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Storage,Framework," /><meta property="og:title" content="SPDK_IO栈&amp;线程对比" />
+<meta property="og:description" content="IO栈对比 无论使用传统内核NVMe驱动，还是使用vhost，虚拟机内部的IO处理流程都是一样的：IO请求下发时需要从用户态应用程序中切换到内" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/spdk-io%E6%A0%88%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-29T16:00:04+00:00" />
+<meta property="article:modified_time" content="2023-09-24T17:03:31+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="SPDK_IO栈&amp;线程对比"/>
+<meta name="twitter:description" content="IO栈对比 无论使用传统内核NVMe驱动，还是使用vhost，虚拟机内部的IO处理流程都是一样的：IO请求下发时需要从用户态应用程序中切换到内"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/spdk-io%E6%A0%88%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/" /><link rel="prev" href="liudongdong1.github.io/kubernetes-storage/" /><link rel="next" href="liudongdong1.github.io/spdk-io%E6%B5%81%E7%A8%8B/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "SPDK_IO栈\u0026线程对比",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/spdk-io%E6%A0%88%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94\/"
+    },"genre": "posts","keywords": "Storage, Framework","wordcount":  1369 ,
+    "url": "liudongdong1.github.io\/spdk-io%E6%A0%88%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94\/","datePublished": "2022-05-29T16:00:04+00:00","dateModified": "2023-09-24T17:03:31+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title d-none">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content d-none" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>SPDK_IO栈&amp;线程对比</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/storage/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div>
+      <div class="post-meta-line"><span title=2022-05-29&#32;16:00:04>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-29" >2022-05-29</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1369 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="SPDK_IO栈&amp;线程对比">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="details toc d-none" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#io栈对比">IO栈对比</a></li>
+        <li><a href="#线程模型">线程模型</a></li>
+        <li><a href="#resource">Resource</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      data-password="0e891e1122e262ef2a6df73bee254b7b"
+      data-content="PGgzIGlkPSJf9edd4dfd294074428f6edc78da5b09898aa006b71d9b025b5bc3pb&#43;agiOWvueavlCI&#43;SU/moIjlr7nmr5Q8L2gzPgo8YmxvY2txdW90ZT4KPHA&#43;5peg6K665L2/55So5Lyg57uf5YaF5qC4TlZNZempseWKqO&#43;8jOi/mOaYr&#43;S9v&#43;eUqHZob3N077yMPGNvZGU&#43;6Jma5ouf5py65YaF6YOo55qESU/lpITnkIbmtYHnqIs8L2NvZGU&#43;6YO95piv5LiA5qC355qE77yaSU/or7fmsYLkuIvlj5Hml7bpnIDopoHku47nlKjmiLfmgIHlupTnlKjnqIvluo/kuK3liIfmjaLliLDlhoXmoLjmgIHvvIzlubbnqb/ov4fmlofku7bns7vnu5/lkox2aXJ0aW8tYmxr6amx5Yqo5ZCO77yM5omN6IO95YCf5YqpSU/njq8oSU8gUmluZynlsIbor7fmsYLkv6Hmga/kvKDpgJLnu5nomZrmi5/orr7lpIfov5vooYzlpITnkIbvvJvomZrmi5/orr7lpIflpITnkIblrozmiJDlkI7vvIzku6XkuK3mlq3mlrnlvI/pgJrnn6XomZrmi5/mnLrvvIzomZrmi5/mnLrlhoXov5vov4fpqbHliqjlkozmlofku7bns7vnu5/nmoTlm57osIPlkI7vvIzmnIDnu4jllKTphpLlupTnlKjnqIvluo/ov5Tlm57nlKjmiLfmgIHnu6fnu63miafooYzkuJrliqHpgLvovpHjgII8L3A&#43;Cjx1bD4KPGxpPumSiOWvueS8oOe7n&#43;WGheaguE5WTWXpqbHliqjvvIxxZW116L&#43;b56iL5LitaW/nur/nqIvotJ/otKPlpITnkIbomZrmi5/mnLrkuIvlj5HnmoRJT&#43;ivt&#43;axgu&#43;8muWug&#43;mAmui/h3ZpcnRpbyBiYWNrZW5k5LuOSU/njq/kuK3lj5blh7ror7fmsYLvvIzlubY8Y29kZT7lsIbor7fmsYLpgJrov4fns7vnu5/osIPnlKjkvKDpgJLnu5nlhoXmoLjlnZflsYLlkoxOVk1l6amx5Yqo5bGC6L&#43;b6KGM5aSE55CGPC9jb2RlPu&#43;8jOacgOWQjjxjb2RlPueUsU5WTWXpqbHliqjlsIbor7fmsYLpgJrov4dRdWV1ZSBQYWlyKOexu&#43;S8vElP546vKeS6pOeUseeJqeeQhk5WTWXmjqfliLblmajov5vooYzlpITnkIY8L2NvZGU&#43;77ybTlZNZeaOp&#43;WItuWZqOWkhOeQhuWujOaIkOWQjuS7peeJqeeQhuS4reaWreaWueW8j&#43;mAmuefpXFlbXUgaW/nur/nqIvvvIznlLHlroPlsIblk43lupTmlL7lhaXomZrmi5/mnLpJT&#43;eOr&#43;S4reW5tuS7peiZmuaLn&#43;S4reaWremAmuefpeiZmuaLn&#43;acuuivt&#43;axguWujOaIkOOAgjwvbGk&#43;CjxsaT7pkojlr7lTUERLIHZob3N077yMPGNvZGU&#43;cWVtdei/m&#43;eoi&#43;S4jeWPguS4jklP6K&#43;35rGC55qE5aSE55CGPC9jb2RlPijku4XlnKjliJ3lp4vljJbml7botbfkvZznlKgp77yMPGNvZGU&#43;5omA5pyJ6Jma5ouf5py65LiL5Y&#43;R55qESU/or7fmsYLlnYfnlLF2aG9zdOi/m&#43;eoi&#43;WkhOeQhjwvY29kZT7jgIJ2aG9zdOi/m&#43;eoi&#43;S7pTxjb2RlPui9ruW&#43;qjwvY29kZT7nmoTmlrnlvI/kuI3mlq3ku448Y29kZT5JT&#43;eOr&#43;S4reWPluWHuuivt&#43;axgjwvY29kZT4o5oSP5ZGz552APGNvZGU&#43;6Jma5ouf5py65LiL5Y&#43;RSU/or7fmsYLml7bvvIzkuI3nlKjpgJrnn6XomZrmi5/orr7lpIc8L2NvZGU&#43;Ke&#43;8jOWvueS6juWPluWHuueahOavj&#43;S4quivt&#43;axgu&#43;8jHZob3N05bCG5YW2PGNvZGU&#43;5Lul5Lu75Yqh5pa55byP5Lqk57uZYmRlduaKveixoeWxgui/m&#43;ihjOWkhOeQhjwvY29kZT7vvJtiZGV25qC55o2u5ZCO56uv6K6&#43;5aSH55qE57G75Z6L5p2l6YCJ5oup5LiN5ZCM55qE6amx5Yqo6L&#43;b6KGM5aSE55CG77yM5L6L5aaC5a&#43;55LqOTlZNZeiuvuWkh&#43;&#43;8jOWwhuS9v&#43;eUqOeUqOaIt&#43;aAgeeahE5WTWXpqbHliqjlnKjnlKjmiLfnqbrpl7TlrozmiJDlr7lRdWV1ZSBQYWly55qE5pON5L2c44CCdmhvc3Tov5vnqIvlkIzmoLfkvJrova7lvqrniannkIZOVk1l6K6&#43;5aSH55qEUXVldWUgUGFpcu&#43;8jOWmguaenOacieWTjeW6lOS&#43;i&#43;S8mueri&#43;WIu&#43;i/m&#43;ihjOWkhOeQhu&#43;8jOiAjOaXoOmhu&#43;etieW&#43;heeJqeeQhuS4reaWreOAgnZob3N05Zyo5aSE55CGTlZNZeWTjeW6lOi/h&#43;eoi&#43;S4re&#43;8jOS8muWQkeiZmuaLn&#43;acuklP546v5Lit5re75Yqg5ZON5bqU77yM5bm25Lul6Jma5ouf5Lit5pat5pa55byP6YCa55&#43;l6Jma5ouf5py644CCPC9saT4KPC91bD4KPC9ibG9ja3F1b3RlPgo8cD48aW1nDQogICAgY2xhc3M9Imxhenlsb2FkIg0KICAgIHNyYz0iL2xpdWRvbmdkb25nMS5naXRodWIuaW8vc3ZnL2xvYWRpbmcubWluLnN2ZyINCiAgICBkYXRhLXNyYz0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2lvc3RhY2suanBnIg0KICAgIGRhdGEtc3Jjc2V0PSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW9zdGFjay5qcGcsIGh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pb3N0YWNrLmpwZyAxLjV4LCBodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW9zdGFjay5qcGcgMngiDQogICAgZGF0YS1zaXplcz0iYXV0byINCiAgICBhbHQ9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pb3N0YWNrLmpwZyINCiAgICB0aXRsZT0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2lvc3RhY2suanBnIi8&#43;PC9wPgo8aDMgaWQ9Iue6v&#43;eoi&#43;aooeWeiyI&#43;57q/56iL5qih5Z6LPC9oMz4KPGJsb2NrcXVvdGU&#43;CjxwPuS4gOWPsOacjeWKoeWZqOS4iuaPkuS6huS4gOW8oE5WTWUgU1NE5Y2h77yM5Y2h5LiK5YiS5YiG5LqG5LiJ5LiqbmFtZXNwYWNl77yb5LiJ5LiqbmFtZXNwYWNl5YiG5Yir6YWN57uZ5LqG5LiJ5Y&#43;w6Jma5ouf5py655qEdmhvc3QtdXNlci1ibGstcGNp6K6&#43;5aSH44CCPC9wPgo8dWw&#43;CjxsaT52aG9zdOi/m&#43;eoi&#43;WQr&#43;WKqOaXtuWPr&#43;S7pemFjee9ruWkmuS4qui9ruW&#43;que6v&#43;eoiyhyZWFjdG9yKe&#43;8jOavj&#43;S4que6v&#43;eoi&#43;e7keWumuS4gOS4queJqeeQhkNQVeOAgjwvbGk&#43;CjxsaT7lm77kuK3lgYforr7phY3nva7kuobkuKTkuKrova7lvqrnur/nqItyZWFjdG9yXzDlkoxyZWFjdG9yXzHvvIzliIbliKvlr7nlupTniannkIZDUFUw5ZKM54mp55CGQ1BVMeOAgjwvbGk&#43;CjxsaT7mr4/phY3nva7kuIDkuKp2aG9zdC1ibGvorr7lpIfml7bvvIzlkIzmoLfopoHkuLror6Xorr7lpIfnu5HlrprniannkIbmoLjvvIzlubbkuJTlj6rog73nu5HlrprliLDkuIDkuKrniannkIbmoLjkuIrjgII8L2xpPgo8L3VsPgo8cD52aG9zdOe6v&#43;eoi&#43;WcqOaTjeS9nOebuOWQjE5WTWXmjqfliLblmajkuIvnmoRuYW1lc3BhY2Xml7bvvIw8Y29kZT7kuI3lkIznmoR2aG9zdOe6v&#43;eoi&#43;S8mueUs&#43;ivt&#43;S4jeWQjOeahElPIENoYW5uZWwo5a6e6ZmF5a&#43;55bqUTlZNZSBRdWV1ZSBQYWly77yM5L2c55So57G75Ly86Jma5ouf5py6SU/njq8pPC9jb2RlPu&#43;8jOW5tuS4lDxjb2RlPuavj&#43;S4que6v&#43;eoi&#43;mDveS8mui9ruW&#43;quWQhOiHqueUs&#43;ivt&#43;eahElPIENoYW5uZWzkuK3nmoTlk43lupTmtojmga88L2NvZGU&#43;44CC5L6L5aaC5Zu&#43;5LitcmVhY3Rvcl8w5Lya5ZCRTlZNZeaOp&#43;WItuWZqOeUs&#43;ivt1F1ZXVlUGFpcjHvvIzlubblnKjova7lvqrov4fnqIvkuK3ms6jlhozlr7nor6VRdWV1ZVBhaXLnmoRwb2xsZXLlh73mlbAo6LSf6LSj5LuO5Lit5Y&#43;W5ZON5bqUKe&#43;8m3JlYWN0b3JfMeWImeS8muWQkU5WTWXmjqfliLblmajnlLPor7dRdWV1ZVBhaXIy5bm26L2u5b6q6K&#43;lUXVldWVQYWly44CCPC9wPgo8dWw&#43;CjxsaT7mr4/kuKp2aG9zdOe6v&#43;eoi&#43;mDveS8mui9ruW&#43;quiLpeW5suS4qnZob3N06K6&#43;5aSH55qESU/njq/vvIzlubbkuJTkvJrlkJHmnInmk43kvZzov7DmsYLnmoTniannkIblrZjlgqjmjqfliLblmago5L6L5aaCTlZNZeaOp&#43;WItuWZqOOAgXZpcnRpby1ibGvmjqfliLblmajjgIF2aXJ0aW8tc2NzaeaOp&#43;WItuWZqOetiSnnlLPor7fkuIDkuKrni6znq4vnmoRJTyBDaGFubmVs77yM5bm25a&#43;55YW26L&#43;b6KGM6L2u5b6q44CCPC9saT4KPGxpPuaXoOiuuuaYrzxjb2RlPuWJjeerr&#43;iZmuaLn&#43;acuklP546v77yM6L&#43;Y5piv5ZCO56uvSU8gQ2hhbm5lbO&#43;8jOmDveWPquS8muWcqOS4gOS4qnZob3N057q/56iL5Lit6KKr6L2u5b6qPC9jb2RlPu&#43;8jOWboOatpOi/meWwsemBv&#43;WFjeS6huWkmue6v&#43;eoi&#43;W5tuWPkeaTjeS9nOWQjOS4gOS4quWvueixoe&#43;8jOWPr&#43;S7pemAmui/h&#43;aXoOmUgeeahOaWueW8j&#43;aTjeS9nElP546v5oiWSU8gQ2hhbm5lbOOAgjwvbGk&#43;CjwvdWw&#43;CjwvYmxvY2txdW90ZT4KPHA&#43;PGltZw0KICAgIGNsYXNzPSJsYXp5bG9hZCINCiAgICBzcmM9Ii9saXVkb25nZG9uZzEuZ2l0aHViLmlvL3N2Zy9sb2FkaW5nLm1pbi5zdmciDQogICAgZGF0YS1zcmM9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci90aHJlYWQuanBnIg0KICAgIGRhdGEtc3Jjc2V0PSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvdGhyZWFkLmpwZywgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL3RocmVhZC5qcGcgMS41eCwgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL3RocmVhZC5qcGcgMngiDQogICAgZGF0YS1zaXplcz0iYXV0byINCiAgICBhbHQ9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci90aHJlYWQuanBnIg0KICAgIHRpdGxlPSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvdGhyZWFkLmpwZyIvPjwvcD4KPGgzIGlkPSJyZXNvdXJjZSI&#43;UmVzb3VyY2U8L2gzPgo8dWw&#43;CjxsaT48YSBocmVmPSJodHRwczovL3Jvb3R3LmdpdGh1Yi5pby8yMDE4LzA1L1NQREstaW9hbmFseXplLyJ0YXJnZXQ9Il9ibGFuayIgcmVsPSJleHRlcm5hbCBub2ZvbGxvdyBub29wZW5lciBub3JlZmVycmVyIj5odHRwczovL3Jvb3R3LmdpdGh1Yi5pby8yMDE4LzA1L1NQREstaW9hbmFseXplLzxpIGNsYXNzPSJmYS1zb2xpZCBmYS1leHRlcm5hbC1saW5rLWFsdCBmYS1mdyBmYS14cyBtcy0xIHRleHQtc2Vjb25kYXJ5IiBhcmlhLWhpZGRlbj0idHJ1ZSI&#43;PC9pPjwvYT48L2xpPgo8L3VsPgo="
+    ><div class="fixit-decryptor-container">
+  <img class="fixit-decryptor-loading" src="/liudongdong1.github.io/svg/loading.min.svg" alt="decryptor loading" />
+  <label for="fixit-decryptor-input" title='密码'>
+    <input type="password" id="fixit-decryptor-input" class="d-none" placeholder="🔑 请输入密码" />
+  </label>
+  <button class="fixit-encryptor-btn d-none"><i class="fa-solid fa-lock" aria-hidden="true"></i> 重新加密</button>
+</div>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-24&#32;17:03:31>更新于 2023-09-24&nbsp;</span>
+      </div><div class="post-info-license d-none">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line d-none">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/spdk-io%E6%A0%88%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5c%e5%bc%80%e6%ba%90%e9%a1%b9%e7%9b%ae-SPDK%5cSPDK-IO%e6%a0%88&amp;%e7%ba%bf%e7%a8%8b%e5%af%b9%e6%af%94.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/spdk-io%E6%A0%88%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/" data-title="SPDK_IO栈&amp;线程对比" data-hashtags="Storage,Framework"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/spdk-io%E6%A0%88%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/" data-hashtag="Storage"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/spdk-io%E6%A0%88%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/" data-title="SPDK_IO栈&amp;线程对比"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/storage/">Storage</a>,&nbsp;<a href="liudongdong1.github.io/tags/framework/">Framework</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/kubernetes-storage/" class="prev" rel="prev" title="Kubernetes-Storage"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Kubernetes-Storage</a>
+      <a href="liudongdong1.github.io/spdk-io%E6%B5%81%E7%A8%8B/" class="next" rel="next" title="SPDK_IO 流程">SPDK_IO 流程<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/core.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/enc-base64.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/md5.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/sha256.min.js" defer></script><script src="/liudongdong1.github.io/js/fixit-decryptor.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"encryption":{"all":true,"shortcode":false},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

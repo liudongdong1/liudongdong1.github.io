@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>STL迭代器失效 - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="当容器调用 erase() 方法后，当前位置到容器末尾元素的所有迭代器全部失效。 当容器调用 insert() 方法后，当前位置到容器末尾元素的所有迭代器全部失效。 如果容器扩容" /><meta name="keywords" content='C&#43;&#43;' /><meta itemprop="name" content="STL迭代器失效">
+<meta itemprop="description" content="当容器调用 erase() 方法后，当前位置到容器末尾元素的所有迭代器全部失效。 当容器调用 insert() 方法后，当前位置到容器末尾元素的所有迭代器全部失效。 如果容器扩容"><meta itemprop="datePublished" content="2022-04-10T12:00:04+00:00" />
+<meta itemprop="dateModified" content="2023-09-24T17:00:04+08:00" />
+<meta itemprop="wordCount" content="885"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="C&#43;&#43;," /><meta property="og:title" content="STL迭代器失效" />
+<meta property="og:description" content="当容器调用 erase() 方法后，当前位置到容器末尾元素的所有迭代器全部失效。 当容器调用 insert() 方法后，当前位置到容器末尾元素的所有迭代器全部失效。 如果容器扩容" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/stl%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-10T12:00:04+00:00" />
+<meta property="article:modified_time" content="2023-09-24T17:00:04+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="STL迭代器失效"/>
+<meta name="twitter:description" content="当容器调用 erase() 方法后，当前位置到容器末尾元素的所有迭代器全部失效。 当容器调用 insert() 方法后，当前位置到容器末尾元素的所有迭代器全部失效。 如果容器扩容"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/stl%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88/" /><link rel="prev" href="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_%E6%95%B0%E6%8D%AE%E5%BA%93/" /><link rel="next" href="liudongdong1.github.io/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%98%E5%82%A8%E6%8A%80%E8%83%BD/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "STL迭代器失效",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/stl%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88\/"
+    },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  885 ,
+    "url": "liudongdong1.github.io\/stl%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88\/","datePublished": "2022-04-10T12:00:04+00:00","dateModified": "2023-09-24T17:00:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title d-none">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content d-none" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>STL迭代器失效</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;编程语言</a></span></div>
+      <div class="post-meta-line"><span title=2022-04-10&#32;12:00:04>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-10" >2022-04-10</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 885 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="STL迭代器失效">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.pixabay.com/photo/2021/11/09/14/01/sea-6781567__340.jpg"
+    data-srcset="https://cdn.pixabay.com/photo/2021/11/09/14/01/sea-6781567__340.jpg, https://cdn.pixabay.com/photo/2021/11/09/14/01/sea-6781567__340.jpg 1.5x, https://cdn.pixabay.com/photo/2021/11/09/14/01/sea-6781567__340.jpg 2x"
+    data-sizes="auto"
+    alt="https://cdn.pixabay.com/photo/2021/11/09/14/01/sea-6781567__340.jpg"
+    title="https://cdn.pixabay.com/photo/2021/11/09/14/01/sea-6781567__340.jpg"/></div><div class="details toc d-none" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-序列式容器">1. 序列式容器</a></li>
+        <li><a href="#2-链表式容器">2. 链表式容器</a></li>
+        <li><a href="#3-关联式容器">3. 关联式容器</a></li>
+        <li><a href="#resource">Resource</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      data-password="0e891e1122e262ef2a6df73bee254b7b"
+      data-content="PGJsb2NrcXVf9edd4dfd294074428f6edc78da5b09898aa006b71d9b025b5bc3vdGU&#43;Cjx1bD4KPGxpPuW9k&#43;WuueWZqOiwg&#43;eUqCA8Y29kZT5lcmFzZSgpPC9jb2RlPiDmlrnms5XlkI7vvIzlvZPliY3kvY3nva7liLDlrrnlmajmnKvlsL7lhYPntKDnmoTmiYDmnInov63ku6Plmajlhajpg6jlpLHmlYjjgII8L2xpPgo8bGk&#43;5b2T5a655Zmo6LCD55SoIDxjb2RlPmluc2VydCgpPC9jb2RlPiDmlrnms5XlkI7vvIzlvZPliY3kvY3nva7liLDlrrnlmajmnKvlsL7lhYPntKDnmoTmiYDmnInov63ku6Plmajlhajpg6jlpLHmlYjjgII8L2xpPgo8bGk&#43;5aaC5p6c5a655Zmo5omp5a6577yM5Zyo5YW25LuW5Zyw5pa56YeN5paw5Y&#43;I5byA6L6f5LqG5LiA5Z2X5YaF5a2Y44CC5Y6f5p2l5a655Zmo5bqV5bGC55qE5YaF5a2Y5LiK5omA5L&#43;d5a2Y55qE6L&#43;t5Luj5Zmo5YWo6YO95aSx5pWI5LqG44CCPC9saT4KPC91bD4KPC9ibG9ja3F1b3RlPgo8aDMgaWQ9IjEt5bqP5YiX5byP5a655ZmoIj4xLiDluo/liJflvI/lrrnlmag8L2gzPgo8ZGl2IGNsYXNzPSJoaWdobGlnaHQiPjxwcmUgdGFiaW5kZXg9IjAiIHN0eWxlPSJjb2xvcjojZjhmOGYyO2JhY2tncm91bmQtY29sb3I6IzI3MjgyMjstbW96LXRhYi1zaXplOjQ7LW8tdGFiLXNpemU6NDt0YWItc2l6ZTo0OyI&#43;PGNvZGUgY2xhc3M9Imxhbmd1YWdlLWMrKyIgZGF0YS1sYW5nPSJjKysiPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6Izc1NzE1ZSI&#43;I2luY2x1ZGU8L3NwYW4&#43;PHNwYW4gc3R5bGU9ImNvbG9yOiM3NTcxNWUiPiZsdDtpb3N0cmVhbSZndDs8L3NwYW4&#43;PHNwYW4gc3R5bGU9ImNvbG9yOiM3NTcxNWUiPgo8L3NwYW4&#43;PC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;PHNwYW4gc3R5bGU9ImNvbG9yOiM3NTcxNWUiPiNpbmNsdWRlPC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj4mbHQ7dmVjdG9yJmd0Ozwvc3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6Izc1NzE1ZSI&#43;Cjwvc3Bhbj48L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6Izc1NzE1ZSI&#43;PC9zcGFuPgo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6IzY2ZDllZiI&#43;dXNpbmc8L3NwYW4&#43;IDxzcGFuIHN0eWxlPSJjb2xvcjojNjZkOWVmIj5uYW1lc3BhY2U8L3NwYW4&#43;IHN0ZDsKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojNjZkOWVmIj5pbnQ8L3NwYW4&#43;IDxzcGFuIHN0eWxlPSJjb2xvcjojYTZlMjJlIj5tYWluPC9zcGFuPigpIHsKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPgl2ZWN0b3I8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;Jmx0Ozwvc3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6IzY2ZDllZiI&#43;aW50PC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj4mZ3Q7PC9zcGFuPiBxeyA8c3BhbiBzdHlsZT0iY29sb3I6I2FlODFmZiI&#43;MTwvc3Bhbj4sPHNwYW4gc3R5bGU9ImNvbG9yOiNhZTgxZmYiPjI8L3NwYW4&#43;LDxzcGFuIHN0eWxlPSJjb2xvcjojYWU4MWZmIj4zPC9zcGFuPiw8c3BhbiBzdHlsZT0iY29sb3I6I2FlODFmZiI&#43;NDwvc3Bhbj4sPHNwYW4gc3R5bGU9ImNvbG9yOiNhZTgxZmYiPjU8L3NwYW4&#43;LDxzcGFuIHN0eWxlPSJjb2xvcjojYWU4MWZmIj42PC9zcGFuPiB9Owo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4JPHNwYW4gc3R5bGU9ImNvbG9yOiM3NTcxNWUiPi8vIOWcqOi/memHjOaDs&#43;aKiuWkp&#43;S6jjLnmoTlhYPntKDpg73liKDpmaQKPC9zcGFuPjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj48L3NwYW4&#43;CTxzcGFuIHN0eWxlPSJjb2xvcjojNjZkOWVmIj5mb3I8L3NwYW4&#43;ICg8c3BhbiBzdHlsZT0iY29sb3I6IzY2ZDllZiI&#43;YXV0bzwvc3Bhbj4gaXQgPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPj08L3NwYW4&#43;IHEuYmVnaW4oKTsgaXQgPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPiE9PC9zcGFuPiBxLmVuZCgpOyBpdDxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj4rKzwvc3Bhbj4pIHsKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;CQk8c3BhbiBzdHlsZT0iY29sb3I6IzY2ZDllZiI&#43;aWY8L3NwYW4&#43;ICg8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;Kjwvc3Bhbj5pdCA8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;Jmd0Ozwvc3Bhbj4gPHNwYW4gc3R5bGU9ImNvbG9yOiNhZTgxZmYiPjI8L3NwYW4&#43;KQo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4JCQlxLmVyYXNlKGl0KTsgPHNwYW4gc3R5bGU9ImNvbG9yOiM3NTcxNWUiPi8vIOi/memHjOWwseS8muWPkeeUn&#43;i/reS7o&#43;WZqOWkseaViAo8L3NwYW4&#43;PC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;PHNwYW4gc3R5bGU9ImNvbG9yOiM3NTcxNWUiPjwvc3Bhbj4JfQo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4JPHNwYW4gc3R5bGU9ImNvbG9yOiM3NTcxNWUiPi8vIOaJk&#43;WNsOe7k&#43;aenAo8L3NwYW4&#43;PC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;PHNwYW4gc3R5bGU9ImNvbG9yOiM3NTcxNWUiPjwvc3Bhbj4JPHNwYW4gc3R5bGU9ImNvbG9yOiM2NmQ5ZWYiPmZvcjwvc3Bhbj4gKDxzcGFuIHN0eWxlPSJjb2xvcjojNjZkOWVmIj5hdXRvPC9zcGFuPiBpdCA8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;PTwvc3Bhbj4gcS5iZWdpbigpOyBpdCA8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;IT08L3NwYW4&#43;IHEuZW5kKCk7IGl0PHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPisrPC9zcGFuPikgewo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4JCWNvdXQgPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPiZsdDsmbHQ7PC9zcGFuPiA8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;Kjwvc3Bhbj5pdCA8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;Jmx0OyZsdDs8L3NwYW4&#43;IDxzcGFuIHN0eWxlPSJjb2xvcjojZTZkYjc0Ij4mIzM0OyAmIzM0Ozwvc3Bhbj47Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPgl9Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPgljb3V0IDxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj4mbHQ7Jmx0Ozwvc3Bhbj4gZW5kbDsKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPgk8c3BhbiBzdHlsZT0iY29sb3I6IzY2ZDllZiI&#43;cmV0dXJuPC9zcGFuPiA8c3BhbiBzdHlsZT0iY29sb3I6I2FlODFmZiI&#43;MDwvc3Bhbj47Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPn0KPC9zcGFuPjwvc3Bhbj48L2NvZGU&#43;PC9wcmU&#43;PC9kaXY&#43;PGJsb2NrcXVvdGU&#43;CjxwPuWboOS4uiB2ZXRvcuOAgWRlcXVlIOS9v&#43;eUqOS6hui/nue7reWIhumFjeeahOWGheWtmO&#43;8jDxjb2RlPmVyYXNlPC9jb2RlPiDmk43kvZzliKDpmaTkuIDkuKrlhYPntKDlr7zoh7TlkI7pnaLmiYDmnInnmoTlhYPntKDpg73kvJrlkJHliY3np7vliqjkuIDkuKrkvY3nva7vvIzov5nkupvlhYPntKDnmoTlnLDlnYDlj5HnlJ/kuoblj5jljJbvvIzmiYDku6XlvZPliY3kvY3nva7liLDlrrnlmajmnKvlsL7lhYPntKDnmoTmiYDmnInov63ku6Plmajlhajpg6jlpLHmlYjjgII8L3A&#43;CjwvYmxvY2txdW90ZT4KPGRpdiBjbGFzcz0iaGlnaGxpZ2h0Ij48cHJlIHRhYmluZGV4PSIwIiBzdHlsZT0iY29sb3I6I2Y4ZjhmMjtiYWNrZ3JvdW5kLWNvbG9yOiMyNzI4MjI7LW1vei10YWItc2l6ZTo0Oy1vLXRhYi1zaXplOjQ7dGFiLXNpemU6NDsiPjxjb2RlIGNsYXNzPSJsYW5ndWFnZS1jKysiIGRhdGEtbGFuZz0iYysrIj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;PHNwYW4gc3R5bGU9ImNvbG9yOiM3NTcxNWUiPi8vIOWcqOi/memHjOaDs&#43;aKiuWkp&#43;S6jjLnmoTlhYPntKDpg73liKDpmaQKPC9zcGFuPjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImNvbG9yOiM2NmQ5ZWYiPmZvcjwvc3Bhbj4oPHNwYW4gc3R5bGU9ImNvbG9yOiM2NmQ5ZWYiPmF1dG88L3NwYW4&#43;IGl0PHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPj08L3NwYW4&#43;cS5iZWdpbigpO2l0PHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPiE9PC9zcGFuPnEuZW5kKCk7KQo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj57Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPiAgICA8c3BhbiBzdHlsZT0iY29sb3I6IzY2ZDllZiI&#43;aWY8L3NwYW4&#43;KDxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj4qPC9zcGFuPml0PHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPiZndDs8L3NwYW4&#43;PHNwYW4gc3R5bGU9ImNvbG9yOiNhZTgxZmYiPjI8L3NwYW4&#43;KQo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4gICAgewo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4gICAgCWl0PHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPj08L3NwYW4&#43;cS5lcmFzZShpdCk7IDxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj4vLyDov5nph4zkvJrov5Tlm57mjIflkJHkuIvkuIDkuKrlhYPntKDnmoTov63ku6PlmajvvIzlm6DmraTkuI3pnIDopoHlho3oh6rliqDkuoYKPC9zcGFuPjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj48L3NwYW4&#43;ICAgIH0KPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;ICAgIDxzcGFuIHN0eWxlPSJjb2xvcjojNjZkOWVmIj5lbHNlPC9zcGFuPgo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4gICAgewo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4gICAgCWl0PHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPisrPC9zcGFuPjsKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;ICAgIH0KPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;fQo8L3NwYW4&#43;PC9zcGFuPjwvY29kZT48L3ByZT48L2Rpdj48aDMgaWQ9IjIt6ZO&#43;6KGo5byP5a655ZmoIj4yLiDpk77ooajlvI/lrrnlmag8L2gzPgo8YmxvY2txdW90ZT4KPHA&#43;5a&#43;55LqO6ZO&#43;6KGo5byP5a655ZmoICjlpoIgbGlzdCnvvIzliKDpmaTlvZPliY3nmoQgaXRlcmF0b3LvvIzku4Xku4XkvJrkvb/lvZPliY3nmoQgaXRlcmF0b3Ig5aSx5pWI77yM6L&#43;Z5piv5Zug5Li6IGxpc3Qg5LmL57G755qE5a655Zmo77yM5L2/55So5LqG6ZO&#43;6KGo5p2l5a6e546w77yM5o&#43;S5YWl44CB5Yig6Zmk5LiA5Liq57uT54K55LiN5Lya5a&#43;55YW25LuW57uT54K56YCg5oiQ5b2x5ZON44CC5Y&#43;q6KaB5ZyoIGVyYXNlIOaXtu&#43;8jOmAkuWinuW9k&#43;WJjSBpdGVyYXRvciDljbPlj6/vvIzlubbkuJQgZXJhc2Ug5pa55rOV5Y&#43;v5Lul6L&#43;U5Zue5LiL5LiA5Liq5pyJ5pWI55qEIGl0ZXJhdG9y44CCPC9wPgo8L2Jsb2NrcXVvdGU&#43;CjxkaXYgY2xhc3M9ImhpZ2hsaWdodCI&#43;PHByZSB0YWJpbmRleD0iMCIgc3R5bGU9ImNvbG9yOiNmOGY4ZjI7YmFja2dyb3VuZC1jb2xvcjojMjcyODIyOy1tb3otdGFiLXNpemU6NDstby10YWItc2l6ZTo0O3RhYi1zaXplOjQ7Ij48Y29kZSBjbGFzcz0ibGFuZ3VhZ2UtYysrIiBkYXRhLWxhbmc9ImMrKyI&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojNjZkOWVmIj5mb3I8L3NwYW4&#43;IChpdGVyIDxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj49PC9zcGFuPiBjb250LmJlZ2luKCk7IGl0IDxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj4hPTwvc3Bhbj4gY29udC5lbmQoKTspCjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPnsKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;ICAgKDxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj4qPC9zcGFuPml0ZXIpPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPi0mZ3Q7PC9zcGFuPmRvU29tZXRoaW5nKCk7Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPiAgIDxzcGFuIHN0eWxlPSJjb2xvcjojNjZkOWVmIj5pZjwvc3Bhbj4gKHNob3VsZERlbGV0ZSg8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;Kjwvc3Bhbj5pdGVyKSkKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;ICAgICAgY29udC5lcmFzZShpdGVyPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPisrPC9zcGFuPik7IDxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj4vL&#43;WFiOaKiiBpdGVyIOS8oOWAvOWIsCBlcmFzZSDph4zpnaLvvIznhLblkI4gaXRlciDoh6rlop7vvIznhLblkI7miafooYwgZXJhc2XvvIzmiYDku6UgaXRlciDlnKjlpLHmlYjliY3lt7Lnu4/oh6rlop7kuoYKPC9zcGFuPjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj48L3NwYW4&#43;ICAgPHNwYW4gc3R5bGU9ImNvbG9yOiM2NmQ5ZWYiPmVsc2U8L3NwYW4&#43;Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPiAgICAgIGl0ZXI8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;Kys8L3NwYW4&#43;Owo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj59Cjwvc3Bhbj48L3NwYW4&#43;PC9jb2RlPjwvcHJlPjwvZGl2PjxkaXYgY2xhc3M9ImhpZ2hsaWdodCI&#43;PHByZSB0YWJpbmRleD0iMCIgc3R5bGU9ImNvbG9yOiNmOGY4ZjI7YmFja2dyb3VuZC1jb2xvcjojMjcyODIyOy1tb3otdGFiLXNpemU6NDstby10YWItc2l6ZTo0O3RhYi1zaXplOjQ7Ij48Y29kZSBjbGFzcz0ibGFuZ3VhZ2UtYysrIiBkYXRhLWxhbmc9ImMrKyI&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojNjZkOWVmIj5mb3I8L3NwYW4&#43;IChpdGVyIDxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj49PC9zcGFuPiBjb250LmJlZ2luKCk7IGl0ZXIgPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPiE9PC9zcGFuPiBjb250LmVuZCgpOykKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;ewo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4gICAoPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPio8L3NwYW4&#43;aXQpPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPi0mZ3Q7PC9zcGFuPmRvU29tZXRoaW5nKCk7Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPiAgIDxzcGFuIHN0eWxlPSJjb2xvcjojNjZkOWVmIj5pZjwvc3Bhbj4gKHNob3VsZERlbGV0ZSg8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;Kjwvc3Bhbj5pdGVyKSkKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;ICAgICAgaXRlciA8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;PTwvc3Bhbj4gY29udC5lcmFzZShpdGVyKTsgIDxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj4vL2VyYXNl5Yig6Zmk5YWD57Sg77yM6L&#43;U5Zue5LiL5LiA5Liq6L&#43;t5Luj5ZmoCjwvc3Bhbj48L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6Izc1NzE1ZSI&#43;PC9zcGFuPiAgIDxzcGFuIHN0eWxlPSJjb2xvcjojNjZkOWVmIj5lbHNlPC9zcGFuPgo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4gICAgICA8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;Kys8L3NwYW4&#43;aXRlcjsKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;fQo8L3NwYW4&#43;PC9zcGFuPjwvY29kZT48L3ByZT48L2Rpdj48aDMgaWQ9IjMt5YWz6IGU5byP5a655ZmoIj4zLiDlhbPogZTlvI/lrrnlmag8L2gzPgo8YmxvY2txdW90ZT4KPHA&#43;5LqO5YWz6IGU5a655ZmoICjlpoIgbWFwLCBzZXQsbXVsdGltYXAsbXVsdGlzZXQp77yM5Yig6Zmk5b2T5YmN55qEIGl0ZXJhdG9y77yM5LuF5LuF5Lya5L2/5b2T5YmN55qEIGl0ZXJhdG9yIOWkseaViO&#43;8jOWPquimgeWcqCBlcmFzZSDml7bvvIzpgJLlop7lvZPliY0gaXRlcmF0b3Ig5Y2z5Y&#43;v44CC6L&#43;Z5piv5Zug5Li6IG1hcCDkuYvnsbvnmoTlrrnlmajvvIzkvb/nlKjkuobnuqLpu5HmoJHmnaXlrp7njrDvvIzmj5LlhaXjgIHliKDpmaTkuIDkuKrnu5PngrnkuI3kvJrlr7nlhbbku5bnu5PngrnpgKDmiJDlvbHlk43jgII8Y29kZT5lcmFzZSDov63ku6Plmajlj6rmmK/ooqvliKDlhYPntKDnmoTov63ku6PlmajlpLHmlYjvvIzkvYbmmK/ov5Tlm57lgLzkuLogdm9pZDwvY29kZT7vvIzmiYDku6XopoHph4fnlKggPGNvZGU&#43;ZXJhc2UoaXRlcisrKTwvY29kZT4g55qE5pa55byP5Yig6Zmk6L&#43;t5Luj5Zmo44CCPC9wPgo8L2Jsb2NrcXVvdGU&#43;CjxkaXYgY2xhc3M9ImhpZ2hsaWdodCI&#43;PHByZSB0YWJpbmRleD0iMCIgc3R5bGU9ImNvbG9yOiNmOGY4ZjI7YmFja2dyb3VuZC1jb2xvcjojMjcyODIyOy1tb3otdGFiLXNpemU6NDstby10YWItc2l6ZTo0O3RhYi1zaXplOjQ7Ij48Y29kZSBjbGFzcz0ibGFuZ3VhZ2UtYysrIiBkYXRhLWxhbmc9ImMrKyI&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj4vL&#43;WIoOmZpOaTjeS9nOW8leWPkei/reS7o&#43;WZqOWkseaViAo8L3NwYW4&#43;PC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;PHNwYW4gc3R5bGU9ImNvbG9yOiM3NTcxNWUiPjwvc3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6IzY2ZDllZiI&#43;Zm9yPC9zcGFuPiAoaXRlciA8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;PTwvc3Bhbj4gZGF0YU1hcC5iZWdpbigpOyBpdGVyIDxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj4hPTwvc3Bhbj4gZGF0YU1hcC5lbmQoKTtpdGVyPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPisrPC9zcGFuPikKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;ewo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4gICAgPHNwYW4gc3R5bGU9ImNvbG9yOiM2NmQ5ZWYiPmludDwvc3Bhbj4gbktleSA8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;PTwvc3Bhbj4gaXRlcjxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj4tJmd0Ozwvc3Bhbj5maXJzdDsKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;ICAgIHN0cmluZyBzdHJWYWx1ZSA8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;PTwvc3Bhbj4gaXRlcjxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj4tJmd0Ozwvc3Bhbj5zZWNvbmQ7Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPgo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4gICAgPHNwYW4gc3R5bGU9ImNvbG9yOiM2NmQ5ZWYiPmlmPC9zcGFuPiAobktleSA8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;JTwvc3Bhbj4gPHNwYW4gc3R5bGU9ImNvbG9yOiNhZTgxZmYiPjI8L3NwYW4&#43;IDxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj49PTwvc3Bhbj4gPHNwYW4gc3R5bGU9ImNvbG9yOiNhZTgxZmYiPjA8L3NwYW4&#43;KQo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4gICAgewo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4gICAgICAgIGRhdGFNYXAuZXJhc2UoaXRlcik7ICAgIDxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj4vL&#43;mUmeivr2RhdGFNYXAuZXJhc2UoaXRlcikg5LmL5ZCO77yMaXRlciDlsLHlt7Lnu4/lpLHmlYjkuobvvIzmiYDku6UgaXRlciDml6Dms5Xoh6rlop7vvIzljbMgaXRlcisrIOWwseS8muWHuiBidWfjgILop6PlhrPmlrnmoYjvvIzlsLHmmK/lnKggaXRlciDlpLHmlYjkuYvliY3vvIzlhYjoh6rlop7jgIIKPC9zcGFuPjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj48L3NwYW4&#43;ICAgIH0KPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;ICAgIDxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj4vKiBjb3V0Jmx0OyZsdDtpdGVyLSZndDtzZWNvbmQmbHQ7Jmx0O2VuZGw7Ki88L3NwYW4&#43;Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPn0KPC9zcGFuPjwvc3Bhbj48L2NvZGU&#43;PC9wcmU&#43;PC9kaXY&#43;PGRpdiBjbGFzcz0iaGlnaGxpZ2h0Ij48cHJlIHRhYmluZGV4PSIwIiBzdHlsZT0iY29sb3I6I2Y4ZjhmMjtiYWNrZ3JvdW5kLWNvbG9yOiMyNzI4MjI7LW1vei10YWItc2l6ZTo0Oy1vLXRhYi1zaXplOjQ7dGFiLXNpemU6NDsiPjxjb2RlIGNsYXNzPSJsYW5ndWFnZS1jKysiIGRhdGEtbGFuZz0iYysrIj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;PHNwYW4gc3R5bGU9ImNvbG9yOiM2NmQ5ZWYiPmZvcjwvc3Bhbj4gKGl0ZXIgPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPj08L3NwYW4&#43;IGRhdGFNYXAuYmVnaW4oKTsgaXRlciA8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;IT08L3NwYW4&#43;IGRhdGFNYXAuZW5kKCk7ICkKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;ewo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4gICAgICAgICA8c3BhbiBzdHlsZT0iY29sb3I6IzY2ZDllZiI&#43;aW50PC9zcGFuPiBuS2V5IDxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj49PC9zcGFuPiBpdGVyPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPi0mZ3Q7PC9zcGFuPmZpcnN0Owo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4gICAgICAgICBzdHJpbmcgc3RyVmFsdWUgPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPj08L3NwYW4&#43;IGl0ZXI8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;LSZndDs8L3NwYW4&#43;c2Vjb25kOwo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4KPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;ICAgICAgICAgPHNwYW4gc3R5bGU9ImNvbG9yOiM2NmQ5ZWYiPmlmPC9zcGFuPiAobktleSA8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;JTwvc3Bhbj4gPHNwYW4gc3R5bGU9ImNvbG9yOiNhZTgxZmYiPjI8L3NwYW4&#43;IDxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj49PTwvc3Bhbj4gPHNwYW4gc3R5bGU9ImNvbG9yOiNhZTgxZmYiPjA8L3NwYW4&#43;KQo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj4gICAgICAgICB7Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPiAgICAgICAgICAgICAgIG1hcDxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj4mbHQ7PC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojNjZkOWVmIj5pbnQ8L3NwYW4&#43;LCBzdHJpbmc8c3BhbiBzdHlsZT0iY29sb3I6I2Y5MjY3MiI&#43;Jmd0Ozo6PC9zcGFuPml0ZXJhdG9yIHRtcEl0ZXIgPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPj08L3NwYW4&#43;IGl0ZXI7Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPiAgICAgICAgICAgaXRlcjxzcGFuIHN0eWxlPSJjb2xvcjojZjkyNjcyIj4rKzwvc3Bhbj47Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPiAgICAgICAgICAgICAgIGRhdGFNYXAuZXJhc2UodG1wSXRlcik7Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPiAgICAgICAgICAgICAgIDxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj4vL2RhdGFNYXAuZXJhc2UoaXRlcisrKSDov5nmoLfkuZ/ooYwKPC9zcGFuPjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojNzU3MTVlIj48L3NwYW4&#43;Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPiAgICAgICAgIH08c3BhbiBzdHlsZT0iY29sb3I6IzY2ZDllZiI&#43;ZWxzZTwvc3Bhbj4KPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;ICAgICB7Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gc3R5bGU9ImRpc3BsYXk6ZmxleDsiPjxzcGFuPiAgICAgICAgICBpdGVyPHNwYW4gc3R5bGU9ImNvbG9yOiNmOTI2NzIiPisrPC9zcGFuPjsKPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iZGlzcGxheTpmbGV4OyI&#43;PHNwYW4&#43;ICAgICAgICAgfQo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmZsZXg7Ij48c3Bhbj59Cjwvc3Bhbj48L3NwYW4&#43;PC9jb2RlPjwvcHJlPjwvZGl2PjxoMyBpZD0icmVzb3VyY2UiPlJlc291cmNlPC9oMz4KPHVsPgo8bGk&#43;PGEgaHJlZj0iaHR0cHM6Ly93d3cuY25ibG9ncy5jb20vbGludXhBbmRNY3UvcC8xNDYyMTgxOS5odG1sInRhcmdldD0iX2JsYW5rIiByZWw9ImV4dGVybmFsIG5vZm9sbG93IG5vb3BlbmVyIG5vcmVmZXJyZXIiPmh0dHBzOi8vd3d3LmNuYmxvZ3MuY29tL2xpbnV4QW5kTWN1L3AvMTQ2MjE4MTkuaHRtbDxpIGNsYXNzPSJmYS1zb2xpZCBmYS1leHRlcm5hbC1saW5rLWFsdCBmYS1mdyBmYS14cyBtcy0xIHRleHQtc2Vjb25kYXJ5IiBhcmlhLWhpZGRlbj0idHJ1ZSI&#43;PC9pPjwvYT48L2xpPgo8L3VsPgo="
+    ><div class="fixit-decryptor-container">
+  <img class="fixit-decryptor-loading" src="/liudongdong1.github.io/svg/loading.min.svg" alt="decryptor loading" />
+  <label for="fixit-decryptor-input" title='密码'>
+    <input type="password" id="fixit-decryptor-input" class="d-none" placeholder="🔑 请输入密码" />
+  </label>
+  <button class="fixit-encryptor-btn d-none"><i class="fa-solid fa-lock" aria-hidden="true"></i> 重新加密</button>
+</div>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-24&#32;17:00:04>更新于 2023-09-24&nbsp;</span>
+      </div><div class="post-info-license d-none">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line d-none">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/stl%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80%5cC&#43;&#43;%5cSTL%e8%bf%ad%e4%bb%a3%e5%99%a8%e5%a4%b1%e6%95%88.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/stl%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88/" data-title="STL迭代器失效" data-hashtags="C&#43;&#43;"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/stl%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88/" data-hashtag="C&#43;&#43;"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/stl%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88/" data-title="STL迭代器失效" data-image="https://cdn.pixabay.com/photo/2021/11/09/14/01/sea-6781567__340.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/c&#43;&#43;/">C&#43;&#43;</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_%E6%95%B0%E6%8D%AE%E5%BA%93/" class="prev" rel="prev" title="面经_数据库"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>面经_数据库</a>
+      <a href="liudongdong1.github.io/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%98%E5%82%A8%E6%8A%80%E8%83%BD/" class="next" rel="next" title="分布式存储技能">分布式存储技能<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/core.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/enc-base64.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/md5.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/sha256.min.js" defer></script><script src="/liudongdong1.github.io/js/fixit-decryptor.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"encryption":{"all":true,"shortcode":false},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

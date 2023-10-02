@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>JavaJVM_虚拟机类加载机制 - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="1. 类加载时机 一个类从被加载进内存，到卸载出内存，完整的生命周期包括：加载，验证，准备，解析，初始化，使用，卸载。不同的阶段往往是穿插着进行的" /><meta name="keywords" content='Java' /><meta itemprop="name" content="JavaJVM_虚拟机类加载机制">
+<meta itemprop="description" content="1. 类加载时机 一个类从被加载进内存，到卸载出内存，完整的生命周期包括：加载，验证，准备，解析，初始化，使用，卸载。不同的阶段往往是穿插着进行的">
+<meta itemprop="dateModified" content="2023-09-28T22:47:27+08:00" />
+<meta itemprop="wordCount" content="3603"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Java," /><meta property="og:title" content="JavaJVM_虚拟机类加载机制" />
+<meta property="og:description" content="1. 类加载时机 一个类从被加载进内存，到卸载出内存，完整的生命周期包括：加载，验证，准备，解析，初始化，使用，卸载。不同的阶段往往是穿插着进行的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+
+<meta property="article:modified_time" content="2023-09-28T22:47:27+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="JavaJVM_虚拟机类加载机制"/>
+<meta name="twitter:description" content="1. 类加载时机 一个类从被加载进内存，到卸载出内存，完整的生命周期包括：加载，验证，准备，解析，初始化，使用，卸载。不同的阶段往往是穿插着进行的"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/" /><link rel="prev" href="liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%97%E8%8A%82%E7%A0%81%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E/" /><link rel="next" href="liudongdong1.github.io/javajvm_%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%88%86%E6%9E%90/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "JavaJVM_虚拟机类加载机制",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6\/"
+    },"genre": "posts","keywords": "Java","wordcount":  3603 ,
+    "url": "liudongdong1.github.io\/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6\/","dateModified": "2023-09-28T22:47:27+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>JavaJVM_虚拟机类加载机制</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/framework/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Framework</a></span></div>
+      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01" >0001-01-01</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3603 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="JavaJVM_虚拟机类加载机制">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.stocksnap.io/img-thumbs/280h/FKID7EXJPL.jpg"
+    data-srcset="https://cdn.stocksnap.io/img-thumbs/280h/FKID7EXJPL.jpg, https://cdn.stocksnap.io/img-thumbs/280h/FKID7EXJPL.jpg 1.5x, https://cdn.stocksnap.io/img-thumbs/280h/FKID7EXJPL.jpg 2x"
+    data-sizes="auto"
+    alt="https://cdn.stocksnap.io/img-thumbs/280h/FKID7EXJPL.jpg"
+    title="https://cdn.stocksnap.io/img-thumbs/280h/FKID7EXJPL.jpg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-类加载时机">1. 类加载时机</a></li>
+        <li><a href="#2-类加载过程">2. 类加载过程</a></li>
+        <li><a href="#3-类加载器">3. 类加载器</a></li>
+        <li><a href="#resource">Resource</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><h3 id="1-类加载时机">1. 类加载时机</h3>
+<blockquote>
+<p>一个类从被加载进内存，到卸载出内存，完整的生命周期包括：加载，验证，准备，解析，初始化，使用，卸载。<code>不同的阶段往往是穿插着进行的</code>，加载阶段中可能会激活验证的开始，而验证阶段又有可能激活准备阶段的赋值操作等，但整体的开始顺序是不会变的。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728110102640.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728110102640.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728110102640.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728110102640.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728110102640.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728110102640.png"/></p>
+<h3 id="2-类加载过程">2. 类加载过程</h3>
+<h4 id="1-加载">.1. 加载</h4>
+<ul>
+<li>通过一个<code>类的全限定名</code>来获取定义<code>此类的二进制字节流</code>。</li>
+<li>将这个字节流所代表的<code>静态存储结构</code>转化为<code>方法区的运行时数据结构</code>。</li>
+<li>在内存中生成一个代表这个类的<code>java.lang.Class对象，作为方法区这个类的各种数据的访问入口。</code></li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728121824152.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728121824152.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728121824152.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728121824152.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728121824152.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728121824152.png"/></p>
+<h4 id="2-验证">.2. 验证</h4>
+<blockquote>
+<p>目的是为了<code>确保Class文件的字节流中包含的信息符合当前虚拟机的要求</code>，并且<code>不会危害虚拟机自身的安全</code>。验证阶段大致会完成4个阶段的检验动作:</p>
+<ul>
+<li><strong>文件格式验证:</strong> 验证字节流是否符合Class文件格式的规范；例如: 是否以<code>0xCAFEBABE</code>开头、<code>主次版本号</code>是否在当前虚拟机的处理范围之内、<code>常量池中的常量</code>是否有不被支持的类型。</li>
+<li>**元数据验证：**对字节码描述的信息进行语义分析(注意: 对比<code>javac</code>编译阶段的语义分析)，以保证其描述的信息符合Java语言规范的要求；例如: 这个类是否有父类，除了<code>java.lang.Object</code>之外。</li>
+<li>**字节码验证：**通过<code>数据流和控制流分析</code>，确定程序语义是合法的、符合逻辑的。</li>
+<li>**符号引用验证：**确保解析动作能正确执行。</li>
+</ul>
+<p>如果所引用的类经过反复验证，那么可以考虑采用<code>-Xverifynone</code>参数来关闭大部分的类验证措施，以缩短虚拟机类加载的时间。</p>
+</blockquote>
+<h4 id="3-准备">.3. 准备</h4>
+<blockquote>
+<p><code>准备阶段</code>是正式为<code>类变量分配内存</code>并<code>设置类变量初始值</code>的阶段，这些变量所使用的内存都将在方法区中进行分配。</p>
+<ul>
+<li>
+<p>这时候进行<code>内存分配的仅包括类变量</code>（被<code>static修饰的变量</code>），而不包括实例变量，实例变量将会在对象实例化时随着对象一起分配在Java堆中。</p>
+</li>
+<li>
+<p>这里所设置的初始值通常情况下是<code>数据类型默认的零值</code>(如<code>0</code>、<code>0L</code>、<code>null</code>、<code>false</code>等)，而<code>不是被在Java代码中被显式地赋予的值</code>。</p>
+</li>
+</ul>
+</blockquote>
+<p>比如：假设一个类变量的定义为: <code>public static int value = 3</code>；那么变量value在准备阶段过后的初始值为<code>0</code>，而不是<code>3</code>，因为这时候尚未开始执行任何Java方法，而把value赋值为3的<code>put static</code>指令是在程序编译后，存放于类构造器<code>()</code>方法之中的，所以<code>把value赋值为3的动作将在初始化阶段才会执行</code>。</p>
+<ul>
+<li>对<code>基本数据类型</code>来说，对于<code>类变量(static)和全局变量</code>，如果不显式地对其赋值而直接使用，则<code>系统会为其赋予默认的零值</code>，而<code>对于局部变量来说，在使用前必须显式地为其赋值，否则编译时不通过。</code></li>
+<li>对于同时被<code>static</code>和<code>final</code>修饰的常量，必须在声明的时候就为其显式地赋值，否则编译时不通过；而只被final修饰的常量则既可以在声明时显式地为其赋值，也可以在类初始化时显式地为其赋值，总之，在使用前必须为其显式地赋值，系统不会为其赋予默认零值。</li>
+<li>对于引用数据类型<code>reference</code>来说，如数组引用、对象引用等，如果没有对其进行显式地赋值而直接使用，系统都会为其赋予默认的零值，即<code>null</code>。</li>
+<li>如果在<code>数组初始化时没有对数组中的各元素赋值</code>，那么其中的元素将根据对应的数据类型而被赋予默认的零值。</li>
+<li>如果类字段的字段属性表中存在ConstantValue属性，即同时被final和static修饰，那么在准备阶段变量<code>value就会被初始化为ConstValue属性所指定的值</code>。假设上面的类变量value被定义为: <code>public static final int value = 3；</code>编译时Javac将会为value生成ConstantValue属性，在准备阶段虚拟机就会根据ConstantValue的设置将value赋值为3。我们可以理解为<code>static final</code>常量在编译期就将其结果放入了调用它的类的常量池中</li>
+</ul>
+<h4 id="4-解析">.4. 解析</h4>
+<p>解析阶段是<code>虚拟机将常量池内的符号引用替换为直接引用的过程</code>，解析动作主要针对<code>类</code>或<code>接口</code>、<code>字段</code>、<code>类方法</code>、<code>接口方法</code>、<code>方法类型</code>、<code>方法句柄</code>和<code>调用点</code>限定符7类符号引用进行。</p>
+<ul>
+<li>
+<p><code>符号引用</code>就是一组符号来描述目标，可以是任何字面量。</p>
+</li>
+<li>
+<p><code>直接引用</code>就是直接指向目标的指针、相对偏移量或一个间接定位到目标的句柄。</p>
+</li>
+</ul>
+<h4 id="5-初始化">.5. 初始化</h4>
+<blockquote>
+<ul>
+<li>使用<code>new</code>关键字实例化对象的时候。</li>
+<li>读取或设置一个<code>类型的静态字段</code>（被final修饰、已在编译期把结果放入常量池的静态字段除外）的时候。</li>
+<li>调用一个类型的<code>静态方法</code>的时候。</li>
+<li>使用java.lang.reflect包的<code>方法对类型进行反射调用的时候</code>，如果类型没有进行过初始化，则需要先触发其初始化。</li>
+<li>当初始化类的时候，如果发现<code>其父类还没有进行过初始化</code>，则需要先触发其父类的初始化。</li>
+<li>当虚拟机启动时，用户需要<code>指定一个要执行的主类</code>（包含main()方法的那个类），虚拟机会先初始化这个主类。</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>通过<code>子类引用父类的静态字段</code>，只会触发父类的初始化，而不会触发子类的初始化。</li>
+<li>定义<code>对象数组，不会触发该类的初始化</code>。</li>
+<li><code>常量在编译期间会存入调用类的常量池中</code>，本质上并没有直接引用定义常量的类，不会触发定义常量所在的类。</li>
+<li><code>通过类名获取 Class 对象，不会触发类的初始化</code>。</li>
+<li>通过 <code>Class.forName 加载指定类时，如果指定参数 initialize 为 false 时，也不会触发类初始化</code>,其实这个参数是告诉虚拟机，是否要对类进行初始化。</li>
+<li>通过 <code>ClassLoader 默认的 loadClass 方法</code>，也不会触发初始化动作。</li>
+</ul>
+</blockquote>
+<h3 id="3-类加载器">3. 类加载器</h3>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728123914692.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728123914692.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728123914692.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728123914692.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728123914692.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728123914692.png"/></p>
+<ul>
+<li>一种是<code>启动类加载器（Bootstrap ClassLoader）</code>，这个类加载器<code>使用C++语言实现</code>，是虚拟机自身的一部分；</li>
+<li>另一种就是所有<code>其他的类加载器</code>，这些类加载器都由Java语言实现，独立于虚拟机外部，并且全都继承自抽象类java.lang.ClassLoader。</li>
+</ul>
+<h4 id="1-类加载器">.1. 类加载器</h4>
+<ul>
+<li><strong>启动类加载器：</strong> 这个类将器负责将存放<code>在＜JAVA_HOME＞\lib目录中的</code>，或者<code>被-Xbootclasspath参数所指定的路径中的</code>，并且是虚拟机识别的（按照文件名识别，如rt.jar、tools.jar，名字不符合的类库即使放在lib目录中也不会被加载）类库加载到虚拟机内存中。</li>
+<li><strong>扩展类加载器：</strong> 这个加载器由<code>sun.misc.Launcher$ExtClassLoader实现</code>，它负责<code>加载＜JAVA_HOME＞\lib\ext目录中的</code>，或者被<code>java.ext.dirs系统变量所指定的路径中的所有类库</code>，开发者可以直接使用扩展类加载器。</li>
+<li><strong>应用程序类加载器：</strong> 这个类加载器<code>由sun.misc.Launcher$AppClassLoader来实现</code>。由于应用程序类加载器是ClassLoader类中的getSystem-ClassLoader()方法的返回值，所以有些场合中也称它为“系统类加载器”。它<code>负责加载用户类路径（ClassPath）上所有的类库</code>，开发者同样可以直接在代码中使用这个类加载器。如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。</li>
+</ul>
+<h4 id="2加载方式">.2.加载方式</h4>
+<ol>
+<li>命令行启动应用时候由JVM初始化加载</li>
+<li>通过Class.forName()方法动态加载</li>
+<li>通过ClassLoader.loadClass()方法动态加载</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">loaderTest</span> <span style="color:#f92672">{</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> ClassNotFoundException <span style="color:#f92672">{</span> 
+</span></span><span style="display:flex;"><span>        ClassLoader loader <span style="color:#f92672">=</span> HelloWorld<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getClassLoader</span><span style="color:#f92672">();</span> 
+</span></span><span style="display:flex;"><span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>loader<span style="color:#f92672">);</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//使用ClassLoader.loadClass()来加载类，不会执行初始化块 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        loader<span style="color:#f92672">.</span><span style="color:#a6e22e">loadClass</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Test2&#34;</span><span style="color:#f92672">);</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//使用Class.forName()来加载类，默认会执行初始化块 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">//                Class.forName(&#34;Test2&#34;); 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">//使用Class.forName()来加载类，并指定ClassLoader，初始化时不执行静态块 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">//                Class.forName(&#34;Test2&#34;, false, loader); 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test2</span> <span style="color:#f92672">{</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#f92672">{</span> 
+</span></span><span style="display:flex;"><span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;静态初始化块执行了！&#34;</span><span style="color:#f92672">);</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>Class.forName(): 将类的.class文件加载到jvm中之外，还会<code>对类进行解释</code>，执行类中的static块；</li>
+<li>ClassLoader.loadClass(): 只干一件事情，就是<code>将.class文件加载到jvm中</code>，<code>不会执行static中的内容,只有在newInstance才会去执行static块</code>。</li>
+<li>Class.forName(name, initialize, loader)<code>带参函数也可控制是否加载static块</code>。并且<code>只有调用了newInstance()方法采用调用构造函数，创建类的对象 。</code></li>
+</ul>
+<h4 id="3-加载机制">.3. 加载机制</h4>
+<ul>
+<li>
+<p><strong>全盘负责：</strong> 当一个类加载器负责加载某个Class时，<code>该Class所依赖的和引用的其他Class也将由该类加载器负责载入</code>，除非显示使用另外一个类加载器来载入。</p>
+</li>
+<li>
+<p><strong>缓存机制：</strong> 缓存机制将会保证<code>所有加载过的Class都会被缓存</code>，当程序中需要使用某个Class时，类加载器<code>先从缓存区寻找该Class，只有缓存区不存在，系统才会读取该类对应的二进制数据，并将其转换成Class对象，存入缓存区</code>。这就是为什么修改了Class后，必须重启JVM，程序的修改才会生效。</p>
+</li>
+<li>
+<p><strong>双亲委派机制:</strong> 如果一个类加载器收到了类加载的请求，它<code>首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成</code>，每一个层次的类加载器都是如此，因此所有的加载请求最终都应该传送到最顶层的启动类加载器中，<code>只有当父加载器反馈自己无法完成这个加载请求（它的搜索范围中没有找到所需的类）时，子加载器才会尝试自己去完成加载。</code></p>
+<ul>
+<li>系统类防止内存中出现多份同样的字节码</li>
+<li>保证Java程序安全稳定运行</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728130444041.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728130444041.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728130444041.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728130444041.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728130444041.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728130444041.png"/></p>
+</li>
+</ul>
+<h3 id="resource">Resource</h3>
+<ul>
+<li><a href="https://juejin.cn/post/6865572557329072141#heading-2"target="_blank" rel="external nofollow noopener noreferrer">https://juejin.cn/post/6865572557329072141#heading-2<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ul>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-28&#32;22:47:27>更新于 2023-09-28&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80%5cjava%5cjvm%5cJavaJVM_%e8%99%9a%e6%8b%9f%e6%9c%ba%e7%b1%bb%e5%8a%a0%e8%bd%bd%e6%9c%ba%e5%88%b6.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/" data-title="JavaJVM_虚拟机类加载机制" data-hashtags="Java"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/" data-hashtag="Java"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/" data-title="JavaJVM_虚拟机类加载机制" data-image="https://cdn.stocksnap.io/img-thumbs/280h/FKID7EXJPL.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/java/">Java</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%97%E8%8A%82%E7%A0%81%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E/" class="prev" rel="prev" title="JavaJVM_虚拟机字节码执行引擎"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>JavaJVM_虚拟机字节码执行引擎</a>
+      <a href="liudongdong1.github.io/javajvm_%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%88%86%E6%9E%90/" class="next" rel="next" title="JavaJVM_性能调优分析">JavaJVM_性能调优分析<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

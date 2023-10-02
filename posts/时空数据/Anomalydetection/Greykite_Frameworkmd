@@ -1,0 +1,56 @@
+---
+title: GreykiteRelative
+date: 2021-5-16 15:56:09
+author: liudongdong1
+img: https://cdn.pixabay.com/photo/2021/06/04/06/09/cherries-6308871__340.jpg
+cover: false
+categories: 时空数据
+tags:
+  - Forcast
+  - Framework
+---
+
+> [Greykite](https://linkedin.github.io/greykite/docs/0.1.0/html/gallery/quickstart/index.html) is a` forecast library` that allows you to do exploratory` data analysis (EDA)`, `forecast pipeline`, `model tuning`, `benchmarking,` etc. It includes the` Silverkite model`, a forecast model developed by Linkedin, which allows `feature engineering, automatic changepoint detection, holiday effects, various machine learning fitting methods, statitical prediction bands`, etc. The Silverkite model has many pre-tuned templates (i.e. parameter configs) to fit for `different forecast frequencies, horizons, and data patterns.` Besides Silverkite, it also includes an interface for the Prophet model developed by Facebook.
+
+### 1. [ChangePoint Detection](https://linkedin.github.io/greykite/docs/0.1.0/html/gallery/quickstart/0200_changepoint_detection.html#sphx-glr-gallery-quickstart-0200-changepoint-detection-py)
+
+```python
+import warnings
+
+warnings.filterwarnings("ignore")
+
+import pandas as pd
+import plotly
+
+from greykite.algo.changepoint.adalasso.changepoint_detector import ChangepointDetector
+from greykite.framework.benchmark.data_loader_ts import DataLoaderTS
+from greykite.framework.templates.autogen.forecast_config import ForecastConfig
+from greykite.framework.templates.forecaster import Forecaster
+from greykite.framework.templates.model_templates import ModelTemplateEnum
+
+# Loads dataset into UnivariateTimeSeries
+dl = DataLoaderTS()
+ts = dl.load_peyton_manning_ts()
+df = ts.df  # cleaned pandas.DataFrame
+fig = ts.plot()
+plotly.io.show(fig)
+
+model = ChangepointDetector()
+res = model.find_trend_changepoints(
+    df=df,            # data df
+    time_col="ts",    # time column name
+    value_col="y")    # value column name
+pd.DataFrame({"trend_changepoints": res["trend_changepoints"]})  # prints a dataframe showing the result
+
+fig = model.plot(plot=False)  # plot = False returns a plotly figure object.
+plotly.io.show(fig)
+```
+
+![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210608093730862.png)
+
+![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210608093845785.png)
+
+![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210608094055069.png)
+
+![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210608094128641.png)
+

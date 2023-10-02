@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>rpc框架-mercury - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="Mercury is a Remote Procedure Call (RPC) framework specifically designed for use in High-Performance Computing (HPC) systems with high-performance fabrics. Objective &amp; comparision Objective: Create a reusable RPC libraryfor use in HPC that can serve as a basis for services such as storage systems, I/O forwarding, analysis frameworks and other forms of inter-application communication 优势： takes advantage of low-level HPC network fabrics and facilitates the development of user-level" /><meta name="keywords" content='Framework, Middleware' /><meta itemprop="name" content="rpc框架-mercury">
+<meta itemprop="description" content="Mercury is a Remote Procedure Call (RPC) framework specifically designed for use in High-Performance Computing (HPC) systems with high-performance fabrics. Objective &amp; comparision Objective: Create a reusable RPC libraryfor use in HPC that can serve as a basis for services such as storage systems, I/O forwarding, analysis frameworks and other forms of inter-application communication 优势： takes advantage of low-level HPC network fabrics and facilitates the development of user-level"><meta itemprop="datePublished" content="2022-07-25T20:31:56+00:00" />
+<meta itemprop="dateModified" content="2023-09-28T22:47:26+08:00" />
+<meta itemprop="wordCount" content="3246"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Framework,Middleware," /><meta property="og:title" content="rpc框架-mercury" />
+<meta property="og:description" content="Mercury is a Remote Procedure Call (RPC) framework specifically designed for use in High-Performance Computing (HPC) systems with high-performance fabrics. Objective &amp; comparision Objective: Create a reusable RPC libraryfor use in HPC that can serve as a basis for services such as storage systems, I/O forwarding, analysis frameworks and other forms of inter-application communication 优势： takes advantage of low-level HPC network fabrics and facilitates the development of user-level" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/rpc%E6%A1%86%E6%9E%B6_mercury/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-25T20:31:56+00:00" />
+<meta property="article:modified_time" content="2023-09-28T22:47:26+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="rpc框架-mercury"/>
+<meta name="twitter:description" content="Mercury is a Remote Procedure Call (RPC) framework specifically designed for use in High-Performance Computing (HPC) systems with high-performance fabrics. Objective &amp; comparision Objective: Create a reusable RPC libraryfor use in HPC that can serve as a basis for services such as storage systems, I/O forwarding, analysis frameworks and other forms of inter-application communication 优势： takes advantage of low-level HPC network fabrics and facilitates the development of user-level"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/rpc%E6%A1%86%E6%9E%B6_mercury/" /><link rel="prev" href="liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8-ceph/" /><link rel="next" href="liudongdong1.github.io/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-fuse/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "rpc框架-mercury",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/rpc%E6%A1%86%E6%9E%B6_mercury\/"
+    },"genre": "posts","keywords": "Framework, Middleware","wordcount":  3246 ,
+    "url": "liudongdong1.github.io\/rpc%E6%A1%86%E6%9E%B6_mercury\/","datePublished": "2022-07-25T20:31:56+00:00","dateModified": "2023-09-28T22:47:26+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>rpc框架-mercury</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/framework/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Framework</a></span></div>
+      <div class="post-meta-line"><span title=2022-07-25&#32;20:31:56>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-07-25" >2022-07-25</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3246 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="rpc框架-mercury">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#objective--comparision">Objective &amp; comparision</a>
+      <ul>
+        <li><a href="#hpc-network-support">HPC network support</a></li>
+        <li><a href="#multi-core-architecture-support">Multi-Core Architecture Support</a></li>
+        <li><a href="#flexible-provisioning-and-topology">Flexible Provisioning and Topology</a></li>
+        <li><a href="#resilience-and-fault-tolerance">Resilience and Fault Tolerance</a></li>
+      </ul>
+    </li>
+    <li><a href="#function">Function</a></li>
+    <li><a href="#architecture">Architecture</a>
+      <ul>
+        <li><a href="#network-abstraction-layerhttpsmercury-hpcgithubiouserna"><a href="https://mercury-hpc.github.io/user/na/">Network Abstraction Layer</a></a></li>
+        <li><a href="#mercury-rpc-layerhttpsmercury-hpcgithubiouserhg"><a href="https://mercury-hpc.github.io/user/hg/">Mercury RPC Layer</a></a></li>
+        <li><a href="#mercury-bulk-layer">Mercury Bulk Layer</a></li>
+        <li><a href="#mercury-serialization-macros">Mercury Serialization Macros</a></li>
+        <li><a href="#相关使用案例--mochi">相关使用案例&ndash;Mochi</a></li>
+      </ul>
+    </li>
+    <li><a href="#rpc-执行流程">RPC 执行流程</a>
+      <ul>
+        <li><a href="#progress-model">Progress Model</a></li>
+        <li><a href="#rpc-代码">RPC 代码</a></li>
+        <li><a href="#bulk-data-transfers">Bulk Data Transfers</a></li>
+        <li><a href="#non-contiguous-memory-bulk">Non contiguous memory bulk</a></li>
+        <li><a href="#macros">Macros</a></li>
+      </ul>
+    </li>
+    <li><a href="#resource">Resource</a></li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><blockquote>
+<p>Mercury is a Remote Procedure Call (RPC) framework specifically designed for use in High-Performance Computing (HPC) systems with high-performance fabrics.</p>
+</blockquote>
+<h2 id="objective--comparision">Objective &amp; comparision</h2>
+<ul>
+<li><strong>Objective</strong>: Create a <code>reusable RPC library</code>for use in HPC that can serve as a basis for services such as <code>storage systems</code>, <code>I/O forwarding</code>, <code>analysis frameworks</code> and other forms of <code>inter-application communication</code></li>
+<li>优势：
+<ul>
+<li>takes advantage of low-level HPC network fabrics and facilitates the development of user-level data services</li>
+<li>provide reliable RPC functionality, support large data arguments, and take advantage of the HPC network fabrics.</li>
+<li>Mercury remains as thin as possible in order to allow for reusability between various service components that must support different needs.</li>
+<li>how one can enhance RPC to (1)<code> leverage RDMA-capable networks</code>; (2) support <code>node-local service scaling and leverage multi-core processors</code>; (3) enable <code>flexible, node-local deployment scenarios and service composition</code>; (4) <code>bridge nodes between multiple HPC networks</code>; (5) enable <code>fault tolerance</code>.</li>
+</ul>
+</li>
+<li><strong>Comparision</strong>:
+<ul>
+<li>Do not support <code>efficient large data transfers or asynchronous calls</code></li>
+<li>Can potentially introduce a lot of jitter (extra threads / memory used / etc)</li>
+<li>Mostly built on top of TCP/IP protocols
+<ul>
+<li>Need support for <code>native transport </code></li>
+<li>Need to be easy to port to new systems</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="hpc-network-support">HPC network support</h3>
+<ul>
+<li>leverage low-level vendor APIs such as InfiniBandTM Verbs, IntelR Performance Scaled Messaging 2 (PSM2), and CrayR Generic Network Interface (GNI) by y using OFI libfabric [16] as the intermediate layer that abstracts RDMA capabilities for RDMA-capable networks or emulated RMA (over point-to-point) for noncapable networks.</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../../blogimgv2022/image-20220730104725547.png"
+    data-srcset="../../../../../blogimgv2022/image-20220730104725547.png, ../../../../../blogimgv2022/image-20220730104725547.png 1.5x, ../../../../../blogimgv2022/image-20220730104725547.png 2x"
+    data-sizes="auto"
+    alt="../../../../../blogimgv2022/image-20220730104725547.png"
+    title="../../../../../blogimgv2022/image-20220730104725547.png"/></p>
+<h3 id="multi-core-architecture-support">Multi-Core Architecture Support</h3>
+<ul>
+<li>by either distributing the load of incoming RPCs across cores or by running multiple services co-located within the same node.</li>
+<li>Communication frameworks typically adopt one of two progress models: either explicit or implicit.
+<ul>
+<li>Explicit progress implies that the user will regularly make progress calls to effectively check into network completion queues, poll file descriptors, etc.</li>
+<li>an implicit progress model will make progress in background without any need for the user to be involved.</li>
+</ul>
+</li>
+<li><code>decouple the RPC execution activities from the network progress activities</code>, which leads us to actually adopt a progress-and-trigger model that gives services more control over the placement of the progress and execution threads.</li>
+<li><code>Scalable endpoints allow for sharing a single endpoint resources between threads by assigning separate transmit and receive contexts (including completion queues) to each thread. </code>When SEPs are used, context switches between threads no longer exist— a fundamental advantage for RPC multi-core architectures.  todo? SEP 原理介绍</li>
+</ul>
+<h3 id="flexible-provisioning-and-topology">Flexible Provisioning and Topology</h3>
+<h4 id="transparent-node-local-deployment">Transparent Node-Local Deployment</h4>
+<blockquote>
+<p>When deploying data services, it is common for some of these services to either issue RPCs to other local services (i.e., separate processes within the same node) or to send RPCs back to themselves (i.e., within the same process). todo? 没看懂这句话</p>
+</blockquote>
+<p>issue RPCs to other local service</p>
+<ul>
+<li>Mercury 可以通过检测目标地址在同一个节点上来透明地使用共享内存。</li>
+<li>使用<code>无锁共享环形缓冲区和无锁队列</code>，可以以非常低的延迟实现无锁传输。</li>
+<li>对于批量数据传输并防止任何中间 memcpy，可以使用 Linux Cross-Memory Attach 机制实现零拷贝传输（即从源缓冲区到目标缓冲区的一个单一和直接复制）</li>
+</ul>
+<p>send RPCs back to themselves</p>
+<ul>
+<li>Mercury 检测目标地址何时与源地址相同，并使用相同的参数打包机制发送 RPC</li>
+<li>方法是立即将 RPC 排队到本地完成队列中，在内部发出完成信号以唤醒任何在进度调用中等待的潜在线程。</li>
+<li>批量数据传输是通过源缓冲区和目标缓冲区之间的 memcpy 实现的。</li>
+</ul>
+<h4 id="service-composition">Service Composition</h4>
+<ul>
+<li>为了提供灵活的组合，RPC API 不能特定于任何实现，而只能依赖于源和目标概念。然后可以一致地使用 RPC 机制在不同的服务“服务器”和“客户端”之间进行通信。</li>
+<li>使用代理模式，或者硬件支持的 SEP 模式</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../../blogimgv2022/image-20220730111134107.png"
+    data-srcset="../../../../../blogimgv2022/image-20220730111134107.png, ../../../../../blogimgv2022/image-20220730111134107.png 1.5x, ../../../../../blogimgv2022/image-20220730111134107.png 2x"
+    data-sizes="auto"
+    alt="../../../../../blogimgv2022/image-20220730111134107.png"
+    title="../../../../../blogimgv2022/image-20220730111134107.png"/></p>
+<h3 id="resilience-and-fault-tolerance">Resilience and Fault Tolerance</h3>
+<ul>
+<li>允许服务在发生故障（例如，节点故障、服务组件无响应）后恢复，而不会影响性能，只需为取消挂起的操作提供强大的支持，<code>回收 RPC 操作先前分配的本地资源并从故障中正常恢复。 </code></li>
+<li>如果涉及的任何对等方不再响应，则 RPC 和批量数据传输操作都可能被中断，在这种情况下，必须取消挂起的操作。取消无法完成的操作，无论是因为发生了故障还是达到了超时，对于达到正确的完成都是必要的。</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../../blogimgv2022/image-20220730111635964.png"
+    data-srcset="../../../../../blogimgv2022/image-20220730111635964.png, ../../../../../blogimgv2022/image-20220730111635964.png 1.5x, ../../../../../blogimgv2022/image-20220730111635964.png 2x"
+    data-sizes="auto"
+    alt="../../../../../blogimgv2022/image-20220730111635964.png"
+    title="../../../../../blogimgv2022/image-20220730111635964.png"/></p>
+<h2 id="function">Function</h2>
+<ul>
+<li>function arguments / metadata transferred with RPC request
+<ul>
+<li>two-sides model with unexpected /expected messaging  (todo? 含义)</li>
+<li>Message size limited to a few kilobytes (low-latency)</li>
+</ul>
+</li>
+<li>Bulk data transferred using separate and dedicated API
+<ul>
+<li>one-sided model that exposes RMA semantics (high-bandwidth)</li>
+</ul>
+</li>
+<li>Network Abstraction layer
+<ul>
+<li>alows definition of multiple network plugins</li>
+<li>MPI and BMI plugins first plugins</li>
+<li>shared-memory plugin（mmap+CMA, supported on Cray w/CLE6)</li>
+<li>CCI plugin contributed by ORNL</li>
+<li>Libfabric plugin contributed by Intel</li>
+</ul>
+</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../../blogimgv2022/image-20220730093238545.png"
+    data-srcset="../../../../../blogimgv2022/image-20220730093238545.png, ../../../../../blogimgv2022/image-20220730093238545.png 1.5x, ../../../../../blogimgv2022/image-20220730093238545.png 2x"
+    data-sizes="auto"
+    alt="../../../../../blogimgv2022/image-20220730093238545.png"
+    title="../../../../../blogimgv2022/image-20220730093238545.png"/></p>
+<h2 id="architecture">Architecture</h2>
+<blockquote>
+<ol>
+<li>the <a href="https://mercury-hpc.github.io/user/na/"target="_blank" rel="external nofollow noopener noreferrer">network abstraction layer<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>, which provides a high-performance communication interface on top of lower level network fabrics.</li>
+<li>the <a href="https://mercury-hpc.github.io/user/hg/"target="_blank" rel="external nofollow noopener noreferrer">RPC layer<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>, which provides users with the necessary components for sending and receiving RPC metadata (small messages). This includes serialization and deserialization of function arguments;</li>
+<li>the <a href="https://mercury-hpc.github.io/user/hg_bulk/"target="_blank" rel="external nofollow noopener noreferrer">bulk layer<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>, which provides the necessary components for handling large arguments&mdash;this implies large data transfers through RMA;</li>
+<li>the (<em>optional</em>) <a href="https://mercury-hpc.github.io/user/hg_macros/"target="_blank" rel="external nofollow noopener noreferrer">high-level RPC layer<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>, which aims at providing a convenience API, builds on top of the lower layers and provides macros for generating RPC stubs as well as serialization and deserialization functions.</li>
+</ol>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../../blogimgv2022/image-20220730091152203.png"
+    data-srcset="../../../../../blogimgv2022/image-20220730091152203.png, ../../../../../blogimgv2022/image-20220730091152203.png 1.5x, ../../../../../blogimgv2022/image-20220730091152203.png 2x"
+    data-sizes="auto"
+    alt="../../../../../blogimgv2022/image-20220730091152203.png"
+    title="../../../../../blogimgv2022/image-20220730091152203.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../../blogimgv2022/image-20220730104034328.png"
+    data-srcset="../../../../../blogimgv2022/image-20220730104034328.png, ../../../../../blogimgv2022/image-20220730104034328.png 1.5x, ../../../../../blogimgv2022/image-20220730104034328.png 2x"
+    data-sizes="auto"
+    alt="../../../../../blogimgv2022/image-20220730104034328.png"
+    title="../../../../../blogimgv2022/image-20220730104034328.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../../blogimgv2022/image-20220730102906929.png"
+    data-srcset="../../../../../blogimgv2022/image-20220730102906929.png, ../../../../../blogimgv2022/image-20220730102906929.png 1.5x, ../../../../../blogimgv2022/image-20220730102906929.png 2x"
+    data-sizes="auto"
+    alt="../../../../../blogimgv2022/image-20220730102906929.png"
+    title="../../../../../blogimgv2022/image-20220730102906929.png"/></p>
+<h3 id="network-abstraction-layerhttpsmercury-hpcgithubiouserna"><a href="https://mercury-hpc.github.io/user/na/"target="_blank" rel="external nofollow noopener noreferrer">Network Abstraction Layer<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></h3>
+<ul>
+<li>The NA layer uses a plugin mechanism so that support for various network protocols can be easily added and selected at runtime.</li>
+<li>NA provides a minimal set of function calls that abstract the underlying network fabric and that can be used to provide: <em>target address lookup</em>, <em>point-to-point messaging</em> with both unexpected and expected messaging, <em>remote memory access (RMA)</em>, <em>progress</em> and <em>cancelation</em>.</li>
+<li>The API is non-blocking and uses a callback mechanism so that upper layers can provide asynchronous execution more easily</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// info_string 表示使用 network plugin种类，listen表示是否是target
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">NA_Initialize</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>info_string, <span style="color:#66d9ef">na_bool_t</span> listen);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">NA_Initialize_opt</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>info_string, <span style="color:#66d9ef">na_bool_t</span> listen,<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> na_init_info <span style="color:#f92672">*</span>na_init_info);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// release na_class_t object
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">na_return_tNA_Finalize</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//a context within this plugin must be created, which internally creates and associates a completion queue for the operations
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">na_context_t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">NA_Context_create</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span> <span style="color:#a6e22e">NA_Context_destroy</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">na_context_t</span> <span style="color:#f92672">*</span>context);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//Target Address Lookup
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">na_return_t</span> <span style="color:#a6e22e">NA_Addr_self</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">na_addr_t</span> <span style="color:#f92672">*</span>addr);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//convert that address to a string
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">na_return_t</span> <span style="color:#a6e22e">NA_Addr_to_string</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">na_size_t</span> buf_size, <span style="color:#66d9ef">na_addr_t</span> addr);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//string can then be exchanged to other processes through out-of-band mechanisms (e.g., using a file, etc), which can then look up the target
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">na_return_t</span> <span style="color:#a6e22e">NA_Addr_lookup</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>name, <span style="color:#66d9ef">na_addr_t</span> <span style="color:#f92672">*</span>addr);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span> <span style="color:#a6e22e">NA_Addr_free</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">na_addr_t</span> addr);
+</span></span></code></pre></div><ul>
+<li>Point-to-point Messaging</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NA_Msg_send_unexpected</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">na_context_t</span> <span style="color:#f92672">*</span>context,<span style="color:#66d9ef">na_cb_t</span> callback, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">na_size_t</span> buf_size,<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>plugin_data, <span style="color:#66d9ef">na_addr_t</span> dest_addr, <span style="color:#66d9ef">na_uint8_t</span> dest_id, <span style="color:#66d9ef">na_tag_t</span> tag,<span style="color:#66d9ef">na_op_id_t</span> <span style="color:#f92672">*</span>op_id);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NA_Msg_send_expected</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">na_context_t</span> <span style="color:#f92672">*</span>context,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">na_cb_t</span> callback, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">na_size_t</span> buf_size,<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>plugin_data, <span style="color:#66d9ef">na_addr_t</span> dest_addr, <span style="color:#66d9ef">na_uint8_t</span> dest_id, <span style="color:#66d9ef">na_tag_t</span> tag,<span style="color:#66d9ef">na_op_id_t</span> <span style="color:#f92672">*</span>op_id);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NA_Msg_recv_unexpected</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">na_context_t</span> <span style="color:#f92672">*</span>context,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">na_cb_t</span> callback, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">na_size_t</span> buf_size,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>plugin_data, <span style="color:#66d9ef">na_op_id_t</span> <span style="color:#f92672">*</span>op_id);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NA_Msg_recv_expected</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">na_context_t</span> <span style="color:#f92672">*</span>context,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">na_cb_t</span> callback, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">na_size_t</span> buf_size,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>plugin_data, <span style="color:#66d9ef">na_addr_t</span> source_addr, <span style="color:#66d9ef">na_uint8_t</span> source_id,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">na_tag_t</span> tag, <span style="color:#66d9ef">na_op_id_t</span> <span style="color:#f92672">*</span>op_id);
+</span></span></code></pre></div><ul>
+<li>Remote Memory Access</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NA_Mem_handle_create</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">na_size_t</span> buf_size,<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> flags, <span style="color:#66d9ef">na_mem_handle_t</span> <span style="color:#f92672">*</span>mem_handle);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NA_Mem_register</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">na_mem_handle_t</span> mem_handle);
+</span></span></code></pre></div><ul>
+<li>serialise /deserialize</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NA_Mem_handle_serialize</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">na_size_t</span> buf_size,<span style="color:#66d9ef">na_mem_handle_t</span> mem_handle);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NA_Mem_handle_deserialize</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">na_mem_handle_t</span> <span style="color:#f92672">*</span>mem_handle,<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">na_size_t</span> buf_size);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NA_Put</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">na_context_t</span> <span style="color:#f92672">*</span>context, <span style="color:#66d9ef">na_cb_t</span> callback, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">na_mem_handle_t</span> local_mem_handle, <span style="color:#66d9ef">na_offset_t</span> local_offset,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">na_mem_handle_t</span> remote_mem_handle, <span style="color:#66d9ef">na_offset_t</span> remote_offset,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">na_size_t</span> data_size, <span style="color:#66d9ef">na_addr_t</span> remote_addr, <span style="color:#66d9ef">na_uint8_t</span> remote_id, <span style="color:#66d9ef">na_op_id_t</span> <span style="color:#f92672">*</span>op_id);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NA_Get</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">na_context_t</span> <span style="color:#f92672">*</span>context, <span style="color:#66d9ef">na_cb_t</span> callback, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">na_mem_handle_t</span> local_mem_handle, <span style="color:#66d9ef">na_offset_t</span> local_offset,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">na_mem_handle_t</span> remote_mem_handle, <span style="color:#66d9ef">na_offset_t</span> remote_offset,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">na_size_t</span> data_size, <span style="color:#66d9ef">na_addr_t</span> remote_addr, <span style="color:#66d9ef">na_uint8_t</span> remote_id, <span style="color:#66d9ef">na_op_id_t</span> <span style="color:#f92672">*</span>op_id);
+</span></span></code></pre></div><ul>
+<li>Progress and Cancelation</li>
+<li><code>当调用 progress 时，一旦操作完成或已经在完成队列中，它就会返回，以便可以调用 NA_Trigger() 来清空队列并执行用户回调。</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NA_Progress</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">na_context_t</span> <span style="color:#f92672">*</span>context, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> timeout);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NA_Trigger</span>(<span style="color:#66d9ef">na_context_t</span> <span style="color:#f92672">*</span>context, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> timeout, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> max_count,<span style="color:#66d9ef">int</span> callback_ret[], <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>actual_count);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">na_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NA_Cancel</span>(<span style="color:#66d9ef">na_class_t</span> <span style="color:#f92672">*</span>na_class, <span style="color:#66d9ef">na_context_t</span> <span style="color:#f92672">*</span>context, <span style="color:#66d9ef">na_op_id_t</span> <span style="color:#f92672">*</span>op_id);
+</span></span></code></pre></div><h3 id="mercury-rpc-layerhttpsmercury-hpcgithubiouserhg"><a href="https://mercury-hpc.github.io/user/hg/"target="_blank" rel="external nofollow noopener noreferrer">Mercury RPC Layer<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></h3>
+<ul>
+<li>the HG interface provides the following primitives:<code> target address lookup, RPC registration, RPC execution, progress and cancelation.</code></li>
+</ul>
+<h4 id="initialization">initialization</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">hg_class_t</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Init</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>info_string, <span style="color:#66d9ef">hg_bool_t</span> listen);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Finalize</span>(<span style="color:#66d9ef">hg_class_t</span> <span style="color:#f92672">*</span>hg_class);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_context_t</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Context_create</span>(<span style="color:#66d9ef">hg_class_t</span> <span style="color:#f92672">*</span>hg_class);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Context_destroy</span>(<span style="color:#66d9ef">hg_context_t</span> <span style="color:#f92672">*</span>context);
+</span></span></code></pre></div><h4 id="registration">Registration</h4>
+<ul>
+<li>在这里注册具体函数名字，和对应的执行函数rpc_cb</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#a6e22e">hg_return_t</span> (<span style="color:#f92672">*</span><span style="color:#66d9ef">hg_proc_cb_t</span>)(<span style="color:#66d9ef">hg_proc_t</span> proc, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>data);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#a6e22e">hg_return_t</span> (<span style="color:#f92672">*</span><span style="color:#66d9ef">hg_rpc_cb_t</span>)(<span style="color:#66d9ef">hg_handle_t</span> handle);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_id_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Register_name</span>(<span style="color:#66d9ef">hg_class_t</span> <span style="color:#f92672">*</span>hg_class, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>func_name,
+</span></span><span style="display:flex;"><span>                 <span style="color:#66d9ef">hg_proc_cb_t</span> in_proc_cb, <span style="color:#66d9ef">hg_proc_cb_t</span> out_proc_cb,
+</span></span><span style="display:flex;"><span>                 <span style="color:#66d9ef">hg_rpc_cb_t</span> rpc_cb);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Registered_disable_response</span>(<span style="color:#66d9ef">hg_class_t</span> <span style="color:#f92672">*</span>hg_class, <span style="color:#66d9ef">hg_id_t</span> id, <span style="color:#66d9ef">hg_bool_t</span> disable);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Deregister</span>(<span style="color:#66d9ef">hg_class_t</span> <span style="color:#f92672">*</span>hg_class, <span style="color:#66d9ef">hg_id_t</span> id);
+</span></span></code></pre></div><h4 id="target-address-lookup">Target Address Lookup</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Addr_self</span>(<span style="color:#66d9ef">hg_class_t</span> <span style="color:#f92672">*</span>hg_class, <span style="color:#66d9ef">hg_addr_t</span> <span style="color:#f92672">*</span>addr);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Addr_to_string</span>(<span style="color:#66d9ef">hg_class_t</span> <span style="color:#f92672">*</span>hg_class, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">hg_size_t</span> <span style="color:#f92672">*</span>buf_size, <span style="color:#66d9ef">hg_addr_t</span> addr);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Addr_lookup</span>(<span style="color:#66d9ef">hg_class_t</span> <span style="color:#f92672">*</span>hg_class, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>name, <span style="color:#66d9ef">hg_addr_t</span> <span style="color:#f92672">*</span>addr);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Addr_free</span>(<span style="color:#66d9ef">hg_class_t</span> <span style="color:#f92672">*</span>hg_class, <span style="color:#66d9ef">hg_addr_t</span> addr);
+</span></span></code></pre></div><h4 id="execution-origin">Execution-origin</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">//Using the RPC ID defined after a call to HG_Register(), one can use the HG_Create() call to define a new hg_handle_t object that can be used (and later re-used without reallocating resources) to set/get input/output arguments.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Create</span>(<span style="color:#66d9ef">hg_context_t</span> <span style="color:#f92672">*</span>context, <span style="color:#66d9ef">hg_addr_t</span> addr, <span style="color:#66d9ef">hg_id_t</span> id, <span style="color:#66d9ef">hg_handle_t</span> <span style="color:#f92672">*</span>handle);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//pack the input arguments within a structure, for which a serialization function is provided with the HG_Register() call. The HG_Forward() function can then be used to send that structure (which describes the input arguments). This function is non-blocking. When it completes, the associated callback can be executed by calling HG_Trigger().
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> <span style="color:#a6e22e">hg_return_t</span> (<span style="color:#f92672">*</span><span style="color:#66d9ef">hg_cb_t</span>)(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> hg_cb_info <span style="color:#f92672">*</span>callback_info);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Forward</span>(<span style="color:#66d9ef">hg_handle_t</span> handle, <span style="color:#66d9ef">hg_cb_t</span> callback, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>in_struct);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//When HG_Forward() completes (i.e., when the user callback can be triggered), the RPC has been remotely executed and a response with the output results has been sent back. 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Get_output</span>(<span style="color:#66d9ef">hg_handle_t</span> handle, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>out_struct);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Free_output</span>(<span style="color:#66d9ef">hg_handle_t</span> handle, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>out_struct);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Destroy</span>(<span style="color:#66d9ef">hg_handle_t</span> handle);
+</span></span></code></pre></div><h4 id="execution-target">Execution-target</h4>
+<ul>
+<li>在 HG_Respond 函数中：This call is also non-blocking. When it completes, the associated callback is placed onto a completion queue. It can then be triggered after a call to <code>HG_Trigger()</code>.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">//On the target, the RPC callback function passed to the HG_Register() call must be defined.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> <span style="color:#a6e22e">hg_return_t</span> (<span style="color:#f92672">*</span><span style="color:#66d9ef">hg_rpc_cb_t</span>)(<span style="color:#66d9ef">hg_handle_t</span> handle);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//Whenever a new RPC is received, that callback will be invoked. 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Get_input</span>(<span style="color:#66d9ef">hg_handle_t</span> handle, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>in_struct);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//When the input has been retrieved, the arguments contained in the input structure can be passed to the actual function call. When the execution is done, an output structure can be filled with the return value and/or the output arguments of the function. 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> <span style="color:#a6e22e">hg_return_t</span> (<span style="color:#f92672">*</span><span style="color:#66d9ef">hg_cb_t</span>)(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> hg_cb_info <span style="color:#f92672">*</span>callback_info);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Respond</span>(<span style="color:#66d9ef">hg_handle_t</span> handle, <span style="color:#66d9ef">hg_cb_t</span> callback, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>out_struct);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Free_input</span>(<span style="color:#66d9ef">hg_handle_t</span> handle, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>in_struct);
+</span></span></code></pre></div><h4 id="progress-cancelation">Progress &amp;Cancelation</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">//Mercury uses a callback model. Callbacks are passed to non-blocking functions and are pushed to the context&#39;s completion queue when the operation completes. 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Progress</span>(<span style="color:#66d9ef">hg_context_t</span> <span style="color:#f92672">*</span>context, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> timeout);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//When an operation completes, calling HG_Trigger() allows the callback execution to be separately controlled from the main progress loop.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Trigger</span>(<span style="color:#66d9ef">hg_context_t</span> <span style="color:#f92672">*</span>context, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> timeout,
+</span></span><span style="display:flex;"><span>           <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> max_count, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>actual_count);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Cancel</span>(<span style="color:#66d9ef">hg_handle_t</span> handle);
+</span></span></code></pre></div><h3 id="mercury-bulk-layer">Mercury Bulk Layer</h3>
+<h4 id="bulk-descriptor">bulk descriptor</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Bulk_create</span>(<span style="color:#66d9ef">hg_class_t</span> <span style="color:#f92672">*</span>hg_class, <span style="color:#66d9ef">hg_uint32_t</span> count,
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">void</span> <span style="color:#f92672">**</span>buf_ptrs, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">hg_size_t</span> <span style="color:#f92672">*</span>buf_sizes,
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">hg_uint8_t</span> flags, <span style="color:#66d9ef">hg_bulk_t</span> <span style="color:#f92672">*</span>handle);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span> <span style="color:#a6e22e">HG_Bulk_free</span>(<span style="color:#66d9ef">hg_bulk_t</span> handle);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//memory pointers from an existing bulk descriptor can be accessed with:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Bulk_access</span>(<span style="color:#66d9ef">hg_bulk_t</span> handle, <span style="color:#66d9ef">hg_size_t</span> offset, <span style="color:#66d9ef">hg_size_t</span> size,
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">hg_uint8_t</span> flags, <span style="color:#66d9ef">hg_uint32_t</span> max_count, <span style="color:#66d9ef">void</span> <span style="color:#f92672">**</span>buf_ptrs,
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">hg_size_t</span> <span style="color:#f92672">*</span>buf_sizes, <span style="color:#66d9ef">hg_uint32_t</span> <span style="color:#f92672">*</span>actual_count);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//通过 HG_Bulk_bind() 函数将源地址绑定到批量句柄，代价是序列化和反序列化寻址信息的额外开销。仅当从 HG_Get_info() 调用检索的源地址与必须用于传输的源地址不同（例如，多个源）时，才需要这样做。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Bulk_bind</span>(<span style="color:#66d9ef">hg_bulk_t</span> handle, <span style="color:#66d9ef">hg_context_t</span> <span style="color:#f92672">*</span>context);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">hg_addr_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Bulk_get_addr</span>(<span style="color:#66d9ef">hg_bulk_t</span> handle);
+</span></span></code></pre></div><h4 id="serialization">Serialization</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">hg_proc_hg_bulk_t</span>(<span style="color:#66d9ef">hg_proc_t</span> proc, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>data);
+</span></span></code></pre></div><h4 id="bulk-transfer">Bulk Transfer</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Bulk_transfer</span>(<span style="color:#66d9ef">hg_context_t</span> <span style="color:#f92672">*</span>context, <span style="color:#66d9ef">hg_bulk_cb_t</span> callback, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg,
+</span></span><span style="display:flex;"><span>                 <span style="color:#66d9ef">hg_bulk_op_t</span> op, <span style="color:#66d9ef">hg_addr_t</span> origin_addr,
+</span></span><span style="display:flex;"><span>                 <span style="color:#66d9ef">hg_bulk_t</span> origin_handle, <span style="color:#66d9ef">hg_size_t</span> origin_offset,
+</span></span><span style="display:flex;"><span>                 <span style="color:#66d9ef">hg_bulk_t</span> local_handle, <span style="color:#66d9ef">hg_size_t</span> local_offset,
+</span></span><span style="display:flex;"><span>                 <span style="color:#66d9ef">hg_size_t</span> size, <span style="color:#66d9ef">hg_op_id_t</span> <span style="color:#f92672">*</span>op_id);
+</span></span><span style="display:flex;"><span>                 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> hg_info {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">hg_class_t</span> <span style="color:#f92672">*</span>hg_class;               <span style="color:#75715e">/* HG class */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">hg_context_t</span> <span style="color:#f92672">*</span>context;              <span style="color:#75715e">/* HG context */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">hg_addr_t</span> addr;                     <span style="color:#75715e">/* HG address */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">hg_id_t</span> id;                         <span style="color:#75715e">/* RPC ID */</span>
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> hg_info <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Get_info</span>(<span style="color:#66d9ef">hg_handle_t</span> handle);       
+</span></span></code></pre></div><h3 id="mercury-serialization-macros">Mercury Serialization Macros</h3>
+<blockquote>
+<p>Mercury 提供的宏可以减少发送 RPC 调用所需的代码量。 Mercury 没有使用繁琐的 RPC 存根和代码生成器，而是使用 Boost 预处理器库，以便用户可以生成序列化和反序列化函数参数所需的所有样板代码。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">MERCURY_REGISTER</span>(hg_class, func_name, in_struct_type_name, out_struct_type_name, rpc_cb);
+</span></span></code></pre></div><h3 id="相关使用案例--mochi">相关使用案例&ndash;Mochi</h3>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../../blogimgv2022/image-20220730102455807.png"
+    data-srcset="../../../../../blogimgv2022/image-20220730102455807.png, ../../../../../blogimgv2022/image-20220730102455807.png 1.5x, ../../../../../blogimgv2022/image-20220730102455807.png 2x"
+    data-sizes="auto"
+    alt="../../../../../blogimgv2022/image-20220730102455807.png"
+    title="../../../../../blogimgv2022/image-20220730102455807.png"/></p>
+<ul>
+<li>其他： DAOS / DeltaFS / UnifyCR / Dataspaces / ParaView / Visit / SOS / Faodel</li>
+</ul>
+<h2 id="rpc-执行流程">RPC 执行流程</h2>
+<ol>
+<li>define the mechanism to send an RPC reqeust (ignore response or not)</li>
+<li><strong>origin &amp; target:</strong>  register call and get request id</li>
+<li><strong>origin</strong>: (pre-post recieve for target response) post unexpected send with request id and serialized parameters; <strong>target:</strong> Post receive for unexpected request/ make progress</li>
+<li><strong>target:</strong> execute call</li>
+<li><strong>target:</strong> post send with serialized response; <strong>Origin:</strong> make <code>progess</code></li>
+</ol>
+<p>![](../../../../../blogimgv2022/Screenshot from 2022-07-30 09-41-39.png)</p>
+<h3 id="progress-model">Progress Model</h3>
+<ul>
+<li><code>callback-based model with completion queue </code></li>
+<li>explicit progress with <code>HG_Progress() and HG_Trigger()</code>
+<ul>
+<li>allows user to create workflow</li>
+<li>no need to have an explicit wait call (shim layers possible)</li>
+<li>facilitate operation scheduling, multi-threaded execution and cancellation</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">do</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> actual_count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">do</span> {
+</span></span><span style="display:flex;"><span>        ret <span style="color:#f92672">=</span> <span style="color:#a6e22e">HG_Trigger</span>(context, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#f92672">&amp;</span>actual_count);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">while</span> ((ret <span style="color:#f92672">==</span> HG_SUCCESS) <span style="color:#f92672">&amp;&amp;</span> actual_count);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (done)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    ret <span style="color:#f92672">=</span> <span style="color:#a6e22e">HG_Progress</span>(context, HG_MAX_IDLE_TIME);
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">while</span> (ret <span style="color:#f92672">==</span> HG_SUCCESS);
+</span></span></code></pre></div><p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../../blogimgv2022/image-20220730095114525.png"
+    data-srcset="../../../../../blogimgv2022/image-20220730095114525.png, ../../../../../blogimgv2022/image-20220730095114525.png 1.5x, ../../../../../blogimgv2022/image-20220730095114525.png 2x"
+    data-sizes="auto"
+    alt="../../../../../blogimgv2022/image-20220730095114525.png"
+    title="../../../../../blogimgv2022/image-20220730095114525.png"/></p>
+<h3 id="rpc-代码">RPC 代码</h3>
+<h4 id="1-客户端代码">.1. 客户端代码</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">open_in_t</span> in_struct;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Initialize the interface and get target address */</span>
+</span></span><span style="display:flex;"><span>hg_class <span style="color:#f92672">=</span> <span style="color:#a6e22e">HG_Init</span>(<span style="color:#e6db74">&#34;ofi+tcp://eth0:22222&#34;</span>, HG_FALSE);
+</span></span><span style="display:flex;"><span>hg_context <span style="color:#f92672">=</span> <span style="color:#a6e22e">HG_Context_create</span>(hg_class);
+</span></span><span style="display:flex;"><span>[...]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Addr_lookup_wait</span>(hg_context, target_name, <span style="color:#f92672">&amp;</span>target_addr);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Register RPC call */</span>
+</span></span><span style="display:flex;"><span>rpc_id <span style="color:#f92672">=</span> <span style="color:#a6e22e">MERCURY_REGISTER</span>(hg_class, <span style="color:#e6db74">&#34;open&#34;</span>, <span style="color:#66d9ef">open_in_t</span>, <span style="color:#66d9ef">open_out_t</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Set input parameters */</span>
+</span></span><span style="display:flex;"><span>in_struct.in_param0 <span style="color:#f92672">=</span> in_param0;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Create RPC request */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Create</span>(hg_context, target_addr, rpc_id, <span style="color:#f92672">&amp;</span>hg_handle);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Send RPC request */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Forward</span>(hg_handle, rpc_done_cb, <span style="color:#f92672">&amp;</span>rpc_done_args, <span style="color:#f92672">&amp;</span>in_struct);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Make progress */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* cancellation */</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Cancellation: HG Cancel() on handle
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Callback still triggered (canceled = completion)
+</span></span></span></code></pre></div><h4 id="2-回调函数">.2. 回调函数</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rpc_done_cb</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> hg_cb_info <span style="color:#f92672">*</span>callback_info)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">open_out_t</span> out_struct;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Get output */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">HG_Get_output</span>(callback_info<span style="color:#f92672">-&gt;</span>handle, <span style="color:#f92672">&amp;</span>out_struct);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Get output parameters */</span>
+</span></span><span style="display:flex;"><span>    ret <span style="color:#f92672">=</span> out_struct.ret;
+</span></span><span style="display:flex;"><span>    out_param0 <span style="color:#f92672">=</span> out_struct.out_param0;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Free output */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">HG_Free_output</span>(callback_info<span style="color:#f92672">-&gt;</span>handle, <span style="color:#f92672">&amp;</span>out_struct);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> HG_SUCCESS;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="3-服务端代码">.3. 服务端代码</h4>
+<ul>
+<li>客户端和服务端代码基本一致，HG_Init(&ldquo;ofi+tcp://eth0:22222&rdquo;, HG_TRUE);  TRUE 表示是服务端</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>argv[])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Initialize the interface and listen */</span>
+</span></span><span style="display:flex;"><span>    hg_class <span style="color:#f92672">=</span> <span style="color:#a6e22e">HG_Init</span>(<span style="color:#e6db74">&#34;ofi+tcp://eth0:22222&#34;</span>, HG_TRUE); 
+</span></span><span style="display:flex;"><span>    [...]
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Register RPC call */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">MERCURY_REGISTER</span>(hg_class, <span style="color:#e6db74">&#34;open&#34;</span>, <span style="color:#66d9ef">open_in_t</span>, <span style="color:#66d9ef">open_out_t</span>, open_rpc_cb);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Make progress */</span>
+</span></span><span style="display:flex;"><span>    [...]
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Finalize the interface */</span>
+</span></span><span style="display:flex;"><span>    [...]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="4-打开回调函数">.4. 打开回调函数</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span> <span style="color:#a6e22e">open_rpc_cb</span>(<span style="color:#66d9ef">hg_handle_t</span> handle)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">open_in_t</span> in_struct;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">open_out_t</span> out_struct;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Get input */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">HG_Get_input</span>(handle, <span style="color:#f92672">&amp;</span>in_struct);
+</span></span><span style="display:flex;"><span>    in_param0 <span style="color:#f92672">=</span> in_struct.in_param0;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Execute call */</span>
+</span></span><span style="display:flex;"><span>    out_param0 <span style="color:#f92672">=</span> <span style="color:#a6e22e">open</span>(in_param0, ...);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Set output */</span>
+</span></span><span style="display:flex;"><span>    open_out_struct.out_param0 <span style="color:#f92672">=</span> out_param0;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Send response back to origin */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">HG_Respond</span>(handle, NULL, NULL, <span style="color:#f92672">&amp;</span>out_struct);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Free input and destroy handle */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">HG_Free_input</span>(handle, <span style="color:#f92672">&amp;</span>in_struct);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">HG_Destroy</span>(handle);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> HG_SUCCESS;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="bulk-data-transfers">Bulk Data Transfers</h3>
+<ul>
+<li><code>Transfer </code>controlled by target (better flow control)</li>
+<li><code>Memory buffer(s) </code>abstracted by handle</li>
+<li>Handle must be serialized and exchanged using other means</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../../blogimgv2022/image-20220730100912164.png"
+    data-srcset="../../../../../blogimgv2022/image-20220730100912164.png, ../../../../../blogimgv2022/image-20220730100912164.png 1.5x, ../../../../../blogimgv2022/image-20220730100912164.png 2x"
+    data-sizes="auto"
+    alt="../../../../../blogimgv2022/image-20220730100912164.png"
+    title="../../../../../blogimgv2022/image-20220730100912164.png"/></p>
+<ul>
+<li>客户端代码</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/* Initialize the interface and get target address */</span>
+</span></span><span style="display:flex;"><span>[...]
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Create bulk handle (only change) */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Bulk_create</span>(hg_info<span style="color:#f92672">-&gt;</span>hg_bulk_class, <span style="color:#ae81ff">1</span>, <span style="color:#f92672">&amp;</span>buf, <span style="color:#f92672">&amp;</span>buf_size, HG_BULK_READ_ONLY, <span style="color:#f92672">&amp;</span>bulk_handle);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Attach bulk handle to input parameters */</span>
+</span></span><span style="display:flex;"><span>[...]
+</span></span><span style="display:flex;"><span>in_struct.bulk_handle <span style="color:#f92672">=</span> bulk_handle;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Create RPC request */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Create</span>(hg_context, target_addr, rpc_id, <span style="color:#f92672">&amp;</span>hg_handle);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Send RPC request */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Forward</span>(hg_handle, rpc_done_cb, <span style="color:#f92672">&amp;</span>rpc_done_args, <span style="color:#f92672">&amp;</span>in_struct);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Make progress */</span>
+</span></span></code></pre></div><ul>
+<li>服务端代码</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/* Get input parameters and bulk handle */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Get_input</span>(handle, <span style="color:#f92672">&amp;</span>in_struct);
+</span></span><span style="display:flex;"><span>[...]
+</span></span><span style="display:flex;"><span>origin_bulk_handle <span style="color:#f92672">=</span> in_struct.bulk_handle;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Get size of data and allocate buffer */</span>
+</span></span><span style="display:flex;"><span>nbytes <span style="color:#f92672">=</span> <span style="color:#a6e22e">HG_Bulk_get_size</span>(bulk_handle);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Create block handle to read data */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Bulk_create</span>(hg_info<span style="color:#f92672">-&gt;</span>hg_bulk_class, <span style="color:#ae81ff">1</span>, NULL, <span style="color:#f92672">&amp;</span>nbytes,
+</span></span><span style="display:flex;"><span>               HG_BULK_READWRITE, <span style="color:#f92672">&amp;</span>local_bulk_handle);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Start pulling bulk data (execute call / send response in callback) */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">HG_Bulk_transfer</span>(hg_info<span style="color:#f92672">-&gt;</span>bulk_context, bulk_transfer_cb,
+</span></span><span style="display:flex;"><span>                 bulk_args, HG_BULK_PULL, hg_info<span style="color:#f92672">-&gt;</span>addr, origin_bulk_handle, <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>                 local_bulk_handle, <span style="color:#ae81ff">0</span>, nbytes, HG_OP_ID_IGNORE);
+</span></span></code></pre></div><h3 id="non-contiguous-memory-bulk">Non contiguous memory bulk</h3>
+<ul>
+<li>allows for scatter/gather memory transfers using virtual memory offsets and length</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">hg_return_t</span> <span style="color:#a6e22e">HG_Bulk_create</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">hg_bulk_class_t</span> <span style="color:#f92672">*</span>hg_bulk_class,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">hg_size_t</span> count,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">**</span>buf_ptrs,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">hg_size_t</span> <span style="color:#f92672">*</span>buf_sizes,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">hg_uint8_t</span> flags,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">hg_bulk_t</span> <span style="color:#f92672">*</span>handle
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><h3 id="macros">Macros</h3>
+<ul>
+<li>generate as  much boilerplate code as possible for
+<ul>
+<li>serialization/deserialization of parameters</li>
+<li>sending/executing rpc</li>
+</ul>
+</li>
+<li>single include <code>header file shared</code> between origin and target</li>
+<li>make use of boost preprocessor for macro definition
+<ul>
+<li>generate serialization / deserialization functions and structure that contains parameters.</li>
+</ul>
+</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../../blogimgv2022/image-20220730102020501.png"
+    data-srcset="../../../../../blogimgv2022/image-20220730102020501.png, ../../../../../blogimgv2022/image-20220730102020501.png 1.5x, ../../../../../blogimgv2022/image-20220730102020501.png 2x"
+    data-sizes="auto"
+    alt="../../../../../blogimgv2022/image-20220730102020501.png"
+    title="../../../../../blogimgv2022/image-20220730102020501.png"/></p>
+<h2 id="resource">Resource</h2>
+<ul>
+<li><a href="https://mercury-hpc.github.io/assets/publications/2016-07-14-Intel-meeting.pdf"target="_blank" rel="external nofollow noopener noreferrer">https://mercury-hpc.github.io/assets/publications/2016-07-14-Intel-meeting.pdf<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://mercury-hpc.github.io/assets/publications/2017-06-22-Nersc_slides.pdf"target="_blank" rel="external nofollow noopener noreferrer">https://mercury-hpc.github.io/assets/publications/2017-06-22-Nersc_slides.pdf<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://mercury-hpc.github.io/assets/publications/SC18_BOF_Intro_mercury.pdf"target="_blank" rel="external nofollow noopener noreferrer">https://mercury-hpc.github.io/assets/publications/SC18_BOF_Intro_mercury.pdf<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="http://sites.computer.org/debull/A20mar/p23.pdf"target="_blank" rel="external nofollow noopener noreferrer">http://sites.computer.org/debull/A20mar/p23.pdf<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://mercury-hpc.github.io/user/hg_macros/"target="_blank" rel="external nofollow noopener noreferrer">https://mercury-hpc.github.io/user/hg_macros/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li>案例代码：https://github1s.com/mercury-hpc/mercury/blob/HEAD/src/mercury_core.c#L5056</li>
+<li>案例代码：https://mochi.readthedocs.io/en/latest/mercury/05_bulk.html</li>
+</ul>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-28&#32;22:47:26>更新于 2023-09-28&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/rpc%E6%A1%86%E6%9E%B6_mercury/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e6%a1%86%e6%9e%b6%e8%ae%be%e8%ae%a1%5cmiddleware%5cRPC%5crpc%e6%a1%86%e6%9e%b6_mercury.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/rpc%E6%A1%86%E6%9E%B6_mercury/" data-title="rpc框架-mercury" data-hashtags="Framework,Middleware"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/rpc%E6%A1%86%E6%9E%B6_mercury/" data-hashtag="Framework"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/rpc%E6%A1%86%E6%9E%B6_mercury/" data-title="rpc框架-mercury"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/framework/">Framework</a>,&nbsp;<a href="liudongdong1.github.io/tags/middleware/">Middleware</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8-ceph/" class="prev" rel="prev" title="Kubernetes-_存储-ceph"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Kubernetes-_存储-ceph</a>
+      <a href="liudongdong1.github.io/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-fuse/" class="next" rel="next" title="文件系统Fuse">文件系统Fuse<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>
