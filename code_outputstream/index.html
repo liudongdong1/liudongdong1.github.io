@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Code_OutputStream - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="1. OutputStream抽象类 public abstract void write(int b) // 写入一个字节，可以看到这里的参数是一个 int 类型，对应上面的读方法，int 类型的 32 位，只有低 8 位才写" /><meta name="keywords" content='Java, Storage' /><meta itemprop="name" content="Code_OutputStream">
+<meta itemprop="description" content="1. OutputStream抽象类 public abstract void write(int b) // 写入一个字节，可以看到这里的参数是一个 int 类型，对应上面的读方法，int 类型的 32 位，只有低 8 位才写"><meta itemprop="datePublished" content="2021-05-10T21:31:56+00:00" />
+<meta itemprop="dateModified" content="2023-09-28T22:47:27+08:00" />
+<meta itemprop="wordCount" content="5380"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Java,Storage," /><meta property="og:title" content="Code_OutputStream" />
+<meta property="og:description" content="1. OutputStream抽象类 public abstract void write(int b) // 写入一个字节，可以看到这里的参数是一个 int 类型，对应上面的读方法，int 类型的 32 位，只有低 8 位才写" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/code_outputstream/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-05-10T21:31:56+00:00" />
+<meta property="article:modified_time" content="2023-09-28T22:47:27+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="Code_OutputStream"/>
+<meta name="twitter:description" content="1. OutputStream抽象类 public abstract void write(int b) // 写入一个字节，可以看到这里的参数是一个 int 类型，对应上面的读方法，int 类型的 32 位，只有低 8 位才写"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/code_outputstream/" /><link rel="prev" href="liudongdong1.github.io/exceptionhandle/" /><link rel="next" href="liudongdong1.github.io/iteratormode/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Code_OutputStream",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/code_outputstream\/"
+    },"genre": "posts","keywords": "Java, Storage","wordcount":  5380 ,
+    "url": "liudongdong1.github.io\/code_outputstream\/","datePublished": "2021-05-10T21:31:56+00:00","dateModified": "2023-09-28T22:47:27+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>Code_OutputStream</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/framework/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Framework</a></span></div>
+      <div class="post-meta-line"><span title=2021-05-10&#32;21:31:56>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-10" >2021-05-10</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 5380 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="Code_OutputStream">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.pixabay.com/photo/2022/02/10/05/44/wuzhen-7004638__340.jpg"
+    data-srcset="https://cdn.pixabay.com/photo/2022/02/10/05/44/wuzhen-7004638__340.jpg, https://cdn.pixabay.com/photo/2022/02/10/05/44/wuzhen-7004638__340.jpg 1.5x, https://cdn.pixabay.com/photo/2022/02/10/05/44/wuzhen-7004638__340.jpg 2x"
+    data-sizes="auto"
+    alt="https://cdn.pixabay.com/photo/2022/02/10/05/44/wuzhen-7004638__340.jpg"
+    title="https://cdn.pixabay.com/photo/2022/02/10/05/44/wuzhen-7004638__340.jpg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-outputstream抽象类">1. OutputStream抽象类</a></li>
+        <li><a href="#2-filteroutputstream">2. FilterOutputStream</a></li>
+        <li><a href="#3-bytearrayoutputstream">3. ByteArrayOutputStream</a></li>
+        <li><a href="#4-bufferedouputstream">4. BufferedOuputStream</a></li>
+        <li><a href="#5-pipeoutputstream">5. PipeOutputStream</a></li>
+        <li><a href="#6-fileoutputstream">6. FileOutputStream</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/picture2023/raw/master/image-20230312100228460.png"
+    data-srcset="https://gitee.com/github-25970295/picture2023/raw/master/image-20230312100228460.png, https://gitee.com/github-25970295/picture2023/raw/master/image-20230312100228460.png 1.5x, https://gitee.com/github-25970295/picture2023/raw/master/image-20230312100228460.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/picture2023/raw/master/image-20230312100228460.png"
+    title="https://gitee.com/github-25970295/picture2023/raw/master/image-20230312100228460.png"/></p>
+<h3 id="1-outputstream抽象类">1. OutputStream抽象类</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> b<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 写入一个字节，可以看到这里的参数是一个 int 类型，对应上面的读方法，int 类型的 32 位，只有低 8 位才写入，高 24 位将舍弃。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span> b<span style="color:#f92672">[])</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 将数组中的所有字节写入，和上面对应的 read() 方法类似，实际调用的也是下面的方法。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span> b<span style="color:#f92672">[],</span> <span style="color:#66d9ef">int</span> off<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> len<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 将 byte 数组从 off 位置开始，len 长度的字节写入
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">flush</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 强制刷新，将缓冲中的数据写入
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 关闭输出流，流被关闭后就不能再输出数据了
+</span></span></span></code></pre></div><h3 id="2-filteroutputstream">2. FilterOutputStream</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * This class is the superclass of all classes that filter output
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * streams. These streams sit on top of an already existing output
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * stream (the &lt;i&gt;underlying&lt;/i&gt; output stream) which it uses as its
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * basic sink of data, but possibly transforming the data along the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * way or providing additional functionality.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * The class &lt;code&gt;FilterOutputStream&lt;/code&gt; itself simply overrides
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * all methods of &lt;code&gt;OutputStream&lt;/code&gt; with versions that pass
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * all requests to the underlying output stream. Subclasses of
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * &lt;code&gt;FilterOutputStream&lt;/code&gt; may further override some of these
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * methods as well as provide additional methods and fields.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @author  Jonathan Payne
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @since   JDK1.0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FilterOutputStream</span> <span style="color:#66d9ef">extends</span> OutputStream <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The underlying output stream to be filtered.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> OutputStream out<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates an output stream filter built on top of the specified
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * underlying output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param   out   the underlying output stream to be assigned to
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *                the field &lt;tt&gt;this.out&lt;/tt&gt; for later use, or
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *                &lt;code&gt;null&lt;/code&gt; if this instance is to be
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *                created without an underlying stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">FilterOutputStream</span><span style="color:#f92672">(</span>OutputStream out<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">out</span> <span style="color:#f92672">=</span> out<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes the specified &lt;code&gt;byte&lt;/code&gt; to this output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The &lt;code&gt;write&lt;/code&gt; method of &lt;code&gt;FilterOutputStream&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * calls the &lt;code&gt;write&lt;/code&gt; method of its underlying output stream,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * that is, it performs &lt;tt&gt;out.write(b)&lt;/tt&gt;.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Implements the abstract &lt;tt&gt;write&lt;/tt&gt; method of &lt;tt&gt;OutputStream&lt;/tt&gt;.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      b   the &lt;code&gt;byte&lt;/code&gt;.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> b<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        out<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>b<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes &lt;code&gt;b.length&lt;/code&gt; bytes to this output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The &lt;code&gt;write&lt;/code&gt; method of &lt;code&gt;FilterOutputStream&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * calls its &lt;code&gt;write&lt;/code&gt; method of three arguments with the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * arguments &lt;code&gt;b&lt;/code&gt;, &lt;code&gt;0&lt;/code&gt;, and
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;code&gt;b.length&lt;/code&gt;.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Note that this method does not call the one-argument
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;code&gt;write&lt;/code&gt; method of its underlying stream with the single
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * argument &lt;code&gt;b&lt;/code&gt;.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      b   the data to be written.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.io.FilterOutputStream#write(byte[], int, int)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span> b<span style="color:#f92672">[])</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        write<span style="color:#f92672">(</span>b<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> b<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes &lt;code&gt;len&lt;/code&gt; bytes from the specified
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;code&gt;byte&lt;/code&gt; array starting at offset &lt;code&gt;off&lt;/code&gt; to
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * this output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The &lt;code&gt;write&lt;/code&gt; method of &lt;code&gt;FilterOutputStream&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * calls the &lt;code&gt;write&lt;/code&gt; method of one argument on each
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;code&gt;byte&lt;/code&gt; to output.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Note that this method does not call the &lt;code&gt;write&lt;/code&gt; method
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * of its underlying input stream with the same arguments. Subclasses
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * of &lt;code&gt;FilterOutputStream&lt;/code&gt; should provide a more efficient
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * implementation of this method.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      b     the data.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      off   the start offset in the data.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      len   the number of bytes to write.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.io.FilterOutputStream#write(int)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span> b<span style="color:#f92672">[],</span> <span style="color:#66d9ef">int</span> off<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> len<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>off <span style="color:#f92672">|</span> len <span style="color:#f92672">|</span> <span style="color:#f92672">(</span>b<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> <span style="color:#f92672">(</span>len <span style="color:#f92672">+</span> off<span style="color:#f92672">))</span> <span style="color:#f92672">|</span> <span style="color:#f92672">(</span>off <span style="color:#f92672">+</span> len<span style="color:#f92672">))</span> <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IndexOutOfBoundsException<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0 <span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> len <span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            write<span style="color:#f92672">(</span>b<span style="color:#f92672">[</span>off <span style="color:#f92672">+</span> i<span style="color:#f92672">]);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Flushes this output stream and forces any buffered output bytes
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * to be written out to the stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The &lt;code&gt;flush&lt;/code&gt; method of &lt;code&gt;FilterOutputStream&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * calls the &lt;code&gt;flush&lt;/code&gt; method of its underlying output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.io.FilterOutputStream#out
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">flush</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        out<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Closes this output stream and releases any system resources
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * associated with the stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The &lt;code&gt;close&lt;/code&gt; method of &lt;code&gt;FilterOutputStream&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * calls its &lt;code&gt;flush&lt;/code&gt; method, and then calls the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;code&gt;close&lt;/code&gt; method of its underlying output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.io.FilterOutputStream#flush()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.io.FilterOutputStream#out
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@SuppressWarnings</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;try&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> <span style="color:#f92672">(</span>OutputStream ostream <span style="color:#f92672">=</span> out<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            flush<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="3-bytearrayoutputstream">3. ByteArrayOutputStream</h3>
+<blockquote>
+<p>不知道最后数组或者缓冲区使用大小为多少，可以使用 ByteArrayOutputStream</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * This class implements an output stream in which the data is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * written into a byte array. The buffer automatically grows as data
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * is written to it.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * The data can be retrieved using &lt;code&gt;toByteArray()&lt;/code&gt; and
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * &lt;code&gt;toString()&lt;/code&gt;.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Closing a &lt;tt&gt;ByteArrayOutputStream&lt;/tt&gt; has no effect. The methods in
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * this class can be called after the stream has been closed without
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * generating an &lt;tt&gt;IOException&lt;/tt&gt;.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @author  Arthur van Hoff
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @since   JDK1.0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ByteArrayOutputStream</span> <span style="color:#66d9ef">extends</span> OutputStream <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The buffer where data is stored.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">byte</span> buf<span style="color:#f92672">[];</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The number of valid bytes in the buffer.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">int</span> count<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates a new byte array output stream. The buffer capacity is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * initially 32 bytes, though its size increases if necessary.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ByteArrayOutputStream</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">(</span>32<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates a new byte array output stream, with a buffer capacity of
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * the specified size, in bytes.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param   size   the initial size.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IllegalArgumentException if size is negative.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ByteArrayOutputStream</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> size<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>size <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalArgumentException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Negative initial size: &#34;</span>
+</span></span><span style="display:flex;"><span>                                               <span style="color:#f92672">+</span> size<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        buf <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>size<span style="color:#f92672">];</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Increases the capacity if necessary to ensure that it can hold
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * at least the number of elements specified by the minimum
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * capacity argument.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param minCapacity the desired minimum capacity
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @throws OutOfMemoryError if {@code minCapacity &lt; 0}.  This is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * interpreted as a request for the unsatisfiably large capacity
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * {@code (long) Integer.MAX_VALUE + (minCapacity - Integer.MAX_VALUE)}.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ensureCapacity</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> minCapacity<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// overflow-conscious code
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>minCapacity <span style="color:#f92672">-</span> buf<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>            grow<span style="color:#f92672">(</span>minCapacity<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The maximum size of array to allocate.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Some VMs reserve some header words in an array.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Attempts to allocate larger arrays may result in
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * OutOfMemoryError: Requested array size exceeds VM limit
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> MAX_ARRAY_SIZE <span style="color:#f92672">=</span> Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">MAX_VALUE</span> <span style="color:#f92672">-</span> 8<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Increases the capacity to ensure that it can hold at least the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * number of elements specified by the minimum capacity argument.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param minCapacity the desired minimum capacity
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">grow</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> minCapacity<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// overflow-conscious code
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">int</span> oldCapacity <span style="color:#f92672">=</span> buf<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> newCapacity <span style="color:#f92672">=</span> oldCapacity <span style="color:#f92672">&lt;&lt;</span> 1<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>newCapacity <span style="color:#f92672">-</span> minCapacity <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>            newCapacity <span style="color:#f92672">=</span> minCapacity<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>newCapacity <span style="color:#f92672">-</span> MAX_ARRAY_SIZE <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>            newCapacity <span style="color:#f92672">=</span> hugeCapacity<span style="color:#f92672">(</span>minCapacity<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        buf <span style="color:#f92672">=</span> Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">copyOf</span><span style="color:#f92672">(</span>buf<span style="color:#f92672">,</span> newCapacity<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">hugeCapacity</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> minCapacity<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>minCapacity <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span> <span style="color:#75715e">// overflow
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> OutOfMemoryError<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#f92672">(</span>minCapacity <span style="color:#f92672">&gt;</span> MAX_ARRAY_SIZE<span style="color:#f92672">)</span> <span style="color:#f92672">?</span>
+</span></span><span style="display:flex;"><span>            Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">MAX_VALUE</span> <span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>            MAX_ARRAY_SIZE<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes the specified byte to this byte array output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param   b   the byte to be written.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> b<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        ensureCapacity<span style="color:#f92672">(</span>count <span style="color:#f92672">+</span> 1<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        buf<span style="color:#f92672">[</span>count<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span><span style="color:#f92672">)</span> b<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        count <span style="color:#f92672">+=</span> 1<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes &lt;code&gt;len&lt;/code&gt; bytes from the specified byte array
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * starting at offset &lt;code&gt;off&lt;/code&gt; to this byte array output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param   b     the data.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param   off   the start offset in the data.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param   len   the number of bytes to write.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span> b<span style="color:#f92672">[],</span> <span style="color:#66d9ef">int</span> off<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> len<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>off <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">||</span> <span style="color:#f92672">(</span>off <span style="color:#f92672">&gt;</span> b<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">)</span> <span style="color:#f92672">||</span> <span style="color:#f92672">(</span>len <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">((</span>off <span style="color:#f92672">+</span> len<span style="color:#f92672">)</span> <span style="color:#f92672">-</span> b<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IndexOutOfBoundsException<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        ensureCapacity<span style="color:#f92672">(</span>count <span style="color:#f92672">+</span> len<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">arraycopy</span><span style="color:#f92672">(</span>b<span style="color:#f92672">,</span> off<span style="color:#f92672">,</span> buf<span style="color:#f92672">,</span> count<span style="color:#f92672">,</span> len<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        count <span style="color:#f92672">+=</span> len<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes the complete contents of this byte array output stream to
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * the specified output stream argument, as if by calling the output
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * stream&#39;s write method using &lt;code&gt;out.write(buf, 0, count)&lt;/code&gt;.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      out   the output stream to which to write the data.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">writeTo</span><span style="color:#f92672">(</span>OutputStream out<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        out<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>buf<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> count<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Resets the &lt;code&gt;count&lt;/code&gt; field of this byte array output
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * stream to zero, so that all currently accumulated output in the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * output stream is discarded. The output stream can be used again,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * reusing the already allocated buffer space.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see     java.io.ByteArrayInputStream#count
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reset</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        count <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates a newly allocated byte array. Its size is the current
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * size of this output stream and the valid contents of the buffer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * have been copied into it.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @return  the current contents of this output stream, as a byte array.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see     java.io.ByteArrayOutputStream#size()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">byte</span> <span style="color:#a6e22e">toByteArray</span><span style="color:#f92672">()[]</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">copyOf</span><span style="color:#f92672">(</span>buf<span style="color:#f92672">,</span> count<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Returns the current size of the buffer.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @return  the value of the &lt;code&gt;count&lt;/code&gt; field, which is the number
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *          of valid bytes in this output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see     java.io.ByteArrayOutputStream#count
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">size</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> count<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Converts the buffer&#39;s contents into a string decoding bytes using the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * platform&#39;s default character set. The length of the new &lt;tt&gt;String&lt;/tt&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * is a function of the character set, and hence may not be equal to the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * size of the buffer.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt; This method always replaces malformed-input and unmappable-character
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * sequences with the default replacement string for the platform&#39;s
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * default character set. The {@linkplain java.nio.charset.CharsetDecoder}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * class should be used when more control over the decoding process is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * required.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @return String decoded from the buffer&#39;s contents.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @since  JDK1.1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>buf<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> count<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Converts the buffer&#39;s contents into a string by decoding the bytes using
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * the named {@link java.nio.charset.Charset charset}. The length of the new
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;tt&gt;String&lt;/tt&gt; is a function of the charset, and hence may not be equal
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * to the length of the byte array.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt; This method always replaces malformed-input and unmappable-character
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * sequences with this charset&#39;s default replacement string. The {@link
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * java.nio.charset.CharsetDecoder} class should be used when more control
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * over the decoding process is required.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      charsetName  the name of a supported
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *             {@link java.nio.charset.Charset charset}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @return     String decoded from the buffer&#39;s contents.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  UnsupportedEncodingException
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *             If the named charset is not supported
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @since      JDK1.1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span>String charsetName<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throws</span> UnsupportedEncodingException
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>buf<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> count<span style="color:#f92672">,</span> charsetName<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates a newly allocated string. Its size is the current size of
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * the output stream and the valid contents of the buffer have been
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * copied into it. Each character &lt;i&gt;c&lt;/i&gt; in the resulting string is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * constructed from the corresponding element &lt;i&gt;b&lt;/i&gt; in the byte
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * array such that:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;blockquote&gt;&lt;pre&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *     c == (char)(((hibyte &amp;amp; 0xff) &amp;lt;&amp;lt; 8) | (b &amp;amp; 0xff))
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;/pre&gt;&lt;/blockquote&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @deprecated This method does not properly convert bytes into characters.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * As of JDK&amp;nbsp;1.1, the preferred way to do this is via the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;code&gt;toString(String enc)&lt;/code&gt; method, which takes an encoding-name
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * argument, or the &lt;code&gt;toString()&lt;/code&gt; method, which uses the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * platform&#39;s default character encoding.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      hibyte    the high byte of each resulting Unicode character.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @return     the current contents of the output stream, as a string.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.io.ByteArrayOutputStream#size()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.io.ByteArrayOutputStream#toString(String)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.io.ByteArrayOutputStream#toString()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Deprecated</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> hibyte<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>buf<span style="color:#f92672">,</span> hibyte<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> count<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Closing a &lt;tt&gt;ByteArrayOutputStream&lt;/tt&gt; has no effect. The methods in
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * this class can be called after the stream has been closed without
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * generating an &lt;tt&gt;IOException&lt;/tt&gt;.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="4-bufferedouputstream">4. BufferedOuputStream</h3>
+<blockquote>
+<p>内部有个byte buf[]， 缓冲要写入的数据，写入数据大于buf数组时，通过父类FIlterOutputStream 写入到OutputStream中。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * The class implements a buffered output stream. By setting up such
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * an output stream, an application can write bytes to the underlying
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * output stream without necessarily causing a call to the underlying
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * system for each byte written.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @author  Arthur van Hoff
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @since   JDK1.0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BufferedOutputStream</span> <span style="color:#66d9ef">extends</span> FilterOutputStream <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The internal buffer where data is stored.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">byte</span> buf<span style="color:#f92672">[];</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The number of valid bytes in the buffer. This value is always
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * in the range &lt;tt&gt;0&lt;/tt&gt; through &lt;tt&gt;buf.length&lt;/tt&gt;; elements
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;tt&gt;buf[0]&lt;/tt&gt; through &lt;tt&gt;buf[count-1]&lt;/tt&gt; contain valid
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * byte data.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">int</span> count<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates a new buffered output stream to write data to the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * specified underlying output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param   out   the underlying output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">BufferedOutputStream</span><span style="color:#f92672">(</span>OutputStream out<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span><span style="color:#f92672">(</span>out<span style="color:#f92672">,</span> 8192<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates a new buffered output stream to write data to the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * specified underlying output stream with the specified buffer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * size.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param   out    the underlying output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param   size   the buffer size.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception IllegalArgumentException if size &amp;lt;= 0.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">BufferedOutputStream</span><span style="color:#f92672">(</span>OutputStream out<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> size<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">super</span><span style="color:#f92672">(</span>out<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>size <span style="color:#f92672">&lt;=</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalArgumentException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Buffer size &lt;= 0&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>            buf <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>size<span style="color:#f92672">];</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/** Flush the internal buffer */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">flushBuffer</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>count <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                out<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>buf<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> count<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>                count <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes the specified byte to this buffered output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      b   the byte to be written.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> b<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>count <span style="color:#f92672">&gt;=</span> buf<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                flushBuffer<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>            buf<span style="color:#f92672">[</span>count<span style="color:#f92672">++]</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span><span style="color:#f92672">)</span>b<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes &lt;code&gt;len&lt;/code&gt; bytes from the specified byte array
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * starting at offset &lt;code&gt;off&lt;/code&gt; to this buffered output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt; Ordinarily this method stores bytes from the given array into this
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * stream&#39;s buffer, flushing the buffer to the underlying output stream as
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * needed.  If the requested length is at least as large as this stream&#39;s
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * buffer, however, then this method will flush the buffer and write the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * bytes directly to the underlying output stream.  Thus redundant
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;code&gt;BufferedOutputStream&lt;/code&gt;s will not copy data unnecessarily.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      b     the data.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      off   the start offset in the data.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      len   the number of bytes to write.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span> b<span style="color:#f92672">[],</span> <span style="color:#66d9ef">int</span> off<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> len<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>len <span style="color:#f92672">&gt;=</span> buf<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">/* If the request length exceeds the size of the output buffer,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">               flush the output buffer and then write the data directly.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">               In this way buffered streams will cascade harmlessly. */</span>
+</span></span><span style="display:flex;"><span>                flushBuffer<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>                out<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>b<span style="color:#f92672">,</span> off<span style="color:#f92672">,</span> len<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>len <span style="color:#f92672">&gt;</span> buf<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> count<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                flushBuffer<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">arraycopy</span><span style="color:#f92672">(</span>b<span style="color:#f92672">,</span> off<span style="color:#f92672">,</span> buf<span style="color:#f92672">,</span> count<span style="color:#f92672">,</span> len<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            count <span style="color:#f92672">+=</span> len<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Flushes this buffered output stream. This forces any buffered
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * output bytes to be written out to the underlying output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.io.FilterOutputStream#out
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">flush</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            flushBuffer<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            out<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="5-pipeoutputstream">5. PipeOutputStream</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * A piped output stream can be connected to a piped input stream
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * to create a communications pipe. The piped output stream is the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * sending end of the pipe. Typically, data is written to a
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * &lt;code&gt;PipedOutputStream&lt;/code&gt; object by one thread and data is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * read from the connected &lt;code&gt;PipedInputStream&lt;/code&gt; by some
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * other thread. Attempting to use both objects from a single thread
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * is not recommended as it may deadlock the thread.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * The pipe is said to be &lt;a name=BROKEN&gt; &lt;i&gt;broken&lt;/i&gt; &lt;/a&gt; if a
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * thread that was reading data bytes from the connected piped input
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * stream is no longer alive.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @author  James Gosling
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @see     java.io.PipedInputStream
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @since   JDK1.0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PipedOutputStream</span> <span style="color:#66d9ef">extends</span> OutputStream <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/* REMIND: identification of the read and write sides needs to be
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">           more sophisticated.  Either using thread groups (but what about
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">           pipes within a thread?) or using finalization (but it may be a
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">           long time until the next GC). */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> PipedInputStream sink<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates a piped output stream connected to the specified piped
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * input stream. Data bytes written to this stream will then be
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * available as input from &lt;code&gt;snk&lt;/code&gt;.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      snk   The piped input stream to connect to.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">PipedOutputStream</span><span style="color:#f92672">(</span>PipedInputStream snk<span style="color:#f92672">)</span>  <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        connect<span style="color:#f92672">(</span>snk<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates a piped output stream that is not yet connected to a
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * piped input stream. It must be connected to a piped input stream,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * either by the receiver or the sender, before being used.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see     java.io.PipedInputStream#connect(java.io.PipedOutputStream)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see     java.io.PipedOutputStream#connect(java.io.PipedInputStream)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">PipedOutputStream</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Connects this piped output stream to a receiver. If this object
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * is already connected to some other piped input stream, an
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;code&gt;IOException&lt;/code&gt; is thrown.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * If &lt;code&gt;snk&lt;/code&gt; is an unconnected piped input stream and
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;code&gt;src&lt;/code&gt; is an unconnected piped output stream, they may
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * be connected by either the call:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;blockquote&gt;&lt;pre&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * src.connect(snk)&lt;/pre&gt;&lt;/blockquote&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * or the call:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;blockquote&gt;&lt;pre&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * snk.connect(src)&lt;/pre&gt;&lt;/blockquote&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The two calls have the same effect.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      snk   the piped input stream to connect to.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">connect</span><span style="color:#f92672">(</span>PipedInputStream snk<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>snk <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NullPointerException<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>sink <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> snk<span style="color:#f92672">.</span><span style="color:#a6e22e">connected</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IOException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Already connected&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        sink <span style="color:#f92672">=</span> snk<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        snk<span style="color:#f92672">.</span><span style="color:#a6e22e">in</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        snk<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span> <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        snk<span style="color:#f92672">.</span><span style="color:#a6e22e">connected</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes the specified &lt;code&gt;byte&lt;/code&gt; to the piped output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Implements the &lt;code&gt;write&lt;/code&gt; method of &lt;code&gt;OutputStream&lt;/code&gt;.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      b   the &lt;code&gt;byte&lt;/code&gt; to be written.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception IOException if the pipe is &lt;a href=#BROKEN&gt; broken&lt;/a&gt;,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *          {@link #connect(java.io.PipedInputStream) unconnected},
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *          closed, or if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> b<span style="color:#f92672">)</span>  <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>sink <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IOException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Pipe not connected&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        sink<span style="color:#f92672">.</span><span style="color:#a6e22e">receive</span><span style="color:#f92672">(</span>b<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes &lt;code&gt;len&lt;/code&gt; bytes from the specified byte array
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * starting at offset &lt;code&gt;off&lt;/code&gt; to this piped output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * This method blocks until all the bytes are written to the output
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      b     the data.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      off   the start offset in the data.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      len   the number of bytes to write.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception IOException if the pipe is &lt;a href=#BROKEN&gt; broken&lt;/a&gt;,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *          {@link #connect(java.io.PipedInputStream) unconnected},
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *          closed, or if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span> b<span style="color:#f92672">[],</span> <span style="color:#66d9ef">int</span> off<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> len<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>sink <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IOException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Pipe not connected&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>b <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NullPointerException<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>off <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">||</span> <span style="color:#f92672">(</span>off <span style="color:#f92672">&gt;</span> b<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">)</span> <span style="color:#f92672">||</span> <span style="color:#f92672">(</span>len <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f92672">((</span>off <span style="color:#f92672">+</span> len<span style="color:#f92672">)</span> <span style="color:#f92672">&gt;</span> b<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">)</span> <span style="color:#f92672">||</span> <span style="color:#f92672">((</span>off <span style="color:#f92672">+</span> len<span style="color:#f92672">)</span> <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IndexOutOfBoundsException<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>len <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        sink<span style="color:#f92672">.</span><span style="color:#a6e22e">receive</span><span style="color:#f92672">(</span>b<span style="color:#f92672">,</span> off<span style="color:#f92672">,</span> len<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Flushes this output stream and forces any buffered output bytes
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * to be written out.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * This will notify any readers that bytes are waiting in the pipe.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception IOException if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">flush</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>sink <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">synchronized</span> <span style="color:#f92672">(</span>sink<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                sink<span style="color:#f92672">.</span><span style="color:#a6e22e">notifyAll</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Closes this piped output stream and releases any system resources
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * associated with this stream. This stream may no longer be used for
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * writing bytes.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close</span><span style="color:#f92672">()</span>  <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>sink <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            sink<span style="color:#f92672">.</span><span style="color:#a6e22e">receivedLast</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="6-fileoutputstream">6. FileOutputStream</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileOutputStream</span> <span style="color:#66d9ef">extends</span> OutputStream
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The system dependent file descriptor.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> FileDescriptor fd<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * True if the file is opened for append.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">boolean</span> append<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The associated channel, initialized lazily.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> FileChannel channel<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The path of the referenced file
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * (null if the stream is created with a file descriptor)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String path<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Object closeLock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Object<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">volatile</span> <span style="color:#66d9ef">boolean</span> closed <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates a file output stream to write to the file with the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * specified name. A new &lt;code&gt;FileDescriptor&lt;/code&gt; object is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * created to represent this file connection.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * First, if there is a security manager, its &lt;code&gt;checkWrite&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * method is called with &lt;code&gt;name&lt;/code&gt; as its argument.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * If the file exists but is a directory rather than a regular file, does
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * not exist but cannot be created, or cannot be opened for any other
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * reason then a &lt;code&gt;FileNotFoundException&lt;/code&gt; is thrown.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      name   the system-dependent filename
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  FileNotFoundException  if the file exists but is a directory
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *                   rather than a regular file, does not exist but cannot
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *                   be created, or cannot be opened for any other reason
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  SecurityException  if a security manager exists and its
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *               &lt;code&gt;checkWrite&lt;/code&gt; method denies write access
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *               to the file.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.lang.SecurityManager#checkWrite(java.lang.String)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">FileOutputStream</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> FileNotFoundException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">(</span>name <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span>name<span style="color:#f92672">)</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates a file output stream to write to the file with the specified
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * name.  If the second argument is &lt;code&gt;true&lt;/code&gt;, then
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * bytes will be written to the end of the file rather than the beginning.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * A new &lt;code&gt;FileDescriptor&lt;/code&gt; object is created to represent this
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * file connection.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * First, if there is a security manager, its &lt;code&gt;checkWrite&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * method is called with &lt;code&gt;name&lt;/code&gt; as its argument.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * If the file exists but is a directory rather than a regular file, does
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * not exist but cannot be created, or cannot be opened for any other
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * reason then a &lt;code&gt;FileNotFoundException&lt;/code&gt; is thrown.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param     name        the system-dependent file name
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param     append      if &lt;code&gt;true&lt;/code&gt;, then bytes will be written
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *                   to the end of the file rather than the beginning
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  FileNotFoundException  if the file exists but is a directory
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *                   rather than a regular file, does not exist but cannot
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *                   be created, or cannot be opened for any other reason.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  SecurityException  if a security manager exists and its
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *               &lt;code&gt;checkWrite&lt;/code&gt; method denies write access
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *               to the file.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.lang.SecurityManager#checkWrite(java.lang.String)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @since     JDK1.1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">FileOutputStream</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> <span style="color:#66d9ef">boolean</span> append<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throws</span> FileNotFoundException
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">(</span>name <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span>name<span style="color:#f92672">)</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">,</span> append<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates a file output stream to write to the file represented by
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * the specified &lt;code&gt;File&lt;/code&gt; object. A new
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;code&gt;FileDescriptor&lt;/code&gt; object is created to represent this
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * file connection.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * First, if there is a security manager, its &lt;code&gt;checkWrite&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * method is called with the path represented by the &lt;code&gt;file&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * argument as its argument.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * If the file exists but is a directory rather than a regular file, does
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * not exist but cannot be created, or cannot be opened for any other
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * reason then a &lt;code&gt;FileNotFoundException&lt;/code&gt; is thrown.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      file               the file to be opened for writing.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  FileNotFoundException  if the file exists but is a directory
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *                   rather than a regular file, does not exist but cannot
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *                   be created, or cannot be opened for any other reason
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  SecurityException  if a security manager exists and its
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *               &lt;code&gt;checkWrite&lt;/code&gt; method denies write access
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *               to the file.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.io.File#getPath()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.lang.SecurityException
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.lang.SecurityManager#checkWrite(java.lang.String)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">FileOutputStream</span><span style="color:#f92672">(</span>File file<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> FileNotFoundException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">(</span>file<span style="color:#f92672">,</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates a file output stream to write to the file represented by
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * the specified &lt;code&gt;File&lt;/code&gt; object. If the second argument is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;code&gt;true&lt;/code&gt;, then bytes will be written to the end of the file
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * rather than the beginning. A new &lt;code&gt;FileDescriptor&lt;/code&gt; object is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * created to represent this file connection.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * First, if there is a security manager, its &lt;code&gt;checkWrite&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * method is called with the path represented by the &lt;code&gt;file&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * argument as its argument.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * If the file exists but is a directory rather than a regular file, does
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * not exist but cannot be created, or cannot be opened for any other
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * reason then a &lt;code&gt;FileNotFoundException&lt;/code&gt; is thrown.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      file               the file to be opened for writing.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param     append      if &lt;code&gt;true&lt;/code&gt;, then bytes will be written
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *                   to the end of the file rather than the beginning
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  FileNotFoundException  if the file exists but is a directory
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *                   rather than a regular file, does not exist but cannot
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *                   be created, or cannot be opened for any other reason
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  SecurityException  if a security manager exists and its
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *               &lt;code&gt;checkWrite&lt;/code&gt; method denies write access
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *               to the file.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.io.File#getPath()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.lang.SecurityException
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.lang.SecurityManager#checkWrite(java.lang.String)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @since 1.4
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">FileOutputStream</span><span style="color:#f92672">(</span>File file<span style="color:#f92672">,</span> <span style="color:#66d9ef">boolean</span> append<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throws</span> FileNotFoundException
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        String name <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>file <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">?</span> file<span style="color:#f92672">.</span><span style="color:#a6e22e">getPath</span><span style="color:#f92672">()</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        SecurityManager security <span style="color:#f92672">=</span> System<span style="color:#f92672">.</span><span style="color:#a6e22e">getSecurityManager</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>security <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            security<span style="color:#f92672">.</span><span style="color:#a6e22e">checkWrite</span><span style="color:#f92672">(</span>name<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>name <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NullPointerException<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>file<span style="color:#f92672">.</span><span style="color:#a6e22e">isInvalid</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> FileNotFoundException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Invalid file path&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">fd</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileDescriptor<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        fd<span style="color:#f92672">.</span><span style="color:#a6e22e">attach</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">append</span> <span style="color:#f92672">=</span> append<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        open<span style="color:#f92672">(</span>name<span style="color:#f92672">,</span> append<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creates a file output stream to write to the specified file
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * descriptor, which represents an existing connection to an actual
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * file in the file system.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * First, if there is a security manager, its &lt;code&gt;checkWrite&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * method is called with the file descriptor &lt;code&gt;fdObj&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * argument as its argument.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * If &lt;code&gt;fdObj&lt;/code&gt; is null then a &lt;code&gt;NullPointerException&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * is thrown.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * This constructor does not throw an exception if &lt;code&gt;fdObj&lt;/code&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * is {@link java.io.FileDescriptor#valid() invalid}.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * However, if the methods are invoked on the resulting stream to attempt
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * I/O on the stream, an &lt;code&gt;IOException&lt;/code&gt; is thrown.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      fdObj   the file descriptor to be opened for writing
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  SecurityException  if a security manager exists and its
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *               &lt;code&gt;checkWrite&lt;/code&gt; method denies
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *               write access to the file descriptor
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.lang.SecurityManager#checkWrite(java.io.FileDescriptor)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">FileOutputStream</span><span style="color:#f92672">(</span>FileDescriptor fdObj<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        SecurityManager security <span style="color:#f92672">=</span> System<span style="color:#f92672">.</span><span style="color:#a6e22e">getSecurityManager</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>fdObj <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NullPointerException<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>security <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            security<span style="color:#f92672">.</span><span style="color:#a6e22e">checkWrite</span><span style="color:#f92672">(</span>fdObj<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">fd</span> <span style="color:#f92672">=</span> fdObj<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">append</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        fd<span style="color:#f92672">.</span><span style="color:#a6e22e">attach</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Opens a file, with the specified name, for overwriting or appending.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param name name of file to be opened
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param append whether the file is to be opened in append mode
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">native</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">open0</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> <span style="color:#66d9ef">boolean</span> append<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throws</span> FileNotFoundException<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// wrap native call to allow instrumentation
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Opens a file, with the specified name, for overwriting or appending.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param name name of file to be opened
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param append whether the file is to be opened in append mode
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">open</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> <span style="color:#66d9ef">boolean</span> append<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throws</span> FileNotFoundException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        open0<span style="color:#f92672">(</span>name<span style="color:#f92672">,</span> append<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes the specified byte to this file output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param   b   the byte to be written.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param   append   {@code true} if the write operation first
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *     advances the position to the end of file
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">native</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> b<span style="color:#f92672">,</span> <span style="color:#66d9ef">boolean</span> append<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes the specified byte to this file output stream. Implements
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * the &lt;code&gt;write&lt;/code&gt; method of &lt;code&gt;OutputStream&lt;/code&gt;.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      b   the byte to be written.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> b<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        write<span style="color:#f92672">(</span>b<span style="color:#f92672">,</span> append<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes a sub array as a sequence of bytes.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param b the data to be written
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param off the start offset in the data
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param len the number of bytes that are written
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param append {@code true} to first advance the position to the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *     end of file
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception IOException If an I/O error has occurred.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">native</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">writeBytes</span><span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span> b<span style="color:#f92672">[],</span> <span style="color:#66d9ef">int</span> off<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> len<span style="color:#f92672">,</span> <span style="color:#66d9ef">boolean</span> append<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throws</span> IOException<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes &lt;code&gt;b.length&lt;/code&gt; bytes from the specified byte array
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * to this file output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      b   the data.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span> b<span style="color:#f92672">[])</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        writeBytes<span style="color:#f92672">(</span>b<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> b<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">,</span> append<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writes &lt;code&gt;len&lt;/code&gt; bytes from the specified byte array
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * starting at offset &lt;code&gt;off&lt;/code&gt; to this file output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      b     the data.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      off   the start offset in the data.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param      len   the number of bytes to write.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span> b<span style="color:#f92672">[],</span> <span style="color:#66d9ef">int</span> off<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> len<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        writeBytes<span style="color:#f92672">(</span>b<span style="color:#f92672">,</span> off<span style="color:#f92672">,</span> len<span style="color:#f92672">,</span> append<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Closes this file output stream and releases any system resources
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * associated with this stream. This file output stream may no longer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * be used for writing bytes.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt; If this stream has an associated channel then the channel is closed
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * as well.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @revised 1.4
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @spec JSR-51
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">synchronized</span> <span style="color:#f92672">(</span>closeLock<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>closed<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>            closed <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>channel <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            channel<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        fd<span style="color:#f92672">.</span><span style="color:#a6e22e">closeAll</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Closeable<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>               close0<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">});</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Returns the file descriptor associated with this stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @return  the &lt;code&gt;FileDescriptor&lt;/code&gt; object that represents
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *          the connection to the file in the file system being used
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *          by this &lt;code&gt;FileOutputStream&lt;/code&gt; object.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.io.FileDescriptor
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> FileDescriptor <span style="color:#a6e22e">getFD</span><span style="color:#f92672">()</span>  <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>fd <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> fd<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IOException<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Returns the unique {@link java.nio.channels.FileChannel FileChannel}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * object associated with this file output stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;p&gt; The initial {@link java.nio.channels.FileChannel#position()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * position} of the returned channel will be equal to the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * number of bytes written to the file so far unless this stream is in
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * append mode, in which case it will be equal to the size of the file.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Writing bytes to this stream will increment the channel&#39;s position
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * accordingly.  Changing the channel&#39;s position, either explicitly or by
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * writing, will change this stream&#39;s file position.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @return  the file channel associated with this file output stream
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @since 1.4
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @spec JSR-51
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> FileChannel <span style="color:#a6e22e">getChannel</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">synchronized</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>channel <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                channel <span style="color:#f92672">=</span> FileChannelImpl<span style="color:#f92672">.</span><span style="color:#a6e22e">open</span><span style="color:#f92672">(</span>fd<span style="color:#f92672">,</span> path<span style="color:#f92672">,</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">,</span> append<span style="color:#f92672">,</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> channel<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Cleans up the connection to the file, and ensures that the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * &lt;code&gt;close&lt;/code&gt; method of this file output stream is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * called when there are no more references to this stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @exception  IOException  if an I/O error occurs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see        java.io.FileInputStream#close()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">finalize</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>fd <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>fd <span style="color:#f92672">==</span> FileDescriptor<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span> <span style="color:#f92672">||</span> fd <span style="color:#f92672">==</span> FileDescriptor<span style="color:#f92672">.</span><span style="color:#a6e22e">err</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                flush<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">/* if fd is shared, the references in FileDescriptor
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                 * will ensure that finalizer is only called when
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                 * safe to do so. All references using the fd have
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                 * become unreachable. We can call close()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                 */</span>
+</span></span><span style="display:flex;"><span>                close<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">native</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close0</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">native</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">initIDs</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        initIDs<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div></div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-28&#32;22:47:27>更新于 2023-09-28&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/code_outputstream/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80%5cjava%5cjavaIO%5cCode_OutputStream.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/code_outputstream/" data-title="Code_OutputStream" data-hashtags="Java,Storage"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/code_outputstream/" data-hashtag="Java"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/code_outputstream/" data-title="Code_OutputStream" data-image="https://cdn.pixabay.com/photo/2022/02/10/05/44/wuzhen-7004638__340.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/java/">Java</a>,&nbsp;<a href="liudongdong1.github.io/tags/storage/">Storage</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/exceptionhandle/" class="prev" rel="prev" title="ExceptionHandle"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>ExceptionHandle</a>
+      <a href="liudongdong1.github.io/iteratormode/" class="next" rel="next" title="IteratorMode">IteratorMode<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

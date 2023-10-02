@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>动态实例化与Register - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="写具体的网络结构，它往往是一个Class，并且往往是一个单独的文件 配置文件中会指定我们使用哪一个网络结构，往往是Class name 在训练过程的某一" /><meta name="keywords" content='python, basicSR' /><meta itemprop="name" content="动态实例化与Register">
+<meta itemprop="description" content="写具体的网络结构，它往往是一个Class，并且往往是一个单独的文件 配置文件中会指定我们使用哪一个网络结构，往往是Class name 在训练过程的某一">
+<meta itemprop="dateModified" content="2023-09-28T22:42:10+08:00" />
+<meta itemprop="wordCount" content="1919"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="python,basicSR," /><meta property="og:title" content="动态实例化与Register" />
+<meta property="og:description" content="写具体的网络结构，它往往是一个Class，并且往往是一个单独的文件 配置文件中会指定我们使用哪一个网络结构，往往是Class name 在训练过程的某一" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/%E5%8A%A8%E6%80%81%E5%AE%9E%E4%BE%8B%E5%8C%96%E4%B8%8Eregister/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+
+<meta property="article:modified_time" content="2023-09-28T22:42:10+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="动态实例化与Register"/>
+<meta name="twitter:description" content="写具体的网络结构，它往往是一个Class，并且往往是一个单独的文件 配置文件中会指定我们使用哪一个网络结构，往往是Class name 在训练过程的某一"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/%E5%8A%A8%E6%80%81%E5%AE%9E%E4%BE%8B%E5%8C%96%E4%B8%8Eregister/" /><link rel="prev" href="liudongdong1.github.io/ainetworkprediction/" /><link rel="next" href="liudongdong1.github.io/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "动态实例化与Register",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/%E5%8A%A8%E6%80%81%E5%AE%9E%E4%BE%8B%E5%8C%96%E4%B8%8Eregister\/"
+    },"genre": "posts","keywords": "python, basicSR","wordcount":  1919 ,
+    "url": "liudongdong1.github.io\/%E5%8A%A8%E6%80%81%E5%AE%9E%E4%BE%8B%E5%8C%96%E4%B8%8Eregister\/","dateModified": "2023-09-28T22:42:10+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>动态实例化与Register</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/ai/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;AI</a></span></div>
+      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01" >0001-01-01</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1919 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="动态实例化与Register">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.stocksnap.io/img-thumbs/280h/3H1PTCEQYT.jpg"
+    data-srcset="https://cdn.stocksnap.io/img-thumbs/280h/3H1PTCEQYT.jpg, https://cdn.stocksnap.io/img-thumbs/280h/3H1PTCEQYT.jpg 1.5x, https://cdn.stocksnap.io/img-thumbs/280h/3H1PTCEQYT.jpg 2x"
+    data-sizes="auto"
+    alt="https://cdn.stocksnap.io/img-thumbs/280h/3H1PTCEQYT.jpg"
+    title="https://cdn.stocksnap.io/img-thumbs/280h/3H1PTCEQYT.jpg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-if-else">1. if-else</a></li>
+        <li><a href="#2-自动化实例">2. 自动化实例</a></li>
+        <li><a href="#3-register">3. Register</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><blockquote>
+<ol>
+<li>
+<p>写<strong>具体的网络结构</strong>，它往往是一个Class，并且往往是一个单独的文件</p>
+</li>
+<li>
+<p><strong>配置文件</strong>中会指定我们使用哪一个网络结构，往往是Class name</p>
+</li>
+<li>
+<p>在训练过程的某一个地方，会根据配置文件指定的Class name，<strong>自动实例化相关的类</strong></p>
+</li>
+</ol>
+<p>转自：https://zhuanlan.zhihu.com/p/414759881</p>
+</blockquote>
+<h3 id="1-if-else">1. if-else</h3>
+<blockquote>
+<p>在构建网络结构的过程中，调用一个判断，根据配置文件中的信息，自动做出选择。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023162738614.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023162738614.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023162738614.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023162738614.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023162738614.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023162738614.png"/></p>
+<h3 id="2-自动化实例">2. 自动化实例</h3>
+<blockquote>
+<p>动态加载模块用的模块importlib 里面的<code>import_module(“字符串模块路径”， 相对路径包名)</code></p>
+<ul>
+<li><code>hasattr </code>判断对象是否有什么属性和方法 返回真或假</li>
+<li><code>getattr(对象，“字符串属性”，默认值)</code>
+<ul>
+<li>如果 获取的是实例对象,获取实例方法，不用传实例直接可以调用</li>
+<li>如果 获取的是类的实例方法，需要传实例对象 传给函数。一般可以类（）当做实例化</li>
+<li>如果是实例对象或者类,去调用静态方法， 都不用给函数传self cls</li>
+<li>如果没有字符串属性 可以给个默认值，不会抛出AttributeError 异常</li>
+</ul>
+</li>
+<li>setattr(对象， “字符串属性”， value)： value 可以是任何数据类型，重点是<code>value可以是一个函数的内存地址</code>，<code>如果value是一个函数，调用的时候需要把self或者cls传进去</code>.</li>
+<li>delattr(对象，“属性名”)
+<ul>
+<li>只有类可以删除类的实例方法或者静态方法</li>
+<li>只有类可以删除类属性</li>
+<li>实例只能删除实例属性</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># import importlib</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># from common.settings import module_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># from common.constants import CONFIG_FILE_PATH</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># # name参数是一个字符串 package是个包 一般相对路径的时候有用</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># # s = importlib.import_module(module_name)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># s = importlib.import_module(&#34;scripts.handle_config&#34;)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># print(s.HandleConfig) # 获取类</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># print(s.HandleConfig(CONFIG_FILE_PATH).get_value(&#34;file path&#34;, &#34;cases_path&#34;))</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 反射</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pprint
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>]
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># pprint.pprint(dir(a))</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># hasattr 这个是判断 对象是不是有什么属性 方法</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> hasattr(a, <span style="color:#e6db74">&#34;__iter__&#34;</span>):
+</span></span><span style="display:flex;"><span>    print(a<span style="color:#f92672">.</span>__iter__)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> a:
+</span></span><span style="display:flex;"><span>        print(i)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取 对象的 属性和方法</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Dog</span>:
+</span></span><span style="display:flex;"><span>    age <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;kafei&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">eat</span>(self, x):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;正在吃</span><span style="color:#e6db74">{</span>x<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@classmethod</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lasi</span>(cls, x):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;狗拉的是</span><span style="color:#e6db74">{</span>x<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># pprint.pprint(dir(Dog))</span>
+</span></span><span style="display:flex;"><span>print(getattr(Dog, <span style="color:#e6db74">&#34;age&#34;</span>))
+</span></span><span style="display:flex;"><span>print(getattr(Dog, <span style="color:#e6db74">&#34;name&#34;</span>))
+</span></span><span style="display:flex;"><span>e <span style="color:#f92672">=</span> getattr(Dog, <span style="color:#e6db74">&#34;eat&#34;</span>)
+</span></span><span style="display:flex;"><span>print(e) <span style="color:#75715e"># 实例方法返回的是一个函数</span>
+</span></span><span style="display:flex;"><span>e(Dog(),<span style="color:#e6db74">&#34;西瓜&#34;</span>) <span style="color:#75715e"># 直接调用需要传一个实例对象</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> Dog()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>e1 <span style="color:#f92672">=</span> getattr(p, <span style="color:#e6db74">&#34;eat&#34;</span>)
+</span></span><span style="display:flex;"><span>e1(<span style="color:#e6db74">&#34;面包&#34;</span>)
+</span></span><span style="display:flex;"><span>getattr(Dog, <span style="color:#e6db74">&#34;lasi&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>getattr(Dog, <span style="color:#e6db74">&#34;lasi&#34;</span>)(<span style="color:#e6db74">&#34;黄金&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># setattr(对象，字符串的属性名， value)  value:可以是任何类型   给他 对象</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">shuijiao</span>(self):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;111111111111&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>  <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># setattr(p, &#34;shuijiao&#34;, shuijiao) # 给类添加实例方法，那么调用外部添加在方法时候必须把实力传给外部函数</span>
+</span></span><span style="display:flex;"><span>setattr(Dog, <span style="color:#e6db74">&#34;shuijiao&#34;</span>, shuijiao)  <span style="color:#75715e"># 给类添加类方法，那么调用外部添加在方法时候必须把类传给外部函数</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># delattr(对象， 字符串属性)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>delattr(Dog, <span style="color:#e6db74">&#34;age&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># delattr(p, &#34;name&#34;) # 实例对象匀删除 类属性 会抛出异常AttributeError</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>delattr(Dog, <span style="color:#e6db74">&#39;eat&#39;</span>)  <span style="color:#75715e"># 删除方法必须用类去删， 实例对象删除不了</span>
+</span></span><span style="display:flex;"><span>delattr(Dog, <span style="color:#e6db74">&#39;lasi&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">总结：
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">动态加载模块用的模块importlib 里面的import_module(“字符串模块路径”， 相对路径包名)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">1. hasattr 判断对象是否有什么属性和方法 返回真或假
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">2.getattr(对象，“字符串属性”，默认值) 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">* 如果 获取的是实例对象获取实例方法，不用传实例直接可以调用
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">* 如果 获取的是类的实例方法，需要传实例对象 传给函数。一般可以类（）当做实例化
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">* 如果是实例对象或者类 去调用静态方法， 都不用给函数传self cls
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">* 如果没有字符串属性 可以给个默认值，不会抛出AttributeError 异常
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">3. setattr(对象， “字符串属性”， value)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">value 可以是任何数据类型，重点是value可以是一个 函数的内存地址
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">如果value是一个函数，调用的时候需要把self或者cls传进去
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">4. delattr(对象，“属性名”)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">只有类可以删除 类的实例方法或者静态方法
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">只有类可以删除 类属性
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">实例只能删除 实例属性
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span></code></pre></div><p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023163743462.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023163743462.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023163743462.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023163743462.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023163743462.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023163743462.png"/></p>
+<blockquote>
+<p>先扫描相关文件，把文件中所有的类、函数都import进来，然后调用getattr动态实例化，这个方法有两个问题：</p>
+<ol>
+<li>
+<p>如果有重名怎么办？我就遇到了这个问题，不小心类有重名了，它load错了类，然后怎么改都没用，因为实例化了同名的但不是我想要的类嘛</p>
+</li>
+<li>
+<p>它会把文件中所有的类、函数都import进来，就很冗余，因为很多类和函数都是中间的量</p>
+</li>
+</ol>
+</blockquote>
+<h3 id="3-register">3. Register</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Registry</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    The registry that provides name -&gt; object mapping, to support third-party
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    users&#39; custom modules.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    To create a registry (e.g. a backbone registry):
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    .. code-block:: python
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        BACKBONE_REGISTRY = Registry(&#39;BACKBONE&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    To register an object:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    .. code-block:: python
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        @BACKBONE_REGISTRY.register()
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        class MyBackbone():
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            ...
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Or:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    .. code-block:: python
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        BACKBONE_REGISTRY.register(MyBackbone)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, name):
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Args:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            name (str): the name of this registry
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_name <span style="color:#f92672">=</span> name
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_obj_map <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_do_register</span>(self, name, obj):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">assert</span> (name <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>_obj_map), (<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;An object named &#39;</span><span style="color:#e6db74">{</span>name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39; was already registered &#34;</span>
+</span></span><span style="display:flex;"><span>                                             <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;in &#39;</span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>_name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39; registry!&#34;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_obj_map[name] <span style="color:#f92672">=</span> obj
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">register</span>(self, obj<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Register the given object under the the name `obj.__name__`.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Can be used as either a decorator or not.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        See docstring of this class for usage.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> obj <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># used as a decorator</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">deco</span>(func_or_class):
+</span></span><span style="display:flex;"><span>                name <span style="color:#f92672">=</span> func_or_class<span style="color:#f92672">.</span>__name__
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>_do_register(name, func_or_class)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> func_or_class
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> deco
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># used as a function call</span>
+</span></span><span style="display:flex;"><span>        name <span style="color:#f92672">=</span> obj<span style="color:#f92672">.</span>__name__
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_do_register(name, obj)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get</span>(self, name):
+</span></span><span style="display:flex;"><span>        ret <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_obj_map<span style="color:#f92672">.</span>get(name)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ret <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">KeyError</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;No object named &#39;</span><span style="color:#e6db74">{</span>name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39; found in &#39;</span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>_name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39; registry!&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ret
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __contains__(self, name):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> name <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>_obj_map
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __iter__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> iter(self<span style="color:#f92672">.</span>_obj_map<span style="color:#f92672">.</span>items())
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">keys</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>_obj_map<span style="color:#f92672">.</span>keys()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>DATASET_REGISTRY <span style="color:#f92672">=</span> Registry(<span style="color:#e6db74">&#39;dataset&#39;</span>)
+</span></span><span style="display:flex;"><span>ARCH_REGISTRY <span style="color:#f92672">=</span> Registry(<span style="color:#e6db74">&#39;arch&#39;</span>)
+</span></span><span style="display:flex;"><span>MODEL_REGISTRY <span style="color:#f92672">=</span> Registry(<span style="color:#e6db74">&#39;model&#39;</span>)
+</span></span><span style="display:flex;"><span>LOSS_REGISTRY <span style="color:#f92672">=</span> Registry(<span style="color:#e6db74">&#39;loss&#39;</span>)
+</span></span><span style="display:flex;"><span>METRIC_REGISTRY <span style="color:#f92672">=</span> Registry(<span style="color:#e6db74">&#39;metric&#39;</span>)
+</span></span></code></pre></div><p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023164336359.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023164336359.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023164336359.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023164336359.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023164336359.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023164336359.png"/></p>
+<blockquote>
+<ol>
+<li>
+<p>写<strong>具体的网络结构 (以_arch.py结尾)</strong>，它往往是一个Class (加上@ARCH_REGISTRY.register()的装饰器)，并且往往是一个单独的文件</p>
+</li>
+<li>
+<p><strong>配置文件</strong>中会指定我们使用了哪一个网络结构，往往是Class name</p>
+</li>
+</ol>
+</blockquote>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-28&#32;22:42:10>更新于 2023-09-28&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/%E5%8A%A8%E6%80%81%E5%AE%9E%E4%BE%8B%E5%8C%96%E4%B8%8Eregister/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e8%a7%86%e8%a7%89%e8%bf%90%e5%8a%a8%5cvideo_understand%5c%e5%8a%a8%e6%80%81%e5%ae%9e%e4%be%8b%e5%8c%96%e4%b8%8eRegister.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/%E5%8A%A8%E6%80%81%E5%AE%9E%E4%BE%8B%E5%8C%96%E4%B8%8Eregister/" data-title="动态实例化与Register" data-hashtags="python,basicSR"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/%E5%8A%A8%E6%80%81%E5%AE%9E%E4%BE%8B%E5%8C%96%E4%B8%8Eregister/" data-hashtag="python"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/%E5%8A%A8%E6%80%81%E5%AE%9E%E4%BE%8B%E5%8C%96%E4%B8%8Eregister/" data-title="动态实例化与Register" data-image="https://cdn.stocksnap.io/img-thumbs/280h/3H1PTCEQYT.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/python/">Python</a>,&nbsp;<a href="liudongdong1.github.io/tags/basicsr/">basicSR</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/ainetworkprediction/" class="prev" rel="prev" title="读书计划"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>读书计划</a>
+      <a href="liudongdong1.github.io/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="next" rel="next" title="动态规划">动态规划<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

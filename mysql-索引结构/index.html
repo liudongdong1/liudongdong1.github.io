@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>mysql 索引结构 - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="Innodb 架构 Buffer Pool 用于加速读 Change Buffer 用于没有非唯一索引的加速写 Log Buffer 用于加速redo log写 自适应Hash索引主要用于加快查询页。在查询时，Innodb通" /><meta name="keywords" content='Storage' /><meta itemprop="name" content="mysql 索引结构">
+<meta itemprop="description" content="Innodb 架构 Buffer Pool 用于加速读 Change Buffer 用于没有非唯一索引的加速写 Log Buffer 用于加速redo log写 自适应Hash索引主要用于加快查询页。在查询时，Innodb通"><meta itemprop="datePublished" content="2022-05-10T22:00:04+00:00" />
+<meta itemprop="dateModified" content="2023-09-24T17:00:04+08:00" />
+<meta itemprop="wordCount" content="2607"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Storage," /><meta property="og:title" content="mysql 索引结构" />
+<meta property="og:description" content="Innodb 架构 Buffer Pool 用于加速读 Change Buffer 用于没有非唯一索引的加速写 Log Buffer 用于加速redo log写 自适应Hash索引主要用于加快查询页。在查询时，Innodb通" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/mysql-%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-10T22:00:04+00:00" />
+<meta property="article:modified_time" content="2023-09-24T17:00:04+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="mysql 索引结构"/>
+<meta name="twitter:description" content="Innodb 架构 Buffer Pool 用于加速读 Change Buffer 用于没有非唯一索引的加速写 Log Buffer 用于加速redo log写 自适应Hash索引主要用于加快查询页。在查询时，Innodb通"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/mysql-%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84/" /><link rel="prev" href="liudongdong1.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84/" /><link rel="next" href="liudongdong1.github.io/dfs-bfs%E7%B3%BB%E5%88%97/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "mysql 索引结构",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/mysql-%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84\/"
+    },"genre": "posts","keywords": "Storage","wordcount":  2607 ,
+    "url": "liudongdong1.github.io\/mysql-%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84\/","datePublished": "2022-05-10T22:00:04+00:00","dateModified": "2023-09-24T17:00:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>mysql 索引结构</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/storage/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div>
+      <div class="post-meta-line"><span title=2022-05-10&#32;22:00:04>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-10" >2022-05-10</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 2607 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="mysql 索引结构">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#innodb-架构">Innodb 架构</a>
+      <ul>
+        <li><a href="#缓冲池-buffer-pool">缓冲池 buffer pool</a></li>
+        <li><a href="#change-buffer"><strong>change Buffer</strong></a></li>
+        <li><a href="#log-buffer">Log Buffer</a></li>
+        <li><a href="#adaptive-hash-index">Adaptive Hash Index</a></li>
+        <li><a href="#oscache">osCache</a></li>
+      </ul>
+    </li>
+    <li><a href="#mysql-内部模块">Mysql 内部模块</a></li>
+    <li><a href="#update-sql-流程">update sql 流程</a></li>
+    <li><a href="#主从复制方案">主从复制方案</a></li>
+    <li><a href="#数据库索引">数据库索引</a></li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><h2 id="innodb-架构">Innodb 架构</h2>
+<blockquote>
+<ol>
+<li><code>Buffer Pool </code>用于加速读</li>
+<li><code>Change Buffer</code> 用于<code>没有非唯一索引的加速写</code></li>
+<li><code>Log Buffer</code> 用于<code>加速redo log写</code></li>
+<li><code>自适应Hash索引</code>主要用于加快查询页。在查询时，Innodb通过监视索引搜索的机制来判断当前查询是否能走Hash索引。比如LIKE运算符和% 通配符就不能走。</li>
+</ol>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://upload-images.jianshu.io/upload_images/24630328-701b5738c2cb5ce3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
+    data-srcset="https://upload-images.jianshu.io/upload_images/24630328-701b5738c2cb5ce3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240, https://upload-images.jianshu.io/upload_images/24630328-701b5738c2cb5ce3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240 1.5x, https://upload-images.jianshu.io/upload_images/24630328-701b5738c2cb5ce3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240 2x"
+    data-sizes="auto"
+    alt="https://upload-images.jianshu.io/upload_images/24630328-701b5738c2cb5ce3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
+    title="https://upload-images.jianshu.io/upload_images/24630328-701b5738c2cb5ce3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"/></p>
+<h3 id="缓冲池-buffer-pool">缓冲池 buffer pool</h3>
+<ul>
+<li>数据是存在磁盘的idb文件中，交互时速度必然是比较慢的。这时就需要将数据加载到内存中。</li>
+<li>innodb逻辑上的最小单位是页(16k)，那么每次加载的页到内存的区域（预读），就是buffer pool</li>
+<li>下一次取数据（数据页或者索引页）时，会优先判断在不在buffer页中。修改时，会修改内存中的数据，当buffer pool中数据和磁盘不一致时，这时就叫脏页。会有工作线程会定时同步，这个操作就叫刷脏</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../blogimgv2022/image-20220730231513666.png"
+    data-srcset="../../../../blogimgv2022/image-20220730231513666.png, ../../../../blogimgv2022/image-20220730231513666.png 1.5x, ../../../../blogimgv2022/image-20220730231513666.png 2x"
+    data-sizes="auto"
+    alt="../../../../blogimgv2022/image-20220730231513666.png"
+    title="../../../../blogimgv2022/image-20220730231513666.png"/></p>
+<ul>
+<li>mysql改进的LRU：
+<ul>
+<li>buffer pool 分为了young（5/8）和old（5/3）两个部分</li>
+<li>数据会在用户的sql用到了页中的数据，或者mysql猜测你很可能会用到的数据-预读，这两种情况加载到buffer pool</li>
+<li>数据优先进入old，old满了会移出队列尾部。young区呢？ <code>用户sql使用的页，会被移入young</code>（且需要在old中待满配置的秒数）。而预读的数据，没被使用则会一直在old区，直到被清除</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>问题： 当一次大表扫描，会导致大量数进入young？</p>
+<p>解决：mysql防止一次扫描数据过大，替换了大量热数据，有参数控制 innodb_old_blocks_time(需要在old区待满多少秒，且再被用户sql调用时，才会进入young)。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../blogimgv2022/image-20220730232330078.png"
+    data-srcset="../../../../blogimgv2022/image-20220730232330078.png, ../../../../blogimgv2022/image-20220730232330078.png 1.5x, ../../../../blogimgv2022/image-20220730232330078.png 2x"
+    data-sizes="auto"
+    alt="../../../../blogimgv2022/image-20220730232330078.png"
+    title="../../../../blogimgv2022/image-20220730232330078.png"/></p>
+<h3 id="change-buffer"><strong>change Buffer</strong></h3>
+<blockquote>
+<p><code>当数据不存在于buffer pool时，且更新操作的数据没有唯一索引</code>(非唯一，非主键，不是降序索引)，<code>不存在重复数据的情况</code>，可以直接在change buffer中记录操作。</p>
+<p>原因： 这样的数据，不需要校验唯一性，直接更新即可，没必要加载数据到buffer pool，而且查询时，数据也是随机分布在不同的页上面，可能需要加载多个页的数据，产生大量IO操作。</p>
+</blockquote>
+<blockquote>
+<p>change buffer的数据什么时候会同步出去：</p>
+<ul>
+<li><code>访问这个数据页时、执行merge操作</code>，将修改操作合并，后面同步到磁盘</li>
+<li><code>空闲时后台线程处理</code></li>
+<li><code>shoutdown </code></li>
+</ul>
+</blockquote>
+<h3 id="log-buffer">Log Buffer</h3>
+<p>官方描述：<code>日志缓冲区是保存要写入磁盘上日志文件的数据的内存区域</code>。日志缓冲区大小由 innodb_log_buffer_size变量定义。默认大小为 16MB。日志缓冲区的内容会定期刷新到磁盘。大的日志缓冲区使大事务能够运行，而无需在事务提交之前将redo log 数据写入磁盘。因此，如果您有更新、插入或删除许多行的事务，则增加日志缓冲区的大小可以节省磁盘 I/O。</p>
+<p><code>用来记录操作日志，先写入到log buffer ，然后事务提交，或者缓冲区满了的时候写入磁盘文件 redo log</code></p>
+<p><strong>redo log</strong></p>
+<ul>
+<li>
+<p>是一种基于磁盘的数据结构，用于<code>在崩溃恢复期间纠正由不完整事务写入的数据</code>。</p>
+</li>
+<li>
+<p>作用: 主要用来做崩溃恢复，用来实现事务持久性</p>
+</li>
+<li>
+<p>内部机制：<code>数据存在缓冲区，没有进行刷盘操作时，如果数据库宕机或者重启，会导致数据丢失</code>。 redo log的作用就是，<code>数据写入缓存后，写一下redo log ，记录的不是最终的结果，而是要进行的操作</code>。崩溃恢复时，将redo log数据重新加载到缓冲区。</p>
+</li>
+<li>
+<p>策略： 0（延时写）  1  2（实时写，延时刷）  默认是1 事务操作实时记录并刷新数据页</p>
+</li>
+</ul>
+<blockquote>
+<p>疑问：写到日志文件还是一次磁盘io，为什么不直接写到数据页 ？</p>
+<ul>
+<li>顺序IO和随机IO  写日志是顺序io，效率高（可以参考Kakfa）</li>
+<li>记录的是操作，不是结果，数据量其实不大</li>
+</ul>
+</blockquote>
+<h3 id="adaptive-hash-index">Adaptive Hash Index</h3>
+<h3 id="oscache">osCache</h3>
+<p><code>磁盘中主要组成部分是5类表空间</code></p>
+<ul>
+<li>
+<p>**系统表空间（ibdata1）：**组成：<code>数据字典（表和索引的元信息） 、双写缓冲区 、undo log、Change buffer</code></p>
+<ul>
+<li>双写缓冲： Innodb从buffer pool  flushed数据页过程中，如果出现崩溃等异常情况（简单理解就是，刷数据时出现刷一半崩溃的情况，内存被清空了，磁盘也刷了一半数据，这种场景需要处理），  innodb 为我们提供双写机制，先拷贝一份数据的副本，如果崩溃，就将副本恢复。虽然数据需要双写，但是并不是两倍的IO开销，因为写入缓冲区是一次 large sequential chunk （官网这一句理解不了，暂时理解为顺序写入开销不大）</li>
+</ul>
+</li>
+<li>
+<p>独占表空间： 可以为每个表设置为独占表空间</p>
+</li>
+<li>
+<p>临时表空间：</p>
+</li>
+<li>
+<p>通用表空间：</p>
+</li>
+</ul>
+<blockquote>
+<p>redo log：记录数据到磁盘，用于崩溃恢复，保证事务的持久性</p>
+<p>undo log：撤销回滚日志 记录事务发生之前的状态，如果发生异常，可以使用undo log回滚，存储的是旧数据，并发事务时使用回滚段来控制。</p>
+<p>bin log ，server层的日志。主要是用来主从复制（原理就是读取主库的bin log，执行一遍sql），数据恢复。记录所有的sql语句，有点aof的味道，可以将操作重复实现数据恢复。和redo log不一样，他的内容可以追加，没有大小限制</p>
+</blockquote>
+<h2 id="mysql-内部模块">Mysql 内部模块</h2>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../blogimgv2022/image-20220730231259644.png"
+    data-srcset="../../../../blogimgv2022/image-20220730231259644.png, ../../../../blogimgv2022/image-20220730231259644.png 1.5x, ../../../../blogimgv2022/image-20220730231259644.png 2x"
+    data-sizes="auto"
+    alt="../../../../blogimgv2022/image-20220730231259644.png"
+    title="../../../../blogimgv2022/image-20220730231259644.png"/></p>
+<h2 id="update-sql-流程">update sql 流程</h2>
+<ol>
+<li>查询到我们要修改的那条数据，我们这里称做 origin，返给执行器</li>
+<li>在执行器中修改数据，称为 modification</li>
+<li>将modification刷入内存，Buffer Pool的 Change Buffer</li>
+<li>引擎层：<code>记录undo log （实现事务原子性）</code></li>
+<li>引擎层：<code>记录redo log （崩溃恢复使用）</code></li>
+<li>服务层：<code>记录bin log（记录DDL）</code></li>
+<li>返回更新成功结果</li>
+<li>数据等待被工作线程刷入磁盘</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../blogimgv2022/image-20220730233615993.png"
+    data-srcset="../../../../blogimgv2022/image-20220730233615993.png, ../../../../blogimgv2022/image-20220730233615993.png 1.5x, ../../../../blogimgv2022/image-20220730233615993.png 2x"
+    data-sizes="auto"
+    alt="../../../../blogimgv2022/image-20220730233615993.png"
+    title="../../../../blogimgv2022/image-20220730233615993.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../blogimgv2022/image-20220730233723652.png"
+    data-srcset="../../../../blogimgv2022/image-20220730233723652.png, ../../../../blogimgv2022/image-20220730233723652.png 1.5x, ../../../../blogimgv2022/image-20220730233723652.png 2x"
+    data-sizes="auto"
+    alt="../../../../blogimgv2022/image-20220730233723652.png"
+    title="../../../../blogimgv2022/image-20220730233723652.png"/></p>
+<h2 id="主从复制方案">主从复制方案</h2>
+<ol>
+<li>全同步复制，事务方式执行，主节点先写入，然后让所有slave写，必须要所有 从节点 把数据写完，才返回写成功，这样的话会大大影响写入的性能</li>
+<li>半同步复制，只要有一个salve写入数据，就算成功。（如果需要半同步复制，主从节点都需要安装semisync_mater.so和 semisync_slave.so插件）</li>
+<li>GTID（global transaction identities）复制，主库并行复制的时候，从库也并行复制，解决主从同步复制延迟，实现自动的failover动作，即主节点挂掉，选举从节点后，能快速自动避免数据丢失。</li>
+</ol>
+<h2 id="数据库索引">数据库索引</h2>
+<ul>
+<li>索引记录的是索引字段信息+对应的磁盘地址，以便于快速查找</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../blogimgv2022/image-20220730233844301.png"
+    data-srcset="../../../../blogimgv2022/image-20220730233844301.png, ../../../../blogimgv2022/image-20220730233844301.png 1.5x, ../../../../blogimgv2022/image-20220730233844301.png 2x"
+    data-sizes="auto"
+    alt="../../../../blogimgv2022/image-20220730233844301.png"
+    title="../../../../blogimgv2022/image-20220730233844301.png"/></p>
+<p><strong>innodb的索引</strong>：聚集索引  非聚集索引(又叫二级索引，普通索引)</p>
+<ul>
+<li>有主键，主键会作为聚集索引</li>
+<li>无主键，第一个非空的唯一索引作为聚集索引</li>
+<li>没有合适的唯一索引，默认创建row id 来作为聚集索引</li>
+<li>聚集索引的作用： 优化查询、插入和其他数据库操作的性能 <code>聚集索引直接指向数据对应的页</code>，所以节省io</li>
+</ul>
+<blockquote>
+<p>二级索引和聚集索引的关系：二级索引中其实包含主键信息，通过主键值到聚集索引中找到对应的行数据。所以PK其实越小越好</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../blogimgv2022/image-20220730234019815.png"
+    data-srcset="../../../../blogimgv2022/image-20220730234019815.png, ../../../../blogimgv2022/image-20220730234019815.png 1.5x, ../../../../blogimgv2022/image-20220730234019815.png 2x"
+    data-sizes="auto"
+    alt="../../../../blogimgv2022/image-20220730234019815.png"
+    title="../../../../blogimgv2022/image-20220730234019815.png"/></p>
+<blockquote>
+<p><strong>在MYISAM内部</strong>，其实B+Tree中维护的叶子节点，也全部都是数据文件的地址信息，根据MYI中的index的地址，然后查询.MYD。主键索引和辅助索引都是这种形式</p>
+</blockquote>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-24&#32;17:00:04>更新于 2023-09-24&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/mysql-%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5cDatabase%5cmysql%20%e7%b4%a2%e5%bc%95%e7%bb%93%e6%9e%84.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/mysql-%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84/" data-title="mysql 索引结构" data-hashtags="Storage"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/mysql-%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84/" data-hashtag="Storage"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/mysql-%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84/" data-title="mysql 索引结构"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/storage/">Storage</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84/" class="prev" rel="prev" title="mysql 索引结构"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>mysql 索引结构</a>
+      <a href="liudongdong1.github.io/dfs-bfs%E7%B3%BB%E5%88%97/" class="next" rel="next" title="DFS &amp; BFS系列">DFS &amp; BFS系列<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

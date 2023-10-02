@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>DTW&amp;Sequence Analysis - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="level: SIGKDD ACM author:Thanawin Rakthanmanon date: August 12–16, 2012 keyword: Sequence data matching Paper: DTW Research Objective Application Area: time series motif discovery [25] [26], anomaly detection [35] [31], time series summarization, shapelet extraction [39], clustering, and classification [6], gestures/brainwaves/musical patterns/anomalous heartbeats in real-time Purpose: fast sequential search instead of approximately search Proble Statement Time Series Subsequences must be Normalized ，or tiny changes" /><meta name="keywords" content='SequanceAnalysis' /><meta itemprop="name" content="DTW&amp;Sequence Analysis">
+<meta itemprop="description" content="level: SIGKDD ACM author:Thanawin Rakthanmanon date: August 12–16, 2012 keyword: Sequence data matching Paper: DTW Research Objective Application Area: time series motif discovery [25] [26], anomaly detection [35] [31], time series summarization, shapelet extraction [39], clustering, and classification [6], gestures/brainwaves/musical patterns/anomalous heartbeats in real-time Purpose: fast sequential search instead of approximately search Proble Statement Time Series Subsequences must be Normalized ，or tiny changes"><meta itemprop="datePublished" content="2020-05-27T09:35:14+00:00" />
+<meta itemprop="dateModified" content="2023-09-28T23:39:26+08:00" />
+<meta itemprop="wordCount" content="3321"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="SequanceAnalysis," /><meta property="og:title" content="DTW&amp;Sequence Analysis" />
+<meta property="og:description" content="level: SIGKDD ACM author:Thanawin Rakthanmanon date: August 12–16, 2012 keyword: Sequence data matching Paper: DTW Research Objective Application Area: time series motif discovery [25] [26], anomaly detection [35] [31], time series summarization, shapelet extraction [39], clustering, and classification [6], gestures/brainwaves/musical patterns/anomalous heartbeats in real-time Purpose: fast sequential search instead of approximately search Proble Statement Time Series Subsequences must be Normalized ，or tiny changes" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/dtw-sequence-analysis/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-05-27T09:35:14+00:00" />
+<meta property="article:modified_time" content="2023-09-28T23:39:26+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="DTW&amp;Sequence Analysis"/>
+<meta name="twitter:description" content="level: SIGKDD ACM author:Thanawin Rakthanmanon date: August 12–16, 2012 keyword: Sequence data matching Paper: DTW Research Objective Application Area: time series motif discovery [25] [26], anomaly detection [35] [31], time series summarization, shapelet extraction [39], clustering, and classification [6], gestures/brainwaves/musical patterns/anomalous heartbeats in real-time Purpose: fast sequential search instead of approximately search Proble Statement Time Series Subsequences must be Normalized ，or tiny changes"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/dtw-sequence-analysis/" /><link rel="prev" href="liudongdong1.github.io/unmanned-intelligent-retail/" /><link rel="next" href="liudongdong1.github.io/windowsinstallation/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "DTW\u0026Sequence Analysis",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/dtw-sequence-analysis\/"
+    },"genre": "posts","keywords": "SequanceAnalysis","wordcount":  3321 ,
+    "url": "liudongdong1.github.io\/dtw-sequence-analysis\/","datePublished": "2020-05-27T09:35:14+00:00","dateModified": "2023-09-28T23:39:26+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>DTW&amp;Sequence Analysis</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;时空数据</a></span></div>
+      <div class="post-meta-line"><span title=2020-05-27&#32;09:35:14>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-05-27" >2020-05-27</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3321 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="DTW&amp;Sequence Analysis">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/source-2147529__340.jpg"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/source-2147529__340.jpg, https://gitee.com/github-25970295/blogImage/raw/master/img/source-2147529__340.jpg 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/source-2147529__340.jpg 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/source-2147529__340.jpg"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/source-2147529__340.jpg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#paper-dtw">Paper: DTW</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#paper--dba">Paper:  DBA</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#paper-generating-synthetic-series">Paper: Generating Synthetic series</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#paper-soft-dtw">Paper: Soft-DTW</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><p><strong>level</strong>: SIGKDD  ACM
+<strong>author</strong>:Thanawin Rakthanmanon
+<strong>date</strong>:  August 12–16, 2012
+<strong>keyword</strong>:</p>
+<ul>
+<li>Sequence data matching</li>
+</ul>
+<hr>
+<h2 id="paper-dtw">Paper: DTW</h2>
+<!-- raw HTML omitted -->
+<h4 id="research-objective">Research Objective</h4>
+<ul>
+<li><strong>Application Area</strong>:  time series motif discovery [25] [26], anomaly detection [35] [31], time series summarization, shapelet extraction [39], clustering, and classification [6], gestures/brainwaves/musical patterns/anomalous heartbeats in real-time</li>
+<li><strong>Purpose</strong>:  <!-- raw HTML omitted -->fast sequential search  instead of approximately search<!-- raw HTML omitted --></li>
+</ul>
+<h4 id="proble-statement">Proble Statement</h4>
+<blockquote>
+<p>Time Series Subsequences must be Normalized ，or tiny changes we made are completely dwarfed by changes we might expect to see in a real world deployment. ,but  it is not sufficient to normalize the entire dataset.</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526152414354.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526152414354.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526152414354.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526152414354.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526152414354.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526152414354.png"/></p>
+<blockquote>
+<p>Arbitrary Query Lengths cannot be Indexed.</p>
+</blockquote>
+<h4 id="methods">Methods</h4>
+<ul>
+<li>
+<p><strong>Problem Formulation</strong>:</p>
+<ul>
+<li>
+<p><strong>Definition1:</strong>  Time serias to search :  $T=t_1,t_2,&hellip;,t_m$</p>
+</li>
+<li>
+<p><strong>Definition 2:</strong>  subsequence to query:  $Q = T_{i,k}=t_i,t_{i+1},&hellip;,t_{i+k-1},  i\epsilon [1,m-k+1]$</p>
+</li>
+<li>
+<p><strong>Definition 3:</strong>  the Euclidean distance(ED) between Q and C, where |Q|=|C|, the distance is :
+$$
+ED(Q,C)=\sqrt{\sum_{i=1}^n(q_i-c_i)^2}
+$$</p>
+</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526153507470.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526153507470.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526153507470.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526153507470.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526153507470.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526153507470.png"/></p>
+</li>
+<li>
+<p><strong>ED&amp;&amp;DTW</strong></p>
+</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228095803776.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228095803776.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228095803776.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228095803776.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228095803776.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228095803776.png"/></p>
+<p><strong>【Opinion 1】 Using the Squared Distance</strong>
+$$
+ED(Q,C)=\sqrt{\sum_{i=1}^n(q_i-c_i)^2} &mdash;&gt;    ED(Q,C)=\sum_{i=1}^n(q_i-c_i)^2
+$$</p>
+<p><strong>【Opinion 2】 Using Lower Bounding</strong></p>
+<ul>
+<li>
+<p><strong>a）LB_Kim</strong></p>
+<p>通过计算两个序列的1,2,3,4四个点对应的ED距离，来计算两个序列的相似性，其中1,2点为首尾点，3,4点表示函数的最小点和最大点。其时间复杂度为O(n)。还有些改进版的，再在这四个点的基础上多取一些点来进行计算。公式：$LB_{Kim}(Q,C)=Max_{(i=1,2,3,4)}d(f_i^Q,f_i^C)$ , 经过Z-normalization 后，影响不大</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154124354.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154124354.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154124354.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154124354.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154124354.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154124354.png"/></p>
+<p><strong>b）LB_Yi</strong></p>
+<p>在LB_Kim的基础上做了改进，通过定义被比较序列C的最大和最小值的范围，来进行相似性的比较，公式如下：</p>
+</li>
+</ul>
+<p>$$
+LBY_I(Q,C)=\sum_{q_i&gt;max(C)}d(q_i,max(C))+\sum_{q_i&lt;min(C)}d(q_i,min(C))
+$$</p>
+<p>如下图所示：</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154326770.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154326770.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154326770.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154326770.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154326770.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154326770.png"/></p>
+<p><strong>c) LB_Keogh</strong></p>
+<p>LB_Keogh 下界函数，相比于LB_Kim以及LB_Yi具有更好的效果。Keogh使用了上下包络线，该下界距离更为紧凑, 不容易产生漏报。U 和 L 指的是上下包络函数。
+$$
+LBFKeogh(Q,C)=\sum_{i=1}^n\begin {cases} (q_i-u_i)^2,q_i&gt;u_i\(q_i-l_i)^2,q_i&lt;l_i\0 \end{cases}
+$$
+<img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154828729.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154828729.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154828729.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154828729.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154828729.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154828729.png"/></p>
+<p>**【Opinion 3】 Using Early Abandoning of ED and LB_Keogh  **</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026101815567.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026101815567.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026101815567.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026101815567.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026101815567.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026101815567.png"/></p>
+<p><strong>【Opinion 3】 Using Early Abandoning of DTW</strong></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155211203.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155211203.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155211203.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155211203.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155211203.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155211203.png"/></p>
+<p>对于右图，从左边开始DTW匹配，右边使用之前计算地LB_keogh 代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span>  <span style="color:#75715e">/// Calculate Dynamic Time Wrapping distance</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// A,B: data and query, respectively</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// cb : cummulative bound used for early abandoning</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// r  : size of Sakoe-Chiba warpping band</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">double</span> dtw(<span style="color:#66d9ef">double</span>[] A, <span style="color:#66d9ef">double</span>[] B, <span style="color:#66d9ef">double</span>[] cb, <span style="color:#66d9ef">int</span> m, <span style="color:#66d9ef">int</span> r,
+</span></span><span style="display:flex;"><span>                                  <span style="color:#66d9ef">double</span> bsf = <span style="color:#66d9ef">double</span>.PositiveInfinity)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">double</span>[] cost;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">double</span>[] cost_prev;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">double</span>[] cost_tmp;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> i, j, k;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">double</span> x, y, z, min_cost;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">/// Instead of using matrix of size O(m^2) or O(mr), we will reuse two array of size O(r).</span>
+</span></span><span style="display:flex;"><span>            cost = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">double</span>[<span style="color:#ae81ff">2</span> * r + <span style="color:#ae81ff">1</span>]; <span style="color:#75715e">//(double*)malloc(sizeof(double)*(2*r+1));</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (k = <span style="color:#ae81ff">0</span>; k &lt; <span style="color:#ae81ff">2</span> * r + <span style="color:#ae81ff">1</span>; k++) cost[k] = <span style="color:#66d9ef">double</span>.PositiveInfinity;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            cost_prev = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">double</span>[<span style="color:#ae81ff">2</span> * r + <span style="color:#ae81ff">1</span>]; <span style="color:#75715e">//(double*)malloc(sizeof(double)*(2*r+1));</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (k = <span style="color:#ae81ff">0</span>; k &lt; <span style="color:#ae81ff">2</span> * r + <span style="color:#ae81ff">1</span>; k++) cost_prev[k] = <span style="color:#66d9ef">double</span>.PositiveInfinity;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (i = <span style="color:#ae81ff">0</span>; i &lt; m; i++)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                k = max(<span style="color:#ae81ff">0</span>, r - i);
+</span></span><span style="display:flex;"><span>                min_cost = <span style="color:#66d9ef">double</span>.PositiveInfinity;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">for</span> (j = max(<span style="color:#ae81ff">0</span>, i - r); j &lt;= min(m - <span style="color:#ae81ff">1</span>, i + r); j++, k++)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// Initialize all row and column</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> ((i == <span style="color:#ae81ff">0</span>) &amp;&amp; (j == <span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        cost[k] = dist(A[<span style="color:#ae81ff">0</span>], B[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>                        min_cost = cost[k];
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> ((j - <span style="color:#ae81ff">1</span> &lt; <span style="color:#ae81ff">0</span>) || (k - <span style="color:#ae81ff">1</span> &lt; <span style="color:#ae81ff">0</span>)) y = <span style="color:#66d9ef">double</span>.PositiveInfinity;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">else</span> y = cost[k - <span style="color:#ae81ff">1</span>];
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> ((i - <span style="color:#ae81ff">1</span> &lt; <span style="color:#ae81ff">0</span>) || (k + <span style="color:#ae81ff">1</span> &gt; <span style="color:#ae81ff">2</span> * r)) x = <span style="color:#66d9ef">double</span>.PositiveInfinity;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">else</span> x = cost_prev[k + <span style="color:#ae81ff">1</span>];
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> ((i - <span style="color:#ae81ff">1</span> &lt; <span style="color:#ae81ff">0</span>) || (j - <span style="color:#ae81ff">1</span> &lt; <span style="color:#ae81ff">0</span>)) z = <span style="color:#66d9ef">double</span>.PositiveInfinity;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">else</span> z = cost_prev[k];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// Classic DTW calculation</span>
+</span></span><span style="display:flex;"><span>                    cost[k] = min(min(x, y), z) + dist(A[i], B[j]);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// Find minimum cost in row for early abandoning (possibly to use column instead of row).</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (cost[k] &lt; min_cost)
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        min_cost = cost[k];
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// We can abandon early if the current cummulative distace with lower bound together are larger than bsf</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (i + r &lt; m - <span style="color:#ae81ff">1</span> &amp;&amp; min_cost + cb[i + r + <span style="color:#ae81ff">1</span>] &gt;= bsf)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> min_cost + cb[i + r + <span style="color:#ae81ff">1</span>];
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Move current array to previous array.</span>
+</span></span><span style="display:flex;"><span>                cost_tmp = cost;
+</span></span><span style="display:flex;"><span>                cost = cost_prev;
+</span></span><span style="display:flex;"><span>                cost_prev = cost_tmp;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            k--;
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// the DTW distance is in the last cell in the matrix of size O(m^2) or at the middle of our array.</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">double</span> final_dtw = cost_prev[k];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> final_dtw;
+</span></span><span style="display:flex;"><span>        }
+</span></span></code></pre></div><p><strong>【Opinion 4】 The UCR Suite</strong></p>
+<ul>
+<li><strong>Early Abandoning Z-Normalization</strong></li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155315097.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155315097.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155315097.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155315097.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155315097.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155315097.png"/></p>
+<ul>
+<li><strong>Reordering Early Abandoning</strong></li>
+</ul>
+<blockquote>
+<p>in the picture below, different orderings produce different speedups, an the author use an universal optimal ordering that to sort the index based on the absolute values of the Z-normalized Q, based on the intuition that the value at $Q_I$ will be compared to many $C_i$ during a search;</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100422959.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100422959.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100422959.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100422959.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100422959.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100422959.png"/></p>
+<ul>
+<li><strong>Reversing the Query/Data Role in LB_Keogh</strong></li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100547809.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100547809.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100547809.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100547809.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100547809.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100547809.png"/></p>
+<p>对应代码：</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526202120154.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526202120154.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526202120154.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526202120154.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526202120154.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526202120154.png"/></p>
+<ul>
+<li><strong>Cascading Lower Bounds</strong></li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100626971.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100626971.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100626971.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100626971.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100626971.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100626971.png"/></p>
+<h4 id="experiment">Experiment</h4>
+<ul>
+<li>Random works of length 20 million with increasing long query</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155630301.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155630301.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155630301.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155630301.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155630301.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155630301.png"/></p>
+<ul>
+<li>
+<p><strong>EEG Query:</strong></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026105256644.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026105256644.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026105256644.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026105256644.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026105256644.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026105256644.png"/></p>
+</li>
+<li>
+<p><strong>Supporting Very Long queries: DNA</strong></p>
+</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155729346.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155729346.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155729346.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155729346.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155729346.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155729346.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155755980.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155755980.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155755980.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155755980.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155755980.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155755980.png"/></p>
+<ul>
+<li>Application:  Online Time serial motifs,  classification of historical musical scores, classification of ancient coins, clustering of star light curves</li>
+</ul>
+<blockquote>
+<p>We believe that oversampled data can be searched more quickly by exploiting a provisional search in a downsampled version of the data that can quickly provide a low best-so-far, which, when projected back into the original space can be used to “prime” the search by setting a low best-so-far at the beginning of the search, thus allowing the early abandoning techniques to be more efficient.</p>
+<p>We simply caution the reader that oversampled (i.e., “smooth”) data may allow more speedup than a direct application of the UCR suite may initially suggest.</p>
+</blockquote>
+<h4 id="examples">Examples</h4>
+<ul>
+<li><strong>Time Series Shapelets</strong> have garnered significant interest since their introduction in 2009 [39]. We obtained the original code and tested it on the Face (four) dataset, finding it took 18.9 minutes to finish. After replacing the similarity search routine with UCR suite, it took 12.5 minutes to finish.</li>
+<li><strong>Online Time Series Motifs</strong> generalize the idea of mining repeated patterns in a batch time series to the streaming case [25]. We obtained the original code and tested it on the EEG dataset used in the original paper. The fastest running time for the code assuming linear space is 436 seconds. After replacing the distance function with UCR suite, it took just 156 seconds.</li>
+<li><strong>Classification of Historical Musical Scores</strong> [10]. This dataset has 4,027 images of musical notes converted to time series. We used the UCR suite to compute the rotation-invariant DTW leaveone-out classification. It took 720.6 minutes. SOTA takes 142.4 hours. Thus, we have a speedup factor of 11.8.</li>
+<li><strong>Classification of Ancient Coins</strong> [15]. 2,400 irregularly shaped coins are converted to time series of length 256, and rotationinvariant DTW is used to search the database, taking 12.8 seconds per query. Using the UCR suite, this takes 0.8 seconds per query.</li>
+<li><strong>Clustering of Star Light Curves</strong> is an important problem in astronomy [20], as it can be a preprocessing step in outlier detection [31]. We consider a dataset with 1,000 (purportedly) phase-aligned light curves of length 1,024, whose class has been determined by an expert [31]. Doing spectral clustering on this data with DTW (R = 5%) takes about 23 minutes for all algorithms, and averaged over 100 runs we find the Rand-Index is 0.62. While this time may seem slow, recall that we must do 499,500 DTW calculations with relatively long sequences. As we do not trust the original claim of phase alignment, we further do rotation-invariant DTW that dramatically increases Rand-Index to 0.76. Using SOTA, this takes 16.57 days, but if we use the UCR suite, this time falls by an order of magnitude, to just 1.47 days on a single core.</li>
+</ul>
+<h4 id="notes">Notes</h4>
+<ul>
+<li>Code available:     <a href="http://www.cs.ucr.edu/~eamonn/UCRsuite.html"target="_blank" rel="external nofollow noopener noreferrer">http://www.cs.ucr.edu/~eamonn/UCRsuite.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ul>
+<h4 id="code-explain">Code Explain:</h4>
+<ul>
+<li>包络线绘制</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#75715e">/// Finding the envelop of min and max value for LB_Keogh</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// Implementation idea is intoruduced by Danial Lemire in his paper</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &#34;Faster Retrieval with a Two-Pass Dynamic-Time-Warping Lower Bound&#34;, Pattern Recognition 42(9), 2009.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> lower_upper_lemire(<span style="color:#66d9ef">double</span>[] t, <span style="color:#66d9ef">int</span> len, <span style="color:#66d9ef">int</span> r, <span style="color:#66d9ef">double</span>[] l, <span style="color:#66d9ef">double</span>[] u)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Deque du = <span style="color:#66d9ef">new</span> Deque();
+</span></span><span style="display:flex;"><span>            Deque dl = <span style="color:#66d9ef">new</span> Deque();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">init</span>(<span style="color:#66d9ef">ref</span> du, <span style="color:#ae81ff">2</span> * r + <span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">init</span>(<span style="color:#66d9ef">ref</span> dl, <span style="color:#ae81ff">2</span> * r + <span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            push_back(<span style="color:#66d9ef">ref</span> du, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>            push_back(<span style="color:#66d9ef">ref</span> dl, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i = <span style="color:#ae81ff">1</span>; i &lt; len; i++)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (i &gt; r)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    u[i - r - <span style="color:#ae81ff">1</span>] = t[front(<span style="color:#66d9ef">ref</span> du)];
+</span></span><span style="display:flex;"><span>                    l[i - r - <span style="color:#ae81ff">1</span>] = t[front(<span style="color:#66d9ef">ref</span> dl)];
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (t[i] &gt; t[i - <span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    pop_back(<span style="color:#66d9ef">ref</span> du);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">while</span> (!du.Empty &amp;&amp; t[i] &gt; t[back(<span style="color:#66d9ef">ref</span> du)])
+</span></span><span style="display:flex;"><span>                        pop_back(<span style="color:#66d9ef">ref</span> du);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    pop_back(<span style="color:#66d9ef">ref</span> dl);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">while</span> (!dl.Empty &amp;&amp; t[i] &lt; t[back(<span style="color:#66d9ef">ref</span> dl)])
+</span></span><span style="display:flex;"><span>                        pop_back(<span style="color:#66d9ef">ref</span> dl);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                push_back(<span style="color:#66d9ef">ref</span> du, i);
+</span></span><span style="display:flex;"><span>                push_back(<span style="color:#66d9ef">ref</span> dl, i);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (i == <span style="color:#ae81ff">2</span> * r + <span style="color:#ae81ff">1</span> + front(<span style="color:#66d9ef">ref</span> du))
+</span></span><span style="display:flex;"><span>                    pop_front(<span style="color:#66d9ef">ref</span> du);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (i == <span style="color:#ae81ff">2</span> * r + <span style="color:#ae81ff">1</span> + front(<span style="color:#66d9ef">ref</span> dl))
+</span></span><span style="display:flex;"><span>                    pop_front(<span style="color:#66d9ef">ref</span> dl);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i = len; i &lt; len + r + <span style="color:#ae81ff">1</span>; i++)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                u[i - r - <span style="color:#ae81ff">1</span>] = t[front(<span style="color:#66d9ef">ref</span> du)];
+</span></span><span style="display:flex;"><span>                l[i - r - <span style="color:#ae81ff">1</span>] = t[front(<span style="color:#66d9ef">ref</span> dl)];
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (i - front(<span style="color:#66d9ef">ref</span> du) &gt;= <span style="color:#ae81ff">2</span> * r + <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>                    pop_front(<span style="color:#66d9ef">ref</span> du);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (i - front(<span style="color:#66d9ef">ref</span> dl) &gt;= <span style="color:#ae81ff">2</span> * r + <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>                    pop_front(<span style="color:#66d9ef">ref</span> dl);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span></code></pre></div><p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/Figure_1.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/Figure_1.png, https://gitee.com/github-25970295/blogImage/raw/master/img/Figure_1.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/Figure_1.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/Figure_1.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/Figure_1.png"/></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span> <span style="color:#75715e">/// LB_Keogh 1: Create Envelop for the query</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// Note that because the query is known, envelop can be created once at the begenining.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">///</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// Variable Explanation,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// order : sorted indices for the query.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// uo, lo: upper and lower envelops for the query, which already sorted.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// t     : a circular array keeping the current data.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// j     : index of the starting location in t</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// cb    : (output) current bound at each position. It will be used later for early abandoning in DTW.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">double</span> lb_keogh_cumulative(<span style="color:#66d9ef">long</span>[] order, <span style="color:#66d9ef">double</span>[] t, <span style="color:#66d9ef">double</span>[] uo, <span style="color:#66d9ef">double</span>[] lo, <span style="color:#66d9ef">double</span>[] cb,
+</span></span><span style="display:flex;"><span>                                                  <span style="color:#66d9ef">long</span> j, <span style="color:#66d9ef">int</span> len, <span style="color:#66d9ef">double</span> mean, <span style="color:#66d9ef">double</span> std,
+</span></span><span style="display:flex;"><span>                                                  <span style="color:#66d9ef">double</span> best_so_far = <span style="color:#66d9ef">double</span>.PositiveInfinity)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">double</span> lb = <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">double</span> x, d;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i = <span style="color:#ae81ff">0</span>; i &lt; len &amp;&amp; lb &lt; best_so_far; i++)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                x = (t[(order[i] + j)] - mean) / std;
+</span></span><span style="display:flex;"><span>                d = <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (x &gt; uo[i])
+</span></span><span style="display:flex;"><span>                    d = dist(x, uo[i]);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (x &lt; lo[i])
+</span></span><span style="display:flex;"><span>                    d = dist(x, lo[i]);
+</span></span><span style="display:flex;"><span>                lb += d;
+</span></span><span style="display:flex;"><span>                cb[order[i]] = d;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> lb;
+</span></span><span style="display:flex;"><span>        }
+</span></span></code></pre></div><p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526191916114.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526191916114.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526191916114.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526191916114.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526191916114.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526191916114.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526203936526.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526203936526.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526203936526.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526203936526.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526203936526.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526203936526.png"/></p>
+<p><strong>level</strong>:
+<strong>author</strong>:  François Petitjean   Faculty of IT, Monash University
+<strong>date</strong>: 2014
+<strong>keyword</strong>:</p>
+<ul>
+<li>DTW  Sequence Analyze</li>
+</ul>
+<hr>
+<h2 id="paper--dba">Paper:  DBA</h2>
+<!-- raw HTML omitted -->
+<h4 id="summary">Summary</h4>
+<ol>
+<li>exploit  a recent result to allow meaningful averaging of warped times series, to allows us to create ultra-efficient Nearest &ldquo;Centroid &quot; classifiers that at least as accurate as their more lethargic Nearest Neighbor cousins.</li>
+<li>application area:  reducing the data cardinality,   reducing the data dimensionality(the idea works well when the raw data is oversampled),       reducing the number of objects the nearest neighbor algorithm must see.</li>
+</ol>
+<h4 id="research-objective-1">Research Objective</h4>
+<ul>
+<li><strong>Application Area</strong>: sequence analyse</li>
+<li><strong>Purpose</strong>:  using DBA method to represent  a category</li>
+</ul>
+<h4 id="proble-statement-1">Proble Statement</h4>
+<p>previous work:</p>
+<ul>
+<li>NN-DTW algorithm are competitive or superior in domains as diverse as gesture recognition, robotics and ECG classification[1].</li>
+<li>DBA can be used to speed up NN-DTW by constructing the most representative time series of each class and using only those for training.</li>
+<li>sometiems NCC and NN can have approximately the same accuracy, in such cases we prefer NCC because it is faster and requires less memory.</li>
+<li>sometiems NCC can be more accurate than NN, in such cases we prefer NCC because of the accuracy gains, and the reduced computational requirements come for free.</li>
+</ul>
+<h4 id="methods-1">Methods</h4>
+<ul>
+<li>
+<p><strong>Problem Formulation</strong>:</p>
+<ul>
+<li>Definitions: Dataset $D={ T_1,&hellip;,T_N}$ , $T=(t_1,t_2,&hellip;,t_L)$,  L is the length.</li>
+<li>Averaging under time warping : Finding the multiple alignment of  a set of sequences, or its average sequence(often called consesus sequence in biology) is a typical chicken-and-egg problem: knowig the average sequence provides a multiple alignment and vice versa, Finding the solution to the multiple alignment problem( and thus finding of an average sequence) has been shown to be NP-complete with the exact solution requiring$O(L^N)$ operations for N sequences of length L.</li>
+<li>Average object: given a set of objects $O={O_1,&hellip;,O_N)}$  in a space E indeced by a measure d, the average object $\vec{o} is the object that minimizes the sum of the squares to the set:</li>
+</ul>
+<p>$$
+argmin_{\vec{o}\epsilon E} \sum_{i=1}^Nd^2(\vec{o},O_i)
+$$</p>
+<ul>
+<li>Average time series for DTW:</li>
+</ul>
+</li>
+</ul>
+<p>$$
+argmin_{\vec{T}\epsilon E}\sum_{i=1}^N DTW^2(\vec{T},T_i)
+$$</p>
+<ul>
+<li>DBA:  the best-so-far method to average time series for Dynamic Time Warping:  DBA iteratively refines an average sequence $\vec{T}$  and folows an expectation-maximization scheme:
+<ul>
+<li>Consider  $\vec{T}$   fixed and find the best multiple alignment  M   of the set of sequences D   consistently with  $\vec{T}$</li>
+<li>consider the M fixed and update $\vec{T}$ as the best average sequence consistent with M</li>
+</ul>
+</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122636067.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122636067.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122636067.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122636067.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122636067.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122636067.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122617085.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122617085.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122617085.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122617085.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122617085.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122617085.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123050110.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123050110.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123050110.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123050110.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123050110.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123050110.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123133018.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123133018.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123133018.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123133018.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123133018.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123133018.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123625681.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123625681.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123625681.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123625681.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123625681.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123625681.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123304559.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123304559.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123304559.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123304559.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123304559.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123304559.png"/></p>
+<h4 id="evaluation">Evaluation</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305120253517.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305120253517.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305120253517.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305120253517.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305120253517.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305120253517.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222446448.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222446448.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222446448.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222446448.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222446448.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222446448.png"/></p>
+<ul>
+<li>Left) NN has error-rate of 12.60%, while the Nearest Centroid classifier (right) with the same instances achieves an error-rate of just 5.22%</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222631759.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222631759.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222631759.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222631759.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222631759.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222631759.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222804005.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222804005.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222804005.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222804005.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222804005.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222804005.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526225000764.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526225000764.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526225000764.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526225000764.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526225000764.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526225000764.png"/></p>
+<h4 id="notes-1">Notes</h4>
+<ul>
+<li>
+<p>Nearest centroid classifier [1]</p>
+</li>
+<li>
+<p>code  available: 23   Matlab and java source code for DBA</p>
+</li>
+</ul>
+<p><strong>level</strong>:
+<strong>author</strong>: Germain Forestier,University of Haute-Alsace, Mulhouse, France
+<strong>date</strong>:
+<strong>keyword</strong>:</p>
+<ul>
+<li>DTW, Series generate</li>
+</ul>
+<hr>
+<h2 id="paper-generating-synthetic-series">Paper: Generating Synthetic series</h2>
+<!-- raw HTML omitted -->
+<h4 id="summary-1">Summary</h4>
+<ol>
+<li>extend DBA to calculate a weighted average of time series under DTW.</li>
+<li>enlarge training sets by generating synthetic (or artificial) examples.</li>
+<li>can generate an unlimited number of synthetic time series and tailor the weights distribution to achieve diversity.</li>
+<li>deal with cold start problem, and use synthetic time series to double the trainning sets size regardless of their original sizes.</li>
+</ol>
+<h4 id="research-objective-2">Research Objective</h4>
+<ul>
+<li><strong>Application Area</strong>:  Sequence Analyse</li>
+<li><strong>Purpose</strong>:   cold start problem, synthetic time series to double the training sets size regardless of their original sizes.</li>
+</ul>
+<h4 id="proble-statement-2">Proble Statement</h4>
+<p>based information</p>
+<ul>
+<li>in some cases, it can be easier to experss our knowledge of the problem by generating synthetic data than by modifying the classifier itself. For instance, images containing street numbers on houses can be slightly rotated without changing what number they actually are. Voice can be slightly accelerated or slowed down without modifying the meaning. we can replace some words in a sentence by a close synonym without completely altering its meaning.</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305110536197.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305110536197.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305110536197.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305110536197.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305110536197.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305110536197.png"/></p>
+<p>previous work:</p>
+<ul>
+<li>Le Guennec et al. proposed to stretch or shrink randomly selected slices of a time series in order to create synthetic examples.</li>
+</ul>
+<h4 id="methods-2">Methods</h4>
+<ul>
+<li>
+<p><strong>Problem Formulation</strong>:</p>
+<ul>
+<li>Definition 1:  A dataset $D={T_1,T_2,&hellip;,T_N}$, for $T_1$:  $T_1=&lt;t_1,t_2,&hellip;,t_L&gt;$, L is the length.</li>
+<li>Definition2: Average time series for DTW:</li>
+</ul>
+<p>$$
+argmin\vec{T}\epsilon E\sum_{i=1}^NDTW^2(\vec{T},T_i)
+$$</p>
+<ul>
+<li>Definition 3:  weighted average of time series under DTW, given a weighted set of time series $D={(T_1,w_1),&hellip;,(T_N,w_N)} $in a space E induced by DTW, $\vec{T}$ the average time series is the time series that minimizes :</li>
+</ul>
+</li>
+</ul>
+<p>$$
+argmin\vec{T}\epsilon E\sum_{i=1}^Nw_i*DTW^2(\vec{T},T_i)
+$$</p>
+<ul>
+<li>DBA uses expectation-maximization scheme and iteratively refines a starting average $\vec{T}$  by:
+<ul>
+<li>Expectation: Considering $\vec{T}$  fixed and finding the best multiple alignment M of the set of sequence D consistenly with $\vec{T}$</li>
+<li>Maximization: considering M fixed and updating $\vec{T} $ as the best average sequence consistent with M.</li>
+</ul>
+</li>
+</ul>
+<p><strong>【Problem Define】</strong></p>
+<ul>
+<li>how to compute a weighted average consistently with dynamic time warping</li>
+<li>how to decide upon the weights to give to each times series.</li>
+</ul>
+<p><strong>[Weighted average of time series for DTW]</strong></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305111507465.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305111507465.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305111507465.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305111507465.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305111507465.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305111507465.png"/></p>
+<p>DTW_alignment:   找到DTW匹配时的path所对应的序列对，  将序列对D中对应元素值相加，然后统计个数取平均,其中代码片段如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>pathMatrix<span style="color:#f92672">[</span>i<span style="color:#f92672">][</span>j<span style="color:#f92672">]</span> <span style="color:#f92672">!=</span> DBA<span style="color:#f92672">.</span><span style="color:#a6e22e">NIL</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    updatedMean<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">+=</span> T<span style="color:#f92672">[</span>j<span style="color:#f92672">];</span>
+</span></span><span style="display:flex;"><span>    nElementsForMean<span style="color:#f92672">[</span>i<span style="color:#f92672">]++;</span>
+</span></span><span style="display:flex;"><span>    move <span style="color:#f92672">=</span> pathMatrix<span style="color:#f92672">[</span>i<span style="color:#f92672">][</span>j<span style="color:#f92672">];</span>
+</span></span><span style="display:flex;"><span>    i <span style="color:#f92672">+=</span> moveI<span style="color:#f92672">[</span>move<span style="color:#f92672">];</span>
+</span></span><span style="display:flex;"><span>    j <span style="color:#f92672">+=</span> moveJ<span style="color:#f92672">[</span>move<span style="color:#f92672">];</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">(</span>i <span style="color:#f92672">!=</span> 0 <span style="color:#f92672">||</span> j <span style="color:#f92672">!=</span> 0<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>updatedMean<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">+=</span> T<span style="color:#f92672">[</span>j<span style="color:#f92672">];</span>
+</span></span><span style="display:flex;"><span>nElementsForMean<span style="color:#f92672">[</span>i<span style="color:#f92672">]++;</span>
+</span></span></code></pre></div><p>medoid 方法java代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">approximateMedoidIndex</span><span style="color:#f92672">(</span><span style="color:#66d9ef">double</span><span style="color:#f92672">[][]</span> sequences<span style="color:#f92672">,</span> <span style="color:#66d9ef">double</span><span style="color:#f92672">[][]</span> mat<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">		 * we are finding the medoid, as this can take a bit of time, if
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">		 * there is more than 50 time series, we sample 50 as possible
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">		 * medoid candidates
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">		 */</span>
+</span></span><span style="display:flex;"><span>		ArrayList<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> allIndices <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> sequences<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>			allIndices<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>i<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>		Collections<span style="color:#f92672">.</span><span style="color:#a6e22e">shuffle</span><span style="color:#f92672">(</span>allIndices<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>		ArrayList<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> medianIndices <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> sequences<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">&amp;&amp;</span> i <span style="color:#f92672">&lt;</span> 50<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>			medianIndices<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>allIndices<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>i<span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">int</span> indexMedoid <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">double</span> lowestSoS <span style="color:#f92672">=</span> Double<span style="color:#f92672">.</span><span style="color:#a6e22e">MAX_VALUE</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> medianCandidateIndex <span style="color:#f92672">:</span> medianIndices<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">double</span><span style="color:#f92672">[]</span> possibleMedoid <span style="color:#f92672">=</span> sequences<span style="color:#f92672">[</span>medianCandidateIndex<span style="color:#f92672">];</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">double</span> tmpSoS <span style="color:#f92672">=</span> sumOfSquares<span style="color:#f92672">(</span>possibleMedoid<span style="color:#f92672">,</span> sequences<span style="color:#f92672">,</span> mat<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>tmpSoS <span style="color:#f92672">&lt;</span> lowestSoS<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>				indexMedoid <span style="color:#f92672">=</span> medianCandidateIndex<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>				lowestSoS <span style="color:#f92672">=</span> tmpSoS<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> indexMedoid<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">sumOfSquares</span><span style="color:#f92672">(</span><span style="color:#66d9ef">double</span><span style="color:#f92672">[]</span> sequence<span style="color:#f92672">,</span> <span style="color:#66d9ef">double</span><span style="color:#f92672">[][]</span> sequences<span style="color:#f92672">,</span> <span style="color:#66d9ef">double</span><span style="color:#f92672">[][]</span> mat<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">double</span> sos <span style="color:#f92672">=</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> sequences<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">double</span> dist <span style="color:#f92672">=</span> DTW<span style="color:#f92672">(</span>sequence<span style="color:#f92672">,</span> sequences<span style="color:#f92672">[</span>i<span style="color:#f92672">],</span> mat<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>			sos <span style="color:#f92672">+=</span> dist <span style="color:#f92672">*</span> dist<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> sos<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p><strong>[Average All]</strong></p>
+<blockquote>
+<p>We ﬁrst propose to sample the weights vector following a ﬂat Dirichlet distribution with unit concentration parameter w ⇠Dir(1). We used a low value for the shape parameter (0.2 in this paper) of the Gamma-distributed random variable used for the Dirichlet distribution in order to give more weight to a time series that is then used as the initial object to update in Weighted DBA algorithm</p>
+<p>the following two methods ﬁrst select a subset of the time series to average</p>
+</blockquote>
+<p>[ Average Selected (AS) ]</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112112422.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112112422.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112112422.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112112422.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112112422.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112112422.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112129474.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112129474.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112129474.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112129474.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112129474.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112129474.png"/></p>
+<p>[ Average Selected with Distance (ASD)]</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112407656.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112407656.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112407656.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112407656.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112407656.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112407656.png"/></p>
+<h4 id="notes-2">Notes</h4>
+<ul>
+<li>
+<p>code available： <a href="https://github.com/fpetitjean/DBA"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/fpetitjean/DBA<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+</li>
+<li>
+<h5 id="dirichlet-distribution">Dirichlet distribution</h5>
+</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305113855885.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305113855885.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305113855885.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305113855885.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305113855885.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305113855885.png"/></p>
+<p><strong>level</strong>: 2017 PMLR  , Sydney Australia
+<strong>author</strong>:  Macro Cuturi, Mathieu Blondel
+<strong>date</strong>:   2017
+<strong>keyword</strong>:</p>
+<ul>
+<li>DTW, Sequence prediction</li>
+</ul>
+<hr>
+<h2 id="paper-soft-dtw">Paper: Soft-DTW</h2>
+<!-- raw HTML omitted -->
+<h4 id="summary-2">Summary</h4>
+<ol>
+<li>propose a differentiable learning loss between time series, building upon the DTW discrepancy.</li>
+<li>computes the soft-minimum of all alignment costs, that both its value and gradient can be computed with quadratic time complexity.</li>
+<li>propose to use soft-DTW as a fitting term to compare the output of a machine synthesizing a time series segment with a ground truth observation.</li>
+</ol>
+<h4 id="research-objective-3">Research Objective</h4>
+<ul>
+<li><strong>Application Area</strong>:   Sequence Analyse</li>
+<li><strong>Purpose</strong>:    the compare data is not a vector, but a sequence</li>
+</ul>
+<h4 id="proble-statement-3">Proble Statement</h4>
+<ul>
+<li>the gradients of soft-DTW to all of its variables can be computed as a by-product of the computation of the discrepancy itself, with an added quadratic storage cost.</li>
+</ul>
+<h4 id="methods-3">Methods</h4>
+<p><strong>【Opinion 1】DTW and soft-DTW loss function</strong></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092022176.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092022176.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092022176.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092022176.png 2x"
+    data-sizes="auto"
+    alt="image-20200527092022176"
+    title="image-20200527092022176"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091952121.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091952121.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091952121.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091952121.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091952121.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091952121.png"/></p>
+<p>【Wait to read clearly】don&rsquo;t understand the follows.</p>
+<h4 id="evaluation-1">Evaluation</h4>
+<ul>
+<li><strong>Environment</strong>:
+<ul>
+<li>Dataset:</li>
+</ul>
+</li>
+<li>Average with soft-DTW loss</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092731729.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092731729.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092731729.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092731729.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092731729.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092731729.png"/></p>
+<ul>
+<li>Clustering with the soft-DTW geometry</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092811040.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092811040.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092811040.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092811040.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092811040.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092811040.png"/></p>
+<ul>
+<li>Multi-step-ahead prediction</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091559497.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091559497.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091559497.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091559497.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091559497.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091559497.png"/></p>
+<h4 id="notes-font-colororange去加强了解font">Notes <!-- raw HTML omitted -->去加强了解<!-- raw HTML omitted --></h4>
+<ul>
+<li>coda available:  https: //github.com/mblondel/soft-dtw.</li>
+</ul>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-28&#32;23:39:26>更新于 2023-09-28&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/dtw-sequence-analysis/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e6%97%b6%e7%a9%ba%e6%95%b0%e6%8d%ae%5cRetrieve%5cDTW-Sequence-Analysis.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/dtw-sequence-analysis/" data-title="DTW&amp;Sequence Analysis" data-hashtags="SequanceAnalysis"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/dtw-sequence-analysis/" data-hashtag="SequanceAnalysis"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/dtw-sequence-analysis/" data-title="DTW&amp;Sequence Analysis" data-image="https://gitee.com/github-25970295/blogImage/raw/master/img/source-2147529__340.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/sequanceanalysis/">SequanceAnalysis</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/unmanned-intelligent-retail/" class="prev" rel="prev" title="Unmanned Intelligent Retail"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Unmanned Intelligent Retail</a>
+      <a href="liudongdong1.github.io/windowsinstallation/" class="next" rel="next" title="Window CommandLine">Window CommandLine<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

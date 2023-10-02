@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Kubernetes_存储流程详解 - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="1.流程概览 流程如下： 用户创建了一个包含 PVC 的 Pod，该 PVC 要求使用动态存储卷； Scheduler 根据 Pod 配置、节点状态、PV 配置等信息，把 Pod 调度到一个合适的 Worker 节" /><meta name="keywords" content='Storage' /><meta itemprop="name" content="Kubernetes_存储流程详解">
+<meta itemprop="description" content="1.流程概览 流程如下： 用户创建了一个包含 PVC 的 Pod，该 PVC 要求使用动态存储卷； Scheduler 根据 Pod 配置、节点状态、PV 配置等信息，把 Pod 调度到一个合适的 Worker 节">
+<meta itemprop="dateModified" content="2023-09-24T17:00:04+08:00" />
+<meta itemprop="wordCount" content="4339"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Storage," /><meta property="og:title" content="Kubernetes_存储流程详解" />
+<meta property="og:description" content="1.流程概览 流程如下： 用户创建了一个包含 PVC 的 Pod，该 PVC 要求使用动态存储卷； Scheduler 根据 Pod 配置、节点状态、PV 配置等信息，把 Pod 调度到一个合适的 Worker 节" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+
+<meta property="article:modified_time" content="2023-09-24T17:00:04+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="Kubernetes_存储流程详解"/>
+<meta name="twitter:description" content="1.流程概览 流程如下： 用户创建了一个包含 PVC 的 Pod，该 PVC 要求使用动态存储卷； Scheduler 根据 Pod 配置、节点状态、PV 配置等信息，把 Pod 调度到一个合适的 Worker 节"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3/" /><link rel="prev" href="liudongdong1.github.io/kubernetes-cluster-architecture/" /><link rel="next" href="liudongdong1.github.io/kubernets%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Kubernetes_存储流程详解",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/kubernetes_%E5%AD%98%E5%82%A8%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3\/"
+    },"genre": "posts","keywords": "Storage","wordcount":  4339 ,
+    "url": "liudongdong1.github.io\/kubernetes_%E5%AD%98%E5%82%A8%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3\/","dateModified": "2023-09-24T17:00:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>Kubernetes_存储流程详解</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/storage/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div>
+      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01" >0001-01-01</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 4339 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="Kubernetes_存储流程详解">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1流程概览">1.流程概览</a></li>
+        <li><a href="#2流程详解">2.流程详解</a></li>
+        <li><a href="#resource">Resource</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><h3 id="1流程概览">1.流程概览</h3>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../blogimgv2022/88c73171b412b2f9d996d155384647ad.png"
+    data-srcset="../../../../blogimgv2022/88c73171b412b2f9d996d155384647ad.png, ../../../../blogimgv2022/88c73171b412b2f9d996d155384647ad.png 1.5x, ../../../../blogimgv2022/88c73171b412b2f9d996d155384647ad.png 2x"
+    data-sizes="auto"
+    alt="../../../../blogimgv2022/88c73171b412b2f9d996d155384647ad.png"
+    title="../../../../blogimgv2022/88c73171b412b2f9d996d155384647ad.png"/></p>
+<p>流程如下：</p>
+<ol>
+<li>用户创建了一个包含 PVC 的 Pod，该 PVC 要求使用动态存储卷；</li>
+<li>Scheduler 根据 Pod 配置、节点状态、PV 配置等信息，把 <code>Pod 调度到一个合适的 Worker 节点上</code>；</li>
+<li><code>PV 控制器 watch 到该 Pod 使用的 PVC 处于 Pending 状态，于是调用 Volume Plugin（in-tree）创建存储卷</code>，并<code>创建 PV 对象</code>（out-of-tree 由 External Provisioner 来处理）；</li>
+<li><code>AD 控制器发现 Pod 和 PVC 处于待挂接状态</code>，于是调用 <code>Volume Plugin 挂接存储设备到目标 Worker 节点上</code></li>
+<li>在 Worker 节点上，Kubelet 中的 Volume Manager 等待存储设备挂接完成，并通过 <code>Volume Plugin 将设备挂载到全局目录</code>：/var/lib/kubelet/pods/[pod uid]/volumes/kubernetes.io~iscsi/[PV name]（以 iscsi 为例）；</li>
+<li>Kubelet 通过 Docker 启动 Pod 的 Containers，用 <code>bind mount 方式将已挂载到本地全局目录的卷映射到容器中。</code></li>
+</ol>
+<p>更详细的流程如下：</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../blogimgv2022/47a28aa992e90fd5a5bb7a30b6e4a8b3.png"
+    data-srcset="../../../../blogimgv2022/47a28aa992e90fd5a5bb7a30b6e4a8b3.png, ../../../../blogimgv2022/47a28aa992e90fd5a5bb7a30b6e4a8b3.png 1.5x, ../../../../blogimgv2022/47a28aa992e90fd5a5bb7a30b6e4a8b3.png 2x"
+    data-sizes="auto"
+    alt="img"
+    title="img"/></p>
+<h3 id="2流程详解">2.流程详解</h3>
+<p>不同 K8s 版本，持久化存储流程略有区别。本文基于 Kubernetes 1.14.8 版本。从上述流程图中可看到，存储卷从创建到提供应用使用共分为三个阶段：<code>Provision/Delete、Attach/Detach、Mount/Unmount</code>。</p>
+<h4 id="provisioning-volumes">provisioning volumes</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://static001.infoq.cn/resource/image/fb/b7/fb17827e4e6f2266a0987e7d0dfbeeb7.png"
+    data-srcset="https://static001.infoq.cn/resource/image/fb/b7/fb17827e4e6f2266a0987e7d0dfbeeb7.png, https://static001.infoq.cn/resource/image/fb/b7/fb17827e4e6f2266a0987e7d0dfbeeb7.png 1.5x, https://static001.infoq.cn/resource/image/fb/b7/fb17827e4e6f2266a0987e7d0dfbeeb7.png 2x"
+    data-sizes="auto"
+    alt="img"
+    title="img"/></p>
+<p><strong>PV 控制器中有两个 Worker</strong>：</p>
+<ul>
+<li>ClaimWorker：处理 <code>PVC 的 add / update / delete 相关事件以及 PVC 的状态迁移</code>；</li>
+<li>VolumeWorker：<code>负责 PV 的状态迁移</code>。</li>
+</ul>
+<p><strong>PV 状态迁移（UpdatePVStatus）</strong>：</p>
+<ul>
+<li>PV 初始状态为 Available，当 PV 与 PVC 绑定后，状态变为 Bound；</li>
+<li>与 PV 绑定的 PVC 删除后，状态变为 Released；</li>
+<li>当 PV 回收策略为 Recycled 或手动删除 PV 的 .Spec.ClaimRef 后，PV 状态变为 Available；</li>
+<li>当 PV 回收策略未知或 Recycle 失败或存储卷删除失败，PV 状态变为 Failed；</li>
+<li>手动删除 PV 的 .Spec.ClaimRef，PV 状态变为 Available。</li>
+</ul>
+<p><strong>PVC 状态迁移（UpdatePVCStatus）</strong>：</p>
+<ul>
+<li>当集群中不存在满足 PVC 条件的 PV 时，PVC 状态为 Pending。在 PV 与 PVC 绑定后，PVC 状态由 Pending 变为 Bound；</li>
+<li>与 PVC 绑定的 PV 在环境中被删除，PVC 状态变为 Lost；</li>
+<li>再次与一个同名 PV 绑定后，PVC 状态变为 Bound。</li>
+</ul>
+<h4 id="-provision-流程">-Provision 流程</h4>
+<p><strong>静态存储卷流程（FindBestMatch）</strong>：PV 控制器首先在环境中筛选一个状态为 Available 的 PV 与新 PVC 匹配。</p>
+<ul>
+<li><strong>DelayBinding</strong>：
+<ul>
+<li>PV 控制器判断该 PVC 是否需要延迟绑定：查看 PVC 的 annotation 中是否包含 volume.kubernetes.io/selected-node，若存在则表示该 PVC 已经被调度器指定好了节点（属于 ProvisionVolume），故不需要延迟绑定；</li>
+<li>若 PVC 的 annotation 中不存在 volume.kubernetes.io/selected-node，同时没有 StorageClass，默认表示不需要延迟绑定；<code>若有 StorageClass，查看其 VolumeBindingMode 字段，若为 WaitForFirstConsumer 则需要延迟绑定</code>，若为 Immediate 则不需要延迟绑定；</li>
+</ul>
+</li>
+<li><strong>FindBestMatchPVForClaim</strong>：PV 控制器尝试找一个满足 PVC 要求的环境中现有的 PV。PV 控制器会将所有的 PV 进行一次筛选，并会从满足条件的 PV 中选择一个最佳匹配的 PV。筛选规则：
+<ul>
+<li><code>VolumeMode 是否匹配</code>；</li>
+<li>PV 是否已绑定到 PVC 上；</li>
+<li>PV 的 .Status.Phase 是否为 Available；</li>
+<li><code>LabelSelector </code>检查，PV 与 PVC 的 label 要保持一致；</li>
+<li>PV 与 PVC 的 <code>StorageClass</code> 是否一致；</li>
+<li>每次迭代更新<code>最小满足 PVC requested size </code>的 PV，并作为最终结果返回；</li>
+</ul>
+</li>
+<li><strong>Bind</strong>：PV 控制器对选中的 PV、PVC 进行绑定：
+<ul>
+<li>更新 PV 的 .Spec.ClaimRef 信息为当前 PVC；</li>
+<li>更新 PV 的 .Status.Phase 为 Bound；</li>
+<li>新增 PV 的 annotation ：pv.kubernetes.io/bound-by-controller: “yes”；</li>
+<li>更新 PVC 的 .Spec.VolumeName 为 PV 名称；</li>
+<li>更新 PVC 的 .Status.Phase 为 Bound；</li>
+<li>新增 PVC 的 annotation：pv.kubernetes.io/bound-by-controller: “yes” 和 pv.kubernetes.io/bind-completed: “yes”；</li>
+</ul>
+</li>
+</ul>
+<p><strong>动态存储卷流程（ProvisionVolume）</strong>：若环境中没有合适的 PV，则进入动态 Provisioning 场景：</p>
+<ul>
+<li><strong>Before Provisioning</strong>：
+<ul>
+<li>PV 控制器首先判断 PVC 使用的 StorageClass 是 in-tree 还是 out-of-tree：通过查看 <code>StorageClass 的 Provisioner 字段是否包含 “kubernetes.io/” 前缀来判断</code>；</li>
+<li>PV 控制器更新 PVC 的 annotation：claim.Annotations[“volume.beta.kubernetes.io/storage-provisioner”] = storageClass.Provisioner；</li>
+</ul>
+</li>
+<li><strong>in-tree Provisioning</strong>（internal provisioning）：
+<ul>
+<li>in-tree 的 Provioner 会实现 <code>ProvisionableVolumePlugin 接口的 NewProvisioner 方法，用来返回一个新的 Provisioner</code>；</li>
+<li>PV 控制器调用 Provisioner 的 Provision 函数，该函数会返回一个 PV 对象；</li>
+<li>PV 控制器创建上一步返回的 PV 对象，将其与 PVC 绑定，Spec.ClaimRef 设置为 PVC，.Status.Phase 设置为 Bound，.Spec.StorageClassName 设置为与 PVC 相同的 StorageClassName；同时新增 annotation：“pv.kubernetes.io/bound-by-controller”=“yes” 和 “pv.kubernetes.io/provisioned-by”=plugin.GetPluginName()；</li>
+</ul>
+</li>
+<li><strong>out-of-tree Provisioning</strong>（external provisioning）：
+<ul>
+<li>External Provisioner 检查 PVC 中的 claim.Spec.VolumeName 是否为空，不为空则直接跳过该 PVC；</li>
+<li>External Provisioner 检查 PVC 中的 claim.Annotations[“volume.beta.kubernetes.io/storage-provisioner”] 是否等于自己的 Provisioner Name（External Provisioner 在启动时会传入 &ndash;provisioner 参数来确定自己的 Provisioner Name）；</li>
+<li>若 PVC 的 VolumeMode=Block，检查 External Provisioner 是否支持块设备；</li>
+<li>External Provisioner 调用 Provision 函数：通过 <code>gRPC 调用 CSI 存储插件的 CreateVolume 接口</code>；</li>
+<li>External Provisioner 创建一个 PV 来代表该 volume，同时将该 PV 与之前的 PVC 做绑定。</li>
+</ul>
+</li>
+</ul>
+<h4 id="-deleting-volumes-流程">-<strong>deleting volumes</strong> 流程</h4>
+<ul>
+<li>
+<p>用户删除 PVC，删除 PV 控制器改变 PV.Status.Phase 为 Released。</p>
+</li>
+<li>
+<p>当 PV.Status.Phase == Released 时，PV 控制器首先检查 Spec.PersistentVolumeReclaimPolicy 的值，为 Retain 时直接跳过，为 Delete 时：</p>
+<ul>
+<li>
+<p><strong>in-tree Deleting</strong>：</p>
+<ul>
+<li>in-tree 的 Provioner 会实现 DeletableVolumePlugin 接口的 NewDeleter 方法，用来返回一个新的 Deleter；</li>
+<li>控制器调用 Deleter 的 Delete 函数，删除对应 volume；</li>
+<li>在 volume 删除后，PV 控制器会删除 PV 对象；</li>
+</ul>
+</li>
+<li>
+<p><strong>out-of-tree Deleting</strong>：</p>
+<ul>
+<li>External Provisioner 调用 Delete 函数，通过 gRPC 调用 CSI 插件的 DeleteVolume 接口；</li>
+<li>在 volume 删除后，External Provisioner 会删除 PV 对象</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="attaching-volumes"><strong>Attaching Volumes</strong></h4>
+<p>Kubelet 组件和 AD 控制器都可以做 attach/detach 操作，若 Kubelet 的启动参数中指定了 &ndash;enable-controller-attach-detach，则由 Kubelet 来做；否则默认由 AD 控制起来做。下面以 AD 控制器为例来讲解 attach/detach 操作。</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../blogimgv2022/bdcbcf0ce4b69a68a2efa5ff98f79ac7.png"
+    data-srcset="../../../../blogimgv2022/bdcbcf0ce4b69a68a2efa5ff98f79ac7.png, ../../../../blogimgv2022/bdcbcf0ce4b69a68a2efa5ff98f79ac7.png 1.5x, ../../../../blogimgv2022/bdcbcf0ce4b69a68a2efa5ff98f79ac7.png 2x"
+    data-sizes="auto"
+    alt="../../../../blogimgv2022/bdcbcf0ce4b69a68a2efa5ff98f79ac7.png"
+    title="../../../../blogimgv2022/bdcbcf0ce4b69a68a2efa5ff98f79ac7.png"/></p>
+<p><strong>AD 控制器中有两个核心变量</strong>：</p>
+<ul>
+<li>DesiredStateOfWorld（DSW）：集群中<code>预期的数据卷挂接状态</code>，包含了 nodes-&gt;volumes-&gt;pods 的信息；</li>
+<li>ActualStateOfWorld（ASW）：集群中<code>实际的数据卷挂接状态</code>，包含了 volumes-&gt;nodes 的信息。</li>
+</ul>
+<h4 id="--attaching-流程">- Attaching 流程</h4>
+<p>AD 控制器根据集群中的资源信息，初始化 DSW 和 ASW。</p>
+<p>AD 控制器内部有三个组件周期性更新 DSW 和 ASW：</p>
+<ul>
+<li>
+<p><strong>Reconciler</strong>。通过一个 GoRoutine 周期性运行，确保 volume 挂接 / 摘除完毕。此期间不断更新 ASW：</p>
+<ul>
+<li>in-tree attaching：1. in-tree 的 Attacher 会实现 AttachableVolumePlugin 接口的 NewAttacher 方法，用来返回一个新的 Attacher；2. AD 控制器调用 Attacher 的 Attach 函数进行设备挂接；3. 更新 ASW。</li>
+<li>out-of-tree attaching：1. 调用 in-tree 的 CSIAttacher 创建一个 VolumeAttachement（VA）对象，该对象包含了 Attacher 信息、节点名称、待挂接 PV 信息；2. External Attacher 会 watch 集群中的 VolumeAttachement 资源，发现有需要挂接的数据卷时，调用 Attach 函数，通过 gRPC 调用 CSI 插件的 ControllerPublishVolume 接口。</li>
+</ul>
+</li>
+<li>
+<p><strong>DesiredStateOfWorldPopulator</strong>。通过一个 GoRoutine 周期性运行，主要功能是更新 DSW</p>
+<ul>
+<li>findAndRemoveDeletedPods - 遍历所有 DSW 中的 Pods，若其已从集群中删除则从 DSW 中移除；</li>
+<li>findAndAddActivePods - 遍历所有 PodLister 中的 Pods，若 DSW 中不存在该 Pod 则添加至 DSW。</li>
+</ul>
+</li>
+<li>
+<p><strong>PVC Worker</strong>。watch PVC 的 add/update 事件，处理 PVC 相关的 Pod，并实时更新 DSW。</p>
+</li>
+</ul>
+<h4 id="-detaching-volumes-流程">-Detaching Volumes 流程</h4>
+<ol>
+<li>当 Pod 被删除，<code>AD 控制器</code>会 watch 到该事件。首先 AD 控制器检查 Pod 所在的 Node 资源是否包含&quot;volumes.kubernetes.io/<code>keep-terminated-pod-volumes</code>&ldquo;标签，若包含则不做操作；不包含则从 DSW 中去掉该 volume；</li>
+<li>AD 控制器通过 <code>Reconciler </code>使 ActualStateOfWorld 状态向 DesiredStateOfWorld 状态靠近，当发现 ASW 中有 DSW 中不存在的 volume 时，会做 Detach 操作：</li>
+</ol>
+<p><strong>in-tree detaching</strong>：1. AD 控制器会实现 AttachableVolumePlugin 接口的 NewDetacher 方法，用来返回一个新的 Detacher；2. 控制器调用 Detacher 的 Detach 函数，detach 对应 volume；3. AD 控制器更新 ASW。</p>
+<p><strong>out-of-tree detaching</strong>：1. AD 控制器调用 out-tree 的 CSIAttacher 删除相关 VolumeAttachement 对象；2. External Attacher 会 watch 集群中的 VolumeAttachement（VA）资源，发现有需要摘除的数据卷时，调用 Detach 函数，通过 gRPC 调用 CSI 插件的 ControllerUnpublishVolume 接口；3. AD 控制器更新 ASW。</p>
+<h4 id="--mountingunmounting-volumes">- Mounting/Unmounting Volumes</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="../../../../blogimgv2022/e8c4e7e085da874578243bb3747c91bf.png"
+    data-srcset="../../../../blogimgv2022/e8c4e7e085da874578243bb3747c91bf.png, ../../../../blogimgv2022/e8c4e7e085da874578243bb3747c91bf.png 1.5x, ../../../../blogimgv2022/e8c4e7e085da874578243bb3747c91bf.png 2x"
+    data-sizes="auto"
+    alt="../../../../blogimgv2022/e8c4e7e085da874578243bb3747c91bf.png"
+    title="../../../../blogimgv2022/e8c4e7e085da874578243bb3747c91bf.png"/></p>
+<p>Volume Manager 中同样也有两个核心变量：</p>
+<ul>
+<li>DesiredStateOfWorld（DSW）：集群中预期的数据卷挂载状态，包含了 volumes-&gt;pods 的信息；</li>
+<li>ActualStateOfWorld（ASW）：集群中实际的数据卷挂载状态，包含了 volumes-&gt;pods 的信息。</li>
+</ul>
+<p>Mounting/UnMounting 流程如下：</p>
+<blockquote>
+<p>全局目录（global mount path）存在的目的：块设备在 Linux 上只能挂载一次，而在 K8s 场景中，一个 PV 可能被挂载到同一个 Node 上的多个 Pod 实例中。若块设备格式化后先挂载至 Node 上的一个临时全局目录，然后再使用 Linux 中的 bind mount 技术把这个全局目录挂载进 Pod 中对应的目录上，就可以满足要求。上述流程图中，全局目录即 /var/lib/kubelet/pods/[pod uid]/volumes/kubernetes.io~iscsi/[PV name]</p>
+</blockquote>
+<p>VolumeManager 根据集群中的资源信息，初始化 DSW 和 ASW。</p>
+<p>VolumeManager 内部有两个组件周期性更新 DSW 和 ASW：</p>
+<ul>
+<li>DesiredStateOfWorldPopulator：通过一个 GoRoutine 周期性运行，主要功能是更新 DSW；</li>
+<li>Reconciler：通过一个 GoRoutine 周期性运行，确保 volume 挂载 / 卸载完毕。此期间不断更新 ASW：</li>
+</ul>
+<p>unmountVolumes：确保 Pod 删除后 volumes 被 unmount。遍历一遍所有 ASW 中的 Pod，若其不在 DSW 中（表示 Pod 被删除），此处以 VolumeMode=FileSystem 举例，则执行如下操作：</p>
+<ol>
+<li>Remove all bind-mounts：调用 Unmounter 的 TearDown 接口（若为 out-of-tree 则调用 CSI 插件的 NodeUnpublishVolume 接口）；</li>
+<li>Unmount volume：调用 DeviceUnmounter 的 UnmountDevice 函数（若为 out-of-tree 则调用 CSI 插件的 NodeUnstageVolume 接口）；</li>
+<li>更新 ASW。</li>
+</ol>
+<p>mountAttachVolumes：确保 Pod 要使用的 volumes 挂载成功。遍历一遍所有 DSW 中的 Pod，若其不在 ASW 中（表示目录待挂载映射到 Pod 上），此处以 VolumeMode=FileSystem 举例，执行如下操作：</p>
+<ol>
+<li>等待 volume 挂接到节点上（由 External Attacher or Kubelet 本身挂接）；</li>
+<li>挂载 volume 到全局目录：调用 DeviceMounter 的 MountDevice 函数（若为 out-of-tree 则调用 CSI 插件的 NodeStageVolume 接口）；</li>
+<li>更新 ASW：该 volume 已挂载到全局目录；</li>
+<li>bind-mount volume 到 Pod 上：调用 Mounter 的 SetUp 接口（若为 out-of-tree 则调用 CSI 插件的 NodePublishVolume 接口）；</li>
+<li>更新 ASW。</li>
+</ol>
+<p>unmountDetachDevices：确保需要 unmount 的 volumes 被 unmount。遍历一遍所有 ASW 中的 UnmountedVolumes，若其不在 DSW 中（表示 volume 已无需使用），执行如下操作：</p>
+<ol>
+<li>Unmount volume：调用 DeviceUnmounter 的 UnmountDevice 函数（若为 out-of-tree 则调用 CSI 插件的 NodeUnstageVolume 接口）；</li>
+<li>更新 ASW。</li>
+</ol>
+<h3 id="resource">Resource</h3>
+<ul>
+<li><a href="https://juejin.cn/post/7014625141720088606#heading-17"target="_blank" rel="external nofollow noopener noreferrer">https://juejin.cn/post/7014625141720088606#heading-17<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ul>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-24&#32;17:00:04>更新于 2023-09-24&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5c%e8%99%9a%e6%8b%9f%e5%8c%96%e6%8a%80%e6%9c%af%5cKubernetes_%e5%ad%98%e5%82%a8%e6%b5%81%e7%a8%8b%e8%af%a6%e8%a7%a3.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3/" data-title="Kubernetes_存储流程详解" data-hashtags="Storage"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3/" data-hashtag="Storage"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3/" data-title="Kubernetes_存储流程详解"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/storage/">Storage</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/kubernetes-cluster-architecture/" class="prev" rel="prev" title="Kubernetes-Cluster Architecture"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Kubernetes-Cluster Architecture</a>
+      <a href="liudongdong1.github.io/kubernets%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" class="next" rel="next" title="Kubernetes 命令大全">Kubernetes 命令大全<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>点云配准 - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="点云配准是点云之间的变换估计问题，从优化的角度来看，它经历了很长的发展历史。最近，深度学习的成功极大地提高了配准的鲁棒性和效率。随着LiDA" /><meta name="keywords" content='CV' /><meta itemprop="name" content="点云配准">
+<meta itemprop="description" content="点云配准是点云之间的变换估计问题，从优化的角度来看，它经历了很长的发展历史。最近，深度学习的成功极大地提高了配准的鲁棒性和效率。随着LiDA">
+<meta itemprop="dateModified" content="2023-09-28T23:10:49+08:00" />
+<meta itemprop="wordCount" content="2520"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="CV," /><meta property="og:title" content="点云配准" />
+<meta property="og:description" content="点云配准是点云之间的变换估计问题，从优化的角度来看，它经历了很长的发展历史。最近，深度学习的成功极大地提高了配准的鲁棒性和效率。随着LiDA" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+
+<meta property="article:modified_time" content="2023-09-28T23:10:49+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="点云配准"/>
+<meta name="twitter:description" content="点云配准是点云之间的变换估计问题，从优化的角度来看，它经历了很长的发展历史。最近，深度学习的成功极大地提高了配准的鲁棒性和效率。随着LiDA"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86/" /><link rel="prev" href="liudongdong1.github.io/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" /><link rel="next" href="liudongdong1.github.io/%E9%80%92%E5%BD%92%E7%B3%BB%E5%88%97%E9%97%AE%E9%A2%98/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "点云配准",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86\/"
+    },"genre": "posts","keywords": "CV","wordcount":  2520 ,
+    "url": "liudongdong1.github.io\/%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86\/","dateModified": "2023-09-28T23:10:49+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>点云配准</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/aiot/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;AIOT</a></span></div>
+      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01" >0001-01-01</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 2520 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="点云配准">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.stocksnap.io/img-thumbs/280h/DKJEWB6D0L.jpg"
+    data-srcset="https://cdn.stocksnap.io/img-thumbs/280h/DKJEWB6D0L.jpg, https://cdn.stocksnap.io/img-thumbs/280h/DKJEWB6D0L.jpg 1.5x, https://cdn.stocksnap.io/img-thumbs/280h/DKJEWB6D0L.jpg 2x"
+    data-sizes="auto"
+    alt="https://cdn.stocksnap.io/img-thumbs/280h/DKJEWB6D0L.jpg"
+    title="https://cdn.stocksnap.io/img-thumbs/280h/DKJEWB6D0L.jpg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-应用场景">1. 应用场景</a></li>
+        <li><a href="#2-相关方法">2. 相关方法</a></li>
+        <li><a href="#3-同源点云配准">3. 同源点云配准</a></li>
+        <li><a href="#4-异源点云配准">4. 异源点云配准</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><blockquote>
+<p>点云配准是点云之间的变换估计问题，从优化的角度来看，它经历了很长的发展历史。最近，深度学习的成功极大地提高了配准的鲁棒性和效率。随着LiDAR、Kinect等高精度传感器的快速发展，点云已成为表征三维世界的主要数据格式。由于传感器只能在有限的视野范围内扫描获取数据，因此需要采用配准算法生成完整的三维场景。点云配准是一种估计两帧扫描点云之间变换矩阵的问题。根据变换矩阵，我们可以将同一个三维场景或物体的部分扫描点云合并成一个完整的三维点云。</p>
+<p><code>跨源点云配准</code>成为一个新兴的研究课题。每种三维传感器都有其独特的优点和局限性。例如，<code>Kinect可以生成密集的点云，而测量范围通常限制为5米。激光雷达在生成稀疏点云的同时具有很长的视距。</code>这些不同类型的三维传感器的数据融合结合了它们的优点，这是一个跨源点云配准问题[43]、[41]、[42]。跨源点云配准在建筑施工、虚拟增强现实、无人驾驶车辆等领域有着广泛的应用。例如，建筑领域将3D CAD模型与实时激光雷达扫描进行比较，以评估当前的施工质量。</p>
+</blockquote>
+<h3 id="1-应用场景">1. 应用场景</h3>
+<ul>
+<li><strong>三维重建</strong>。生成完整的三维场景是各种计算机视觉应用的基础和重要技术，包括自动驾驶中的高精度三维地图重建、机器人技术中的三维环境重建和实时监控地下采矿的三维重建。例如，<code>点云配准可以为机器人应用中的路线规划和决策构建三维环境</code>。另一个例子是在地下采矿空间进行大型三维场景重建，以准确监控采矿安全。</li>
+<li><strong>三维定位</strong>。在三维环境中定位移动智能设备的位置对于机器人技术尤为重要。例如，无人驾驶汽车估计其在地图上的位置（例如&lt;10cm）及其到道路边界线的距离。点云配准可以将当前的实时三维点云精确匹配到所属的三维环境中，提供高精度的定位服务。此应用程序表明，配准为智能系统（例如机器人或无驾驶汽车）提供了一个与3D环境交互的解决方案。</li>
+<li><strong>姿态估计</strong>。将一个点云A（3D实时视图）与另一个点云B（3D环境）对齐，可以<code>生成与点云B相对的点云A的姿态信息</code>，这些姿态信息可用于<code>机器人的决策</code>。例如，可以获得机器人手臂的姿势信息，从而决定移动到哪里以准确地抓取对象。姿态估计应用表明，该配准方法还提供了一种了解环境中agent信息的方法。由于点云配准在许多有价值的计算机视觉应用中扮演着重要的角色，因此迫切需要对点云配准进行全面的研究，以使这些应用受益。</li>
+</ul>
+<h3 id="2-相关方法">2. 相关方法</h3>
+<ul>
+<li>通过<code>对应搜索和变换估计</code>两个过程来<code>减小几何投影误差</code>。这两个过程交替进行，直到几何重投影误差最小。在已知精确对应的情况下，变换估计有一个闭环形式的解。</li>
+<li>提取<code>三维点云的特征</code>并找到<code>精确的对应关系</code>。然后，使用这些对应关系来<code>估计具有单独变换估计阶段的变换</code>。</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111006168.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111006168.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111006168.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111006168.png 2x"
+    data-sizes="auto"
+    alt="点云配准分类"
+    title="点云配准分类"/></p>
+<p>（a）一种<code>基于优化的点云配准框架</code>。给定两个输入点云，<code>迭代估计这些点云之间的对应关系和变换</code>。算法输出最优变换T作为最终变换矩阵。</p>
+<ul>
+<li>对应点搜索是在另一个点云中找到每个点的匹配点。变换估计就是利用对应关系来估计变换矩阵。这两个阶段将进行迭代，以找到最佳的变换。</li>
+<li><code>严密的数学理论</code>可以保证它们的收敛性。</li>
+<li>不需要训练数据，可以很好地推广到未知场景。</li>
+<li>局限性在于，需要<code>许多复杂的策略来克服噪声、异常值、密度变化和部分重叠的变化，这将增加计算成本</code>。</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112518330.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112518330.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112518330.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112518330.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112518330.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112518330.png"/></p>
+<p>（b）基于<code>特征学习的点云配准框架</code>。给定两个输入点云，利用深度神经网络对特征进行估计。然后，对应和变换估计(Ransac算法）迭代运行以估计最终变换矩阵T。</p>
+<ul>
+<li>可以提供鲁棒、准确的对应搜索。</li>
+<li>通过简单的RANSAC方法，精确的对应可以得到准确的配准结果。</li>
+<li>在未知场景中，如果场景与训练数据存在较大的分布差异，则配准性能会急剧下降。</li>
+</ul>
+<blockquote>
+<p>3DMatch 总体框架，3DMatch从RGBD图像训练并行网络。3DMatch的输入是三维体素数据，<code>输出是一个局部面片的512维特征</code>。3DMatch可以提取三维点云的局部特征。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112558653.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112558653.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112558653.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112558653.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112558653.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112558653.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112656009.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112656009.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112656009.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112656009.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112656009.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112656009.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112720732.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112720732.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112720732.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112720732.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112720732.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112720732.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111750220.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111750220.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111750220.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111750220.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111750220.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111750220.png"/></p>
+<p>（c）一个基于<code>端到端学习的点云配准框架</code>。给定两个输入点云，使用端到端框架来估计最终变换矩阵T。</p>
+<ul>
+<li>端到端学习方法的基本思想是将配准问题转化为回归问题</li>
+<li>[97]提出了一种配准网络，用于建立原始点集和目标点集之间的相关性，并使用定义的相关性预测变换。</li>
+<li>[27]提出了一种用于定位的自动编码器配准网络，它结合了超点提取和无监督特征学习。</li>
+<li>它既可以利用传统数学理论的优点，又能利用深层神经网络的优点。</li>
+<li>回归方法将变换参数估计看作黑匣子，距离度量在基于坐标的欧氏空间中进行测量，<code>该空间对噪声和密度差敏感</code>。</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112809624.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112809624.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112809624.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112809624.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112809624.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112809624.png"/></p>
+<p>（d）一个<code>跨源点云配准框架</code>。在给定两个输入点云的情况下，设计了一个配准框架来克服跨源问题并估计最终的变换矩阵T。</p>
+<ul>
+<li>CSGM[41]将配准问题转化为图匹配问题，并利用图匹配理论来克服这些挑战.</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111837596.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111837596.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111837596.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111837596.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111837596.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111837596.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112829897.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112829897.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112829897.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112829897.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112829897.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112829897.png"/></p>
+<h3 id="3-同源点云配准">3. 同源点云配准</h3>
+<blockquote>
+<p>同源点云的配准是指从<code>同一类型的传感器</code>，但在<code>不同的时间或视角</code>下获取的点云在进行配准问题中存在的挑战，其主要包含了</p>
+<ul>
+<li><code>噪声和离群值</code>。在不同的采集时间，环境和传感器噪声是不同的，采集到的点云在同一三维位置附近会包含噪声和异常值。</li>
+<li><code>部分重叠</code>。由于视点和采集时间的不同，采集到的点云只是部分重叠。</li>
+</ul>
+</blockquote>
+<h3 id="4-异源点云配准">4. 异源点云配准</h3>
+<blockquote>
+<p>跨源点云配准的挑战，点云传感器经历了快速发展。例如，Kinect已经在许多领域得到了广泛的应用。激光雷达变得使用价格合理，并已集成到移动电话（如iPhone 12）中。而且，多年来三维重建技术的发展使得利用RGB相机生成点云成为可能。尽管在点云采集方面有这些改进，但<code>每个传感器都有其独特的优点和局限性</code>。例如，<code>Kinect可以记录详细的结构信息，但视距有限</code>；<code>Lidar可以记录远处的物体，但分辨率有限</code>。来自不同传感器的融合点云可为实际应用提供更多的信息和更好的性能。点云融合需要跨源点云配准技术。由于点云是从不同类型的传感器获取的，并且不同类型的传感器包含不同的成像机制，因此点云配准问题中的跨源挑战要比同源点云配准挑战复杂得多。这些挑战主要可以分为</p>
+<ul>
+<li><code>噪声和异常值</code>。由于<code>不同采集时间的采集环境</code>、<code>传感器噪声</code>和<code>传感器成像机制</code>不同，采集到的点云在同一个三维位置附近会包含噪声和离群点。</li>
+<li><code>部分重叠</code>。由于视点和采集时间的不同，采集到的点云只是部分重叠。</li>
+<li><code>密度差</code>。由于不同的成像机制和不同的分辨率，<code>捕获的点云通常包含不同的密度</code>。</li>
+<li><code>尺度变化</code>。由于不同的成像机制可能具有不同的物理度量，因此捕获的点云可能包含尺度差异。</li>
+</ul>
+</blockquote>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-28&#32;23:10:49>更新于 2023-09-28&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e8%a7%86%e8%a7%89%e8%bf%90%e5%8a%a8%5cslam%5c%e7%82%b9%e4%ba%91%e9%85%8d%e5%87%86.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86/" data-title="点云配准" data-hashtags="CV"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86/" data-hashtag="CV"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86/" data-title="点云配准" data-image="https://cdn.stocksnap.io/img-thumbs/280h/DKJEWB6D0L.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/cv/">CV</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" class="prev" rel="prev" title="定时任务"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>定时任务</a>
+      <a href="liudongdong1.github.io/%E9%80%92%E5%BD%92%E7%B3%BB%E5%88%97%E9%97%AE%E9%A2%98/" class="next" rel="next" title="递归系列问题">递归系列问题<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Bazel - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="Bazel builds software from source code organized in a directory called a workspace. Source files in the workspace are organized in a nested hierarchy of packages, where each package is a directory that contains a set of related source files and one BUILD file. The BUILD file specifies what software outputs can be built from the source. 1.Introduce 1.1. Features High-level build language fast and reliable multi-platform large scales and" /><meta name="keywords" content='Software' /><meta itemprop="name" content="Bazel">
+<meta itemprop="description" content="Bazel builds software from source code organized in a directory called a workspace. Source files in the workspace are organized in a nested hierarchy of packages, where each package is a directory that contains a set of related source files and one BUILD file. The BUILD file specifies what software outputs can be built from the source. 1.Introduce 1.1. Features High-level build language fast and reliable multi-platform large scales and"><meta itemprop="datePublished" content="2020-08-28T16:00:04+00:00" />
+<meta itemprop="dateModified" content="2023-09-29T08:23:06+08:00" />
+<meta itemprop="wordCount" content="1625"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Software," /><meta property="og:title" content="Bazel" />
+<meta property="og:description" content="Bazel builds software from source code organized in a directory called a workspace. Source files in the workspace are organized in a nested hierarchy of packages, where each package is a directory that contains a set of related source files and one BUILD file. The BUILD file specifies what software outputs can be built from the source. 1.Introduce 1.1. Features High-level build language fast and reliable multi-platform large scales and" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/bazel/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-08-28T16:00:04+00:00" />
+<meta property="article:modified_time" content="2023-09-29T08:23:06+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="Bazel"/>
+<meta name="twitter:description" content="Bazel builds software from source code organized in a directory called a workspace. Source files in the workspace are organized in a nested hierarchy of packages, where each package is a directory that contains a set of related source files and one BUILD file. The BUILD file specifies what software outputs can be built from the source. 1.Introduce 1.1. Features High-level build language fast and reliable multi-platform large scales and"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/bazel/" /><link rel="prev" href="liudongdong1.github.io/anchorintroduce/" /><link rel="next" href="liudongdong1.github.io/mqtt/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Bazel",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/bazel\/"
+    },"genre": "posts","keywords": "Software","wordcount":  1625 ,
+    "url": "liudongdong1.github.io\/bazel\/","datePublished": "2020-08-28T16:00:04+00:00","dateModified": "2023-09-29T08:23:06+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>Bazel</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/software/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Software</a></span></div>
+      <div class="post-meta-line"><span title=2020-08-28&#32;16:00:04>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-08-28" >2020-08-28</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1625 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="Bazel">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/15.jpeg"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/15.jpeg, https://gitee.com/github-25970295/blogImage/raw/master/img/15.jpeg 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/15.jpeg 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/15.jpeg"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/15.jpeg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1introduce">1.Introduce</a>
+      <ul>
+        <li><a href="#11-features">1.1. Features</a></li>
+        <li><a href="#12-workflow">1.2. workflow</a></li>
+        <li><a href="#13-backend-workflow">1.3. backend workflow</a></li>
+        <li><a href="#14-download">1.4. Download</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-example">2. Example</a>
+      <ul>
+        <li><a href="#21-structuresinglebuild">2.1. Structure&amp;SingleBuild</a></li>
+        <li><a href="#22-multi-build">2.2. Multi-build</a></li>
+        <li><a href="#23-multi-package">2.3. Multi-Package</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-common-rules">3. Common rules</a>
+      <ul>
+        <li><a href="#31-including-multiple-files-in-a-target">3.1. including multiple files in a target</a></li>
+        <li><a href="#32-using-transitive-includes">3.2. Using transitive includes</a></li>
+        <li><a href="#33-adding-including-paths">3.3. Adding including paths</a></li>
+        <li><a href="#34-adding-dependencies-on-precompiled-libraries">3.4. Adding dependencies on precompiled libraries</a></li>
+        <li><a href="#35-including-external-libraries">3.5. including external libraries</a></li>
+        <li><a href="#36-shadowing-dependencies">3.6. Shadowing dependencies</a></li>
+        <li><a href="#37-visibility">3.7. Visibility</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><blockquote>
+<p><a href="https://docs.bazel.build/versions/master/build-ref.html"target="_blank" rel="external nofollow noopener noreferrer">Bazel<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> builds software from source code organized in a directory called a workspace. Source files in the workspace are organized in a nested hierarchy of packages, where each package is a directory that contains a set of related source files and one BUILD file. The BUILD file specifies what software outputs can be built from the source.</p>
+</blockquote>
+<h2 id="1introduce">1.Introduce</h2>
+<h3 id="11-features">1.1. Features</h3>
+<ul>
+<li>High-level build language</li>
+<li>fast and reliable</li>
+<li>multi-platform</li>
+<li>large scales and extensible</li>
+</ul>
+<h3 id="12-workflow">1.2. workflow</h3>
+<ol>
+<li>
+<p><strong>Set up Bazel.</strong> Download and <a href="https://docs.bazel.build/versions/master/install.html"target="_blank" rel="external nofollow noopener noreferrer">install Bazel<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>.</p>
+</li>
+<li>
+<p><strong>Set up a project <a href="https://docs.bazel.build/versions/master/build-ref.html#workspaces"target="_blank" rel="external nofollow noopener noreferrer">workspace<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></strong>, which is a directory where Bazel looks for build inputs and <code>BUILD</code> files, and where it stores build outputs.</p>
+</li>
+<li>
+<p><strong>Write a <code>BUILD</code> file</strong>, which tells Bazel what to build and how to build it.</p>
+<p>You write your <code>BUILD</code> file by declaring build targets using <a href="https://docs.bazel.build/versions/master/skylark/language.html"target="_blank" rel="external nofollow noopener noreferrer">Starlark<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>, a domain-specific language. (See example <a href="https://github.com/bazelbuild/bazel/blob/master/examples/cpp/BUILD"target="_blank" rel="external nofollow noopener noreferrer">here<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>.)</p>
+<p>A build target specifies a set of input artifacts that Bazel will build plus their dependencies, the build rule Bazel will use to build it, and options that configure the build rule.</p>
+<p>A build rule specifies the build tools Bazel will use, such as compilers and linkers, and their configurations. Bazel ships with a number of build rules covering the most common artifact types in the supported languages on supported platforms.</p>
+</li>
+<li>
+<p><strong>Run Bazel</strong> from the <a href="https://docs.bazel.build/versions/master/command-line-reference.html"target="_blank" rel="external nofollow noopener noreferrer">command line<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>. Bazel places your outputs within the workspace.</p>
+</li>
+</ol>
+<h3 id="13-backend-workflow">1.3. backend workflow</h3>
+<ol>
+<li><strong>Loads</strong> the <code>BUILD</code> files relevant to the target.</li>
+<li><strong>Analyzes</strong> the inputs and their <a href="https://docs.bazel.build/versions/master/build-ref.html#dependencies"target="_blank" rel="external nofollow noopener noreferrer">dependencies<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>, applies the specified build rules, and produces an <a href="https://docs.bazel.build/versions/master/skylark/concepts.html#evaluation-model"target="_blank" rel="external nofollow noopener noreferrer">action<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> graph.</li>
+<li><strong>Executes</strong> the build actions on the inputs until the final build outputs are produced.</li>
+</ol>
+<p>Since all previous build work is cached, Bazel can identify and reuse cached artifacts and only rebuild or retest what’s changed. To further enforce correctness, you can set up Bazel to run builds and tests <a href="https://docs.bazel.build/versions/master/guide.html#sandboxing"target="_blank" rel="external nofollow noopener noreferrer">hermetically<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> through sandboxing, minimizing skew and maximizing <a href="https://docs.bazel.build/versions/master/guide.html#correctness"target="_blank" rel="external nofollow noopener noreferrer">reproducibility<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>.</p>
+<h3 id="14-download">1.4. Download</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install g++ unzip zip
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Ubuntu 16.04 (LTS) uses OpenJDK 8 by default:</span>
+</span></span><span style="display:flex;"><span>sudo apt-get install openjdk-8-jdk
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Ubuntu 18.04 (LTS) uses OpenJDK 11 by default:</span>
+</span></span><span style="display:flex;"><span>sudo apt-get install openjdk-11-jdk
+</span></span><span style="display:flex;"><span>chmod +x bazel-&lt;version&gt;-installer-linux-x86_64.sh
+</span></span><span style="display:flex;"><span>./bazel-&lt;version&gt;-installer-linux-x86_64.sh --user
+</span></span></code></pre></div><blockquote>
+<p>If you ran the Bazel installer with the <code>--user</code> flag as above, the Bazel executable is installed in your <code>$HOME/bin</code> directory. It’s a good idea to add this directory to your default paths, as follows:</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$PATH<span style="color:#e6db74">:</span>$HOME<span style="color:#e6db74">/bin&#34;</span>
+</span></span></code></pre></div><h2 id="2-example">2. Example</h2>
+<h3 id="21-structuresinglebuild">2.1. Structure&amp;SingleBuild</h3>
+<p>the CPP examples structure</p>
+<pre tabindex="0"><code>examples
+└── cpp-tutorial
+    ├──stage1
+    │  ├── main
+    │  │   ├── BUILD
+    │  │   └── hello-world.cc
+    │  └── WORKSPACE
+    ├──stage2
+    │  ├── main
+    │  │   ├── BUILD
+    │  │   ├── hello-world.cc
+    │  │   ├── hello-greet.cc
+    │  │   └── hello-greet.h
+    │  └── WORKSPACE
+    └──stage3
+       ├── main
+       │   ├── BUILD
+       │   ├── hello-world.cc
+       │   ├── hello-greet.cc
+       │   └── hello-greet.h
+       ├── lib
+       │   ├── BUILD
+       │   ├── hello-time.cc
+       │   └── hello-time.h
+       └── WORKSPACE
+</code></pre><ul>
+<li>
+<p><strong>workspace:</strong> a directory that holds your project’s source files and Bazel’s build outputs. It also contains files that Bazel recognizes as special:</p>
+<ul>
+<li>The <code>WORKSPACE</code> file, which identifies the directory and its contents as a Bazel workspace and lives at the root of the project’s directory structure,</li>
+<li>One or more <code>BUILD</code> files, which tell Bazel how to build different parts of the project. (A directory within the workspace that contains a <code>BUILD</code> file is a <em>package</em>. You will learn about packages later in this tutorial.)</li>
+</ul>
+</li>
+<li>
+<p><strong>Build File:</strong></p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cc_binary<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello-world&#34;</span>,
+</span></span><span style="display:flex;"><span>    srcs <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;hello-world.cc&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><blockquote>
+<p>In our example, the <code>hello-world</code> target instantiates Bazel’s built-in <a href="https://docs.bazel.build/versions/master/be/c-cpp.html#cc_binary"target="_blank" rel="external nofollow noopener noreferrer"><code>cc_binary</code> rule<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>. The rule tells Bazel to build a self-contained executable binary from the <code>hello-world.cc</code> source file with no dependencies.</p>
+</blockquote>
+<ul>
+<li>**Build Project: **</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bazel build //main:hello-world <span style="color:#75715e"># in the stage1//</span>
+</span></span></code></pre></div><blockquote>
+<p><code>//main:</code> part is the location of our <code>BUILD</code> file relative to the root of the workspace, and <code>hello-world</code> is what we named that target in the <code>BUILD</code> file</p>
+</blockquote>
+<ul>
+<li><strong>Review dependency graph:</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bazel query --notool_deps --noimplicit_deps <span style="color:#e6db74">&#34;deps(//main:hello-world)&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --output graph
+</span></span></code></pre></div><blockquote>
+<p>to look for all dependencies for the target <code>//main:hello-world</code> (excluding host and implicit dependencies) and format the output as a graph.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># view the graph locally by installing GraphViz and the xdot Dot Viewer:</span>
+</span></span><span style="display:flex;"><span>sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt install graphviz xdot
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># generate and view the graph by piping the text output above straight to xdot:</span>
+</span></span><span style="display:flex;"><span>xdot &lt;<span style="color:#f92672">(</span>bazel query --notool_deps --noimplicit_deps <span style="color:#e6db74">&#34;deps(//main:hello-world)&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --output graph<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/20200828200445.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/20200828200445.png, https://gitee.com/github-25970295/blogImage/raw/master/img/20200828200445.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/20200828200445.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/20200828200445.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/20200828200445.png"/></p>
+<h3 id="22-multi-build">2.2. Multi-build</h3>
+<pre tabindex="0"><code>cc_library(
+    name = &#34;hello-greet&#34;,
+    srcs = [&#34;hello-greet.cc&#34;],
+    hdrs = [&#34;hello-greet.h&#34;],
+)
+
+cc_binary(
+    name = &#34;hello-world&#34;,
+    srcs = [&#34;hello-world.cc&#34;],
+    deps = [
+        &#34;:hello-greet&#34;,
+    ],
+)
+</code></pre><blockquote>
+<p>he <code>deps</code> attribute in the <code>hello-world</code> target tells Bazel that the <code>hello-greet</code> library is required to build the <code>hello-world</code> binary.</p>
+</blockquote>
+<h3 id="23-multi-package">2.3. Multi-Package</h3>
+<p>Take a look at the <code>lib/BUILD</code> file:</p>
+<pre tabindex="0"><code>cc_library(
+    name = &#34;hello-time&#34;,
+    srcs = [&#34;hello-time.cc&#34;],
+    hdrs = [&#34;hello-time.h&#34;],
+    visibility = [&#34;//main:__pkg__&#34;],
+)
+</code></pre><p>And at the <code>main/BUILD</code> file:</p>
+<pre tabindex="0"><code>cc_library(
+    name = &#34;hello-greet&#34;,
+    srcs = [&#34;hello-greet.cc&#34;],
+    hdrs = [&#34;hello-greet.h&#34;],
+)
+
+cc_binary(
+    name = &#34;hello-world&#34;,
+    srcs = [&#34;hello-world.cc&#34;],
+    deps = [
+        &#34;:hello-greet&#34;,
+        &#34;//lib:hello-time&#34;,
+    ],
+)
+</code></pre><p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/20200828201159.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/20200828201159.png, https://gitee.com/github-25970295/blogImage/raw/master/img/20200828201159.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/20200828201159.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/20200828201159.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/20200828201159.png"/></p>
+<blockquote>
+<p>//path//to/package: target-name</p>
+<p>If the target is a rule target, then <code>path/to/package</code> is the path to the directory containing the <code>BUILD</code> file, and <code>target-name</code> is what you named the target in the <code>BUILD</code> file (the <code>name</code> attribute). If the target is a file target, then <code>path/to/package</code> is the path to the root of the package, and <code>target-name</code> is the name of the target file, including its full path.</p>
+</blockquote>
+<h2 id="3-common-rules">3. Common rules</h2>
+<h3 id="31-including-multiple-files-in-a-target">3.1. including multiple files in a target</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cc_library<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;build-all-the-files&#34;</span>,
+</span></span><span style="display:flex;"><span>    srcs <span style="color:#f92672">=</span> glob<span style="color:#f92672">([</span><span style="color:#e6db74">&#34;*.cc&#34;</span><span style="color:#f92672">])</span>,
+</span></span><span style="display:flex;"><span>    hdrs <span style="color:#f92672">=</span> glob<span style="color:#f92672">([</span><span style="color:#e6db74">&#34;*.h&#34;</span><span style="color:#f92672">])</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><h3 id="32-using-transitive-includes">3.2. Using transitive includes</h3>
+<blockquote>
+<p>If a file includes a header, then the file’s rule should depend on that header’s library. Conversely, only direct dependencies need to be specified as dependencies. For example, suppose <code>sandwich.h</code> includes <code>bread.h</code> and <code>bread.h</code> includes <code>flour.h</code>. <code>sandwich.h</code> doesn’t include <code>flour.h</code> (who wants flour in their sandwich?), so the <code>BUILD</code> file would look like this:</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cc_library<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;sandwich&#34;</span>,
+</span></span><span style="display:flex;"><span>    srcs <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;sandwich.cc&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    hdrs <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;sandwich.h&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    deps <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;:bread&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>cc_library<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;bread&#34;</span>,
+</span></span><span style="display:flex;"><span>    srcs <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;bread.cc&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    hdrs <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;bread.h&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    deps <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;:flour&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>cc_library<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;flour&#34;</span>,
+</span></span><span style="display:flex;"><span>    srcs <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;flour.cc&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    hdrs <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;flour.h&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><h3 id="33-adding-including-paths">3.3. Adding including paths</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└── my-project
+</span></span><span style="display:flex;"><span>    ├── legacy
+</span></span><span style="display:flex;"><span>    │   └── some_lib
+</span></span><span style="display:flex;"><span>    │       ├── BUILD
+</span></span><span style="display:flex;"><span>    │       ├── include
+</span></span><span style="display:flex;"><span>    │       │   └── some_lib.h
+</span></span><span style="display:flex;"><span>    │       └── some_lib.cc
+</span></span><span style="display:flex;"><span>    └── WORKSPACE
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cc_library<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;some_lib&#34;</span>,
+</span></span><span style="display:flex;"><span>    srcs <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;some_lib.cc&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    hdrs <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;include/some_lib.h&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    copts <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;-Ilegacy/some_lib/include&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><blockquote>
+<p>copts 这个参数含义不太明白</p>
+</blockquote>
+<h3 id="34-adding-dependencies-on-precompiled-libraries">3.4. Adding dependencies on precompiled libraries</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cc_library<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;mylib&#34;</span>,
+</span></span><span style="display:flex;"><span>    srcs <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;mylib.so&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    hdrs <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;mylib.h&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><h3 id="35-including-external-libraries">3.5. including external libraries</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>load<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;</span>, <span style="color:#e6db74">&#34;http_archive&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>http_archive<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;gtest&#34;</span>,
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://github.com/google/googletest/archive/release-1.7.0.zip&#34;</span>,
+</span></span><span style="display:flex;"><span>    sha256 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;b58cb7547a28b2c718d1e38aee18a3659c9e3ff52440297e965f5edffe34b6d0&#34;</span>,
+</span></span><span style="display:flex;"><span>    build_file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;@//:gtest.BUILD&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cc_library<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;main&#34;</span>,
+</span></span><span style="display:flex;"><span>    srcs <span style="color:#f92672">=</span> glob<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;googletest-release-1.7.0/src/*.cc&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>        exclude <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;googletest-release-1.7.0/src/gtest-all.cc&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">)</span>,
+</span></span><span style="display:flex;"><span>    hdrs <span style="color:#f92672">=</span> glob<span style="color:#f92672">([</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;googletest-release-1.7.0/include/**/*.h&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;googletest-release-1.7.0/src/*.h&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">])</span>,
+</span></span><span style="display:flex;"><span>    copts <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;-Iexternal/gtest/googletest-release-1.7.0/include&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;-Iexternal/gtest/googletest-release-1.7.0&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    linkopts <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;-pthread&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    visibility <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;//visibility:public&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><pre tabindex="0"><code>load(&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;, &#34;http_archive&#34;)
+
+http_archive(
+    name = &#34;gtest&#34;,
+    url = &#34;https://github.com/google/googletest/archive/release-1.7.0.zip&#34;,
+    sha256 = &#34;b58cb7547a28b2c718d1e38aee18a3659c9e3ff52440297e965f5edffe34b6d0&#34;,
+    build_file = &#34;@//:gtest.BUILD&#34;,
+    strip_prefix = &#34;googletest-release-1.7.0&#34;,
+)
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cc_library<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;main&#34;</span>,
+</span></span><span style="display:flex;"><span>    srcs <span style="color:#f92672">=</span> glob<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;src/*.cc&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>        exclude <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;src/gtest-all.cc&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">)</span>,
+</span></span><span style="display:flex;"><span>    hdrs <span style="color:#f92672">=</span> glob<span style="color:#f92672">([</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;include/**/*.h&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;src/*.h&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">])</span>,
+</span></span><span style="display:flex;"><span>    copts <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;-Iexternal/gtest/include&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    linkopts <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;-pthread&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    visibility <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;//visibility:public&#34;</span><span style="color:#f92672">]</span>,
+</span></span></code></pre></div><h4 id="351-depending-on-other-bazel-projects">3.5.1 depending on other bazel projects</h4>
+<blockquote>
+<p>If you want to use targets from a second Bazel project, you can use <a href="http://docs.bazel.build/be/workspace.html#local_repository"target="_blank" rel="external nofollow noopener noreferrer"><code>local_repository</code><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>, <a href="https://docs.bazel.build/versions/master/repo/git.html#git_repository"target="_blank" rel="external nofollow noopener noreferrer"><code>git_repository</code><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> or <a href="https://docs.bazel.build/versions/master/repo/http.html#http_archive"target="_blank" rel="external nofollow noopener noreferrer"><code>http_archive</code><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> to symlink it from the local filesystem, reference a git repository or download it (respectively).</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>local_repository<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;coworkers_project&#34;</span>,
+</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/path/to/coworkers-project&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><h4 id="352depending-on-non-bazel-projects">3.5.2.depending on non-bazel projects</h4>
+<blockquote>
+<p>Rules prefixed with <code>new_</code>, e.g., <a href="http://docs.bazel.build/be/workspace.html#new_local_repository"target="_blank" rel="external nofollow noopener noreferrer"><code>new_local_repository</code><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>, allow you to create targets from projects that do not use Bazel.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>new_local_repository<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;coworkers_project&#34;</span>,
+</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/path/to/coworkers-project&#34;</span>,
+</span></span><span style="display:flex;"><span>    build_file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;coworker.BUILD&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><h3 id="36-shadowing-dependencies">3.6. Shadowing dependencies</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>workspace<span style="color:#f92672">(</span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;myproject&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>local_repository<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span>,
+</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;../A&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>local_repository<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;B&#34;</span>,
+</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;../B&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>A/WORKSPACE</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>workspace<span style="color:#f92672">(</span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>load<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;</span>, <span style="color:#e6db74">&#34;http_archive&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>http_archive<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;testrunner&#34;</span>,
+</span></span><span style="display:flex;"><span>    urls <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;https://github.com/testrunner/v1.zip&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    sha256 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;...&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>B/WORKSPACE</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>workspace<span style="color:#f92672">(</span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;B&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>load<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;</span>, <span style="color:#e6db74">&#34;http_archive&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>http_archive<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;testrunner&#34;</span>,
+</span></span><span style="display:flex;"><span>    urls <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;https://github.com/testrunner/v2.zip&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    sha256 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;...&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>the above confront verson differ problem which can be solved by follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>workspace<span style="color:#f92672">(</span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;myproject&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>load<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;</span>, <span style="color:#e6db74">&#34;http_archive&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>http_archive<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;testrunner-v1&#34;</span>,
+</span></span><span style="display:flex;"><span>    urls <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;https://github.com/testrunner/v1.zip&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    sha256 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;...&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>http_archive<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;testrunner-v2&#34;</span>,
+</span></span><span style="display:flex;"><span>    urls <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;https://github.com/testrunner/v2.zip&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    sha256 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;...&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>local_repository<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span>,
+</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;../A&#34;</span>,
+</span></span><span style="display:flex;"><span>    repo_mapping <span style="color:#f92672">=</span> <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;@testrunner&#34;</span> : <span style="color:#e6db74">&#34;@testrunner-v1&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>local_repository<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;B&#34;</span>,
+</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;../B&#34;</span>,
+</span></span><span style="display:flex;"><span>    repo_mapping <span style="color:#f92672">=</span> <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;@testrunner&#34;</span> : <span style="color:#e6db74">&#34;@testrunner-v2&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><h3 id="37-visibility">3.7. Visibility</h3>
+<ul>
+<li><code>&quot;//visibility:public&quot;</code>: Anyone can use this target. (May not be combined with any other specification.)</li>
+<li><code>&quot;//visibility:private&quot;</code>: Only targets in this package can use this target. (May not be combined with any other specification.)</li>
+<li><code>&quot;//foo/bar:__pkg__&quot;</code>: Grants access to targets defined in <code>//foo/bar</code> (but not its subpackages). Here, <code>__pkg__</code> is a special piece of syntax representing all of the targets in a package.</li>
+<li><code>&quot;//foo/bar:__subpackages__&quot;</code>: Grants access to targets defined in <code>//foo/bar</code>, or any of its direct or indirect subpackages. Again, <code>__subpackages__</code> is special syntax.</li>
+<li><code>&quot;//foo/bar:my_package_group&quot;</code>: Grants access to all of the packages named by the given <a href="https://docs.bazel.build/versions/master/be/functions.html#package_group"target="_blank" rel="external nofollow noopener noreferrer">package group<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>.
+<ul>
+<li>Package groups do not support the special <code>__pkg__</code> and <code>__subpackages__</code> syntax. Within a package group, <code>&quot;//foo/bar&quot;</code> is equivalent to <code>&quot;//foo/bar:__pkg__&quot;</code> and <code>&quot;//foo/bar/...&quot;</code> is equivalent to <code>&quot;//foo/bar:__subpackages__&quot;</code>.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><code>load</code> statements are currently not subject to visibility. It is possible to load a <code>bzl</code> file anywhere in the workspace.</p>
+</blockquote>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-29&#32;08:23:06>更新于 2023-09-29&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/bazel/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e8%bd%af%e4%bb%b6%e5%b7%a5%e5%85%b7%5cBazel.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/bazel/" data-title="Bazel" data-hashtags="Software"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/bazel/" data-hashtag="Software"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/bazel/" data-title="Bazel" data-image="https://gitee.com/github-25970295/blogImage/raw/master/img/15.jpeg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/software/">Software</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/anchorintroduce/" class="prev" rel="prev" title="AnchorIntroduce"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>AnchorIntroduce</a>
+      <a href="liudongdong1.github.io/mqtt/" class="next" rel="next" title="MQTT">MQTT<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

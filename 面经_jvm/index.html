@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>面经_JVM - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content=".1. 简述垃圾回收机制 在 JVM 中，有一个垃圾回收线程，它是低优先级的，在正常情况下是不会执行的，只有在虚拟机空闲或者当前堆内存不足时，才会触发执行，" /><meta name="keywords" content='JVM, Java' /><meta itemprop="name" content="面经_JVM">
+<meta itemprop="description" content=".1. 简述垃圾回收机制 在 JVM 中，有一个垃圾回收线程，它是低优先级的，在正常情况下是不会执行的，只有在虚拟机空闲或者当前堆内存不足时，才会触发执行，"><meta itemprop="datePublished" content="2022-03-21T23:31:56+00:00" />
+<meta itemprop="dateModified" content="2023-09-28T22:05:14+08:00" />
+<meta itemprop="wordCount" content="5430"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="JVM,Java," /><meta property="og:title" content="面经_JVM" />
+<meta property="og:description" content=".1. 简述垃圾回收机制 在 JVM 中，有一个垃圾回收线程，它是低优先级的，在正常情况下是不会执行的，只有在虚拟机空闲或者当前堆内存不足时，才会触发执行，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_jvm/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-21T23:31:56+00:00" />
+<meta property="article:modified_time" content="2023-09-28T22:05:14+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="面经_JVM"/>
+<meta name="twitter:description" content=".1. 简述垃圾回收机制 在 JVM 中，有一个垃圾回收线程，它是低优先级的，在正常情况下是不会执行的，只有在虚拟机空闲或者当前堆内存不足时，才会触发执行，"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_jvm/" /><link rel="prev" href="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" /><link rel="next" href="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_linux/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "面经_JVM",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/%E9%9D%A2%E7%BB%8F_jvm\/"
+    },"genre": "posts","keywords": "JVM, Java","wordcount":  5430 ,
+    "url": "liudongdong1.github.io\/%E9%9D%A2%E7%BB%8F_jvm\/","datePublished": "2022-03-21T23:31:56+00:00","dateModified": "2023-09-28T22:05:14+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title d-none">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content d-none" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>面经_JVM</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/%E9%9D%A2%E7%BB%8F/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;面经</a></span></div>
+      <div class="post-meta-line"><span title=2022-03-21&#32;23:31:56>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-21" >2022-03-21</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 5430 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="面经_JVM">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.pixabay.com/photo/2021/04/20/15/04/hare-6194141__340.jpg"
+    data-srcset="https://cdn.pixabay.com/photo/2021/04/20/15/04/hare-6194141__340.jpg, https://cdn.pixabay.com/photo/2021/04/20/15/04/hare-6194141__340.jpg 1.5x, https://cdn.pixabay.com/photo/2021/04/20/15/04/hare-6194141__340.jpg 2x"
+    data-sizes="auto"
+    alt="https://cdn.pixabay.com/photo/2021/04/20/15/04/hare-6194141__340.jpg"
+    title="https://cdn.pixabay.com/photo/2021/04/20/15/04/hare-6194141__340.jpg"/></div><div class="details toc d-none" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      data-password="0e891e1122e262ef2a6df73bee254b7b"
+      data-content="PGg1IGlkPSIf9edd4dfd294074428f6edc78da5b09898aa006b71d9b025b5bc3xLeeugOi/sOWeg&#43;WcvuWbnuaUtuacuuWItiI&#43;LjEuIOeugOi/sOWeg&#43;WcvuWbnuaUtuacuuWItjwvaDU&#43;CjxibG9ja3F1b3RlPgo8cD7lnKggSlZNIOS4re&#43;8jOacieS4gOS4quWeg&#43;WcvuWbnuaUtue6v&#43;eoi&#43;&#43;8jOWug&#43;aYrzxjb2RlPuS9juS8mOWFiOe6p&#43;eahDwvY29kZT7vvIzlnKjmraPluLjmg4XlhrXkuIvmmK/kuI3kvJrmiafooYznmoTvvIzlj6rmnIk8Y29kZT7lnKjomZrmi5/mnLrnqbrpl7LmiJbogIXlvZPliY3loIblhoXlrZjkuI3otrPml7Y8L2NvZGU&#43;77yM5omN5Lya6Kem5Y&#43;R5omn6KGM77yMPGNvZGU&#43;5omr5o&#43;P6YKj5Lqb5rKh5pyJ6KKr5Lu75L2V5byV55So55qE5a&#43;56LGhPC9jb2RlPu&#43;8jOW5tuWwhuWug&#43;S7rOa3u&#43;WKoOWIsOimgTxjb2RlPuWbnuaUtueahOmbhuWQiDwvY29kZT7kuK3vvIzov5vooYzlm57mlLbjgII8L3A&#43;CjxwPuiLpSBHQyDkuIDmrKHkuYvlkI7ku43kuI3og73mu6HotrPlhoXlrZjliIbphY3nmoTopoHmsYIsSlZNIOS8muWGjei/m&#43;ihjOS4pOasoSBHQyDkvZzov5vkuIDmraXnmoTlsJ3or5Us6Iul5LuN5peg5rOV5ruh6Laz6KaB5rGCLOWImSBKVk0g5bCG5oql4oCcb3V0IG9mIG1lbW9yeeKAneeahOmUmeivryxKYXZhIOW6lOeUqOWwhuWBnOatouOAgjwvcD4KPC9ibG9ja3F1b3RlPgo8aDUgaWQ9IjIt5YaF5a2Y5qih5Z6LIj4uMi4g5YaF5a2Y5qih5Z6LPC9oNT4KPHA&#43;PGltZw0KICAgIGNsYXNzPSJsYXp5bG9hZCINCiAgICBzcmM9Ii9saXVkb25nZG9uZzEuZ2l0aHViLmlvL3N2Zy9sb2FkaW5nLm1pbi5zdmciDQogICAgZGF0YS1zcmM9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci8yMDE3MDcxMTE3MTIyNTI4MC0xNjQ4MDE4NzQzMDQ4NzMucG5nIg0KICAgIGRhdGEtc3Jjc2V0PSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvMjAxNzA3MTExNzEyMjUyODAtMTY0ODAxODc0MzA0ODczLnBuZywgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyLzIwMTcwNzExMTcxMjI1MjgwLTE2NDgwMTg3NDMwNDg3My5wbmcgMS41eCwgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyLzIwMTcwNzExMTcxMjI1MjgwLTE2NDgwMTg3NDMwNDg3My5wbmcgMngiDQogICAgZGF0YS1zaXplcz0iYXV0byINCiAgICBhbHQ9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci8yMDE3MDcxMTE3MTIyNTI4MC0xNjQ4MDE4NzQzMDQ4NzMucG5nIg0KICAgIHRpdGxlPSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvMjAxNzA3MTExNzEyMjUyODAtMTY0ODAxODc0MzA0ODczLnBuZyIvPjwvcD4KPHVsPgo8bGk&#43;PGNvZGU&#43;SmF2YSDloIY8L2NvZGU&#43;5piv6KKrPGNvZGU&#43;5omA5pyJ57q/56iL5YWx5Lqr55qE5LiA5Z2X5YaF5a2Y5Yy65Z&#43;fPC9jb2RlPu&#43;8jOWcqDxjb2RlPuiZmuaLn&#43;acuuWQr&#43;WKqOaXtuWIm&#43;W7ujwvY29kZT7jgILmraTlhoXlrZjljLrln5/nmoTllK/kuIDnm67nmoTlsLHmmK88Y29kZT7lrZjmlL7lr7nosaHlrp7kvos8L2NvZGU&#43;77yM5Yeg5LmO5omA5pyJ55qE5a&#43;56LGh5a6e5L6L6YO95Zyo6L&#43;Z6YeM5YiG6YWN5YaF5a2Y44CCPC9saT4KPGxpPuaWueazleWMuu&#43;8iE1ldGhvZCBBcmVh77yJ5pivPGNvZGU&#43;5ZCE5Liq57q/56iL5YWx5Lqr55qE5YaF5a2Y5Yy65Z&#43;fPC9jb2RlPu&#43;8jOWug&#43;eUqOS6jjxjb2RlPuWtmOWCqOW3suiiq&#43;iZmuaLn&#43;acuuWKoOi9vTwvY29kZT7nmoQ8Y29kZT7nsbvkv6Hmga/jgIHluLjph4/jgIHpnZnmgIHlj5jph4/jgIHljbPml7bnvJbor5HlmajnvJbor5HlkI7nmoTku6PnoIE8L2NvZGU&#43;562J5pWw5o2u44CCPC9saT4KPGxpPueoi&#43;W6j&#43;iuoeaVsOWZqO&#43;8iFByb2dyYW0gQ291bnRlciBSZWdpc3Rlcu&#43;8ieaYr&#43;S4gOWdl&#43;i&#43;g&#43;Wwj&#43;eahOWGheWtmOepuumXtO&#43;8jOWug&#43;eahOS9nOeUqOWPr&#43;S7peeci&#43;WBmuaYrzxjb2RlPuW9k&#43;WJjee6v&#43;eoi&#43;aJgOaJp&#43;ihjOeahOWtl&#43;iKgueggeeahOihjOWPt&#43;aMh&#43;ekuuWZqDwvY29kZT7jgII8L2xpPgo8bGk&#43;SmF2YSDomZrmi5/mnLrmoIjvvIhKYXZhIFZpcnR1YWwgTWFjaGluZSBTdGFja3PvvInkuZ/mmK88Y29kZT7nur/nqIvnp4HmnInnmoQ8L2NvZGU&#43;77yM5a6D55qEPGNvZGU&#43;55Sf5ZG95ZGo5pyf5LiO57q/56iL55u45ZCMPC9jb2RlPuOAguiZmuaLn&#43;acuuagiOaPj&#43;i/sOeahOaYryBKYXZhIOaWueazleaJp&#43;ihjOeahOWGheWtmOaooeWei&#43;&#43;8mjxjb2RlPuavj&#43;S4quaWueazleiiq&#43;aJp&#43;ihjOeahOaXtuWAmemDveS8muWQjOaXtuWIm&#43;W7uuS4gOS4quagiOW4p&#43;&#43;8iFN0YWNrIEZyYW1l77yJ55So5LqO5a2Y5YKo5bGA6YOo5Y&#43;Y6YeP6KGo44CB5pON5L2c5qCI44CB5Yqo5oCB6ZO&#43;5o6l44CB5pa55rOV5Ye65Y&#43;j562JPC9jb2RlPuS/oeaBr&#43;OAguavj&#43;S4gOS4quaWueazleiiq&#43;iwg&#43;eUqOebtOiHs&#43;aJp&#43;ihjOWujOaIkOeahOi/h&#43;eoi&#43;&#43;8jOWwseWvueW6lOedgOS4gOS4quagiOW4p&#43;WcqOiZmuaLn&#43;acuuagiOS4reS7juWFpeagiOWIsOWHuuagiOeahOi/h&#43;eoi&#43;OAgjwvbGk&#43;CjxsaT7mnKzlnLDmlrnms5XmoIjvvIhOYXRpdmUgTWV0aG9kIFN0YWNrc&#43;&#43;8ieS4juiZmuaLn&#43;acuuagiOaJgOWPkeaMpeeahOS9nOeUqOaYr&#43;mdnuW4uOebuOS8vOeahO&#43;8jOWFtuWMuuWIq&#43;S4jei/h&#43;aYr&#43;iZmuaLn&#43;acuuagiOS4uuiZmuaLn&#43;acuuaJp&#43;ihjCBKYXZhIOaWueazle&#43;8iOS5n&#43;WwseaYr&#43;Wtl&#43;iKguegge&#43;8ieacjeWKoe&#43;8jOiAjDxjb2RlPuacrOWcsOaWueazleagiOWImeaYr&#43;S4uuiZmuaLn&#43;acuuS9v&#43;eUqOWIsOeahCBOYXRpdmUg5pa55rOVPC9jb2RlPuacjeWKoeOAgjwvbGk&#43;CjwvdWw&#43;CjxoNSBpZD0iMy3lpoLkvZXliKTmlq3lr7nosaHmrbvlrowiPi4zLiDlpoLkvZXliKTmlq3lr7nosaHmrbvlrozvvJo8L2g1Pgo8YmxvY2txdW90ZT4KPHA&#43;5aCG5Lit4ryP5LmO5pS&#43;552A5omA5pyJ55qE5a&#43;56LGh5a6e5L6L77yM5a&#43;55aCG5Z6D5Zy&#43;5Zue5pS25YmN55qE56ys4ryA5q2l5bCx5piv6KaB5Yik5pat5ZOq5Lqb5a&#43;56LGh5bey57uP5q275Lqh77yI5Y2z5LiN6IO95YaN6KKr5Lu75L2V6YCU5b6E5L2/4r2kIOeahOWvueixoe&#43;8iTwvcD4KPG9sPgo8bGk&#43;PGNvZGU&#43;5byV4r2k6K6h5pWw5rOVPC9jb2RlPu&#43;8mue7meWvueixoeS4rea3u&#43;WKoOK8gOS4quW8leK9pOiuoeaVsOWZqCDmr4/lvZPmnInivIDkuKrlnLDivYXlvJXivaTlroPvvIzorqHmlbDlmajlsLHliqAxIOW9k&#43;W8leK9pOWkseaViO&#43;8jOiuoeaVsOWZqOWwseWHjzEg5Lu75L2V5pe25YCZ6K6h5pWw5Zmo5Li6MOeahOWvueixoeWwseaYr&#43;S4jeWPr&#43;iDveWGjeiiq&#43;S9v&#43;K9pOeahOOAgiDlvojpmr7op6PlhrM8Y29kZT7lr7nosaHnmoTnm7jkupLlvqrnjq/lvJXnlKg8L2NvZGU&#43;6Zeu6aKYPC9saT4KPGxpPuWPr&#43;i&#43;vuaAp&#43;WIhuaekOeul&#43;azle&#43;8muaYr&#43;mAmui/h&#43;K8gOezu&#43;WIl&#43;eahOensOS4uiDigJxHQyBSb290c&#43;KAnSDnmoTlr7nosaHkvZzkuLrotbfngrnvvIzku47ov5nkupvoioLngrnlvIDlp4vlkJHkuIvmkJzntKLvvIzoioLngrnmiYDivpvov4cg55qE6Lev5b6E56ew5Li6PGNvZGU&#43;5byV4r2k6ZO&#43;PC9jb2RlPu&#43;8jOW9k&#43;K8gOS4quWvueixoeWIsCBHQyBSb290cyDmsqHmnInku7vkvZXlvJXivaTpk77nm7jov57nmoTor53vvIzliJnor4HmmI7mraTlr7nosaHmmK/kuI3lj6/ivaTnmoTjgIIKPG9sPgo8bGk&#43;PGNvZGU&#43;6Jma5ouf5py65qCIKOagiOS4reeahOacrOWcsOWPmOmHj&#43;WIl&#43;ihqCkvPC9jb2RlPuaWueazleWMujxjb2RlPumdmeaAgeWxnuaApzwvY29kZT4vPGNvZGU&#43;5pa55rOV5Yy65bi46YeP5byV55SoPC9jb2RlPi88Y29kZT7mnKzlnLDmlrnms5XmoIjkuK0gSk5JIOaJgOW8leeUqOeahOWvueixoTwvY29kZT7pg73mmK/lj6/ku6XkvZzkuLogZ2Mgcm9vdHMg55qEPC9saT4KPC9vbD4KPC9saT4KPC9vbD4KPC9ibG9ja3F1b3RlPgo8aDUgaWQ9IjQtZ2Mt5Zue5pS25py65Yi2Ij4uNC4gR0Mg5Zue5pS25py65Yi2PC9oNT4KPGg2IGlkPSIxLS3moIforrDmuIXpmaTms5UiPjEuICDmoIforrDmuIXpmaTms5XvvJo8L2g2Pgo8YmxvY2txdW90ZT4KPHA&#43;PGNvZGU&#43;5qCH6K6w6Zi25q61PC9jb2RlPuWvueaJgOacieWtmOa0u&#43;eahOWvueixoei/m&#43;ihjOagh&#43;iusCzmoIforrDlrozmiJDlkI4s5YaN5omr5o&#43;P5pW05Liq56m66Ze05pyq5qCH6K6w5a&#43;56LGhLOebtOaOpTxjb2RlPuWbnuaUtuS4jeWtmOa0u&#43;eahOWvueixoTwvY29kZT4uPC9wPgo8cD7nvLrngrnmmK/kvJrpgKDmiJDlhoXlrZjnoo7niYcsIOWvuTxjb2RlPuWkp&#43;WGheWtmOeahOWIhumFjeaXoOi2s&#43;Wkn&#43;epuumXtDwvY29kZT7ml7bogIzmj5DliY3njJ3lj5HkuIDmrKHlnoPlnL7lm57mlLbliqjkvZw7PC9wPgo8L2Jsb2NrcXVvdGU&#43;CjxoNiBpZD0iMi3lpI3liLbnrpfms5UiPjIuIOWkjeWItueul&#43;azle&#43;8mjwvaDY&#43;CjxibG9ja3F1b3RlPgo8cD7lsIblj6/nlKjlhoXlrZjlsIblrrnph4/liJLliIbmiJA8Y29kZT7lpKflsI/nm7jnrYnnmoQgMiDlnZc8L2NvZGU&#43;LOavj&#43;asoea4heeQhuaXtuWwhuWFtuS4rSBBIOWGheWtmOi/mOWtmOa0u&#43;eahOWvueixoeWkjeWItuWIsCBCIOWGheWtmOmHjOmdoiznhLblkI7lho3mioogQSDkuK3muIXnkIbmjok7IOS8mOeCuemrmOaViOS4lOW5tuS4jeS6p&#43;eUn&#43;eijueJhyznvLrngrnnibrnibLkuobkuIDljYrnmoTlhoXlrZjkuLrku6Pku7cuIOmAgueUqOWtmOa0u&#43;WvueixoeWwkSzlm57mlLblr7nosaHlpJo8L3A&#43;CjwvYmxvY2txdW90ZT4KPGg2IGlkPSIzLeagh&#43;iusOaVtOeQhueul&#43;azlSI&#43;My4g5qCH6K6w5pW055CG566X5rOVPC9oNj4KPGJsb2NrcXVvdGU&#43;CjxwPuWujOaIkOagh&#43;iusOWQjuWug&#43;S4jeaYr&#43;ebtOaOpea4heeQhuWPr&#43;WbnuaUtuWvueixoSzogIzmmK88Y29kZT7lsIblrZjmtLvlr7nosaHpg73lkJHkuIDnq6/np7vliqg8L2NvZGU&#43;LOacgOWQjua4heeQhuaOieerr&#43;i&#43;ueeVjOaEj&#43;WklueahOWGheWtmDs8L3A&#43;CjwvYmxvY2txdW90ZT4KPGg2IGlkPSI0LeWIhuS7o&#43;aUtumbhueul&#43;azlSI&#43;NC4g5YiG5Luj5pS26ZuG566X5rOVPC9oNj4KPGJsb2NrcXVvdGU&#43;CjxwPuaVtOWQiOS6hjxjb2RlPuWkjeWItueul&#43;azlTwvY29kZT7lkow8Y29kZT7moIforrDmlbTnkIbnrpfms5U8L2NvZGU&#43;LOagueaNrjxjb2RlPuaWsOeUn&#43;S7o&#43;WSjOiAgeW5tOS7ozwvY29kZT7nmoTkuI3lkIznibnmgKfph4flj5bkuIrpnaLnmoTkuI3lkIznrpfms5U8L3A&#43;Cjx1bD4KPGxpPuaWsOeUn&#43;S7oyDnlJ/lkb3lkajmnJ/nn60s5q&#43;P5qyh5Zue5pS25pe26YO95pyJ5aSn6YeP5Z6D5Zy&#43;5a&#43;56LGh6ZyA6KaB5Zue5pS2IDxjb2RlPuWkjeWItueul&#43;azlTwvY29kZT4sIOWGheWtmOWIkuWIhuaMieeFpyA4OjE6MSDliIbkuIDkuKrlpKfnmoQgRWRlbiDljLrlkozkuKTkuKrlsI/nmoQgc3Vydml2b3Ig55qE56m66Ze077yMPGNvZGU&#43;5paw55Sf5Luj5Lit5a2Y5rS755qE5a&#43;56LGhLOmcgOimgei9rOenu&#43;eahCBTdXJ2aXZvciDnmoTlr7nosaHkuI3lpJo8L2NvZGU&#43;LOeul&#43;aYr&#43;e8k&#43;ino&#43;S6huWkjeWItueul&#43;azleeahOe8uueCuTwvbGk&#43;CjxsaT7ogIHlubTku6Mg5q&#43;P5qyh5Y&#43;q5pyJ5bCR6YeP55qE5a&#43;56LGh6ZyA6KaB5Zue5pS2IDxjb2RlPuagh&#43;iusOaVtOeQhueul&#43;azlTwvY29kZT48L2xpPgo8L3VsPgo8L2Jsb2NrcXVvdGU&#43;CjxwPuW9k&#43;WJjeWVhuS4muiZmuaLn&#43;acuumDvemHh&#43;eUqDxzdHJvbmc&#43;5YiG5Luj5pS26ZuGPC9zdHJvbmc&#43;55qE5Z6D5Zy&#43;5pS26ZuG566X5rOV44CC5YiG5Luj5pS26ZuG566X5rOV77yM6aG&#43;5ZCN5oCd5LmJ5piv5qC55o2u5a&#43;56LGh55qEPHN0cm9uZz7lrZjmtLvlkajmnJ88L3N0cm9uZz7lsIblhoXlrZjliJLliIbkuLrlh6DlnZfjgILkuIDoiKzljIXmi6w8c3Ryb25nPuW5tOi9u&#43;S7ozwvc3Ryb25nPuOAgTxzdHJvbmc&#43;6ICB5bm05LujPC9zdHJvbmc&#43;IOWSjCA8c3Ryb25nPuawuOS5heS7ozwvc3Ryb25nPu&#43;8jOWmguWbvuaJgOekuu&#43;8mjwvcD4KPHA&#43;PGltZw0KICAgIGNsYXNzPSJsYXp5bG9hZCINCiAgICBzcmM9Ii9saXVkb25nZG9uZzEuZ2l0aHViLmlvL3N2Zy9sb2FkaW5nLm1pbi5zdmciDQogICAgZGF0YS1zcmM9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIxMDcwNjA5MTg1ODE2My0xNjQ4MDE4NzQzMDQ4NzUucG5nIg0KICAgIGRhdGEtc3Jjc2V0PSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMTA3MDYwOTE4NTgxNjMtMTY0ODAxODc0MzA0ODc1LnBuZywgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjEwNzA2MDkxODU4MTYzLTE2NDgwMTg3NDMwNDg3NS5wbmcgMS41eCwgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjEwNzA2MDkxODU4MTYzLTE2NDgwMTg3NDMwNDg3NS5wbmcgMngiDQogICAgZGF0YS1zaXplcz0iYXV0byINCiAgICBhbHQ9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIxMDcwNjA5MTg1ODE2My0xNjQ4MDE4NzQzMDQ4NzUucG5nIg0KICAgIHRpdGxlPSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMTA3MDYwOTE4NTgxNjMtMTY0ODAxODc0MzA0ODc1LnBuZyIvPjwvcD4KPGJsb2NrcXVvdGU&#43;CjxwPjxzdHJvbmc&#43;5paw55Sf5LujPC9zdHJvbmc&#43;IOS4reWtmOWcqOS4gOS4qjxjb2RlPkVkZW48L2NvZGU&#43;5Yy65ZKM5Lik5LiqPGNvZGU&#43;U3Vydml2b3I8L2NvZGU&#43;5Yy644CC5paw5a&#43;56LGh5Lya6aaW5YWI5YiG6YWN5ZyoPGNvZGU&#43;RWRlbjwvY29kZT7kuK3vvIjlpoLmnpzmlrDlr7nosaHov4flpKfvvIzkvJrnm7TmjqXliIbphY3lnKjogIHlubTku6PkuK3vvInjgILlnKg8Y29kZT5HQzwvY29kZT7kuK3vvIw8Y29kZT5FZGVuPC9jb2RlPuS4reeahOWvueixoeS8muiiq&#43;enu&#43;WKqOWIsDxjb2RlPlN1cnZpdm9yPC9jb2RlPuS4re&#43;8jOebtOiHs&#43;Wvueixoea7oei2s&#43;S4gOWumueahOW5tOe6qu&#43;8iOWumuS5ieS4uueGrOi/hzxjb2RlPkdDPC9jb2RlPueahOasoeaVsO&#43;8ie&#43;8jOS8muiiq&#43;enu&#43;WKqOWIsDxzdHJvbmc&#43;6ICB5bm05LujPC9zdHJvbmc&#43;44CCPC9wPgo8cD7lj6/ku6Xorr7nva48c3Ryb25nPuaWsOeUn&#43;S7ozwvc3Ryb25nPuWSjDxzdHJvbmc&#43;6ICB5bm05LujPC9zdHJvbmc&#43;55qE55u45a&#43;55aSn5bCP44CC6L&#43;Z56eN5pa55byP55qE5LyY54K55piv5paw55Sf5Luj5aSn5bCP5Lya6ZqP552A5pW05LiqPHN0cm9uZz7loIY8L3N0cm9uZz7lpKflsI88c3Ryb25nPuWKqOaAgeaJqeWxlTwvc3Ryb25nPuOAguWPguaVsCA8Y29kZT4tWFg6TmV3UmF0aW88L2NvZGU&#43;IOiuvue9rjxzdHJvbmc&#43;6ICB5bm05LujPC9zdHJvbmc&#43;5LiOPHN0cm9uZz7mlrDnlJ/ku6M8L3N0cm9uZz7nmoTmr5TkvovjgILkvovlpoIgPGNvZGU&#43;LVhYOk5ld1JhdGlvPTg8L2NvZGU&#43;IOaMh&#43;WumiA8c3Ryb25nPuiAgeW5tOS7oy/mlrDnlJ/ku6M8L3N0cm9uZz4g5Li6PGNvZGU&#43;OC8xPC9jb2RlPi4gPHN0cm9uZz7ogIHlubTku6M8L3N0cm9uZz4g5Y2g5aCG5aSn5bCP55qEIDxjb2RlPjcvODwvY29kZT4g77yMPHN0cm9uZz7mlrDnlJ/ku6M8L3N0cm9uZz4g5Y2g5aCG5aSn5bCP55qEIDxjb2RlPjEvODwvY29kZT7vvIjpu5jorqTljbPmmK8gPGNvZGU&#43;MS84PC9jb2RlPu&#43;8ieOAgjwvcD4KPHA&#43;6ICB5bm05Luj77yaIOWvueixoeayoeacieWPmOW&#43;l&#43;S4jeWPr&#43;i&#43;vu&#43;8jOW5tuS4lOS7juaWsOeUn&#43;S7o&#43;S4rTxzdHJvbmc&#43;5a2Y5rS7PC9zdHJvbmc&#43;5LiL5p2l77yM5Lya6KKrPHN0cm9uZz7mi7fotJ08L3N0cm9uZz7liLDov5nph4zjgILlhbbmiYDljaDnlKjnmoTnqbrpl7TopoHmr5TmlrDnlJ/ku6PlpJrjgILkuZ/mraPnlLHkuo7lhbbnm7jlr7k8c3Ryb25nPui&#43;g&#43;Wkp&#43;eahOepuumXtDwvc3Ryb25nPu&#43;8jOWPkeeUn&#43;WcqDxzdHJvbmc&#43;6ICB5bm05LujPC9zdHJvbmc&#43;5LiK55qEPGNvZGU&#43;R0M8L2NvZGU&#43;6KaB5q&#43;UPHN0cm9uZz7mlrDnlJ/ku6M8L3N0cm9uZz7opoE8c3Ryb25nPuWwkeW&#43;l&#43;Wkmjwvc3Ryb25nPuOAguWvueixoeS7jjxzdHJvbmc&#43;6ICB5bm05LujPC9zdHJvbmc&#43;5Lit5raI5aSx55qE6L&#43;H56iL77yM5Y&#43;v5Lul56ew5LmL5Li6PGNvZGU&#43;bWFqb3IgR0M8L2NvZGU&#43;77yI5oiW6ICFPGNvZGU&#43;ZnVsbCBHQzwvY29kZT7vvInjgII8L3A&#43;CjxwPuWDj&#43;S4gOS6mzxzdHJvbmc&#43;57G755qE5bGC57qn5L&#43;h5oGvPC9zdHJvbmc&#43;77yMPHN0cm9uZz7mlrnms5XmlbDmja48L3N0cm9uZz4g5ZKMPHN0cm9uZz7mlrnms5Xkv6Hmga88L3N0cm9uZz7vvIjlpoI8c3Ryb25nPuWtl&#43;iKgueggTwvc3Ryb25nPu&#43;8jDxzdHJvbmc&#43;5qCIPC9zdHJvbmc&#43;IOWSjCA8c3Ryb25nPuWPmOmHj&#43;Wkp&#43;Wwjzwvc3Ryb25nPu&#43;8ie&#43;8jDxzdHJvbmc&#43;6L&#43;Q6KGM5pe25bi46YeP5rGgPC9zdHJvbmc&#43;77yIPGNvZGU&#43;SkRLNzwvY29kZT7kuYvlkI7np7vlh7o8c3Ryb25nPuawuOS5heS7ozwvc3Ryb25nPu&#43;8ie&#43;8jOW3suehruWumueahDxzdHJvbmc&#43;56ym5Y&#43;35byV55SoPC9zdHJvbmc&#43;5ZKMPHN0cm9uZz7omZrmlrnms5Xooag8L3N0cm9uZz7nrYnnrYnjgILlroPku6zlh6DkuY7pg73mmK88c3Ryb25nPumdmeaAgeeahDwvc3Ryb25nPuW5tuS4lDxzdHJvbmc&#43;5b6I5bCRPC9zdHJvbmc&#43;6KKrPHN0cm9uZz7ljbjovb3lkozlm57mlLY8L3N0cm9uZz7vvIzlnKg8Y29kZT5KREs4PC9jb2RlPuS5i&#43;WJjeeahDxjb2RlPkhvdFNwb3Q8L2NvZGU&#43;6Jma5ouf5py65Lit77yM57G755qE6L&#43;Z5LqbKirigJzmsLjkuYXnmoTigJ0qKiDmlbDmja7lrZjmlL7lnKjkuIDkuKrlj6vlgZo8c3Ryb25nPuawuOS5heS7ozwvc3Ryb25nPueahOWMuuWfn&#43;OAgjwvcD4KPHA&#43;5rC45LmF5Luj5LiA5q61PHN0cm9uZz7ov57nu63nmoTlhoXlrZjnqbrpl7Q8L3N0cm9uZz7vvIzmiJHku6zlnKg8Y29kZT5KVk08L2NvZGU&#43;5ZCv5Yqo5LmL5YmN5Y&#43;v5Lul6YCa6L&#43;H6K6&#43;572uPGNvZGU&#43;LVhYOk1heFBlcm1TaXplPC9jb2RlPueahOWAvOadpeaOp&#43;WItuawuOS5heS7o&#43;eahOWkp&#43;Wwj&#43;OAguS9huaYrzxjb2RlPkpESzg8L2NvZGU&#43;5LmL5ZCO5Y&#43;W5raI5LqG5rC45LmF5Luj77yM6L&#43;Z5LqbPHN0cm9uZz7lhYPmlbDmja48L3N0cm9uZz7ooqvnp7vliLDkuobkuIDkuKrkuI7loIY8c3Ryb25nPuS4jeebuOi/njwvc3Ryb25nPueahOensOS4ujxzdHJvbmc&#43;5YWD56m66Ze0PC9zdHJvbmc&#43;ICg8Y29kZT5NZXRhc3BhY2U8L2NvZGU&#43;KSDnmoQ8c3Ryb25nPuacrOWcsOWGheWtmOWMuuWfnzwvc3Ryb25nPuOAgjwvcD4KPC9ibG9ja3F1b3RlPgo8aDUgaWQ9IjXlnoPlnL7lm57mlLbkuInoibLmoIforrDms5UiPi41LuWeg&#43;WcvuWbnuaUtuS4ieiJsuagh&#43;iusOazle&#43;8mjwvaDU&#43;CjxibG9ja3F1b3RlPgo8cD7ivIDlvIDlp4vmiYDmnInlr7nosaHpg73mn5PmiJDivanivorliJ3lp4vljJblrozmiJDlkI7vvIzkvJrlkK/liqjmoIforrDnqIvluo/jgILlnKjmoIforrDnmoTov4fnqIvkuK3vvIzmmK/lj6/ku6XmmoLlgZzmoIforrDnqIvluo/miafivo8gTXV0YXRpb27vvIznrpfms5XpnIDopoHnu7TmiqQgMyDkuKrpm4blkIjvvIzivanivorpm4blkIjjgIHiv4rivorpm4blkIjjgIHngbDivorpm4blkIjjgIIzIOS4qumbhuWQiOaYr&#43;S6kuaWpeeahO&#43;8jOWvueixoeWPquiDveWcqOK8gOS4qumbhuWQiCDkuK3jgILmiafivo/kuYvliJ3vvIzmiYDmnInlr7nosaHpg73mlL7ivIrivanivorpm4blkIg8L3A&#43;CjxvbD4KPGxpPuesrOS4gOasoeaJp&#43;ihjO&#43;8mueul&#43;azleWwhlJvb3Tpm4blkIjog73nm7TmjqXlvJXnlKjnmoTlr7nosaHliqDlhaXliLDngbDoibLpm4blkIjkuK08L2xpPgo8bGk&#43;5b6A5ZCO5omn6KGM77ya5LiN5pat5LuO54Gw6Imy6ZuG5ZCI5Lit5Y&#43;W5Ye65YWD57Sg6L&#43;b6KGM5qCH6K6wCjxvbD4KPGxpPuWmguaenOWvueixoeWcqOeZveiJsumbhuWQiOS4re&#43;8jOmCo&#43;S5iOWwhueZveiJsuWvueixoeaUvuWFpeWIsOm7keiJsumbhuWQiOS4rTwvbGk&#43;CjxsaT7nhLblkI7pgY3ljoboioLngrnmiYDmnInlvJXnlKjlr7nosaHvvIzlubbpgJLlvZLmiYDmnInlvJXnlKjlr7nosaE8L2xpPgo8bGk&#43;5b2T5LiA5Liq5a&#43;56LGh55qE5omA5pyJ5byV55So6YO95Zyo54Gw6Imy6ZuG5ZCI5Lit77yM5bCx5oqK6L&#43;Z5Liq54K55pS&#43;5Zyo6buR6Imy6ZuG5ZCI5LitPC9saT4KPC9vbD4KPC9saT4KPGxpPuW9k&#43;eul&#43;azleaJp&#43;ihjOWujOaIkO&#43;8jOaJgOacieS4jemcgOimgUdD55qE5YWD57Sg6YO95Lya5raC6buR77yM55m96Imy6ZuG5ZCI5Lit5bCx5piv6ZyA6KaB6L&#43;b6KGM5Zue5pS255qE5a&#43;56LGhPC9saT4KPC9vbD4KPC9ibG9ja3F1b3RlPgo8aDUgaWQ9IjYtY21z5Z6D5Zy&#43;5Zue5pS25Zmo5LuL57uNIj4uNi4gQ01T5Z6D5Zy&#43;5Zue5pS25Zmo5LuL57uN77yaPC9oNT4KPGJsb2NrcXVvdGU&#43;CjxwPuW9k&#43;Weg&#43;WcvuWbnuaUtuW8gOWni&#43;a4heeQhui1hOa6kOaXtu&#43;8jOWFtuS9meeahOaJgOaciee6v&#43;eoi&#43;mDveS8muiiq&#43;WBnOatouOAguWmguaenOa4heeQhueahOaXtumXtOi/h&#43;mVv&#43;&#43;8jOWcqOaIkeS7rOeahOW6lOeUqOeoi&#43;W6j&#43;S4reWwseiDveaEn&#43;inieWIsOaYjuaYvueahOWNoemhv&#43;OAgjwvcD4KPC9ibG9ja3F1b3RlPgo8YmxvY2txdW90ZT4KPHA&#43;Q01T77yIQ29uY3VycmVudCBNYXJrIFN3ZWVw77yJ5pS26ZuG5Zmo5piv4ryA56eNPGNvZGU&#43;5Lul6I635Y&#43;W5pyA55&#43;t5Zue5pS25YGc6aG/5pe26Ze05Li64r2s5qCHPC9jb2RlPueahOaUtumbhuWZqOOAguWug&#43;K&#43;ruW4uOespuWQiOWcqOazqOmHjeK9pCDmiLfkvZPpqoznmoTlupTivaTkuIrkvb/ivaTjgIIg5pivIEhvdFNwb3Qg6Jma5ouf5py656ys4ryA5qy&#43;55yf5q2j5oSP5LmJ5LiK55qE5bm25Y&#43;R5pS26ZuG5Zmo77yM5a6D56ys4ryA5qyh5a6e546w5LqG6K6pIOWeg&#43;WcvuaUtumbhue6v&#43;eoi&#43;S4juK9pOaIt&#43;e6v&#43;eoi&#43;&#43;8iOWfuuacrOS4iu&#43;8ieWQjOaXtuK8r&#43;S9nOOAgjwvcD4KPG9sPgo8bGk&#43;5Yid5aeL5qCH6K6w77ya5pqC5YGc5omA5pyJ5YW25LuW57q/56iL77yM5bm2PGNvZGU&#43;6K6w5b2V5LiL55u05o6l5LiOcm9vdOebuOi/nueahOWvueixoTwvY29kZT7vvIzpgJ/luqbmgZLlv6s8L2xpPgo8bGk&#43;5bm25Y&#43;R5qCH6K6wOuWQjOaXtuW8gOWQr0dD5ZKM55So5oi357q/56iL77yM55So5LiA5Liq6Zet5YyF57uT5p6E5Y676K6w5b2V5Y&#43;v6L6&#43;5a&#43;56LGh77yM5Zug5Li655So5oi357q/56iL5Y&#43;v6IO95Lya5LiN5YGc55qE5pu05paw5byV55So5Z&#43;f77yM5peg5rOV5L&#43;d6K&#43;B5Y&#43;v6L6&#43;5oCn5YiG5p6Q55qE5a6e5pe25oCn44CCPC9saT4KPGxpPumHjeaWsOagh&#43;iusO&#43;8muS4uuS6huS/ruato&#43;W5tuWPkeacn&#43;mXtOWboOS4uueUqOaIt&#43;eoi&#43;W6j&#43;e7p&#43;e7rei/kOihjOiAjOWvvOiHtOagh&#43;iusOS6p&#43;eUn&#43;WPmOWKqOeahOmCo&#43;S4gOmDqOWIhuagh&#43;iusOiusOW9lTwvbGk&#43;CjxsaT7lubblj5HmuIXpmaTvvJrlvIDlkK/nlKjmiLfnur/nqIvlkIzml7ZHQ&#43;e6v&#43;eoi&#43;W8gOWni&#43;Wvueacquagh&#43;iusOeahOWMuuWfn&#43;WBmua4heaJq&#43;OAgjwvbGk&#43;Cjwvb2w&#43;CjwvYmxvY2txdW90ZT4KPGg1IGlkPSI3LWp2bS3kv6nkuKrlhoXlrZgiPi43LiBKVk0g5L&#43;p5Liq5YaF5a2YPC9oNT4KPGg2IGlkPSIxLeagiOWGheWtmCI&#43;MS4g5qCI5YaF5a2YPC9oNj4KPGJsb2NrcXVvdGU&#43;CjxwPuWcqDxjb2RlPuWHveaVsOS4rTwvY29kZT7lrprkuYnnmoTkuIDkups8Y29kZT7ln7rmnKznsbvlnovnmoTlj5jph488L2NvZGU&#43;5ZKMPGNvZGU&#43;5a&#43;56LGh55qE5byV55So5Y&#43;Y6YePPC9jb2RlPumDveWcqOWHveaVsOeahDxjb2RlPuagiOWGheWtmDwvY29kZT7kuK3liIbphY3jgILlvZPlnKjkuIDmrrXku6PnoIHlnZflrprkuYnkuIDkuKrlj5jph4/ml7bvvIxKYXZhIOWwseWcqOagiOS4reS4uui/meS4quWPmOmHj&#43;WIhumFjeWGheWtmOepuumXtO&#43;8jOW9kzxjb2RlPui2hei/h&#43;WPmOmHj&#43;eahOS9nOeUqOWfn&#43;WQjjwvY29kZT7vvIxKYXZhIOS8muiHquWKqOmHiuaUvuaOieS4uuivpeWPmOmHj&#43;aJgOWIhumFjeeahOWGheWtmOepuumXtO&#43;8jOivpeWGheWtmOepuumXtOWPr&#43;S7peeri&#43;WNs&#43;iiq&#43;WPpuS9nOS7lueUqOOAgjwvcD4KPC9ibG9ja3F1b3RlPgo8aDYgaWQ9IjIt5aCG5YaF5a2YIj4yLiDloIblhoXlrZg8L2g2Pgo8YmxvY2txdW90ZT4KPHA&#43;5aCG5YaF5a2Y55So5p2l5a2Y5pS&#43;55SxIDxjb2RlPm5ldyDliJvlu7rnmoTlr7nosaHlkozmlbDnu4Q8L2NvZGU&#43;44CC5Zyo5aCG5Lit5YiG6YWN55qE5YaF5a2Y77yM55SxIEphdmEg6Jma5ouf5py655qE6Ieq5Yqo5Z6D5Zy&#43;5Zue5pS25Zmo5p2l566h55CG44CCPC9wPgo8L2Jsb2NrcXVvdGU&#43;CjxoNSBpZD0iOC3nsbvliqDovb3lmagiPi44LiDnsbvliqDovb3lmag8L2g1Pgo8dWw&#43;CjxsaT48Y29kZT7lkK/liqjnsbvliqDovb3lmag8L2NvZGU&#43;77yaQm9vdHN0cmFwIENsYXNzTG9hZGVy77yM6LSf6LSj5Yqg6L295a2Y5pS&#43;5ZyoIEpES1xqcmVcbGliKEpESyDku6PooaggSkRLIOeahOWuieijheebruW9le&#43;8jOS4i&#43;WQjCnkuIvvvIzmiJbooqstWGJvb3RjbGFzc3BhdGgg5Y&#43;C5pWw5oyH5a6a55qE6Lev5b6E5Lit55qE77yM5bm25LiU6IO96KKrPGNvZGU&#43;6Jma5ouf5py66K&#43;G5Yir55qE57G75bqTPC9jb2RlPjwvbGk&#43;CjxsaT48Y29kZT7mianlsZXnsbvliqDovb3lmag8L2NvZGU&#43;77yaRXh0ZW5zaW9uIENsYXNzTG9hZGVy77yM6K&#43;l5Yqg6L295Zmo55SxIHN1bi5taXNjLkxhdW5jaGVyJEV4dENsYXNzTG9hZGVyIOWunueOsO&#43;8jOWug&#43;i0n&#43;i0o&#43;WKoOi9vSBES1xqcmVcbGliYGV4dCDnm67lvZVg5Lit77yM5oiW6ICF55SxIGphdmEuZXh0LmRpcnMg57O757uf5Y&#43;Y6YeP5oyH5a6a55qE6Lev5b6E5Lit55qE5omA5pyJ57G75bqT77yI5aaCIGphdmF4LirlvIDlpLTnmoTnsbvvvInvvIzlvIDlj5HogIXlj6/ku6Xnm7TmjqXkvb/nlKjmianlsZXnsbvliqDovb3lmajjgII8L2xpPgo8bGk&#43;PGNvZGU&#43;5bqU55So56iL5bqP57G75Yqg6L295ZmoPC9jb2RlPu&#43;8mkFwcGxpY2F0aW9uIENsYXNzTG9hZGVy77yM6K&#43;l57G75Yqg6L295Zmo55SxIHN1bi5taXNjLkxhdW5jaGVyJEFwcENsYXNzTG9hZGVyIOadpeWunueOsO&#43;8jOWug&#43;i0n&#43;i0o&#43;WKoOi9vTxjb2RlPueUqOaIt&#43;exu&#43;i3r&#43;W&#43;hDwvY29kZT7vvIhDbGFzc1BhdGjvvInmiYDmjIflrprnmoTnsbvvvIzlvIDlj5HogIXlj6/ku6Xnm7TmjqXkvb/nlKjor6XnsbvliqDovb3lmagKPHVsPgo8bGk&#43;PGNvZGU&#43;6YG/5YWN6YeN5aSN5Yqg6L29ICsg6YG/5YWN5qC45b&#43;D57G756&#43;h5pS5PC9jb2RlPjwvbGk&#43;CjwvdWw&#43;CjwvbGk&#43;CjwvdWw&#43;CjxwPjxpbWcNCiAgICBjbGFzcz0ibGF6eWxvYWQiDQogICAgc3JjPSIvbGl1ZG9uZ2RvbmcxLmdpdGh1Yi5pby9zdmcvbG9hZGluZy5taW4uc3ZnIg0KICAgIGRhdGEtc3JjPSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMTA3MjgxMjM5MTQ2OTItMTY0ODAxODc0MzA0ODc3LnBuZyINCiAgICBkYXRhLXNyY3NldD0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjEwNzI4MTIzOTE0NjkyLTE2NDgwMTg3NDMwNDg3Ny5wbmcsIGh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIxMDcyODEyMzkxNDY5Mi0xNjQ4MDE4NzQzMDQ4NzcucG5nIDEuNXgsIGh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIxMDcyODEyMzkxNDY5Mi0xNjQ4MDE4NzQzMDQ4NzcucG5nIDJ4Ig0KICAgIGRhdGEtc2l6ZXM9ImF1dG8iDQogICAgYWx0PSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMTA3MjgxMjM5MTQ2OTItMTY0ODAxODc0MzA0ODc3LnBuZyINCiAgICB0aXRsZT0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjEwNzI4MTIzOTE0NjkyLTE2NDgwMTg3NDMwNDg3Ny5wbmciLz48L3A&#43;CjxibG9ja3F1b3RlPgo8b2w&#43;CjxsaT7lkb3ku6TooYzlkK/liqjlupTnlKjml7blgJnnlLFKVk3liJ3lp4vljJbliqDovb08L2xpPgo8bGk&#43;6YCa6L&#43;HQ2xhc3MuZm9yTmFtZSgp5pa55rOV5Yqo5oCB5Yqg6L2977yMIOWwhuexu&#43;eahC5jbGFzc&#43;aWh&#43;S7tuWKoOi9veWIsGp2beS4reS5i&#43;Wklu&#43;8jOi/mOS8mjxjb2RlPuWvueexu&#43;i/m&#43;ihjOino&#43;mHijwvY29kZT7vvIzmiafooYznsbvkuK3nmoRzdGF0aWPlnZfvvJs8L2xpPgo8bGk&#43;6YCa6L&#43;HQ2xhc3NMb2FkZXIubG9hZENsYXNzKCnmlrnms5XliqjmgIHliqDovb3vvIwg5pivPGNvZGU&#43;5bCGLmNsYXNz5paH5Lu25Yqg6L295YiwanZt5LitPC9jb2RlPu&#43;8jDxjb2RlPuS4jeS8muaJp&#43;ihjHN0YXRpY&#43;S4reeahOWGheWuuSzlj6rmnInlnKhuZXdJbnN0YW5jZeaJjeS8muWOu&#43;aJp&#43;ihjHN0YXRpY&#43;WdlzwvY29kZT7jgII8L2xpPgo8L29sPgo8L2Jsb2NrcXVvdGU&#43;CjxoNiBpZD0iMi3liqDovb3mnLrliLYiPi4yLiDliqDovb3mnLrliLY8L2g2Pgo8dWw&#43;CjxsaT48c3Ryb25nPuWFqOebmOi0n&#43;i0o&#43;&#43;8mjwvc3Ryb25nPiDlvZPkuIDkuKrnsbvliqDovb3lmajotJ/otKPliqDovb3mn5DkuKpDbGFzc&#43;aXtu&#43;8jDxjb2RlPuivpUNsYXNz5omA5L6d6LWW55qE5ZKM5byV55So55qE5YW25LuWQ2xhc3PkuZ/lsIbnlLHor6XnsbvliqDovb3lmajotJ/otKPovb3lhaU8L2NvZGU&#43;77yM6Zmk6Z2e5pi&#43;56S65L2/55So5Y&#43;m5aSW5LiA5Liq57G75Yqg6L295Zmo5p2l6L295YWl44CCPC9saT4KPGxpPjxzdHJvbmc&#43;57yT5a2Y5py65Yi277yaPC9zdHJvbmc&#43;IOe8k&#43;WtmOacuuWItuWwhuS8muS/neivgTxjb2RlPuaJgOacieWKoOi9vei/h&#43;eahENsYXNz6YO95Lya6KKr57yT5a2YPC9jb2RlPu&#43;8jOW9k&#43;eoi&#43;W6j&#43;S4remcgOimgeS9v&#43;eUqOafkOS4qkNsYXNz5pe277yM57G75Yqg6L295ZmoPGNvZGU&#43;5YWI5LuO57yT5a2Y5Yy65a&#43;75om&#43;6K&#43;lQ2xhc3PvvIzlj6rmnInnvJPlrZjljLrkuI3lrZjlnKjvvIzns7vnu5/miY3kvJror7vlj5bor6Xnsbvlr7nlupTnmoTkuozov5vliLbmlbDmja7vvIzlubblsIblhbbovazmjaLmiJBDbGFzc&#43;Wvueixoe&#43;8jOWtmOWFpee8k&#43;WtmOWMujwvY29kZT7jgILov5nlsLHmmK/kuLrku4DkuYjkv67mlLnkuoZDbGFzc&#43;WQju&#43;8jOW/hemhu&#43;mHjeWQr0pWTe&#43;8jOeoi&#43;W6j&#43;eahOS/ruaUueaJjeS8mueUn&#43;aViOOAgjwvbGk&#43;CjxsaT48c3Ryb25nPuWPjOS6suWnlOa0vuacuuWItjo8L3N0cm9uZz4g5aaC5p6c5LiA5Liq57G75Yqg6L295Zmo5pS25Yiw5LqG57G75Yqg6L2955qE6K&#43;35rGC77yM5a6DPGNvZGU&#43;6aaW5YWI5LiN5Lya6Ieq5bex5Y675bCd6K&#43;V5Yqg6L296L&#43;Z5Liq57G777yM6ICM5piv5oqK6L&#43;Z5Liq6K&#43;35rGC5aeU5rS&#43;57uZ54i257G75Yqg6L295Zmo5Y675a6M5oiQPC9jb2RlPu&#43;8jOavj&#43;S4gOS4quWxguasoeeahOexu&#43;WKoOi9veWZqOmDveaYr&#43;WmguatpO&#43;8jOWboOatpOaJgOacieeahOWKoOi9veivt&#43;axguacgOe7iOmDveW6lOivpeS8oOmAgeWIsOacgOmhtuWxgueahOWQr&#43;WKqOexu&#43;WKoOi9veWZqOS4re&#43;8jDxjb2RlPuWPquacieW9k&#43;eItuWKoOi9veWZqOWPjemmiOiHquW3seaXoOazleWujOaIkOi/meS4quWKoOi9veivt&#43;axgu&#43;8iOWug&#43;eahOaQnOe0ouiMg&#43;WbtOS4reayoeacieaJvuWIsOaJgOmcgOeahOexu&#43;&#43;8ieaXtu&#43;8jOWtkOWKoOi9veWZqOaJjeS8muWwneivleiHquW3seWOu&#43;WujOaIkOWKoOi9veOAgjwvY29kZT48L2xpPgo8L3VsPgo8cD48aW1nDQogICAgY2xhc3M9Imxhenlsb2FkIg0KICAgIHNyYz0iL2xpdWRvbmdkb25nMS5naXRodWIuaW8vc3ZnL2xvYWRpbmcubWluLnN2ZyINCiAgICBkYXRhLXNyYz0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjEwNzI4MTMwNDQ0MDQxLTE2NDgwMTg3NDMwNDg3OS5wbmciDQogICAgZGF0YS1zcmNzZXQ9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIxMDcyODEzMDQ0NDA0MS0xNjQ4MDE4NzQzMDQ4NzkucG5nLCBodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMTA3MjgxMzA0NDQwNDEtMTY0ODAxODc0MzA0ODc5LnBuZyAxLjV4LCBodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMTA3MjgxMzA0NDQwNDEtMTY0ODAxODc0MzA0ODc5LnBuZyAyeCINCiAgICBkYXRhLXNpemVzPSJhdXRvIg0KICAgIGFsdD0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjEwNzI4MTMwNDQ0MDQxLTE2NDgwMTg3NDMwNDg3OS5wbmciDQogICAgdGl0bGU9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIxMDcyODEzMDQ0NDA0MS0xNjQ4MDE4NzQzMDQ4NzkucG5nIi8&#43;PC9wPgo8aDUgaWQ9Ijkt5a&#43;56LGh5Yib5bu6Ij4uOS4g5a&#43;56LGh5Yib5bu6PC9oNT4KPGJsb2NrcXVvdGU&#43;CjxwPkhvdFNwb3QgVk3pgYfliLDkuIDmnaE8Y29kZT5uZXcg57G75Z6L77yI77yJ5oyH5Luk5pe2PC9jb2RlPu&#43;8jOKRoOmmluWFiOWcqDxjb2RlPuW4uOmHj&#43;axoOS4reaYr&#43;WQpjwvY29kZT7mnInov5nkuKrnsbvnmoTnrKblj7flvJXnlKgoPGNvZGU&#43;56ym5Y&#43;35byV55So5Luj6KGo57G75piv5ZCm5bey6KKr5Yqg6L2944CB6Kej5p6Q5ZKM5Yid5aeL5YyW6L&#43;HPC9jb2RlPinvvJvikaHlpoLmnpzmsqHmnInmo4DmtYvliLDmraTnsbvnmoTnrKblj7flvJXnlKjlsLHlv4XpobvlhYjmiafooYznm7jlupTnmoQ8Y29kZT7nsbvliqDovb3ov4fnqIs8L2NvZGU&#43;77ybMyDnsbvliqDovb3pgJrov4flkI48Y29kZT7ku45KYXZh5aCG5Lit5YiG6YWN56Gu5a6a5aSn5bCP55qE5YaF5a2YPC9jb2RlPijliIbphY3lhoXlrZjnmoTov4fnqIvmmK/kuIDkuKrlubblj5Hov5vooYznmoTov4fnqIsp77yb4pGj5YaF5a2Y5YiG6YWN5a6M5oiQ5ZCO77yM5bCGPGNvZGU&#43;5YiG6YWN5Yiw55qE5YaF5a2Y56m66Ze05Yid5aeL5YyW5Li66Zu25YC8PC9jb2RlPijlr7nosaHlpLTkuI3liJ3lp4vljJYmbmRhc2g75a&#43;56LGh5aS05Zyo5LiL6Z2i5LuL57uNKe&#43;8mzUg6Jma5ouf5py65a&#43;55a&#43;56LGh6L&#43;b6KGM5b&#43;F6KaB55qE6K6&#43;572u77yM5bm25bCG6L&#43;Z5LqbPGNvZGU&#43;6K6&#43;572u5L&#43;h5oGv5a2Y5pS&#43;5Zyo5a&#43;56LGh5aS05LitPC9jb2RlPu&#43;8m&#43;KRpeatpOaXtuWwseW&#43;l&#43;WIsOS6hjxjb2RlPuS7jkpWTeinhuinkueci&#43;WIsOeahOWvueixoTwvY29kZT7vvJvikaY8Y29kZT7ku45qYXZh56iL5bqP55qE6KeS5bqm5p2l55yL5a&#43;56LGh5omN5Yia5Yia5Yib5bu6LS0tJmx0O2luaXQmZ3Q75pa55rOV6L&#43;Y5rKh5pyJ5omn6KGM77yM5omA5pyJ55qE5a2X5q616YO96L&#43;Y5Li6MO&#43;8jOaJp&#43;ihjGluaXTmlrnms5XlkI7nnJ/mraPnmoTlj6/nlKjlr7nosaHkuqfnlJ88L2NvZGU&#43;44CCPC9wPgo8L2Jsb2NrcXVvdGU&#43;CjxwPjxpbWcNCiAgICBjbGFzcz0ibGF6eWxvYWQiDQogICAgc3JjPSIvbGl1ZG9uZ2RvbmcxLmdpdGh1Yi5pby9zdmcvbG9hZGluZy5taW4uc3ZnIg0KICAgIGRhdGEtc3JjPSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMTA2MDQwOTUwMDk2ODQtMTY0ODAxODc0MzA0ODgxLnBuZyINCiAgICBkYXRhLXNyY3NldD0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjEwNjA0MDk1MDA5Njg0LTE2NDgwMTg3NDMwNDg4MS5wbmcsIGh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIxMDYwNDA5NTAwOTY4NC0xNjQ4MDE4NzQzMDQ4ODEucG5nIDEuNXgsIGh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIxMDYwNDA5NTAwOTY4NC0xNjQ4MDE4NzQzMDQ4ODEucG5nIDJ4Ig0KICAgIGRhdGEtc2l6ZXM9ImF1dG8iDQogICAgYWx0PSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMTA2MDQwOTUwMDk2ODQtMTY0ODAxODc0MzA0ODgxLnBuZyINCiAgICB0aXRsZT0iaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjEwNjA0MDk1MDA5Njg0LTE2NDgwMTg3NDMwNDg4MS5wbmciLz48L3A&#43;CjxoNSBpZD0iMTAt5a&#43;56LGh5YaF5a2Y5YiG5biDIj4uMTAuIOWvueixoeWGheWtmOWIhuW4gzwvaDU&#43;CjxibG9ja3F1b3RlPgo8cD7nm67liY3kuLvmtYHorr/pl67mlrnlvI/mnInkvb/nlKg8Y29kZT7lj6Xmn4Tlkoznm7TmjqXmjIfpkog8L2NvZGU&#43;5Lik56eN44CC5Y&#43;l5p&#43;EJm1kYXNoO&#43;S7jkphdmHloIbkuK3liJLliIbkuIDlnZflhoXlrZjkvZzkuLrlj6Xmn4TmsaDvvIxyZWZlcmVuY2XkuK3lrZjlgqjlr7nosaHnmoTlj6Xmn4TlnLDlnYDvvIzlj6Xmn4TkuK3ljIXlkKvkuoblr7nosaHlrp7kvovmlbDmja7kuI7nsbvlnovmlbDmja7lkIToh6rnmoTlhbfkvZPlnLDlnYDkv6Hmga/vvIzkv67mlLnku6Pku7flsI/vvJvnm7TmjqXmjIfpkogmbWRhc2g7cmVmZXJlbmNl5LitPGNvZGU&#43;55u05o6l5a2Y5YKo5aCG5Lit5a&#43;56LGh5Zyw5Z2APC9jb2RlPu&#43;8jOWmguWbvuS6jOaJgOekuu&#43;8jOWFtuiuv&#43;mXrumAn&#43;W6puabtOW/q&#43;&#43;8jOiKguecgeaMh&#43;mSiOWumuS9jeeahOaXtumXtOW8gOmUgO&#43;8jEhvdFNwb3QgVk3lsLHmmK/ph4fnlKjnm7TmjqXmjIfpkojmlrnlvI/jgII8L3A&#43;CjwvYmxvY2txdW90ZT4KPHA&#43;PGltZw0KICAgIGNsYXNzPSJsYXp5bG9hZCINCiAgICBzcmM9Ii9saXVkb25nZG9uZzEuZ2l0aHViLmlvL3N2Zy9sb2FkaW5nLm1pbi5zdmciDQogICAgZGF0YS1zcmM9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIxMDYwNDEwMDg1MTAzMi0xNjQ4MDE4NzQzMDQ4ODMucG5nIg0KICAgIGRhdGEtc3Jjc2V0PSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMTA2MDQxMDA4NTEwMzItMTY0ODAxODc0MzA0ODgzLnBuZywgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjEwNjA0MTAwODUxMDMyLTE2NDgwMTg3NDMwNDg4My5wbmcgMS41eCwgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjEwNjA0MTAwODUxMDMyLTE2NDgwMTg3NDMwNDg4My5wbmcgMngiDQogICAgZGF0YS1zaXplcz0iYXV0byINCiAgICBhbHQ9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIxMDYwNDEwMDg1MTAzMi0xNjQ4MDE4NzQzMDQ4ODMucG5nIg0KICAgIHRpdGxlPSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMTA2MDQxMDA4NTEwMzItMTY0ODAxODc0MzA0ODgzLnBuZyIvPjwvcD4KPHA&#43;PGltZw0KICAgIGNsYXNzPSJsYXp5bG9hZCINCiAgICBzcmM9Ii9saXVkb25nZG9uZzEuZ2l0aHViLmlvL3N2Zy9sb2FkaW5nLm1pbi5zdmciDQogICAgZGF0YS1zcmM9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIxMDYwNDEwMTAwMjk0Mi0xNjQ4MDE4NzQzMDQ4ODUucG5nIg0KICAgIGRhdGEtc3Jjc2V0PSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMTA2MDQxMDEwMDI5NDItMTY0ODAxODc0MzA0ODg1LnBuZywgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjEwNjA0MTAxMDAyOTQyLTE2NDgwMTg3NDMwNDg4NS5wbmcgMS41eCwgaHR0cHM6Ly9naXRlZS5jb20vZ2l0aHViLTI1OTcwMjk1L2Jsb2dpbWd2MjAyMi9yYXcvbWFzdGVyL2ltYWdlLTIwMjEwNjA0MTAxMDAyOTQyLTE2NDgwMTg3NDMwNDg4NS5wbmcgMngiDQogICAgZGF0YS1zaXplcz0iYXV0byINCiAgICBhbHQ9Imh0dHBzOi8vZ2l0ZWUuY29tL2dpdGh1Yi0yNTk3MDI5NS9ibG9naW1ndjIwMjIvcmF3L21hc3Rlci9pbWFnZS0yMDIxMDYwNDEwMTAwMjk0Mi0xNjQ4MDE4NzQzMDQ4ODUucG5nIg0KICAgIHRpdGxlPSJodHRwczovL2dpdGVlLmNvbS9naXRodWItMjU5NzAyOTUvYmxvZ2ltZ3YyMDIyL3Jhdy9tYXN0ZXIvaW1hZ2UtMjAyMTA2MDQxMDEwMDI5NDItMTY0ODAxODc0MzA0ODg1LnBuZyIvPjwvcD4KPGg1IGlkPSIxMS1vdXRvZm1lbW9yeemUmeivryI&#43;LjExLiBPdXRvZk1lbW9yeemUmeivrzwvaDU&#43;CjxibG9ja3F1b3RlPgo8cD5PdXRPZk1lbW9yeeW8guW4uOWOn&#43;WboO&#43;8mjxjb2RlPuagueaNruaKpemUmeS/oeaBr&#43;ehruWumuWHuuaYr&#43;mCo&#43;S4quWMuuWfn&#43;WPkeeUn091dE9mTWVtb3J55byC5bi4PC9jb2RlPu&#43;8jOeEtuWQjuWIhuaekOaYrzxjb2RlPuWGheWtmOazhOmcsui/mOaYr&#43;WGheWtmOa6ouWHujwvY29kZT7jgII8L3A&#43;Cjx1bD4KPGxpPjxjb2RlPuWGheWtmOazhOa8jzwvY29kZT7vvJrkuI5HQyBSb290c&#43;ebuOWFs&#43;iBlOW5tuWvvOiHtEdD5peg5rOV6Ieq5Yqo5Zue5pS244CCPC9saT4KPGxpPjxjb2RlPuWGheWtmOa6ouWHujwvY29kZT7vvJrkvJflpJrlr7nosaHnoa7lrp7ov5jlv4XpobvmtLvnnYDvvIzlr7zoh7TlpKfph4/lhoXlrZjooqvljaDnlKjogIzml6Dms5VHQ&#43;&#43;8jOW9k&#43;i2heWHuumZkOWItuWGheWtmOacgOWkp&#43;WAvOaXtuWwseaKm&#43;WHuk91dE9mTWVtb3J55byC5bi444CCPC9saT4KPC91bD4KPC9ibG9ja3F1b3RlPgo8aDUgaWQ9IjEyLWZ1bGwtZ2MiPi4xMi4gRnVsbCBHQzwvaDU&#43;CjxibG9ja3F1b3RlPgo8cD4qKkZ1bGwgR0PvvJoqKuaXoOWumOaWueWumuS5ie&#43;8jOmAmuW4uOaEj&#43;S5ieS4iuiAjOiogOaMh&#43;eahOaYr&#43;S4gOasoeeJueauiiBHQyDnmoTooYzkuLrmj4/ov7DvvIzov5nmrKEgR0Mg5Lya5Zue5pS25pW05Liq5aCG55qEPGEgaHJlZj0iaHR0cHM6Ly9zby5jc2RuLm5ldC9zby9zZWFyY2g/cT0lZTUlODYlODUlZTUlYWQlOTgmYW1wO3NwbT0xMDAxLjIxMDEuMzAwMS43MDIwInRhcmdldD0iX2JsYW5rIiByZWw9ImV4dGVybmFsIG5vZm9sbG93IG5vb3BlbmVyIG5vcmVmZXJyZXIiPuWGheWtmDxpIGNsYXNzPSJmYS1zb2xpZCBmYS1leHRlcm5hbC1saW5rLWFsdCBmYS1mdyBmYS14cyBtcy0xIHRleHQtc2Vjb25kYXJ5IiBhcmlhLWhpZGRlbj0idHJ1ZSI&#43;PC9pPjwvYT7vvIzljIXlkKvogIHlubTku6PvvIzmlrDnlJ/ku6PvvIxtZXRhc3BhY2Ug562J44CCPC9wPgo8dWw&#43;CjxsaT5TeXN0ZW0uZ2MgKCkg5pa55rOV55qE6LCD55SoPC9saT4KPGxpPuaXp&#43;eUn&#43;S7o&#43;epuumXtOS4jei2s&#43;OAguaXp&#43;eUn&#43;S7o&#43;epuumXtOWPquacieWcqOaWsOeUn&#43;S7o&#43;Wvueixoei9rOWFpeWPiuWIm&#43;W7uuS4uuWkp&#43;WvueixoeOAgeWkp&#43;aVsOe7hOaXtuaJjeS8muWHuueOsOS4jei2s&#43;eahOeOsOixoe&#43;8jOW9k&#43;aJp&#43;ihjCBGdWxsIEdDIOWQjuepuumXtOS7jeeEtuS4jei2s&#43;&#43;8jOWImeaKm&#43;WHuumUmeivr&#43;&#43;8mmphdmEubGFuZy5PdXRPZk1lbW9yeUVycm9yOiBKYXZhIGhlYXAgc3BhY2Ug44CCPC9saT4KPGxpPlBlcm1hbmV0IEdlbmVyYXRpb24g56m66Ze05ruh5LqGPC9saT4KPC91bD4KPC9ibG9ja3F1b3RlPgo8aDUgaWQ9IjEyLeaLt&#43;i0nSI&#43;LjEyLiDmi7fotJ08L2g1Pgo8dWw&#43;CjxsaT7mtYXmi7fotJ3vvJrlpoLmnpzlsZ7mgKfmmK/ln7rmnKznsbvlnovvvIzmi7fotJ3nmoTlsLHmmK/ln7rmnKznsbvlnovnmoTlgLzvvJvlpoLmnpw8Y29kZT7lsZ7mgKfmmK/lhoXlrZjlnLDlnYA8L2NvZGU&#43;77yI5byV55So57G75Z6L77yJ77yM5ou36LSd55qE5bCx5piv5YaF5a2Y5Zyw5Z2APC9saT4KPGxpPua3seaLt&#43;i0ne&#43;8muS8muaLt&#43;i0neaJgOacieeahOWxnuaAp&#43;&#43;8jOW5tjxjb2RlPuaLt&#43;i0neWxnuaAp&#43;aMh&#43;WQkeeahOWKqOaAgeWIhumFjeeahOWGheWtmDwvY29kZT4uIOWPr&#43;S7peS9v&#43;eUqEFycmF5cy5jb3B5b2YoKTwvbGk&#43;CjwvdWw&#43;CjxoNSBpZD0iMTMt5Y&#43;N5bCEIj4uMTMuIOWPjeWwhDwvaDU&#43;CjxibG9ja3F1b3RlPgo8dWw&#43;CjxsaT7pgJrov4flpJbpg6jnsbvnmoQ8Y29kZT7lhajot6/lvoTlkI3liJvlu7rlr7nosaE8L2NvZGU&#43;77yM5bm25L2/55So6L&#43;Z5Lqb57G777yM5a6e546w5LiA5LqbPGNvZGU&#43;5omp5bGV55qE5Yqf6IO9PC9jb2RlPuOAgjwvbGk&#43;CjxsaT7lj43lsITorqnlvIDlj5HkurrlkZjlj6/ku6U8Y29kZT7mnprkuL7lh7rnsbvnmoTlhajpg6jmiJDlkZg8L2NvZGU&#43;77yM5YyF5ous5p6E6YCg5Ye95pWw44CB5bGe5oCn44CB5pa55rOV44CC5Lul5biu5Yqp5byA5Y&#43;R6ICF5YaZ5Ye65q2j56Gu55qE5Luj56CB44CCPC9saT4KPGxpPua1i&#43;ivleaXtuWPr&#43;S7peWIqeeUqOWPjeWwhCBBUEkg6K6/6Zeu57G755qE56eB5pyJ5oiQ5ZGY77yM5Lul5L&#43;d6K&#43;B5rWL6K&#43;V5Luj56CB6KaG55uW546H44CCPC9saT4KPC91bD4KPC9ibG9ja3F1b3RlPgo8dWw&#43;CjxsaT7mmK9KVk0g5Zyo6L&#43;Q6KGM5pe25Yqo5oCB5Yqg6L2957G777yM6LCD55So5pa55rOV5oiW6ICF6K6/6Zeu5bGe5oCn77yM5LiN6ZyA6KaB55&#43;l6YGT6L&#43;Q6KGM5a&#43;56LGh5piv6LCBPC9saT4KPGxpPuebuOWFs&#43;eahOexu&#43;&#43;8mgo8dWw&#43;CjxsaT5jbGFzc&#43;&#43;8miDmr4/kuIDkuKrnsbvpg73mnInkuIDkuKpjbGFzc&#43;Wvueixoe&#43;8iOexu&#43;WunuS&#43;i&#43;&#43;8ie&#43;8jOWMheWQq&#43;exu&#43;eahOebuOWFs&#43;S/oeaBrzwvbGk&#43;CjxsaT5GaWVsZO&#43;8muS9v&#43;eUqGdldC9zZXQg5L&#43;u5pS55oiW6ICF6K&#43;75Y&#43;WRmllbGTnm7jlhbPlr7nosaE8L2xpPgo8bGk&#43;bWV0aG9k77ya5L2/55SoPGNvZGU&#43;aW52b2tl5pa55rOV6LCD55So5LiObWV0aG9k55u45YWz6IGU55qE5a&#43;56LGhPC9jb2RlPjwvbGk&#43;CjxsaT5Db25zdHJ1Y3Rvcu&#43;8miDkvb/nlKhuZXdJbnN0YW5jZSgp5p6E5bu65a&#43;56LGhPC9saT4KPGxpPk9iamVjdCDnsbvvvJpPYmplY3Qg5piv5omA5pyJIEphdmEg57G755qE54i257G744CC5omA5pyJ5a&#43;56LGh6YO96buY6K6k5a6e546w5LqGIE9iamVjdCDnsbvnmoTmlrnms5XjgII8L2xpPgo8L3VsPgo8L2xpPgo8L3VsPgo8aDUgaWQ9IjE0LeWmguS9lemBv&#43;WFjeWGheWtmOazhOa8jyI&#43;LjE0LiDlpoLkvZXpgb/lhY3lhoXlrZjms4TmvI88L2g1Pgo8dWw&#43;CjxsaT7mnKrlr7nkvZzlup/mlbDmja7lhoXlrZjljZXlhYPnva7kuLogbnVsbDwvbGk&#43;CjxsaT7lsL3ml6nph4rmlL7ml6DnlKjlr7nosaHnmoTlvJXnlKjvvIw8L2xpPgo8bGk&#43;5L2/55So5Li05pe25Y&#43;Y6YeP5pe277yM6K6p5byV55So5Y&#43;Y6YeP5Zyo5o6o5Ye65rS75Yqo5Z&#43;f5ZCO6Ieq5Yqo6K6&#43;572u5Li6IG51bGzvvIzmmpfnpLrlnoPlnL7mlLbpm4blmajmlLbpm4bvvJs8L2xpPgo8bGk&#43;56iL5bqP6YG/5YWN55SoIFN0cmluZyDmi7zmjqXvvIznlKggU3RyaW5nQnVmZmVy77yM5Zug5Li65q&#43;P5LiqIFN0cmluZyDkvJrljaDnlKjlhoXlrZjkuIDlnZfljLrln5/vvJs8L2xpPgo8bGk&#43;5bC96YeP5bCR55So6Z2Z5oCB5Y&#43;Y6YeP77yI5YWo5bGA5LiN5Lya5Zue5pS277yJ77ybPC9saT4KPGxpPuS4jeimgembhuS4reWIm&#43;W7uuWvueixoeWwpOWFtuWkp&#43;Wvueixoe&#43;8jOWPr&#43;S7peS9v&#43;eUqOa1geaTjeS9nO&#43;8mzwvbGk&#43;CjxsaT7lsL3ph4/kvb/nlKjlr7nosaHmsaDvvIzkuI3lho3lvqrnjq/kuK3liJvlu7rlr7nosaHvvIzkvJjljJbphY3nva7vvJs8L2xpPgo8bGk&#43;5Yib5bu65a&#43;56LGh5Yiw5Y2V5L6LIGdldEluc3RhbmNlIOS4re&#43;8jOWvueixoeaXoOazleWbnuaUtuiiq&#43;WNleS&#43;i&#43;W8leeUqO&#43;8mzwvbGk&#43;CjxsaT7mnI3liqHlmaggc2Vzc2lvbiDml7bpl7Torr7nva7ov4fplb/kuZ/kvJrlvJXotbflhoXlrZjms4TmvI/jgII8L2xpPgo8L3VsPgo8aDUgaWQ9IjE1LeajgOafpeW8guW4uOi/kOihjOaXtuW8guW4uCI&#43;LjE1LiDmo4Dmn6XlvILluLgmYW1wO&#43;i/kOihjOaXtuW8guW4uDwvaDU&#43;Cjx1bD4KPGxpPgo8cD7mo4Dmn6XlvILluLjmmK/lnKjnqIvluo/kuK3mnIDnu4/luLjnorDliLDlvILluLjvvIw8Y29kZT7miYDmnInnu6fmib/oh6ogRXhjZXB0aW9uIOW5tuS4lOS4jeaYr&#43;i/kOihjOaXtuW8guW4uOeahOW8guW4uOmDveaYr&#43;ajgOafpeW8guW4uDwvY29kZT7vvIzmr5TlpoLlkrHku6zmnIDluLjop4HnmoQgSU8g5byC5bi45ZKMIFNRTCDlvILluLjjgILov5nnp43lvILluLjpg73lj5HnlJ/lnKjnvJbor5HnmoTpmLbmrrXvvIxKYXZhIOe8luivkeWZqOW8uuWItueoi&#43;W6j&#43;WOu&#43;aNleiOt&#43;atpOexu&#43;Wei&#43;eahOW8guW4uO&#43;8jOWNs&#43;Wug&#43;S8muaKiuWPr&#43;iDveS8muWHuueOsOi/meS6m&#43;W8guW4uOeahOS7o&#43;eggeaUvuWIsCB0cnkg5Z2X5Lit77yM5oqK5a&#43;55byC5bi455qE5aSE55CG5Luj56CB5pS&#43;5YiwIGNhdGNoIOWdl&#43;S4reOAguWPl&#43;ajgOW8guW4uOi3n&#43;eoi&#43;W6j&#43;i/kOihjOeahOS4iuS4i&#43;aWh&#43;eOr&#43;Wig&#43;acieWFs&#43;&#43;8jOWNs&#43;S9v&#43;eoi&#43;W6j&#43;iuvuiuoeaXoOivr&#43;&#43;8jOS7jeeEtuWPr&#43;iDveWboOS9v&#43;eUqOeahOmXrumimOiAjOW8leWPkeOAgjwvcD4KPC9saT4KPGxpPgo8cD7ov5DooYzml7blvILluLjkuI3lkIzkuo7mo4Dmn6XlvILluLjvvIznvJbor5HlmajmsqHmnInlvLrliLblr7nlhbbov5vooYzmjZXojrflubblpITnkIbvvIzlpoLmnpzkuI3lr7nlvILluLjov5vooYzlpITnkIbvvIzpgqPkuYjlvZPlh7rnjrDov5nnp43lvILluLjnmoTml7blgJnvvIzkvJrnlLEgSlZNIOadpeWkhOeQhu&#43;8jOavlOWmgiBOdWxsUG9pbnRlckV4Y2VwdGlvbiDlvILluLjvvIzlroPlsLHmmK/ov5DooYzml7blvILluLjjgILlj6ropoHnqIvluo/orr7orqHlvpfmsqHmnInpl67popjpgJrluLjlsLHkuI3kvJrlj5HnlJ/ov5DooYzml7blvILluLjjgII8L3A&#43;CjwvbGk&#43;CjwvdWw&#43;Cg=="
+    ><div class="fixit-decryptor-container">
+  <img class="fixit-decryptor-loading" src="/liudongdong1.github.io/svg/loading.min.svg" alt="decryptor loading" />
+  <label for="fixit-decryptor-input" title='密码'>
+    <input type="password" id="fixit-decryptor-input" class="d-none" placeholder="🔑 请输入密码" />
+  </label>
+  <button class="fixit-encryptor-btn d-none"><i class="fa-solid fa-lock" aria-hidden="true"></i> 重新加密</button>
+</div>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-28&#32;22:05:14>更新于 2023-09-28&nbsp;</span>
+      </div><div class="post-info-license d-none">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line d-none">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_jvm/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80%5c%e9%9d%a2%e7%bb%8f%5c%e9%9d%a2%e7%bb%8f_JVM.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_jvm/" data-title="面经_JVM" data-hashtags="JVM,Java"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_jvm/" data-hashtag="JVM"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_jvm/" data-title="面经_JVM" data-image="https://cdn.pixabay.com/photo/2021/04/20/15/04/hare-6194141__340.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/jvm/">JVM</a>,&nbsp;<a href="liudongdong1.github.io/tags/java/">Java</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="prev" rel="prev" title="面经_计算机网络"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>面经_计算机网络</a>
+      <a href="liudongdong1.github.io/%E9%9D%A2%E7%BB%8F_linux/" class="next" rel="next" title="面经_Linux">面经_Linux<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/core.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/enc-base64.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/md5.min.js" defer></script><script src="/liudongdong1.github.io/lib/crypto-js/sha256.min.js" defer></script><script src="/liudongdong1.github.io/js/fixit-decryptor.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"encryption":{"all":true,"shortcode":false},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

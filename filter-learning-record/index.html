@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Filter Learning Record - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="1.常见滤波算法 1.1. 限幅滤波法（又称程序判断滤波法） A方法： 根据经验判断，确定两次采样允许的最大偏差值（设为A），每次检测到新值时判断： 如果本" /><meta name="keywords" content='Model' /><meta itemprop="name" content="Filter Learning Record">
+<meta itemprop="description" content="1.常见滤波算法 1.1. 限幅滤波法（又称程序判断滤波法） A方法： 根据经验判断，确定两次采样允许的最大偏差值（设为A），每次检测到新值时判断： 如果本"><meta itemprop="datePublished" content="2020-06-10T16:22:21+00:00" />
+<meta itemprop="dateModified" content="2023-09-29T00:21:19+08:00" />
+<meta itemprop="wordCount" content="4175"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Model," /><meta property="og:title" content="Filter Learning Record" />
+<meta property="og:description" content="1.常见滤波算法 1.1. 限幅滤波法（又称程序判断滤波法） A方法： 根据经验判断，确定两次采样允许的最大偏差值（设为A），每次检测到新值时判断： 如果本" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/filter-learning-record/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-06-10T16:22:21+00:00" />
+<meta property="article:modified_time" content="2023-09-29T00:21:19+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="Filter Learning Record"/>
+<meta name="twitter:description" content="1.常见滤波算法 1.1. 限幅滤波法（又称程序判断滤波法） A方法： 根据经验判断，确定两次采样允许的最大偏差值（设为A），每次检测到新值时判断： 如果本"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/filter-learning-record/" /><link rel="prev" href="liudongdong1.github.io/object-tracking/" /><link rel="next" href="liudongdong1.github.io/ros-relative-learning/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Filter Learning Record",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/filter-learning-record\/"
+    },"genre": "posts","keywords": "Model","wordcount":  4175 ,
+    "url": "liudongdong1.github.io\/filter-learning-record\/","datePublished": "2020-06-10T16:22:21+00:00","dateModified": "2023-09-29T00:21:19+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>Filter Learning Record</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/aiot/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;AIOT</a></span></div>
+      <div class="post-meta-line"><span title=2020-06-10&#32;16:22:21>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-06-10" >2020-06-10</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 4175 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="Filter Learning Record">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/golden-gate-bridge-river-bridge-suspension-bridge.jpg"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/golden-gate-bridge-river-bridge-suspension-bridge.jpg, https://gitee.com/github-25970295/blogImage/raw/master/img/golden-gate-bridge-river-bridge-suspension-bridge.jpg 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/golden-gate-bridge-river-bridge-suspension-bridge.jpg 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/golden-gate-bridge-river-bridge-suspension-bridge.jpg"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/golden-gate-bridge-river-bridge-suspension-bridge.jpg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1常见滤波算法">1.常见滤波算法</a></li>
+        <li><a href="#2-频谱功率谱倒频谱">2. 频谱\功率谱\倒频谱</a></li>
+        <li><a href="#3-学习链接">3. 学习链接</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><h3 id="1常见滤波算法">1.常见滤波算法</h3>
+<h4 id="11-限幅滤波法又称程序判断滤波法">1.1. 限幅滤波法（又称程序判断滤波法）</h4>
+<p>　　A方法： 根据经验判断，确定两次采样允许的最大偏差值（设为A），每次检测到新值时判断： 如果本次值与上次值之差&lt;=A，则本次值有效，如果本次值与上次值之差&gt;A，则本次值无效，放弃本次值，用上次值代替本次值。</p>
+<p>　　B优点： 能有效克服因偶然因素引起的脉冲干扰。</p>
+<p>　　C缺点： 无法抑制那种周期性的干扰，平滑度差。</p>
+<h4 id="12-中位值滤波法">1.2. 中位值滤波法</h4>
+<p>　　A方法： 连续采样N次（N取奇数），把N次采样值按大小排列，取中间值为本次有效值。</p>
+<p>　　B优点： 能有效克服因偶然因素引起的波动干扰，<!-- raw HTML omitted -->对温度、液位的变化缓慢的被测参数有良好的滤波效果<!-- raw HTML omitted -->。</p>
+<p>　　C缺点： <!-- raw HTML omitted -->对流量、速度等快速变化的参数不宜。<!-- raw HTML omitted --></p>
+<h4 id="13-算术平均滤波法">1.3. 算术平均滤波法</h4>
+<p>　　A方法： 连续取N个采样值进行算术平均运算，N值较大时：信号平滑度较高，但灵敏度较低；N值较小时：信号平滑度较低，但灵敏度较高。N值的选取：一般流量，N=12；压力：N=4。</p>
+<p>　　B优点： 适用于对一般具有随机干扰的信号进行滤波，<!-- raw HTML omitted -->这样信号的特点是有一个平均值，信号在某一数值范围附近上下波动。<!-- raw HTML omitted --></p>
+<p>　　C缺点： <!-- raw HTML omitted -->对于测量速度较慢或要求数据计算速度较快的实时控制不适用，比较浪费RAM 。<!-- raw HTML omitted --></p>
+<h4 id="14-递推平均滤波法又称滑动平均滤波法">1.4. 递推平均滤波法（又称滑动平均滤波法)</h4>
+<p>　　A方法： 把连续取N个采样值看成一个队列，队列的长度固定为N，每次采样到一个新数据放入队尾，并扔掉原来队首的一次数据(先进先出原则) 。把队列中的N个数据进行算术平均运算，就可获得新的滤波结果。N值的选取：流量，N=12；压力：N=4；液面，N=4~12；温度，N=1~4。</p>
+<p>　　B优点： 对周期性干扰有良好的抑制作用，平滑度高，适用于<code>高频振荡</code>的系统。</p>
+<p>　　C缺点： 灵敏度低，对偶然出现的脉冲性干扰的抑制作用较差，不易消除由于脉冲干扰所引起的采样值偏差，不适用于脉冲干扰比较严重的场合，比较浪费RAM。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MovAvg</span>(object):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, window_size<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span>):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>window_size <span style="color:#f92672">=</span> window_size
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>data_queue <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update</span>(self, data):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(self<span style="color:#f92672">.</span>data_queue) <span style="color:#f92672">==</span> self<span style="color:#f92672">.</span>window_size:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>sum<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>sum<span style="color:#f92672">-</span>self<span style="color:#f92672">.</span>data_queue[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">del</span> self<span style="color:#f92672">.</span>data_queue[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>data_queue<span style="color:#f92672">.</span>append(data)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>sum<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>sum<span style="color:#f92672">+</span>data
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>sum<span style="color:#f92672">/</span>len(self<span style="color:#f92672">.</span>data_queue)
+</span></span></code></pre></div><h4 id="15-中位值平均滤波法又称防脉冲干扰平均滤波法">1.5. 中位值平均滤波法（又称防脉冲干扰平均滤波法）</h4>
+<p>　　A方法： 相当于“中位值滤波法”+“算术平均滤波法”，连续采样N个数据，去掉一个最大值和一个最小值，然后计算N-2个数据的算术平均值。N值的选取：3~14。</p>
+<p>　　B优点： 融合了两种滤波法的优点，对于偶然出现的脉冲性干扰，可消除由于脉冲干扰所引起的采样值偏差。</p>
+<p>　　C缺点： 测量速度较慢，和算术平均滤波法一样，比较浪费RAM。</p>
+<h4 id="16-限幅平均滤波法">1.6. 限幅平均滤波法</h4>
+<p>　　A方法： 相当于“限幅滤波法”+“递推平均滤波法”，每次采样到的新数据先进行限幅处理，再送入队列进行递推平均滤波处理。</p>
+<p>　　B优点： 融合了两种滤波法的优点，对于偶然出现的脉冲性干扰，可消除由于脉冲干扰所引起的采样值偏差。</p>
+<p>　　C缺点： 比较浪费RAM 。</p>
+<h4 id="17-加权递推平均滤波法">1.7. 加权递推平均滤波法</h4>
+<p>　　A方法： 是对递推平均滤波法的改进，即不同时刻的数据加以不同的权，通常是，越接近现时刻的资料，权取得越大，给予新采样值的权系数越大，则灵敏度越高，但信号平滑度越低。</p>
+<p>　　B优点： 适用于有较大纯滞后时间常数的对象和采样周期较短的系统。</p>
+<p>　　C缺点： 对于纯滞后时间常数较小，采样周期较长，变化缓慢的信号，不能迅速反应系统当前所受干扰的严重程度，滤波效果差。</p>
+<h4 id="18-消抖滤波法">1.8. 消抖滤波法</h4>
+<p>　　A方法： 设置一个滤波计数器，将每次采样值与当前有效值比较： 如果采样值＝当前有效值，则计数器清零。如果采样值&lt;&gt;当前有效值，则计数器+1，并判断计数器是否&gt;=上限N(溢出)，如果计数器溢出，则将本次值替换当前有效值，并清计数器。</p>
+<p>　　B优点： 对于变化缓慢的被测参数有较好的滤波效果，可避免在临界值附近控制器的反复开/关跳动或显示器上数值抖动。</p>
+<p>　　C缺点： 对于快速变化的参数不宜，如果在计数器溢出的那一次采样到的值恰好是干扰值，则会将干扰值当作有效值导入系统。</p>
+<h4 id="19-高低通滤波httpsgithubcomscipyscipyblobv141scipysignalsignaltoolspy">1.9. <a href="https://github.com/scipy/scipy/blob/v1.4.1/scipy/signal/signaltools.py"target="_blank" rel="external nofollow noopener noreferrer">高低通滤波<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></h4>
+<blockquote>
+<p><strong>scipy.signal.filtfilt(b, a, x, axis=-1, padtype=&lsquo;odd&rsquo;, padlen=None, method=&lsquo;pad&rsquo;, irlen=None)</strong></p>
+<p>输入参数：</p>
+<p>b: 滤波器的分子系数向量</p>
+<p>a: 滤波器的分母系数向量</p>
+<p>x: 要过滤的数据数组。（array型）</p>
+<p>axis: 指定要过滤的数据数组x的轴</p>
+<p>padtype: 必须是“奇数”、“偶数”、“常数”或“无”。这决定了用于过滤器应用的填充信号的扩展类型。{‘odd&rsquo;, ‘even&rsquo;, ‘constant&rsquo;, None}</p>
+<p>padlen：在应用滤波器之前在轴两端延伸X的元素数目。此值必须小于要滤波元素个数- 1。（int型或None）</p>
+<p>method：确定处理信号边缘的方法。当method为“pad”时，填充信号；填充类型padtype和padlen决定，irlen被忽略。当method为“gust”时，使用古斯塔夫森方法，而忽略padtype和padlen。{“pad” ，“gust”}</p>
+<p>irlen：当method为“gust”时，irlen指定滤波器的脉冲响应的长度。如果irlen是None，则脉冲响应的任何部分都被忽略。对于长信号，指定irlen可以显著改善滤波器的性能。（int型或None）</p>
+</blockquote>
+<blockquote>
+<p><strong>scipy.signal.butter(N, Wn, btype=&lsquo;low&rsquo;, analog=False, output=&lsquo;ba&rsquo;)</strong></p>
+<p>输入参数：</p>
+<p>N:滤波器的阶数</p>
+<p>Wn：归一化截止频率。计算公式<code>Wn=2*截止频率/采样频率</code>。（注意：根据采样定理，采样频率要大于两倍的信号本身最大的频率，才能还原信号。截止频率一定小于信号本身最大的频率，所以Wn一定在0和1之间）。当构造带通滤波器或者带阻滤波器时，Wn为长度为2的列表。</p>
+<p>btype : 滤波器类型{‘lowpass&rsquo;, ‘highpass&rsquo;, ‘bandpass&rsquo;, ‘bandstop&rsquo;},</p>
+<p>output : 输出类型{‘ba&rsquo;, ‘zpk&rsquo;, ‘sos&rsquo;},</p>
+<p>输出参数：</p>
+<p>b，a: IIR滤波器的分子（b）和分母（a）多项式系数向量。output=&lsquo;ba&rsquo;</p>
+<p>z,p,k: IIR滤波器传递函数的零点、极点和系统增益. output= &lsquo;zpk&rsquo;</p>
+<p>sos: IIR滤波器的二阶截面表示。output= &lsquo;sos&rsquo;</p>
+</blockquote>
+<ul>
+<li>高通滤波</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#这里假设采样频率为1000hz,信号本身最大的频率为500hz，要滤除10hz以下频率成分，即截至频率为10hz，则wn=2*10/1000=0.02</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy <span style="color:#f92672">import</span> signal
+</span></span><span style="display:flex;"><span>b, a <span style="color:#f92672">=</span> signal<span style="color:#f92672">.</span>butter(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">0.02</span>, <span style="color:#e6db74">&#39;highpass&#39;</span>)
+</span></span><span style="display:flex;"><span>filtedData <span style="color:#f92672">=</span> signal<span style="color:#f92672">.</span>filtfilt(b, a, data)<span style="color:#75715e">#data为要过滤的信号</span>
+</span></span></code></pre></div><ul>
+<li>低通滤波</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#这里假设采样频率为1000hz,信号本身最大的频率为500hz，要滤除10hz以上频率成分，即截至频率为10hz，则wn=2*10/1000=0.02</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy <span style="color:#f92672">import</span> signal
+</span></span><span style="display:flex;"><span>b, a <span style="color:#f92672">=</span> signal<span style="color:#f92672">.</span>butter(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">0.02</span>, <span style="color:#e6db74">&#39;lowpass&#39;</span>) 
+</span></span><span style="display:flex;"><span>filtedData <span style="color:#f92672">=</span> signal<span style="color:#f92672">.</span>filtfilt(b, a, data)    <span style="color:#75715e">#data为要过滤的信号</span>
+</span></span></code></pre></div><ul>
+<li>带通滤波</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#这里假设采样频率为1000hz,信号本身最大的频率为500hz，要滤除10hz以下和400hz以上频率成分，即截至频率为10hz和400hz,则wn1=2*10/1000=0.02,wn2=2*400/1000=0.8。Wn=[0.02,0.8]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy <span style="color:#f92672">import</span> signal
+</span></span><span style="display:flex;"><span>b, a <span style="color:#f92672">=</span> signal<span style="color:#f92672">.</span>butter(<span style="color:#ae81ff">8</span>, [<span style="color:#ae81ff">0.02</span>,<span style="color:#ae81ff">0.8</span>], <span style="color:#e6db74">&#39;bandpass&#39;</span>)
+</span></span><span style="display:flex;"><span>filtedData <span style="color:#f92672">=</span> signal<span style="color:#f92672">.</span>filtfilt(b, a, data)  <span style="color:#75715e">#data为要过滤的信号</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> b, a <span style="color:#f92672">=</span> signal<span style="color:#f92672">.</span>ellip(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">120</span>, <span style="color:#ae81ff">0.125</span>)  <span style="color:#75715e"># Filter to be applied.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">123456</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> n <span style="color:#f92672">=</span> <span style="color:#ae81ff">60</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> sig <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(n)<span style="color:#f92672">**</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(n)<span style="color:#f92672">.</span>cumsum()
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> fgust <span style="color:#f92672">=</span> signal<span style="color:#f92672">.</span>filtfilt(b, a, sig, method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gust&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> fpad <span style="color:#f92672">=</span> signal<span style="color:#f92672">.</span>filtfilt(b, a, sig, padlen<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> plt<span style="color:#f92672">.</span>plot(sig, <span style="color:#e6db74">&#39;k-&#39;</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;input&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> plt<span style="color:#f92672">.</span>plot(fgust, <span style="color:#e6db74">&#39;b-&#39;</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gust&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> plt<span style="color:#f92672">.</span>plot(fpad, <span style="color:#e6db74">&#39;c-&#39;</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">1.5</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;pad&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> plt<span style="color:#f92672">.</span>legend(loc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;best&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210411214829941.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210411214829941.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210411214829941.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210411214829941.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210411214829941.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210411214829941.png"/></p>
+<h3 id="2-频谱功率谱倒频谱">2. 频谱\功率谱\倒频谱</h3>
+<blockquote>
+<p><a href="https://zhuanlan.zhihu.com/p/19759362"target="_blank" rel="external nofollow noopener noreferrer">时间作为参照来观察动态世界的方法我们称其为时域分析，如果另一种方法来观察世界的话，你会发现世界是永恒不变的。（假定是周期的）<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225217869.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225217869.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225217869.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225217869.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225217869.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225217869.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225327148.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225327148.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225327148.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225327148.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225327148.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225327148.png"/></p>
+<blockquote>
+<p>通常一个信号波形变换到频域后，有的看到有的频率式连续分布在频率轴上的（频率连续的），有的是在频率轴上只出现个别的的频率点（频率离散的）；频率若是离散的则时域是周期的（有规律的波形）；若频域是连续的则时域是非周期的（无规律的波形）；剩下的时域连续和离散只是信号从模拟信号（连续的）采样量化到被计算机处理（离散的）的过程，可以从自己具体的信号来源去选择。</p>
+</blockquote>
+<h4 id="21-能量谱">2.1. 能量谱</h4>
+<blockquote>
+<p>能量谱也叫能量谱密度，能量谱密度描述了信号或时间序列的能量如何随频率分布。能量谱是原信号傅立叶变换的平方。</p>
+</blockquote>
+<p>能量信号与功率信号：对于信号 $f(t)$, 其能量:
+$$
+E=lim_{T-&gt;\infty}\int_{-T}^{T}|f(t)|^2dt
+$$
+其功率为：
+$$
+P=lim_{T-&gt;\infty}1/{2T}\int_{-T}^T|f(t)|^2dt
+$$
+对于电阻R， 施加电压$f(t)$, 在区间$(-\infty,+\infty)$,其能量为：
+$$
+E=1/R\int_{-\infty}^{\infty}|f(t)|^2dt
+$$
+<img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611083833017.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611083833017.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611083833017.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611083833017.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611083833017.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611083833017.png"/></p>
+<h4 id="22-倒频谱">2.2. 倒频谱</h4>
+<blockquote>
+<p>“该分析方法方便提取、分析原频谱图上肉眼难以识别的周期性信号，能将原来频谱图上成族的边频带谱线简化为单根谱线，受传感器的测点位置及传输途径的影响小。”</p>
+</blockquote>
+<blockquote>
+<p>倒频谱能较好地检测出功率谱上的周期成分，通常在功率谱上无法对边频的总体水平作出定量估计，而倒频谱对边频成分具有“概括”能力，<strong>能较明显地显示出功率谱上的周期成分，将原来谱上成族的边频带谱线简化为单根谱线</strong>，便于观察，而齿轮发生故障时的振动频谱具有的边频带一般都具有等间隔（故障频率）的结构，利用倒频谱这个优点，可以检测出功率谱中难以辨识的周期性信号。</p>
+</blockquote>
+<p><strong>调制</strong>：分为幅值调制和频率调制。下面以齿轮的<em>幅值调制</em>为例进行说明：齿轮的振动信号主要包括两部分，分别是齿轮啮合振动信号（高频）和齿轮轴的转频振动信号（低频），时域和频域曲线分别如下图所示：</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085332483.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085332483.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085332483.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085332483.png 2x"
+    data-sizes="auto"
+    alt="高频信号和低频信号时域波形"
+    title="高频信号和低频信号时域波形"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085432069.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085432069.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085432069.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085432069.png 2x"
+    data-sizes="auto"
+    alt="高频信号和低频信号的频域波形"
+    title="高频信号和低频信号的频域波形"/></p>
+<blockquote>
+<p>调制就是高低频率信号的混合。**幅值调制从数学上看，相当于两个信号在时域上相乘；而在频域上，相当于两个信号的卷积。**调制后的信号在时域和频域上分别变为：</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085531551.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085531551.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085531551.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085531551.png 2x"
+    data-sizes="auto"
+    alt="调制后的时域信号"
+    title="调制后的时域信号"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085543847.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085543847.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085543847.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085543847.png 2x"
+    data-sizes="auto"
+    alt="调制后的频域信号"
+    title="调制后的频域信号"/></p>
+<blockquote>
+<p>调制后的信号中，除原来的啮合频率分量外，增加了一对分量，它们是以高频信号特征频率为中心，对称分布于两侧，所以称为<strong>边频带</strong>。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085735068.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085735068.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085735068.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085735068.png 2x"
+    data-sizes="auto"
+    alt="边缘带形成"
+    title="边缘带形成"/></p>
+<blockquote>
+<p>傅里叶变换处理非平稳信号有天生缺陷。它只能获取一段信号总体上包含哪些频率的成分，但是对各成分出现的时刻并无所知。因此时域相差很大的两个信号，可能频谱图一样。</p>
+</blockquote>
+<h4 id="23-小波分析">2.3. 小波分析</h4>
+<blockquote>
+<p>小波直接把傅里叶变换的基给换了——将<strong>无限长的三角函数基</strong>换成了<strong>有限长的会衰减的小波基</strong>。这样<strong>不仅能够获取频率</strong>，还可以<strong>定位到时间</strong>了。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090331061.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090331061.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090331061.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090331061.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090331061.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090331061.png"/></p>
+<p>对于频率随着时间变化的非平稳信号：这三个时域上有巨大差异的信号，频谱（幅值谱）却非常一致</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090529855.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090529855.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090529855.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090529855.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090529855.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090529855.png"/></p>
+<blockquote>
+<p>对于这样的非平稳信号，只知道包含哪些频率成分是不够的，我们还想知道各个成分出现的时间。知道信号频率随时间变化的情况，各个时刻的瞬时频率及其幅值——这也就是时频分析。</p>
+</blockquote>
+<p>短时傅里叶变换（Short-time Fourier Transform, STFT）</p>
+<blockquote>
+<p>把整个时域过程分解成无数个等长的小过程，每个小过程近似平稳，再傅里叶变换，就知道在哪个时间点上出现了什么频率了。STFT存在一个问题，我们应该用多宽的窗函数？框窄：频率分辨率差， 宽了：时间分辨率差。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090938200.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090938200.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090938200.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090938200.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090938200.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090938200.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090949400.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090949400.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090949400.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090949400.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090949400.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090949400.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611091502463.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611091502463.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611091502463.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611091502463.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611091502463.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611091502463.png"/></p>
+<blockquote>
+<p>不同于傅里叶变换，变量只有频率ω，小波变换有两个变量：尺度a（scale）和平移量τ（translation）。<strong>尺度</strong>a控制小波函数的<strong>伸缩</strong>，<strong>平移量</strong> τ控制小波函数的<strong>平移</strong>。<strong>尺度</strong>就对应于<strong>频率</strong>（反比），<strong>平移量</strong> τ就对应于<strong>时间</strong>。</p>
+</blockquote>
+<h3 id="3-学习链接">3. 学习链接</h3>
+<ul>
+<li>c#各种滤波算法：https://github.com/dtaylor-530/TimeSeriesFilterSharp</li>
+<li><a href="https://zhuanlan.zhihu.com/p/34989414"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/34989414<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/36163931"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/36163931<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ul>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-29&#32;00:21:19>更新于 2023-09-29&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/filter-learning-record/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5cAIOT%5cFilter%5cFilter-Learning-Record.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/filter-learning-record/" data-title="Filter Learning Record" data-hashtags="Model"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/filter-learning-record/" data-hashtag="Model"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/filter-learning-record/" data-title="Filter Learning Record" data-image="https://gitee.com/github-25970295/blogImage/raw/master/img/golden-gate-bridge-river-bridge-suspension-bridge.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/model/">Model</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/object-tracking/" class="prev" rel="prev" title="Object Tracking"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Object Tracking</a>
+      <a href="liudongdong1.github.io/ros-relative-learning/" class="next" rel="next" title="ROS Relative Learning">ROS Relative Learning<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

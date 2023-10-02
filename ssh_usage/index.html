@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>SSH_usage - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="SSH（Secure Shell 的缩写）是一种网络协议，用于加密两台计算机之间的通信，并且支持各种身份验证机制。还能对操作者进行认证（authenti" /><meta name="keywords" content='Git' /><meta itemprop="name" content="SSH_usage">
+<meta itemprop="description" content="SSH（Secure Shell 的缩写）是一种网络协议，用于加密两台计算机之间的通信，并且支持各种身份验证机制。还能对操作者进行认证（authenti"><meta itemprop="datePublished" content="2021-06-30T16:00:04+00:00" />
+<meta itemprop="dateModified" content="2023-09-29T08:23:06+08:00" />
+<meta itemprop="wordCount" content="11393"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Git," /><meta property="og:title" content="SSH_usage" />
+<meta property="og:description" content="SSH（Secure Shell 的缩写）是一种网络协议，用于加密两台计算机之间的通信，并且支持各种身份验证机制。还能对操作者进行认证（authenti" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/ssh_usage/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-06-30T16:00:04+00:00" />
+<meta property="article:modified_time" content="2023-09-29T08:23:06+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="SSH_usage"/>
+<meta name="twitter:description" content="SSH（Secure Shell 的缩写）是一种网络协议，用于加密两台计算机之间的通信，并且支持各种身份验证机制。还能对操作者进行认证（authenti"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/ssh_usage/" /><link rel="prev" href="liudongdong1.github.io/javajvm_%E7%BC%96%E8%AF%91%E5%99%A8/" /><link rel="next" href="liudongdong1.github.io/poserelative/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "SSH_usage",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/ssh_usage\/"
+    },"genre": "posts","keywords": "Git","wordcount":  11393 ,
+    "url": "liudongdong1.github.io\/ssh_usage\/","datePublished": "2021-06-30T16:00:04+00:00","dateModified": "2023-09-29T08:23:06+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>SSH_usage</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/software/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Software</a></span></div>
+      <div class="post-meta-line"><span title=2021-06-30&#32;16:00:04>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-30" >2021-06-30</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 11393 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 23 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="SSH_usage">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.stocksnap.io/img-thumbs/280h/779E8EFZ2Y.jpg"
+    data-srcset="https://cdn.stocksnap.io/img-thumbs/280h/779E8EFZ2Y.jpg, https://cdn.stocksnap.io/img-thumbs/280h/779E8EFZ2Y.jpg 1.5x, https://cdn.stocksnap.io/img-thumbs/280h/779E8EFZ2Y.jpg 2x"
+    data-sizes="auto"
+    alt="https://cdn.stocksnap.io/img-thumbs/280h/779E8EFZ2Y.jpg"
+    title="https://cdn.stocksnap.io/img-thumbs/280h/779E8EFZ2Y.jpg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><blockquote>
+<p>SSH（Secure Shell 的缩写）是一种网络协议，用于<code>加密两台计算机之间的通信</code>，并且支持各种身份验证机制。还能对操作者进行<code>认证（authentication）和授权（authorization）</code>。明文的网络协议可以套用在它里面，从而实现加密。</p>
+<p>SSH 软件分成两个部分：向服务器发出请求的部分，称为<code>客户端（client）</code>，OpenSSH 的实现为 ssh；接收客户端发出的请求的部分，称为<code>服务器（server）</code>，OpenSSH 的实现为 sshd。</p>
+</blockquote>
+<h4 id="1-client">1. Client</h4>
+<h5 id="1-链接登录">.1. 链接登录</h5>
+<blockquote>
+<p>OpenSSH 的客户端是二进制程序 ssh。它在 Linux/Unix 系统的位置是<code>/usr/local/bin/ssh</code>，Windows 系统的位置是<code>/Program Files/OpenSSH/bin/ssh.exe</code></p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#查看版本</span>
+</span></span><span style="display:flex;"><span>ssh -V
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#远程登陆</span>
+</span></span><span style="display:flex;"><span>ssh user@hostname  <span style="color:#75715e">#或者： ssh -l username host</span>
+</span></span><span style="display:flex;"><span>ssh -p <span style="color:#ae81ff">8821</span> foo.com
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#查看链接服务器指纹</span>
+</span></span><span style="display:flex;"><span>ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#删除 服务器指纹</span>
+</span></span><span style="display:flex;"><span>ssh-keygen -R hostname
+</span></span></code></pre></div><blockquote>
+<p>所谓“服务器指纹”，指的是 SSH 服务器公钥的哈希值。每台 SSH 服务器都有唯一一对密钥，用于跟客户端通信，其中公钥的哈希值就可以用来识别服务器。<code>ssh 会将本机连接过的所有服务器公钥的指纹</code>，都储存在本机的<code>~/.ssh/known_hosts</code>文件中。每次连接服务器时，通过该文件判断是否为陌生主机（陌生公钥）</p>
+</blockquote>
+<h5 id="2-远程命令">.2. 远程命令</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 登录成功后，会立刻执行command 命令</span>
+</span></span><span style="display:flex;"><span>ssh username@hostname command
+</span></span><span style="display:flex;"><span>ssh foo@server.example.com cat /etc/hosts
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#互动式 shell</span>
+</span></span><span style="display:flex;"><span>ssh -t server.example.com emacs
+</span></span></code></pre></div><h5 id="3-配置文件">.3. 配置文件</h5>
+<h6 id="1-文件位置">1. 文件位置</h6>
+<p>SSH 客户端的<code>全局配置文件</code>是<code>/etc/ssh/ssh_config</code>，<code>用户个人</code>的配置文件在<code>~/.ssh/config</code>，优先级高于全局配置文件。除了配置文件，<code>~/.ssh</code>目录还有一些用户个人的密钥文件和其他文件。</p>
+<ul>
+<li><code>~/.ssh/id_ecdsa</code>：用户的 ECDSA 私钥。</li>
+<li><code>~/.ssh/id_ecdsa.pub</code>：用户的 ECDSA 公钥。</li>
+<li><code>~/.ssh/id_rsa</code>：用于 SSH 协议版本2 的 RSA 私钥。</li>
+<li><code>~/.ssh/id_rsa.pub</code>：用于SSH 协议版本2 的 RSA 公钥。</li>
+<li><code>~/.ssh/identity</code>：用于 SSH 协议版本1 的 RSA 私钥。</li>
+<li><code>~/.ssh/identity.pub</code>：用于 SSH 协议版本1 的 RSA 公钥。</li>
+<li><code>~/.ssh/known_hosts</code>：包含 SSH 服务器的公钥指纹。</li>
+</ul>
+<h6 id="2-主机设置">2. 主机设置</h6>
+<blockquote>
+<p>用户个人的配置文件<code>~/.ssh/config</code>，可以按照不同服务器，列出各自的连接参数，从而不必每一次登录都输入重复的参数。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ae81ff">Host *</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#ae81ff">Port 2222</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">Host remoteserver</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#ae81ff">HostName remote.example.com</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#ae81ff">User neo</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#ae81ff">Port 2112</span>
+</span></span></code></pre></div><blockquote>
+<p><code>Host *</code>表示对所有主机生效，后面的<code>Port 2222</code>表示所有主机的默认连接端口都是2222，这样就不用在登录时特别指定端口了。这里的缩进并不是必需的，只是为了视觉上，易于识别针对不同主机的设置。</p>
+</blockquote>
+<h6 id="3-配置命名">3. 配置命名</h6>
+<ul>
+<li><code>AddressFamily inet</code>：表示只使用 IPv4 协议。如果设为<code>inet6</code>，表示只使用 IPv6 协议。</li>
+<li><code>BindAddress 192.168.10.235</code>：指定本机的 IP 地址（如果本机有多个 IP 地址）。</li>
+<li><code>CheckHostIP yes</code>：检查 SSH 服务器的 IP 地址是否跟公钥数据库吻合。</li>
+<li><code>Ciphers blowfish,3des</code>：指定加密算法。</li>
+<li><code>Compression yes</code>：是否压缩传输信号。</li>
+<li><code>ConnectionAttempts 10</code>：客户端进行连接时，最大的尝试次数。</li>
+<li><code>ConnectTimeout 60</code>：客户端进行连接时，服务器在指定秒数内没有回复，则中断连接尝试。</li>
+<li><code>DynamicForward 1080</code>：指定动态转发端口。</li>
+<li><code>GlobalKnownHostsFile /users/smith/.ssh/my_global_hosts_file</code>：指定全局的公钥数据库文件的位置。</li>
+<li><code>Host server.example.com</code>：指定连接的域名或 IP 地址，也可以是别名，支持通配符。<code>Host</code>命令后面的所有配置，都是针对该主机的，直到下一个<code>Host</code>命令为止。</li>
+<li><code>HostKeyAlgorithms ssh-dss,ssh-rsa</code>：指定密钥算法，优先级从高到低排列。</li>
+<li><code>HostName myserver.example.com</code>：在<code>Host</code>命令使用别名的情况下，<code>HostName</code>指定域名或 IP 地址。</li>
+<li><code>IdentityFile keyfile</code>：指定私钥文件。</li>
+<li><code>LocalForward 2001 localhost:143</code>：指定本地端口转发。</li>
+<li><code>LogLevel QUIET</code>：指定日志详细程度。如果设为<code>QUIET</code>，将不输出大部分的警告和提示。</li>
+<li><code>MACs hmac-sha1,hmac-md5</code>：指定数据校验算法。</li>
+<li><code>NumberOfPasswordPrompts 2</code>：密码登录时，用户输错密码的最大尝试次数。</li>
+<li><code>PasswordAuthentication no</code>：指定是否支持密码登录。不过，这里只是客户端禁止，真正的禁止需要在 SSH 服务器设置。</li>
+<li><code>Port 2035</code>：指定客户端连接的 SSH 服务器端口。</li>
+<li><code>PreferredAuthentications publickey,hostbased,password</code>：指定各种登录方法的优先级。</li>
+<li><code>Protocol 2</code>：支持的 SSH 协议版本，多个版本之间使用逗号分隔。</li>
+<li><code>PubKeyAuthentication yes</code>：是否支持密钥登录。这里只是客户端设置，还需要在 SSH 服务器进行相应设置。</li>
+<li><code>RemoteForward 2001 server:143</code>：指定远程端口转发。</li>
+<li><code>SendEnv COLOR</code>：SSH 客户端向服务器发送的环境变量名，多个环境变量之间使用空格分隔。环境变量的值从客户端当前环境中拷贝。</li>
+<li><code>ServerAliveCountMax 3</code>：如果没有收到服务器的回应，客户端连续发送多少次<code>keepalive</code>信号，才断开连接。该项默认值为3。</li>
+<li><code>ServerAliveInterval 300</code>：客户端建立连接后，如果在给定秒数内，没有收到服务器发来的消息，客户端向服务器发送<code>keepalive</code>消息。如果不希望客户端发送，这一项设为<code>0</code>。</li>
+<li><code>StrictHostKeyChecking yes</code>：<code>yes</code>表示严格检查，服务器公钥为未知或发生变化，则拒绝连接。<code>no</code>表示如果服务器公钥未知，则加入客户端公钥数据库，如果公钥发生变化，不改变客户端公钥数据库，输出一条警告，依然允许连接继续进行。<code>ask</code>（默认值）表示询问用户是否继续进行。</li>
+<li><code>TCPKeepAlive yes</code>：客户端是否定期向服务器发送<code>keepalive</code>信息。</li>
+<li><code>User userName</code>：指定远程登录的账户名。</li>
+<li><code>UserKnownHostsFile /users/smith/.ssh/my_local_hosts_file</code>：指定当前用户的<code>known_hosts</code>文件（服务器公钥指纹列表）的位置。</li>
+<li><code>VerifyHostKeyDNS yes</code>：是否通过检查 SSH 服务器的 DNS 记录，确认公钥指纹是否与<code>known_hosts</code>文件保存的一致。</li>
+</ul>
+<h4 id="2-密钥登录">2. 密钥登录</h4>
+<p>预备步骤，客户端通过<code>ssh-keygen</code>生成自己的公钥和私钥。OpenSSH 提供了一个工具程序<code>ssh-keygen</code>命令，用来生成密钥。</p>
+<ul>
+<li>第一步，手动将客户端的<code>公钥放入远程服务器的指定位置</code>。</li>
+</ul>
+<blockquote>
+<p>用户公钥保存在服务器的<code>~/.ssh/authorized_keys</code>文件。你要以哪个用户的身份登录到服务器，密钥就必须保存在该用户主目录的<code>~/.ssh/authorized_keys</code>文件。只要把公钥添加到这个文件之中，就相当于公钥上传到服务器了。每个公钥占据一行。如果该文件不存在，可以手动创建。</p>
+</blockquote>
+<ul>
+<li>
+<p>第二步，<code>客户端</code>向服务器<code>发起 SSH 登录的请求</code>。</p>
+</li>
+<li>
+<p>第三步，<code>服务器</code>收到用户 SSH 登录的请求，<code>发送一些随机数据给用户，要求用户证明自己的身份</code>。</p>
+</li>
+<li>
+<p>第四步，<code>客户端</code>收到服务器发来的数据，<code>使用私钥对数据进行签名，然后再发还给服务器</code>。</p>
+</li>
+<li>
+<p>第五步，<code>服务器</code>收到客户端发来的加密签名后，<code>使用对应的公钥解密</code>，然后跟原始数据比较。如果一致，就允许用户登录。</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ssh-keygen
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">600</span> ~/.ssh/id_rsa
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">600</span> ~/.ssh/id_rsa.pub
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat ~/.ssh/id_rsa.pub | ssh user@host <span style="color:#e6db74">&#34;mkdir -p ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ssh-copy-id： 自动上传公钥</span>
+</span></span><span style="display:flex;"><span>ssh-copy-id -i key_file user@host  <span style="color:#75715e">#`-i`参数用来指定公钥文件，`user`是所要登录的账户名，`host`是服务器地址。如果`authorized_keys`文件已经存在，使用`ssh-copy-id`命令之前，务必保证`authorized_keys`文件的末尾是换行符（假设该文件已经存在）。</span>
+</span></span></code></pre></div><blockquote>
+<p><code>ssh-agent</code>命令就是为了解决这个问题而设计的，它让用户在整个 Bash 对话（session）之中，只在第一次使用 SSH 命令时输入密码，然后将私钥保存在内存中，后面都不需要再输入私钥的密码了。</p>
+<ul>
+<li>为了安全性，启用<code>密钥登录</code>之后，最好<code>关闭服务器的密码登录</code>。 sshd 的配置文件<code>/etc/ssh/sshd_config</code> PasswordAuthentication no</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ssh-agent bash
+</span></span><span style="display:flex;"><span>eval <span style="color:#e6db74">`</span>ssh-agent<span style="color:#e6db74">`</span>
+</span></span></code></pre></div><h4 id="3-证书登录">3. 证书登录</h4>
+<blockquote>
+<p>证书登录的主要优点有两个：（1）用户和服务器不用交换公钥，这更容易管理，也具有更好的可扩展性。（2）证书可以设置到期时间，而公钥没有到期时间。针对不同的情况，可以设置有效期很短的证书，进一步提高安全性。</p>
+<ul>
+<li>（1）用户和服务器都将自己的公钥，发给 CA；（2）CA 使用服务器公钥，生成服务器证书，发给服务器；（3）CA 使用用户的公钥，生成用户证书，发给用户。</li>
+</ul>
+</blockquote>
+<ul>
+<li>
+<p>第一步，用户登录服务器时，SSH 自动将用户证书发给服务器。</p>
+</li>
+<li>
+<p>第二步，服务器检查用户证书是否有效，以及是否由可信的 CA 颁发。证实以后，就可以信任用户。</p>
+</li>
+<li>
+<p>第三步，SSH 自动将服务器证书发给用户。</p>
+</li>
+<li>
+<p>第四步，用户检查服务器证书是否有效，以及是否由信任的 CA 颁发。证实以后，就可以信任服务器。</p>
+</li>
+<li>
+<p>第五步，双方建立连接，服务器允许用户登录。</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 生成 CA 签发用户证书的密钥</span>
+</span></span><span style="display:flex;"><span>$ ssh-keygen -t rsa -b <span style="color:#ae81ff">4096</span> -f ~/.ssh/user_ca -C user_ca
+</span></span></code></pre></div><ul>
+<li><code>-t rsa</code>：指定密钥算法 RSA。</li>
+<li><code>-b 4096</code>：指定密钥的位数是4096位。安全性要求不高的场合，这个值可以小一点，但是不应小于1024。</li>
+<li><code>-f ~/.ssh/user_ca</code>：指定生成密钥的位置和文件名。</li>
+<li><code>-C user_ca</code>：指定密钥的识别字符串，相当于注释，可以随意设置。</li>
+</ul>
+<h4 id="4-server">4. Server</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 启动</span>
+</span></span><span style="display:flex;"><span>$ sudo systemctl start sshd.service
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 停止</span>
+</span></span><span style="display:flex;"><span>$ sudo systemctl stop sshd.service
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 重启</span>
+</span></span><span style="display:flex;"><span>$ sudo systemctl restart sshd.service
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 让 sshd 在计算机下次启动时自动运行。</span>
+</span></span><span style="display:flex;"><span>$ sudo systemctl enable sshd.service
+</span></span><span style="display:flex;"><span>$ sudo systemctl restart sshd.service  <span style="color:#75715e">#配置文件修改以后，并不会自动生效，必须重新启动 sshd。</span>
+</span></span><span style="display:flex;"><span>$ sshd -f /usr/local/ssh/my_config <span style="color:#75715e">#sshd 启动时会自动读取默认的配置文件。如果希望使用其他的配置文件，可以用 sshd 命令的`-f`参数指定。</span>
+</span></span></code></pre></div><h5 id="1-配置文件">.1. 配置文件</h5>
+<p>sshd 的配置文件在<code>/etc/ssh</code>目录，主配置文件是<code>sshd_config</code>，此外还有一些安装时生成的密钥。</p>
+<ul>
+<li><code>/etc/ssh/sshd_config</code>：配置文件</li>
+<li><code>/etc/ssh/ssh_host_ecdsa_key</code>：ECDSA 私钥。</li>
+<li><code>/etc/ssh/ssh_host_ecdsa_key.pub</code>：ECDSA 公钥。</li>
+<li><code>/etc/ssh/ssh_host_key</code>：用于 SSH 1 协议版本的 RSA 私钥。</li>
+<li><code>/etc/ssh/ssh_host_key.pub</code>：用于 SSH 1 协议版本的 RSA 公钥。</li>
+<li><code>/etc/ssh/ssh_host_rsa_key</code>：用于 SSH 2 协议版本的 RSA 私钥。</li>
+<li><code>/etc/ssh/ssh_host_rsa_key.pub</code>：用于 SSH 2 协议版本的 RSA 公钥。</li>
+<li><code>/etc/pam.d/sshd</code>：PAM 配置文件。</li>
+</ul>
+<p><code>修改配置文件以后，可以使用下面的命令验证，配置文件是否有语法错误。</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sshd -t
+</span></span></code></pre></div><p><code>新的配置文件生效，必须重启 sshd。</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo systemctl restart sshd
+</span></span></code></pre></div><h5 id="2-配置命令">.2. 配置命令</h5>
+<ul>
+<li><strong>AcceptEnv</strong>： <code>AcceptEnv</code>指定允许接受客户端通过<code>SendEnv</code>命令发来的哪些环境变量，即允许客户端设置服务器的环境变量清单，变量名之间使用空格分隔（<code>AcceptEnv PATH TERM</code>）。</li>
+<li><strong>AllowGroups</strong>： <code>AllowGroups</code>指定允许登录的用户组（<code>AllowGroups groupName</code>，多个组之间用空格分隔。如果不使用该项，则允许所有用户组登录。</li>
+<li><strong>AllowUsers</strong>：<code>AllowUsers</code>指定允许登录的用户，用户名之间使用空格分隔（<code>AllowUsers user1 user2</code>），也可以使用多行<code>AllowUsers</code>命令指定，用户名支持使用通配符。如果不使用该项，则允许所有用户登录。该项也可以使用<code>用户名@域名</code>的格式（比如<code>AllowUsers jones@example.com</code>）。</li>
+<li><strong>AllowTcpForwarding</strong>：<code>AllowTcpForwarding</code>指定是否允许端口转发，默认值为<code>yes</code>（<code>AllowTcpForwarding yes</code>），<code>local</code>表示只允许本地端口转发，<code>remote</code>表示只允许远程端口转发。</li>
+<li><strong>AuthorizedKeysFile</strong>：<code>AuthorizedKeysFile</code>指定储存用户公钥的目录，默认是用户主目录的<code>ssh/authorized_keys</code>目录（<code>AuthorizedKeysFile .ssh/authorized_keys</code>）。</li>
+<li><strong>Banner</strong>：<code>Banner</code>指定用户登录后，sshd 向其展示的信息文件（<code>Banner /usr/local/etc/warning.txt</code>），默认不展示任何内容。</li>
+<li><strong>ChallengeResponseAuthentication</strong>：<code>ChallengeResponseAuthentication</code>指定是否使用“键盘交互”身份验证方案，默认值为<code>yes</code>（<code>ChallengeResponseAuthentication yes</code>）。从理论上讲，“键盘交互”身份验证方案可以向用户询问多重问题，但是实践中，通常仅询问用户密码。如果要完全禁用基于密码的身份验证，请将<code>PasswordAuthentication</code>和<code>ChallengeResponseAuthentication</code>都设置为<code>no</code>。</li>
+<li><strong>Ciphers</strong>：<code>Ciphers</code>指定 sshd 可以接受的加密算法（<code>Ciphers 3des-cbc</code>），多个算法之间使用逗号分隔。</li>
+<li><strong>ClientAliveCountMax</strong>：<code>ClientAliveCountMax</code>指定建立连接后，客户端失去响应时，服务器尝试连接的次数（<code>ClientAliveCountMax 8</code>）。</li>
+<li><strong>ClientAliveInterval</strong>：<code>ClientAliveInterval</code>指定允许客户端发呆的时间，单位为秒（<code>ClientAliveInterval 180</code>）。如果这段时间里面，客户端没有发送任何信号，SSH 连接将关闭。</li>
+<li><strong>Compression</strong>：<code>Compression</code>指定客户端与服务器之间的数据传输是否压缩。默认值为<code>yes</code>（<code>Compression yes</code>）</li>
+<li><strong>DenyGroups</strong>：<code>DenyGroups</code>指定不允许登录的用户组（<code>DenyGroups groupName</code>）。</li>
+<li><strong>DenyUsers</strong>：<code>DenyUsers</code>指定不允许登录的用户（<code>DenyUsers user1</code>），用户名之间使用空格分隔，也可以使用多行<code>DenyUsers</code>命令指定。</li>
+<li><strong>FascistLogging</strong>：SSH 1 版本专用，指定日志输出全部 Debug 信息（<code>FascistLogging yes</code>）。</li>
+<li><strong>HostKey</strong>：<code>HostKey</code>指定 sshd 服务器的密钥，详见前文。</li>
+<li><strong>KeyRegenerationInterval</strong>：<code>KeyRegenerationInterval</code>指定 SSH 1 版本的密钥重新生成时间间隔，单位为秒，默认是3600秒（<code>KeyRegenerationInterval 3600</code>）。</li>
+<li><strong>ListenAddress</strong>：<code>ListenAddress</code>指定 sshd 监听的本机 IP 地址，即 sshd 启用的 IP 地址，默认是 0.0.0.0（<code>ListenAddress 0.0.0.0</code>）表示在本机所有网络接口启用。可以改成只在某个网络接口启用（比如<code>ListenAddress 192.168.10.23</code>），也可以指定某个域名启用（比如<code>ListenAddress server.example.com</code>）。如果要监听多个指定的 IP 地址，可以使用多行<code>ListenAddress</code>命令。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ListenAddress 172.16.1.1
+</span></span><span style="display:flex;"><span>ListenAddress 192.168.0.1
+</span></span></code></pre></div><ul>
+<li><strong>LoginGraceTime</strong>：<code>LoginGraceTime</code>指定允许客户端登录时发呆的最长时间，比如用户迟迟不输入密码，连接就会自动断开，单位为秒（<code>LoginGraceTime 60</code>）。如果设为<code>0</code>，就表示没有限制。</li>
+<li><strong>LogLevel</strong>：<code>LogLevel</code>指定日志的详细程度，可能的值依次为<code>QUIET</code>、<code>FATAL</code>、<code>ERROR</code>、<code>INFO</code>、<code>VERBOSE</code>、<code>DEBUG</code>、<code>DEBUG1</code>、<code>DEBUG2</code>、<code>DEBUG3</code>，默认为<code>INFO</code>（<code>LogLevel INFO</code>）。</li>
+<li><strong>MACs</strong>：<code>MACs</code>指定sshd 可以接受的数据校验算法（<code>MACs hmac-sha1</code>），多个算法之间使用逗号分隔。</li>
+<li><strong>MaxAuthTries</strong>：<code>MaxAuthTries</code>指定允许 SSH 登录的最大尝试次数（<code>MaxAuthTries 3</code>），如果密码输入错误达到指定次数，SSH 连接将关闭。</li>
+<li><strong>MaxStartups</strong>：<code>MaxStartups</code>指定允许同时并发的 SSH 连接数量（MaxStartups）。如果设为<code>0</code>，就表示没有限制。这个属性也可以设为<code>A:B:C</code>的形式，比如<code>MaxStartups 10:50:20</code>，表示如果达到10个并发连接，后面的连接将有50%的概率被拒绝；如果达到20个并发连接，则后面的连接将100%被拒绝。</li>
+<li><strong>PasswordAuthentication</strong>：<code>PasswordAuthentication</code>指定是否允许密码登录，默认值为<code>yes</code>（<code>PasswordAuthentication yes</code>），建议改成<code>no</code>（禁止密码登录，只允许密钥登录）。</li>
+<li><strong>PermitEmptyPasswords</strong>：<code>PermitEmptyPasswords</code>指定是否允许空密码登录，即用户的密码是否可以为空，默认为<code>yes</code>（<code>PermitEmptyPasswords yes</code>），建议改成<code>no</code>（禁止无密码登录）。</li>
+<li><strong>PermitRootLogin</strong>：<code>PermitRootLogin</code>指定是否允许根用户登录，默认为<code>yes</code>（<code>PermitRootLogin yes</code>），建议改成<code>no</code>（禁止根用户登录）。还有一种写法是写成<code>prohibit-password</code>，表示 root 用户不能用密码登录，但是可以用密钥登录。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>PermitRootLogin prohibit-password
+</span></span></code></pre></div><ul>
+<li><strong>PermitUserEnvironment</strong>：<code>PermitUserEnvironment</code>指定是否允许 sshd 加载客户端的<code>~/.ssh/environment</code>文件和<code>~/.ssh/authorized_keys</code>文件里面的<code>environment= options</code>环境变量设置。默认值为<code>no</code>（<code>PermitUserEnvironment no</code>）。</li>
+<li><strong>Port</strong>：<code>Port</code>指定 sshd 监听的端口，即客户端连接的端口，默认是22（<code>Port 22</code>）。出于安全考虑，可以改掉这个端口（比如<code>Port 8822</code>）。配置文件可以使用多个<code>Port</code>命令，同时监听多个端口。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Port <span style="color:#ae81ff">22</span>
+</span></span><span style="display:flex;"><span>Port <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>Port <span style="color:#ae81ff">443</span>
+</span></span><span style="display:flex;"><span>Port <span style="color:#ae81ff">8080</span>
+</span></span></code></pre></div><ul>
+<li><strong>PrintMotd</strong>： <code>PrintMotd</code>指定用户登录后，是否向其展示系统的 motd（Message of the day）的信息文件<code>/etc/motd</code>。该文件用于通知所有用户一些重要事项，比如系统维护时间、安全问题等等。默认值为<code>yes</code>（<code>PrintMotd yes</code>），由于 Shell 一般会展示这个信息文件，所以这里可以改为<code>no</code>。</li>
+<li><strong>PrintLastLog</strong>：<code>PrintLastLog</code>指定是否打印上一次用户登录时间，默认值为<code>yes</code>（<code>PrintLastLog yes</code>）。</li>
+<li><strong>Protocol</strong>：<code>Protocol</code>指定 sshd 使用的协议。<code>Protocol 1</code>表示使用 SSH 1 协议，建议改成<code>Protocol 2</code>（使用 SSH 2 协议）。<code>Protocol 2,1</code>表示同时支持两个版本的协议。</li>
+<li><strong>PubKeyAuthentication</strong>：<code>PubKeyAuthentication</code>指定是否允许公钥登录，默认值为<code>yes</code>（<code>PubKeyAuthentication yes</code>）。</li>
+<li><strong>QuietMode</strong>：SSH 1 版本专用，指定日志只输出致命的错误信息（<code>QuietMode yes</code>）。</li>
+<li><strong>RSAAuthentication</strong>：<code>RSAAuthentication</code>指定允许 RSA 认证，默认值为<code>yes</code>（<code>RSAAuthentication yes</code>）。</li>
+<li><strong>ServerKeyBits</strong>：<code>ServerKeyBits</code>指定 SSH 1 版本的密钥重新生成时的位数，默认是768（<code>ServerKeyBits 768</code>）。</li>
+<li><strong>StrictModes</strong>：<code>StrictModes</code>指定 sshd 是否检查用户的一些重要文件和目录的权限。默认为<code>yes</code>（<code>StrictModes yes</code>），即对于用户的 SSH 配置文件、密钥文件和所在目录，SSH 要求拥有者必须是根用户或用户本人，用户组和其他人的写权限必须关闭。</li>
+<li><strong>SyslogFacility</strong>：<code>SyslogFacility</code>指定 Syslog 如何处理 sshd 的日志，默认是 Auth（<code>SyslogFacility AUTH</code>）。</li>
+<li><strong>TCPKeepAlive</strong>：<code>TCPKeepAlive</code>指定打开 sshd 跟客户端 TCP 连接的 keepalive 参数（<code>TCPKeepAlive yes</code>）。</li>
+<li><strong>UseDNS</strong>：<code>UseDNS</code>指定用户 SSH 登录一个域名时，服务器是否使用 DNS，确认该域名对应的 IP 地址包含本机（<code>UseDNS yes</code>）。打开该选项意义不大，而且如果 DNS 更新不及时，还有可能误判，建议关闭。</li>
+<li><strong>UseLogin</strong>：<code>UseLogin</code>指定用户认证内部是否使用<code>/usr/bin/login</code>替代 SSH 工具，默认为<code>no</code>（<code>UseLogin no</code>）。</li>
+<li><strong>UserPrivilegeSeparation</strong>：<code>UserPrivilegeSeparation</code>指定用户认证通过以后，使用另一个子线程处理用户权限相关的操作，这样有利于提高安全性。默认值为<code>yes</code>（<code>UsePrivilegeSeparation yes</code>）。</li>
+<li><strong>VerboseMode</strong>：SSH 2 版本专用，指定日志输出详细的 Debug 信息（<code>VerboseMode yes</code>）。</li>
+<li><strong>X11Forwarding</strong>：<code>X11Forwarding</code>指定是否打开 X window 的转发，默认值为 no（<code>X11Forwarding no</code>）。</li>
+</ul>
+<h4 id="5-端口转发">5. 端口转发</h4>
+<blockquote>
+<p>端口转发有两个主要作用：端口转发有三种使用方法：<code>动态转发</code>，<code>本地转发</code>，<code>远程转发</code>。</p>
+<p>（1）将不加密的数据放在 SSH 安全连接里面传输，使得原本不安全的网络服务增加了安全性，比如通过端口转发访问 Telnet、FTP 等明文服务，数据传输就都会加密。</p>
+<p>（2）作为数据通信的加密跳板，绕过网络防火墙。</p>
+</blockquote>
+<h5 id="1-动态转发">.1. 动态转发</h5>
+<blockquote>
+<p>动态转发指的是，<code>本机与 SSH 服务器之间创建了一个加密连接</code>，然后本机内部针对某个端口的通信，都通过这个加密连接转发。它的一个使用场景就是，访问所有外部网站，都通过 SSH 转发。</p>
+<ul>
+<li>动态转发需要<code>把本地端口绑定到 SSH 服务器</code>。至于<code> SSH 服务器要去访问哪一个网站，完全是动态的，取决于原始通信</code></li>
+</ul>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ssh -D local-port tunnel-host -N
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#使用案例</span>
+</span></span><span style="display:flex;"><span>ssh -D <span style="color:#ae81ff">2121</span> tunnel-host -N
+</span></span><span style="display:flex;"><span>curl -x socks5://localhost:2121 http://www.example.com  <span style="color:#75715e">#curl 的`-x`参数指定代理服务器，即通过 SOCKS5 协议的本地`2121`端口，访问`http://www.example.com`。</span>
+</span></span></code></pre></div><blockquote>
+<p><code>-D</code>表示动态转发，<code>local-port</code>是本地端口，<code>tunnel-host</code>是 SSH 服务器，<code>-N</code>表示这个 SSH 连接只进行端口转发，不登录远程 Shell，不能执行远程命令，只能充当隧道。</p>
+</blockquote>
+<h5 id="2-本地转发">.2. 本地转发</h5>
+<blockquote>
+<p>SSH 服务器作为中介的跳板机，建立本地计算机与特定目标网站之间的加密连接。本地转发是在本地计算机的 SSH 客户端建立的转发规则。</p>
+<ul>
+<li><code>指定一个本地端口（local-port）</code>，所有发向那个端口的请求，都会转发到 SSH 跳板机（tunnel-host），然后 SSH 跳板机作为中介，将收到的请求发到目标服务器（target-host）的目标端口（target-port）。</li>
+<li>本地端口转发<code>采用 HTTP 协议</code>，不用转成 SOCKS5 协议。</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ssh -L local-port:target-host:target-port tunnel-host 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#`-L`参数表示本地转发，`local-port`是本地端口，`target-host`是你想要访问的目标服务器，`target-port`是目标服务器的端口，`tunnel-host`是 SSH 跳板机</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#使用案例</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#现在有一台 SSH 跳板机`tunnel-host`，我们想要通过这台机器，在本地`2121`端口与目标网站`www.example.com`的80端口之间建立 SSH 隧道</span>
+</span></span><span style="display:flex;"><span>ssh -L 2121:www.example.com:80 tunnel-host -N
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#访问本机的`2121`端口，就是访问`www.example.com`的80端口</span>
+</span></span><span style="display:flex;"><span>curl http://localhost:2121
+</span></span></code></pre></div><h5 id="3-远程转发">.3. 远程转发</h5>
+<blockquote>
+<p>远程转发则是通过远程计算机访问本地计算机</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#`-R`参数表示远程端口转发，`remote-port`是远程计算机的端口，`target-host`和`target-port`是目标服务器及其端口，`remotehost`是远程计算机。</span>
+</span></span><span style="display:flex;"><span>ssh -R remote-port:target-host:target-port -N remotehost
+</span></span></code></pre></div><ul>
+<li>内网某台服务器<code>localhost</code>在 80 端口开了一个服务，可以通过远程转发将这个 80 端口，映射到具有公网 IP 地址的<code>my.public.server</code>服务器的 8080 端口，使得访问<code>my.public.server:8080</code>这个地址，就可以访问到那台内网服务器的 80 端口</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ssh -R 8080:localhost:80 -N my.public.server
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#在内网`localhost`服务器上执行，建立从`localhost`到`my.public.server`的 SSH 隧道。运行以后，用户访问`my.public.server:8080`，就会自动映射到`localhost:80`。</span>
+</span></span></code></pre></div><ul>
+<li>本地计算机<code>local</code>在外网，SSH 跳板机和目标服务器<code>my.private.server</code>都在内网，必须通过 SSH 跳板机才能访问目标服务器。但是，本地计算机<code>local</code>无法访问内网之中的 SSH 跳板机，而 SSH 跳板机可以访问本机计算机。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ssh -R 2121:my.private.server:80 -N local
+</span></span></code></pre></div><p>如果经常执行远程端口转发，可以将设置写入 SSH 客户端的用户个人配置文件（<code>~/.ssh/config</code>）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Host remote-forward
+</span></span><span style="display:flex;"><span>  HostName test.example.com
+</span></span><span style="display:flex;"><span>  RemoteForward remote-port target-host:target-port
+</span></span></code></pre></div><p>完成上面的设置后，执行下面的命令就会建立远程转发。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ssh -N remote-forward
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 等同于</span>
+</span></span><span style="display:flex;"><span>$ ssh -R remote-port:target-host:target-port -N test.example.com
+</span></span></code></pre></div><h4 id="6-scp-命令">6. SCP 命令</h4>
+<blockquote>
+<p><code>scp</code>是 secure copy 的缩写，相当于<code>cp</code>命令 + SSH。它的底层是 SSH 协议，默认端口是22，相当于先使用<code>ssh</code>命令登录远程主机，然后再执行拷贝操作。使用<code>scp</code>传输数据时，文件和密码都是加密的，不会泄漏敏感信息。</p>
+<p><code>scp</code>主要用于以下三种复制操作。</p>
+<ul>
+<li>本地复制到远程。</li>
+<li>远程复制到本地。</li>
+<li>两个远程系统之间的复制。</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#`source`是文件当前的位置，`destination`是文件所要复制到的位置</span>
+</span></span><span style="display:flex;"><span>scp source destination
+</span></span><span style="display:flex;"><span>scp user@host:foo.txt bar.txt
+</span></span></code></pre></div><p><strong>（1）本地文件复制到远程</strong></p>
+<ul>
+<li>复制<code>本机文件</code>到远程系统的用法如下。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 语法</span>
+</span></span><span style="display:flex;"><span>$ scp SourceFile user@host:directory/TargetFile
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 示例</span>
+</span></span><span style="display:flex;"><span>$ scp file.txt remote_username@10.10.0.2:/remote/directory
+</span></span></code></pre></div><ul>
+<li>下面是复制<code>整个目录</code>的例子。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 将本机的 documents 目录拷贝到远程主机，</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 会在远程主机创建 documents 目录</span>
+</span></span><span style="display:flex;"><span>$ scp -r documents username@server_ip:/path_to_remote_directory
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 将本机整个目录拷贝到远程目录下</span>
+</span></span><span style="display:flex;"><span>$ scp -r localmachine/path_to_the_directory username@server_ip:/path_to_remote_directory/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 将本机目录下的所有内容拷贝到远程目录下</span>
+</span></span><span style="display:flex;"><span>$ scp -r localmachine/path_to_the_directory/* username@server_ip:/path_to_remote_directory/
+</span></span></code></pre></div><p><strong>（2）远程文件复制到本地</strong></p>
+<ul>
+<li>从远程主机复制文件到本地的用法如下。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 语法</span>
+</span></span><span style="display:flex;"><span>$ scp user@host:directory/SourceFile TargetFile
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 示例</span>
+</span></span><span style="display:flex;"><span>$ scp remote_username@10.10.0.2:/remote/file.txt /local/directory
+</span></span></code></pre></div><ul>
+<li>下面是复制整个目录的例子。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 拷贝一个远程目录到本机目录下</span>
+</span></span><span style="display:flex;"><span>$ scp -r username@server_ip:/path_to_remote_directory local-machine/path_to_the_directory/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 拷贝远程目录下的所有内容，到本机目录下</span>
+</span></span><span style="display:flex;"><span>$ scp -r username@server_ip:/path_to_remote_directory/* local-machine/path_to_the_directory/
+</span></span><span style="display:flex;"><span>$ scp -r user@host:directory/SourceFolder TargetFolder
+</span></span></code></pre></div><p><strong>（3）两个远程系统之间的复制</strong></p>
+<ul>
+<li>本机发出指令，从远程主机 A 拷贝到远程主机 B 的用法如下。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 语法</span>
+</span></span><span style="display:flex;"><span>$ scp user@host1:directory/SourceFile user@host2:directory/SourceFile
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 示例</span>
+</span></span><span style="display:flex;"><span>$ scp user1@host1.com:/files/file.txt user2@host2.com:/files
+</span></span></code></pre></div><h4 id="7-sftp-命令">7. SFTP 命令</h4>
+<blockquote>
+<p><code>sftp</code>是 SSH 提供的一个客户端应用程序，主要用来安全地访问 FTP。因为 FTP 是不加密协议，很不安全，<code>sftp</code>就相当于将 FTP 放入了 SSH。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sftp username@hostname
+</span></span></code></pre></div><ul>
+<li><code>ls [directory]</code>：列出一个远程目录的内容。如果没有指定目标目录，则默认列出当前目录。</li>
+<li><code>cd directory</code>：从当前目录改到指定目录。</li>
+<li><code>mkdir directory</code>：创建一个远程目录。</li>
+<li><code>rmdir path</code>：删除一个远程目录。</li>
+<li><code>put localfile [remotefile]</code>：本地文件传输到远程主机。</li>
+<li><code>get remotefile [localfile]</code>：远程文件传输到本地。</li>
+<li><code>help</code>：显示帮助信息。</li>
+<li><code>bye</code>：退出 sftp。</li>
+<li><code>quit</code>：退出 sftp。</li>
+<li><code>exit</code>：退出 sftp。</li>
+</ul>
+<h4 id="8-rsync">8. RSYNC</h4>
+<blockquote>
+<p>在本地计算机与远程计算机之间，或者两个本地目录之间<code>同步文件</code>（但<code>不支持两台远程计算机之间的同步</code>）。它也可以当作文件复制工具，替代<code>cp</code>和<code>mv</code>命令。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#`-r`表示递归，即包含子目录。注意，`-r`是必须的，否则 rsync 运行不会成功。`source`目录表示源目录，`destination`表示目标目录。上面命令执行以后，目标目录下就会出现`destination/source`这个子目录。</span>
+</span></span><span style="display:flex;"><span>rsync -r source destination
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#`source1`、`source2`都会被同步到`destination`目录</span>
+</span></span><span style="display:flex;"><span>rsync -r source1 source2 destination
+</span></span></code></pre></div><ul>
+<li>可以将本地内容，<code>同步到远程服务器</code>。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ rsync -av source/ username@remote_host:destination
+</span></span></code></pre></div><ul>
+<li>也可以<code>将远程内容同步到本地</code>。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ rsync -av username@remote_host:source/ destination
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ rsync -av source/ 192.168.122.32::module/destination
+</span></span></code></pre></div><p>注意，上面地址中的<code>module</code>并不是实际路径名，而是 rsync 守护程序指定的一个资源名，由管理员分配。</p>
+<p>如果想知道 rsync 守护程序分配的所有 module 列表，可以执行下面命令。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ rsync rsync://192.168.122.32
+</span></span></code></pre></div><p>rsync 协议除了使用双冒号，也可以直接用<code>rsync://</code>协议指定地址。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ rsync -av source/ rsync://192.168.122.32/module/destination
+</span></span></code></pre></div><blockquote>
+<p>第一次同步是全量备份，所有文件在基准目录里面同步一份。以后每一次同步都是增量备份，只同步源目录与基准目录之间有变动的部分，将这部分保存在一个新的目标目录。这个新的目标目录之中，也是包含所有文件，但实际上，只有那些变动过的文件是存在于该目录，其他没有变动的文件都是指向基准目录文件的硬链接。</p>
+</blockquote>
+<p><code>--link-dest</code>参数用来指定同步时的基准目录。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ rsync -a --delete --link-dest /compare/path /source/path /target/path
+</span></span></code></pre></div><blockquote>
+<p>上面命令中，<code>--link-dest</code>参数指定基准目录<code>/compare/path</code>，然后源目录<code>/source/path</code>跟基准目录进行比较，找出变动的文件，将它们拷贝到目标目录<code>/target/path</code>。那些没变动的文件则会生成硬链接。这个命令的第一次备份时是全量备份，后面就都是增量备份了。</p>
+</blockquote>
+<p>下面是一个脚本示例，备份用户的主目录。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># A script to perform incremental backups using rsync</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>set -o errexit
+</span></span><span style="display:flex;"><span>set -o nounset
+</span></span><span style="display:flex;"><span>set -o pipefail
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>readonly SOURCE_DIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>HOME<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>readonly BACKUP_DIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/mnt/data/backups&#34;</span>
+</span></span><span style="display:flex;"><span>readonly DATETIME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>date <span style="color:#e6db74">&#39;+%Y-%m-%d_%H:%M:%S&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>readonly BACKUP_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>BACKUP_DIR<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>DATETIME<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>readonly LATEST_LINK<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>BACKUP_DIR<span style="color:#e6db74">}</span><span style="color:#e6db74">/latest&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mkdir -p <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>BACKUP_DIR<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>rsync -av --delete <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>SOURCE_DIR<span style="color:#e6db74">}</span><span style="color:#e6db74">/&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --link-dest <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>LATEST_LINK<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --exclude<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;.cache&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>BACKUP_PATH<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>rm -rf <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>LATEST_LINK<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>ln -s <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>BACKUP_PATH<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>LATEST_LINK<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><blockquote>
+<p>上面脚本中，每一次同步都会生成一个新目录<code>${BACKUP_DIR}/${DATETIME}</code>，并将软链接<code>${BACKUP_DIR}/latest</code>指向这个目录。下一次备份时，就将<code>${BACKUP_DIR}/latest</code>作为基准目录，生成新的备份目录。最后，再将软链接<code>${BACKUP_DIR}/latest</code>指向新的备份目录。</p>
+</blockquote>
+<h4 id="resource">Resource</h4>
+<ul>
+<li><a href="https://wangdoc.com/ssh/"target="_blank" rel="external nofollow noopener noreferrer">https://wangdoc.com/ssh/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories-on-a-vps"target="_blank" rel="external nofollow noopener noreferrer">How To Use Rsync to Sync Local and Remote Directories on a VPS<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>, Justin Ellingwood</li>
+<li><a href="https://www.howtoforge.com/mirroring_with_rsync"target="_blank" rel="external nofollow noopener noreferrer">Mirror Your Web Site With rsync<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>, Falko Timme</li>
+<li><a href="https://linuxconfig.org/examples-on-how-to-use-rsync-for-local-and-remote-data-backups-and-synchonization"target="_blank" rel="external nofollow noopener noreferrer">Examples on how to use Rsync<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>, Egidio Docile</li>
+<li><a href="https://linuxconfig.org/how-to-create-incremental-backups-using-rsync-on-linux"target="_blank" rel="external nofollow noopener noreferrer">How to create incremental backups using rsync on Linux<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>, Egidio Docile</li>
+</ul>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-29&#32;08:23:06>更新于 2023-09-29&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/ssh_usage/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e8%bd%af%e4%bb%b6%e5%b7%a5%e5%85%b7%5cGit%5cSSH_usage.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/ssh_usage/" data-title="SSH_usage" data-hashtags="Git"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/ssh_usage/" data-hashtag="Git"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/ssh_usage/" data-title="SSH_usage" data-image="https://cdn.stocksnap.io/img-thumbs/280h/779E8EFZ2Y.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/git/">Git</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/javajvm_%E7%BC%96%E8%AF%91%E5%99%A8/" class="prev" rel="prev" title="JavaJVM_编译器"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>JavaJVM_编译器</a>
+      <a href="liudongdong1.github.io/poserelative/" class="next" rel="next" title="PoseRelative">PoseRelative<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

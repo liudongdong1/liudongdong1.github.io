@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>JavaJVM_内存分配&amp;回收 - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="Serial / Serial Old收集器下（ParNew / Serial Old收集器组合的规则也基本一致）的内存分配和回收的策略。 1. 对象优先在Eden分配 大多数情况下，对象在" /><meta name="keywords" content='Java' /><meta itemprop="name" content="JavaJVM_内存分配&amp;回收">
+<meta itemprop="description" content="Serial / Serial Old收集器下（ParNew / Serial Old收集器组合的规则也基本一致）的内存分配和回收的策略。 1. 对象优先在Eden分配 大多数情况下，对象在">
+<meta itemprop="dateModified" content="2023-09-28T22:47:27+08:00" />
+<meta itemprop="wordCount" content="4267"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Java," /><meta property="og:title" content="JavaJVM_内存分配&amp;回收" />
+<meta property="og:description" content="Serial / Serial Old收集器下（ParNew / Serial Old收集器组合的规则也基本一致）的内存分配和回收的策略。 1. 对象优先在Eden分配 大多数情况下，对象在" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/javajvm_%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%9B%9E%E6%94%B6/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+
+<meta property="article:modified_time" content="2023-09-28T22:47:27+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="JavaJVM_内存分配&amp;回收"/>
+<meta name="twitter:description" content="Serial / Serial Old收集器下（ParNew / Serial Old收集器组合的规则也基本一致）的内存分配和回收的策略。 1. 对象优先在Eden分配 大多数情况下，对象在"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/javajvm_%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%9B%9E%E6%94%B6/" /><link rel="prev" href="liudongdong1.github.io/javajvm_%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" /><link rel="next" href="liudongdong1.github.io/javajvm_%E7%B1%BB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "JavaJVM_内存分配\u0026回收",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/javajvm_%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%9B%9E%E6%94%B6\/"
+    },"genre": "posts","keywords": "Java","wordcount":  4267 ,
+    "url": "liudongdong1.github.io\/javajvm_%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%9B%9E%E6%94%B6\/","dateModified": "2023-09-28T22:47:27+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>JavaJVM_内存分配&amp;回收</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/framework/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Framework</a></span></div>
+      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01" >0001-01-01</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 4267 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="JavaJVM_内存分配&amp;回收">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.stocksnap.io/img-thumbs/280h/HYIOWCIBOY.jpg"
+    data-srcset="https://cdn.stocksnap.io/img-thumbs/280h/HYIOWCIBOY.jpg, https://cdn.stocksnap.io/img-thumbs/280h/HYIOWCIBOY.jpg 1.5x, https://cdn.stocksnap.io/img-thumbs/280h/HYIOWCIBOY.jpg 2x"
+    data-sizes="auto"
+    alt="https://cdn.stocksnap.io/img-thumbs/280h/HYIOWCIBOY.jpg"
+    title="https://cdn.stocksnap.io/img-thumbs/280h/HYIOWCIBOY.jpg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><blockquote>
+<p>Serial / Serial Old收集器下（ParNew / Serial Old收集器组合的规则也基本一致）的内存分配和回收的策略。</p>
+</blockquote>
+<h4 id="1-对象优先在eden分配">1. <strong>对象优先在Eden分配</strong></h4>
+<hr>
+<p>大多数情况下，对象在<strong>新生代Eden区</strong>中分配。当Eden区没有足够空间进行分配时，虚拟机将发起一次Minor GC。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> _1MB <span style="color:#f92672">=</span> 1024 <span style="color:#f92672">*</span> 1024<span style="color:#f92672">;</span>  
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * VM参数：-verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  */</span>  
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testAllocation</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>  
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> allocation1<span style="color:#f92672">,</span> allocation2<span style="color:#f92672">,</span> allocation3<span style="color:#f92672">,</span> allocation4<span style="color:#f92672">;</span>  
+</span></span><span style="display:flex;"><span>     allocation1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>2 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>  
+</span></span><span style="display:flex;"><span>     allocation2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>2 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>  
+</span></span><span style="display:flex;"><span>     allocation3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>2 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>  
+</span></span><span style="display:flex;"><span>     allocation4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>4 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>  <span style="color:#75715e">// 出现一次Minor GC  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> <span style="color:#f92672">}</span> 
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">[</span>GC <span style="color:#f92672">[</span>DefNew<span style="color:#f92672">:</span> 6651K<span style="color:#f92672">-&gt;</span>148K<span style="color:#f92672">(</span>9216K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0070106</span> secs<span style="color:#f92672">]</span> 6651K<span style="color:#f92672">-&gt;</span>6292K<span style="color:#f92672">(</span>19456K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0070426</span> secs<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>Times<span style="color:#f92672">:</span> user<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span> sys<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span><span style="color:#f92672">,</span> real<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span> secs<span style="color:#f92672">]</span>   
+</span></span><span style="display:flex;"><span>Heap  
+</span></span><span style="display:flex;"><span> def <span style="color:#66d9ef">new</span> generation   total 9216K<span style="color:#f92672">,</span> used 4326K <span style="color:#f92672">[</span>0x029d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>  eden space 8192K<span style="color:#f92672">,</span>  51<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x029d0000<span style="color:#f92672">,</span> 0x02de4828<span style="color:#f92672">,</span> 0x031d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>  from space 1024K<span style="color:#f92672">,</span>  14<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x032d0000<span style="color:#f92672">,</span> 0x032f5370<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>  to   space 1024K<span style="color:#f92672">,</span>   0<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x031d0000<span style="color:#f92672">,</span> 0x031d0000<span style="color:#f92672">,</span> 0x032d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span> tenured generation   total 10240K<span style="color:#f92672">,</span> used 6144K <span style="color:#f92672">[</span>0x033d0000<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>   the space 10240K<span style="color:#f92672">,</span>  60<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x033d0000<span style="color:#f92672">,</span> 0x039d0030<span style="color:#f92672">,</span> 0x039d0200<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span> compacting perm gen  total 12288K<span style="color:#f92672">,</span> used 2114K <span style="color:#f92672">[</span>0x03dd0000<span style="color:#f92672">,</span> 0x049d0000<span style="color:#f92672">,</span> 0x07dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>   the space 12288K<span style="color:#f92672">,</span>  17<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x03dd0000<span style="color:#f92672">,</span> 0x03fe0998<span style="color:#f92672">,</span> 0x03fe0a00<span style="color:#f92672">,</span> 0x049d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>No shared spaces configured<span style="color:#f92672">.</span>  
+</span></span></code></pre></div><p>代码的<code>testAllocation()</code>方法中，尝试分配3个2MB大小和1个4MB大小的对象，在运行时通过-Xms20M、 -Xmx20M、 -Xmn10M这3个参数限制了Java堆大小为20MB，不可扩展，其中10MB分配给新生代，剩下的10MB分配给老年代。<code>-XX:SurvivorRatio=8</code>决定了新生代中Eden区与一个Survivor区的空间比例是8∶1，从输出的结果也可以清晰地看到<code>eden space 8192K、from space 1024K、to space 1024K</code>的信息，新生代总可用空间为9216KB（Eden区+1个Survivor区的总容量）。</p>
+<p>执行<code>testAllocation()</code>中分配allocation4对象的语句时会发生一次Minor GC，这次GC的结果是新生代6651KB变为148KB，而总内存占用量则几乎没有减少（因为allocation1、allocation2、allocation3三个对象都是存活的，虚拟机几乎没有找到可回收的对象）。这次GC发生的原因是给allocation4分配内存的时候，发现Eden已经被占用了6MB，剩余空间已不足以分配allocation4所需的4MB内存，因此发生Minor GC。GC期间虚拟机又发现已有的3个2MB大小的对象全部无法放入Survivor空间（Survivor空间只有1MB大小），所以只好通过分配担保机制提前转移到老年代去。</p>
+<p>这次GC结束后，4MB的allocation4对象顺利分配在Eden中，因此程序执行完的结果是Eden占用4MB（被allocation4占用），Survivor空闲，老年代被占用6MB（被allocation1、allocation2、allocation3占用）。通过GC日志可以证实这一点。</p>
+<h4 id="2-大对象直接进入老年代">2. <strong>大对象直接进入老年代</strong></h4>
+<hr>
+<p>所谓的大对象是指，需要<strong>大量连续内存空间</strong>的Java对象，最典型的大对象就是<code>那种很长的字符串以及数组</code>。</p>
+<p>大对象对虚拟机的内存分配来说就是一个坏消息（比遇到一个大对象更加坏的消息就是遇到一群“朝生夕灭”的“短命大对象”，写程序的时候应当避免），经常出现大对象容易导致内存还有不少空间时就提前触发垃圾收集以获取足够的连续空间来“安置”它们。</p>
+<p>虚拟机提供了一个<code>-XX:PretenureSizeThreshold</code>参数，令大于这个设置值的对象直接在老年代分配。这样做的目的是避免在Eden区及两个Survivor区之间发生大量的内存复制（复习一下：新生代采用复制算法收集内存）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> _1MB <span style="color:#f92672">=</span> 1024 <span style="color:#f92672">*</span> 1024<span style="color:#f92672">;</span>   
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * VM参数：-verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * -XX:PretenureSizeThreshold=3145728 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>  
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testPretenureSizeThreshold</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> allocation<span style="color:#f92672">;</span>  
+</span></span><span style="display:flex;"><span>  allocation <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>4 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>  <span style="color:#75715e">//直接分配在老年代中  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">}</span> 
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>1<span style="color:#f92672">.</span><span style="color:#a6e22e">Heap</span>  
+</span></span><span style="display:flex;"><span>2<span style="color:#f92672">.</span><span style="color:#a6e22e">def</span> <span style="color:#66d9ef">new</span> generation   total 9216K<span style="color:#f92672">,</span> used 671K <span style="color:#f92672">[</span>0x029d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>3<span style="color:#f92672">.</span><span style="color:#a6e22e">eden</span> space 8192K<span style="color:#f92672">,</span>   8<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x029d0000<span style="color:#f92672">,</span> 0x02a77e98<span style="color:#f92672">,</span> 0x031d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>4<span style="color:#f92672">.</span><span style="color:#a6e22e">from</span> space 1024K<span style="color:#f92672">,</span>   0<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x031d0000<span style="color:#f92672">,</span> 0x031d0000<span style="color:#f92672">,</span> 0x032d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>5<span style="color:#f92672">.</span><span style="color:#a6e22e">to</span>   space 1024K<span style="color:#f92672">,</span>   0<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x032d0000<span style="color:#f92672">,</span> 0x032d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>6<span style="color:#f92672">.</span><span style="color:#a6e22e">tenured</span> generation   total 10240K<span style="color:#f92672">,</span> used 4096K <span style="color:#f92672">[</span>0x033d0000<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>7<span style="color:#f92672">.</span><span style="color:#a6e22e">the</span> space 10240K<span style="color:#f92672">,</span>  40<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x033d0000<span style="color:#f92672">,</span> 0x037d0010<span style="color:#f92672">,</span> 0x037d0200<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>8<span style="color:#f92672">.</span><span style="color:#a6e22e">compacting</span> perm gen  total 12288K<span style="color:#f92672">,</span> used 2107K <span style="color:#f92672">[</span>0x03dd0000<span style="color:#f92672">,</span> 0x049d0000<span style="color:#f92672">,</span> 0x07dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>9<span style="color:#f92672">.</span><span style="color:#a6e22e">the</span> space 12288K<span style="color:#f92672">,</span>  17<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x03dd0000<span style="color:#f92672">,</span> 0x03fdefd0<span style="color:#f92672">,</span> 0x03fdf000<span style="color:#f92672">,</span> 0x049d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>10<span style="color:#f92672">.</span><span style="color:#a6e22e">No</span> shared spaces configured<span style="color:#f92672">.</span> 
+</span></span></code></pre></div><p>执行代码中的<code>testPretenureSizeThreshold()</code>方法后，我们看到Eden空间几乎没有被使用，而老年代的10MB空间被使用了40%，也就是4MB的allocation对象直接就分配在老年代中，这是因为<code>PretenureSizeThreshold</code>被设置为3MB（就是3145728，这个参数不能像-Xmx之类的参数一样直接写3MB），因此超过3MB的对象都会直接在老年代进行分配。</p>
+<p>注意:<code>PretenureSizeThreshold</code>参数只对Serial和ParNew两款收集器有效，Parallel Scavenge收集器不认识这个参数，Parallel Scavenge收集器一般并不需要设置。
+如果遇到必须使用此参数的场合，可以考虑ParNew加CMS的收集器组合。</p>
+<h4 id="3-长期存活的对象将进入老年代">3. 长期存活的对象将进入老年代</h4>
+<hr>
+<p>为了在内存回收时能识别哪些对象应放在新生代，哪些对象应放在老年代中。虚拟机给每个对象定义了一个对象年龄（Age）计数器。</p>
+<ul>
+<li>**对象年龄的判定：**如果对象在Eden出生并经过第一次Minor GC后仍然存活，并且能被Survivor容纳的话，将被移动到Survivor空间中，并且对象年龄设为1。对象在Survivor区中每“熬过”一次Minor GC，年龄就增加1岁，当它的年龄增加到一定程度（默认为15岁），就将会被晋升到老年代中。对象晋升老年代的年龄阈值，可以通过参数<code>-XX:MaxTenuringThreshold</code>设置。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> _1MB <span style="color:#f92672">=</span> 1024 <span style="color:#f92672">*</span> 1024<span style="color:#f92672">;</span>  
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * VM参数：-verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=1 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * -XX:+PrintTenuringDistribution  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>  
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@SuppressWarnings</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;unused&#34;</span><span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testTenuringThreshold</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> allocation1<span style="color:#f92672">,</span> allocation2<span style="color:#f92672">,</span> allocation3<span style="color:#f92672">;</span>  
+</span></span><span style="display:flex;"><span>  allocation1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>_1MB <span style="color:#f92672">/</span> 4<span style="color:#f92672">];</span>    
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// 什么时候进入老年代取决于XX:MaxTenuringThreshold设置  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  allocation2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>4 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>  
+</span></span><span style="display:flex;"><span>  allocation3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>4 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>  
+</span></span><span style="display:flex;"><span>  allocation3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>  
+</span></span><span style="display:flex;"><span>  allocation3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>4 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span> 
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>1<span style="color:#f92672">.[</span>GC <span style="color:#f92672">[</span>DefNew  
+</span></span><span style="display:flex;"><span>2<span style="color:#f92672">.</span><span style="color:#a6e22e">Desired</span> Survivor size 524288 bytes<span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> threshold <span style="color:#a6e22e">1</span> <span style="color:#f92672">(</span>max 1<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>3<span style="color:#f92672">.-</span> age   1<span style="color:#f92672">:</span>     414664 bytes<span style="color:#f92672">,</span>     414664 total  
+</span></span><span style="display:flex;"><span>4<span style="color:#f92672">.:</span> 4859K<span style="color:#f92672">-&gt;</span>404K<span style="color:#f92672">(</span>9216K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0065012</span> secs<span style="color:#f92672">]</span> 4859K<span style="color:#f92672">-&gt;</span>4500K<span style="color:#f92672">(</span>19456K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0065283</span> secs<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>Times<span style="color:#f92672">:</span> user<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">02</span> sys<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span><span style="color:#f92672">,</span> real<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">02</span> secs<span style="color:#f92672">]</span>   
+</span></span><span style="display:flex;"><span>5<span style="color:#f92672">.[</span>GC <span style="color:#f92672">[</span>DefNew  
+</span></span><span style="display:flex;"><span>6<span style="color:#f92672">.</span><span style="color:#a6e22e">Desired</span> Survivor size 524288 bytes<span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> threshold <span style="color:#a6e22e">1</span> <span style="color:#f92672">(</span>max 1<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>7<span style="color:#f92672">.:</span> 4500K<span style="color:#f92672">-&gt;</span>0K<span style="color:#f92672">(</span>9216K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0009253</span> secs<span style="color:#f92672">]</span> 8596K<span style="color:#f92672">-&gt;</span>4500K<span style="color:#f92672">(</span>19456K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0009458</span> secs<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>Times<span style="color:#f92672">:</span> user<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span> sys<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span><span style="color:#f92672">,</span> real<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span> secs<span style="color:#f92672">]</span>   
+</span></span><span style="display:flex;"><span>8<span style="color:#f92672">.</span><span style="color:#a6e22e">Heap</span>  
+</span></span><span style="display:flex;"><span>9<span style="color:#f92672">.</span><span style="color:#a6e22e">def</span> <span style="color:#66d9ef">new</span> generation   total 9216K<span style="color:#f92672">,</span> used 4178K <span style="color:#f92672">[</span>0x029d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>10<span style="color:#f92672">.</span><span style="color:#a6e22e">eden</span> space 8192K<span style="color:#f92672">,</span>  51<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x029d0000<span style="color:#f92672">,</span> 0x02de4828<span style="color:#f92672">,</span> 0x031d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>11<span style="color:#f92672">.</span><span style="color:#a6e22e">from</span> space 1024K<span style="color:#f92672">,</span>   0<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x031d0000<span style="color:#f92672">,</span> 0x031d0000<span style="color:#f92672">,</span> 0x032d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>12<span style="color:#f92672">.</span><span style="color:#a6e22e">to</span>   space 1024K<span style="color:#f92672">,</span>   0<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x032d0000<span style="color:#f92672">,</span> 0x032d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>13<span style="color:#f92672">.</span><span style="color:#a6e22e">to</span>   space 1024K<span style="color:#f92672">,</span>   0<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x032d0000<span style="color:#f92672">,</span> 0x032d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>14<span style="color:#f92672">.</span><span style="color:#a6e22e">to</span>   space 1024K<span style="color:#f92672">,</span>   0<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x032d0000<span style="color:#f92672">,</span> 0x032d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>15<span style="color:#f92672">.</span><span style="color:#a6e22e">to</span>   space 1024K<span style="color:#f92672">,</span>   0<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x032d0000<span style="color:#f92672">,</span> 0x032d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>16<span style="color:#f92672">.</span><span style="color:#a6e22e">tenured</span> generation   total 10240K<span style="color:#f92672">,</span> used 4500K <span style="color:#f92672">[</span>0x033d0000<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>17<span style="color:#f92672">.</span><span style="color:#a6e22e">the</span> space 10240K<span style="color:#f92672">,</span>  43<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x033d0000<span style="color:#f92672">,</span> 0x03835348<span style="color:#f92672">,</span> 0x03835400<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>18<span style="color:#f92672">.</span><span style="color:#a6e22e">compacting</span> perm gen  total 12288K<span style="color:#f92672">,</span> used 2114K <span style="color:#f92672">[</span>0x03dd0000<span style="color:#f92672">,</span> 0x049d0000<span style="color:#f92672">,</span> 0x07dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>19<span style="color:#f92672">.</span><span style="color:#a6e22e">the</span> space 12288K<span style="color:#f92672">,</span>  17<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x03dd0000<span style="color:#f92672">,</span> 0x03fe0998<span style="color:#f92672">,</span> 0x03fe0a00<span style="color:#f92672">,</span> 0x049d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>20<span style="color:#f92672">.</span><span style="color:#a6e22e">No</span> shared spaces configured<span style="color:#f92672">.</span> 
+</span></span></code></pre></div><p>以MaxTenuringThreshold=15参数来运行的结果:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>1<span style="color:#f92672">.[</span>GC <span style="color:#f92672">[</span>DefNew  
+</span></span><span style="display:flex;"><span>2<span style="color:#f92672">.</span><span style="color:#a6e22e">Desired</span> Survivor size 524288 bytes<span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> threshold <span style="color:#a6e22e">15</span> <span style="color:#f92672">(</span>max 15<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>3<span style="color:#f92672">.-</span> age   1<span style="color:#f92672">:</span>     414664 bytes<span style="color:#f92672">,</span>     414664 total  
+</span></span><span style="display:flex;"><span>4<span style="color:#f92672">.:</span> 4859K<span style="color:#f92672">-&gt;</span>404K<span style="color:#f92672">(</span>9216K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0049637</span> secs<span style="color:#f92672">]</span> 4859K<span style="color:#f92672">-&gt;</span>4500K<span style="color:#f92672">(</span>19456K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0049932</span> secs<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>Times<span style="color:#f92672">:</span> user<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span> sys<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span><span style="color:#f92672">,</span> real<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span> secs<span style="color:#f92672">]</span>   
+</span></span><span style="display:flex;"><span>5<span style="color:#f92672">.[</span>GC <span style="color:#f92672">[</span>DefNew  
+</span></span><span style="display:flex;"><span>6<span style="color:#f92672">.</span><span style="color:#a6e22e">Desired</span> Survivor size 524288 bytes<span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> threshold <span style="color:#a6e22e">15</span> <span style="color:#f92672">(</span>max 15<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>7<span style="color:#f92672">.-</span> age   2<span style="color:#f92672">:</span>     414520 bytes<span style="color:#f92672">,</span>     414520 total  
+</span></span><span style="display:flex;"><span>8<span style="color:#f92672">.:</span> 4500K<span style="color:#f92672">-&gt;</span>404K<span style="color:#f92672">(</span>9216K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0008091</span> secs<span style="color:#f92672">]</span> 8596K<span style="color:#f92672">-&gt;</span>4500K<span style="color:#f92672">(</span>19456K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0008305</span> secs<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>Times<span style="color:#f92672">:</span> user<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span> sys<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span><span style="color:#f92672">,</span> real<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span> secs<span style="color:#f92672">]</span>   
+</span></span><span style="display:flex;"><span>9<span style="color:#f92672">.</span><span style="color:#a6e22e">Heap</span>  
+</span></span><span style="display:flex;"><span>10<span style="color:#f92672">.</span><span style="color:#a6e22e">def</span> <span style="color:#66d9ef">new</span> generation   total 9216K<span style="color:#f92672">,</span> used 4582K <span style="color:#f92672">[</span>0x029d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>11<span style="color:#f92672">.</span><span style="color:#a6e22e">eden</span> space 8192K<span style="color:#f92672">,</span>  51<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x029d0000<span style="color:#f92672">,</span> 0x02de4828<span style="color:#f92672">,</span> 0x031d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>12<span style="color:#f92672">.</span><span style="color:#a6e22e">from</span> space 1024K<span style="color:#f92672">,</span>  39<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x031d0000<span style="color:#f92672">,</span> 0x03235338<span style="color:#f92672">,</span> 0x032d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>13<span style="color:#f92672">.</span><span style="color:#a6e22e">to</span>   space 1024K<span style="color:#f92672">,</span>   0<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x032d0000<span style="color:#f92672">,</span> 0x032d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>14<span style="color:#f92672">.</span><span style="color:#a6e22e">tenured</span> generation   total 10240K<span style="color:#f92672">,</span> used 4096K <span style="color:#f92672">[</span>0x033d0000<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>15<span style="color:#f92672">.</span><span style="color:#a6e22e">the</span> space 10240K<span style="color:#f92672">,</span>  40<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x033d0000<span style="color:#f92672">,</span> 0x037d0010<span style="color:#f92672">,</span> 0x037d0200<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>16<span style="color:#f92672">.</span><span style="color:#a6e22e">compacting</span> perm gen  total 12288K<span style="color:#f92672">,</span> used 2114K <span style="color:#f92672">[</span>0x03dd0000<span style="color:#f92672">,</span> 0x049d0000<span style="color:#f92672">,</span> 0x07dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>17<span style="color:#f92672">.</span><span style="color:#a6e22e">the</span> space 12288K<span style="color:#f92672">,</span>  17<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x03dd0000<span style="color:#f92672">,</span> 0x03fe0998<span style="color:#f92672">,</span> 0x03fe0a00<span style="color:#f92672">,</span> 0x049d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>18<span style="color:#f92672">.</span><span style="color:#a6e22e">No</span> shared spaces configured<span style="color:#f92672">.</span>  
+</span></span></code></pre></div><p>分别以<code>-XX:MaxTenuringThreshold=1</code>和<code>-XX:MaxTenuringThreshold=15</code>两种设置来执行代码清单3-7中的<code>testTenuringThreshold()</code>方法，此方法中的allocation1对象需要256KB内存，Survivor空间可以容纳。当MaxTenuringThreshold=1时，allocation1对象在第二次GC发生时进入老年代，新生代已使用的内存GC后非常干净地变成0KB。而MaxTenuringThreshold=15时，第二次GC发生后，allocation1对象则还留在新生代Survivor空间，这时新生代仍然有404KB被占用。</p>
+<h4 id="4-动态对象年龄判定">4. 动态对象年龄判定</h4>
+<hr>
+<p>为了能更好地适应不同程序的内存状况，虚拟机并不是永远地要求对象的年龄必须达到了MaxTenuringThreshold才能晋升老年代.</p>
+<ul>
+<li><strong>动态对象年龄判定</strong>: 如果在Survivor空间中相同年龄所有对象大小的总和大于Survivor空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代，无须等到<code>MaxTenuringThreshold</code>中要求的年龄。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> _1MB <span style="color:#f92672">=</span> 1024 <span style="color:#f92672">*</span> 1024<span style="color:#f92672">;</span>  
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * VM参数：-verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=15 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * -XX:+PrintTenuringDistribution  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>  
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@SuppressWarnings</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;unused&#34;</span><span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testTenuringThreshold2</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> allocation1<span style="color:#f92672">,</span> allocation2<span style="color:#f92672">,</span> allocation3<span style="color:#f92672">,</span> allocation4<span style="color:#f92672">;</span>  
+</span></span><span style="display:flex;"><span>  allocation1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>_1MB <span style="color:#f92672">/</span> 4<span style="color:#f92672">];</span>   
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// allocation1+allocation2大于survivo空间一半  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  allocation2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>_1MB <span style="color:#f92672">/</span> 4<span style="color:#f92672">];</span>    
+</span></span><span style="display:flex;"><span>  allocation3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>4 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>  
+</span></span><span style="display:flex;"><span>  allocation4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>4 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>  
+</span></span><span style="display:flex;"><span>  allocation4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>  
+</span></span><span style="display:flex;"><span>  allocation4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>4 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span> 
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>1<span style="color:#f92672">.[</span>GC <span style="color:#f92672">[</span>DefNew  
+</span></span><span style="display:flex;"><span>2<span style="color:#f92672">.</span><span style="color:#a6e22e">Desired</span> Survivor size 524288 bytes<span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> threshold <span style="color:#a6e22e">1</span> <span style="color:#f92672">(</span>max 15<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>3<span style="color:#f92672">.-</span> age   1<span style="color:#f92672">:</span>     676824 bytes<span style="color:#f92672">,</span>     676824 total  
+</span></span><span style="display:flex;"><span>4<span style="color:#f92672">.:</span> 5115K<span style="color:#f92672">-&gt;</span>660K<span style="color:#f92672">(</span>9216K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0050136</span> secs<span style="color:#f92672">]</span> 5115K<span style="color:#f92672">-&gt;</span>4756K<span style="color:#f92672">(</span>19456K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0050443</span> secs<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>Times<span style="color:#f92672">:</span> user<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span> sys<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">01</span><span style="color:#f92672">,</span> real<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">01</span> secs<span style="color:#f92672">]</span>   
+</span></span><span style="display:flex;"><span>5<span style="color:#f92672">.[</span>GC <span style="color:#f92672">[</span>DefNew  
+</span></span><span style="display:flex;"><span>6<span style="color:#f92672">.</span><span style="color:#a6e22e">Desired</span> Survivor size 524288 bytes<span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> threshold <span style="color:#a6e22e">15</span> <span style="color:#f92672">(</span>max 15<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>7<span style="color:#f92672">.:</span> 4756K<span style="color:#f92672">-&gt;</span>0K<span style="color:#f92672">(</span>9216K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0010571</span> secs<span style="color:#f92672">]</span> 8852K<span style="color:#f92672">-&gt;</span>4756K<span style="color:#f92672">(</span>19456K<span style="color:#f92672">),</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0011009</span> secs<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>Times<span style="color:#f92672">:</span> user<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span> sys<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span><span style="color:#f92672">,</span> real<span style="color:#f92672">=</span>0<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span> secs<span style="color:#f92672">]</span>   
+</span></span><span style="display:flex;"><span>8<span style="color:#f92672">.</span><span style="color:#a6e22e">Heap</span>  
+</span></span><span style="display:flex;"><span>9<span style="color:#f92672">.</span><span style="color:#a6e22e">def</span> <span style="color:#66d9ef">new</span> generation   total 9216K<span style="color:#f92672">,</span> used 4178K <span style="color:#f92672">[</span>0x029d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>10<span style="color:#f92672">.</span><span style="color:#a6e22e">eden</span> space 8192K<span style="color:#f92672">,</span>  51<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x029d0000<span style="color:#f92672">,</span> 0x02de4828<span style="color:#f92672">,</span> 0x031d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>11<span style="color:#f92672">.</span><span style="color:#a6e22e">from</span> space 1024K<span style="color:#f92672">,</span>   0<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x031d0000<span style="color:#f92672">,</span> 0x031d0000<span style="color:#f92672">,</span> 0x032d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>12<span style="color:#f92672">.</span><span style="color:#a6e22e">to</span>   space 1024K<span style="color:#f92672">,</span>   0<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x032d0000<span style="color:#f92672">,</span> 0x032d0000<span style="color:#f92672">,</span> 0x033d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>13<span style="color:#f92672">.</span><span style="color:#a6e22e">tenured</span> generation   total 10240K<span style="color:#f92672">,</span> used 4756K <span style="color:#f92672">[</span>0x033d0000<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>14<span style="color:#f92672">.</span><span style="color:#a6e22e">the</span> space 10240K<span style="color:#f92672">,</span>  46<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x033d0000<span style="color:#f92672">,</span> 0x038753e8<span style="color:#f92672">,</span> 0x03875400<span style="color:#f92672">,</span> 0x03dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>15<span style="color:#f92672">.</span><span style="color:#a6e22e">compacting</span> perm gen  total 12288K<span style="color:#f92672">,</span> used 2114K <span style="color:#f92672">[</span>0x03dd0000<span style="color:#f92672">,</span> 0x049d0000<span style="color:#f92672">,</span> 0x07dd0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>16<span style="color:#f92672">.</span><span style="color:#a6e22e">the</span> space 12288K<span style="color:#f92672">,</span>  17<span style="color:#f92672">%</span> used <span style="color:#f92672">[</span>0x03dd0000<span style="color:#f92672">,</span> 0x03fe09a0<span style="color:#f92672">,</span> 0x03fe0a00<span style="color:#f92672">,</span> 0x049d0000<span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>17<span style="color:#f92672">.</span><span style="color:#a6e22e">No</span> shared spaces configured<span style="color:#f92672">.</span> 
+</span></span></code></pre></div><p>执行代码中的<code>testTenuringThreshold2()</code>方法，并设置<code>-XX:MaxTenuringThreshold=15</code>，会发现运行结果中Survivor的空间占用仍然为0%，而老年代比预期增加了6%，也就是说，allocation1、allocation2对象都直接进入了老年代，而没有等到15岁的临界年龄。因为这两个对象加起来已经到达了512KB，并且它们是同年的，满足同年对象达到Survivor空间的一半规则。我们只要注释掉其中一个对象new操作，就会发现另外一个就不会晋升到老年代中去了。</p>
+<h4 id="5-空间分配担保">5. 空间分配担保</h4>
+<hr>
+<p>在发生Minor GC之前，虚拟机会先检查<code>老年代最大可用的连续空间是否大于新生代所有对象总空间</code>，如果这个条件成立，那么Minor GC可以确保是安全的。如果不成立，则虚拟机会查看HandlePromotionFailure设置值是否允许担保失败。如果允许，那么会<code>继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小</code>，如果大于，将尝试着进行一次Minor GC，尽管这次Minor GC是有风险的；如果小于，或者HandlePromotionFailure设置不允许冒险，那这时也要改为进行一次Full GC。</p>
+<p>下面解释一下“冒险”是冒了什么风险，前面提到过，<code>新生代使用复制收集算法</code>，但为了内存利用率，只使用其中一个Survivor空间来作为轮换备份，因此当出现大量对象在Minor GC后仍然存活的情况（最极端的情况就是内存回收后新生代中所有对象都存活），就需要老年代进行分配担保，把Survivor无法容纳的对象直接进入老年代。与生活中的贷款担保类似，老年代要进行这样的担保，前提是老年代本身还有容纳这些对象的剩余空间，一共有多少对象会活下来在实际完成内存回收之前是无法明确知道的，所以只好取之前每一次回收晋升到老年代对象容量的平均大小值作为经验值，与老年代的剩余空间进行比较，决定是否进行Full GC来让老年代腾出更多空间。</p>
+<p>取平均值进行比较其实仍然是一种动态概率的手段，也就是说，如果某次Minor GC存活后的对象突增，远远高于平均值的话，依然会导致担保失败（Handle Promotion Failure）。如果出现了HandlePromotionFailure失败，那就只好在失败后重新发起一次Full GC。虽然担保失败时绕的圈子是最大的，但大部分情况下都还是会将HandlePromotionFailure 开关打开，避免Full GC过于频繁.</p>
+<h4 id="resource">Resource</h4>
+<ul>
+<li><a href="https://www.jianshu.com/p/fa3569127416"target="_blank" rel="external nofollow noopener noreferrer">https://www.jianshu.com/p/fa3569127416<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ul>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-28&#32;22:47:27>更新于 2023-09-28&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/javajvm_%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%9B%9E%E6%94%B6/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80%5cjava%5cjvm%5cJavaJVM_%e5%86%85%e5%ad%98%e5%88%86%e9%85%8d&amp;%e5%9b%9e%e6%94%b6.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/javajvm_%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%9B%9E%E6%94%B6/" data-title="JavaJVM_内存分配&amp;回收" data-hashtags="Java"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/javajvm_%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%9B%9E%E6%94%B6/" data-hashtag="Java"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/javajvm_%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%9B%9E%E6%94%B6/" data-title="JavaJVM_内存分配&amp;回收" data-image="https://cdn.stocksnap.io/img-thumbs/280h/HYIOWCIBOY.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/java/">Java</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/javajvm_%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" class="prev" rel="prev" title="JavaJVM_内存模型"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>JavaJVM_内存模型</a>
+      <a href="liudongdong1.github.io/javajvm_%E7%B1%BB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" class="next" rel="next" title="JavaJVM_类文件结构">JavaJVM_类文件结构<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>
