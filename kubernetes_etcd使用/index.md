@@ -157,5 +157,5 @@ etcd -name machine3 -discovery http://192.168.1.1:2379/v2/keys/discovery/6c007a1
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kubernetes_etcd%E4%BD%BF%E7%94%A8/  
+> URL: https://liudongdong1.github.io/kubernetes_etcd%E4%BD%BF%E7%94%A8/  
 

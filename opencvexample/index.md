@@ -348,5 +348,5 @@ https://github.com/misbah4064/car_detector_haarcascades
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/opencvexample/  
+> URL: https://liudongdong1.github.io/opencvexample/  
 

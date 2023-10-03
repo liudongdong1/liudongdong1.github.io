@@ -21,5 +21,5 @@ if img.mode != 'L':
 ---
 
 > 作者: [LiuDongdong](https://liudongdong1.github.io/)  
-> URL: liudongdong1.github.io/errorrecord/  
+> URL: https://liudongdong1.github.io/errorrecord/  
 

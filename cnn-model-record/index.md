@@ -327,5 +327,5 @@ more details and other variants.
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/cnn-model-record/  
+> URL: https://liudongdong1.github.io/cnn-model-record/  
 

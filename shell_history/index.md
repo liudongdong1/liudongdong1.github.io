@@ -70,5 +70,5 @@ $ source ~/.bash_profile
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/shell_history/  
+> URL: https://liudongdong1.github.io/shell_history/  
 

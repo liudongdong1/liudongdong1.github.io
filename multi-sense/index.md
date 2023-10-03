@@ -306,5 +306,5 @@ the stream of data is available in M modalities， and there are M classifier ne
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/multi-sense/  
+> URL: https://liudongdong1.github.io/multi-sense/  
 

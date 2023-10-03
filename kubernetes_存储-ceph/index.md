@@ -1094,5 +1094,5 @@ kubectl apply -f nginx-pod.yaml
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8-ceph/  
+> URL: https://liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8-ceph/  
 

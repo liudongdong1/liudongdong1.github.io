@@ -82,5 +82,5 @@ GIS数据以数字数据的形式表现了现实世界客观对象(公路、土�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/gisintroduce/  
+> URL: https://liudongdong1.github.io/gisintroduce/  
 

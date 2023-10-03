@@ -264,5 +264,5 @@ awk '{for(i=1;i< =NF;i++)a[i]=a[i]$i" "}END{for(v in a)print a[v]}' file
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/shell_awk/  
+> URL: https://liudongdong1.github.io/shell_awk/  
 

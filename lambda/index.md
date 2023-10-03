@@ -55,5 +55,5 @@ def extract_features(imgs, feature_fns, verbose=False):
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/lambda/  
+> URL: https://liudongdong1.github.io/lambda/  
 

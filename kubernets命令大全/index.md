@@ -185,5 +185,5 @@ $ kubectl taint nodes foo dedicated=special-user:NoSchedule
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kubernets%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/  
+> URL: https://liudongdong1.github.io/kubernets%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/  
 

@@ -122,5 +122,5 @@ pro.load(FileLoad.class.getResourceAsStream("/assets/test.properties")); //或�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android_%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6%E5%8F%8A%E4%BD%BF%E7%94%A8/  
+> URL: https://liudongdong1.github.io/android_%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6%E5%8F%8A%E4%BD%BF%E7%94%A8/  
 

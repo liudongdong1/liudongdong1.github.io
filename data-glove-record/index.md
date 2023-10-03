@@ -345,5 +345,5 @@ Soli可以扫描和计算出深度图，为何不拿来做成3D扫描与成像�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/data-glove-record/  
+> URL: https://liudongdong1.github.io/data-glove-record/  
 

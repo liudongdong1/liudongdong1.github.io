@@ -121,5 +121,5 @@ Java 中的非虚方法除了使用 invokestatic、invokespecial 调用的方法
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%97%E8%8A%82%E7%A0%81%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E/  
+> URL: https://liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%97%E8%8A%82%E7%A0%81%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E/  
 

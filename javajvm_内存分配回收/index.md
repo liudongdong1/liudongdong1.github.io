@@ -223,5 +223,5 @@ public static void testTenuringThreshold2() {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/javajvm_%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%9B%9E%E6%94%B6/  
+> URL: https://liudongdong1.github.io/javajvm_%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%9B%9E%E6%94%B6/  
 

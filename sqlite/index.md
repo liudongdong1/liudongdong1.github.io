@@ -61,5 +61,5 @@ update student set age=18 where id=1;
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/sqlite/  
+> URL: https://liudongdong1.github.io/sqlite/  
 

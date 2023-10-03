@@ -121,5 +121,5 @@ python -m deeplabcut
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/dlc_usage/  
+> URL: https://liudongdong1.github.io/dlc_usage/  
 

@@ -140,5 +140,5 @@ public final class MemoryCacheUtils {
 ---
 
 > 作者: liudongdong  
-> URL: liudongdong1.github.io/android_universal_image_loader/  
+> URL: https://liudongdong1.github.io/android_universal_image_loader/  
 

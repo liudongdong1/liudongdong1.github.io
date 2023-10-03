@@ -454,5 +454,5 @@ startActivityForResult(intent, 0);
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android_activity/  
+> URL: https://liudongdong1.github.io/android_activity/  
 

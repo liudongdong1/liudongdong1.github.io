@@ -641,5 +641,5 @@ private static int approximateMedoidIndex(double[][] sequences, double[][] mat) 
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/dtw-sequence-analysis/  
+> URL: https://liudongdong1.github.io/dtw-sequence-analysis/  
 

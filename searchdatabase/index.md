@@ -60,5 +60,5 @@ for Information Retrieval Research
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/searchdatabase/  
+> URL: https://liudongdong1.github.io/searchdatabase/  
 

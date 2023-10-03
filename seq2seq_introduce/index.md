@@ -51,5 +51,5 @@ Second, an attention decoder does an extra step before producing its output. In 
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/seq2seq_introduce/  
+> URL: https://liudongdong1.github.io/seq2seq_introduce/  
 

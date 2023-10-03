@@ -469,5 +469,5 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android_event/  
+> URL: https://liudongdong1.github.io/android_event/  
 

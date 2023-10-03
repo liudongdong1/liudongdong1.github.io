@@ -185,5 +185,5 @@ public class LiveWallpaper extends WallpaperService
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android_%E6%89%8B%E6%9C%BA%E6%A1%8C%E9%9D%A2%E5%BC%80%E5%8F%91/  
+> URL: https://liudongdong1.github.io/android_%E6%89%8B%E6%9C%BA%E6%A1%8C%E9%9D%A2%E5%BC%80%E5%8F%91/  
 

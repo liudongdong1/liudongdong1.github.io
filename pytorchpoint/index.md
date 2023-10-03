@@ -333,5 +333,5 @@ def compute_mean_and_std(dataset):
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/pytorchpoint/  
+> URL: https://liudongdong1.github.io/pytorchpoint/  
 

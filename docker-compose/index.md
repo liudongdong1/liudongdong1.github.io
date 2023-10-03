@@ -33,5 +33,5 @@ docker-compose run web bash  #在一个服务上执行一个命令
 ---
 
 > 作者: [LiuDongdong](https://liudongdong1.github.io/)  
-> URL: liudongdong1.github.io/docker-compose/  
+> URL: https://liudongdong1.github.io/docker-compose/  
 

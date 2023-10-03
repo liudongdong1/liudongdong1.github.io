@@ -21,5 +21,5 @@
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/reducedimension/  
+> URL: https://liudongdong1.github.io/reducedimension/  
 

@@ -6,5 +6,5 @@
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/knowledgegraph/  
+> URL: https://liudongdong1.github.io/knowledgegraph/  
 

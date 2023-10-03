@@ -600,5 +600,5 @@ python allennlp-server/server_simple.py \
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/allennlpintroduce/  
+> URL: https://liudongdong1.github.io/allennlpintroduce/  
 

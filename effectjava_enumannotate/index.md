@@ -349,5 +349,5 @@ public interface Collection<E> extends Iterable<E> {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/effectjava_enumannotate/  
+> URL: https://liudongdong1.github.io/effectjava_enumannotate/  
 

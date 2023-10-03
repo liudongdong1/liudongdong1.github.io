@@ -349,5 +349,5 @@ public class CustomHealthIndicator extends AbstractHealthIndicator {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/springactuator/  
+> URL: https://liudongdong1.github.io/springactuator/  
 

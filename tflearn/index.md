@@ -235,5 +235,5 @@ tensorboard --logdir='C:/Users/liudongdong/OneDrive - tju.edu.cn/桌面/Alexnet/
 ---
 
 > 作者: [LiuDongdong](https://liudongdong1.github.io/)  
-> URL: liudongdong1.github.io/tflearn/  
+> URL: https://liudongdong1.github.io/tflearn/  
 

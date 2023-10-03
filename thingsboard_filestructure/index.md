@@ -12,5 +12,5 @@
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/thingsboard_filestructure/  
+> URL: https://liudongdong1.github.io/thingsboard_filestructure/  
 

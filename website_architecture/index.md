@@ -40,5 +40,5 @@
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/website_architecture/  
+> URL: https://liudongdong1.github.io/website_architecture/  
 

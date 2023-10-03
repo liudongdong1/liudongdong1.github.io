@@ -196,5 +196,5 @@ public class ClientInitializer extends ChannelInitializer<SocketChannel> {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/telnet-helloworld/  
+> URL: https://liudongdong1.github.io/telnet-helloworld/  
 

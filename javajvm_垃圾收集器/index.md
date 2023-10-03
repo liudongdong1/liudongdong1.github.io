@@ -125,5 +125,5 @@ Serial收集器是最基本、发展历史最悠久的收集器，曾经（在JD
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/javajvm_%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/  
+> URL: https://liudongdong1.github.io/javajvm_%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/  
 

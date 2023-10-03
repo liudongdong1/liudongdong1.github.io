@@ -198,5 +198,5 @@ pdflatex -v //查看 pdfTeX 的版本信息
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/02-latex-%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/  
+> URL: https://liudongdong1.github.io/02-latex-%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/  
 

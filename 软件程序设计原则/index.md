@@ -338,5 +338,5 @@ Java中实现高内聚低耦合的常用方式：
 ---
 
 > 作者: blinkfox  
-> URL: liudongdong1.github.io/%E8%BD%AF%E4%BB%B6%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/  
+> URL: https://liudongdong1.github.io/%E8%BD%AF%E4%BB%B6%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/  
 

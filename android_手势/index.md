@@ -197,5 +197,5 @@ public class MainActivity extends Activity
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android_%E6%89%8B%E5%8A%BF/  
+> URL: https://liudongdong1.github.io/android_%E6%89%8B%E5%8A%BF/  
 

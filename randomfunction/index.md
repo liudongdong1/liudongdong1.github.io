@@ -134,5 +134,5 @@ for (int i = 0; i < 10; i++) {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/randomfunction/  
+> URL: https://liudongdong1.github.io/randomfunction/  
 

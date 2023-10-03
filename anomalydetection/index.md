@@ -424,5 +424,5 @@ LOF容易将边界处的点判断为异常，INFLO在计算密度时，利用k*�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/anomalydetection/  
+> URL: https://liudongdong1.github.io/anomalydetection/  
 

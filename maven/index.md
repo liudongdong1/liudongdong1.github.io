@@ -663,5 +663,5 @@ converted（仓库管理员从 Maven 1 POM转换过来），partner（直接从�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/maven/  
+> URL: https://liudongdong1.github.io/maven/  
 

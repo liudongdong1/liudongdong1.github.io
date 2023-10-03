@@ -129,5 +129,5 @@ public boolean add(E e) {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/jdk_collectionthreadsafe/  
+> URL: https://liudongdong1.github.io/jdk_collectionthreadsafe/  
 

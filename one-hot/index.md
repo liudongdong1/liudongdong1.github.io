@@ -160,5 +160,5 @@ print(OneHotEncoder().fit_transform(test_data.reshape(-1, 1)).toarray())    # �
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/one-hot/  
+> URL: https://liudongdong1.github.io/one-hot/  
 

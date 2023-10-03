@@ -44,5 +44,5 @@ migrator.migrate_data(tables=["customers", "employees", "offices"])
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/databasetool/  
+> URL: https://liudongdong1.github.io/databasetool/  
 

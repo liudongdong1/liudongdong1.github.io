@@ -227,5 +227,5 @@ docker commit -a '提交人' -m '描述' <容器名/ID> <镜像名称>
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/nvidia-docker/  
+> URL: https://liudongdong1.github.io/nvidia-docker/  
 

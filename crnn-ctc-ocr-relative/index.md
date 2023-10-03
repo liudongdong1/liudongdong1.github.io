@@ -42,5 +42,5 @@ From: https://zhuanlan.zhihu.com/p/43534801
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/crnn-ctc-ocr-relative/  
+> URL: https://liudongdong1.github.io/crnn-ctc-ocr-relative/  
 

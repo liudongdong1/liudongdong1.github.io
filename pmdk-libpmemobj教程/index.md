@@ -5,5 +5,5 @@
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/pmdk-libpmemobj%E6%95%99%E7%A8%8B/  
+> URL: https://liudongdong1.github.io/pmdk-libpmemobj%E6%95%99%E7%A8%8B/  
 

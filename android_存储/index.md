@@ -483,5 +483,5 @@ adb -s 设备号 shell
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android_%E5%AD%98%E5%82%A8/  
+> URL: https://liudongdong1.github.io/android_%E5%AD%98%E5%82%A8/  
 

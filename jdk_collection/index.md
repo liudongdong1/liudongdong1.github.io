@@ -1093,5 +1093,5 @@ class FIFOCache<K, V> extends LinkedHashMap<K, V>{
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/jdk_collection/  
+> URL: https://liudongdong1.github.io/jdk_collection/  
 

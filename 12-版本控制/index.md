@@ -72,5 +72,5 @@ API 的新 major 版本**不能**依赖于以前**同样API**的主要版本。 
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/12-%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/  
+> URL: https://liudongdong1.github.io/12-%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/  
 

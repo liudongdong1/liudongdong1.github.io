@@ -68,5 +68,5 @@ pred_onehot = model_onehot.predict(train_image[:1,:,:])  # 只对测试集的第
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/modeltype/  
+> URL: https://liudongdong1.github.io/modeltype/  
 

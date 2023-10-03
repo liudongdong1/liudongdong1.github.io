@@ -264,5 +264,5 @@ insert into Ingredient (id, name, type) values ('SRCR', 'Sour Cream', 'SAUCE');
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/springjdbc/  
+> URL: https://liudongdong1.github.io/springjdbc/  
 

@@ -124,5 +124,5 @@ CSI 代表[容器存储接口](https://github.com/container-storage-interface/sp
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kubernetes-%E5%BC%80%E6%94%BE%E6%8E%A5%E5%8F%A3/  
+> URL: https://liudongdong1.github.io/kubernetes-%E5%BC%80%E6%94%BE%E6%8E%A5%E5%8F%A3/  
 

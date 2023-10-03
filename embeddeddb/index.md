@@ -39,5 +39,5 @@
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/embeddeddb/  
+> URL: https://liudongdong1.github.io/embeddeddb/  
 

@@ -719,5 +719,5 @@ KTable<Windowed<String>, Long> sessionizedAggregatedStream = groupedStream
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kafka_stream/  
+> URL: https://liudongdong1.github.io/kafka_stream/  
 

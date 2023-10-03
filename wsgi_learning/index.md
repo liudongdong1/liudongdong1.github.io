@@ -36,5 +36,5 @@ uwsgi --connect-and-read uwsgi/uwsgi.status # 读取实时状态
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/wsgi_learning/  
+> URL: https://liudongdong1.github.io/wsgi_learning/  
 

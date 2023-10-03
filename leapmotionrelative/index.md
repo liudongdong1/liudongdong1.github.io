@@ -178,5 +178,5 @@ Shao, Lin. "Hand movement and gesture recognition using Leap Motion Controller."
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/leapmotionrelative/  
+> URL: https://liudongdong1.github.io/leapmotionrelative/  
 

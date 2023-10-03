@@ -126,5 +126,5 @@ public class RoleA extends Role
 ---
 
 > 作者: liudongdong  
-> URL: liudongdong1.github.io/strategymode/  
+> URL: https://liudongdong1.github.io/strategymode/  
 

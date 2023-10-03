@@ -79,5 +79,5 @@ private static class SerializationProxy<E extends Enum<E>>
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/effectivejava_serialise/  
+> URL: https://liudongdong1.github.io/effectivejava_serialise/  
 

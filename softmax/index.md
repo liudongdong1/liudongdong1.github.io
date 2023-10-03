@@ -117,5 +117,5 @@ def softmax_loss_vectorized(W, X, y, reg):
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/softmax/  
+> URL: https://liudongdong1.github.io/softmax/  
 

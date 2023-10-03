@@ -301,5 +301,5 @@ du $backup_path/*$date* -sh | awk '{print "文件:" $2 ",大小:" $1}'
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/shell_scriptrecord/  
+> URL: https://liudongdong1.github.io/shell_scriptrecord/  
 

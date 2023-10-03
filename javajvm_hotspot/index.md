@@ -22,5 +22,5 @@
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/javajvm_hotspot/  
+> URL: https://liudongdong1.github.io/javajvm_hotspot/  
 

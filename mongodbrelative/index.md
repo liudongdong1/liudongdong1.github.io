@@ -66,5 +66,5 @@ mongod --config "D:\software\mongodb\mongod.cfg" --bind_ip 0.0.0.0 --install
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/mongodbrelative/  
+> URL: https://liudongdong1.github.io/mongodbrelative/  
 

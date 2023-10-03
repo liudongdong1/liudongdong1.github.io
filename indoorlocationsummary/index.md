@@ -194,5 +194,5 @@ Indoor Atlas是由芬兰奥卢大学（University of Oulu）的一个研究团�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/indoorlocationsummary/  
+> URL: https://liudongdong1.github.io/indoorlocationsummary/  
 

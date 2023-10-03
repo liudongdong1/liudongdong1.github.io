@@ -427,5 +427,5 @@ local_repository(
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/bazel/  
+> URL: https://liudongdong1.github.io/bazel/  
 

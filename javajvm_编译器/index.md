@@ -44,5 +44,5 @@
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/javajvm_%E7%BC%96%E8%AF%91%E5%99%A8/  
+> URL: https://liudongdong1.github.io/javajvm_%E7%BC%96%E8%AF%91%E5%99%A8/  
 

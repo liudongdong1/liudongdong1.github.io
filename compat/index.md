@@ -18,5 +18,5 @@ Github：https://github.com/PaddlePaddle/PaddleOCR
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/compat/  
+> URL: https://liudongdong1.github.io/compat/  
 

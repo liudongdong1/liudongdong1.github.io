@@ -136,5 +136,5 @@ Azure Kinect DK 开发环境由以下多个 SDK 组成：
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kinectrelativeproject/  
+> URL: https://liudongdong1.github.io/kinectrelativeproject/  
 

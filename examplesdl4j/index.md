@@ -90,5 +90,5 @@ model.fit(input, output);
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/examplesdl4j/  
+> URL: https://liudongdong1.github.io/examplesdl4j/  
 

@@ -52,5 +52,5 @@ pygame.quit()
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/pygamerecord/  
+> URL: https://liudongdong1.github.io/pygamerecord/  
 

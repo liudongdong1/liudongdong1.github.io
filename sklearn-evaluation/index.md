@@ -362,5 +362,5 @@ plt.title('ROC curve')
 ---
 
 > 作者: [LiuDongdong](https://liudongdong1.github.io/)  
-> URL: liudongdong1.github.io/sklearn-evaluation/  
+> URL: https://liudongdong1.github.io/sklearn-evaluation/  
 

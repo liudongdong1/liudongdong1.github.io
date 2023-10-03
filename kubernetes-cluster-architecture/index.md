@@ -139,5 +139,5 @@ Kubernetes主要由以下几个核心组件组成：
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kubernetes-cluster-architecture/  
+> URL: https://liudongdong1.github.io/kubernetes-cluster-architecture/  
 

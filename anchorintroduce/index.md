@@ -31,5 +31,5 @@ anchor box其实就是从训练集的所有ground truth box中统计(使用k-mea
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/anchorintroduce/  
+> URL: https://liudongdong1.github.io/anchorintroduce/  
 

@@ -406,5 +406,5 @@ sudo ifconfig eth0 up
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/cudakerneldowload/  
+> URL: https://liudongdong1.github.io/cudakerneldowload/  
 

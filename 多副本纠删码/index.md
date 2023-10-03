@@ -104,5 +104,5 @@ N+M:1（折叠)：将N个数据块和M个校验块随机打散存放于所有节
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/%E5%A4%9A%E5%89%AF%E6%9C%AC%E7%BA%A0%E5%88%A0%E7%A0%81/  
+> URL: https://liudongdong1.github.io/%E5%A4%9A%E5%89%AF%E6%9C%AC%E7%BA%A0%E5%88%A0%E7%A0%81/  
 

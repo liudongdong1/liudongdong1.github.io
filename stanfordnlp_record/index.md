@@ -755,5 +755,5 @@ labeller.release()  # 释放模型
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/stanfordnlp_record/  
+> URL: https://liudongdong1.github.io/stanfordnlp_record/  
 

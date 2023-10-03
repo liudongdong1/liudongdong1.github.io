@@ -192,5 +192,5 @@ public class FinalizeEscapeGC {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/javajvm_gc/  
+> URL: https://liudongdong1.github.io/javajvm_gc/  
 

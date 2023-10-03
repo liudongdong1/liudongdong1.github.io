@@ -69,5 +69,5 @@ mnasnet = models.mnasnet1_0(pretrained=True)
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/torchvision_models/  
+> URL: https://liudongdong1.github.io/torchvision_models/  
 

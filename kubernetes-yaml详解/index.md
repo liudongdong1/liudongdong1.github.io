@@ -216,5 +216,5 @@ spec:
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/  
+> URL: https://liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/  
 

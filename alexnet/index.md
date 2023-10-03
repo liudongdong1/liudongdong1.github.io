@@ -256,5 +256,5 @@ print(scores)
 ---
 
 > 作者: [LiuDongdong](https://liudongdong1.github.io/)  
-> URL: liudongdong1.github.io/alexnet/  
+> URL: https://liudongdong1.github.io/alexnet/  
 

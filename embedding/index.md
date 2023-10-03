@@ -42,5 +42,5 @@ tensor([[[-0.0251, -1.6902,  0.7172],
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/embedding/  
+> URL: https://liudongdong1.github.io/embedding/  
 

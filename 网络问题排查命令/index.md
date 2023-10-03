@@ -416,5 +416,5 @@ ldd@ldd:~/v2ray$ sudo /etc/init.d/networking restart
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E5%91%BD%E4%BB%A4/  
+> URL: https://liudongdong1.github.io/%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E5%91%BD%E4%BB%A4/  
 

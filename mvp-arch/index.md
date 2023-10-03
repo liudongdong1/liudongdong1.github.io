@@ -119,5 +119,5 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/mvp-arch/  
+> URL: https://liudongdong1.github.io/mvp-arch/  
 

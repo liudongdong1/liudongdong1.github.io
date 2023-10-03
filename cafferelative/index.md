@@ -94,5 +94,5 @@ p = workspace.Predictor(init_net.SerializeToString(), predict_net.SerializeToStr
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/cafferelative/  
+> URL: https://liudongdong1.github.io/cafferelative/  
 

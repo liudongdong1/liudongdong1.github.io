@@ -21,5 +21,5 @@ todo？ 结合代码理解这个第三方库设计思想
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/picture_glide/  
+> URL: https://liudongdong1.github.io/picture_glide/  
 

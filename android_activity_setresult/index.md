@@ -124,5 +124,5 @@ public class OtherActivity extends Activity {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android_activity_setresult/  
+> URL: https://liudongdong1.github.io/android_activity_setresult/  
 

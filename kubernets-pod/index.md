@@ -227,5 +227,5 @@ define one or multiple `topologySpreadConstraint` to` instruct the kube-schedule
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kubernets-pod/  
+> URL: https://liudongdong1.github.io/kubernets-pod/  
 

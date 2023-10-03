@@ -114,5 +114,5 @@ $ kubectl rollout undo deployments/kubernetes-bootcamp  # roll back to the last 
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/minikube-tutorial/  
+> URL: https://liudongdong1.github.io/minikube-tutorial/  
 

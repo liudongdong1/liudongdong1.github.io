@@ -443,5 +443,5 @@ http://{Your fate-board ip}:{your fate-board port}/index.html#/history
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/federated-learning-introduce/  
+> URL: https://liudongdong1.github.io/federated-learning-introduce/  
 

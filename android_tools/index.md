@@ -383,5 +383,5 @@ Google提供的CameraView方便简化使用Camera实现拍照录像功能
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android_tools/  
+> URL: https://liudongdong1.github.io/android_tools/  
 

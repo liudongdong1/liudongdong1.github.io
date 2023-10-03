@@ -620,5 +620,5 @@ Observable.concat(memory, disk, network)
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android_rxandroid/  
+> URL: https://liudongdong1.github.io/android_rxandroid/  
 

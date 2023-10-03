@@ -83,5 +83,5 @@ curl  -X POST "http://localhost:8000/api/v1/recognition/recognize?plugins=age,ge
 ---
 
 > 作者: liudongdong  
-> URL: liudongdong1.github.io/compreface/  
+> URL: https://liudongdong1.github.io/compreface/  
 

@@ -33,5 +33,5 @@
 ---
 
 > 作者: blinkfox  
-> URL: liudongdong1.github.io/vue-%E6%96%87%E6%A1%A3%E9%A3%8E%E6%A0%BC%E7%9A%84-typora-%E4%B8%BB%E9%A2%98/  
+> URL: https://liudongdong1.github.io/vue-%E6%96%87%E6%A1%A3%E9%A3%8E%E6%A0%BC%E7%9A%84-typora-%E4%B8%BB%E9%A2%98/  
 

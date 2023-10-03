@@ -37,5 +37,5 @@ EIT主机的主要有`激励模块和测量模块`。其常用的`阻抗测量`�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/eit/  
+> URL: https://liudongdong1.github.io/eit/  
 

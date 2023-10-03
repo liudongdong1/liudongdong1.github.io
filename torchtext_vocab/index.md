@@ -299,5 +299,5 @@ bleu_score(candidate_corpus, references_corpus)
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/torchtext_vocab/  
+> URL: https://liudongdong1.github.io/torchtext_vocab/  
 

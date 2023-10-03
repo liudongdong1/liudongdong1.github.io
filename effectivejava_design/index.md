@@ -96,5 +96,5 @@ LinkedHashSet<Son> sonSet = new LinkedHashSet<>();
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/effectivejava_design/  
+> URL: https://liudongdong1.github.io/effectivejava_design/  
 

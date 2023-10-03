@@ -70,5 +70,5 @@ Service的onDestory方法不会立刻执行,因为有一个与Service绑定的Ac
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/step-counter/  
+> URL: https://liudongdong1.github.io/step-counter/  
 

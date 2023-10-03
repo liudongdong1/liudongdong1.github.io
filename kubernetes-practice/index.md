@@ -302,5 +302,5 @@ echo $pods  #list all the pods that belong to the ReplicationController in a mac
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kubernetes-practice/  
+> URL: https://liudongdong1.github.io/kubernetes-practice/  
 

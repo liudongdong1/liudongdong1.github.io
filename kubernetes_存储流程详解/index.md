@@ -182,5 +182,5 @@ unmountDetachDevices：确保需要 unmount 的 volumes 被 unmount。遍历一�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3/  
+> URL: https://liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3/  
 

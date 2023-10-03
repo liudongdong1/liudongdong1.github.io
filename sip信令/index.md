@@ -57,5 +57,5 @@ SIP一般消息 = 起始行
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/sip%E4%BF%A1%E4%BB%A4/  
+> URL: https://liudongdong1.github.io/sip%E4%BF%A1%E4%BB%A4/  
 

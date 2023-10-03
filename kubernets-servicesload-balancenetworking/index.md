@@ -355,5 +355,5 @@ $ kubectl exec my-nginx-3800858182-jr4a2 -- printenv | grep SERVICE
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kubernets-servicesload-balancenetworking/  
+> URL: https://liudongdong1.github.io/kubernets-servicesload-balancenetworking/  
 

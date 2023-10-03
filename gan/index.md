@@ -72,5 +72,5 @@ Learning From:
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/gan/  
+> URL: https://liudongdong1.github.io/gan/  
 

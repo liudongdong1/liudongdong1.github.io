@@ -43,5 +43,5 @@
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/barcode/  
+> URL: https://liudongdong1.github.io/barcode/  
 

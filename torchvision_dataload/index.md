@@ -306,5 +306,5 @@ for i, (images, labels) in enumerate(train_loader):
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/torchvision_dataload/  
+> URL: https://liudongdong1.github.io/torchvision_dataload/  
 

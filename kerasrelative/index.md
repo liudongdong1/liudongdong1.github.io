@@ -203,5 +203,5 @@ assert conv.get_input_shape_at(1) == (None, 64, 64, 3)
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kerasrelative/  
+> URL: https://liudongdong1.github.io/kerasrelative/  
 

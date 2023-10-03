@@ -274,5 +274,5 @@ Leader选出后，就开始接收客户端的请求。`Leader把请求作为日�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/distributionalgorithm/  
+> URL: https://liudongdong1.github.io/distributionalgorithm/  
 

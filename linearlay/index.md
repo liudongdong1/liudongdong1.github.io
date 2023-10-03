@@ -63,5 +63,5 @@ torch.Size([140, 50])
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/linearlay/  
+> URL: https://liudongdong1.github.io/linearlay/  
 

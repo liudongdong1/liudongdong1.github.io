@@ -273,5 +273,5 @@ SAS 标准将 SAS 架构分为 6 层，从低到高依次是物理层、phy 层�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/%E5%AD%98%E5%82%A8%E5%8D%8F%E8%AE%AE/  
+> URL: https://liudongdong1.github.io/%E5%AD%98%E5%82%A8%E5%8D%8F%E8%AE%AE/  
 

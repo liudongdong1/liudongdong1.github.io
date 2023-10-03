@@ -258,5 +258,5 @@ public class MainActivity extends AppCompatActivity implements Observer {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/jdk-observer-observable/  
+> URL: https://liudongdong1.github.io/jdk-observer-observable/  
 

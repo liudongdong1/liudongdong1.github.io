@@ -55,5 +55,5 @@ torchvision.utils.save_image(tensor: Union[torch.Tensor, List[torch.Tensor]], fp
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/torchvision_transforms/  
+> URL: https://liudongdong1.github.io/torchvision_transforms/  
 

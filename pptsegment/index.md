@@ -5,5 +5,5 @@
 ---
 
 > 作者: [LiuDongdong](https://liudongdong1.github.io/)  
-> URL: liudongdong1.github.io/pptsegment/  
+> URL: https://liudongdong1.github.io/pptsegment/  
 

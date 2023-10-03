@@ -340,5 +340,5 @@ getRemoteDevice()获取远程设备，这里指的是获取bluetoothSocket指定
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/bluetooth-workmode-introduce/  
+> URL: https://liudongdong1.github.io/bluetooth-workmode-introduce/  
 

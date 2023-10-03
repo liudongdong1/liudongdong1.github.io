@@ -444,5 +444,5 @@ JMM 不保证未同步程序的执行结果与该程序在顺序一致性模型�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/javajvm_%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/  
+> URL: https://liudongdong1.github.io/javajvm_%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/  
 

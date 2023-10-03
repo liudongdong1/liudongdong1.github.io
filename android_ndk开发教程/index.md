@@ -265,5 +265,5 @@ target_link_libraries(demo
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android_ndk%E5%BC%80%E5%8F%91%E6%95%99%E7%A8%8B/  
+> URL: https://liudongdong1.github.io/android_ndk%E5%BC%80%E5%8F%91%E6%95%99%E7%A8%8B/  
 

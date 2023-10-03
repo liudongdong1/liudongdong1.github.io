@@ -596,5 +596,5 @@ torch.cuda.empty_cache()
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/gcndemo/  
+> URL: https://liudongdong1.github.io/gcndemo/  
 

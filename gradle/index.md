@@ -412,5 +412,5 @@ distributionUrl=https\://services.gradle.org/distributions/gradle-4.0-milestone-
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/gradle/  
+> URL: https://liudongdong1.github.io/gradle/  
 

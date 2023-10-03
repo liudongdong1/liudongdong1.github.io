@@ -25,5 +25,5 @@ yum deplist 查看软件被哪些库依赖
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/rpm/  
+> URL: https://liudongdong1.github.io/rpm/  
 

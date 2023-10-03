@@ -31,5 +31,5 @@ public class HttpHelloWorldServerInitializer extends ChannelInitializer<SocketCh
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/http%E6%9C%8D%E5%8A%A1/  
+> URL: https://liudongdong1.github.io/http%E6%9C%8D%E5%8A%A1/  
 

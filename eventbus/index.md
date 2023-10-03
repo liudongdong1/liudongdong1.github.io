@@ -248,5 +248,5 @@ public class PublisherDialogFragment extends DialogFragment {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/eventbus/  
+> URL: https://liudongdong1.github.io/eventbus/  
 

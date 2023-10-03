@@ -844,5 +844,5 @@ void getSkeletonImage(cv::Mat & skeletonImg, cv::Mat & colorImg)
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/kinect2relative/  
+> URL: https://liudongdong1.github.io/kinect2relative/  
 

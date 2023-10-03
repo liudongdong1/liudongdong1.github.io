@@ -50,5 +50,5 @@ code：https://github.com/devitrylouis/imaging_time_series
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/dimstransfor/  
+> URL: https://liudongdong1.github.io/dimstransfor/  
 

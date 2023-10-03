@@ -311,5 +311,5 @@ console.log(obj.doSum(10));
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/typescript/  
+> URL: https://liudongdong1.github.io/typescript/  
 

@@ -570,5 +570,5 @@ private Bitmap getBitmapFromUri(Uri uri) throws IOException {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android_contentprovider/  
+> URL: https://liudongdong1.github.io/android_contentprovider/  
 

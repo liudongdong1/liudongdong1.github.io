@@ -785,5 +785,5 @@ GRANT OPTION    -- 允许授予权限
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/sqlcommand/  
+> URL: https://liudongdong1.github.io/sqlcommand/  
 

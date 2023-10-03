@@ -201,5 +201,5 @@ sudo apt-get install gcc-5 g++-5
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/makebuildrelative/  
+> URL: https://liudongdong1.github.io/makebuildrelative/  
 

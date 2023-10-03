@@ -276,5 +276,5 @@ plt.hist(a, bins =  [0,20,40,60,80,100]) #  绘制数据分布条形图
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/mathbasic/  
+> URL: https://liudongdong1.github.io/mathbasic/  
 

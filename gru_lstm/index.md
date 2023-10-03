@@ -248,5 +248,5 @@ Ft表示遗忘门限，It表示输入门限， ̃Ct表示前一时刻cell状态�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/gru_lstm/  
+> URL: https://liudongdong1.github.io/gru_lstm/  
 

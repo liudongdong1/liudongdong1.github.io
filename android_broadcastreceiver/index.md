@@ -212,5 +212,5 @@ public class MyReceiver extends BroadcastReceiver
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android_broadcastreceiver/  
+> URL: https://liudongdong1.github.io/android_broadcastreceiver/  
 

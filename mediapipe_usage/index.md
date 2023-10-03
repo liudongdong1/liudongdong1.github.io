@@ -124,5 +124,5 @@ bazel-bin/mediapipe/examples/desktop/hand_tracking/hand_tracking_gpu \
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/mediapipe_usage/  
+> URL: https://liudongdong1.github.io/mediapipe_usage/  
 

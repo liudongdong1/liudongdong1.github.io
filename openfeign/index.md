@@ -41,5 +41,5 @@ public @interface EnableFeignClients {
 ---
 
 > 作者: liudongdong  
-> URL: liudongdong1.github.io/openfeign/  
+> URL: https://liudongdong1.github.io/openfeign/  
 

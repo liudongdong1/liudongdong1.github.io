@@ -95,5 +95,5 @@ ZeroDivisionError        除数为零
 ---
 
 > 作者: [LiuDongdong](https://liudongdong1.github.io/)  
-> URL: liudongdong1.github.io/trycatch/  
+> URL: https://liudongdong1.github.io/trycatch/  
 

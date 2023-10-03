@@ -345,5 +345,5 @@ GPIO.input(12)
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/raspberrypi4-installation/  
+> URL: https://liudongdong1.github.io/raspberrypi4-installation/  
 

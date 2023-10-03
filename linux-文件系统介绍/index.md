@@ -643,5 +643,5 @@ dentry由于会被动态创建，为了提升系统性能，设计了一个dentr
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/linux-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BB%8B%E7%BB%8D/  
+> URL: https://liudongdong1.github.io/linux-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BB%8B%E7%BB%8D/  
 

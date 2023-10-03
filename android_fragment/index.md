@@ -554,5 +554,5 @@ private static class ImageAdapter extends PagerAdapter {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android_fragment/  
+> URL: https://liudongdong1.github.io/android_fragment/  
 

@@ -38,5 +38,5 @@
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/z_waverelative/  
+> URL: https://liudongdong1.github.io/z_waverelative/  
 

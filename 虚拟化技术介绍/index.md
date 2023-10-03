@@ -125,5 +125,5 @@ KVM 是在硬件虚拟化支持下的**完全虚拟化技术**，所以它能支
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/  
+> URL: https://liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/  
 

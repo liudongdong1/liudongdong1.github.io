@@ -573,5 +573,5 @@ hg_return_t HG_Bulk_create(
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/rpc%E6%A1%86%E6%9E%B6_mercury/  
+> URL: https://liudongdong1.github.io/rpc%E6%A1%86%E6%9E%B6_mercury/  
 

@@ -394,5 +394,5 @@ pt-online-schema-change 它会首先建立一个与原表结构相同的新表�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/sqloptimize/  
+> URL: https://liudongdong1.github.io/sqloptimize/  
 

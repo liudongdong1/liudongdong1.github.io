@@ -316,5 +316,5 @@ wandb.log({"my_custom_id" : wandb.plot.line_series(
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/wandb_intro/  
+> URL: https://liudongdong1.github.io/wandb_intro/  
 

@@ -157,5 +157,5 @@ sudo apt-get install synaptic  #  全面高效地管理各种软件和依赖。
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/packageinstall/  
+> URL: https://liudongdong1.github.io/packageinstall/  
 

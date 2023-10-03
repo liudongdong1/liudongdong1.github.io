@@ -82,5 +82,5 @@ invcube = inversefunc(cube, y_values=3)
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/fitfunction/  
+> URL: https://liudongdong1.github.io/fitfunction/  
 

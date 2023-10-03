@@ -14,5 +14,5 @@
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/pytorch3d/  
+> URL: https://liudongdong1.github.io/pytorch3d/  
 

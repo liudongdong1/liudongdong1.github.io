@@ -253,5 +253,5 @@ python detect.py --save-txt --source ./自己数据集的文件目录 --weights 
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/yolo5_pytorch/  
+> URL: https://liudongdong1.github.io/yolo5_pytorch/  
 

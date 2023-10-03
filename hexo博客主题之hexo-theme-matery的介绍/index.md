@@ -476,5 +476,5 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
 ---
 
 > 作者: [LiuDongdong](https://liudongdong1.github.io/)  
-> URL: liudongdong1.github.io/hexo%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E4%B9%8Bhexo-theme-matery%E7%9A%84%E4%BB%8B%E7%BB%8D/  
+> URL: https://liudongdong1.github.io/hexo%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E4%B9%8Bhexo-theme-matery%E7%9A%84%E4%BB%8B%E7%BB%8D/  
 

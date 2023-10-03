@@ -75,5 +75,5 @@ public double calcTimeCost(CurveFitting curveFitting) throws Exception {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/commonmath/  
+> URL: https://liudongdong1.github.io/commonmath/  
 

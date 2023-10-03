@@ -1208,5 +1208,5 @@ AS 已帮你集成了一些注释模板，我们只需要直接使用即可，�
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/androidstandarddevelop/  
+> URL: https://liudongdong1.github.io/androidstandarddevelop/  
 

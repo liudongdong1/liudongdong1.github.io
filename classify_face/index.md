@@ -144,5 +144,5 @@ plt.show()
 ---
 
 > 作者: [LiuDongdong](https://liudongdong1.github.io/)  
-> URL: liudongdong1.github.io/classify_face/  
+> URL: https://liudongdong1.github.io/classify_face/  
 

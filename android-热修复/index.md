@@ -842,5 +842,5 @@ public static void monkeyPatchExistingResources(Context context,
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/android-%E7%83%AD%E4%BF%AE%E5%A4%8D/  
+> URL: https://liudongdong1.github.io/android-%E7%83%AD%E4%BF%AE%E5%A4%8D/  
 

@@ -123,5 +123,5 @@ public class LenovoComputerFactory extends ComputerFactory {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/factormode/  
+> URL: https://liudongdong1.github.io/factormode/  
 

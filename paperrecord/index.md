@@ -205,5 +205,5 @@ clothes classification, attribute prediction, clothing item retrieval.
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/paperrecord/  
+> URL: https://liudongdong1.github.io/paperrecord/  
 

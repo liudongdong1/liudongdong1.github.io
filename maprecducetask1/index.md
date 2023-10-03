@@ -381,5 +381,5 @@ public abstract class RecordWriter<K, V> {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/maprecducetask1/  
+> URL: https://liudongdong1.github.io/maprecducetask1/  
 

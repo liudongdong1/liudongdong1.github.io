@@ -310,5 +310,5 @@ if __name__ == "__main__":
 ---
 
 > 作者: [LiuDongdong](https://liudongdong1.github.io/)  
-> URL: liudongdong1.github.io/blinkdetection/  
+> URL: https://liudongdong1.github.io/blinkdetection/  
 

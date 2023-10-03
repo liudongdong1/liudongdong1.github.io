@@ -371,5 +371,5 @@ class sklearn.naive_bayes.BernoulliNB(alpha=1.0, binarize=0.0, fit_prior=True, c
 ---
 
 > 作者: [LiuDongdong](https://liudongdong1.github.io/)  
-> URL: liudongdong1.github.io/sklearn-record/  
+> URL: https://liudongdong1.github.io/sklearn-record/  
 

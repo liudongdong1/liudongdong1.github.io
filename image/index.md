@@ -245,5 +245,5 @@ def draw_boxes(image, boxes, overlay_text, labels, obj_thresh, quiet=True):
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/image/  
+> URL: https://liudongdong1.github.io/image/  
 

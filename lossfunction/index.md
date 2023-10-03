@@ -131,5 +131,5 @@ print('one-hot loss is {}'.format(loss))
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/lossfunction/  
+> URL: https://liudongdong1.github.io/lossfunction/  
 

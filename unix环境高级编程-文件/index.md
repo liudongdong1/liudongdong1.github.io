@@ -32,5 +32,5 @@
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B-%E6%96%87%E4%BB%B6/  
+> URL: https://liudongdong1.github.io/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B-%E6%96%87%E4%BB%B6/  
 

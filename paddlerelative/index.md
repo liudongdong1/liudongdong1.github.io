@@ -47,5 +47,5 @@ b.  车辆、行人、交通标示检测及计数等
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/paddlerelative/  
+> URL: https://liudongdong1.github.io/paddlerelative/  
 

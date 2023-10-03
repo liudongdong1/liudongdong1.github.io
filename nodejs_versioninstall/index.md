@@ -208,5 +208,5 @@ cnpm install vue-router@4
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/nodejs_versioninstall/  
+> URL: https://liudongdong1.github.io/nodejs_versioninstall/  
 

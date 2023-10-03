@@ -208,5 +208,5 @@ public class RecognizeTorch {
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/androidpytorch/  
+> URL: https://liudongdong1.github.io/androidpytorch/  
 

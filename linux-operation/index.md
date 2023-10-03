@@ -404,5 +404,5 @@ sudo apt-fast install libodbc1 unixodbc msodbcsql mssql-tools unixodbc-dev
 ---
 
 > 作者: liudongdong1  
-> URL: liudongdong1.github.io/linux-operation/  
+> URL: https://liudongdong1.github.io/linux-operation/  
 
