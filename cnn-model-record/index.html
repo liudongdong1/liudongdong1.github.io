@@ -1,733 +1,122 @@
-<!DOCTYPE html>
-<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-  <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <meta name="robots" content="noodp" />
-    <title>CNN Model Record - DAY By DAY</title><meta name="author" content="LiuDongdong">
-<meta name="author-link" content="https://liudongdong1.github.io/">
-<meta name="description" content="可视化计算网页：https://ezyang.github.io/convolution-visualizer/index.html 1. 一维卷" /><meta name="keywords" content='Model' /><meta itemprop="name" content="CNN Model Record">
-<meta itemprop="description" content="可视化计算网页：https://ezyang.github.io/convolution-visualizer/index.html 1. 一维卷"><meta itemprop="datePublished" content="2020-06-06T17:23:49+00:00" />
-<meta itemprop="dateModified" content="2023-09-28T23:52:01+08:00" />
-<meta itemprop="wordCount" content="2405"><meta itemprop="image" content="/logo.png"/>
-<meta itemprop="keywords" content="Model," /><meta property="og:title" content="CNN Model Record" />
-<meta property="og:description" content="可视化计算网页：https://ezyang.github.io/convolution-visualizer/index.html 1. 一维卷" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="liudongdong1.github.io/cnn-model-record/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2020-06-06T17:23:49+00:00" />
-<meta property="article:modified_time" content="2023-09-28T23:52:01+08:00" />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/logo.png"/>
-
-<meta name="twitter:title" content="CNN Model Record"/>
-<meta name="twitter:description" content="可视化计算网页：https://ezyang.github.io/convolution-visualizer/index.html 1. 一维卷"/>
-<meta name="application-name" content="DAY By DAY">
-<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/cnn-model-record/" /><link rel="prev" href="liudongdong1.github.io/deformable_conv/" /><link rel="next" href="liudongdong1.github.io/data-glove-record/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "BlogPosting",
-    "headline": "CNN Model Record",
-    "inLanguage": "zh-CN",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "liudongdong1.github.io\/cnn-model-record\/"
-    },"genre": "posts","keywords": "Model","wordcount":  2405 ,
-    "url": "liudongdong1.github.io\/cnn-model-record\/","datePublished": "2020-06-06T17:23:49+00:00","dateModified": "2023-09-28T23:52:01+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
-      "@type": "Organization",
-      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
-        "@type": "Person",
-        "name": "liudongdong1"
-      },"description": ""
-  }
-  </script></head>
-  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
-  <div class="header-wrapper" data-github-corner="right">
-    <div class="header-title">
-      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="DAY By DAY"
-    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
-    <nav>
-      <ul class="menu"><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/posts/"
-                
-                
-              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/categories/"
-                
-                
-              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/tags/"
-                
-                
-              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/friends/"
-                title="友情链接"
-                
-              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/about/"
-                
-                
-              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
-          </li><li class="menu-item search" id="search-desktop">
-            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
-            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-            </a>
-            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-            </a>
-            <span class="search-button search-loading" id="search-loading-desktop">
-              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-            </span>
-          </li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header><header class="mobile animate__faster" id="header-mobile">
-  <div class="header-container">
-    <div class="header-wrapper">
-      <div class="header-title">
-        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="/fixit.min.svg"
-    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
-      <div class="menu-toggle" id="menu-toggle-mobile">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-    <nav>
-      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
-            <div class="search mobile" id="search-mobile">
-              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
-              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-              </a>
-              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-              </a>
-              <span class="search-button search-loading" id="search-loading-mobile">
-                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-              </span>
-            </div>
-            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-              取消
-            </a>
-          </li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/posts/"
-                  
-                  
-                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/categories/"
-                  
-                  
-                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/tags/"
-                  
-                  
-                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/friends/"
-                  title="友情链接"
-                  
-                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/about/"
-                  
-                  
-                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
-              class="menu-item text-center"
-            ><a
-                  class="menu-link"
-                  href="https://liudongdong1.github.io/"
-                  title="GitHub"
-                  rel="noopener noreferrer" target="_blank"
-                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
-          </li></ul>
-    </nav>
-  </div>
-</header><div class="search-dropdown desktop">
-    <div id="search-dropdown-desktop"></div>
-  </div>
-  <div class="search-dropdown mobile">
-    <div id="search-dropdown-mobile"></div>
-  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
-      <div class="toc-content" id="toc-content-auto"></div></aside>
-
-  <aside class="aside-custom" id="aside-sakana">
-    
-
-<div class="sakana-widget">
-  <div class="sakana-item" id="takina-widget"></div>
-  <div class="sakana-item" id="chisato-widget"></div>
-</div>
-<script>
-  function initSakanaWidget() {
-    const takina = SakanaWidget.getCharacter('takina')
-    SakanaWidget.registerCharacter('takina-slow', takina);
-    new SakanaWidget({
-      character: 'takina-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#takina-widget');
-
-    const chisato = SakanaWidget.getCharacter('chisato')
-    SakanaWidget.registerCharacter('chisato-slow', chisato);
-    new SakanaWidget({
-      character: 'chisato-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#chisato-widget');
-  }
-</script>
-<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
-</script></aside>
-
-  <article class="page single">
-    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
-        <span>CNN Model Record</span>
-      </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
-      liudongdong1</span></span>
-          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/aiot/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;AIOT</a></span></div>
-      <div class="post-meta-line"><span title=2020-06-06&#32;17:23:49>
-            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-06-06" >2020-06-06</time>
-          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 2405 字&nbsp;
-        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="CNN Model Record">
-            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
-          </span>&nbsp;</div>
-    </div><div class="featured-image"><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png"/></div><div class="details toc" id="toc-static" kept="true">
-        <div class="details-summary toc-title">
-          <span>目录</span>
-          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-        </div>
-        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#paper-densenet">Paper: DenseNet</a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-    <li><a href="#paper-resnet">Paper: ResNet</a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-    <li><a href="#paper-mask-r-cnn">Paper: Mask R-CNN</a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-      </div><div
-      class="content"
-      id="content"
-      
-      
-    ><blockquote>
-<p>可视化计算网页：https://ezyang.github.io/convolution-visualizer/index.html</p>
-</blockquote>
-<h1 id="1-一维卷积">1. 一维卷积</h1>
-<blockquote>
-<p>一维卷积主要用于对只有一个维度的时间序列提取特征，比如信号、股价、天气、文本以及自然语言处理领域。</p>
-</blockquote>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201011195051641.png"
-    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201011195051641.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201011195051641.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201011195051641.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201011195051641.png"
-    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201011195051641.png"/></p>
-<h1 id="2-conv-calculationhttpsezyanggithubioconvolution-visualizerindexhtml">2. <a href="https://ezyang.github.io/convolution-visualizer/index.html"target="_blank" rel="external nofollow noopener noreferrer">Conv Calculation<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></h1>
-<p><strong>输入矩阵</strong>格式：四个维度，依次为：<code>样本数、图像高度、图像宽度、图像通道数</code></p>
-<p><strong>输出矩阵</strong>格式：与输出矩阵的维度顺序和含义相同，但是后三个维度（<code>图像高度、图像宽度、图像通道数</code>）的尺寸发生变化。</p>
-<p><strong>权重矩阵</strong>（卷积核）格式：同样是四个维度，但维度的含义与上面两者都不同，为：卷积核高度、卷积核宽度、输入通道数、输出通道数（卷积核个数）</p>
-<blockquote>
-<p>adding前面的系数是2，所以在padding时，一般是对称地补，左／右各padding一列 或者 上下各padding一行。stride是2，而括号里算出来的值刚好是奇数怎么办？那就再偷偷摸摸补一列padding或者补一行padding。</p>
-<ul>
-<li>caffe的padding策略是把0补在<strong>左上</strong>。</li>
-<li>tensorflow的padding策略是把0补在<strong>右下</strong>。</li>
-<li>padding=1的效果是：<strong>原来的输入层基础上，上下左右各补了一行</strong>！</li>
-</ul>
-</blockquote>
-<p><strong>输入矩阵、权重矩阵、输出矩阵这三者之间的相互决定关系</strong></p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101124419.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101124419.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101124419.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101124419.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101124419.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101124419.png"/></p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101107678.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101107678.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101107678.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101107678.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101107678.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101107678.png"/>
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>CNN Model Record - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="可视化计算网页：https://ezyang.github.io/convolution-visualizer/index.html 1. 一维卷"><meta name=keywords content="Model"><meta itemprop=name content="CNN Model Record"><meta itemprop=description content="可视化计算网页：https://ezyang.github.io/convolution-visualizer/index.html 1. 一维卷"><meta itemprop=datePublished content="2020-06-06T17:23:49+00:00"><meta itemprop=dateModified content="2023-09-28T23:52:01+08:00"><meta itemprop=wordCount content="2405"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="Model,"><meta property="og:title" content="CNN Model Record"><meta property="og:description" content="可视化计算网页：https://ezyang.github.io/convolution-visualizer/index.html 1. 一维卷"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/cnn-model-record/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-06-06T17:23:49+00:00"><meta property="article:modified_time" content="2023-09-28T23:52:01+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="CNN Model Record"><meta name=twitter:description content="可视化计算网页：https://ezyang.github.io/convolution-visualizer/index.html 1. 一维卷"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/cnn-model-record/><link rel=prev href=liudongdong1.github.io/deformable_conv/><link rel=next href=liudongdong1.github.io/data-glove-record/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"CNN Model Record","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/cnn-model-record\/"},"genre":"posts","keywords":"Model","wordcount":2405,"url":"liudongdong1.github.io\/cnn-model-record\/","datePublished":"2020-06-06T17:23:49+00:00","dateModified":"2023-09-28T23:52:01+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"liudongdong1"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
+<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>CNN Model Record</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle" aria-hidden=true></i>
+liudongdong1</span></span>
+<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/aiot/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;AIOT</a></span></div><div class=post-meta-line><span title="2020-06-06 17:23:49"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-06-06>2020-06-06</time>
+</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 2405 字&nbsp;
+<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title="CNN Model Record">
+<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png></div><div class="details toc" id=toc-static kept=true><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#paper-densenet>Paper: DenseNet</a><ul><li></li></ul></li><li><a href=#paper-resnet>Paper: ResNet</a><ul><li></li></ul></li><li><a href=#paper-mask-r-cnn>Paper: Mask R-CNN</a><ul><li></li></ul></li></ul></nav></div></div><div class=content id=content><blockquote><p>可视化计算网页：https://ezyang.github.io/convolution-visualizer/index.html</p></blockquote><h1 id=1-一维卷积>1. 一维卷积</h1><blockquote><p>一维卷积主要用于对只有一个维度的时间序列提取特征，比如信号、股价、天气、文本以及自然语言处理领域。</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201011195051641.png data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201011195051641.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201011195051641.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201011195051641.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201011195051641.png title=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201011195051641.png></p><h1 id=2-conv-calculationhttpsezyanggithubioconvolution-visualizerindexhtml>2. <a href=https://ezyang.github.io/convolution-visualizer/index.html target=_blank rel="external nofollow noopener noreferrer">Conv Calculation<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></h1><p><strong>输入矩阵</strong>格式：四个维度，依次为：<code>样本数、图像高度、图像宽度、图像通道数</code></p><p><strong>输出矩阵</strong>格式：与输出矩阵的维度顺序和含义相同，但是后三个维度（<code>图像高度、图像宽度、图像通道数</code>）的尺寸发生变化。</p><p><strong>权重矩阵</strong>（卷积核）格式：同样是四个维度，但维度的含义与上面两者都不同，为：卷积核高度、卷积核宽度、输入通道数、输出通道数（卷积核个数）</p><blockquote><p>adding前面的系数是2，所以在padding时，一般是对称地补，左／右各padding一列 或者 上下各padding一行。stride是2，而括号里算出来的值刚好是奇数怎么办？那就再偷偷摸摸补一列padding或者补一行padding。</p><ul><li>caffe的padding策略是把0补在<strong>左上</strong>。</li><li>tensorflow的padding策略是把0补在<strong>右下</strong>。</li><li>padding=1的效果是：<strong>原来的输入层基础上，上下左右各补了一行</strong>！</li></ul></blockquote><p><strong>输入矩阵、权重矩阵、输出矩阵这三者之间的相互决定关系</strong></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101124419.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101124419.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101124419.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101124419.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101124419.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101124419.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101107678.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101107678.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101107678.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101107678.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101107678.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101107678.png>
 $$
-H_{out} = \left\lfloor\frac{H_{in}  + 2 \times \text{padding}[0] - \text{dilation}[0]
+H_{out} = \left\lfloor\frac{H_{in} + 2 \times \text{padding}[0] - \text{dilation}[0]
 \times (\text{kernel_size}[0] - 1) - 1}{\text{stride}[0]} + 1\right\rfloor
 \
-W_{out} = \left\lfloor\frac{W_{in}  + 2 \times \text{padding}[1] - \text{dilation}[1]
+W_{out} = \left\lfloor\frac{W_{in} + 2 \times \text{padding}[1] - \text{dilation}[1]
 \times (\text{kernel_size}[1] - 1) - 1}{\text{stride}[1]} + 1\right\rfloor
-$$</p>
-<ul>
-<li>向下取整  4.9 =4</li>
-</ul>
-<p>example one: 标准卷积计算</p>
-<blockquote>
-<p>以 AlexNet 模型的第一个卷积层为例，
+$$</p><ul><li>向下取整 4.9 =4</li></ul><p>example one: 标准卷积计算</p><blockquote><p>以 AlexNet 模型的第一个卷积层为例，
 - 输入图片的尺寸统一为 227 x 227 x 3 （高度 x 宽度 x 颜色通道数），
 - 本层一共具有96个卷积核，
 - 每个卷积核的尺寸都是 11 x 11 x 3。
 - 已知 stride = 4， padding = 0，
 - 假设 batch_size = 256，
-- 则输出矩阵的高度/宽度为 (227 - 11) / 4 + 1 = 55</p>
-</blockquote>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132214697.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132214697.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132214697.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132214697.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132214697.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132214697.png"/></p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132327322.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132327322.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132327322.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132327322.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132327322.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132327322.png"/></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Conv2D(
-</span></span><span style="display:flex;"><span>    filters,
-</span></span><span style="display:flex;"><span>    kernel_size,
-</span></span><span style="display:flex;"><span>    strides<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>),
-</span></span><span style="display:flex;"><span>    padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;valid&#34;</span>,
-</span></span><span style="display:flex;"><span>    data_format<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
-</span></span><span style="display:flex;"><span>    dilation_rate<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>),
-</span></span><span style="display:flex;"><span>    groups<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,
-</span></span><span style="display:flex;"><span>    activation<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
-</span></span><span style="display:flex;"><span>    use_bias<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
-</span></span><span style="display:flex;"><span>    kernel_initializer<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;glorot_uniform&#34;</span>,
-</span></span><span style="display:flex;"><span>    bias_initializer<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;zeros&#34;</span>,
-</span></span><span style="display:flex;"><span>    kernel_regularizer<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
-</span></span><span style="display:flex;"><span>    bias_regularizer<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
-</span></span><span style="display:flex;"><span>    activity_regularizer<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
-</span></span><span style="display:flex;"><span>    kernel_constraint<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
-</span></span><span style="display:flex;"><span>    bias_constraint<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">**</span>kwargs
-</span></span><span style="display:flex;"><span>)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> input_shape <span style="color:#f92672">=</span> (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> x <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(input_shape)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> y <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Conv2D(
-</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span> <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>, input_shape<span style="color:#f92672">=</span>input_shape[<span style="color:#ae81ff">1</span>:])(x)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(y<span style="color:#f92672">.</span>shape)
-</span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">2</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">################</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#75715e"># With `dilation_rate` as 2.  </span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> input_shape <span style="color:#f92672">=</span> (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> x <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(input_shape)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> y <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Conv2D(
-</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span> <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>, dilation_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, input_shape<span style="color:#f92672">=</span>input_shape[<span style="color:#ae81ff">1</span>:])(x)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(y<span style="color:#f92672">.</span>shape)
-</span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">2</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">####################</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#75715e"># With `padding` as &#34;same&#34;.  </span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> input_shape <span style="color:#f92672">=</span> (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> x <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(input_shape)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> y <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Conv2D(
-</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span> <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>, padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;same&#34;</span>, input_shape<span style="color:#f92672">=</span>input_shape[<span style="color:#ae81ff">1</span>:])(x)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(y<span style="color:#f92672">.</span>shape)
-</span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">2</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#########</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> input_shape <span style="color:#f92672">=</span> (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> x <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(input_shape)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> y <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Conv2D(
-</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span> <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>, input_shape<span style="color:#f92672">=</span>input_shape[<span style="color:#ae81ff">2</span>:])(x)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(y<span style="color:#f92672">.</span>shape)
-</span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">2</span>)
-</span></span></code></pre></div><blockquote>
-<ul>
-<li>
-<p><strong>padding</strong>: one of <code>&quot;valid&quot;</code> or <code>&quot;same&quot;</code> (case-insensitive). <code>&quot;valid&quot;</code> means no padding. <code>&quot;same&quot;</code> results in padding evenly to the left/right or up/down of the input such that output has the same height/width dimension as the input.</p>
-</li>
-<li>
-<p><strong>data_format</strong>: A string, one of <code>channels_last</code> (default) or <code>channels_first</code>. The ordering of the dimensions in the inputs. <code>channels_last</code> corresponds to inputs with shape <code>(batch_size, height, width, channels)</code> while <code>channels_first</code> corresponds to inputs with shape <code>(batch_size, channels, height, width)</code>. It defaults to the <code>image_data_format</code> value found in your Keras config file at <code>~/.keras/keras.json</code>. If you never set it, then it will be <code>channels_last</code>.</p>
-</li>
-<li>
-<p><strong>Input shape</strong></p>
-<p>4+D tensor with shape: <code>batch_shape + (channels, rows, cols)</code> if <code>data_format='channels_first'</code> or 4+D tensor with shape: <code>batch_shape + (rows, cols, channels)</code> if <code>data_format='channels_last'</code>.</p>
-</li>
-<li>
-<p><strong>Output shape</strong></p>
-<p>4+D tensor with shape: <code>batch_shape + (filters, new_rows, new_cols)</code> if <code>data_format='channels_first'</code> or 4+D tensor with shape: <code>batch_shape + (new_rows, new_cols, filters)</code> if <code>data_format='channels_last'</code>. <code>rows</code> and <code>cols</code> values might have changed due to padding.</p>
-</li>
-</ul>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Generator_model</span>():
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 下面搭建生成器的架构，首先导入序贯模型</span>
-</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">=</span> Sequential()
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 添加一个全连接层，输入为100维向量，输出为1024维</span>
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Dense(input_dim<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, output_dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1024</span>))  <span style="color:#75715e">#100---&gt;1024</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 添加一个激活函数tanh</span>
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;tanh&#39;</span>))
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 添加一个全连接层，输出维128×7×7维度</span>
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Dense(<span style="color:#ae81ff">128</span><span style="color:#f92672">*</span><span style="color:#ae81ff">7</span><span style="color:#f92672">*</span><span style="color:#ae81ff">7</span>))    <span style="color:#75715e">#1024--&gt;128*7*7</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 添加一个批量归一化层，该层在每个batch上将前一层的激活值重新规范化，即使得其输出均值接近于0，标准差接近于1</span>
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(BatchNormalization())
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;tanh&#39;</span>))
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Reshape层用来将输入shape转换为特定的shape</span>
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Reshape((<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">128</span>),input_shape<span style="color:#f92672">=</span>(<span style="color:#ae81ff">128</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">7</span>)))  <span style="color:#75715e">#128*7*7--&gt;7*7*128</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 2维上采样层，即将数据的行和列分别重复2次</span>
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(UpSampling2D(size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>)))                <span style="color:#75715e">#7*7*128--&gt;14*14*128</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 添加一个2维卷积层，卷积核大小维5×5，激活函数为tanh，共64个卷积核，并采用padding使图像尺寸保持不变</span>
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Conv2D(<span style="color:#ae81ff">64</span>,(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">5</span>),padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;same&#39;</span>))    <span style="color:#75715e">#14*14*128--&gt;14*14*128</span>
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;tanh&#39;</span>))
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(UpSampling2D(size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>)))          <span style="color:#75715e">#14*14*128--&gt;28*28*124</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 卷积核设为1即输出图像的维度</span>
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Conv2D(<span style="color:#ae81ff">1</span>,(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">5</span>),padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;same&#39;</span>))    <span style="color:#75715e">#28*28*124--&gt;28*28*1</span>
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;tanh&#39;</span>))
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> model
-</span></span></code></pre></div><p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://static001.geekbang.org/infoq/ae/ae8a4d6f0ded77d731f179f361254db1.gif"
-    data-srcset="https://static001.geekbang.org/infoq/ae/ae8a4d6f0ded77d731f179f361254db1.gif, https://static001.geekbang.org/infoq/ae/ae8a4d6f0ded77d731f179f361254db1.gif 1.5x, https://static001.geekbang.org/infoq/ae/ae8a4d6f0ded77d731f179f361254db1.gif 2x"
-    data-sizes="auto"
-    alt="https://static001.geekbang.org/infoq/ae/ae8a4d6f0ded77d731f179f361254db1.gif"
-    title="https://static001.geekbang.org/infoq/ae/ae8a4d6f0ded77d731f179f361254db1.gif"/></p>
-<h1 id="3-3d-卷积c3d">3. 3D 卷积（C3D)</h1>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195154368.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195154368.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195154368.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195154368.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195154368.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195154368.png"/></p>
-<blockquote>
-<p>与2D卷积不同之处在于，输入的图像多了一个 depth 维度，即输入为(1, depth, height, width)，卷积核也多了一个k_d维度，因此卷积核在输入3D图像的空间维度（height和width维）和depth维度上均进行滑窗操作，每次滑窗与 (k_d, k_h, k_w) 窗口内的values进行相关操作，得到输出3D图像中的一个value。
-针对多通道，输入大小为(3, depth, height, width)，则与2D卷积的操作一样，每次滑窗与3个channels上的 (k_d, k_h, k_w) 窗口内的所有values进行相关操作，得到输出3D图像中的一个value。</p>
-</blockquote>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195227311.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195227311.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195227311.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195227311.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195227311.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195227311.png"/></p>
-<h1 id="4paper-reading">4.Paper Reading</h1>
-<p><strong>level</strong>:  CVPR  CCFA
-<strong>author</strong>: Gao Huang ,Cornell University  Zhuang Liu Tsinghua
+- 则输出矩阵的高度/宽度为 (227 - 11) / 4 + 1 = 55</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132214697.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132214697.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132214697.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132214697.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132214697.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132214697.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132327322.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132327322.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132327322.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132327322.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132327322.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132327322.png></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>tf<span style=color:#f92672>.</span>keras<span style=color:#f92672>.</span>layers<span style=color:#f92672>.</span>Conv2D(
+</span></span><span style=display:flex><span>    filters,
+</span></span><span style=display:flex><span>    kernel_size,
+</span></span><span style=display:flex><span>    strides<span style=color:#f92672>=</span>(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>),
+</span></span><span style=display:flex><span>    padding<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;valid&#34;</span>,
+</span></span><span style=display:flex><span>    data_format<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>,
+</span></span><span style=display:flex><span>    dilation_rate<span style=color:#f92672>=</span>(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>),
+</span></span><span style=display:flex><span>    groups<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>,
+</span></span><span style=display:flex><span>    activation<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>,
+</span></span><span style=display:flex><span>    use_bias<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>,
+</span></span><span style=display:flex><span>    kernel_initializer<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;glorot_uniform&#34;</span>,
+</span></span><span style=display:flex><span>    bias_initializer<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;zeros&#34;</span>,
+</span></span><span style=display:flex><span>    kernel_regularizer<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>,
+</span></span><span style=display:flex><span>    bias_regularizer<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>,
+</span></span><span style=display:flex><span>    activity_regularizer<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>,
+</span></span><span style=display:flex><span>    kernel_constraint<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>,
+</span></span><span style=display:flex><span>    bias_constraint<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>**</span>kwargs
+</span></span><span style=display:flex><span>)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> input_shape <span style=color:#f92672>=</span> (<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>28</span>, <span style=color:#ae81ff>28</span>, <span style=color:#ae81ff>3</span>)
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> x <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>random<span style=color:#f92672>.</span>normal(input_shape)
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> y <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>keras<span style=color:#f92672>.</span>layers<span style=color:#f92672>.</span>Conv2D(
+</span></span><span style=display:flex><span><span style=color:#f92672>...</span> <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, activation<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;relu&#39;</span>, input_shape<span style=color:#f92672>=</span>input_shape[<span style=color:#ae81ff>1</span>:])(x)
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> print(y<span style=color:#f92672>.</span>shape)
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>26</span>, <span style=color:#ae81ff>26</span>, <span style=color:#ae81ff>2</span>)
+</span></span><span style=display:flex><span><span style=color:#75715e>################</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> <span style=color:#75715e># With `dilation_rate` as 2.  </span>
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> input_shape <span style=color:#f92672>=</span> (<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>28</span>, <span style=color:#ae81ff>28</span>, <span style=color:#ae81ff>3</span>)
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> x <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>random<span style=color:#f92672>.</span>normal(input_shape)
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> y <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>keras<span style=color:#f92672>.</span>layers<span style=color:#f92672>.</span>Conv2D(
+</span></span><span style=display:flex><span><span style=color:#f92672>...</span> <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, activation<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;relu&#39;</span>, dilation_rate<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>, input_shape<span style=color:#f92672>=</span>input_shape[<span style=color:#ae81ff>1</span>:])(x)
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> print(y<span style=color:#f92672>.</span>shape)
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>24</span>, <span style=color:#ae81ff>24</span>, <span style=color:#ae81ff>2</span>)
+</span></span><span style=display:flex><span><span style=color:#75715e>####################</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> <span style=color:#75715e># With `padding` as &#34;same&#34;.  </span>
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> input_shape <span style=color:#f92672>=</span> (<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>28</span>, <span style=color:#ae81ff>28</span>, <span style=color:#ae81ff>3</span>)
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> x <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>random<span style=color:#f92672>.</span>normal(input_shape)
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> y <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>keras<span style=color:#f92672>.</span>layers<span style=color:#f92672>.</span>Conv2D(
+</span></span><span style=display:flex><span><span style=color:#f92672>...</span> <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, activation<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;relu&#39;</span>, padding<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;same&#34;</span>, input_shape<span style=color:#f92672>=</span>input_shape[<span style=color:#ae81ff>1</span>:])(x)
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> print(y<span style=color:#f92672>.</span>shape)
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>28</span>, <span style=color:#ae81ff>28</span>, <span style=color:#ae81ff>2</span>)
+</span></span><span style=display:flex><span><span style=color:#75715e>#########</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> input_shape <span style=color:#f92672>=</span> (<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>28</span>, <span style=color:#ae81ff>28</span>, <span style=color:#ae81ff>3</span>)
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> x <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>random<span style=color:#f92672>.</span>normal(input_shape)
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> y <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>keras<span style=color:#f92672>.</span>layers<span style=color:#f92672>.</span>Conv2D(
+</span></span><span style=display:flex><span><span style=color:#f92672>...</span> <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, activation<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;relu&#39;</span>, input_shape<span style=color:#f92672>=</span>input_shape[<span style=color:#ae81ff>2</span>:])(x)
+</span></span><span style=display:flex><span><span style=color:#f92672>&gt;&gt;&gt;</span> print(y<span style=color:#f92672>.</span>shape)
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>26</span>, <span style=color:#ae81ff>26</span>, <span style=color:#ae81ff>2</span>)
+</span></span></code></pre></div><blockquote><ul><li><p><strong>padding</strong>: one of <code>"valid"</code> or <code>"same"</code> (case-insensitive). <code>"valid"</code> means no padding. <code>"same"</code> results in padding evenly to the left/right or up/down of the input such that output has the same height/width dimension as the input.</p></li><li><p><strong>data_format</strong>: A string, one of <code>channels_last</code> (default) or <code>channels_first</code>. The ordering of the dimensions in the inputs. <code>channels_last</code> corresponds to inputs with shape <code>(batch_size, height, width, channels)</code> while <code>channels_first</code> corresponds to inputs with shape <code>(batch_size, channels, height, width)</code>. It defaults to the <code>image_data_format</code> value found in your Keras config file at <code>~/.keras/keras.json</code>. If you never set it, then it will be <code>channels_last</code>.</p></li><li><p><strong>Input shape</strong></p><p>4+D tensor with shape: <code>batch_shape + (channels, rows, cols)</code> if <code>data_format='channels_first'</code> or 4+D tensor with shape: <code>batch_shape + (rows, cols, channels)</code> if <code>data_format='channels_last'</code>.</p></li><li><p><strong>Output shape</strong></p><p>4+D tensor with shape: <code>batch_shape + (filters, new_rows, new_cols)</code> if <code>data_format='channels_first'</code> or 4+D tensor with shape: <code>batch_shape + (new_rows, new_cols, filters)</code> if <code>data_format='channels_last'</code>. <code>rows</code> and <code>cols</code> values might have changed due to padding.</p></li></ul></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Generator_model</span>():
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 下面搭建生成器的架构，首先导入序贯模型</span>
+</span></span><span style=display:flex><span>    model <span style=color:#f92672>=</span> Sequential()
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 添加一个全连接层，输入为100维向量，输出为1024维</span>
+</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Dense(input_dim<span style=color:#f92672>=</span><span style=color:#ae81ff>100</span>, output_dim<span style=color:#f92672>=</span><span style=color:#ae81ff>1024</span>))  <span style=color:#75715e>#100---&gt;1024</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 添加一个激活函数tanh</span>
+</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Activation(<span style=color:#e6db74>&#39;tanh&#39;</span>))
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 添加一个全连接层，输出维128×7×7维度</span>
+</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Dense(<span style=color:#ae81ff>128</span><span style=color:#f92672>*</span><span style=color:#ae81ff>7</span><span style=color:#f92672>*</span><span style=color:#ae81ff>7</span>))    <span style=color:#75715e>#1024--&gt;128*7*7</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 添加一个批量归一化层，该层在每个batch上将前一层的激活值重新规范化，即使得其输出均值接近于0，标准差接近于1</span>
+</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(BatchNormalization())
+</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Activation(<span style=color:#e6db74>&#39;tanh&#39;</span>))
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Reshape层用来将输入shape转换为特定的shape</span>
+</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Reshape((<span style=color:#ae81ff>7</span>,<span style=color:#ae81ff>7</span>,<span style=color:#ae81ff>128</span>),input_shape<span style=color:#f92672>=</span>(<span style=color:#ae81ff>128</span>,<span style=color:#ae81ff>7</span>,<span style=color:#ae81ff>7</span>)))  <span style=color:#75715e>#128*7*7--&gt;7*7*128</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 2维上采样层，即将数据的行和列分别重复2次</span>
+</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(UpSampling2D(size<span style=color:#f92672>=</span>(<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>2</span>)))                <span style=color:#75715e>#7*7*128--&gt;14*14*128</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 添加一个2维卷积层，卷积核大小维5×5，激活函数为tanh，共64个卷积核，并采用padding使图像尺寸保持不变</span>
+</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Conv2D(<span style=color:#ae81ff>64</span>,(<span style=color:#ae81ff>5</span>,<span style=color:#ae81ff>5</span>),padding<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;same&#39;</span>))    <span style=color:#75715e>#14*14*128--&gt;14*14*128</span>
+</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Activation(<span style=color:#e6db74>&#39;tanh&#39;</span>))
+</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(UpSampling2D(size<span style=color:#f92672>=</span>(<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>2</span>)))          <span style=color:#75715e>#14*14*128--&gt;28*28*124</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 卷积核设为1即输出图像的维度</span>
+</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Conv2D(<span style=color:#ae81ff>1</span>,(<span style=color:#ae81ff>5</span>,<span style=color:#ae81ff>5</span>),padding<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;same&#39;</span>))    <span style=color:#75715e>#28*28*124--&gt;28*28*1</span>
+</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Activation(<span style=color:#e6db74>&#39;tanh&#39;</span>))
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> model
+</span></span></code></pre></div><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://static001.geekbang.org/infoq/ae/ae8a4d6f0ded77d731f179f361254db1.gif data-srcset="https://static001.geekbang.org/infoq/ae/ae8a4d6f0ded77d731f179f361254db1.gif, https://static001.geekbang.org/infoq/ae/ae8a4d6f0ded77d731f179f361254db1.gif 1.5x, https://static001.geekbang.org/infoq/ae/ae8a4d6f0ded77d731f179f361254db1.gif 2x" data-sizes=auto alt=https://static001.geekbang.org/infoq/ae/ae8a4d6f0ded77d731f179f361254db1.gif title=https://static001.geekbang.org/infoq/ae/ae8a4d6f0ded77d731f179f361254db1.gif></p><h1 id=3-3d-卷积c3d>3. 3D 卷积（C3D)</h1><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195154368.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195154368.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195154368.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195154368.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195154368.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195154368.png></p><blockquote><p>与2D卷积不同之处在于，输入的图像多了一个 depth 维度，即输入为(1, depth, height, width)，卷积核也多了一个k_d维度，因此卷积核在输入3D图像的空间维度（height和width维）和depth维度上均进行滑窗操作，每次滑窗与 (k_d, k_h, k_w) 窗口内的values进行相关操作，得到输出3D图像中的一个value。
+针对多通道，输入大小为(3, depth, height, width)，则与2D卷积的操作一样，每次滑窗与3个channels上的 (k_d, k_h, k_w) 窗口内的所有values进行相关操作，得到输出3D图像中的一个value。</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195227311.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195227311.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195227311.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195227311.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195227311.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195227311.png></p><h1 id=4paper-reading>4.Paper Reading</h1><p><strong>level</strong>: CVPR CCFA
+<strong>author</strong>: Gao Huang ,Cornell University Zhuang Liu Tsinghua
 <strong>date</strong>: 2017
-<strong>keyword</strong>:</p>
-<ul>
-<li>CNN</li>
-</ul>
-<hr>
-<h2 id="paper-densenet">Paper: DenseNet</h2>
-<!-- raw HTML omitted -->
-<h4 id="summary">Summary</h4>
-<ol>
-<li>alleviate the vanishing-gradient problem, strengthen feature propagation , encourage feature reuse and substantially reduce the number of parameters</li>
-<li>each layer has direct access to the gradients from the loss function and the original input signal,leading to an implicit deep supervision.</li>
-<li>DensNets require substantially fewer parameters and less computation to achieve state-of-art performance.</li>
-<li>(CIFAR-10 ,CIFAR-100,SVHN and ImageNet)</li>
-</ol>
-<ul>
-<li><strong>Purpose</strong>:  to ensure maximum information flow between layers in the network.</li>
-</ul>
-<h4 id="proble-statement">Proble Statement</h4>
-<ul>
-<li>
-<p>as information about the input or gradient passes through many layers ,it can vanish and wash out by the time it reaches the end of network . <!-- raw HTML omitted -->ResNets ,Highway Networks via identity connections; Stochastic depth shortens ResNets by randomly dropping layers;   they both create short paths from early layers to later layers<!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>Traditional feed-forward architectures can be views as algorithm with a state  [ResNet] make information preservation explicit through identity tansformations, many layers contribute very little and can in fact be randomly dropped during training.</p>
-</li>
-<li>
-<p>Compared to Inception networks,which concatenate features from dfferent laysers, DenseNets</p>
-</li>
-</ul>
-<h4 id="methods">Methods</h4>
-<ul>
-<li><strong>system overview</strong>:</li>
-</ul>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124108672.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124108672.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124108672.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124108672.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124108672.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124108672.png"/></p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124633940.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124633940.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124633940.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124633940.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124633940.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124633940.png"/></p>
-<ul>
-<li>Dense connectivit</li>
-</ul>
-<p>$$
-x_l=H_l([x_0,x_1,x_2,&hellip;,x_{l-1}]),x_i\quad refertoI_{layers} \quad output
-$$</p>
-<ul>
-<li>Composite function:</li>
-</ul>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130125645770.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130125645770.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130125645770.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130125645770.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130125645770.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130125645770.png"/></p>
-<ul>
-<li>Pooling layers: down-sampling layers changing the size of feature maps,refering to layers between blocks as transition layers which do convolution and pooling. the transition layers consist of a batch of normalization layer and 1<em>1 convolutional layer followed by a 2</em>2 average pooling layer</li>
-<li><strong>Growth Rate</strong>: the $l_th$ layers has k0+k*(l-1) input feature-map, k0 is the number of channels in the input layer.</li>
-<li><strong>Bottleneck layers</strong> : 1<em>1 convolution can be introdeced as bottleneck layer before each 3</em>  × 3 convolution to reduce the number of input feature-maps.</li>
-<li><strong>Compression</strong>: reduce the number of feature-maps at transition layers.</li>
-</ul>
-<h4 id="notes-font-colororange去加强了解font">Notes <!-- raw HTML omitted -->去加强了解<!-- raw HTML omitted --></h4>
-<ul>
-<li><i class="fa-regular fa-square fa-fw" aria-hidden="true"></i> <a href="https://github.com/liuzhuang13/DenseNet"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/liuzhuang13/DenseNet<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><i class="fa-regular fa-square fa-fw" aria-hidden="true"></i> <a href="https://github.com/facebook/fb.resnet.torch"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/facebook/fb.resnet.torch<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><i class="fa-regular fa-check-square fa-fw" aria-hidden="true"></i> BN: batch normalization ;ReLU: rectified linear units</li>
-</ul>
-<p><strong>level</strong>: CVPR
-<strong>author</strong>: Kaiming He ,Xiangyu Zhang  Microsoft Research
-<strong>date</strong>:  2016
-<strong>keyword</strong>:</p>
-<ul>
-<li></li>
-</ul>
-<hr>
-<h2 id="paper-resnet">Paper: ResNet</h2>
-<!-- raw HTML omitted -->
-<h4 id="summary-1">Summary</h4>
-<p><strong>Purpose</strong>:  Deeper neural networks are more difficult to train, a residual learning framework to ease the training of networks</p>
-<ul>
-<li>our extremely deep residual nets are easy to optimize but the counterpart plain nets exhibit higher training error when the depth increases</li>
-<li>easily enjoy accuracy gains from greatly increased depth producing results substantially better than previous networks.</li>
-</ul>
-<h4 id="proble-statement-1">Proble Statement</h4>
-<ul>
-<li>Deep networks naturally integrate low/mid/high level features and classifiers in an end-to-end multi-layer fashion,and the level of features can be enriched by the number of stacked layers.<img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130131715128.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130131715128.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130131715128.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130131715128.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130131715128.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130131715128.png"/></li>
-</ul>
-<p>previous work:</p>
-<ul>
-<li>normalized initialization and intermediate normalization layers which enable networks with tens of layers to start converging for stochastic descent with back propagation.<!-- raw HTML omitted -->with network depth increasing , accuracy gets saturated and thenndegrades rapidly<!-- raw HTML omitted --></li>
-</ul>
-<h4 id="methods-1">Methods</h4>
-<ul>
-<li><strong>system overview</strong>:</li>
-</ul>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132128156.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132128156.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132128156.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132128156.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132128156.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132128156.png"/></p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132712377.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132712377.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132712377.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132712377.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132712377.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132712377.png"/></p>
-<p>Figure 3. Example network architectures for ImageNet. Left: the VGG-19 model [40] (19.6 billion FLOPs) as a reference. Mid-
+<strong>keyword</strong>:</p><ul><li>CNN</li></ul><hr><h2 id=paper-densenet>Paper: DenseNet</h2><h4 id=summary>Summary</h4><ol><li>alleviate the vanishing-gradient problem, strengthen feature propagation , encourage feature reuse and substantially reduce the number of parameters</li><li>each layer has direct access to the gradients from the loss function and the original input signal,leading to an implicit deep supervision.</li><li>DensNets require substantially fewer parameters and less computation to achieve state-of-art performance.</li><li>(CIFAR-10 ,CIFAR-100,SVHN and ImageNet)</li></ol><ul><li><strong>Purpose</strong>: to ensure maximum information flow between layers in the network.</li></ul><h4 id=proble-statement>Proble Statement</h4><ul><li><p>as information about the input or gradient passes through many layers ,it can vanish and wash out by the time it reaches the end of network . ResNets ,Highway Networks via identity connections; Stochastic depth shortens ResNets by randomly dropping layers; they both create short paths from early layers to later layers</p></li><li><p>Traditional feed-forward architectures can be views as algorithm with a state [ResNet] make information preservation explicit through identity tansformations, many layers contribute very little and can in fact be randomly dropped during training.</p></li><li><p>Compared to Inception networks,which concatenate features from dfferent laysers, DenseNets</p></li></ul><h4 id=methods>Methods</h4><ul><li><strong>system overview</strong>:</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124108672.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124108672.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124108672.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124108672.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124108672.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124108672.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124633940.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124633940.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124633940.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124633940.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124633940.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124633940.png></p><ul><li>Dense connectivit</li></ul><p>$$
+x_l=H_l([x_0,x_1,x_2,&mldr;,x_{l-1}]),x_i\quad refertoI_{layers} \quad output
+$$</p><ul><li>Composite function:</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130125645770.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130125645770.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130125645770.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130125645770.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130125645770.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130125645770.png></p><ul><li>Pooling layers: down-sampling layers changing the size of feature maps,refering to layers between blocks as transition layers which do convolution and pooling. the transition layers consist of a batch of normalization layer and 1<em>1 convolutional layer followed by a 2</em>2 average pooling layer</li><li><strong>Growth Rate</strong>: the $l_th$ layers has k0+k*(l-1) input feature-map, k0 is the number of channels in the input layer.</li><li><strong>Bottleneck layers</strong> : 1<em>1 convolution can be introdeced as bottleneck layer before each 3</em> × 3 convolution to reduce the number of input feature-maps.</li><li><strong>Compression</strong>: reduce the number of feature-maps at transition layers.</li></ul><h4 id=notes-font-colororange去加强了解font>Notes 去加强了解</h4><ul><li><i class="fa-regular fa-square fa-fw" aria-hidden=true></i> <a href=https://github.com/liuzhuang13/DenseNet target=_blank rel="external nofollow noopener noreferrer">https://github.com/liuzhuang13/DenseNet<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li><i class="fa-regular fa-square fa-fw" aria-hidden=true></i> <a href=https://github.com/facebook/fb.resnet.torch target=_blank rel="external nofollow noopener noreferrer">https://github.com/facebook/fb.resnet.torch<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li><i class="fa-regular fa-check-square fa-fw" aria-hidden=true></i> BN: batch normalization ;ReLU: rectified linear units</li></ul><p><strong>level</strong>: CVPR
+<strong>author</strong>: Kaiming He ,Xiangyu Zhang Microsoft Research
+<strong>date</strong>: 2016
+<strong>keyword</strong>:</p><ul><li></li></ul><hr><h2 id=paper-resnet>Paper: ResNet</h2><h4 id=summary-1>Summary</h4><p><strong>Purpose</strong>: Deeper neural networks are more difficult to train, a residual learning framework to ease the training of networks</p><ul><li>our extremely deep residual nets are easy to optimize but the counterpart plain nets exhibit higher training error when the depth increases</li><li>easily enjoy accuracy gains from greatly increased depth producing results substantially better than previous networks.</li></ul><h4 id=proble-statement-1>Proble Statement</h4><ul><li>Deep networks naturally integrate low/mid/high level features and classifiers in an end-to-end multi-layer fashion,and the level of features can be enriched by the number of stacked layers.<img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130131715128.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130131715128.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130131715128.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130131715128.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130131715128.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130131715128.png></li></ul><p>previous work:</p><ul><li>normalized initialization and intermediate normalization layers which enable networks with tens of layers to start converging for stochastic descent with back propagation.with network depth increasing , accuracy gets saturated and thenndegrades rapidly</li></ul><h4 id=methods-1>Methods</h4><ul><li><strong>system overview</strong>:</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132128156.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132128156.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132128156.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132128156.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132128156.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132128156.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132712377.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132712377.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132712377.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132712377.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132712377.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132712377.png></p><p>Figure 3. Example network architectures for ImageNet. Left: the VGG-19 model [40] (19.6 billion FLOPs) as a reference. Mid-
 dle: a plain network with 34 parameter layers (3.6 billion FLOPs).
 Right: a residual network with 34 parameter layers (3.6 billion
 FLOPs). The dotted shortcuts increase dimensions. Table 1 shows
-more details and other variants.</p>
-<h4 id="notes-font-colororange去加强了解font-1">Notes <!-- raw HTML omitted -->去加强了解<!-- raw HTML omitted --></h4>
-<ul>
-<li>去运行一下代码</li>
-</ul>
-<p><strong>level</strong>:  ICCV CCF_A
-<strong>author</strong>: Kaiming He ,Georgia Gkioxari   Facebook AI Research
+more details and other variants.</p><h4 id=notes-font-colororange去加强了解font-1>Notes 去加强了解</h4><ul><li>去运行一下代码</li></ul><p><strong>level</strong>: ICCV CCF_A
+<strong>author</strong>: Kaiming He ,Georgia Gkioxari Facebook AI Research
 <strong>date</strong>: 2017
-<strong>keyword</strong>:</p>
-<ul>
-<li>instance segmentation, bounding-box object detection, person keypoint detection</li>
-</ul>
-<hr>
-<h2 id="paper-mask-r-cnn">Paper: Mask R-CNN</h2>
-<!-- raw HTML omitted -->
-<h4 id="summary-2">Summary</h4>
-<ol>
-<li>efficiently detects objects in an image while simultaneously generating a high-quality segmentation mask for each instance.</li>
-<li>the method extends Faster R-CNN by adding a branch for predicting an object mask in parallel with existing branch for bounding box recognition.<!-- raw HTML omitted -->predicting segmentation masks on each Region of Interest(ROI) in parallel with existing branch for classification and bounding box regression.<!-- raw HTML omitted --></li>
-<li>propose ROIAlign that faithfully preserves exact spatial locations</li>
-</ol>
-<h4 id="proble-statement-2">Proble Statement</h4>
-<ul>
-<li><strong>R-CNN</strong>: Region-based CNN to bounding-box object detection using ROIPool   ,<strong>Faster-RCNN</strong> advanced this stream by learning the attention mechanism with a Region Proposal network . Faster R-CNN consists of two stages.  The first stage, called a Region Proposal Network (RPN),proposes candidate object bounding boxes. The second stage, which is in essence Fast R-CNN [9], extracts features using RoIPool from each candidate box and performs classification and bounding-box regression.</li>
-<li><strong>Instance Segmentation</strong> bottom-up segments,DeepMask[27] learn to propose segment candidates which are classified by fast R-CNN ; multiple-stage cascade that predicts segment proposals from bounding-box proposals.</li>
-</ul>
-<h4 id="methods-2">Methods</h4>
-<ul>
-<li><strong>system overview</strong>:</li>
-</ul>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130133741574.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130133741574.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130133741574.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130133741574.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130133741574.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130133741574.png"/></p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130151104006.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130151104006.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130151104006.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130151104006.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130151104006.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130151104006.png"/></p>
-<ul>
-<li>Mask R-CNN adopts the same two-stage procedure with an identical first stage(RPN),in the second stage .in parrallel to predicting the class and box offset, Mask R-CNN also outputs a binary mask for each RoI.</li>
-<li>Loss Function     $L = L cls + L box + L mask$</li>
-</ul>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130150329761.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130150329761.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130150329761.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130150329761.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130150329761.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130150329761.png"/></p>
-<ul>
-<li>we predict m* m mask from each ROI using an FCN[24],allowing each layer in the mask branch to maintain the explicit m*m object  spatial layout without collapsing it into a vector representation that lacks dimensions.</li>
-<li>RoIAlign : RoIPool first quantizes a floating-number RoI to the discrete granularity of the feature map, this quantized RoI is then subdivided into spatial bins which are themselves quantized, and finally feature values covered by each bin are aggregated(usually by max pooling) <!-- raw HTML omitted --> we avoid any quantization of the RoI boundaries or bins (i.e., we use x/16 instead of [x/16]). We use bilinear interpolation [18] to compute the exact values of the input features at four regularly sampled locations in each RoI bin,
-and aggregate the result (using max or average). <!-- raw HTML omitted --></li>
-</ul>
-<h4 id="notes-font-colororange去加强了解font-2">Notes <!-- raw HTML omitted -->去加强了解<!-- raw HTML omitted --></h4>
-<ul>
-<li><i class="fa-regular fa-square fa-fw" aria-hidden="true"></i> Fast/Faster R-CNN[9 29]  Fully Convolutional Networ(FCN)</li>
-<li><i class="fa-regular fa-square fa-fw" aria-hidden="true"></i> practice two MaskR-CNN code</li>
-</ul>
-</div>
-<div class="post-footer" id="post-footer">
-  <div class="post-info">
-    <div class="post-info-line">
-      <div class="post-info-mod">
-        <span title=2023-09-28&#32;23:52:01>更新于 2023-09-28&nbsp;</span>
-      </div><div class="post-info-license">
-          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
-        </div></div>
-    <div class="post-info-line">
-      <div class="post-info-md"><span><a href="liudongdong1.github.io/cnn-model-record/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%5cmodel%5clayer%5cCNN-Model-Record.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
-      <div class="post-info-share">
-        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/cnn-model-record/" data-title="CNN Model Record" data-hashtags="Model"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/cnn-model-record/" data-hashtag="Model"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/cnn-model-record/" data-title="CNN Model Record" data-image="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
-  </span>
-      </div>
-    </div>
-  </div>
-
-  <div class="post-info-more">
-    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/model/">Model</a></section>
-    <section>
-      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
-    </section>
-  </div>
-
-  <div class="post-nav"><a href="liudongdong1.github.io/deformable_conv/" class="prev" rel="prev" title="Deformable_conv"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Deformable_conv</a>
-      <a href="liudongdong1.github.io/data-glove-record/" class="next" rel="next" title="Data Glove Record">Data Glove Record<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-</article></main><footer class="footer">
-    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
-        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
-            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
-              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
-          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
-        </div></div>
-  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
-        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
-    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
-  </noscript>
-</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
-</html>
+<strong>keyword</strong>:</p><ul><li>instance segmentation, bounding-box object detection, person keypoint detection</li></ul><hr><h2 id=paper-mask-r-cnn>Paper: Mask R-CNN</h2><h4 id=summary-2>Summary</h4><ol><li>efficiently detects objects in an image while simultaneously generating a high-quality segmentation mask for each instance.</li><li>the method extends Faster R-CNN by adding a branch for predicting an object mask in parallel with existing branch for bounding box recognition.predicting segmentation masks on each Region of Interest(ROI) in parallel with existing branch for classification and bounding box regression.</li><li>propose ROIAlign that faithfully preserves exact spatial locations</li></ol><h4 id=proble-statement-2>Proble Statement</h4><ul><li><strong>R-CNN</strong>: Region-based CNN to bounding-box object detection using ROIPool ,<strong>Faster-RCNN</strong> advanced this stream by learning the attention mechanism with a Region Proposal network . Faster R-CNN consists of two stages. The first stage, called a Region Proposal Network (RPN),proposes candidate object bounding boxes. The second stage, which is in essence Fast R-CNN [9], extracts features using RoIPool from each candidate box and performs classification and bounding-box regression.</li><li><strong>Instance Segmentation</strong> bottom-up segments,DeepMask[27] learn to propose segment candidates which are classified by fast R-CNN ; multiple-stage cascade that predicts segment proposals from bounding-box proposals.</li></ul><h4 id=methods-2>Methods</h4><ul><li><strong>system overview</strong>:</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130133741574.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130133741574.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130133741574.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130133741574.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130133741574.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130133741574.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130151104006.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130151104006.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130151104006.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130151104006.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130151104006.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130151104006.png></p><ul><li>Mask R-CNN adopts the same two-stage procedure with an identical first stage(RPN),in the second stage .in parrallel to predicting the class and box offset, Mask R-CNN also outputs a binary mask for each RoI.</li><li>Loss Function $L = L cls + L box + L mask$</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130150329761.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130150329761.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130150329761.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130150329761.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130150329761.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130150329761.png></p><ul><li>we predict m* m mask from each ROI using an FCN[24],allowing each layer in the mask branch to maintain the explicit m*m object spatial layout without collapsing it into a vector representation that lacks dimensions.</li><li>RoIAlign : RoIPool first quantizes a floating-number RoI to the discrete granularity of the feature map, this quantized RoI is then subdivided into spatial bins which are themselves quantized, and finally feature values covered by each bin are aggregated(usually by max pooling) we avoid any quantization of the RoI boundaries or bins (i.e., we use x/16 instead of [x/16]). We use bilinear interpolation [18] to compute the exact values of the input features at four regularly sampled locations in each RoI bin,
+and aggregate the result (using max or average).</li></ul><h4 id=notes-font-colororange去加强了解font-2>Notes 去加强了解</h4><ul><li><i class="fa-regular fa-square fa-fw" aria-hidden=true></i> Fast/Faster R-CNN[9 29] Fully Convolutional Networ(FCN)</li><li><i class="fa-regular fa-square fa-fw" aria-hidden=true></i> practice two MaskR-CNN code</li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-28 23:52:01">更新于 2023-09-28&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/cnn-model-record/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5c%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%5cmodel%5clayer%5cCNN-Model-Record.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/cnn-model-record/ data-title="CNN Model Record" data-hashtags=Model><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/cnn-model-record/ data-hashtag=Model><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/cnn-model-record/ data-title="CNN Model Record" data-image=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010112945600.png><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/model/>Model</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/deformable_conv/ class=prev rel=prev title=Deformable_conv><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>Deformable_conv</a>
+<a href=liudongdong1.github.io/data-glove-record/ class=next rel=next title="Data Glove Record">Data Glove Record<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
+<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
+<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>

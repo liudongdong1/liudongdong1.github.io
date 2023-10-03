@@ -1,643 +1,214 @@
-<!DOCTYPE html>
-<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-  <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <meta name="robots" content="noodp" />
-    <title>Torchtext - DAY By DAY</title><meta name="author" content="LiuDongdong">
-<meta name="author-link" content="https://liudongdong1.github.io/">
-<meta name="description" content="torchtext.data.Example : 用来表示一个样本，数据&#43;标签 torchtext.vocab.Vocab: 词汇表相关 torchtext.data.Datasets: 数据集类，getitem 返回 Example实例 torchtext.data.Field : 用来定义字段的处理方法（文本字段，标签字段）" /><meta name="keywords" content='PyTorch, NLP' /><meta itemprop="name" content="Torchtext">
-<meta itemprop="description" content="torchtext.data.Example : 用来表示一个样本，数据&#43;标签 torchtext.vocab.Vocab: 词汇表相关 torchtext.data.Datasets: 数据集类，getitem 返回 Example实例 torchtext.data.Field : 用来定义字段的处理方法（文本字段，标签字段）"><meta itemprop="datePublished" content="2020-10-27T08:56:09+00:00" />
-<meta itemprop="dateModified" content="2023-09-24T17:00:05+08:00" />
-<meta itemprop="wordCount" content="1652"><meta itemprop="image" content="/logo.png"/>
-<meta itemprop="keywords" content="PyTorch,NLP," /><meta property="og:title" content="Torchtext" />
-<meta property="og:description" content="torchtext.data.Example : 用来表示一个样本，数据&#43;标签 torchtext.vocab.Vocab: 词汇表相关 torchtext.data.Datasets: 数据集类，getitem 返回 Example实例 torchtext.data.Field : 用来定义字段的处理方法（文本字段，标签字段）" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="liudongdong1.github.io/torchtext_vocab/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2020-10-27T08:56:09+00:00" />
-<meta property="article:modified_time" content="2023-09-24T17:00:05+08:00" />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/logo.png"/>
-
-<meta name="twitter:title" content="Torchtext"/>
-<meta name="twitter:description" content="torchtext.data.Example : 用来表示一个样本，数据&#43;标签 torchtext.vocab.Vocab: 词汇表相关 torchtext.data.Datasets: 数据集类，getitem 返回 Example实例 torchtext.data.Field : 用来定义字段的处理方法（文本字段，标签字段）"/>
-<meta name="application-name" content="DAY By DAY">
-<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/torchtext_vocab/" /><link rel="prev" href="liudongdong1.github.io/picturedatatype/" /><link rel="next" href="liudongdong1.github.io/chromeplugin/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "BlogPosting",
-    "headline": "Torchtext",
-    "inLanguage": "zh-CN",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "liudongdong1.github.io\/torchtext_vocab\/"
-    },"genre": "posts","keywords": "PyTorch, NLP","wordcount":  1652 ,
-    "url": "liudongdong1.github.io\/torchtext_vocab\/","datePublished": "2020-10-27T08:56:09+00:00","dateModified": "2023-09-24T17:00:05+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
-      "@type": "Organization",
-      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
-        "@type": "Person",
-        "name": "liudongdong1"
-      },"description": ""
-  }
-  </script></head>
-  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
-  <div class="header-wrapper" data-github-corner="right">
-    <div class="header-title">
-      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="DAY By DAY"
-    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
-    <nav>
-      <ul class="menu"><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/posts/"
-                
-                
-              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/categories/"
-                
-                
-              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/tags/"
-                
-                
-              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/friends/"
-                title="友情链接"
-                
-              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/about/"
-                
-                
-              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
-          </li><li class="menu-item search" id="search-desktop">
-            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
-            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-            </a>
-            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-            </a>
-            <span class="search-button search-loading" id="search-loading-desktop">
-              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-            </span>
-          </li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header><header class="mobile animate__faster" id="header-mobile">
-  <div class="header-container">
-    <div class="header-wrapper">
-      <div class="header-title">
-        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="/fixit.min.svg"
-    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
-      <div class="menu-toggle" id="menu-toggle-mobile">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-    <nav>
-      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
-            <div class="search mobile" id="search-mobile">
-              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
-              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-              </a>
-              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-              </a>
-              <span class="search-button search-loading" id="search-loading-mobile">
-                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-              </span>
-            </div>
-            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-              取消
-            </a>
-          </li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/posts/"
-                  
-                  
-                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/categories/"
-                  
-                  
-                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/tags/"
-                  
-                  
-                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/friends/"
-                  title="友情链接"
-                  
-                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/about/"
-                  
-                  
-                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
-              class="menu-item text-center"
-            ><a
-                  class="menu-link"
-                  href="https://liudongdong1.github.io/"
-                  title="GitHub"
-                  rel="noopener noreferrer" target="_blank"
-                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
-          </li></ul>
-    </nav>
-  </div>
-</header><div class="search-dropdown desktop">
-    <div id="search-dropdown-desktop"></div>
-  </div>
-  <div class="search-dropdown mobile">
-    <div id="search-dropdown-mobile"></div>
-  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
-      <div class="toc-content" id="toc-content-auto"></div></aside>
-
-  <aside class="aside-custom" id="aside-sakana">
-    
-
-<div class="sakana-widget">
-  <div class="sakana-item" id="takina-widget"></div>
-  <div class="sakana-item" id="chisato-widget"></div>
-</div>
-<script>
-  function initSakanaWidget() {
-    const takina = SakanaWidget.getCharacter('takina')
-    SakanaWidget.registerCharacter('takina-slow', takina);
-    new SakanaWidget({
-      character: 'takina-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#takina-widget');
-
-    const chisato = SakanaWidget.getCharacter('chisato')
-    SakanaWidget.registerCharacter('chisato-slow', chisato);
-    new SakanaWidget({
-      character: 'chisato-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#chisato-widget');
-  }
-</script>
-<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
-</script></aside>
-
-  <article class="page single">
-    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
-        <span>Torchtext</span>
-      </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
-      liudongdong1</span></span>
-          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/nlp/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;NLP</a></span></div>
-      <div class="post-meta-line"><span title=2020-10-27&#32;08:56:09>
-            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-27" >2020-10-27</time>
-          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1652 字&nbsp;
-        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="Torchtext">
-            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
-          </span>&nbsp;</div>
-    </div><div class="featured-image"><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg, https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg"/></div><div class="details toc" id="toc-static" kept="true">
-        <div class="details-summary toc-title">
-          <span>目录</span>
-          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-        </div>
-        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#1data-相关类">1.Data 相关类</a></li>
-        <li><a href="#2-构建词表">2. 构建词表</a></li>
-        <li><a href="#3-构建迭代器">3. 构建迭代器</a></li>
-        <li><a href="#4-使用torchtext构建的数据集用于lstm">4. 使用torchtext构建的数据集用于LSTM</a></li>
-        <li><a href="#5-evaluation机制">5. Evaluation机制</a></li>
-        <li><a href="#6-multiheadattention">6. MultiHeadAttention</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-      </div><div
-      class="content"
-      id="content"
-      
-      
-    ><blockquote>
-<p>torchtext.data.Example : 用来表示一个样本，数据+标签</p>
-<p>torchtext.vocab.Vocab: 词汇表相关</p>
-<p>torchtext.data.Datasets: 数据集类，<strong>getitem</strong> 返回 Example实例</p>
-<p>torchtext.data.Field : 用来定义字段的处理方法（文本字段，标签字段）</p>
-<ul>
-<li>
-<p>创建 Example时的预处理</p>
-</li>
-<li>
-<p>batch 时的一些处理操作。</p>
-</li>
-</ul>
-<p>torchtext.data.Iterator: 迭代器，用来生成 batch</p>
-</blockquote>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162627905.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162627905.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162627905.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162627905.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162627905.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162627905.png"/></p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027180456476.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027180456476.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027180456476.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027180456476.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027180456476.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027180456476.png"/></p>
-<h3 id="1data-相关类">1.Data 相关类</h3>
-<h4 id="11-dataset-batch-examplefield">1.1. Dataset, Batch, Example,Field</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># defines a dataset composed of examples along with its fields;</span>
-</span></span><span style="display:flex;"><span>torchtext<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>Dataset(examples, fields, filter<span style="color:#f92672">-</span>Pred<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>);
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Defines a Dataset of columns stored in CSV, TSV, or JSON format.</span>
-</span></span><span style="display:flex;"><span>torchtext<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>TabularDataset(path, format, fields, skip_header<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,scv_reader_params<span style="color:#f92672">=</span>[],<span style="color:#f92672">**</span>kwargs);
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Defines a batch of examples along with its Fields.</span>
-</span></span><span style="display:flex;"><span>torchtext<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>Batch(data<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,dataset<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,device<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Defines a single training or test example.Stores each column of the example as an attribute.</span>
-</span></span><span style="display:flex;"><span>torchtext<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>Example
-</span></span></code></pre></div><p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162219368.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162219368.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162219368.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162219368.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162219368.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162219368.png"/></p>
-<ul>
-<li>
-<blockquote>
-<p><strong>Field</strong>: Torchtext采用了一种声明式的方法来加载数据：你来告诉Torchtext你希望的数据是什么样子的，剩下的由torchtext来处理。field在默认的情况下都期望一个输入是一组单词的序列，并且将单词映射成整数。这个映射被称为vocab。如果一个field已经被数字化了并且不需要被序列化，可以将参数设置为use_vocab=False以及sequential=False。</p>
-</blockquote>
-</li>
-</ul>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027174530628.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027174530628.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027174530628.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027174530628.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027174530628.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027174530628.png"/></p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027173439055.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027173439055.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027173439055.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027173439055.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027173439055.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027173439055.png"/></p>
-<h4 id="12--具体使用">1.2.  具体使用</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> torchtext <span style="color:#f92672">import</span> data
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchtext.vocab <span style="color:#f92672">import</span> Vectors
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.nn <span style="color:#f92672">import</span> init
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> tqdm <span style="color:#f92672">import</span> tqdm
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>tokenize <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>split()
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># fix_length指定每条文本的长度，截断补长</span>
-</span></span><span style="display:flex;"><span>TEXT <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>Field(sequential<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, tokenize<span style="color:#f92672">=</span>tokenize, lower<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, fix_length<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>)
-</span></span><span style="display:flex;"><span>LABEL <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>Field(sequential<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, use_vocab<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>train_data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#39;data/train_one_label.csv&#39;</span>)
-</span></span><span style="display:flex;"><span>valid_data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#39;data/valid_one_label.csv&#39;</span>)
-</span></span><span style="display:flex;"><span>test_data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#39;data/test.csv&#39;</span>)
-</span></span><span style="display:flex;"><span>TEXT <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>Field(sequential<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, tokenize<span style="color:#f92672">=</span>tokenize, lower<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>LABEL <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>Field(sequential<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, use_vocab<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># get_dataset构造并返回Dataset所需的examples和fields</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_dataset</span>(csv_data, text_field, label_field, test<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
-</span></span><span style="display:flex;"><span>    fields <span style="color:#f92672">=</span> [(<span style="color:#e6db74">&#39;id&#39;</span>, <span style="color:#66d9ef">None</span>), (<span style="color:#e6db74">&#39;comment_text&#39;</span>, text_field), (<span style="color:#e6db74">&#39;toxic&#39;</span>, label_field)]
-</span></span><span style="display:flex;"><span>    examples <span style="color:#f92672">=</span> [] 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> test:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> text <span style="color:#f92672">in</span> tqdm(csv_data[<span style="color:#e6db74">&#39;comment_text&#39;</span>]):
-</span></span><span style="display:flex;"><span>            examples<span style="color:#f92672">.</span>append(data<span style="color:#f92672">.</span>Example<span style="color:#f92672">.</span>fromlist([<span style="color:#66d9ef">None</span>, text, <span style="color:#66d9ef">None</span>], fields))
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> text, label <span style="color:#f92672">in</span> tqdm(zip(csv_data[<span style="color:#e6db74">&#39;comment_text&#39;</span>], csv_data[<span style="color:#e6db74">&#39;toxic&#39;</span>])):
-</span></span><span style="display:flex;"><span>            examples<span style="color:#f92672">.</span>append(data<span style="color:#f92672">.</span>Example<span style="color:#f92672">.</span>fromlist([<span style="color:#66d9ef">None</span>, text, label], fields))
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> examples, fields
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 得到构建Dataset所需的examples和fields</span>
-</span></span><span style="display:flex;"><span>train_examples, train_fields <span style="color:#f92672">=</span> get_dataset(train_data, TEXT, LABEL)
-</span></span><span style="display:flex;"><span>valid_examples, valid_fields <span style="color:#f92672">=</span> get_dataset(valid_data, TEXT, LABEL)
-</span></span><span style="display:flex;"><span>test_examples, test_fields <span style="color:#f92672">=</span> get_dataset(test_data, TEXT, <span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 构建Dataset数据集</span>
-</span></span><span style="display:flex;"><span>train <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>Dataset(train_examples, train_fields)
-</span></span><span style="display:flex;"><span>valid <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>Dataset(valid_examples, valid_fields)
-</span></span><span style="display:flex;"><span>test <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>Dataset(test_examples, test_fields)
-</span></span></code></pre></div><h4 id="13-自定义数据">1.3. 自定义数据</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> torchtext <span style="color:#f92672">import</span> data
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchtext.vocab <span style="color:#f92672">import</span> Vectors
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> tqdm <span style="color:#f92672">import</span> tqdm
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> random
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>train_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;data/train_one_label.csv&#39;</span>
-</span></span><span style="display:flex;"><span>valid_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;data/valid_one_label.csv&#39;</span>
-</span></span><span style="display:flex;"><span>test_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;data/test.csv&#39;</span>
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyDataset</span>(data<span style="color:#f92672">.</span>Dataset):
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, path, text_field, label_field, test<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, aug<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, <span style="color:#f92672">**</span>kwargs):
-</span></span><span style="display:flex;"><span>        fields <span style="color:#f92672">=</span> [(<span style="color:#e6db74">&#34;id&#34;</span>, <span style="color:#66d9ef">None</span>), (<span style="color:#e6db74">&#34;comment_text&#34;</span>, text_field), (<span style="color:#e6db74">&#34;toxic&#34;</span>, label_field)]
-</span></span><span style="display:flex;"><span>        examples <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>        csv_data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(path)
-</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;read data from </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(path))
-</span></span><span style="display:flex;"><span>         
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> test:
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> text <span style="color:#f92672">in</span> tqdm(csv_data[<span style="color:#e6db74">&#39;comment_text&#39;</span>]):
-</span></span><span style="display:flex;"><span>                examples<span style="color:#f92672">.</span>append(data<span style="color:#f92672">.</span>Example<span style="color:#f92672">.</span>fromlist([<span style="color:#66d9ef">None</span>, text, <span style="color:#66d9ef">None</span>], fields))
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> text, label <span style="color:#f92672">in</span> tqdm(zip(csv_data[<span style="color:#e6db74">&#39;comment_text&#39;</span>], csv_data[<span style="color:#e6db74">&#39;toxic&#39;</span>])):
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> aug:
-</span></span><span style="display:flex;"><span>                    rate <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>random()
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> rate <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0.5</span>:
-</span></span><span style="display:flex;"><span>                        text <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>dropout(text)
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>                        text <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>shuffle(text)
-</span></span><span style="display:flex;"><span>                examples<span style="color:#f92672">.</span>append(data<span style="color:#f92672">.</span>Example<span style="color:#f92672">.</span>fromlist([<span style="color:#66d9ef">None</span>, text, label<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], fields)
-</span></span><span style="display:flex;"><span>        super(MyDataset, self)<span style="color:#f92672">.</span>__init__(examples, fields, <span style="color:#f92672">**</span>kwargs)
-</span></span><span style="display:flex;"><span>     
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">shuffle</span>(self, text):
-</span></span><span style="display:flex;"><span>        text <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>permutation(text<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>split())
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">.</span>join(text)
-</span></span><span style="display:flex;"><span>         
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dropout</span>(self, text, p<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>):
-</span></span><span style="display:flex;"><span>        text <span style="color:#f92672">=</span> text<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>split()
-</span></span><span style="display:flex;"><span>        len_ <span style="color:#f92672">=</span> len(text)
-</span></span><span style="display:flex;"><span>        indexs <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(len_, int(len_ <span style="color:#f92672">*</span> p))
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> indexs:
-</span></span><span style="display:flex;"><span>            text[i] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
-</span></span><span style="display:flex;"><span>        retrurn <span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">.</span>join(text)
-</span></span><span style="display:flex;"><span>train <span style="color:#f92672">=</span> MyDataset(train_path, text_field<span style="color:#f92672">=</span>TEXT, label_field<span style="color:#f92672">=</span>LABEL, test<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, aug<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>valid <span style="color:#f92672">=</span> MyDataset(valid_path, text_field<span style="color:#f92672">=</span>TEXT, label_field<span style="color:#f92672">=</span>LABEL, test<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, aug<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>test <span style="color:#f92672">=</span> MyDataset(test_path, text_field<span style="color:#f92672">=</span>TEXT, label_field<span style="color:#f92672">=</span>LABEL, test<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, aug<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-</span></span></code></pre></div><h4 id="14--pytorch-自带数据集使用">1.4.  pytorch 自带数据集使用</h4>
-<blockquote>
-<p>All datasets are subclasses of <a href="https://pytorch.org/text/data.html#torchtext.data.Dataset"target="_blank" rel="external nofollow noopener noreferrer"><code>torchtext.data.Dataset</code><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>, which inherits from <a href="https://pytorch.org/docs/0.3.0/data.html#torch.utils.data.Dataset"target="_blank" rel="external nofollow noopener noreferrer"><code>torch.utils.data.Dataset</code><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> i.e, they have <code>split</code> and <code>iters</code> methods implemented.</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#      使用方式一</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># set up fields</span>
-</span></span><span style="display:flex;"><span>TEXT <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>Field(lower<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, include_lengths<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, batch_first<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>LABEL <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>Field(sequential<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># make splits for data</span>
-</span></span><span style="display:flex;"><span>train, test <span style="color:#f92672">=</span> datasets<span style="color:#f92672">.</span>IMDB<span style="color:#f92672">.</span>splits(TEXT, LABEL)
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># build the vocabulary</span>
-</span></span><span style="display:flex;"><span>TEXT<span style="color:#f92672">.</span>build_vocab(train, vectors<span style="color:#f92672">=</span>GloVe(name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;6B&#39;</span>, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>))
-</span></span><span style="display:flex;"><span>LABEL<span style="color:#f92672">.</span>build_vocab(train)
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># make iterator for splits</span>
-</span></span><span style="display:flex;"><span>train_iter, test_iter <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>BucketIterator<span style="color:#f92672">.</span>splits(
-</span></span><span style="display:flex;"><span>    (train, test), batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, device<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#      使用方式二</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># use default configurations</span>
-</span></span><span style="display:flex;"><span>train_iter, test_iter <span style="color:#f92672">=</span> datasets<span style="color:#f92672">.</span>IMDB<span style="color:#f92672">.</span>iters(batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
-</span></span></code></pre></div><h3 id="2-构建词表">2. 构建词表</h3>
-<h4 id="21-tokenizer">2.1. tokenizer</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Generate tokenizer function for a string sentence.</span>
-</span></span><span style="display:flex;"><span>torchtext<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>get_tokenizer(<span style="color:#f92672">*</span>tokenizer<span style="color:#f92672">*</span>, <span style="color:#f92672">*</span>language<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;en&#39;</span><span style="color:#f92672">*</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># return an iterator that yields the given tokens and their ngrams</span>
-</span></span><span style="display:flex;"><span>torchtext<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>ngrams_iterator(token_list,ngrams)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>token_list <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;here&#39;</span>, <span style="color:#e6db74">&#39;we&#39;</span>, <span style="color:#e6db74">&#39;are&#39;</span>]
-</span></span><span style="display:flex;"><span>list(ngrams_iterator(token_list, <span style="color:#ae81ff">2</span>))
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># &gt;&gt;&gt; [&#39;here&#39;, &#39;here we&#39;, &#39;we&#39;, &#39;we are&#39;, &#39;are&#39;]</span>
-</span></span></code></pre></div><p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027181930226.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027181930226.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027181930226.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027181930226.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027181930226.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027181930226.png"/></p>
-<blockquote>
-<p>所谓构建词表，即需要给每个单词编码，也就是用数字表示每个单词，这样才能传入模型。</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#   方式一： 使用build_vocab()方法构建词表</span>
-</span></span><span style="display:flex;"><span>TEXT<span style="color:#f92672">.</span>build_vocab(train)
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 统计词频</span>
-</span></span><span style="display:flex;"><span>TEXT<span style="color:#f92672">.</span>vocab<span style="color:#f92672">.</span>freqs<span style="color:#f92672">.</span>most_common(<span style="color:#ae81ff">10</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#   方式二： 使用预训练的词向量</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#         2.1. 使用pytorch默认支持的预训练词向量</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchtext.vocab <span style="color:#f92672">import</span> GloVe
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchtext <span style="color:#f92672">import</span> data
-</span></span><span style="display:flex;"><span>TEXT <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>Field(sequential<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>TEXT<span style="color:#f92672">.</span>build_vocab(train, vectors<span style="color:#f92672">=</span>GloVe(name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;6B&#39;</span>, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>))
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#默认情况下，会自动下载对应的预训练词向量文件到当前文件夹下的.vector_cache目录下</span>
-</span></span><span style="display:flex;"><span>TEXT<span style="color:#f92672">.</span>build_vocab(train, vectors<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;glove.6B.300d&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#          2.2. 使用外部预训练好的词向量</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(<span style="color:#e6db74">&#39;.vector_cache&#39;</span>):
-</span></span><span style="display:flex;"><span>    os<span style="color:#f92672">.</span>mkdir(<span style="color:#e6db74">&#39;.vector_cache&#39;</span>)
-</span></span><span style="display:flex;"><span>vectors <span style="color:#f92672">=</span> Vectors(name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;myvector/glove/glove.6B.200d.txt&#39;</span>)
-</span></span><span style="display:flex;"><span>TEXT<span style="color:#f92672">.</span>build_vocab(train, vectors<span style="color:#f92672">=</span>vectors)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#         2.3 vetor 使用</span>
-</span></span><span style="display:flex;"><span>examples <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;chip&#39;</span>, <span style="color:#e6db74">&#39;baby&#39;</span>, <span style="color:#e6db74">&#39;Beautiful&#39;</span>]
-</span></span><span style="display:flex;"><span>vec <span style="color:#f92672">=</span> text<span style="color:#f92672">.</span>vocab<span style="color:#f92672">.</span>GloVe(name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;6B&#39;</span>, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Look up embedding vectors of tokens.</span>
-</span></span><span style="display:flex;"><span>ret <span style="color:#f92672">=</span> vec<span style="color:#f92672">.</span>get_vecs_by_tokens(tokens, lower_case_backup<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span></code></pre></div><p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png"/></p>
-<!-- raw HTML omitted -->
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175043317.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175043317.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175043317.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175043317.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175043317.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175043317.png"/></p>
-<h3 id="3-构建迭代器">3. 构建迭代器</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> torchtext.data <span style="color:#f92672">import</span> Iterator, BucketIterator
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 若只对训练集构造迭代器</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># train_iter = data.BucketIterator(dataset=train, batch_size=8, shuffle=True, sort_within_batch=False, repeat=False)</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#BucketIterator相比Iterator的优势是会自动选取样本长度相似的数据来构建批数据。但是在测试集中一般不想改变样本顺序，因此测试集使用Iterator迭代器来构建。</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 若同时对训练集和验证集进行迭代器构建</span>
-</span></span><span style="display:flex;"><span>train_iter, val_iter <span style="color:#f92672">=</span> BucketIterator<span style="color:#f92672">.</span>splits(
-</span></span><span style="display:flex;"><span>        (train, valid),
-</span></span><span style="display:flex;"><span>        batch_size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>),
-</span></span><span style="display:flex;"><span>        device<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>, <span style="color:#75715e"># 如果使用gpu，将-1更换为GPU的编号</span>
-</span></span><span style="display:flex;"><span>        sort_key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: len(x<span style="color:#f92672">.</span>comment_text),
-</span></span><span style="display:flex;"><span>        sort_within_batch<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
-</span></span><span style="display:flex;"><span>        repeat<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>test_iter <span style="color:#f92672">=</span> Iterator(test, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>, device<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>, sort<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, sort_within_batch<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, repeat<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> idx, batch <span style="color:#f92672">in</span> enumerate(train_iter):
-</span></span><span style="display:flex;"><span>    text, label <span style="color:#f92672">=</span> batch<span style="color:#f92672">.</span>comment_text, batch<span style="color:#f92672">.</span>toxic
-</span></span></code></pre></div><h3 id="4-使用torchtext构建的数据集用于lstm">4. 使用torchtext构建的数据集用于LSTM</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.optim <span style="color:#66d9ef">as</span> optim
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>weight_matrix <span style="color:#f92672">=</span> TEXT<span style="color:#f92672">.</span>vocab<span style="color:#f92672">.</span>vectors
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LSTM</span>(nn<span style="color:#f92672">.</span>Module):
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
-</span></span><span style="display:flex;"><span>        super(LSTM, self)<span style="color:#f92672">.</span>__init__()
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>word_embeddings <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Embedding(len(TEXT<span style="color:#f92672">.</span>vocab), <span style="color:#ae81ff">300</span>)
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>word_embeddings<span style="color:#f92672">.</span>weight<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>copy_(weight_matrix)
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>lstm <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>LSTM(input_size<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>, hidden_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, num_layer<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>decoder <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">2</span>)
-</span></span><span style="display:flex;"><span>     
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, sentence):
-</span></span><span style="display:flex;"><span>        embeds <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>word_embeddings(sentence)
-</span></span><span style="display:flex;"><span>        lstm_out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>lstm(embeds)[<span style="color:#ae81ff">0</span>]
-</span></span><span style="display:flex;"><span>        final <span style="color:#f92672">=</span> lstm_out[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
-</span></span><span style="display:flex;"><span>        y <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>decoder(final)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> y
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">=</span> LSTM()
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>train()
-</span></span><span style="display:flex;"><span>    optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>Adam(filter(<span style="color:#66d9ef">lambda</span> p: p<span style="color:#f92672">.</span>requires_grad, model<span style="color:#f92672">.</span>parameters()), lr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>)
-</span></span><span style="display:flex;"><span>    loss_funciton <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> epoch, batch <span style="color:#f92672">in</span> enumerate(train_iter):
-</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>zero_grad()
-</span></span><span style="display:flex;"><span>        start <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
-</span></span><span style="display:flex;"><span>        predicted <span style="color:#f92672">=</span> model(batch<span style="color:#f92672">.</span>comment_text)
-</span></span><span style="display:flex;"><span>         
-</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> loss_function(predicted, batch<span style="color:#f92672">.</span>toxic)
-</span></span><span style="display:flex;"><span>        loss<span style="color:#f92672">.</span>backward()
-</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>step()
-</span></span><span style="display:flex;"><span>        print(loss)
-</span></span></code></pre></div><h3 id="5-evaluation机制">5. Evaluation机制</h3>
-<h4 id="51-bleu_score">5.1. Bleu_score</h4>
-<blockquote>
-<p>Computes the BLEU score between a candidate translation corpus and a references translation corpus. Based on <a href="https://www.aclweb.org/anthology/P02-1040.pdf"target="_blank" rel="external nofollow noopener noreferrer">https://www.aclweb.org/anthology/P02-1040.pdf<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> torchtext.data.metrics <span style="color:#f92672">import</span> bleu_score
-</span></span><span style="display:flex;"><span>candidate_corpus <span style="color:#f92672">=</span> [[<span style="color:#e6db74">&#39;My&#39;</span>, <span style="color:#e6db74">&#39;full&#39;</span>, <span style="color:#e6db74">&#39;pytorch&#39;</span>, <span style="color:#e6db74">&#39;test&#39;</span>], [<span style="color:#e6db74">&#39;Another&#39;</span>, <span style="color:#e6db74">&#39;Sentence&#39;</span>]]
-</span></span><span style="display:flex;"><span>references_corpus <span style="color:#f92672">=</span> [[[<span style="color:#e6db74">&#39;My&#39;</span>, <span style="color:#e6db74">&#39;full&#39;</span>, <span style="color:#e6db74">&#39;pytorch&#39;</span>, <span style="color:#e6db74">&#39;test&#39;</span>], [<span style="color:#e6db74">&#39;Completely&#39;</span>, <span style="color:#e6db74">&#39;Different&#39;</span>]], [[<span style="color:#e6db74">&#39;No&#39;</span>, <span style="color:#e6db74">&#39;Match&#39;</span>]]]
-</span></span><span style="display:flex;"><span>bleu_score(candidate_corpus, references_corpus)
-</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0.8408964276313782</span>
-</span></span></code></pre></div><h4 id="52-rouge">5.2. ROUGE</h4>
-<blockquote>
-<p>ROUGEROUGE 由 Chin-Yew Lin 在 2004 年的论文<a href="https://www.aclweb.org/anthology/W04-1013.pdf"target="_blank" rel="external nofollow noopener noreferrer">《ROUGE: A Package for Automatic Evaluation of Summaries》<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>中提出。与 BLEUBLEU 类似，通过统计生成的摘要与参考摘要集合之间重叠的基本单元（nn 元组）的数目来评估摘要的质量，该方法已成为自动文摘系统评价的主流方法。</p>
-</blockquote>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027183228807.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027183228807.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027183228807.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027183228807.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027183228807.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027183228807.png"/></p>
-<h3 id="6-multiheadattention">6. MultiHeadAttention</h3>
-<ul>
-<li><a href="https://pytorch.org/text/nn_modules.html"target="_blank" rel="external nofollow noopener noreferrer">https://pytorch.org/text/nn_modules.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li>学习链接：https://blog.nowcoder.net/n/3a8d2c1b05354f3b942edfd4966bb0c1</li>
-<li><a href="https://xiaosheng.run/2020/08/13/article184/"target="_blank" rel="external nofollow noopener noreferrer">https://xiaosheng.run/2020/08/13/article184/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ul>
-</div>
-<div class="post-footer" id="post-footer">
-  <div class="post-info">
-    <div class="post-info-line">
-      <div class="post-info-mod">
-        <span title=2023-09-24&#32;17:00:05>更新于 2023-09-24&nbsp;</span>
-      </div><div class="post-info-license">
-          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
-        </div></div>
-    <div class="post-info-line">
-      <div class="post-info-md"><span><a href="liudongdong1.github.io/torchtext_vocab/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e8%87%aa%e7%84%b6%e8%af%ad%e8%a8%80%5cFramework%5cTorchtext_vocab.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
-      <div class="post-info-share">
-        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/torchtext_vocab/" data-title="Torchtext" data-hashtags="PyTorch,NLP"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/torchtext_vocab/" data-hashtag="PyTorch"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/torchtext_vocab/" data-title="Torchtext" data-image="https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
-  </span>
-      </div>
-    </div>
-  </div>
-
-  <div class="post-info-more">
-    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/pytorch/">Pytorch</a>,&nbsp;<a href="liudongdong1.github.io/tags/nlp/">NLP</a></section>
-    <section>
-      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
-    </section>
-  </div>
-
-  <div class="post-nav"><a href="liudongdong1.github.io/picturedatatype/" class="prev" rel="prev" title="PictureDataType"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>PictureDataType</a>
-      <a href="liudongdong1.github.io/chromeplugin/" class="next" rel="next" title="ChromePlugin">ChromePlugin<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-</article></main><footer class="footer">
-    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
-        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
-            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
-              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
-          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
-        </div></div>
-  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
-        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
-    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
-  </noscript>
-</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
-</html>
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>Torchtext - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="torchtext.data.Example : 用来表示一个样本，数据+标签 torchtext.vocab.Vocab: 词汇表相关 torchtext.data.Datasets: 数据集类，getitem 返回 Example实例 torchtext.data.Field : 用来定义字段的处理方法（文本字段，标签字段）"><meta name=keywords content="PyTorch,NLP"><meta itemprop=name content="Torchtext"><meta itemprop=description content="torchtext.data.Example : 用来表示一个样本，数据+标签 torchtext.vocab.Vocab: 词汇表相关 torchtext.data.Datasets: 数据集类，getitem 返回 Example实例 torchtext.data.Field : 用来定义字段的处理方法（文本字段，标签字段）"><meta itemprop=datePublished content="2020-10-27T08:56:09+00:00"><meta itemprop=dateModified content="2023-09-24T17:00:05+08:00"><meta itemprop=wordCount content="1652"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="PyTorch,NLP,"><meta property="og:title" content="Torchtext"><meta property="og:description" content="torchtext.data.Example : 用来表示一个样本，数据+标签 torchtext.vocab.Vocab: 词汇表相关 torchtext.data.Datasets: 数据集类，getitem 返回 Example实例 torchtext.data.Field : 用来定义字段的处理方法（文本字段，标签字段）"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/torchtext_vocab/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-10-27T08:56:09+00:00"><meta property="article:modified_time" content="2023-09-24T17:00:05+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="Torchtext"><meta name=twitter:description content="torchtext.data.Example : 用来表示一个样本，数据+标签 torchtext.vocab.Vocab: 词汇表相关 torchtext.data.Datasets: 数据集类，getitem 返回 Example实例 torchtext.data.Field : 用来定义字段的处理方法（文本字段，标签字段）"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/torchtext_vocab/><link rel=prev href=liudongdong1.github.io/picturedatatype/><link rel=next href=liudongdong1.github.io/chromeplugin/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Torchtext","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/torchtext_vocab\/"},"genre":"posts","keywords":"PyTorch, NLP","wordcount":1652,"url":"liudongdong1.github.io\/torchtext_vocab\/","datePublished":"2020-10-27T08:56:09+00:00","dateModified":"2023-09-24T17:00:05+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"liudongdong1"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
+<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>Torchtext</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle" aria-hidden=true></i>
+liudongdong1</span></span>
+<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/nlp/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;NLP</a></span></div><div class=post-meta-line><span title="2020-10-27 08:56:09"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-10-27>2020-10-27</time>
+</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1652 字&nbsp;
+<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title=Torchtext>
+<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg, https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg title=https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg></div><div class="details toc" id=toc-static kept=true><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#1data-相关类>1.Data 相关类</a></li><li><a href=#2-构建词表>2. 构建词表</a></li><li><a href=#3-构建迭代器>3. 构建迭代器</a></li><li><a href=#4-使用torchtext构建的数据集用于lstm>4. 使用torchtext构建的数据集用于LSTM</a></li><li><a href=#5-evaluation机制>5. Evaluation机制</a></li><li><a href=#6-multiheadattention>6. MultiHeadAttention</a></li></ul></li></ul></nav></div></div><div class=content id=content><blockquote><p>torchtext.data.Example : 用来表示一个样本，数据+标签</p><p>torchtext.vocab.Vocab: 词汇表相关</p><p>torchtext.data.Datasets: 数据集类，<strong>getitem</strong> 返回 Example实例</p><p>torchtext.data.Field : 用来定义字段的处理方法（文本字段，标签字段）</p><ul><li><p>创建 Example时的预处理</p></li><li><p>batch 时的一些处理操作。</p></li></ul><p>torchtext.data.Iterator: 迭代器，用来生成 batch</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162627905.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162627905.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162627905.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162627905.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162627905.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162627905.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027180456476.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027180456476.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027180456476.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027180456476.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027180456476.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027180456476.png></p><h3 id=1data-相关类>1.Data 相关类</h3><h4 id=11-dataset-batch-examplefield>1.1. Dataset, Batch, Example,Field</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># defines a dataset composed of examples along with its fields;</span>
+</span></span><span style=display:flex><span>torchtext<span style=color:#f92672>.</span>data<span style=color:#f92672>.</span>Dataset(examples, fields, filter<span style=color:#f92672>-</span>Pred<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>);
+</span></span><span style=display:flex><span><span style=color:#75715e>#Defines a Dataset of columns stored in CSV, TSV, or JSON format.</span>
+</span></span><span style=display:flex><span>torchtext<span style=color:#f92672>.</span>data<span style=color:#f92672>.</span>TabularDataset(path, format, fields, skip_header<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>,scv_reader_params<span style=color:#f92672>=</span>[],<span style=color:#f92672>**</span>kwargs);
+</span></span><span style=display:flex><span><span style=color:#75715e>#Defines a batch of examples along with its Fields.</span>
+</span></span><span style=display:flex><span>torchtext<span style=color:#f92672>.</span>data<span style=color:#f92672>.</span>Batch(data<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>,dataset<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>,device<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>)
+</span></span><span style=display:flex><span><span style=color:#75715e>#Defines a single training or test example.Stores each column of the example as an attribute.</span>
+</span></span><span style=display:flex><span>torchtext<span style=color:#f92672>.</span>data<span style=color:#f92672>.</span>Example
+</span></span></code></pre></div><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162219368.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162219368.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162219368.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162219368.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162219368.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162219368.png></p><ul><li><blockquote><p><strong>Field</strong>: Torchtext采用了一种声明式的方法来加载数据：你来告诉Torchtext你希望的数据是什么样子的，剩下的由torchtext来处理。field在默认的情况下都期望一个输入是一组单词的序列，并且将单词映射成整数。这个映射被称为vocab。如果一个field已经被数字化了并且不需要被序列化，可以将参数设置为use_vocab=False以及sequential=False。</p></blockquote></li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027174530628.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027174530628.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027174530628.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027174530628.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027174530628.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027174530628.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027173439055.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027173439055.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027173439055.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027173439055.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027173439055.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027173439055.png></p><h4 id=12--具体使用>1.2. 具体使用</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> torchtext <span style=color:#f92672>import</span> data
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> torchtext.vocab <span style=color:#f92672>import</span> Vectors
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> torch.nn <span style=color:#f92672>import</span> init
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> tqdm <span style=color:#f92672>import</span> tqdm
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>tokenize <span style=color:#f92672>=</span> <span style=color:#66d9ef>lambda</span> x: x<span style=color:#f92672>.</span>split()
+</span></span><span style=display:flex><span><span style=color:#75715e># fix_length指定每条文本的长度，截断补长</span>
+</span></span><span style=display:flex><span>TEXT <span style=color:#f92672>=</span> data<span style=color:#f92672>.</span>Field(sequential<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, tokenize<span style=color:#f92672>=</span>tokenize, lower<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, fix_length<span style=color:#f92672>=</span><span style=color:#ae81ff>200</span>)
+</span></span><span style=display:flex><span>LABEL <span style=color:#f92672>=</span> data<span style=color:#f92672>.</span>Field(sequential<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>, use_vocab<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>train_data <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_csv(<span style=color:#e6db74>&#39;data/train_one_label.csv&#39;</span>)
+</span></span><span style=display:flex><span>valid_data <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_csv(<span style=color:#e6db74>&#39;data/valid_one_label.csv&#39;</span>)
+</span></span><span style=display:flex><span>test_data <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_csv(<span style=color:#e6db74>&#39;data/test.csv&#39;</span>)
+</span></span><span style=display:flex><span>TEXT <span style=color:#f92672>=</span> data<span style=color:#f92672>.</span>Field(sequential<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, tokenize<span style=color:#f92672>=</span>tokenize, lower<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>LABEL <span style=color:#f92672>=</span> data<span style=color:#f92672>.</span>Field(sequential<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>, use_vocab<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#75715e># get_dataset构造并返回Dataset所需的examples和fields</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_dataset</span>(csv_data, text_field, label_field, test<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>):
+</span></span><span style=display:flex><span>    fields <span style=color:#f92672>=</span> [(<span style=color:#e6db74>&#39;id&#39;</span>, <span style=color:#66d9ef>None</span>), (<span style=color:#e6db74>&#39;comment_text&#39;</span>, text_field), (<span style=color:#e6db74>&#39;toxic&#39;</span>, label_field)]
+</span></span><span style=display:flex><span>    examples <span style=color:#f92672>=</span> [] 
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> test:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> text <span style=color:#f92672>in</span> tqdm(csv_data[<span style=color:#e6db74>&#39;comment_text&#39;</span>]):
+</span></span><span style=display:flex><span>            examples<span style=color:#f92672>.</span>append(data<span style=color:#f92672>.</span>Example<span style=color:#f92672>.</span>fromlist([<span style=color:#66d9ef>None</span>, text, <span style=color:#66d9ef>None</span>], fields))
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> text, label <span style=color:#f92672>in</span> tqdm(zip(csv_data[<span style=color:#e6db74>&#39;comment_text&#39;</span>], csv_data[<span style=color:#e6db74>&#39;toxic&#39;</span>])):
+</span></span><span style=display:flex><span>            examples<span style=color:#f92672>.</span>append(data<span style=color:#f92672>.</span>Example<span style=color:#f92672>.</span>fromlist([<span style=color:#66d9ef>None</span>, text, label], fields))
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> examples, fields
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#75715e># 得到构建Dataset所需的examples和fields</span>
+</span></span><span style=display:flex><span>train_examples, train_fields <span style=color:#f92672>=</span> get_dataset(train_data, TEXT, LABEL)
+</span></span><span style=display:flex><span>valid_examples, valid_fields <span style=color:#f92672>=</span> get_dataset(valid_data, TEXT, LABEL)
+</span></span><span style=display:flex><span>test_examples, test_fields <span style=color:#f92672>=</span> get_dataset(test_data, TEXT, <span style=color:#66d9ef>None</span>, <span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#75715e># 构建Dataset数据集</span>
+</span></span><span style=display:flex><span>train <span style=color:#f92672>=</span> data<span style=color:#f92672>.</span>Dataset(train_examples, train_fields)
+</span></span><span style=display:flex><span>valid <span style=color:#f92672>=</span> data<span style=color:#f92672>.</span>Dataset(valid_examples, valid_fields)
+</span></span><span style=display:flex><span>test <span style=color:#f92672>=</span> data<span style=color:#f92672>.</span>Dataset(test_examples, test_fields)
+</span></span></code></pre></div><h4 id=13-自定义数据>1.3. 自定义数据</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> torchtext <span style=color:#f92672>import</span> data
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> torchtext.vocab <span style=color:#f92672>import</span> Vectors
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> tqdm <span style=color:#f92672>import</span> tqdm
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> pandas <span style=color:#66d9ef>as</span> pd
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> torch
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> random
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> os
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>train_path <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;data/train_one_label.csv&#39;</span>
+</span></span><span style=display:flex><span>valid_path <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;data/valid_one_label.csv&#39;</span>
+</span></span><span style=display:flex><span>test_path <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;data/test.csv&#39;</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>MyDataset</span>(data<span style=color:#f92672>.</span>Dataset):
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self, path, text_field, label_field, test<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>, aug<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>, <span style=color:#f92672>**</span>kwargs):
+</span></span><span style=display:flex><span>        fields <span style=color:#f92672>=</span> [(<span style=color:#e6db74>&#34;id&#34;</span>, <span style=color:#66d9ef>None</span>), (<span style=color:#e6db74>&#34;comment_text&#34;</span>, text_field), (<span style=color:#e6db74>&#34;toxic&#34;</span>, label_field)]
+</span></span><span style=display:flex><span>        examples <span style=color:#f92672>=</span> []
+</span></span><span style=display:flex><span>        csv_data <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_csv(path)
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#39;read data from </span><span style=color:#e6db74>{}</span><span style=color:#e6db74>&#39;</span><span style=color:#f92672>.</span>format(path))
+</span></span><span style=display:flex><span>         
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> test:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>for</span> text <span style=color:#f92672>in</span> tqdm(csv_data[<span style=color:#e6db74>&#39;comment_text&#39;</span>]):
+</span></span><span style=display:flex><span>                examples<span style=color:#f92672>.</span>append(data<span style=color:#f92672>.</span>Example<span style=color:#f92672>.</span>fromlist([<span style=color:#66d9ef>None</span>, text, <span style=color:#66d9ef>None</span>], fields))
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>for</span> text, label <span style=color:#f92672>in</span> tqdm(zip(csv_data[<span style=color:#e6db74>&#39;comment_text&#39;</span>], csv_data[<span style=color:#e6db74>&#39;toxic&#39;</span>])):
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> aug:
+</span></span><span style=display:flex><span>                    rate <span style=color:#f92672>=</span> random<span style=color:#f92672>.</span>random()
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>if</span> rate <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>0.5</span>:
+</span></span><span style=display:flex><span>                        text <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>dropout(text)
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>                        text <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>shuffle(text)
+</span></span><span style=display:flex><span>                examples<span style=color:#f92672>.</span>append(data<span style=color:#f92672>.</span>Example<span style=color:#f92672>.</span>fromlist([<span style=color:#66d9ef>None</span>, text, label<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>], fields)
+</span></span><span style=display:flex><span>        super(MyDataset, self)<span style=color:#f92672>.</span>__init__(examples, fields, <span style=color:#f92672>**</span>kwargs)
+</span></span><span style=display:flex><span>     
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>shuffle</span>(self, text):
+</span></span><span style=display:flex><span>        text <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>random<span style=color:#f92672>.</span>permutation(text<span style=color:#f92672>.</span>strip()<span style=color:#f92672>.</span>split())
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39; &#39;</span><span style=color:#f92672>.</span>join(text)
+</span></span><span style=display:flex><span>         
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>dropout</span>(self, text, p<span style=color:#f92672>=</span><span style=color:#ae81ff>0.5</span>):
+</span></span><span style=display:flex><span>        text <span style=color:#f92672>=</span> text<span style=color:#f92672>.</span>strip()<span style=color:#f92672>.</span>split()
+</span></span><span style=display:flex><span>        len_ <span style=color:#f92672>=</span> len(text)
+</span></span><span style=display:flex><span>        indexs <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>random<span style=color:#f92672>.</span>choice(len_, int(len_ <span style=color:#f92672>*</span> p))
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> indexs:
+</span></span><span style=display:flex><span>            text[i] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;&#39;</span>
+</span></span><span style=display:flex><span>        retrurn <span style=color:#e6db74>&#39; &#39;</span><span style=color:#f92672>.</span>join(text)
+</span></span><span style=display:flex><span>train <span style=color:#f92672>=</span> MyDataset(train_path, text_field<span style=color:#f92672>=</span>TEXT, label_field<span style=color:#f92672>=</span>LABEL, test<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>, aug<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span>valid <span style=color:#f92672>=</span> MyDataset(valid_path, text_field<span style=color:#f92672>=</span>TEXT, label_field<span style=color:#f92672>=</span>LABEL, test<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>, aug<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span>test <span style=color:#f92672>=</span> MyDataset(test_path, text_field<span style=color:#f92672>=</span>TEXT, label_field<span style=color:#f92672>=</span>LABEL, test<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, aug<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>)
+</span></span></code></pre></div><h4 id=14--pytorch-自带数据集使用>1.4. pytorch 自带数据集使用</h4><blockquote><p>All datasets are subclasses of <a href=https://pytorch.org/text/data.html#torchtext.data.Dataset target=_blank rel="external nofollow noopener noreferrer"><code>torchtext.data.Dataset</code><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a>, which inherits from <a href=https://pytorch.org/docs/0.3.0/data.html#torch.utils.data.Dataset target=_blank rel="external nofollow noopener noreferrer"><code>torch.utils.data.Dataset</code><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> i.e, they have <code>split</code> and <code>iters</code> methods implemented.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#      使用方式一</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># set up fields</span>
+</span></span><span style=display:flex><span>TEXT <span style=color:#f92672>=</span> data<span style=color:#f92672>.</span>Field(lower<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, include_lengths<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, batch_first<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>LABEL <span style=color:#f92672>=</span> data<span style=color:#f92672>.</span>Field(sequential<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
+</span></span><span style=display:flex><span><span style=color:#75715e># make splits for data</span>
+</span></span><span style=display:flex><span>train, test <span style=color:#f92672>=</span> datasets<span style=color:#f92672>.</span>IMDB<span style=color:#f92672>.</span>splits(TEXT, LABEL)
+</span></span><span style=display:flex><span><span style=color:#75715e># build the vocabulary</span>
+</span></span><span style=display:flex><span>TEXT<span style=color:#f92672>.</span>build_vocab(train, vectors<span style=color:#f92672>=</span>GloVe(name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;6B&#39;</span>, dim<span style=color:#f92672>=</span><span style=color:#ae81ff>300</span>))
+</span></span><span style=display:flex><span>LABEL<span style=color:#f92672>.</span>build_vocab(train)
+</span></span><span style=display:flex><span><span style=color:#75715e># make iterator for splits</span>
+</span></span><span style=display:flex><span>train_iter, test_iter <span style=color:#f92672>=</span> data<span style=color:#f92672>.</span>BucketIterator<span style=color:#f92672>.</span>splits(
+</span></span><span style=display:flex><span>    (train, test), batch_size<span style=color:#f92672>=</span><span style=color:#ae81ff>3</span>, device<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span><span style=color:#75715e>#      使用方式二</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># use default configurations</span>
+</span></span><span style=display:flex><span>train_iter, test_iter <span style=color:#f92672>=</span> datasets<span style=color:#f92672>.</span>IMDB<span style=color:#f92672>.</span>iters(batch_size<span style=color:#f92672>=</span><span style=color:#ae81ff>4</span>)
+</span></span></code></pre></div><h3 id=2-构建词表>2. 构建词表</h3><h4 id=21-tokenizer>2.1. tokenizer</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># Generate tokenizer function for a string sentence.</span>
+</span></span><span style=display:flex><span>torchtext<span style=color:#f92672>.</span>data<span style=color:#f92672>.</span>utils<span style=color:#f92672>.</span>get_tokenizer(<span style=color:#f92672>*</span>tokenizer<span style=color:#f92672>*</span>, <span style=color:#f92672>*</span>language<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;en&#39;</span><span style=color:#f92672>*</span>)
+</span></span><span style=display:flex><span><span style=color:#75715e># return an iterator that yields the given tokens and their ngrams</span>
+</span></span><span style=display:flex><span>torchtext<span style=color:#f92672>.</span>data<span style=color:#f92672>.</span>utils<span style=color:#f92672>.</span>ngrams_iterator(token_list,ngrams)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>token_list <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;here&#39;</span>, <span style=color:#e6db74>&#39;we&#39;</span>, <span style=color:#e6db74>&#39;are&#39;</span>]
+</span></span><span style=display:flex><span>list(ngrams_iterator(token_list, <span style=color:#ae81ff>2</span>))
+</span></span><span style=display:flex><span><span style=color:#75715e># &gt;&gt;&gt; [&#39;here&#39;, &#39;here we&#39;, &#39;we&#39;, &#39;we are&#39;, &#39;are&#39;]</span>
+</span></span></code></pre></div><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027181930226.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027181930226.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027181930226.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027181930226.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027181930226.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027181930226.png></p><blockquote><p>所谓构建词表，即需要给每个单词编码，也就是用数字表示每个单词，这样才能传入模型。</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#   方式一： 使用build_vocab()方法构建词表</span>
+</span></span><span style=display:flex><span>TEXT<span style=color:#f92672>.</span>build_vocab(train)
+</span></span><span style=display:flex><span><span style=color:#75715e># 统计词频</span>
+</span></span><span style=display:flex><span>TEXT<span style=color:#f92672>.</span>vocab<span style=color:#f92672>.</span>freqs<span style=color:#f92672>.</span>most_common(<span style=color:#ae81ff>10</span>)
+</span></span><span style=display:flex><span><span style=color:#75715e>#   方式二： 使用预训练的词向量</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#         2.1. 使用pytorch默认支持的预训练词向量</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> torchtext.vocab <span style=color:#f92672>import</span> GloVe
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> torchtext <span style=color:#f92672>import</span> data
+</span></span><span style=display:flex><span>TEXT <span style=color:#f92672>=</span> data<span style=color:#f92672>.</span>Field(sequential<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>TEXT<span style=color:#f92672>.</span>build_vocab(train, vectors<span style=color:#f92672>=</span>GloVe(name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;6B&#39;</span>, dim<span style=color:#f92672>=</span><span style=color:#ae81ff>300</span>))
+</span></span><span style=display:flex><span><span style=color:#75715e>#默认情况下，会自动下载对应的预训练词向量文件到当前文件夹下的.vector_cache目录下</span>
+</span></span><span style=display:flex><span>TEXT<span style=color:#f92672>.</span>build_vocab(train, vectors<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;glove.6B.300d&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#75715e>#          2.2. 使用外部预训练好的词向量</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>exists(<span style=color:#e6db74>&#39;.vector_cache&#39;</span>):
+</span></span><span style=display:flex><span>    os<span style=color:#f92672>.</span>mkdir(<span style=color:#e6db74>&#39;.vector_cache&#39;</span>)
+</span></span><span style=display:flex><span>vectors <span style=color:#f92672>=</span> Vectors(name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;myvector/glove/glove.6B.200d.txt&#39;</span>)
+</span></span><span style=display:flex><span>TEXT<span style=color:#f92672>.</span>build_vocab(train, vectors<span style=color:#f92672>=</span>vectors)
+</span></span><span style=display:flex><span><span style=color:#75715e>#         2.3 vetor 使用</span>
+</span></span><span style=display:flex><span>examples <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;chip&#39;</span>, <span style=color:#e6db74>&#39;baby&#39;</span>, <span style=color:#e6db74>&#39;Beautiful&#39;</span>]
+</span></span><span style=display:flex><span>vec <span style=color:#f92672>=</span> text<span style=color:#f92672>.</span>vocab<span style=color:#f92672>.</span>GloVe(name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;6B&#39;</span>, dim<span style=color:#f92672>=</span><span style=color:#ae81ff>50</span>)
+</span></span><span style=display:flex><span><span style=color:#75715e>#Look up embedding vectors of tokens.</span>
+</span></span><span style=display:flex><span>ret <span style=color:#f92672>=</span> vec<span style=color:#f92672>.</span>get_vecs_by_tokens(tokens, lower_case_backup<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span></code></pre></div><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175043317.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175043317.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175043317.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175043317.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175043317.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175043317.png></p><h3 id=3-构建迭代器>3. 构建迭代器</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> torchtext.data <span style=color:#f92672>import</span> Iterator, BucketIterator
+</span></span><span style=display:flex><span><span style=color:#75715e># 若只对训练集构造迭代器</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># train_iter = data.BucketIterator(dataset=train, batch_size=8, shuffle=True, sort_within_batch=False, repeat=False)</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#BucketIterator相比Iterator的优势是会自动选取样本长度相似的数据来构建批数据。但是在测试集中一般不想改变样本顺序，因此测试集使用Iterator迭代器来构建。</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 若同时对训练集和验证集进行迭代器构建</span>
+</span></span><span style=display:flex><span>train_iter, val_iter <span style=color:#f92672>=</span> BucketIterator<span style=color:#f92672>.</span>splits(
+</span></span><span style=display:flex><span>        (train, valid),
+</span></span><span style=display:flex><span>        batch_size<span style=color:#f92672>=</span>(<span style=color:#ae81ff>8</span>, <span style=color:#ae81ff>8</span>),
+</span></span><span style=display:flex><span>        device<span style=color:#f92672>=-</span><span style=color:#ae81ff>1</span>, <span style=color:#75715e># 如果使用gpu，将-1更换为GPU的编号</span>
+</span></span><span style=display:flex><span>        sort_key<span style=color:#f92672>=</span><span style=color:#66d9ef>lambda</span> x: len(x<span style=color:#f92672>.</span>comment_text),
+</span></span><span style=display:flex><span>        sort_within_batch<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>,
+</span></span><span style=display:flex><span>        repeat<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>test_iter <span style=color:#f92672>=</span> Iterator(test, batch_size<span style=color:#f92672>=</span><span style=color:#ae81ff>8</span>, device<span style=color:#f92672>=-</span><span style=color:#ae81ff>1</span>, sort<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>, sort_within_batch<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>, repeat<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> idx, batch <span style=color:#f92672>in</span> enumerate(train_iter):
+</span></span><span style=display:flex><span>    text, label <span style=color:#f92672>=</span> batch<span style=color:#f92672>.</span>comment_text, batch<span style=color:#f92672>.</span>toxic
+</span></span></code></pre></div><h3 id=4-使用torchtext构建的数据集用于lstm>4. 使用torchtext构建的数据集用于LSTM</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> torch.nn <span style=color:#66d9ef>as</span> nn
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> torch.nn.functional <span style=color:#66d9ef>as</span> F
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> torch.optim <span style=color:#66d9ef>as</span> optim
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>weight_matrix <span style=color:#f92672>=</span> TEXT<span style=color:#f92672>.</span>vocab<span style=color:#f92672>.</span>vectors
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>LSTM</span>(nn<span style=color:#f92672>.</span>Module):
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self):
+</span></span><span style=display:flex><span>        super(LSTM, self)<span style=color:#f92672>.</span>__init__()
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>word_embeddings <span style=color:#f92672>=</span> nn<span style=color:#f92672>.</span>Embedding(len(TEXT<span style=color:#f92672>.</span>vocab), <span style=color:#ae81ff>300</span>)
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>word_embeddings<span style=color:#f92672>.</span>weight<span style=color:#f92672>.</span>data<span style=color:#f92672>.</span>copy_(weight_matrix)
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>lstm <span style=color:#f92672>=</span> nn<span style=color:#f92672>.</span>LSTM(input_size<span style=color:#f92672>=</span><span style=color:#ae81ff>300</span>, hidden_size<span style=color:#f92672>=</span><span style=color:#ae81ff>128</span>, num_layer<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>decoder <span style=color:#f92672>=</span> nn<span style=color:#f92672>.</span>Linear(<span style=color:#ae81ff>128</span>, <span style=color:#ae81ff>2</span>)
+</span></span><span style=display:flex><span>     
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>forward</span>(self, sentence):
+</span></span><span style=display:flex><span>        embeds <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>word_embeddings(sentence)
+</span></span><span style=display:flex><span>        lstm_out <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>lstm(embeds)[<span style=color:#ae81ff>0</span>]
+</span></span><span style=display:flex><span>        final <span style=color:#f92672>=</span> lstm_out[<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>]
+</span></span><span style=display:flex><span>        y <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>decoder(final)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> y
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>main</span>():
+</span></span><span style=display:flex><span>    model <span style=color:#f92672>=</span> LSTM()
+</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>train()
+</span></span><span style=display:flex><span>    optimizer <span style=color:#f92672>=</span> optim<span style=color:#f92672>.</span>Adam(filter(<span style=color:#66d9ef>lambda</span> p: p<span style=color:#f92672>.</span>requires_grad, model<span style=color:#f92672>.</span>parameters()), lr<span style=color:#f92672>=</span><span style=color:#ae81ff>0.01</span>)
+</span></span><span style=display:flex><span>    loss_funciton <span style=color:#f92672>=</span> F<span style=color:#f92672>.</span>cross_entropy
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> epoch, batch <span style=color:#f92672>in</span> enumerate(train_iter):
+</span></span><span style=display:flex><span>        optimizer<span style=color:#f92672>.</span>zero_grad()
+</span></span><span style=display:flex><span>        start <span style=color:#f92672>=</span> time<span style=color:#f92672>.</span>time()
+</span></span><span style=display:flex><span>        predicted <span style=color:#f92672>=</span> model(batch<span style=color:#f92672>.</span>comment_text)
+</span></span><span style=display:flex><span>         
+</span></span><span style=display:flex><span>        loss <span style=color:#f92672>=</span> loss_function(predicted, batch<span style=color:#f92672>.</span>toxic)
+</span></span><span style=display:flex><span>        loss<span style=color:#f92672>.</span>backward()
+</span></span><span style=display:flex><span>        optimizer<span style=color:#f92672>.</span>step()
+</span></span><span style=display:flex><span>        print(loss)
+</span></span></code></pre></div><h3 id=5-evaluation机制>5. Evaluation机制</h3><h4 id=51-bleu_score>5.1. Bleu_score</h4><blockquote><p>Computes the BLEU score between a candidate translation corpus and a references translation corpus. Based on <a href=https://www.aclweb.org/anthology/P02-1040.pdf target=_blank rel="external nofollow noopener noreferrer">https://www.aclweb.org/anthology/P02-1040.pdf<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> torchtext.data.metrics <span style=color:#f92672>import</span> bleu_score
+</span></span><span style=display:flex><span>candidate_corpus <span style=color:#f92672>=</span> [[<span style=color:#e6db74>&#39;My&#39;</span>, <span style=color:#e6db74>&#39;full&#39;</span>, <span style=color:#e6db74>&#39;pytorch&#39;</span>, <span style=color:#e6db74>&#39;test&#39;</span>], [<span style=color:#e6db74>&#39;Another&#39;</span>, <span style=color:#e6db74>&#39;Sentence&#39;</span>]]
+</span></span><span style=display:flex><span>references_corpus <span style=color:#f92672>=</span> [[[<span style=color:#e6db74>&#39;My&#39;</span>, <span style=color:#e6db74>&#39;full&#39;</span>, <span style=color:#e6db74>&#39;pytorch&#39;</span>, <span style=color:#e6db74>&#39;test&#39;</span>], [<span style=color:#e6db74>&#39;Completely&#39;</span>, <span style=color:#e6db74>&#39;Different&#39;</span>]], [[<span style=color:#e6db74>&#39;No&#39;</span>, <span style=color:#e6db74>&#39;Match&#39;</span>]]]
+</span></span><span style=display:flex><span>bleu_score(candidate_corpus, references_corpus)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>0.8408964276313782</span>
+</span></span></code></pre></div><h4 id=52-rouge>5.2. ROUGE</h4><blockquote><p>ROUGEROUGE 由 Chin-Yew Lin 在 2004 年的论文<a href=https://www.aclweb.org/anthology/W04-1013.pdf target=_blank rel="external nofollow noopener noreferrer">《ROUGE: A Package for Automatic Evaluation of Summaries》<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a>中提出。与 BLEUBLEU 类似，通过统计生成的摘要与参考摘要集合之间重叠的基本单元（nn 元组）的数目来评估摘要的质量，该方法已成为自动文摘系统评价的主流方法。</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027183228807.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027183228807.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027183228807.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027183228807.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027183228807.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027183228807.png></p><h3 id=6-multiheadattention>6. MultiHeadAttention</h3><ul><li><a href=https://pytorch.org/text/nn_modules.html target=_blank rel="external nofollow noopener noreferrer">https://pytorch.org/text/nn_modules.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li>学习链接：https://blog.nowcoder.net/n/3a8d2c1b05354f3b942edfd4966bb0c1</li><li><a href=https://xiaosheng.run/2020/08/13/article184/ target=_blank rel="external nofollow noopener noreferrer">https://xiaosheng.run/2020/08/13/article184/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-24 17:00:05">更新于 2023-09-24&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/torchtext_vocab/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5c%e8%87%aa%e7%84%b6%e8%af%ad%e8%a8%80%5cFramework%5cTorchtext_vocab.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/torchtext_vocab/ data-title=Torchtext data-hashtags=PyTorch,NLP><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/torchtext_vocab/ data-hashtag=PyTorch><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/torchtext_vocab/ data-title=Torchtext data-image=https://gitee.com/github-25970295/blogImage/raw/master/img/32.jpeg><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/pytorch/>Pytorch</a>,&nbsp;<a href=liudongdong1.github.io/tags/nlp/>NLP</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/picturedatatype/ class=prev rel=prev title=PictureDataType><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>PictureDataType</a>
+<a href=liudongdong1.github.io/chromeplugin/ class=next rel=next title=ChromePlugin>ChromePlugin<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
+<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
+<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>

@@ -1,567 +1,139 @@
-<!DOCTYPE html>
-<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-  <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <meta name="robots" content="noodp" />
-    <title>Kubernetes-yaml详解 - DAY By DAY</title><meta name="author" content="LiuDongdong">
-<meta name="author-link" content="https://liudongdong1.github.io/">
-<meta name="description" content="属性名称 介绍 apiVersion API 版本 kind 资源类型 metadata 资源元数据 spec 资源规格 replicas 副本数量 selector 标签选择器 template Pod 模板 metadata Pod 元数据 spec Pod 规格 containers 容器配置 1. 核心技术概念 .1. 复制控制器（R" /><meta name="keywords" content='Storage' /><meta itemprop="name" content="Kubernetes-yaml详解">
-<meta itemprop="description" content="属性名称 介绍 apiVersion API 版本 kind 资源类型 metadata 资源元数据 spec 资源规格 replicas 副本数量 selector 标签选择器 template Pod 模板 metadata Pod 元数据 spec Pod 规格 containers 容器配置 1. 核心技术概念 .1. 复制控制器（R">
-<meta itemprop="dateModified" content="2023-09-24T17:00:04+08:00" />
-<meta itemprop="wordCount" content="3956"><meta itemprop="image" content="/logo.png"/>
-<meta itemprop="keywords" content="Storage," /><meta property="og:title" content="Kubernetes-yaml详解" />
-<meta property="og:description" content="属性名称 介绍 apiVersion API 版本 kind 资源类型 metadata 资源元数据 spec 资源规格 replicas 副本数量 selector 标签选择器 template Pod 模板 metadata Pod 元数据 spec Pod 规格 containers 容器配置 1. 核心技术概念 .1. 复制控制器（R" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
-
-<meta property="article:modified_time" content="2023-09-24T17:00:04+08:00" />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/logo.png"/>
-
-<meta name="twitter:title" content="Kubernetes-yaml详解"/>
-<meta name="twitter:description" content="属性名称 介绍 apiVersion API 版本 kind 资源类型 metadata 资源元数据 spec 资源规格 replicas 副本数量 selector 标签选择器 template Pod 模板 metadata Pod 元数据 spec Pod 规格 containers 容器配置 1. 核心技术概念 .1. 复制控制器（R"/>
-<meta name="application-name" content="DAY By DAY">
-<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/" /><link rel="prev" href="liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8nfs%E5%AE%9E%E8%B7%B5/" /><link rel="next" href="liudongdong1.github.io/kubernetes-practice/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "BlogPosting",
-    "headline": "Kubernetes-yaml详解",
-    "inLanguage": "zh-CN",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "liudongdong1.github.io\/kubernetes-yaml%E8%AF%A6%E8%A7%A3\/"
-    },"genre": "posts","keywords": "Storage","wordcount":  3956 ,
-    "url": "liudongdong1.github.io\/kubernetes-yaml%E8%AF%A6%E8%A7%A3\/","dateModified": "2023-09-24T17:00:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
-      "@type": "Organization",
-      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
-        "@type": "Person",
-        "name": "liudongdong1"
-      },"description": ""
-  }
-  </script></head>
-  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
-  <div class="header-wrapper" data-github-corner="right">
-    <div class="header-title">
-      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="DAY By DAY"
-    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
-    <nav>
-      <ul class="menu"><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/posts/"
-                
-                
-              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/categories/"
-                
-                
-              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/tags/"
-                
-                
-              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/friends/"
-                title="友情链接"
-                
-              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/about/"
-                
-                
-              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
-          </li><li class="menu-item search" id="search-desktop">
-            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
-            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-            </a>
-            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-            </a>
-            <span class="search-button search-loading" id="search-loading-desktop">
-              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-            </span>
-          </li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header><header class="mobile animate__faster" id="header-mobile">
-  <div class="header-container">
-    <div class="header-wrapper">
-      <div class="header-title">
-        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="/fixit.min.svg"
-    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
-      <div class="menu-toggle" id="menu-toggle-mobile">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-    <nav>
-      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
-            <div class="search mobile" id="search-mobile">
-              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
-              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-              </a>
-              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-              </a>
-              <span class="search-button search-loading" id="search-loading-mobile">
-                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-              </span>
-            </div>
-            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-              取消
-            </a>
-          </li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/posts/"
-                  
-                  
-                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/categories/"
-                  
-                  
-                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/tags/"
-                  
-                  
-                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/friends/"
-                  title="友情链接"
-                  
-                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/about/"
-                  
-                  
-                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
-              class="menu-item text-center"
-            ><a
-                  class="menu-link"
-                  href="https://liudongdong1.github.io/"
-                  title="GitHub"
-                  rel="noopener noreferrer" target="_blank"
-                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
-          </li></ul>
-    </nav>
-  </div>
-</header><div class="search-dropdown desktop">
-    <div id="search-dropdown-desktop"></div>
-  </div>
-  <div class="search-dropdown mobile">
-    <div id="search-dropdown-mobile"></div>
-  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
-      <div class="toc-content" id="toc-content-auto"></div></aside>
-
-  <aside class="aside-custom" id="aside-sakana">
-    
-
-<div class="sakana-widget">
-  <div class="sakana-item" id="takina-widget"></div>
-  <div class="sakana-item" id="chisato-widget"></div>
-</div>
-<script>
-  function initSakanaWidget() {
-    const takina = SakanaWidget.getCharacter('takina')
-    SakanaWidget.registerCharacter('takina-slow', takina);
-    new SakanaWidget({
-      character: 'takina-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#takina-widget');
-
-    const chisato = SakanaWidget.getCharacter('chisato')
-    SakanaWidget.registerCharacter('chisato-slow', chisato);
-    new SakanaWidget({
-      character: 'chisato-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#chisato-widget');
-  }
-</script>
-<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
-</script></aside>
-
-  <article class="page single">
-    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
-        <span>Kubernetes-yaml详解</span>
-      </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
-      liudongdong1</span></span>
-          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/storage/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div>
-      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00>
-            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01" >0001-01-01</time>
-          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3956 字&nbsp;
-        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="Kubernetes-yaml详解">
-            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
-          </span>&nbsp;</div>
-    </div><div class="featured-image"><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg"
-    data-srcset="https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg, https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg 1.5x, https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg 2x"
-    data-sizes="auto"
-    alt="https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg"
-    title="https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg"/></div><div class="details toc" id="toc-static" kept="true">
-        <div class="details-summary toc-title">
-          <span>目录</span>
-          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-        </div>
-        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#1-核心技术概念">1. 核心技术概念</a></li>
-        <li><a href="#2-完整yaml">2. 完整yaml</a></li>
-        <li><a href="#3-deployment">3. Deployment</a></li>
-        <li><a href="#4-pod">4. pod</a></li>
-        <li><a href="#5-service">5. service</a></li>
-        <li><a href="#resource">Resource</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-      </div><div
-      class="content"
-      id="content"
-      
-      
-    ><table>
-<thead>
-<tr>
-<th style="text-align:center">属性名称</th>
-<th style="text-align:center">介绍</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">apiVersion</td>
-<td style="text-align:center">API 版本</td>
-</tr>
-<tr>
-<td style="text-align:center">kind</td>
-<td style="text-align:center">资源类型</td>
-</tr>
-<tr>
-<td style="text-align:center">metadata</td>
-<td style="text-align:center">资源元数据</td>
-</tr>
-<tr>
-<td style="text-align:center">spec</td>
-<td style="text-align:center">资源规格</td>
-</tr>
-<tr>
-<td style="text-align:center">replicas</td>
-<td style="text-align:center">副本数量</td>
-</tr>
-<tr>
-<td style="text-align:center">selector</td>
-<td style="text-align:center">标签选择器</td>
-</tr>
-<tr>
-<td style="text-align:center">template</td>
-<td style="text-align:center">Pod 模板</td>
-</tr>
-<tr>
-<td style="text-align:center">metadata</td>
-<td style="text-align:center">Pod 元数据</td>
-</tr>
-<tr>
-<td style="text-align:center">spec</td>
-<td style="text-align:center">Pod 规格</td>
-</tr>
-<tr>
-<td style="text-align:center">containers</td>
-<td style="text-align:center">容器配置</td>
-</tr>
-</tbody>
-</table>
-<h3 id="1-核心技术概念">1. 核心技术概念</h3>
-<h4 id="1-复制控制器replication-controllerrc">.1. 复制控制器（Replication Controller，RC）</h4>
-<ul>
-<li>RC是K8s集群中保证Pod高可用的API对象。通过监控运行中的Pod来保证集群中运行指定数目的Pod副本。指定的数目可以是多个也可以是1个；少于指定数目，RC就会启动运行新的Pod副本；</li>
-<li>多于指定数目，RC就会杀死多余的Pod副本。即使在指定数目为1的情况下，<code>通过RC运行Pod也比直接运行Pod更明智，因为RC也可以发挥它高可用的能力</code>，保证永远有1个Pod在运行。</li>
-<li>RC是K8s较早期的技术概念，只适用于长期伺服型的业务类型，比如控制小机器人提供高可用的Web服务。</li>
-</ul>
-<h4 id="2-副本集replica-setrs">.2. 副本集（Replica Set，RS）</h4>
-<ul>
-<li>RS是新一代RC，提供同样的高可用能力，区别主要在于RS后来居上，能支持更多种类的匹配模式。副本集对象一般不单独使用，而是作为Deployment的理想状态参数使用。</li>
-</ul>
-<h4 id="3-部署deployment">.3. 部署(Deployment)</h4>
-<ul>
-<li>部署表示用户对K8s集群的<code>一次更新操作</code>。部署是一个比RS应用模式更广的API对象，可以是<code>创建一个新的服务</code>，<code>更新一个新的服务</code>，也可以是<code>滚动升级一个服务</code>。</li>
-<li>滚动升级一个服务，实际是创建一个新的RS，然后逐渐将新RS中副本数增加到理想状态，将旧RS中的副本数减小到0的复合操作；</li>
-<li>这样一个复合操作用一个RS是不太好描述的，所以用一个更通用的Deployment来描述。</li>
-</ul>
-<h4 id="4-服务service">.4. 服务（Service）</h4>
-<ul>
-<li><code>RC、RS和Deployment只是保证了支撑服务的微服务Pod的数量</code>，但是没有解决如何访问这些服务的问题。</li>
-<li><code>一个Pod只是一个运行服务的实例，随时可能在一个节点上停止</code>，在另一个节点以一个新的IP启动一个新的Pod，因此不能以确定的IP和端口号提供服务。</li>
-<li>要稳定地提供服务需要服务发现和负载均衡能力。服务发现完成的工作，是针对客户端访问的服务，找到对应的的后端服务实例。在K8s集群中，客户端需要访问的服务就是Service对象。</li>
-<li>每个Service会对应一个集群内部有效的虚拟IP，集群内部通过虚拟IP访问一个服务。</li>
-<li>在K8s集群中微服务的负载均衡是由Kube-proxy实现的。Kube-proxy是K8s集群内部的负载均衡器。</li>
-<li>它是一个分布式代理服务器，在K8s的每个节点上都有一个；这一设计体现了它的伸缩性优势，需要访问服务的节点越多，提供负载均衡能力的Kube-proxy就越多，高可用节点也随之增多。</li>
-<li>与之相比，我们平时在服务器端做个反向代理做负载均衡，还要进一步解决反向代理的负载均衡和高可用问题。</li>
-</ul>
-<h4 id="5-任务job">.5. 任务（Job）</h4>
-<ul>
-<li>Job是K8s用来<code>控制批处理型任务的API对象</code>。批处理业务与长期伺服业务的主要区别是批处理业务的运行有头有尾，而长期伺服业务在用户不停止的情况下永远运行。</li>
-<li>Job管理的Pod根据用户的设置把任务成功完成就自动退出了。</li>
-<li>成功完成的标志根据不同的spec.completions策略而不同：单Pod型任务有一个Pod成功就标志完成；定数成功型任务保证有N个任务全部成功；工作队列型任务根据应用确认的全局成功而标志成功。</li>
-</ul>
-<h4 id="6-后台支撑服务集daemonset">.6. 后台支撑服务集（DaemonSet）</h4>
-<ul>
-<li>长期伺服型和批处理型服务的核心在业务应用，可能有些节点运行多个同类业务的Pod，</li>
-<li>有些节点上又没有这类Pod运行；而后台支撑型服务的核心关注点在K8s集群中的节点（物理机或虚拟机），要保证每个节点上都有一个此类Pod运行。</li>
-<li>节点可能是所有集群节点也可能是通过nodeSelector选定的一些特定节点。典型的后台支撑型服务包括，存储，日志和监控等在每个节点上支持K8s集群运行的服务。</li>
-</ul>
-<h4 id="7-存储卷volume">.7. 存储卷（Volume）</h4>
-<ul>
-<li>
-<p>K8s集群中的存储卷跟Docker的存储卷有些类似，只不过Docker的存储卷作用范围为一个容器，而<code>K8s的存储卷的生命周期和作用范围是一个Pod</code>。<code>每个Pod中声明的存储卷由Pod中的所有容器共享</code>。K8s支持非常多的存储卷类型，特别的，支持多种公有云平台的存储，包括AWS，Google和Azure云；支持多种分布式存储包括GlusterFS和Ceph；也支持较容易使用的主机本地目录hostPath和NFS。K8s还支持使用Persistent Volume Claim即PVC这种逻辑存储，使用这种存储，使得存储的使用者可以忽略后台的实际存储技术（例如AWS，Google或GlusterFS和Ceph），而将有关存储实际技术的配置交给存储管理员通过Persistent Volume来配置。</p>
-</li>
-<li>
-<p><code>持久存储卷（Persistent Volume，PV）</code>和<code>持久存储卷声明（Persistent Volume Claim，PVC）</code></p>
-</li>
-<li>
-<p>PV和PVC使得K8s集群具备了存储的逻辑抽象能力，使得在配置Pod的逻辑里可以忽略对实际后台存储技术的配置，而把这项配置的工作交给PV的配置者，即集群的管理者。存储的PV和PVC的这种关系，跟计算的Node和Pod的关系是非常类似的；PV和Node是资源的提供者，根据集群的基础设施变化而变化，由K8s集群管理员配置；而PVC和Pod是资源的使用者，根据业务服务的需求变化而变化，有K8s集群的使用者即服务的管理员来配置。</p>
-</li>
-</ul>
-<h4 id="8-节点node">.8. 节点（Node）</h4>
-<ul>
-<li>K8s集群中的计算能力由Node提供，最初Node称为服务节点Minion，后来改名为Node。</li>
-<li>K8s集群中的Node也就等同于Mesos集群中的Slave节点，<code>是所有Pod运行所在的工作主机，可以是物理机也可以是虚拟机</code>。</li>
-<li>不论是物理机还是虚拟机，<code>工作主机的统一特征是上面要运行kubelet管理节点上运行的容器</code>。</li>
-</ul>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://s5.51cto.com/images/blog/202106/17/107c0a87915be3d36e4d96b13ffe5207.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk="
-    data-srcset="https://s5.51cto.com/images/blog/202106/17/107c0a87915be3d36e4d96b13ffe5207.png?x-oss-process=image/watermark%2csize_16%2ctext_QDUxQ1RP5Y2a5a6i%2ccolor_FFFFFF%2ct_100%2cg_se%2cx_10%2cy_10%2cshadow_90%2ctype_ZmFuZ3poZW5naGVpdGk=, https://s5.51cto.com/images/blog/202106/17/107c0a87915be3d36e4d96b13ffe5207.png?x-oss-process=image/watermark%2csize_16%2ctext_QDUxQ1RP5Y2a5a6i%2ccolor_FFFFFF%2ct_100%2cg_se%2cx_10%2cy_10%2cshadow_90%2ctype_ZmFuZ3poZW5naGVpdGk= 1.5x, https://s5.51cto.com/images/blog/202106/17/107c0a87915be3d36e4d96b13ffe5207.png?x-oss-process=image/watermark%2csize_16%2ctext_QDUxQ1RP5Y2a5a6i%2ccolor_FFFFFF%2ct_100%2cg_se%2cx_10%2cy_10%2cshadow_90%2ctype_ZmFuZ3poZW5naGVpdGk= 2x"
-    data-sizes="auto"
-    alt="kubernetes Container、Pod、Replicaset、Service、Deployment、Lable、Statefulset关系和区别_Kubernetes"
-    title="kubernetes Container、Pod、Replicaset、Service、Deployment、Lable、Statefulset关系和区别_Kubernetes"/></p>
-<h3 id="2-完整yaml">2. 完整yaml</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1        　　#必选，版本号，例如v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod       　　　　　　#必选，Pod</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:       　　　　　　<span style="color:#75715e">#必选，元数据</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string        　　#必选，Pod名称</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">string     　　#必选，Pod所属的命名空间</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:       　　　　　　<span style="color:#75715e">#自定义标签</span>
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string      　#自定义标签名字</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">annotations</span>:        　　<span style="color:#75715e">#自定义注释列表</span>
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:         　　　　　　　<span style="color:#75715e">#必选，Pod中容器的详细定义,  期望的状态</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:       　　　　<span style="color:#75715e">#必选，Pod中容器列表</span>
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string      　　#必选，容器名称</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">string     　　#必选，容器的镜像名称</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">imagePullPolicy</span>: [<span style="color:#ae81ff">Always | Never | IfNotPresent] </span> <span style="color:#75715e">#获取镜像的策略 Alawys表示下载镜像 IfnotPresent表示优先使用本地镜像，否则下载镜像，Nerver表示仅使用本地镜像</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">command</span>: [<span style="color:#ae81ff">string]     　　#容器的启动命令列表，如不指定，使用打包时使用的启动命令</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">args</span>: [<span style="color:#ae81ff">string]      　　</span> <span style="color:#75715e">#容器的启动命令参数列表</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">workingDir</span>: <span style="color:#ae81ff">string     </span> <span style="color:#75715e">#容器的工作目录</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumeMounts</span>:     　　　　<span style="color:#75715e">#挂载到容器内部的存储卷配置</span>
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string      　　　#引用pod定义的共享存储卷的名称，需用volumes[]部分定义的的卷名</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">string    </span> <span style="color:#75715e">#存储卷在容器内mount的绝对路径，应少于512字符</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">readOnly</span>: <span style="color:#ae81ff">boolean    </span> <span style="color:#75715e">#是否为只读模式</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:        　　　　　　<span style="color:#75715e">#需要暴露的端口库号列表</span>
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string      　　　#端口号名称</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">int   </span> <span style="color:#75715e">#容器需要监听的端口号</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">hostPort</span>: <span style="color:#ae81ff">int     　　</span> <span style="color:#75715e">#容器所在主机需要监听的端口号，默认与Container相同</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">string     </span> <span style="color:#75715e">#端口协议，支持TCP和UDP，默认TCP</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">env</span>:        　　　　　　<span style="color:#75715e">#容器运行前需设置的环境变量列表</span>
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string      　　#环境变量名称</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">value</span>: <span style="color:#ae81ff">string     　　#环境变量的值</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">resources</span>:        　　<span style="color:#75715e">#资源限制和请求的设置</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">limits</span>:       　　　　<span style="color:#75715e">#资源限制的设置</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">cpu</span>: <span style="color:#ae81ff">string     　　#Cpu的限制，单位为core数，将用于docker run --cpu-shares参数</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">memory</span>: <span style="color:#ae81ff">string     </span> <span style="color:#75715e">#内存限制，单位可以为Mib/Gib，将用于docker run --memory参数</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">requests</span>:       　　<span style="color:#75715e">#资源请求的设置</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">cpu</span>: <span style="color:#ae81ff">string     　　#Cpu请求，容器启动的初始可用数量</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">memory</span>: <span style="color:#ae81ff">string     </span> <span style="color:#75715e">#内存清楚，容器启动的初始可用数量</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">livenessProbe</span>:      　　<span style="color:#75715e">#对Pod内个容器健康检查的设置，当探测无响应几次后将自动重启该容器，检查方法有exec、httpGet和tcpSocket，对一个容器只需设置其中一种方法即可</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">exec</span>:       　　　　　　<span style="color:#75715e">#对Pod容器内检查方式设置为exec方式</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">command</span>: [<span style="color:#ae81ff">string]  </span> <span style="color:#75715e">#exec方式需要制定的命令或脚本</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">httpGet</span>:        　　　　<span style="color:#75715e">#对Pod内个容器健康检查方法设置为HttpGet，需要制定Path、port</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">string</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">port</span>: <span style="color:#ae81ff">number</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">host</span>: <span style="color:#ae81ff">string</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">scheme</span>: <span style="color:#ae81ff">string</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">HttpHeaders</span>:
-</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">value</span>: <span style="color:#ae81ff">string</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">tcpSocket</span>:      　　　　　　<span style="color:#75715e">#对Pod内个容器健康检查方式设置为tcpSocket方式</span>
-</span></span><span style="display:flex;"><span>         <span style="color:#f92672">port</span>: <span style="color:#ae81ff">number</span>
-</span></span><span style="display:flex;"><span>       <span style="color:#f92672">initialDelaySeconds</span>: <span style="color:#ae81ff">0</span>   <span style="color:#75715e">#容器启动完成后首次探测的时间，单位为秒</span>
-</span></span><span style="display:flex;"><span>       <span style="color:#f92672">timeoutSeconds</span>: <span style="color:#ae81ff">0</span>    　　<span style="color:#75715e">#对容器健康检查探测等待响应的超时时间，单位秒，默认1秒</span>
-</span></span><span style="display:flex;"><span>       <span style="color:#f92672">periodSeconds</span>: <span style="color:#ae81ff">0</span>     　　<span style="color:#75715e">#对容器监控检查的定期探测时间设置，单位秒，默认10秒一次</span>
-</span></span><span style="display:flex;"><span>       <span style="color:#f92672">successThreshold</span>: <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>       <span style="color:#f92672">failureThreshold</span>: <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>       <span style="color:#f92672">securityContext</span>:
-</span></span><span style="display:flex;"><span>         <span style="color:#f92672">privileged</span>: <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restartPolicy</span>: [<span style="color:#ae81ff">Always | Never | OnFailure]</span> <span style="color:#75715e">#Pod的重启策略，Always表示一旦不管以何种方式终止运行，kubelet都将重启，OnFailure表示只有Pod以非0退出码退出才重启，Nerver表示不再重启该Pod</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">nodeSelector</span>: <span style="color:#ae81ff">obeject   　　#设置NodeSelector表示将该Pod调度到包含这个label的node上，以key：value的格式指定</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">imagePullSecrets</span>:     　　　　<span style="color:#75715e">#Pull镜像时使用的secret名称，以key：secretkey格式指定</span>
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hostNetwork</span>: <span style="color:#66d9ef">false</span>      　　<span style="color:#75715e">#是否使用主机网络模式，默认为false，如果设置为true，表示使用宿主机网络</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:        　　　　　　<span style="color:#75715e">#在该pod上定义共享存储卷列表</span>
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string     　　 　　#共享存储卷名称 （volumes类型有很多种）</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">emptyDir</span>: {}      　　　　<span style="color:#75715e">#类型为emtyDir的存储卷，与Pod同生命周期的一个临时目录。为空值</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">hostPath</span>: <span style="color:#ae81ff">string      　　#类型为hostPath的存储卷，表示挂载Pod所在宿主机的目录</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">string      　　#Pod所在宿主机的目录，将被用于同期中mount的目录</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">secret</span>:       　　　　　　<span style="color:#75715e">#类型为secret的存储卷，挂载集群与定义的secre对象到容器内部</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">scretname</span>: <span style="color:#ae81ff">string  </span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">items</span>:     
-</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">key</span>: <span style="color:#ae81ff">string</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">path</span>: <span style="color:#ae81ff">string</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">configMap</span>:      　　　　<span style="color:#75715e">#类型为configMap的存储卷，挂载预定义的configMap对象到容器内部</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">items</span>:
-</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">key</span>: <span style="color:#ae81ff">string</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">path</span>: <span style="color:#ae81ff">string    </span>
-</span></span></code></pre></div><h3 id="3-deployment">3. Deployment</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1  </span> <span style="color:#75715e"># 1.9.0 之前的版本使用 apps/v1beta2，可通过命令 kubectl api-versions 查看</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment 	#指定创建资源的角色/类型</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>: 	 <span style="color:#75715e">#资源的元数据/属性</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-deployment	#资源的名字，在同一个namespace中必须唯一</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">2</span> 	 <span style="color:#75715e">#副本数量2</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:      <span style="color:#75715e">#定义标签选择器</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">web-server</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">template</span>: 	 <span style="color:#75715e">#这里Pod的定义</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">labels</span>: 	 <span style="color:#75715e">#Pod的label</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">web-server</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">spec:		</span> <span style="color:#75715e"># 指定该资源的内容  </span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">containers</span>:  
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx 	</span> <span style="color:#75715e">#容器的名字  </span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:1.12.1 </span> <span style="color:#75715e">#容器的镜像地址    </span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:  
-</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>  <span style="color:#75715e">#容器对外的端口</span>
-</span></span></code></pre></div><h3 id="4-pod">4. pod</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod  </span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:  
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pod-redis</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">redis</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>: 
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pod-redis</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker.io/redis  </span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>	<span style="color:#75715e">#容器对外的端口</span>
-</span></span></code></pre></div><h3 id="5-service">5. service</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod  </span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:  
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pod-redis</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">redis</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>: 
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pod-redis</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker.io/redis  </span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>	<span style="color:#75715e">#容器对外的端口</span>
-</span></span></code></pre></div><h3 id="resource">Resource</h3>
-<ul>
-<li><a href="https://www.cnblogs.com/flying1819/articles/9039529.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/flying1819/articles/9039529.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://www.cnblogs.com/bakari/p/10509484.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/bakari/p/10509484.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ul>
-</div>
-<div class="post-footer" id="post-footer">
-  <div class="post-info">
-    <div class="post-info-line">
-      <div class="post-info-mod">
-        <span title=2023-09-24&#32;17:00:04>更新于 2023-09-24&nbsp;</span>
-      </div><div class="post-info-license">
-          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
-        </div></div>
-    <div class="post-info-line">
-      <div class="post-info-md"><span><a href="liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5c%e8%99%9a%e6%8b%9f%e5%8c%96%e6%8a%80%e6%9c%af%5cKubernetes-yaml%e8%af%a6%e8%a7%a3.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
-      <div class="post-info-share">
-        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/" data-title="Kubernetes-yaml详解" data-hashtags="Storage"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/" data-hashtag="Storage"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/" data-title="Kubernetes-yaml详解" data-image="https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
-  </span>
-      </div>
-    </div>
-  </div>
-
-  <div class="post-info-more">
-    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/storage/">Storage</a></section>
-    <section>
-      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
-    </section>
-  </div>
-
-  <div class="post-nav"><a href="liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8nfs%E5%AE%9E%E8%B7%B5/" class="prev" rel="prev" title="Kubernetes-存储NFS实践"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Kubernetes-存储NFS实践</a>
-      <a href="liudongdong1.github.io/kubernetes-practice/" class="next" rel="next" title="Kubernetes-workload">Kubernetes-workload<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-</article></main><footer class="footer">
-    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
-        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
-            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
-              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
-          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
-        </div></div>
-  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
-        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
-    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
-  </noscript>
-</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
-</html>
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>Kubernetes-yaml详解 - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="属性名称 介绍 apiVersion API 版本 kind 资源类型 metadata 资源元数据 spec 资源规格 replicas 副本数量 selector 标签选择器 template Pod 模板 metadata Pod 元数据 spec Pod 规格 containers 容器配置 1. 核心技术概念 .1. 复制控制器（R"><meta name=keywords content="Storage"><meta itemprop=name content="Kubernetes-yaml详解"><meta itemprop=description content="属性名称 介绍 apiVersion API 版本 kind 资源类型 metadata 资源元数据 spec 资源规格 replicas 副本数量 selector 标签选择器 template Pod 模板 metadata Pod 元数据 spec Pod 规格 containers 容器配置 1. 核心技术概念 .1. 复制控制器（R"><meta itemprop=dateModified content="2023-09-24T17:00:04+08:00"><meta itemprop=wordCount content="3956"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="Storage,"><meta property="og:title" content="Kubernetes-yaml详解"><meta property="og:description" content="属性名称 介绍 apiVersion API 版本 kind 资源类型 metadata 资源元数据 spec 资源规格 replicas 副本数量 selector 标签选择器 template Pod 模板 metadata Pod 元数据 spec Pod 规格 containers 容器配置 1. 核心技术概念 .1. 复制控制器（R"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:modified_time" content="2023-09-24T17:00:04+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="Kubernetes-yaml详解"><meta name=twitter:description content="属性名称 介绍 apiVersion API 版本 kind 资源类型 metadata 资源元数据 spec 资源规格 replicas 副本数量 selector 标签选择器 template Pod 模板 metadata Pod 元数据 spec Pod 规格 containers 容器配置 1. 核心技术概念 .1. 复制控制器（R"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/><link rel=prev href=liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8nfs%E5%AE%9E%E8%B7%B5/><link rel=next href=liudongdong1.github.io/kubernetes-practice/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Kubernetes-yaml详解","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/kubernetes-yaml%E8%AF%A6%E8%A7%A3\/"},"genre":"posts","keywords":"Storage","wordcount":3956,"url":"liudongdong1.github.io\/kubernetes-yaml%E8%AF%A6%E8%A7%A3\/","dateModified":"2023-09-24T17:00:04+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"liudongdong1"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
+<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>Kubernetes-yaml详解</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle" aria-hidden=true></i>
+liudongdong1</span></span>
+<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/storage/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div><div class=post-meta-line><span title="0001-01-01 00:00:00"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=0001-01-01>0001-01-01</time>
+</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3956 字&nbsp;
+<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title=Kubernetes-yaml详解>
+<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg data-srcset="https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg, https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg 1.5x, https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg 2x" data-sizes=auto alt=https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg title=https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg></div><div class="details toc" id=toc-static kept=true><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#1-核心技术概念>1. 核心技术概念</a></li><li><a href=#2-完整yaml>2. 完整yaml</a></li><li><a href=#3-deployment>3. Deployment</a></li><li><a href=#4-pod>4. pod</a></li><li><a href=#5-service>5. service</a></li><li><a href=#resource>Resource</a></li></ul></li></ul></nav></div></div><div class=content id=content><table><thead><tr><th style=text-align:center>属性名称</th><th style=text-align:center>介绍</th></tr></thead><tbody><tr><td style=text-align:center>apiVersion</td><td style=text-align:center>API 版本</td></tr><tr><td style=text-align:center>kind</td><td style=text-align:center>资源类型</td></tr><tr><td style=text-align:center>metadata</td><td style=text-align:center>资源元数据</td></tr><tr><td style=text-align:center>spec</td><td style=text-align:center>资源规格</td></tr><tr><td style=text-align:center>replicas</td><td style=text-align:center>副本数量</td></tr><tr><td style=text-align:center>selector</td><td style=text-align:center>标签选择器</td></tr><tr><td style=text-align:center>template</td><td style=text-align:center>Pod 模板</td></tr><tr><td style=text-align:center>metadata</td><td style=text-align:center>Pod 元数据</td></tr><tr><td style=text-align:center>spec</td><td style=text-align:center>Pod 规格</td></tr><tr><td style=text-align:center>containers</td><td style=text-align:center>容器配置</td></tr></tbody></table><h3 id=1-核心技术概念>1. 核心技术概念</h3><h4 id=1-复制控制器replication-controllerrc>.1. 复制控制器（Replication Controller，RC）</h4><ul><li>RC是K8s集群中保证Pod高可用的API对象。通过监控运行中的Pod来保证集群中运行指定数目的Pod副本。指定的数目可以是多个也可以是1个；少于指定数目，RC就会启动运行新的Pod副本；</li><li>多于指定数目，RC就会杀死多余的Pod副本。即使在指定数目为1的情况下，<code>通过RC运行Pod也比直接运行Pod更明智，因为RC也可以发挥它高可用的能力</code>，保证永远有1个Pod在运行。</li><li>RC是K8s较早期的技术概念，只适用于长期伺服型的业务类型，比如控制小机器人提供高可用的Web服务。</li></ul><h4 id=2-副本集replica-setrs>.2. 副本集（Replica Set，RS）</h4><ul><li>RS是新一代RC，提供同样的高可用能力，区别主要在于RS后来居上，能支持更多种类的匹配模式。副本集对象一般不单独使用，而是作为Deployment的理想状态参数使用。</li></ul><h4 id=3-部署deployment>.3. 部署(Deployment)</h4><ul><li>部署表示用户对K8s集群的<code>一次更新操作</code>。部署是一个比RS应用模式更广的API对象，可以是<code>创建一个新的服务</code>，<code>更新一个新的服务</code>，也可以是<code>滚动升级一个服务</code>。</li><li>滚动升级一个服务，实际是创建一个新的RS，然后逐渐将新RS中副本数增加到理想状态，将旧RS中的副本数减小到0的复合操作；</li><li>这样一个复合操作用一个RS是不太好描述的，所以用一个更通用的Deployment来描述。</li></ul><h4 id=4-服务service>.4. 服务（Service）</h4><ul><li><code>RC、RS和Deployment只是保证了支撑服务的微服务Pod的数量</code>，但是没有解决如何访问这些服务的问题。</li><li><code>一个Pod只是一个运行服务的实例，随时可能在一个节点上停止</code>，在另一个节点以一个新的IP启动一个新的Pod，因此不能以确定的IP和端口号提供服务。</li><li>要稳定地提供服务需要服务发现和负载均衡能力。服务发现完成的工作，是针对客户端访问的服务，找到对应的的后端服务实例。在K8s集群中，客户端需要访问的服务就是Service对象。</li><li>每个Service会对应一个集群内部有效的虚拟IP，集群内部通过虚拟IP访问一个服务。</li><li>在K8s集群中微服务的负载均衡是由Kube-proxy实现的。Kube-proxy是K8s集群内部的负载均衡器。</li><li>它是一个分布式代理服务器，在K8s的每个节点上都有一个；这一设计体现了它的伸缩性优势，需要访问服务的节点越多，提供负载均衡能力的Kube-proxy就越多，高可用节点也随之增多。</li><li>与之相比，我们平时在服务器端做个反向代理做负载均衡，还要进一步解决反向代理的负载均衡和高可用问题。</li></ul><h4 id=5-任务job>.5. 任务（Job）</h4><ul><li>Job是K8s用来<code>控制批处理型任务的API对象</code>。批处理业务与长期伺服业务的主要区别是批处理业务的运行有头有尾，而长期伺服业务在用户不停止的情况下永远运行。</li><li>Job管理的Pod根据用户的设置把任务成功完成就自动退出了。</li><li>成功完成的标志根据不同的spec.completions策略而不同：单Pod型任务有一个Pod成功就标志完成；定数成功型任务保证有N个任务全部成功；工作队列型任务根据应用确认的全局成功而标志成功。</li></ul><h4 id=6-后台支撑服务集daemonset>.6. 后台支撑服务集（DaemonSet）</h4><ul><li>长期伺服型和批处理型服务的核心在业务应用，可能有些节点运行多个同类业务的Pod，</li><li>有些节点上又没有这类Pod运行；而后台支撑型服务的核心关注点在K8s集群中的节点（物理机或虚拟机），要保证每个节点上都有一个此类Pod运行。</li><li>节点可能是所有集群节点也可能是通过nodeSelector选定的一些特定节点。典型的后台支撑型服务包括，存储，日志和监控等在每个节点上支持K8s集群运行的服务。</li></ul><h4 id=7-存储卷volume>.7. 存储卷（Volume）</h4><ul><li><p>K8s集群中的存储卷跟Docker的存储卷有些类似，只不过Docker的存储卷作用范围为一个容器，而<code>K8s的存储卷的生命周期和作用范围是一个Pod</code>。<code>每个Pod中声明的存储卷由Pod中的所有容器共享</code>。K8s支持非常多的存储卷类型，特别的，支持多种公有云平台的存储，包括AWS，Google和Azure云；支持多种分布式存储包括GlusterFS和Ceph；也支持较容易使用的主机本地目录hostPath和NFS。K8s还支持使用Persistent Volume Claim即PVC这种逻辑存储，使用这种存储，使得存储的使用者可以忽略后台的实际存储技术（例如AWS，Google或GlusterFS和Ceph），而将有关存储实际技术的配置交给存储管理员通过Persistent Volume来配置。</p></li><li><p><code>持久存储卷（Persistent Volume，PV）</code>和<code>持久存储卷声明（Persistent Volume Claim，PVC）</code></p></li><li><p>PV和PVC使得K8s集群具备了存储的逻辑抽象能力，使得在配置Pod的逻辑里可以忽略对实际后台存储技术的配置，而把这项配置的工作交给PV的配置者，即集群的管理者。存储的PV和PVC的这种关系，跟计算的Node和Pod的关系是非常类似的；PV和Node是资源的提供者，根据集群的基础设施变化而变化，由K8s集群管理员配置；而PVC和Pod是资源的使用者，根据业务服务的需求变化而变化，有K8s集群的使用者即服务的管理员来配置。</p></li></ul><h4 id=8-节点node>.8. 节点（Node）</h4><ul><li>K8s集群中的计算能力由Node提供，最初Node称为服务节点Minion，后来改名为Node。</li><li>K8s集群中的Node也就等同于Mesos集群中的Slave节点，<code>是所有Pod运行所在的工作主机，可以是物理机也可以是虚拟机</code>。</li><li>不论是物理机还是虚拟机，<code>工作主机的统一特征是上面要运行kubelet管理节点上运行的容器</code>。</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src="https://s5.51cto.com/images/blog/202106/17/107c0a87915be3d36e4d96b13ffe5207.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" data-srcset="https://s5.51cto.com/images/blog/202106/17/107c0a87915be3d36e4d96b13ffe5207.png?x-oss-process=image/watermark%2csize_16%2ctext_QDUxQ1RP5Y2a5a6i%2ccolor_FFFFFF%2ct_100%2cg_se%2cx_10%2cy_10%2cshadow_90%2ctype_ZmFuZ3poZW5naGVpdGk=, https://s5.51cto.com/images/blog/202106/17/107c0a87915be3d36e4d96b13ffe5207.png?x-oss-process=image/watermark%2csize_16%2ctext_QDUxQ1RP5Y2a5a6i%2ccolor_FFFFFF%2ct_100%2cg_se%2cx_10%2cy_10%2cshadow_90%2ctype_ZmFuZ3poZW5naGVpdGk= 1.5x, https://s5.51cto.com/images/blog/202106/17/107c0a87915be3d36e4d96b13ffe5207.png?x-oss-process=image/watermark%2csize_16%2ctext_QDUxQ1RP5Y2a5a6i%2ccolor_FFFFFF%2ct_100%2cg_se%2cx_10%2cy_10%2cshadow_90%2ctype_ZmFuZ3poZW5naGVpdGk= 2x" data-sizes=auto alt="kubernetes Container、Pod、Replicaset、Service、Deployment、Lable、Statefulset关系和区别_Kubernetes" title="kubernetes Container、Pod、Replicaset、Service、Deployment、Lable、Statefulset关系和区别_Kubernetes"></p><h3 id=2-完整yaml>2. 完整yaml</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1        　　#必选，版本号，例如v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Pod       　　　　　　#必选，Pod</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:       　　　　　　<span style=color:#75715e>#必选，元数据</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>string        　　#必选，Pod名称</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>namespace</span>: <span style=color:#ae81ff>string     　　#必选，Pod所属的命名空间</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:       　　　　　　<span style=color:#75715e>#自定义标签</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>string      　#自定义标签名字</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>annotations</span>:        　　<span style=color:#75715e>#自定义注释列表</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:         　　　　　　　<span style=color:#75715e>#必选，Pod中容器的详细定义,  期望的状态</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>containers</span>:       　　　　<span style=color:#75715e>#必选，Pod中容器列表</span>
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>string      　　#必选，容器名称</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>string     　　#必选，容器的镜像名称</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>imagePullPolicy</span>: [<span style=color:#ae81ff>Always | Never | IfNotPresent] </span> <span style=color:#75715e>#获取镜像的策略 Alawys表示下载镜像 IfnotPresent表示优先使用本地镜像，否则下载镜像，Nerver表示仅使用本地镜像</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>command</span>: [<span style=color:#ae81ff>string]     　　#容器的启动命令列表，如不指定，使用打包时使用的启动命令</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>args</span>: [<span style=color:#ae81ff>string]      　　</span> <span style=color:#75715e>#容器的启动命令参数列表</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>workingDir</span>: <span style=color:#ae81ff>string     </span> <span style=color:#75715e>#容器的工作目录</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>volumeMounts</span>:     　　　　<span style=color:#75715e>#挂载到容器内部的存储卷配置</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>string      　　　#引用pod定义的共享存储卷的名称，需用volumes[]部分定义的的卷名</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>mountPath</span>: <span style=color:#ae81ff>string    </span> <span style=color:#75715e>#存储卷在容器内mount的绝对路径，应少于512字符</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>readOnly</span>: <span style=color:#ae81ff>boolean    </span> <span style=color:#75715e>#是否为只读模式</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>ports</span>:        　　　　　　<span style=color:#75715e>#需要暴露的端口库号列表</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>string      　　　#端口号名称</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>int   </span> <span style=color:#75715e>#容器需要监听的端口号</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>hostPort</span>: <span style=color:#ae81ff>int     　　</span> <span style=color:#75715e>#容器所在主机需要监听的端口号，默认与Container相同</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>string     </span> <span style=color:#75715e>#端口协议，支持TCP和UDP，默认TCP</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>env</span>:        　　　　　　<span style=color:#75715e>#容器运行前需设置的环境变量列表</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>string      　　#环境变量名称</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>value</span>: <span style=color:#ae81ff>string     　　#环境变量的值</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>resources</span>:        　　<span style=color:#75715e>#资源限制和请求的设置</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>limits</span>:       　　　　<span style=color:#75715e>#资源限制的设置</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>cpu</span>: <span style=color:#ae81ff>string     　　#Cpu的限制，单位为core数，将用于docker run --cpu-shares参数</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>memory</span>: <span style=color:#ae81ff>string     </span> <span style=color:#75715e>#内存限制，单位可以为Mib/Gib，将用于docker run --memory参数</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>requests</span>:       　　<span style=color:#75715e>#资源请求的设置</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>cpu</span>: <span style=color:#ae81ff>string     　　#Cpu请求，容器启动的初始可用数量</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>memory</span>: <span style=color:#ae81ff>string     </span> <span style=color:#75715e>#内存清楚，容器启动的初始可用数量</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>livenessProbe</span>:      　　<span style=color:#75715e>#对Pod内个容器健康检查的设置，当探测无响应几次后将自动重启该容器，检查方法有exec、httpGet和tcpSocket，对一个容器只需设置其中一种方法即可</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>exec</span>:       　　　　　　<span style=color:#75715e>#对Pod容器内检查方式设置为exec方式</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>command</span>: [<span style=color:#ae81ff>string]  </span> <span style=color:#75715e>#exec方式需要制定的命令或脚本</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>httpGet</span>:        　　　　<span style=color:#75715e>#对Pod内个容器健康检查方法设置为HttpGet，需要制定Path、port</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>port</span>: <span style=color:#ae81ff>number</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>host</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>scheme</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>HttpHeaders</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>value</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>tcpSocket</span>:      　　　　　　<span style=color:#75715e>#对Pod内个容器健康检查方式设置为tcpSocket方式</span>
+</span></span><span style=display:flex><span>         <span style=color:#f92672>port</span>: <span style=color:#ae81ff>number</span>
+</span></span><span style=display:flex><span>       <span style=color:#f92672>initialDelaySeconds</span>: <span style=color:#ae81ff>0</span>   <span style=color:#75715e>#容器启动完成后首次探测的时间，单位为秒</span>
+</span></span><span style=display:flex><span>       <span style=color:#f92672>timeoutSeconds</span>: <span style=color:#ae81ff>0</span>    　　<span style=color:#75715e>#对容器健康检查探测等待响应的超时时间，单位秒，默认1秒</span>
+</span></span><span style=display:flex><span>       <span style=color:#f92672>periodSeconds</span>: <span style=color:#ae81ff>0</span>     　　<span style=color:#75715e>#对容器监控检查的定期探测时间设置，单位秒，默认10秒一次</span>
+</span></span><span style=display:flex><span>       <span style=color:#f92672>successThreshold</span>: <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>       <span style=color:#f92672>failureThreshold</span>: <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>       <span style=color:#f92672>securityContext</span>:
+</span></span><span style=display:flex><span>         <span style=color:#f92672>privileged</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>restartPolicy</span>: [<span style=color:#ae81ff>Always | Never | OnFailure]</span> <span style=color:#75715e>#Pod的重启策略，Always表示一旦不管以何种方式终止运行，kubelet都将重启，OnFailure表示只有Pod以非0退出码退出才重启，Nerver表示不再重启该Pod</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>nodeSelector</span>: <span style=color:#ae81ff>obeject   　　#设置NodeSelector表示将该Pod调度到包含这个label的node上，以key：value的格式指定</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>imagePullSecrets</span>:     　　　　<span style=color:#75715e>#Pull镜像时使用的secret名称，以key：secretkey格式指定</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>hostNetwork</span>: <span style=color:#66d9ef>false</span>      　　<span style=color:#75715e>#是否使用主机网络模式，默认为false，如果设置为true，表示使用宿主机网络</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>volumes</span>:        　　　　　　<span style=color:#75715e>#在该pod上定义共享存储卷列表</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>string     　　 　　#共享存储卷名称 （volumes类型有很多种）</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>emptyDir</span>: {}      　　　　<span style=color:#75715e>#类型为emtyDir的存储卷，与Pod同生命周期的一个临时目录。为空值</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>hostPath</span>: <span style=color:#ae81ff>string      　　#类型为hostPath的存储卷，表示挂载Pod所在宿主机的目录</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>string      　　#Pod所在宿主机的目录，将被用于同期中mount的目录</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>secret</span>:       　　　　　　<span style=color:#75715e>#类型为secret的存储卷，挂载集群与定义的secre对象到容器内部</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>scretname</span>: <span style=color:#ae81ff>string  </span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>items</span>:     
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>key</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>path</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>configMap</span>:      　　　　<span style=color:#75715e>#类型为configMap的存储卷，挂载预定义的configMap对象到容器内部</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>items</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>key</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>path</span>: <span style=color:#ae81ff>string    </span>
+</span></span></code></pre></div><h3 id=3-deployment>3. Deployment</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1  </span> <span style=color:#75715e># 1.9.0 之前的版本使用 apps/v1beta2，可通过命令 kubectl api-versions 查看</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment 	#指定创建资源的角色/类型</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>: 	 <span style=color:#75715e>#资源的元数据/属性</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx-deployment	#资源的名字，在同一个namespace中必须唯一</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>2</span> 	 <span style=color:#75715e>#副本数量2</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:      <span style=color:#75715e>#定义标签选择器</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>web-server</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>: 	 <span style=color:#75715e>#这里Pod的定义</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>: 	 <span style=color:#75715e>#Pod的label</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>web-server</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>spec:		</span> <span style=color:#75715e># 指定该资源的内容  </span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:  
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx 	</span> <span style=color:#75715e>#容器的名字  </span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>image</span>: <span style=color:#ae81ff>nginx:1.12.1 </span> <span style=color:#75715e>#容器的镜像地址    </span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:  
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>80</span>  <span style=color:#75715e>#容器对外的端口</span>
+</span></span></code></pre></div><h3 id=4-pod>4. pod</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Pod  </span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:  
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>pod-redis</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>name</span>: <span style=color:#ae81ff>redis</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>: 
+</span></span><span style=display:flex><span>  <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>pod-redis</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>docker.io/redis  </span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>80</span>	<span style=color:#75715e>#容器对外的端口</span>
+</span></span></code></pre></div><h3 id=5-service>5. service</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Pod  </span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:  
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>pod-redis</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>name</span>: <span style=color:#ae81ff>redis</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>: 
+</span></span><span style=display:flex><span>  <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>pod-redis</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>docker.io/redis  </span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>80</span>	<span style=color:#75715e>#容器对外的端口</span>
+</span></span></code></pre></div><h3 id=resource>Resource</h3><ul><li><a href=https://www.cnblogs.com/flying1819/articles/9039529.html target=_blank rel="external nofollow noopener noreferrer">https://www.cnblogs.com/flying1819/articles/9039529.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li><a href=https://www.cnblogs.com/bakari/p/10509484.html target=_blank rel="external nofollow noopener noreferrer">https://www.cnblogs.com/bakari/p/10509484.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-24 17:00:04">更新于 2023-09-24&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5c%e8%99%9a%e6%8b%9f%e5%8c%96%e6%8a%80%e6%9c%af%5cKubernetes-yaml%e8%af%a6%e8%a7%a3.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/ data-title=Kubernetes-yaml详解 data-hashtags=Storage><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/ data-hashtag=Storage><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/kubernetes-yaml%E8%AF%A6%E8%A7%A3/ data-title=Kubernetes-yaml详解 data-image=https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/storage/>Storage</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/kubernetes_%E5%AD%98%E5%82%A8nfs%E5%AE%9E%E8%B7%B5/ class=prev rel=prev title=Kubernetes-存储NFS实践><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>Kubernetes-存储NFS实践</a>
+<a href=liudongdong1.github.io/kubernetes-practice/ class=next rel=next title=Kubernetes-workload>Kubernetes-workload<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
+<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
+<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>

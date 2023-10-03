@@ -1,636 +1,236 @@
-<!DOCTYPE html>
-<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-  <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <meta name="robots" content="noodp" />
-    <title>TorchVision_DataLoad - DAY By DAY</title><meta name="author" content="LiuDongdong">
-<meta name="author-link" content="https://liudongdong1.github.io/">
-<meta name="description" content="All datasets are subclasses of torch.utils.data.Dataset i.e, they have __getitem__ and __len__ methods implemented. Hence, they can all be passed to a torch.utils.data.DataLoader which can load multiple samples parallelly using torch.multiprocessing workers. Dataloader： offer a way to parallelly load data, batch load, and offer shuffle policy. Dataset: the dataset entry, offer getitem function., Transformer function 在这里执行" /><meta name="keywords" content='PyTorch' /><meta itemprop="name" content="TorchVision_DataLoad">
-<meta itemprop="description" content="All datasets are subclasses of torch.utils.data.Dataset i.e, they have __getitem__ and __len__ methods implemented. Hence, they can all be passed to a torch.utils.data.DataLoader which can load multiple samples parallelly using torch.multiprocessing workers. Dataloader： offer a way to parallelly load data, batch load, and offer shuffle policy. Dataset: the dataset entry, offer getitem function., Transformer function 在这里执行"><meta itemprop="datePublished" content="2020-10-17T08:56:09+00:00" />
-<meta itemprop="dateModified" content="2023-09-28T22:45:34+08:00" />
-<meta itemprop="wordCount" content="1386"><meta itemprop="image" content="/logo.png"/>
-<meta itemprop="keywords" content="PyTorch," /><meta property="og:title" content="TorchVision_DataLoad" />
-<meta property="og:description" content="All datasets are subclasses of torch.utils.data.Dataset i.e, they have __getitem__ and __len__ methods implemented. Hence, they can all be passed to a torch.utils.data.DataLoader which can load multiple samples parallelly using torch.multiprocessing workers. Dataloader： offer a way to parallelly load data, batch load, and offer shuffle policy. Dataset: the dataset entry, offer getitem function., Transformer function 在这里执行" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="liudongdong1.github.io/torchvision_dataload/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2020-10-17T08:56:09+00:00" />
-<meta property="article:modified_time" content="2023-09-28T22:45:34+08:00" />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/logo.png"/>
-
-<meta name="twitter:title" content="TorchVision_DataLoad"/>
-<meta name="twitter:description" content="All datasets are subclasses of torch.utils.data.Dataset i.e, they have __getitem__ and __len__ methods implemented. Hence, they can all be passed to a torch.utils.data.DataLoader which can load multiple samples parallelly using torch.multiprocessing workers. Dataloader： offer a way to parallelly load data, batch load, and offer shuffle policy. Dataset: the dataset entry, offer getitem function., Transformer function 在这里执行"/>
-<meta name="application-name" content="DAY By DAY">
-<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/torchvision_dataload/" /><link rel="prev" href="liudongdong1.github.io/torchvision_models/" /><link rel="next" href="liudongdong1.github.io/torchvision_transforms/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "BlogPosting",
-    "headline": "TorchVision_DataLoad",
-    "inLanguage": "zh-CN",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "liudongdong1.github.io\/torchvision_dataload\/"
-    },"genre": "posts","keywords": "PyTorch","wordcount":  1386 ,
-    "url": "liudongdong1.github.io\/torchvision_dataload\/","datePublished": "2020-10-17T08:56:09+00:00","dateModified": "2023-09-28T22:45:34+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
-      "@type": "Organization",
-      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
-        "@type": "Person",
-        "name": "liudongdong1"
-      },"description": ""
-  }
-  </script></head>
-  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
-  <div class="header-wrapper" data-github-corner="right">
-    <div class="header-title">
-      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="DAY By DAY"
-    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
-    <nav>
-      <ul class="menu"><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/posts/"
-                
-                
-              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/categories/"
-                
-                
-              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/tags/"
-                
-                
-              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/friends/"
-                title="友情链接"
-                
-              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/about/"
-                
-                
-              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
-          </li><li class="menu-item search" id="search-desktop">
-            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
-            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-            </a>
-            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-            </a>
-            <span class="search-button search-loading" id="search-loading-desktop">
-              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-            </span>
-          </li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header><header class="mobile animate__faster" id="header-mobile">
-  <div class="header-container">
-    <div class="header-wrapper">
-      <div class="header-title">
-        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="/fixit.min.svg"
-    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
-      <div class="menu-toggle" id="menu-toggle-mobile">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-    <nav>
-      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
-            <div class="search mobile" id="search-mobile">
-              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
-              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-              </a>
-              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-              </a>
-              <span class="search-button search-loading" id="search-loading-mobile">
-                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-              </span>
-            </div>
-            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-              取消
-            </a>
-          </li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/posts/"
-                  
-                  
-                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/categories/"
-                  
-                  
-                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/tags/"
-                  
-                  
-                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/friends/"
-                  title="友情链接"
-                  
-                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/about/"
-                  
-                  
-                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
-              class="menu-item text-center"
-            ><a
-                  class="menu-link"
-                  href="https://liudongdong1.github.io/"
-                  title="GitHub"
-                  rel="noopener noreferrer" target="_blank"
-                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
-          </li></ul>
-    </nav>
-  </div>
-</header><div class="search-dropdown desktop">
-    <div id="search-dropdown-desktop"></div>
-  </div>
-  <div class="search-dropdown mobile">
-    <div id="search-dropdown-mobile"></div>
-  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
-      <div class="toc-content" id="toc-content-auto"></div></aside>
-
-  <aside class="aside-custom" id="aside-sakana">
-    
-
-<div class="sakana-widget">
-  <div class="sakana-item" id="takina-widget"></div>
-  <div class="sakana-item" id="chisato-widget"></div>
-</div>
-<script>
-  function initSakanaWidget() {
-    const takina = SakanaWidget.getCharacter('takina')
-    SakanaWidget.registerCharacter('takina-slow', takina);
-    new SakanaWidget({
-      character: 'takina-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#takina-widget');
-
-    const chisato = SakanaWidget.getCharacter('chisato')
-    SakanaWidget.registerCharacter('chisato-slow', chisato);
-    new SakanaWidget({
-      character: 'chisato-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#chisato-widget');
-  }
-</script>
-<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
-</script></aside>
-
-  <article class="page single">
-    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
-        <span>TorchVision_DataLoad</span>
-      </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
-      liudongdong1</span></span>
-          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/ai/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;AI</a></span></div>
-      <div class="post-meta-line"><span title=2020-10-17&#32;08:56:09>
-            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-17" >2020-10-17</time>
-          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1386 字&nbsp;
-        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="TorchVision_DataLoad">
-            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
-          </span>&nbsp;</div>
-    </div><div class="featured-image"><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg, https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg"/></div><div class="details toc" id="toc-static" kept="true">
-        <div class="details-summary toc-title">
-          <span>目录</span>
-          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-        </div>
-        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#0-dataloader">0. DataLoader</a>
-      <ul>
-        <li><a href="#1-map-style-dataset">.1. Map-style Dataset</a></li>
-        <li><a href="#2-iterable-style-dataset">.2. Iterable-style dataset</a></li>
-      </ul>
-    </li>
-    <li><a href="#1-available-datasets">1. Available Datasets</a></li>
-    <li><a href="#2-generic-dataloader">2. Generic Dataloader</a>
-      <ul>
-        <li><a href="#21-imagefolder">2.1. ImageFolder</a></li>
-        <li><a href="#22-datasetfolder">2.2. DatasetFolder</a></li>
-        <li><a href="#3-examples">3. Examples</a></li>
-      </ul>
-    </li>
-    <li><a href="#learning-resources">Learning Resources</a></li>
-  </ul>
-</nav></div>
-      </div><div
-      class="content"
-      id="content"
-      
-      
-    ><blockquote>
-<p>All datasets are subclasses of <a href="https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset"target="_blank" rel="external nofollow noopener noreferrer"><code>torch.utils.data.Dataset</code><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> i.e, they have <code>__getitem__</code> and <code>__len__</code> methods implemented. Hence, they can all be passed to a <a href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader"target="_blank" rel="external nofollow noopener noreferrer"><code>torch.utils.data.DataLoader</code><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> which can load multiple samples parallelly using <code>torch.multiprocessing</code> workers.</p>
-<ul>
-<li>Dataloader： offer a way to parallelly load data, batch load, and offer shuffle policy.</li>
-<li>Dataset: the dataset entry, offer <strong>getitem</strong> function., Transformer function 在这里执行。</li>
-</ul>
-</blockquote>
-<h2 id="0-dataloader">0. DataLoader</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>DataLoader(dataset, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, sampler<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
-</span></span><span style="display:flex;"><span>           batch_sampler<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, collate_fn<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
-</span></span><span style="display:flex;"><span>           pin_memory<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,
-</span></span><span style="display:flex;"><span>           worker_init_fn<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>, <span style="color:#f92672">*</span>, prefetch_factor<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,
-</span></span><span style="display:flex;"><span>           persistent_workers<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-</span></span></code></pre></div><ul>
-<li><strong>dataset</strong> (<a href="https://pytorch.org/docs/stable/data.html?highlight=dataset#torch.utils.data.Dataset"target="_blank" rel="external nofollow noopener noreferrer"><em>Dataset</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>) – dataset from which to load the data.</li>
-<li><strong>batch_size</strong> (<a href="https://docs.python.org/3/library/functions.html#int"target="_blank" rel="external nofollow noopener noreferrer"><em>int</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><em>,</em> <em>optional</em>) – how many samples per batch to load (default: <code>1</code>).</li>
-<li><strong>shuffle</strong> (<a href="https://docs.python.org/3/library/functions.html#bool"target="_blank" rel="external nofollow noopener noreferrer"><em>bool</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><em>,</em> <em>optional</em>) – set to <code>True</code> to have the data reshuffled at every epoch (default: <code>False</code>).</li>
-<li><strong>sampler</strong> (<a href="https://pytorch.org/docs/stable/data.html?highlight=dataset#torch.utils.data.Sampler"target="_blank" rel="external nofollow noopener noreferrer"><em>Sampler</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> <em>or</em> <em>Iterable</em>*,* <em>optional</em>) – defines the strategy to draw samples from the dataset. Can be any <code>Iterable</code> with <code>__len__</code> implemented. If specified, <code>shuffle</code> must not be specified.</li>
-<li><strong>batch_sampler</strong> (<a href="https://pytorch.org/docs/stable/data.html?highlight=dataset#torch.utils.data.Sampler"target="_blank" rel="external nofollow noopener noreferrer"><em>Sampler</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> <em>or</em> <em>Iterable</em>*,* <em>optional</em>) – like <code>sampler</code>, but returns a batch of indices at a time. Mutually exclusive with <code>batch_size</code>, <code>shuffle</code>, <code>sampler</code>, and <code>drop_last</code>.</li>
-<li><strong>num_workers</strong> (<a href="https://docs.python.org/3/library/functions.html#int"target="_blank" rel="external nofollow noopener noreferrer"><em>int</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><em>,</em> <em>optional</em>) – how many subprocesses to use for data loading. <code>0</code> means that the data will be loaded in the main process. (default: <code>0</code>)</li>
-<li><strong>collate_fn</strong> (<em>callable</em>*,* <em>optional</em>) – merges a list of samples to form a mini-batch of Tensor(s). Used when using batched loading from a map-style dataset.</li>
-<li><strong>pin_memory</strong> (<a href="https://docs.python.org/3/library/functions.html#bool"target="_blank" rel="external nofollow noopener noreferrer"><em>bool</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><em>,</em> <em>optional</em>) – If <code>True</code>, the data loader will copy Tensors into CUDA pinned memory before returning them. If your data elements are a custom type, or your <code>collate_fn</code> returns a batch that is a custom type, see the example below.</li>
-<li><strong>drop_last</strong> (<a href="https://docs.python.org/3/library/functions.html#bool"target="_blank" rel="external nofollow noopener noreferrer"><em>bool</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><em>,</em> <em>optional</em>) – set to <code>True</code> to drop the last incomplete batch, if the dataset size is not divisible by the batch size. If <code>False</code> and the size of dataset is not divisible by the batch size, then the last batch will be smaller. (default: <code>False</code>)</li>
-<li><strong>timeout</strong> (<em>numeric</em>*,* <em>optional</em>) – if positive, the timeout value for collecting a batch from workers. Should always be non-negative. (default: <code>0</code>)</li>
-<li><strong>worker_init_fn</strong> (<em>callable</em>*,* <em>optional</em>) – If not <code>None</code>, this will be called on each worker subprocess with the worker id (an int in <code>[0, num_workers - 1]</code>) as input, after seeding and before data loading. (default: <code>None</code>)</li>
-<li><strong>prefetch_factor</strong> (<a href="https://docs.python.org/3/library/functions.html#int"target="_blank" rel="external nofollow noopener noreferrer"><em>int</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><em>,</em> <em>optional</em>*,* <em>keyword-only arg</em>) – Number of samples loaded in advance by each worker. <code>2</code> means there will be a total of 2 * num_workers samples prefetched across all workers. (default: <code>2</code>)</li>
-<li><strong>persistent_workers</strong> (<a href="https://docs.python.org/3/library/functions.html#bool"target="_blank" rel="external nofollow noopener noreferrer"><em>bool</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><em>,</em> <em>optional</em>) – If <code>True</code>, the data loader will not shutdown the worker processes after a dataset has been consumed once. This allows to maintain the workers Dataset instances alive. (default: <code>False</code>)</li>
-</ul>
-<h3 id="1-map-style-dataset">.1. Map-style Dataset</h3>
-<blockquote>
-<p>implements the <code>__getitem__()</code> and <code>__len__()</code> protocols, and represents a map from (poissibly non-integral) indices/keys to data samples. dataset[idx]={image, label}</p>
-</blockquote>
-<h3 id="2-iterable-style-dataset">.2. Iterable-style dataset</h3>
-<blockquote>
-<p>implements the <code>__iter__()</code> protocol, and represents an iterable over data samples. This type of datasets is particularly suitable for cases where random reads are expensive or even improbable, and where the batch size depends on the fetched data.</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Dataset</span>(Generic[T_co]):
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#34;&#34;An abstract class representing a :class:`Dataset`.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    All datasets that represent a map from keys to data samples should subclass
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    it. All subclasses should overwrite :meth:`__getitem__`, supporting fetching a
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    data sample for a given key. Subclasses could also optionally overwrite
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    :meth:`__len__`, which is expected to return the size of the dataset by many
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    :class:`~torch.utils.data.Sampler` implementations and the default options
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    of :class:`~torch.utils.data.DataLoader`.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    .. note::
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      :class:`~torch.utils.data.DataLoader` by default constructs a index
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      sampler that yields integral indices.  To make it work with a map-style
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      dataset with non-integral indices/keys, a custom sampler must be provided.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __getitem__(self, index) <span style="color:#f92672">-&gt;</span> T_co:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">NotImplementedError</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __add__(self, other: <span style="color:#e6db74">&#39;Dataset[T_co]&#39;</span>) <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#39;ConcatDataset[T_co]&#39;</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ConcatDataset([self, other])
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># No `def __len__(self)` default?</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># See NOTE [ Lack of Default `__len__` in Python Abstract Base Classes ]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># in pytorch/torch/utils/data/sampler.py</span>
-</span></span></code></pre></div><h2 id="1-available-datasets">1. Available Datasets</h2>
-<ul>
-<li><a href="https://pytorch.org/docs/stable/torchvision/datasets.html#mnist"target="_blank" rel="external nofollow noopener noreferrer">MNIST<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>         <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#qmnist"target="_blank" rel="external nofollow noopener noreferrer">QMNIST<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>       <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#fakedata"target="_blank" rel="external nofollow noopener noreferrer">FakeData<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#coco"target="_blank" rel="external nofollow noopener noreferrer">COCO<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#captions"target="_blank" rel="external nofollow noopener noreferrer">Captions<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#detection"target="_blank" rel="external nofollow noopener noreferrer">Detection<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><a href="https://pytorch.org/docs/stable/torchvision/datasets.html#lsun"target="_blank" rel="external nofollow noopener noreferrer">LSUN<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#imagefolder"target="_blank" rel="external nofollow noopener noreferrer">ImageFolder<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#datasetfolder"target="_blank" rel="external nofollow noopener noreferrer">DatasetFolder<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#imagenet"target="_blank" rel="external nofollow noopener noreferrer">ImageNet<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><a href="https://pytorch.org/docs/stable/torchvision/datasets.html#cifar"target="_blank" rel="external nofollow noopener noreferrer">CIFAR<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#stl10"target="_blank" rel="external nofollow noopener noreferrer">STL10<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#svhn"target="_blank" rel="external nofollow noopener noreferrer">SVHN<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#phototour"target="_blank" rel="external nofollow noopener noreferrer">PhotoTour<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#sbu"target="_blank" rel="external nofollow noopener noreferrer">SBU<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#flickr"target="_blank" rel="external nofollow noopener noreferrer">Flickr<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#voc"target="_blank" rel="external nofollow noopener noreferrer">VOC<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#cityscapes"target="_blank" rel="external nofollow noopener noreferrer">Cityscapes<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#sbd"target="_blank" rel="external nofollow noopener noreferrer">SBD<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#usps"target="_blank" rel="external nofollow noopener noreferrer">USPS<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#kinetics-400"target="_blank" rel="external nofollow noopener noreferrer">Kinetics-400<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#hmdb51"target="_blank" rel="external nofollow noopener noreferrer">HMDB51<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#ucf101"target="_blank" rel="external nofollow noopener noreferrer">UCF101<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#celeba"target="_blank" rel="external nofollow noopener noreferrer">CelebA<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#fashion-mnist"target="_blank" rel="external nofollow noopener noreferrer">Fashion-MNIST<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#kmnist"target="_blank" rel="external nofollow noopener noreferrer">KMNIST<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>   <a href="https://pytorch.org/docs/stable/torchvision/datasets.html#emnist"target="_blank" rel="external nofollow noopener noreferrer">EMNIST<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ul>
-<blockquote>
-<p>All the datasets have almost similar API. They all have two common arguments: <code>transform</code> and <code>target_transform</code> to transform the input and target respectively.
-Take MNIST for example:</p>
-</blockquote>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124252716.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124252716.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124252716.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124252716.png 2x"
-    data-sizes="auto"
-    alt="image-20201017124252716"
-    title="image-20201017124252716"/></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> .vision <span style="color:#f92672">import</span> VisionDataset
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> warnings
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os.path
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> codecs
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> string
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> .utils <span style="color:#f92672">import</span> download_url, download_and_extract_archive, extract_archive, \
-</span></span><span style="display:flex;"><span>    verify_str_arg
-</span></span><span style="display:flex;"><span>[docs]<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MNIST</span>(VisionDataset):
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;`MNIST &lt;http://yann.lecun.com/exdb/mnist/&gt;`_ Dataset.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Args:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        root (string): Root directory of dataset where ``MNIST/processed/training.pt``
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            and  ``MNIST/processed/test.pt`` exist.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        train (bool, optional): If True, creates dataset from ``training.pt``,
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            otherwise from ``test.pt``.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        download (bool, optional): If true, downloads the dataset from the internet and
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            puts it in root directory. If dataset is already downloaded, it is not
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            downloaded again.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        transform (callable, optional): A function/transform that  takes in an PIL image
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            and returns a transformed version. E.g, ``transforms.RandomCrop``
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        target_transform (callable, optional): A function/transform that takes in the
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            target and transforms it.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    resources <span style="color:#f92672">=</span> [
-</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz&#34;</span>, <span style="color:#e6db74">&#34;f68b3c2dcbeaaa9fbdd348bbdeb94873&#34;</span>),
-</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz&#34;</span>, <span style="color:#e6db74">&#34;d53e105ee54ea40749a09fcbcd1e9432&#34;</span>),
-</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz&#34;</span>, <span style="color:#e6db74">&#34;9fb629c4189551a2d022fa330f9573f3&#34;</span>),
-</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz&#34;</span>, <span style="color:#e6db74">&#34;ec29112dd5afa0611ce80d1b7f02629c&#34;</span>)
-</span></span><span style="display:flex;"><span>    ]
-</span></span><span style="display:flex;"><span>    training_file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;training.pt&#39;</span>
-</span></span><span style="display:flex;"><span>    test_file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;test.pt&#39;</span>
-</span></span><span style="display:flex;"><span>    classes <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;0 - zero&#39;</span>, <span style="color:#e6db74">&#39;1 - one&#39;</span>, <span style="color:#e6db74">&#39;2 - two&#39;</span>, <span style="color:#e6db74">&#39;3 - three&#39;</span>, <span style="color:#e6db74">&#39;4 - four&#39;</span>,
-</span></span><span style="display:flex;"><span>               <span style="color:#e6db74">&#39;5 - five&#39;</span>, <span style="color:#e6db74">&#39;6 - six&#39;</span>, <span style="color:#e6db74">&#39;7 - seven&#39;</span>, <span style="color:#e6db74">&#39;8 - eight&#39;</span>, <span style="color:#e6db74">&#39;9 - nine&#39;</span>]
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_labels</span>(self):
-</span></span><span style="display:flex;"><span>        warnings<span style="color:#f92672">.</span>warn(<span style="color:#e6db74">&#34;train_labels has been renamed targets&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>targets
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_labels</span>(self):
-</span></span><span style="display:flex;"><span>        warnings<span style="color:#f92672">.</span>warn(<span style="color:#e6db74">&#34;test_labels has been renamed targets&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>targets
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_data</span>(self):
-</span></span><span style="display:flex;"><span>        warnings<span style="color:#f92672">.</span>warn(<span style="color:#e6db74">&#34;train_data has been renamed data&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>data
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_data</span>(self):
-</span></span><span style="display:flex;"><span>        warnings<span style="color:#f92672">.</span>warn(<span style="color:#e6db74">&#34;test_data has been renamed data&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>data
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, root, train<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, transform<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>, target_transform<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
-</span></span><span style="display:flex;"><span>                 download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
-</span></span><span style="display:flex;"><span>        super(MNIST, self)<span style="color:#f92672">.</span>__init__(root, transform<span style="color:#f92672">=</span>transform,
-</span></span><span style="display:flex;"><span>                                    target_transform<span style="color:#f92672">=</span>target_transform)
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>train <span style="color:#f92672">=</span> train  <span style="color:#75715e"># training set or test set</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> download:
-</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>download()
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> self<span style="color:#f92672">.</span>_check_exists():
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">RuntimeError</span>(<span style="color:#e6db74">&#39;Dataset not found.&#39;</span> <span style="color:#f92672">+</span>
-</span></span><span style="display:flex;"><span>                               <span style="color:#e6db74">&#39; You can use download=True to download it&#39;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>train:
-</span></span><span style="display:flex;"><span>            data_file <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>training_file
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>            data_file <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>test_file
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>data, self<span style="color:#f92672">.</span>targets <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>load(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>processed_folder, data_file))
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __getitem__(self, index):
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Args:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            index (int): Index
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Returns:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            tuple: (image, target) where target is index of the target class.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>        img, target <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>data[index], int(self<span style="color:#f92672">.</span>targets[index])
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># doing this so that it is consistent with all other datasets</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># to return a PIL Image</span>
-</span></span><span style="display:flex;"><span>        img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(img<span style="color:#f92672">.</span>numpy(), mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;L&#39;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>transform <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
-</span></span><span style="display:flex;"><span>            img <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>transform(img)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>target_transform <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
-</span></span><span style="display:flex;"><span>            target <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>target_transform(target)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> img, target
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __len__(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> len(self<span style="color:#f92672">.</span>data)
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">raw_folder</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>root, self<span style="color:#f92672">.</span>__class__<span style="color:#f92672">.</span>__name__, <span style="color:#e6db74">&#39;raw&#39;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">processed_folder</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>root, self<span style="color:#f92672">.</span>__class__<span style="color:#f92672">.</span>__name__, <span style="color:#e6db74">&#39;processed&#39;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">class_to_idx</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {_class: i <span style="color:#66d9ef">for</span> i, _class <span style="color:#f92672">in</span> enumerate(self<span style="color:#f92672">.</span>classes)}
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_check_exists</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>processed_folder,
-</span></span><span style="display:flex;"><span>                                            self<span style="color:#f92672">.</span>training_file)) <span style="color:#f92672">and</span>
-</span></span><span style="display:flex;"><span>                os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>processed_folder,
-</span></span><span style="display:flex;"><span>                                            self<span style="color:#f92672">.</span>test_file)))
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">download</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;Download the MNIST data if it doesn&#39;t exist in processed_folder already.&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>_check_exists():
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>        os<span style="color:#f92672">.</span>makedirs(self<span style="color:#f92672">.</span>raw_folder, exist_ok<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>        os<span style="color:#f92672">.</span>makedirs(self<span style="color:#f92672">.</span>processed_folder, exist_ok<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># download files</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> url, md5 <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>resources:
-</span></span><span style="display:flex;"><span>            filename <span style="color:#f92672">=</span> url<span style="color:#f92672">.</span>rpartition(<span style="color:#e6db74">&#39;/&#39;</span>)[<span style="color:#ae81ff">2</span>]
-</span></span><span style="display:flex;"><span>            download_and_extract_archive(url, download_root<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>raw_folder, filename<span style="color:#f92672">=</span>filename, md5<span style="color:#f92672">=</span>md5)
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># process and save as torch files</span>
-</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;Processing...&#39;</span>)
-</span></span><span style="display:flex;"><span>        training_set <span style="color:#f92672">=</span> (
-</span></span><span style="display:flex;"><span>            read_image_file(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>raw_folder, <span style="color:#e6db74">&#39;train-images-idx3-ubyte&#39;</span>)),
-</span></span><span style="display:flex;"><span>            read_label_file(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>raw_folder, <span style="color:#e6db74">&#39;train-labels-idx1-ubyte&#39;</span>))
-</span></span><span style="display:flex;"><span>        )
-</span></span><span style="display:flex;"><span>        test_set <span style="color:#f92672">=</span> (
-</span></span><span style="display:flex;"><span>            read_image_file(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>raw_folder, <span style="color:#e6db74">&#39;t10k-images-idx3-ubyte&#39;</span>)),
-</span></span><span style="display:flex;"><span>            read_label_file(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>raw_folder, <span style="color:#e6db74">&#39;t10k-labels-idx1-ubyte&#39;</span>))
-</span></span><span style="display:flex;"><span>        )
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> open(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>processed_folder, self<span style="color:#f92672">.</span>training_file), <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> f:
-</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>save(training_set, f)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> open(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>processed_folder, self<span style="color:#f92672">.</span>test_file), <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> f:
-</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>save(test_set, f)
-</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;Done!&#39;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extra_repr</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Split: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;Train&#34;</span> <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>train <span style="color:#f92672">is</span> <span style="color:#66d9ef">True</span> <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;Test&#34;</span>)
-</span></span></code></pre></div><h2 id="2-generic-dataloader">2. Generic Dataloader</h2>
-<h3 id="21-imagefolder">2.1. ImageFolder</h3>
-<blockquote>
-<p>A generic data loader where the images are arranged in this way:</p>
-<p>torchvision.datasets.ImageFolder(<em>root</em>, <em>transform=None</em>, <em>target_transform=None</em>, <em>loader=<!-- raw HTML omitted --></em>, <em>is_valid_file=None</em>)
-<img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124740466.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124740466.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124740466.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124740466.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124740466.png"
-    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124740466.png"/></p>
-</blockquote>
-<p><code>__getitem__</code>(<em>index</em>)</p>
-<ul>
-<li>
-<p>Parameters</p>
-<p><strong>index</strong> (<a href="https://docs.python.org/3/library/functions.html#int"target="_blank" rel="external nofollow noopener noreferrer"><em>int</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>) – Index</p>
-</li>
-<li>
-<p>Returns</p>
-<p>(sample, target) where target is class_index of the target class.</p>
-</li>
-<li>
-<p>Return type</p>
-<p><a href="https://docs.python.org/3/library/stdtypes.html#tuple"target="_blank" rel="external nofollow noopener noreferrer">tuple<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_data</span>(root_path, dir, batch_size, phase):
-</span></span><span style="display:flex;"><span>    transform_dict <span style="color:#f92672">=</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;src&#39;</span>: transforms<span style="color:#f92672">.</span>Compose(
-</span></span><span style="display:flex;"><span>        [transforms<span style="color:#f92672">.</span>RandomResizedCrop(<span style="color:#ae81ff">224</span>),
-</span></span><span style="display:flex;"><span>         transforms<span style="color:#f92672">.</span>RandomHorizontalFlip(),
-</span></span><span style="display:flex;"><span>         transforms<span style="color:#f92672">.</span>ToTensor(),
-</span></span><span style="display:flex;"><span>         transforms<span style="color:#f92672">.</span>Normalize(mean<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0.485</span>, <span style="color:#ae81ff">0.456</span>, <span style="color:#ae81ff">0.406</span>],
-</span></span><span style="display:flex;"><span>                              std<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0.229</span>, <span style="color:#ae81ff">0.224</span>, <span style="color:#ae81ff">0.225</span>]),
-</span></span><span style="display:flex;"><span>         ]),
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;tar&#39;</span>: transforms<span style="color:#f92672">.</span>Compose(
-</span></span><span style="display:flex;"><span>        [transforms<span style="color:#f92672">.</span>Resize(<span style="color:#ae81ff">224</span>),
-</span></span><span style="display:flex;"><span>         transforms<span style="color:#f92672">.</span>ToTensor(),
-</span></span><span style="display:flex;"><span>         transforms<span style="color:#f92672">.</span>Normalize(mean<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0.485</span>, <span style="color:#ae81ff">0.456</span>, <span style="color:#ae81ff">0.406</span>],
-</span></span><span style="display:flex;"><span>                              std<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0.229</span>, <span style="color:#ae81ff">0.224</span>, <span style="color:#ae81ff">0.225</span>]),
-</span></span><span style="display:flex;"><span>         ])}
-</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> datasets<span style="color:#f92672">.</span>ImageFolder(root<span style="color:#f92672">=</span>root_path <span style="color:#f92672">+</span> dir, transform<span style="color:#f92672">=</span>transform_dict[phase])
-</span></span><span style="display:flex;"><span>    data_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(data, batch_size<span style="color:#f92672">=</span>batch_size, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> data_loader 
-</span></span></code></pre></div><h3 id="22-datasetfolder">2.2. DatasetFolder</h3>
-<blockquote>
-<p><code>torchvision.datasets.``DatasetFolder</code>(<em>root</em>, <em>loader</em>, <em>extensions=None</em>, <em>transform=None</em>, <em>target_transform=None</em>, <em>is_valid_file=None</em>)
-<img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017125057711.png"
-    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017125057711.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017125057711.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017125057711.png 2x"
-    data-sizes="auto"
-    alt="image-20201017125057711"
-    title="image-20201017125057711"/></p>
-</blockquote>
-<h3 id="3-examples">3. Examples</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> multiprocessing <span style="color:#f92672">import</span> freeze_support
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch <span style="color:#f92672">import</span> nn
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.autograd <span style="color:#f92672">import</span> Variable
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> DataLoader, Sampler
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchvision <span style="color:#f92672">import</span> datasets
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchvision.transforms <span style="color:#f92672">import</span> transforms
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.optim <span style="color:#f92672">import</span> Adam
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pathlib <span style="color:#f92672">import</span> Path
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Hyperparameters.</span>
-</span></span><span style="display:flex;"><span>num_epochs <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
-</span></span><span style="display:flex;"><span>num_classes <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
-</span></span><span style="display:flex;"><span>batch_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
-</span></span><span style="display:flex;"><span>learning_rate <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.001</span>
-</span></span><span style="display:flex;"><span>num_of_workers <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
-</span></span><span style="display:flex;"><span>DATA_PATH_TRAIN <span style="color:#f92672">=</span> Path(<span style="color:#e6db74">&#39;C:/Users/Aeryes/PycharmProjects/simplecnn/images/train/&#39;</span>)
-</span></span><span style="display:flex;"><span>DATA_PATH_TEST <span style="color:#f92672">=</span> Path(<span style="color:#e6db74">&#39;C:/Users/Aeryes/PycharmProjects/simplecnn/images/test/&#39;</span>)
-</span></span><span style="display:flex;"><span>MODEL_STORE_PATH <span style="color:#f92672">=</span> Path(<span style="color:#e6db74">&#39;C:/Users/Aeryes/PycharmProjects/simplecnn/model&#39;</span>)
-</span></span><span style="display:flex;"><span>trans <span style="color:#f92672">=</span> transforms<span style="color:#f92672">.</span>Compose([
-</span></span><span style="display:flex;"><span>    transforms<span style="color:#f92672">.</span>RandomHorizontalFlip(),
-</span></span><span style="display:flex;"><span>    transforms<span style="color:#f92672">.</span>Resize(<span style="color:#ae81ff">32</span>),
-</span></span><span style="display:flex;"><span>    transforms<span style="color:#f92672">.</span>CenterCrop(<span style="color:#ae81ff">32</span>),
-</span></span><span style="display:flex;"><span>    transforms<span style="color:#f92672">.</span>ToTensor(),
-</span></span><span style="display:flex;"><span>    transforms<span style="color:#f92672">.</span>Normalize((<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.5</span>),(<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.5</span>))
-</span></span><span style="display:flex;"><span>    ])
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Flowers dataset.</span>
-</span></span><span style="display:flex;"><span>train_dataset <span style="color:#f92672">=</span> datasets<span style="color:#f92672">.</span>ImageFolder(root<span style="color:#f92672">=</span>DATA_PATH_TRAIN, transform<span style="color:#f92672">=</span>trans)
-</span></span><span style="display:flex;"><span>test_dataset <span style="color:#f92672">=</span> datasets<span style="color:#f92672">.</span>ImageFolder(root<span style="color:#f92672">=</span>DATA_PATH_TEST, transform<span style="color:#f92672">=</span>trans)
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create custom random sampler class to iter over dataloader.</span>
-</span></span><span style="display:flex;"><span>train_loader <span style="color:#f92672">=</span> DataLoader(dataset<span style="color:#f92672">=</span>train_dataset, batch_size<span style="color:#f92672">=</span>batch_size, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, num_workers<span style="color:#f92672">=</span>num_of_workers)
-</span></span><span style="display:flex;"><span>test_loader <span style="color:#f92672">=</span> DataLoader(dataset<span style="color:#f92672">=</span>test_dataset, batch_size<span style="color:#f92672">=</span>batch_size, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, num_workers<span style="color:#f92672">=</span>num_of_workers)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i, (images, labels) <span style="color:#f92672">in</span> enumerate(train_loader):   
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Move images and labels to gpu if available</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> cuda_avail:
-</span></span><span style="display:flex;"><span>    images <span style="color:#f92672">=</span> Variable(images<span style="color:#f92672">.</span>cuda())
-</span></span><span style="display:flex;"><span>    labels <span style="color:#f92672">=</span> Variable(labels<span style="color:#f92672">.</span>cuda())
-</span></span></code></pre></div><h2 id="learning-resources">Learning Resources</h2>
-<ul>
-<li><a href="https://pytorch.org/docs/stable/_modules/torchvision/datasets/mnist.html#MNIST"target="_blank" rel="external nofollow noopener noreferrer">https://pytorch.org/docs/stable/_modules/torchvision/datasets/mnist.html#MNIST<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://pytorch.org/docs/stable/torchvision/index.html"target="_blank" rel="external nofollow noopener noreferrer">https://pytorch.org/docs/stable/torchvision/index.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ul>
-</div>
-<div class="post-footer" id="post-footer">
-  <div class="post-info">
-    <div class="post-info-line">
-      <div class="post-info-mod">
-        <span title=2023-09-28&#32;22:45:34>更新于 2023-09-28&nbsp;</span>
-      </div><div class="post-info-license">
-          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
-        </div></div>
-    <div class="post-info-line">
-      <div class="post-info-md"><span><a href="liudongdong1.github.io/torchvision_dataload/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%5cpytorch%5cTorchVision_DataLoad.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
-      <div class="post-info-share">
-        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/torchvision_dataload/" data-title="TorchVision_DataLoad" data-hashtags="PyTorch"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/torchvision_dataload/" data-hashtag="PyTorch"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/torchvision_dataload/" data-title="TorchVision_DataLoad" data-image="https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
-  </span>
-      </div>
-    </div>
-  </div>
-
-  <div class="post-info-more">
-    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/pytorch/">Pytorch</a></section>
-    <section>
-      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
-    </section>
-  </div>
-
-  <div class="post-nav"><a href="liudongdong1.github.io/torchvision_models/" class="prev" rel="prev" title="TorchVision_Models"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>TorchVision_Models</a>
-      <a href="liudongdong1.github.io/torchvision_transforms/" class="next" rel="next" title="TorchVision_Transforms">TorchVision_Transforms<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-</article></main><footer class="footer">
-    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
-        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
-            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
-              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
-          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
-        </div></div>
-  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
-        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
-    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
-  </noscript>
-</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
-</html>
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>TorchVision_DataLoad - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="All datasets are subclasses of torch.utils.data.Dataset i.e, they have __getitem__ and __len__ methods implemented. Hence, they can all be passed to a torch.utils.data.DataLoader which can load multiple samples parallelly using torch.multiprocessing workers. Dataloader： offer a way to parallelly load data, batch load, and offer shuffle policy. Dataset: the dataset entry, offer getitem function., Transformer function 在这里执行"><meta name=keywords content="PyTorch"><meta itemprop=name content="TorchVision_DataLoad"><meta itemprop=description content="All datasets are subclasses of torch.utils.data.Dataset i.e, they have __getitem__ and __len__ methods implemented. Hence, they can all be passed to a torch.utils.data.DataLoader which can load multiple samples parallelly using torch.multiprocessing workers. Dataloader： offer a way to parallelly load data, batch load, and offer shuffle policy. Dataset: the dataset entry, offer getitem function., Transformer function 在这里执行"><meta itemprop=datePublished content="2020-10-17T08:56:09+00:00"><meta itemprop=dateModified content="2023-09-28T22:45:34+08:00"><meta itemprop=wordCount content="1386"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="PyTorch,"><meta property="og:title" content="TorchVision_DataLoad"><meta property="og:description" content="All datasets are subclasses of torch.utils.data.Dataset i.e, they have __getitem__ and __len__ methods implemented. Hence, they can all be passed to a torch.utils.data.DataLoader which can load multiple samples parallelly using torch.multiprocessing workers. Dataloader： offer a way to parallelly load data, batch load, and offer shuffle policy. Dataset: the dataset entry, offer getitem function., Transformer function 在这里执行"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/torchvision_dataload/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-10-17T08:56:09+00:00"><meta property="article:modified_time" content="2023-09-28T22:45:34+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="TorchVision_DataLoad"><meta name=twitter:description content="All datasets are subclasses of torch.utils.data.Dataset i.e, they have __getitem__ and __len__ methods implemented. Hence, they can all be passed to a torch.utils.data.DataLoader which can load multiple samples parallelly using torch.multiprocessing workers. Dataloader： offer a way to parallelly load data, batch load, and offer shuffle policy. Dataset: the dataset entry, offer getitem function., Transformer function 在这里执行"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/torchvision_dataload/><link rel=prev href=liudongdong1.github.io/torchvision_models/><link rel=next href=liudongdong1.github.io/torchvision_transforms/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"TorchVision_DataLoad","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/torchvision_dataload\/"},"genre":"posts","keywords":"PyTorch","wordcount":1386,"url":"liudongdong1.github.io\/torchvision_dataload\/","datePublished":"2020-10-17T08:56:09+00:00","dateModified":"2023-09-28T22:45:34+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"liudongdong1"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
+<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>TorchVision_DataLoad</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle" aria-hidden=true></i>
+liudongdong1</span></span>
+<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/ai/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;AI</a></span></div><div class=post-meta-line><span title="2020-10-17 08:56:09"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-10-17>2020-10-17</time>
+</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1386 字&nbsp;
+<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title=TorchVision_DataLoad>
+<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg, https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg title=https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg></div><div class="details toc" id=toc-static kept=true><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#0-dataloader>0. DataLoader</a><ul><li><a href=#1-map-style-dataset>.1. Map-style Dataset</a></li><li><a href=#2-iterable-style-dataset>.2. Iterable-style dataset</a></li></ul></li><li><a href=#1-available-datasets>1. Available Datasets</a></li><li><a href=#2-generic-dataloader>2. Generic Dataloader</a><ul><li><a href=#21-imagefolder>2.1. ImageFolder</a></li><li><a href=#22-datasetfolder>2.2. DatasetFolder</a></li><li><a href=#3-examples>3. Examples</a></li></ul></li><li><a href=#learning-resources>Learning Resources</a></li></ul></nav></div></div><div class=content id=content><blockquote><p>All datasets are subclasses of <a href=https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset target=_blank rel="external nofollow noopener noreferrer"><code>torch.utils.data.Dataset</code><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> i.e, they have <code>__getitem__</code> and <code>__len__</code> methods implemented. Hence, they can all be passed to a <a href=https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader target=_blank rel="external nofollow noopener noreferrer"><code>torch.utils.data.DataLoader</code><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> which can load multiple samples parallelly using <code>torch.multiprocessing</code> workers.</p><ul><li>Dataloader： offer a way to parallelly load data, batch load, and offer shuffle policy.</li><li>Dataset: the dataset entry, offer <strong>getitem</strong> function., Transformer function 在这里执行。</li></ul></blockquote><h2 id=0-dataloader>0. DataLoader</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>DataLoader(dataset, batch_size<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>, shuffle<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>, sampler<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>,
+</span></span><span style=display:flex><span>           batch_sampler<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>, num_workers<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>, collate_fn<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>,
+</span></span><span style=display:flex><span>           pin_memory<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>, drop_last<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>, timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>,
+</span></span><span style=display:flex><span>           worker_init_fn<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>, <span style=color:#f92672>*</span>, prefetch_factor<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>,
+</span></span><span style=display:flex><span>           persistent_workers<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
+</span></span></code></pre></div><ul><li><strong>dataset</strong> (<a href="https://pytorch.org/docs/stable/data.html?highlight=dataset#torch.utils.data.Dataset" target=_blank rel="external nofollow noopener noreferrer"><em>Dataset</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a>) – dataset from which to load the data.</li><li><strong>batch_size</strong> (<a href=https://docs.python.org/3/library/functions.html#int target=_blank rel="external nofollow noopener noreferrer"><em>int</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a><em>,</em> <em>optional</em>) – how many samples per batch to load (default: <code>1</code>).</li><li><strong>shuffle</strong> (<a href=https://docs.python.org/3/library/functions.html#bool target=_blank rel="external nofollow noopener noreferrer"><em>bool</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a><em>,</em> <em>optional</em>) – set to <code>True</code> to have the data reshuffled at every epoch (default: <code>False</code>).</li><li><strong>sampler</strong> (<a href="https://pytorch.org/docs/stable/data.html?highlight=dataset#torch.utils.data.Sampler" target=_blank rel="external nofollow noopener noreferrer"><em>Sampler</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <em>or</em> <em>Iterable</em>*,* <em>optional</em>) – defines the strategy to draw samples from the dataset. Can be any <code>Iterable</code> with <code>__len__</code> implemented. If specified, <code>shuffle</code> must not be specified.</li><li><strong>batch_sampler</strong> (<a href="https://pytorch.org/docs/stable/data.html?highlight=dataset#torch.utils.data.Sampler" target=_blank rel="external nofollow noopener noreferrer"><em>Sampler</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <em>or</em> <em>Iterable</em>*,* <em>optional</em>) – like <code>sampler</code>, but returns a batch of indices at a time. Mutually exclusive with <code>batch_size</code>, <code>shuffle</code>, <code>sampler</code>, and <code>drop_last</code>.</li><li><strong>num_workers</strong> (<a href=https://docs.python.org/3/library/functions.html#int target=_blank rel="external nofollow noopener noreferrer"><em>int</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a><em>,</em> <em>optional</em>) – how many subprocesses to use for data loading. <code>0</code> means that the data will be loaded in the main process. (default: <code>0</code>)</li><li><strong>collate_fn</strong> (<em>callable</em>*,* <em>optional</em>) – merges a list of samples to form a mini-batch of Tensor(s). Used when using batched loading from a map-style dataset.</li><li><strong>pin_memory</strong> (<a href=https://docs.python.org/3/library/functions.html#bool target=_blank rel="external nofollow noopener noreferrer"><em>bool</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a><em>,</em> <em>optional</em>) – If <code>True</code>, the data loader will copy Tensors into CUDA pinned memory before returning them. If your data elements are a custom type, or your <code>collate_fn</code> returns a batch that is a custom type, see the example below.</li><li><strong>drop_last</strong> (<a href=https://docs.python.org/3/library/functions.html#bool target=_blank rel="external nofollow noopener noreferrer"><em>bool</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a><em>,</em> <em>optional</em>) – set to <code>True</code> to drop the last incomplete batch, if the dataset size is not divisible by the batch size. If <code>False</code> and the size of dataset is not divisible by the batch size, then the last batch will be smaller. (default: <code>False</code>)</li><li><strong>timeout</strong> (<em>numeric</em>*,* <em>optional</em>) – if positive, the timeout value for collecting a batch from workers. Should always be non-negative. (default: <code>0</code>)</li><li><strong>worker_init_fn</strong> (<em>callable</em>*,* <em>optional</em>) – If not <code>None</code>, this will be called on each worker subprocess with the worker id (an int in <code>[0, num_workers - 1]</code>) as input, after seeding and before data loading. (default: <code>None</code>)</li><li><strong>prefetch_factor</strong> (<a href=https://docs.python.org/3/library/functions.html#int target=_blank rel="external nofollow noopener noreferrer"><em>int</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a><em>,</em> <em>optional</em>*,* <em>keyword-only arg</em>) – Number of samples loaded in advance by each worker. <code>2</code> means there will be a total of 2 * num_workers samples prefetched across all workers. (default: <code>2</code>)</li><li><strong>persistent_workers</strong> (<a href=https://docs.python.org/3/library/functions.html#bool target=_blank rel="external nofollow noopener noreferrer"><em>bool</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a><em>,</em> <em>optional</em>) – If <code>True</code>, the data loader will not shutdown the worker processes after a dataset has been consumed once. This allows to maintain the workers Dataset instances alive. (default: <code>False</code>)</li></ul><h3 id=1-map-style-dataset>.1. Map-style Dataset</h3><blockquote><p>implements the <code>__getitem__()</code> and <code>__len__()</code> protocols, and represents a map from (poissibly non-integral) indices/keys to data samples. dataset[idx]={image, label}</p></blockquote><h3 id=2-iterable-style-dataset>.2. Iterable-style dataset</h3><blockquote><p>implements the <code>__iter__()</code> protocol, and represents an iterable over data samples. This type of datasets is particularly suitable for cases where random reads are expensive or even improbable, and where the batch size depends on the fetched data.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Dataset</span>(Generic[T_co]):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>r</span><span style=color:#e6db74>&#34;&#34;&#34;An abstract class representing a :class:`Dataset`.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    All datasets that represent a map from keys to data samples should subclass
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    it. All subclasses should overwrite :meth:`__getitem__`, supporting fetching a
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    data sample for a given key. Subclasses could also optionally overwrite
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    :meth:`__len__`, which is expected to return the size of the dataset by many
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    :class:`~torch.utils.data.Sampler` implementations and the default options
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    of :class:`~torch.utils.data.DataLoader`.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    .. note::
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      :class:`~torch.utils.data.DataLoader` by default constructs a index
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      sampler that yields integral indices.  To make it work with a map-style
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      dataset with non-integral indices/keys, a custom sampler must be provided.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __getitem__(self, index) <span style=color:#f92672>-&gt;</span> T_co:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>NotImplementedError</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __add__(self, other: <span style=color:#e6db74>&#39;Dataset[T_co]&#39;</span>) <span style=color:#f92672>-&gt;</span> <span style=color:#e6db74>&#39;ConcatDataset[T_co]&#39;</span>:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> ConcatDataset([self, other])
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># No `def __len__(self)` default?</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># See NOTE [ Lack of Default `__len__` in Python Abstract Base Classes ]</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># in pytorch/torch/utils/data/sampler.py</span>
+</span></span></code></pre></div><h2 id=1-available-datasets>1. Available Datasets</h2><ul><li><a href=https://pytorch.org/docs/stable/torchvision/datasets.html#mnist target=_blank rel="external nofollow noopener noreferrer">MNIST<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#qmnist target=_blank rel="external nofollow noopener noreferrer">QMNIST<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#fakedata target=_blank rel="external nofollow noopener noreferrer">FakeData<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#coco target=_blank rel="external nofollow noopener noreferrer">COCO<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#captions target=_blank rel="external nofollow noopener noreferrer">Captions<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#detection target=_blank rel="external nofollow noopener noreferrer">Detection<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a><a href=https://pytorch.org/docs/stable/torchvision/datasets.html#lsun target=_blank rel="external nofollow noopener noreferrer">LSUN<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#imagefolder target=_blank rel="external nofollow noopener noreferrer">ImageFolder<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#datasetfolder target=_blank rel="external nofollow noopener noreferrer">DatasetFolder<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#imagenet target=_blank rel="external nofollow noopener noreferrer">ImageNet<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a><a href=https://pytorch.org/docs/stable/torchvision/datasets.html#cifar target=_blank rel="external nofollow noopener noreferrer">CIFAR<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#stl10 target=_blank rel="external nofollow noopener noreferrer">STL10<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#svhn target=_blank rel="external nofollow noopener noreferrer">SVHN<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#phototour target=_blank rel="external nofollow noopener noreferrer">PhotoTour<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#sbu target=_blank rel="external nofollow noopener noreferrer">SBU<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#flickr target=_blank rel="external nofollow noopener noreferrer">Flickr<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#voc target=_blank rel="external nofollow noopener noreferrer">VOC<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#cityscapes target=_blank rel="external nofollow noopener noreferrer">Cityscapes<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#sbd target=_blank rel="external nofollow noopener noreferrer">SBD<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#usps target=_blank rel="external nofollow noopener noreferrer">USPS<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#kinetics-400 target=_blank rel="external nofollow noopener noreferrer">Kinetics-400<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#hmdb51 target=_blank rel="external nofollow noopener noreferrer">HMDB51<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#ucf101 target=_blank rel="external nofollow noopener noreferrer">UCF101<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#celeba target=_blank rel="external nofollow noopener noreferrer">CelebA<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#fashion-mnist target=_blank rel="external nofollow noopener noreferrer">Fashion-MNIST<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#kmnist target=_blank rel="external nofollow noopener noreferrer">KMNIST<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> <a href=https://pytorch.org/docs/stable/torchvision/datasets.html#emnist target=_blank rel="external nofollow noopener noreferrer">EMNIST<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li></ul><blockquote><p>All the datasets have almost similar API. They all have two common arguments: <code>transform</code> and <code>target_transform</code> to transform the input and target respectively.
+Take MNIST for example:</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124252716.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124252716.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124252716.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124252716.png 2x" data-sizes=auto alt=image-20201017124252716 title=image-20201017124252716></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> .vision <span style=color:#f92672>import</span> VisionDataset
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> warnings
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> PIL <span style=color:#f92672>import</span> Image
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> os
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> os.path
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> torch
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> codecs
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> string
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> .utils <span style=color:#f92672>import</span> download_url, download_and_extract_archive, extract_archive, \
+</span></span><span style=display:flex><span>    verify_str_arg
+</span></span><span style=display:flex><span>[docs]<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>MNIST</span>(VisionDataset):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;`MNIST &lt;http://yann.lecun.com/exdb/mnist/&gt;`_ Dataset.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Args:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        root (string): Root directory of dataset where ``MNIST/processed/training.pt``
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            and  ``MNIST/processed/test.pt`` exist.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        train (bool, optional): If True, creates dataset from ``training.pt``,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            otherwise from ``test.pt``.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        download (bool, optional): If true, downloads the dataset from the internet and
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            puts it in root directory. If dataset is already downloaded, it is not
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            downloaded again.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        transform (callable, optional): A function/transform that  takes in an PIL image
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            and returns a transformed version. E.g, ``transforms.RandomCrop``
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        target_transform (callable, optional): A function/transform that takes in the
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            target and transforms it.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    resources <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>        (<span style=color:#e6db74>&#34;http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz&#34;</span>, <span style=color:#e6db74>&#34;f68b3c2dcbeaaa9fbdd348bbdeb94873&#34;</span>),
+</span></span><span style=display:flex><span>        (<span style=color:#e6db74>&#34;http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz&#34;</span>, <span style=color:#e6db74>&#34;d53e105ee54ea40749a09fcbcd1e9432&#34;</span>),
+</span></span><span style=display:flex><span>        (<span style=color:#e6db74>&#34;http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz&#34;</span>, <span style=color:#e6db74>&#34;9fb629c4189551a2d022fa330f9573f3&#34;</span>),
+</span></span><span style=display:flex><span>        (<span style=color:#e6db74>&#34;http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz&#34;</span>, <span style=color:#e6db74>&#34;ec29112dd5afa0611ce80d1b7f02629c&#34;</span>)
+</span></span><span style=display:flex><span>    ]
+</span></span><span style=display:flex><span>    training_file <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;training.pt&#39;</span>
+</span></span><span style=display:flex><span>    test_file <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;test.pt&#39;</span>
+</span></span><span style=display:flex><span>    classes <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;0 - zero&#39;</span>, <span style=color:#e6db74>&#39;1 - one&#39;</span>, <span style=color:#e6db74>&#39;2 - two&#39;</span>, <span style=color:#e6db74>&#39;3 - three&#39;</span>, <span style=color:#e6db74>&#39;4 - four&#39;</span>,
+</span></span><span style=display:flex><span>               <span style=color:#e6db74>&#39;5 - five&#39;</span>, <span style=color:#e6db74>&#39;6 - six&#39;</span>, <span style=color:#e6db74>&#39;7 - seven&#39;</span>, <span style=color:#e6db74>&#39;8 - eight&#39;</span>, <span style=color:#e6db74>&#39;9 - nine&#39;</span>]
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@property</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>train_labels</span>(self):
+</span></span><span style=display:flex><span>        warnings<span style=color:#f92672>.</span>warn(<span style=color:#e6db74>&#34;train_labels has been renamed targets&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>targets
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@property</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>test_labels</span>(self):
+</span></span><span style=display:flex><span>        warnings<span style=color:#f92672>.</span>warn(<span style=color:#e6db74>&#34;test_labels has been renamed targets&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>targets
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@property</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>train_data</span>(self):
+</span></span><span style=display:flex><span>        warnings<span style=color:#f92672>.</span>warn(<span style=color:#e6db74>&#34;train_data has been renamed data&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>data
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@property</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>test_data</span>(self):
+</span></span><span style=display:flex><span>        warnings<span style=color:#f92672>.</span>warn(<span style=color:#e6db74>&#34;test_data has been renamed data&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>data
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self, root, train<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, transform<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>, target_transform<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>,
+</span></span><span style=display:flex><span>                 download<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>):
+</span></span><span style=display:flex><span>        super(MNIST, self)<span style=color:#f92672>.</span>__init__(root, transform<span style=color:#f92672>=</span>transform,
+</span></span><span style=display:flex><span>                                    target_transform<span style=color:#f92672>=</span>target_transform)
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>train <span style=color:#f92672>=</span> train  <span style=color:#75715e># training set or test set</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> download:
+</span></span><span style=display:flex><span>            self<span style=color:#f92672>.</span>download()
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> self<span style=color:#f92672>.</span>_check_exists():
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>RuntimeError</span>(<span style=color:#e6db74>&#39;Dataset not found.&#39;</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                               <span style=color:#e6db74>&#39; You can use download=True to download it&#39;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> self<span style=color:#f92672>.</span>train:
+</span></span><span style=display:flex><span>            data_file <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>training_file
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>            data_file <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>test_file
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>data, self<span style=color:#f92672>.</span>targets <span style=color:#f92672>=</span> torch<span style=color:#f92672>.</span>load(os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(self<span style=color:#f92672>.</span>processed_folder, data_file))
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __getitem__(self, index):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        Args:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            index (int): Index
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        Returns:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            tuple: (image, target) where target is index of the target class.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        img, target <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>data[index], int(self<span style=color:#f92672>.</span>targets[index])
+</span></span><span style=display:flex><span>        <span style=color:#75715e># doing this so that it is consistent with all other datasets</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e># to return a PIL Image</span>
+</span></span><span style=display:flex><span>        img <span style=color:#f92672>=</span> Image<span style=color:#f92672>.</span>fromarray(img<span style=color:#f92672>.</span>numpy(), mode<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;L&#39;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> self<span style=color:#f92672>.</span>transform <span style=color:#f92672>is</span> <span style=color:#f92672>not</span> <span style=color:#66d9ef>None</span>:
+</span></span><span style=display:flex><span>            img <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>transform(img)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> self<span style=color:#f92672>.</span>target_transform <span style=color:#f92672>is</span> <span style=color:#f92672>not</span> <span style=color:#66d9ef>None</span>:
+</span></span><span style=display:flex><span>            target <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>target_transform(target)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> img, target
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __len__(self):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> len(self<span style=color:#f92672>.</span>data)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@property</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>raw_folder</span>(self):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(self<span style=color:#f92672>.</span>root, self<span style=color:#f92672>.</span>__class__<span style=color:#f92672>.</span>__name__, <span style=color:#e6db74>&#39;raw&#39;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@property</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>processed_folder</span>(self):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(self<span style=color:#f92672>.</span>root, self<span style=color:#f92672>.</span>__class__<span style=color:#f92672>.</span>__name__, <span style=color:#e6db74>&#39;processed&#39;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@property</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>class_to_idx</span>(self):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> {_class: i <span style=color:#66d9ef>for</span> i, _class <span style=color:#f92672>in</span> enumerate(self<span style=color:#f92672>.</span>classes)}
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>_check_exists</span>(self):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> (os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>exists(os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(self<span style=color:#f92672>.</span>processed_folder,
+</span></span><span style=display:flex><span>                                            self<span style=color:#f92672>.</span>training_file)) <span style=color:#f92672>and</span>
+</span></span><span style=display:flex><span>                os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>exists(os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(self<span style=color:#f92672>.</span>processed_folder,
+</span></span><span style=display:flex><span>                                            self<span style=color:#f92672>.</span>test_file)))
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>download</span>(self):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;Download the MNIST data if it doesn&#39;t exist in processed_folder already.&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> self<span style=color:#f92672>.</span>_check_exists():
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>        os<span style=color:#f92672>.</span>makedirs(self<span style=color:#f92672>.</span>raw_folder, exist_ok<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>        os<span style=color:#f92672>.</span>makedirs(self<span style=color:#f92672>.</span>processed_folder, exist_ok<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>        <span style=color:#75715e># download files</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> url, md5 <span style=color:#f92672>in</span> self<span style=color:#f92672>.</span>resources:
+</span></span><span style=display:flex><span>            filename <span style=color:#f92672>=</span> url<span style=color:#f92672>.</span>rpartition(<span style=color:#e6db74>&#39;/&#39;</span>)[<span style=color:#ae81ff>2</span>]
+</span></span><span style=display:flex><span>            download_and_extract_archive(url, download_root<span style=color:#f92672>=</span>self<span style=color:#f92672>.</span>raw_folder, filename<span style=color:#f92672>=</span>filename, md5<span style=color:#f92672>=</span>md5)
+</span></span><span style=display:flex><span>        <span style=color:#75715e># process and save as torch files</span>
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#39;Processing...&#39;</span>)
+</span></span><span style=display:flex><span>        training_set <span style=color:#f92672>=</span> (
+</span></span><span style=display:flex><span>            read_image_file(os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(self<span style=color:#f92672>.</span>raw_folder, <span style=color:#e6db74>&#39;train-images-idx3-ubyte&#39;</span>)),
+</span></span><span style=display:flex><span>            read_label_file(os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(self<span style=color:#f92672>.</span>raw_folder, <span style=color:#e6db74>&#39;train-labels-idx1-ubyte&#39;</span>))
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>        test_set <span style=color:#f92672>=</span> (
+</span></span><span style=display:flex><span>            read_image_file(os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(self<span style=color:#f92672>.</span>raw_folder, <span style=color:#e6db74>&#39;t10k-images-idx3-ubyte&#39;</span>)),
+</span></span><span style=display:flex><span>            read_label_file(os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(self<span style=color:#f92672>.</span>raw_folder, <span style=color:#e6db74>&#39;t10k-labels-idx1-ubyte&#39;</span>))
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>with</span> open(os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(self<span style=color:#f92672>.</span>processed_folder, self<span style=color:#f92672>.</span>training_file), <span style=color:#e6db74>&#39;wb&#39;</span>) <span style=color:#66d9ef>as</span> f:
+</span></span><span style=display:flex><span>            torch<span style=color:#f92672>.</span>save(training_set, f)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>with</span> open(os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(self<span style=color:#f92672>.</span>processed_folder, self<span style=color:#f92672>.</span>test_file), <span style=color:#e6db74>&#39;wb&#39;</span>) <span style=color:#66d9ef>as</span> f:
+</span></span><span style=display:flex><span>            torch<span style=color:#f92672>.</span>save(test_set, f)
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#39;Done!&#39;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>extra_repr</span>(self):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;Split: </span><span style=color:#e6db74>{}</span><span style=color:#e6db74>&#34;</span><span style=color:#f92672>.</span>format(<span style=color:#e6db74>&#34;Train&#34;</span> <span style=color:#66d9ef>if</span> self<span style=color:#f92672>.</span>train <span style=color:#f92672>is</span> <span style=color:#66d9ef>True</span> <span style=color:#66d9ef>else</span> <span style=color:#e6db74>&#34;Test&#34;</span>)
+</span></span></code></pre></div><h2 id=2-generic-dataloader>2. Generic Dataloader</h2><h3 id=21-imagefolder>2.1. ImageFolder</h3><blockquote><p>A generic data loader where the images are arranged in this way:</p><p>torchvision.datasets.ImageFolder(<em>root</em>, <em>transform=None</em>, <em>target_transform=None</em>, <em>loader=</em>, <em>is_valid_file=None</em>)
+<img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124740466.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124740466.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124740466.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124740466.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124740466.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124740466.png></p></blockquote><p><code>__getitem__</code>(<em>index</em>)</p><ul><li><p>Parameters</p><p><strong>index</strong> (<a href=https://docs.python.org/3/library/functions.html#int target=_blank rel="external nofollow noopener noreferrer"><em>int</em><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a>) – Index</p></li><li><p>Returns</p><p>(sample, target) where target is class_index of the target class.</p></li><li><p>Return type</p><p><a href=https://docs.python.org/3/library/stdtypes.html#tuple target=_blank rel="external nofollow noopener noreferrer">tuple<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></p></li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>load_data</span>(root_path, dir, batch_size, phase):
+</span></span><span style=display:flex><span>    transform_dict <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;src&#39;</span>: transforms<span style=color:#f92672>.</span>Compose(
+</span></span><span style=display:flex><span>        [transforms<span style=color:#f92672>.</span>RandomResizedCrop(<span style=color:#ae81ff>224</span>),
+</span></span><span style=display:flex><span>         transforms<span style=color:#f92672>.</span>RandomHorizontalFlip(),
+</span></span><span style=display:flex><span>         transforms<span style=color:#f92672>.</span>ToTensor(),
+</span></span><span style=display:flex><span>         transforms<span style=color:#f92672>.</span>Normalize(mean<span style=color:#f92672>=</span>[<span style=color:#ae81ff>0.485</span>, <span style=color:#ae81ff>0.456</span>, <span style=color:#ae81ff>0.406</span>],
+</span></span><span style=display:flex><span>                              std<span style=color:#f92672>=</span>[<span style=color:#ae81ff>0.229</span>, <span style=color:#ae81ff>0.224</span>, <span style=color:#ae81ff>0.225</span>]),
+</span></span><span style=display:flex><span>         ]),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;tar&#39;</span>: transforms<span style=color:#f92672>.</span>Compose(
+</span></span><span style=display:flex><span>        [transforms<span style=color:#f92672>.</span>Resize(<span style=color:#ae81ff>224</span>),
+</span></span><span style=display:flex><span>         transforms<span style=color:#f92672>.</span>ToTensor(),
+</span></span><span style=display:flex><span>         transforms<span style=color:#f92672>.</span>Normalize(mean<span style=color:#f92672>=</span>[<span style=color:#ae81ff>0.485</span>, <span style=color:#ae81ff>0.456</span>, <span style=color:#ae81ff>0.406</span>],
+</span></span><span style=display:flex><span>                              std<span style=color:#f92672>=</span>[<span style=color:#ae81ff>0.229</span>, <span style=color:#ae81ff>0.224</span>, <span style=color:#ae81ff>0.225</span>]),
+</span></span><span style=display:flex><span>         ])}
+</span></span><span style=display:flex><span>    data <span style=color:#f92672>=</span> datasets<span style=color:#f92672>.</span>ImageFolder(root<span style=color:#f92672>=</span>root_path <span style=color:#f92672>+</span> dir, transform<span style=color:#f92672>=</span>transform_dict[phase])
+</span></span><span style=display:flex><span>    data_loader <span style=color:#f92672>=</span> torch<span style=color:#f92672>.</span>utils<span style=color:#f92672>.</span>data<span style=color:#f92672>.</span>DataLoader(data, batch_size<span style=color:#f92672>=</span>batch_size, shuffle<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, drop_last<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>, num_workers<span style=color:#f92672>=</span><span style=color:#ae81ff>4</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> data_loader 
+</span></span></code></pre></div><h3 id=22-datasetfolder>2.2. DatasetFolder</h3><blockquote><p><code>torchvision.datasets.``DatasetFolder</code>(<em>root</em>, <em>loader</em>, <em>extensions=None</em>, <em>transform=None</em>, <em>target_transform=None</em>, <em>is_valid_file=None</em>)
+<img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017125057711.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017125057711.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017125057711.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017125057711.png 2x" data-sizes=auto alt=image-20201017125057711 title=image-20201017125057711></p></blockquote><h3 id=3-examples>3. Examples</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> multiprocessing <span style=color:#f92672>import</span> freeze_support
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> torch
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> torch <span style=color:#f92672>import</span> nn
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> torch.autograd <span style=color:#f92672>import</span> Variable
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> torch.utils.data <span style=color:#f92672>import</span> DataLoader, Sampler
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> torchvision <span style=color:#f92672>import</span> datasets
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> torchvision.transforms <span style=color:#f92672>import</span> transforms
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> torch.optim <span style=color:#f92672>import</span> Adam
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> pathlib <span style=color:#f92672>import</span> Path
+</span></span><span style=display:flex><span><span style=color:#75715e># Hyperparameters.</span>
+</span></span><span style=display:flex><span>num_epochs <span style=color:#f92672>=</span> <span style=color:#ae81ff>20</span>
+</span></span><span style=display:flex><span>num_classes <span style=color:#f92672>=</span> <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>batch_size <span style=color:#f92672>=</span> <span style=color:#ae81ff>100</span>
+</span></span><span style=display:flex><span>learning_rate <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.001</span>
+</span></span><span style=display:flex><span>num_of_workers <span style=color:#f92672>=</span> <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>DATA_PATH_TRAIN <span style=color:#f92672>=</span> Path(<span style=color:#e6db74>&#39;C:/Users/Aeryes/PycharmProjects/simplecnn/images/train/&#39;</span>)
+</span></span><span style=display:flex><span>DATA_PATH_TEST <span style=color:#f92672>=</span> Path(<span style=color:#e6db74>&#39;C:/Users/Aeryes/PycharmProjects/simplecnn/images/test/&#39;</span>)
+</span></span><span style=display:flex><span>MODEL_STORE_PATH <span style=color:#f92672>=</span> Path(<span style=color:#e6db74>&#39;C:/Users/Aeryes/PycharmProjects/simplecnn/model&#39;</span>)
+</span></span><span style=display:flex><span>trans <span style=color:#f92672>=</span> transforms<span style=color:#f92672>.</span>Compose([
+</span></span><span style=display:flex><span>    transforms<span style=color:#f92672>.</span>RandomHorizontalFlip(),
+</span></span><span style=display:flex><span>    transforms<span style=color:#f92672>.</span>Resize(<span style=color:#ae81ff>32</span>),
+</span></span><span style=display:flex><span>    transforms<span style=color:#f92672>.</span>CenterCrop(<span style=color:#ae81ff>32</span>),
+</span></span><span style=display:flex><span>    transforms<span style=color:#f92672>.</span>ToTensor(),
+</span></span><span style=display:flex><span>    transforms<span style=color:#f92672>.</span>Normalize((<span style=color:#ae81ff>0.5</span>, <span style=color:#ae81ff>0.5</span>, <span style=color:#ae81ff>0.5</span>),(<span style=color:#ae81ff>0.5</span>, <span style=color:#ae81ff>0.5</span>, <span style=color:#ae81ff>0.5</span>))
+</span></span><span style=display:flex><span>    ])
+</span></span><span style=display:flex><span><span style=color:#75715e># Flowers dataset.</span>
+</span></span><span style=display:flex><span>train_dataset <span style=color:#f92672>=</span> datasets<span style=color:#f92672>.</span>ImageFolder(root<span style=color:#f92672>=</span>DATA_PATH_TRAIN, transform<span style=color:#f92672>=</span>trans)
+</span></span><span style=display:flex><span>test_dataset <span style=color:#f92672>=</span> datasets<span style=color:#f92672>.</span>ImageFolder(root<span style=color:#f92672>=</span>DATA_PATH_TEST, transform<span style=color:#f92672>=</span>trans)
+</span></span><span style=display:flex><span><span style=color:#75715e># Create custom random sampler class to iter over dataloader.</span>
+</span></span><span style=display:flex><span>train_loader <span style=color:#f92672>=</span> DataLoader(dataset<span style=color:#f92672>=</span>train_dataset, batch_size<span style=color:#f92672>=</span>batch_size, shuffle<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, num_workers<span style=color:#f92672>=</span>num_of_workers)
+</span></span><span style=display:flex><span>test_loader <span style=color:#f92672>=</span> DataLoader(dataset<span style=color:#f92672>=</span>test_dataset, batch_size<span style=color:#f92672>=</span>batch_size, shuffle<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>, num_workers<span style=color:#f92672>=</span>num_of_workers)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> i, (images, labels) <span style=color:#f92672>in</span> enumerate(train_loader):   
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Move images and labels to gpu if available</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> cuda_avail:
+</span></span><span style=display:flex><span>    images <span style=color:#f92672>=</span> Variable(images<span style=color:#f92672>.</span>cuda())
+</span></span><span style=display:flex><span>    labels <span style=color:#f92672>=</span> Variable(labels<span style=color:#f92672>.</span>cuda())
+</span></span></code></pre></div><h2 id=learning-resources>Learning Resources</h2><ul><li><a href=https://pytorch.org/docs/stable/_modules/torchvision/datasets/mnist.html#MNIST target=_blank rel="external nofollow noopener noreferrer">https://pytorch.org/docs/stable/_modules/torchvision/datasets/mnist.html#MNIST<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li><a href=https://pytorch.org/docs/stable/torchvision/index.html target=_blank rel="external nofollow noopener noreferrer">https://pytorch.org/docs/stable/torchvision/index.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-28 22:45:34">更新于 2023-09-28&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/torchvision_dataload/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5c%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%5cpytorch%5cTorchVision_DataLoad.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/torchvision_dataload/ data-title=TorchVision_DataLoad data-hashtags=PyTorch><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/torchvision_dataload/ data-hashtag=PyTorch><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/torchvision_dataload/ data-title=TorchVision_DataLoad data-image=https://gitee.com/github-25970295/blogImage/raw/master/img/39.jpeg><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/pytorch/>Pytorch</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/torchvision_models/ class=prev rel=prev title=TorchVision_Models><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>TorchVision_Models</a>
+<a href=liudongdong1.github.io/torchvision_transforms/ class=next rel=next title=TorchVision_Transforms>TorchVision_Transforms<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
+<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
+<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>

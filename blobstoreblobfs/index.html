@@ -1,787 +1,354 @@
-<!DOCTYPE html>
-<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-  <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <meta name="robots" content="noodp" />
-    <title>blobstore&amp;blobfs - DAY By DAY</title><meta name="author" content="LiuDongdong">
-<meta name="author-link" content="https://liudongdong1.github.io/">
-<meta name="description" content="Blobstore是位于SPDK bdev之上的Blob管理层，用于与用户态文件系统Blobstore Filesystem （BlobFS）集成，从而代替传统的文" /><meta name="keywords" content='Storage' /><meta itemprop="name" content="blobstore&amp;blobfs">
-<meta itemprop="description" content="Blobstore是位于SPDK bdev之上的Blob管理层，用于与用户态文件系统Blobstore Filesystem （BlobFS）集成，从而代替传统的文">
-<meta itemprop="dateModified" content="2023-09-24T17:00:04+08:00" />
-<meta itemprop="wordCount" content="5558"><meta itemprop="image" content="/logo.png"/>
-<meta itemprop="keywords" content="Storage," /><meta property="og:title" content="blobstore&amp;blobfs" />
-<meta property="og:description" content="Blobstore是位于SPDK bdev之上的Blob管理层，用于与用户态文件系统Blobstore Filesystem （BlobFS）集成，从而代替传统的文" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="liudongdong1.github.io/blobstoreblobfs/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
-
-<meta property="article:modified_time" content="2023-09-24T17:00:04+08:00" />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/logo.png"/>
-
-<meta name="twitter:title" content="blobstore&amp;blobfs"/>
-<meta name="twitter:description" content="Blobstore是位于SPDK bdev之上的Blob管理层，用于与用户态文件系统Blobstore Filesystem （BlobFS）集成，从而代替传统的文"/>
-<meta name="application-name" content="DAY By DAY">
-<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/blobstoreblobfs/" /><link rel="prev" href="liudongdong1.github.io/c-%E5%AE%B9%E5%99%A8%E7%B1%BB%E9%A2%98%E7%9B%AE/" /><link rel="next" href="liudongdong1.github.io/beetlsql/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "BlogPosting",
-    "headline": "blobstore\u0026blobfs",
-    "inLanguage": "zh-CN",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "liudongdong1.github.io\/blobstoreblobfs\/"
-    },"genre": "posts","keywords": "Storage","wordcount":  5558 ,
-    "url": "liudongdong1.github.io\/blobstoreblobfs\/","dateModified": "2023-09-24T17:00:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
-      "@type": "Organization",
-      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
-        "@type": "Person",
-        "name": "liudongdong1"
-      },"description": ""
-  }
-  </script></head>
-  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
-  <div class="header-wrapper" data-github-corner="right">
-    <div class="header-title">
-      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="DAY By DAY"
-    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
-    <nav>
-      <ul class="menu"><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/posts/"
-                
-                
-              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/categories/"
-                
-                
-              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/tags/"
-                
-                
-              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/friends/"
-                title="友情链接"
-                
-              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/about/"
-                
-                
-              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
-          </li><li class="menu-item search" id="search-desktop">
-            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
-            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-            </a>
-            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-            </a>
-            <span class="search-button search-loading" id="search-loading-desktop">
-              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-            </span>
-          </li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header><header class="mobile animate__faster" id="header-mobile">
-  <div class="header-container">
-    <div class="header-wrapper">
-      <div class="header-title">
-        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="/fixit.min.svg"
-    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
-      <div class="menu-toggle" id="menu-toggle-mobile">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-    <nav>
-      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
-            <div class="search mobile" id="search-mobile">
-              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
-              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-              </a>
-              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-              </a>
-              <span class="search-button search-loading" id="search-loading-mobile">
-                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-              </span>
-            </div>
-            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-              取消
-            </a>
-          </li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/posts/"
-                  
-                  
-                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/categories/"
-                  
-                  
-                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/tags/"
-                  
-                  
-                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/friends/"
-                  title="友情链接"
-                  
-                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/about/"
-                  
-                  
-                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
-              class="menu-item text-center"
-            ><a
-                  class="menu-link"
-                  href="https://liudongdong1.github.io/"
-                  title="GitHub"
-                  rel="noopener noreferrer" target="_blank"
-                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
-          </li></ul>
-    </nav>
-  </div>
-</header><div class="search-dropdown desktop">
-    <div id="search-dropdown-desktop"></div>
-  </div>
-  <div class="search-dropdown mobile">
-    <div id="search-dropdown-mobile"></div>
-  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
-      <div class="toc-content" id="toc-content-auto"></div></aside>
-
-  <aside class="aside-custom" id="aside-sakana">
-    
-
-<div class="sakana-widget">
-  <div class="sakana-item" id="takina-widget"></div>
-  <div class="sakana-item" id="chisato-widget"></div>
-</div>
-<script>
-  function initSakanaWidget() {
-    const takina = SakanaWidget.getCharacter('takina')
-    SakanaWidget.registerCharacter('takina-slow', takina);
-    new SakanaWidget({
-      character: 'takina-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#takina-widget');
-
-    const chisato = SakanaWidget.getCharacter('chisato')
-    SakanaWidget.registerCharacter('chisato-slow', chisato);
-    new SakanaWidget({
-      character: 'chisato-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#chisato-widget');
-  }
-</script>
-<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
-</script></aside>
-
-  <article class="page single">
-    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
-        <span>blobstore&amp;blobfs</span>
-      </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
-      liudongdong1</span></span>
-          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/storage/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div>
-      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00>
-            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01" >0001-01-01</time>
-          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 5558 字&nbsp;
-        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="blobstore&amp;blobfs">
-            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
-          </span>&nbsp;</div>
-    </div><div class="featured-image"><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg"
-    data-srcset="https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg, https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg 1.5x, https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg 2x"
-    data-sizes="auto"
-    alt="https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg"
-    title="https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg"/></div><div class="details toc" id="toc-static" kept="true">
-        <div class="details-summary toc-title">
-          <span>目录</span>
-          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-        </div>
-        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#blobstore-架构">BlobStore 架构</a></li>
-        <li><a href="#blobfs--blobstore-关系">BlobFS &amp; Blobstore 关系</a></li>
-        <li><a href="#blobstore中结构的划分">Blobstore中结构的划分</a></li>
-        <li><a href="#blobstore-块管理与分配">Blobstore 块管理与分配</a></li>
-        <li><a href="#blob-使用说明">Blob 使用说明</a></li>
-        <li><a href="#io流程">IO流程</a></li>
-        <li><a href="#blob代码案例">blob代码案例</a></li>
-        <li><a href="#resource">Resource</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-      </div><div
-      class="content"
-      id="content"
-      
-      
-    ><blockquote>
-<p>Blobstore是位于SPDK bdev之上的Blob管理层，用于与用户态文件系统Blobstore Filesystem （BlobFS）集成，从而代替传统的文件系统，支持更上层的服务，如<a href="https://cloud.tencent.com/solution/database?from=10680"target="_blank" rel="external nofollow noopener noreferrer">数据库<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><a href="https://cloud.tencent.com/product/cdb?from=10680"target="_blank" rel="external nofollow noopener noreferrer">MySQL<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>、K-V存储引擎Rocksdb以及<a href="https://cloud.tencent.com/product/cos?from=10680"target="_blank" rel="external nofollow noopener noreferrer">分布式存储<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>系统Ceph、Cassandra等。**以Rocksdb为例，通过BlobFS作为Rocksdb的存储后端的优势在于，I/O经由BlobFS与Blobstore下发到bdev，随后由SPDK用户态driver写入磁盘。整个I/O流从发起到落盘均在用户态操作，完全bypass内核。**此外，可以充分利用SPDK所提供的异步、无锁化、Zero Copy、轮询等机制，大幅度减少额外的系统开销。</p>
-</blockquote>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620.jpeg"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620.jpeg 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620.jpeg"
-    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620.jpeg"/></p>
-<h3 id="blobstore-架构">BlobStore 架构</h3>
-<p>BlobStore在BlueStore的工作上简化了许多功能，同时也增加了分层缓存功能，所以大致上和BlueStore的架构很类似。</p>
-<ul>
-<li><code>BlockDevice</code>：物理块设备，直接操作裸设备，支持KernelDevice(内核态异步IO)、NVMEDevice(SPDK用户态IO)；同时提供分层缓存的功能。</li>
-<li><code>RocksDB</code>：存储WAL、对象元数据、磁盘分配器元数据。</li>
-<li><code>Allocator</code>：磁盘分配器，使用bitmap磁盘分配器，负责高效的分配磁盘空间。</li>
-<li><code>SPDK</code>：使用spdk提供的blobfs、blobstore来支持rocksdb的存储，也可使用BlueStore的。</li>
-<li><code>FreeListManager</code>：使用bitmap方式来管理空闲空间列表。</li>
-<li><code>Cache</code>：主要用来缓存元数据，可缓存部分数据，数据主要缓存在BlockDevice提供的缓存里。</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//shimingyah.github.io/2019/09/BlueStore%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BBlockDevice/"target="_blank" rel="external nofollow noopener noreferrer">BlueStore源码分析之BlockDevice<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//shimingyah.github.io/2019/09/BlueStore%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BBitMap%E5%88%86%E9%85%8D%E5%99%A8/"target="_blank" rel="external nofollow noopener noreferrer">BlueStore源码分析之BitMap分配器<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//shimingyah.github.io/2019/09/BlueStore%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BFreelistManager/"target="_blank" rel="external nofollow noopener noreferrer">BlueStore源码分析之FreelistManager<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//shimingyah.github.io/2019/11/BlueStore%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BCache/"target="_blank" rel="external nofollow noopener noreferrer">BlueStore源码分析之Cache<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//shimingyah.github.io/2019/11/BlueStore%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8B%E5%AF%B9%E8%B1%A1IO/"target="_blank" rel="external nofollow noopener noreferrer">BlueStore源码分析之对象IO<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ul>
-<h3 id="blobfs--blobstore-关系">BlobFS &amp; Blobstore 关系</h3>
-<ul>
-<li>Blobstore的设计可以在一个块设备上，进行异步、未压缩、并行读写，这个块设备会被<strong>分为很多组块</strong>，这些块称为“blobs”。</li>
-<li>BlobFS在管理文件时，主要<code>依赖于Blobstore对blob的分配与管理</code>。Blob类似于文件的概念，而又不完全等同于文件，其并不支持所有文件的POSIX接口。</li>
-<li>BlobFS与Blobstore的关系可以理解为<code>Blobstore实现了对Blob的管理，包括Blob的分配、删除、读取、写入、元数据的管理</code>等，而<code>BlobFS是在Blobstore的基础上进行封装的一个轻量级文件系统</code>，用于提供部分对于文件操作的接口，并<code>将对文件的操作转换为对Blob的操作</code>，<code>BlobFS中的文件与Blobstore中的Blob</code>一一对应。</li>
-<li>在Blobstore下层，与SPDK bdev层对接。SPDK bdev层类似于内核中的<code>通用块设备层</code>，是对底层不同类型设备的统一抽象管理，例如NVMe bdev、Malloc bdev、AIO bdev等。</li>
-</ul>
-<h3 id="blobstore中结构的划分">Blobstore中结构的划分</h3>
-<ul>
-<li>在blobstore中，将SSD中的块划分为多个抽象层，主要由Logical Block、Page、Cluster、Blob组成</li>
-<li>Logical Block：<code>与块设备中所提供的逻辑块相对应</code>，通常为512B或4KiB。实际硬盘存储的基本单位。</li>
-<li>Page：由多个连续的Logical Block构成，通常一个page的大小为4KiB，因此一个Page由八个或一个Logical Block构成，取决于Logical Block的大小。在Blobstore中，<code>Page是连续的</code>，即从SSD的LBA 0开始，多个或一个块构成Page 0,接下来是Page 1，依次类推。</li>
-<li>Cluster：<code>由多个连续的Page构成</code>，通常一个Cluster的大小默认为1MiB，因此一个Cluster由256个Page构成。Cluster与Page一样，是连续的，即从SSD的LBA 0开始的位置依次为Cluster 0到Cluster N。</li>
-<li>Blob：Blobstore中主要的操作对象为Blob，与BlobFS中的文件相对应，提供read、write、create、delete等操作。<code>一个Blob由多个Cluster构成，但构成Blob中的Cluster并不一定是连续的</code>。</li>
-</ul>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867444690747.jpeg"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867444690747.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867444690747.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867444690747.jpeg 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867444690747.jpeg"
-    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867444690747.jpeg"/></p>
-<h3 id="blobstore-块管理与分配">Blobstore 块管理与分配</h3>
-<ul>
-<li>在Blobstore中，会将cluster 0作为一个特殊的cluster。该cluster用于存放<code>Blobtore的所有信息以及元数据</code>，对每个blob数据块的查找、分配都是依赖cluster 0中所记录的元数据所进行的。</li>
-<li>Cluster 0中的第一个page作为super block，Blobstore初始化后的一些基本信息都存放在super block中，例如cluster的大小、已使用page的起始位置、已使用page的个数、已使用cluster的起始位置、已使用cluster的个数、Blobstore的大小等信息。</li>
-</ul>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867459322749.jpeg"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867459322749.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867459322749.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867459322749.jpeg 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867459322749.jpeg"
-    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867459322749.jpeg"/></p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867464209851.jpeg"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867464209851.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867464209851.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867464209851.jpeg 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867464209851.jpeg"
-    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867464209851.jpeg"/></p>
-<ul>
-<li>Metadata Page Allocation：用于记录<code>所有元数据页的分配</code>情况。在分配或释放元数据页后，将会对metadata page allocation中的数据做相应的修改。</li>
-<li>Cluster Allocation：用于记录<code>所有cluster的分配</code>情况。在分配新的cluster或释放cluster后会对cluster allocation中的数据做相应的修改。</li>
-<li>Blob Id Allocation：用于记录<code>blob id的分配</code>情况。对于blobstore中的所有blob，都是通过唯一的标识符blob id将其对应起来。在元数据域中，将会在blob allocation中记录所有的blob id分配情况。</li>
-<li>Metadata Pages Region：元数据页区域中<code>存放着每个blob的元数据页</code>。<code>每个blob中所分配的cluster都会记录在该blob的元数据页中</code>，在读写blob时，首先会<code>通过blob id</code>定位到该<code>blob的元数据页</code>，其次根据元数据页中所记录的信息，<code>检索到对应的cluster</code>。对于每个blob的元数据页，并不是连续的。</li>
-<li>在创建blob时，首先会为其分配blob id以及metadata page，其次更新metadata region。当对blob进行写入时，首先会为其分配cluster，其次更新该blob的metadata page，最后将数据写入，并持久化到磁盘中。</li>
-</ul>
-<h3 id="blob-使用说明">Blob 使用说明</h3>
-<ul>
-<li><strong>原子性</strong>：对于所有blobstore 的操作原子性保证，都由底层来保证操作一个page的原子性。
-<ul>
-<li>数据写入：写入的数据通过以page为单位。每个page写入之后就会保存。举例：如果一个page更新数据时断电了，那么这个page的数据将不会写入新数据。也就是他不会更新。</li>
-</ul>
-</li>
-<li><strong>异步回调</strong>：blobstore 是回调驱动的，如果blolbstore中的某个API不能够继续进行，他不会阻塞住其他的API。当原始调用完成后，他会返回到控制点。</li>
-<li><strong>元数据：</strong>
-<ul>
-<li>每个blob都有自己的元数据，可以通过调用API显示的同步。</li>
-<li>blobstore的全局元数据，他会在每次正确执行完成关闭后自动同步。由于不正确的关闭可能会导致数据丢失，所以每次正确关闭流程很重要。</li>
-</ul>
-</li>
-<li>**channels 通道：**当引用执行IO操作的时候需要使用channel，应用会对channel进行IO。
-channel和线程最好是1：1数量对应关系。</li>
-</ul>
-<h3 id="io流程">IO流程</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>class BlobStore {
-</span></span><span style="display:flex;"><span>  public:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">completion_t</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">open</span>();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close</span>();
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">put</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>key, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>val, <span style="color:#66d9ef">uint64_t</span> expire);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">get</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>key, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>val, <span style="color:#66d9ef">uint64_t</span> off, <span style="color:#66d9ef">size_t</span> len);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">delete</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>key);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">async_put</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>key, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>val, <span style="color:#66d9ef">uint64_t</span> expire, <span style="color:#66d9ef">completion_t</span> comp);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">async_get</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>key, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>val, <span style="color:#66d9ef">uint64_t</span> off, <span style="color:#66d9ef">size_t</span> len, <span style="color:#66d9ef">completion_t</span> comp);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">async_delete</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>key, <span style="color:#66d9ef">completion_t</span> comp);
-</span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div><h4 id="文件读取">文件读取</h4>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867507473253.jpeg"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867507473253.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867507473253.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867507473253.jpeg 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867507473253.jpeg"
-    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867507473253.jpeg"/></p>
-<ul>
-<li>在文件读写时，首先会进行read ahead操作，将一部分数据从磁盘预先读取到内存的buffer中。</li>
-<li>根据cache buffer的大小，对文件的I/O进行切分，使每个I/O的最大长度不超过一个cache buffer的大小。</li>
-<li>对于拆分后的文件I/O，会根据其offset在cache buffer tree中查找相应的buffer。若存在，则直接从cache buffer中读取数据，进行memcpy。而对于没有缓存到cache buffer中的数据，将会对该文件的读取，转换到该文件对应的Blob进行读取。</li>
-<li>对Blob读取时候，根据已打开的blob结构中记录的信息，可以获取该blob所有cluster的LBA起始位置，并根据读取位置的offset信息，计算相应的LBA地址。最后向SPDK bdev层发送异步的读请求，并等待I/O完成。BlobFS所提供的读操作为同步读，I/O完成后会在callback函数中，通过信号量通知BlobFS完成信号，至此文件读取结束。</li>
-<li>Cache buffer tree是由多层树结构组成。最底层Level 0叶子节点为buffer node，是用于存放数据的buffer。Level 0以上的其它层中，均为tree node，用于构建树的索引结构。</li>
-</ul>
-<h4 id="文件写入">文件写入</h4>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867527828855.jpeg"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867527828855.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867527828855.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867527828855.jpeg 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867527828855.jpeg"
-    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867527828855.jpeg"/></p>
-<ul>
-<li>在进行文件写入时，首先会根据文件当前的写入位置检查是否符合cache buffer写入需求，若满足，则直接将数据写入到cache buffer中，同时触发异步的flush操作。在flush的过程中，BlobFS触发Blob的写操作，将cache buffer中的数据，写入到文件对应blob的相应位置。若不满足cache buffer的写入需求，BlobFS则直接触发文件对应的blob的写操作。</li>
-</ul>
-<h3 id="blob代码案例">blob代码案例</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * We&#39;ll use this struct to gather housekeeping hello_context to pass between
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * our events and callbacks.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//该类为收集信息，并作为事件回调的存储信息介质
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> spdk_blob_store <span style="color:#f92672">*</span>bs;
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> spdk_blob <span style="color:#f92672">*</span>blob;
-</span></span><span style="display:flex;"><span>	spdk_blob_id blobid;
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> spdk_io_channel <span style="color:#f92672">*</span>channel;
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">uint8_t</span> <span style="color:#f92672">*</span>read_buff;
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">uint8_t</span> <span style="color:#f92672">*</span>write_buff;
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">uint64_t</span> io_unit_size;
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">int</span> rc;
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Free up memory that we allocated.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">hello_cleanup</span>(<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">spdk_free</span>(hello_context<span style="color:#f92672">-&gt;</span>read_buff);
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">spdk_free</span>(hello_context<span style="color:#f92672">-&gt;</span>write_buff);
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">free</span>(hello_context);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Callback routine for the blobstore unload.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">unload_complete</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>cb_arg, <span style="color:#66d9ef">int</span> bserrno)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context <span style="color:#f92672">=</span> cb_arg;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">spdk_app_stop</span>(hello_context<span style="color:#f92672">-&gt;</span>rc);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Unload the blobstore, cleaning up as needed.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">unload_bs</span>(<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg, <span style="color:#66d9ef">int</span> bserrno)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (hello_context<span style="color:#f92672">-&gt;</span>bs) {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (hello_context<span style="color:#f92672">-&gt;</span>channel) {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">spdk_bs_free_io_channel</span>(hello_context<span style="color:#f92672">-&gt;</span>channel);
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">spdk_bs_unload</span>(hello_context<span style="color:#f92672">-&gt;</span>bs, unload_complete, hello_context);
-</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">spdk_app_stop</span>(bserrno);
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Callback routine for the deletion of a blob.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//13、删除blob完成
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">delete_complete</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg1, <span style="color:#66d9ef">int</span> bserrno)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context <span style="color:#f92672">=</span> arg1;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SPDK_NOTICELOG</span>(<span style="color:#e6db74">&#34;entry</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">/* We&#39;re all done, we can unload the blobstore. */</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">unload_bs</span>(hello_context, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Function for deleting a blob.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//12、删除blob
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">delete_blob</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg1, <span style="color:#66d9ef">int</span> bserrno)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context <span style="color:#f92672">=</span> arg1;
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//先关闭blob，然后再删除该blob
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">spdk_bs_delete_blob</span>(hello_context<span style="color:#f92672">-&gt;</span>bs, hello_context<span style="color:#f92672">-&gt;</span>blobid,
-</span></span><span style="display:flex;"><span>			    delete_complete, hello_context);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Callback function for reading a blob.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//11 、读blob完成后回调
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">read_complete</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg1, <span style="color:#66d9ef">int</span> bserrno)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context <span style="color:#f92672">=</span> arg1;
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">int</span> match_res <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">/* Now let&#39;s make sure things match. */</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//我们测试一下看读到的数据和我们写入的数据是否相同
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	match_res <span style="color:#f92672">=</span> <span style="color:#a6e22e">memcmp</span>(hello_context<span style="color:#f92672">-&gt;</span>write_buff, hello_context<span style="color:#f92672">-&gt;</span>read_buff,
-</span></span><span style="display:flex;"><span>			   hello_context<span style="color:#f92672">-&gt;</span>io_unit_size);
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (match_res) {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">unload_bs</span>(hello_context, <span style="color:#e6db74">&#34;Error in data compare&#34;</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>;
-</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">SPDK_NOTICELOG</span>(<span style="color:#e6db74">&#34;read SUCCESS and data matches!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//关闭blob，我们写完数据了，这时也就是说我们已经将数据写入到硬盘了，那么我们可以将blob关闭了。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">spdk_blob_close</span>(hello_context<span style="color:#f92672">-&gt;</span>blob, delete_blob, hello_context);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Function for reading a blob.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//10、读blob中的数据
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">read_blob</span>(<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//还是分配一块内存给readbuffer
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	hello_context<span style="color:#f92672">-&gt;</span>read_buff <span style="color:#f92672">=</span> <span style="color:#a6e22e">spdk_malloc</span>(hello_context<span style="color:#f92672">-&gt;</span>io_unit_size,
-</span></span><span style="display:flex;"><span>					       <span style="color:#ae81ff">0x1000</span>, NULL, SPDK_ENV_LCORE_ID_ANY,
-</span></span><span style="display:flex;"><span>					       SPDK_MALLOC_DMA);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">/* Issue the read and compare the results in the callback. */</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//从blob中读取数据，将读到的数据放入readbuffer
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">spdk_blob_io_read</span>(hello_context<span style="color:#f92672">-&gt;</span>blob, hello_context<span style="color:#f92672">-&gt;</span>channel,
-</span></span><span style="display:flex;"><span>			  hello_context<span style="color:#f92672">-&gt;</span>read_buff, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, read_complete,
-</span></span><span style="display:flex;"><span>			  hello_context);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Callback function for writing a blob.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//10：写数据完成后回调
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">write_complete</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg1, <span style="color:#66d9ef">int</span> bserrno)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context <span style="color:#f92672">=</span> arg1;
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">/* Now let&#39;s read back what we wrote and make sure it matches. */</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//写完我们可以试一下读blob中的数据
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">read_blob</span>(hello_context);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Function for writing to a blob.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//9. 将数据写入blob
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">blob_write</span>(<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SPDK_NOTICELOG</span>(<span style="color:#e6db74">&#34;entry</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//要写的数据先要放到一个buffer中，所以我们需要分配一块内存给buffer
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	hello_context<span style="color:#f92672">-&gt;</span>write_buff <span style="color:#f92672">=</span> <span style="color:#a6e22e">spdk_malloc</span>(hello_context<span style="color:#f92672">-&gt;</span>io_unit_size,
-</span></span><span style="display:flex;"><span>						<span style="color:#ae81ff">0x1000</span>, NULL, SPDK_ENV_LCORE_ID_ANY,
-</span></span><span style="display:flex;"><span>						SPDK_MALLOC_DMA);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//使用c语言中memset函数，内存空间初始化
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//memset（地址指针， 值， 大小）将地址指向的区域连续大小的内存区域填充为值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//这一步是我们将writebuffer中的数据都填充为0x5a
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">memset</span>(hello_context<span style="color:#f92672">-&gt;</span>write_buff, <span style="color:#ae81ff">0x5a</span>, hello_context<span style="color:#f92672">-&gt;</span>io_unit_size);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//在写操作钱我们需要分配IO
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//在分配IO的时候我们需要将IO分配到channel上
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	hello_context<span style="color:#f92672">-&gt;</span>channel <span style="color:#f92672">=</span> <span style="color:#a6e22e">spdk_bs_alloc_io_channel</span>(hello_context<span style="color:#f92672">-&gt;</span>bs);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">/* Let&#39;s perform the write, 1 io_unit at offset 0. */</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//执行blob写操作，将writebuffer中的数据写入blob
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">spdk_blob_io_write</span>(hello_context<span style="color:#f92672">-&gt;</span>blob, hello_context<span style="color:#f92672">-&gt;</span>channel,
-</span></span><span style="display:flex;"><span>			   hello_context<span style="color:#f92672">-&gt;</span>write_buff,
-</span></span><span style="display:flex;"><span>			   <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, write_complete, hello_context);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Callback function for sync&#39;ing metadata.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">sync_complete</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg1, <span style="color:#66d9ef">int</span> bserrno)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context <span style="color:#f92672">=</span> arg1;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//blob创建并且打开，并resize了，现在我们可以想blob中写入数据了
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">blob_write</span>(hello_context);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 7：blob大小设置完成回调函数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">resize_complete</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>cb_arg, <span style="color:#66d9ef">int</span> bserrno)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context <span style="color:#f92672">=</span> cb_arg;
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">uint64_t</span> total <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//拿到该blob的大小，看他大小是多少个cluster
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	total <span style="color:#f92672">=</span> <span style="color:#a6e22e">spdk_blob_get_num_clusters</span>(hello_context<span style="color:#f92672">-&gt;</span>blob);
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SPDK_NOTICELOG</span>(<span style="color:#e6db74">&#34;resized blob now has USED clusters of %&#34;</span> PRIu64 <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,
-</span></span><span style="display:flex;"><span>		       total);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//手动同步blob中的元数据，当blob关闭时也会自动完成该动作。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">spdk_blob_sync_md</span>(hello_context<span style="color:#f92672">-&gt;</span>blob, sync_complete, hello_context);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 6
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Callback function for opening a blob.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">open_complete</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>cb_arg, <span style="color:#66d9ef">struct</span> spdk_blob <span style="color:#f92672">*</span>blob, <span style="color:#66d9ef">int</span> bserrno)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context <span style="color:#f92672">=</span> cb_arg;
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">uint64_t</span> free <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	hello_context<span style="color:#f92672">-&gt;</span>blob <span style="color:#f92672">=</span> blob;
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//先查看blobstore中free cluster的数量，也就是实际容量抽象为多少个cluster
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	free <span style="color:#f92672">=</span> <span style="color:#a6e22e">spdk_bs_free_cluster_count</span>(hello_context<span style="color:#f92672">-&gt;</span>bs);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//在使用该blob之前我们需要resize一下，因为他的初始大小为0
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//第一个参数为需要重置的blob，第二个参数为设置这个blob的大小，设置的单位是cluster，也就是
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//需要设置这个blob有多少个cluster
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//这个例子中我们将blobstore中剩余的cluster整个都放入一个blob。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">spdk_blob_resize</span>(hello_context<span style="color:#f92672">-&gt;</span>blob, free, resize_complete, hello_context);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 5 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Callback function for creating a blob. 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">blob_create_complete</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg1, spdk_blob_id blobid, <span style="color:#66d9ef">int</span> bserrno)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context <span style="color:#f92672">=</span> arg1;
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//创建blob后系统会返回blobID
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	hello_context<span style="color:#f92672">-&gt;</span>blobid <span style="color:#f92672">=</span> blobid;
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SPDK_NOTICELOG</span>(<span style="color:#e6db74">&#34;new blob id %&#34;</span> PRIu64 <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, hello_context<span style="color:#f92672">-&gt;</span>blobid);
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//创建完blob后，如果要操作这个blob首先我们需要打开这个blob，打开成功后回调
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">spdk_bs_open_blob</span>(hello_context<span style="color:#f92672">-&gt;</span>bs, hello_context<span style="color:#f92672">-&gt;</span>blobid,
-</span></span><span style="display:flex;"><span>			  open_complete, hello_context);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 4
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Function for creating a blob.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">create_blob</span>(<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SPDK_NOTICELOG</span>(<span style="color:#e6db74">&#34;entry</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//调用创建blob的接口函数，创建完成回调
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">spdk_bs_create_blob</span>(hello_context<span style="color:#f92672">-&gt;</span>bs, blob_create_complete, hello_context);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 3 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Callback function for initializing the blobstore.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">bs_init_complete</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>cb_arg, <span style="color:#66d9ef">struct</span> spdk_blob_store <span style="color:#f92672">*</span>bs,
-</span></span><span style="display:flex;"><span>		 <span style="color:#66d9ef">int</span> bserrno)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context <span style="color:#f92672">=</span> cb_arg;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//Get the io unit size in bytes.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//拿到io的单位大小
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	hello_context<span style="color:#f92672">-&gt;</span>io_unit_size <span style="color:#f92672">=</span> <span style="color:#a6e22e">spdk_bs_get_io_unit_size</span>(hello_context<span style="color:#f92672">-&gt;</span>bs);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//blobstore就已经初始化完成了，下面进行创建blob
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">create_blob</span>(hello_context);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">base_bdev_event_cb</span>(<span style="color:#66d9ef">enum</span> spdk_bdev_event_type type, <span style="color:#66d9ef">struct</span> spdk_bdev <span style="color:#f92672">*</span>bdev,
-</span></span><span style="display:flex;"><span>		   <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>event_ctx)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SPDK_WARNLOG</span>(<span style="color:#e6db74">&#34;Unsupported bdev event: type %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, type);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 2。入口函数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Our initial event that kicks off everything from main().
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">hello_start</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg1)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//此时传入的参数是hello_context
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context <span style="color:#f92672">=</span> arg1;
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> spdk_bs_dev <span style="color:#f92672">*</span>bs_dev <span style="color:#f92672">=</span> NULL;
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">int</span> rc;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SPDK_NOTICELOG</span>(<span style="color:#e6db74">&#34;entry</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//第一个参数指定bdev的名称，bdev可以是nvme，文件IO，或者内存
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//bdev就是决定下层使用的存储介质，比如nvme或者malloc，或者文件IO
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	rc <span style="color:#f92672">=</span> <span style="color:#a6e22e">spdk_bdev_create_bs_dev_ext</span>(<span style="color:#e6db74">&#34;Malloc0&#34;</span>, base_bdev_event_cb, NULL, <span style="color:#f92672">&amp;</span>bs_dev);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//创建完bdev之后，我们需要创建blobstore，与指定的bdev设备关联上
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">spdk_bs_init</span>(bs_dev, NULL, bs_init_complete, hello_context);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//1
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> spdk_app_opts opts <span style="color:#f92672">=</span> {};
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">int</span> rc <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span> <span style="color:#f92672">*</span>hello_context <span style="color:#f92672">=</span> NULL;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SPDK_NOTICELOG</span>(<span style="color:#e6db74">&#34;entry</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">/* Set default values in opts structure. */</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//设置spdk的默认值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">spdk_app_opts_init</span>(<span style="color:#f92672">&amp;</span>opts);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//设置名称
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	opts.name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello_blob&#34;</span>;
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//配置文件信息
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	opts.json_config_file <span style="color:#f92672">=</span> argv[<span style="color:#ae81ff">1</span>];
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//给hello_context分配空间
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	hello_context <span style="color:#f92672">=</span> <span style="color:#a6e22e">calloc</span>(<span style="color:#ae81ff">1</span>, <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">hello_context_t</span>));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//启动到hello_start函数中，并将hello_context作为参数传入
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	rc <span style="color:#f92672">=</span> <span style="color:#a6e22e">spdk_app_start</span>(<span style="color:#f92672">&amp;</span>opts, hello_start, hello_context);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="resource">Resource</h3>
-<ul>
-<li>from： <a href="https://cloud.tencent.com/developer/article/1442627"target="_blank" rel="external nofollow noopener noreferrer">https://cloud.tencent.com/developer/article/1442627<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ul>
-</div>
-<div class="post-footer" id="post-footer">
-  <div class="post-info">
-    <div class="post-info-line">
-      <div class="post-info-mod">
-        <span title=2023-09-24&#32;17:00:04>更新于 2023-09-24&nbsp;</span>
-      </div><div class="post-info-license">
-          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
-        </div></div>
-    <div class="post-info-line">
-      <div class="post-info-md"><span><a href="liudongdong1.github.io/blobstoreblobfs/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5c%e5%ad%98%e5%82%a8%e5%bc%95%e6%93%8e%5cblobstore&amp;blobfs.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
-      <div class="post-info-share">
-        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/blobstoreblobfs/" data-title="blobstore&amp;blobfs" data-hashtags="Storage"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/blobstoreblobfs/" data-hashtag="Storage"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/blobstoreblobfs/" data-title="blobstore&amp;blobfs" data-image="https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
-  </span>
-      </div>
-    </div>
-  </div>
-
-  <div class="post-info-more">
-    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/storage/">Storage</a></section>
-    <section>
-      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
-    </section>
-  </div>
-
-  <div class="post-nav"><a href="liudongdong1.github.io/c-%E5%AE%B9%E5%99%A8%E7%B1%BB%E9%A2%98%E7%9B%AE/" class="prev" rel="prev" title="c&#43;&#43;容器类题目"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>c&#43;&#43;容器类题目</a>
-      <a href="liudongdong1.github.io/beetlsql/" class="next" rel="next" title="Beetlsql">Beetlsql<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-</article></main><footer class="footer">
-    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
-        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
-            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
-              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
-          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
-        </div></div>
-  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
-        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
-    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
-  </noscript>
-</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
-</html>
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>blobstore&amp;blobfs - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="Blobstore是位于SPDK bdev之上的Blob管理层，用于与用户态文件系统Blobstore Filesystem （BlobFS）集成，从而代替传统的文"><meta name=keywords content="Storage"><meta itemprop=name content="blobstore&amp;blobfs"><meta itemprop=description content="Blobstore是位于SPDK bdev之上的Blob管理层，用于与用户态文件系统Blobstore Filesystem （BlobFS）集成，从而代替传统的文"><meta itemprop=dateModified content="2023-09-24T17:00:04+08:00"><meta itemprop=wordCount content="5558"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="Storage,"><meta property="og:title" content="blobstore&amp;blobfs"><meta property="og:description" content="Blobstore是位于SPDK bdev之上的Blob管理层，用于与用户态文件系统Blobstore Filesystem （BlobFS）集成，从而代替传统的文"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/blobstoreblobfs/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:modified_time" content="2023-09-24T17:00:04+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="blobstore&amp;blobfs"><meta name=twitter:description content="Blobstore是位于SPDK bdev之上的Blob管理层，用于与用户态文件系统Blobstore Filesystem （BlobFS）集成，从而代替传统的文"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/blobstoreblobfs/><link rel=prev href=liudongdong1.github.io/c-%E5%AE%B9%E5%99%A8%E7%B1%BB%E9%A2%98%E7%9B%AE/><link rel=next href=liudongdong1.github.io/beetlsql/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"blobstore\u0026blobfs","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/blobstoreblobfs\/"},"genre":"posts","keywords":"Storage","wordcount":5558,"url":"liudongdong1.github.io\/blobstoreblobfs\/","dateModified":"2023-09-24T17:00:04+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"liudongdong1"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
+<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>blobstore&amp;blobfs</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle" aria-hidden=true></i>
+liudongdong1</span></span>
+<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/storage/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div><div class=post-meta-line><span title="0001-01-01 00:00:00"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=0001-01-01>0001-01-01</time>
+</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 5558 字&nbsp;
+<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title=blobstore&amp;blobfs>
+<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg data-srcset="https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg, https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg 1.5x, https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg 2x" data-sizes=auto alt=https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg title=https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg></div><div class="details toc" id=toc-static kept=true><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#blobstore-架构>BlobStore 架构</a></li><li><a href=#blobfs--blobstore-关系>BlobFS & Blobstore 关系</a></li><li><a href=#blobstore中结构的划分>Blobstore中结构的划分</a></li><li><a href=#blobstore-块管理与分配>Blobstore 块管理与分配</a></li><li><a href=#blob-使用说明>Blob 使用说明</a></li><li><a href=#io流程>IO流程</a></li><li><a href=#blob代码案例>blob代码案例</a></li><li><a href=#resource>Resource</a></li></ul></li></ul></nav></div></div><div class=content id=content><blockquote><p>Blobstore是位于SPDK bdev之上的Blob管理层，用于与用户态文件系统Blobstore Filesystem （BlobFS）集成，从而代替传统的文件系统，支持更上层的服务，如<a href="https://cloud.tencent.com/solution/database?from=10680" target=_blank rel="external nofollow noopener noreferrer">数据库<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a><a href="https://cloud.tencent.com/product/cdb?from=10680" target=_blank rel="external nofollow noopener noreferrer">MySQL<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a>、K-V存储引擎Rocksdb以及<a href="https://cloud.tencent.com/product/cos?from=10680" target=_blank rel="external nofollow noopener noreferrer">分布式存储<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a>系统Ceph、Cassandra等。**以Rocksdb为例，通过BlobFS作为Rocksdb的存储后端的优势在于，I/O经由BlobFS与Blobstore下发到bdev，随后由SPDK用户态driver写入磁盘。整个I/O流从发起到落盘均在用户态操作，完全bypass内核。**此外，可以充分利用SPDK所提供的异步、无锁化、Zero Copy、轮询等机制，大幅度减少额外的系统开销。</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620.jpeg data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620.jpeg 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620.jpeg title=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620.jpeg></p><h3 id=blobstore-架构>BlobStore 架构</h3><p>BlobStore在BlueStore的工作上简化了许多功能，同时也增加了分层缓存功能，所以大致上和BlueStore的架构很类似。</p><ul><li><code>BlockDevice</code>：物理块设备，直接操作裸设备，支持KernelDevice(内核态异步IO)、NVMEDevice(SPDK用户态IO)；同时提供分层缓存的功能。</li><li><code>RocksDB</code>：存储WAL、对象元数据、磁盘分配器元数据。</li><li><code>Allocator</code>：磁盘分配器，使用bitmap磁盘分配器，负责高效的分配磁盘空间。</li><li><code>SPDK</code>：使用spdk提供的blobfs、blobstore来支持rocksdb的存储，也可使用BlueStore的。</li><li><code>FreeListManager</code>：使用bitmap方式来管理空闲空间列表。</li><li><code>Cache</code>：主要用来缓存元数据，可缓存部分数据，数据主要缓存在BlockDevice提供的缓存里。</li><li><a href="https://link.zhihu.com/?target=https%3A//shimingyah.github.io/2019/09/BlueStore%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BBlockDevice/" target=_blank rel="external nofollow noopener noreferrer">BlueStore源码分析之BlockDevice<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li><a href="https://link.zhihu.com/?target=https%3A//shimingyah.github.io/2019/09/BlueStore%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BBitMap%E5%88%86%E9%85%8D%E5%99%A8/" target=_blank rel="external nofollow noopener noreferrer">BlueStore源码分析之BitMap分配器<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li><a href="https://link.zhihu.com/?target=https%3A//shimingyah.github.io/2019/09/BlueStore%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BFreelistManager/" target=_blank rel="external nofollow noopener noreferrer">BlueStore源码分析之FreelistManager<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li><a href="https://link.zhihu.com/?target=https%3A//shimingyah.github.io/2019/11/BlueStore%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BCache/" target=_blank rel="external nofollow noopener noreferrer">BlueStore源码分析之Cache<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li><a href="https://link.zhihu.com/?target=https%3A//shimingyah.github.io/2019/11/BlueStore%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8B%E5%AF%B9%E8%B1%A1IO/" target=_blank rel="external nofollow noopener noreferrer">BlueStore源码分析之对象IO<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li></ul><h3 id=blobfs--blobstore-关系>BlobFS & Blobstore 关系</h3><ul><li>Blobstore的设计可以在一个块设备上，进行异步、未压缩、并行读写，这个块设备会被<strong>分为很多组块</strong>，这些块称为“blobs”。</li><li>BlobFS在管理文件时，主要<code>依赖于Blobstore对blob的分配与管理</code>。Blob类似于文件的概念，而又不完全等同于文件，其并不支持所有文件的POSIX接口。</li><li>BlobFS与Blobstore的关系可以理解为<code>Blobstore实现了对Blob的管理，包括Blob的分配、删除、读取、写入、元数据的管理</code>等，而<code>BlobFS是在Blobstore的基础上进行封装的一个轻量级文件系统</code>，用于提供部分对于文件操作的接口，并<code>将对文件的操作转换为对Blob的操作</code>，<code>BlobFS中的文件与Blobstore中的Blob</code>一一对应。</li><li>在Blobstore下层，与SPDK bdev层对接。SPDK bdev层类似于内核中的<code>通用块设备层</code>，是对底层不同类型设备的统一抽象管理，例如NVMe bdev、Malloc bdev、AIO bdev等。</li></ul><h3 id=blobstore中结构的划分>Blobstore中结构的划分</h3><ul><li>在blobstore中，将SSD中的块划分为多个抽象层，主要由Logical Block、Page、Cluster、Blob组成</li><li>Logical Block：<code>与块设备中所提供的逻辑块相对应</code>，通常为512B或4KiB。实际硬盘存储的基本单位。</li><li>Page：由多个连续的Logical Block构成，通常一个page的大小为4KiB，因此一个Page由八个或一个Logical Block构成，取决于Logical Block的大小。在Blobstore中，<code>Page是连续的</code>，即从SSD的LBA 0开始，多个或一个块构成Page 0,接下来是Page 1，依次类推。</li><li>Cluster：<code>由多个连续的Page构成</code>，通常一个Cluster的大小默认为1MiB，因此一个Cluster由256个Page构成。Cluster与Page一样，是连续的，即从SSD的LBA 0开始的位置依次为Cluster 0到Cluster N。</li><li>Blob：Blobstore中主要的操作对象为Blob，与BlobFS中的文件相对应，提供read、write、create、delete等操作。<code>一个Blob由多个Cluster构成，但构成Blob中的Cluster并不一定是连续的</code>。</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867444690747.jpeg data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867444690747.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867444690747.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867444690747.jpeg 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867444690747.jpeg title=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867444690747.jpeg></p><h3 id=blobstore-块管理与分配>Blobstore 块管理与分配</h3><ul><li>在Blobstore中，会将cluster 0作为一个特殊的cluster。该cluster用于存放<code>Blobtore的所有信息以及元数据</code>，对每个blob数据块的查找、分配都是依赖cluster 0中所记录的元数据所进行的。</li><li>Cluster 0中的第一个page作为super block，Blobstore初始化后的一些基本信息都存放在super block中，例如cluster的大小、已使用page的起始位置、已使用page的个数、已使用cluster的起始位置、已使用cluster的个数、Blobstore的大小等信息。</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867459322749.jpeg data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867459322749.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867459322749.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867459322749.jpeg 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867459322749.jpeg title=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867459322749.jpeg></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867464209851.jpeg data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867464209851.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867464209851.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867464209851.jpeg 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867464209851.jpeg title=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867464209851.jpeg></p><ul><li>Metadata Page Allocation：用于记录<code>所有元数据页的分配</code>情况。在分配或释放元数据页后，将会对metadata page allocation中的数据做相应的修改。</li><li>Cluster Allocation：用于记录<code>所有cluster的分配</code>情况。在分配新的cluster或释放cluster后会对cluster allocation中的数据做相应的修改。</li><li>Blob Id Allocation：用于记录<code>blob id的分配</code>情况。对于blobstore中的所有blob，都是通过唯一的标识符blob id将其对应起来。在元数据域中，将会在blob allocation中记录所有的blob id分配情况。</li><li>Metadata Pages Region：元数据页区域中<code>存放着每个blob的元数据页</code>。<code>每个blob中所分配的cluster都会记录在该blob的元数据页中</code>，在读写blob时，首先会<code>通过blob id</code>定位到该<code>blob的元数据页</code>，其次根据元数据页中所记录的信息，<code>检索到对应的cluster</code>。对于每个blob的元数据页，并不是连续的。</li><li>在创建blob时，首先会为其分配blob id以及metadata page，其次更新metadata region。当对blob进行写入时，首先会为其分配cluster，其次更新该blob的metadata page，最后将数据写入，并持久化到磁盘中。</li></ul><h3 id=blob-使用说明>Blob 使用说明</h3><ul><li><strong>原子性</strong>：对于所有blobstore 的操作原子性保证，都由底层来保证操作一个page的原子性。<ul><li>数据写入：写入的数据通过以page为单位。每个page写入之后就会保存。举例：如果一个page更新数据时断电了，那么这个page的数据将不会写入新数据。也就是他不会更新。</li></ul></li><li><strong>异步回调</strong>：blobstore 是回调驱动的，如果blolbstore中的某个API不能够继续进行，他不会阻塞住其他的API。当原始调用完成后，他会返回到控制点。</li><li><strong>元数据：</strong><ul><li>每个blob都有自己的元数据，可以通过调用API显示的同步。</li><li>blobstore的全局元数据，他会在每次正确执行完成关闭后自动同步。由于不正确的关闭可能会导致数据丢失，所以每次正确关闭流程很重要。</li></ul></li><li>**channels 通道：**当引用执行IO操作的时候需要使用channel，应用会对channel进行IO。
+channel和线程最好是1：1数量对应关系。</li></ul><h3 id=io流程>IO流程</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span>class BlobStore {
+</span></span><span style=display:flex><span>  public:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>typedef</span> <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#66d9ef>completion_t</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>open</span>();
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>close</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>put</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>key, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>val, <span style=color:#66d9ef>uint64_t</span> expire);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>get</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>key, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>val, <span style=color:#66d9ef>uint64_t</span> off, <span style=color:#66d9ef>size_t</span> len);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>delete</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>key);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>async_put</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>key, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>val, <span style=color:#66d9ef>uint64_t</span> expire, <span style=color:#66d9ef>completion_t</span> comp);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>async_get</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>key, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>val, <span style=color:#66d9ef>uint64_t</span> off, <span style=color:#66d9ef>size_t</span> len, <span style=color:#66d9ef>completion_t</span> comp);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>async_delete</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>key, <span style=color:#66d9ef>completion_t</span> comp);
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></div><h4 id=文件读取>文件读取</h4><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867507473253.jpeg data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867507473253.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867507473253.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867507473253.jpeg 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867507473253.jpeg title=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867507473253.jpeg></p><ul><li>在文件读写时，首先会进行read ahead操作，将一部分数据从磁盘预先读取到内存的buffer中。</li><li>根据cache buffer的大小，对文件的I/O进行切分，使每个I/O的最大长度不超过一个cache buffer的大小。</li><li>对于拆分后的文件I/O，会根据其offset在cache buffer tree中查找相应的buffer。若存在，则直接从cache buffer中读取数据，进行memcpy。而对于没有缓存到cache buffer中的数据，将会对该文件的读取，转换到该文件对应的Blob进行读取。</li><li>对Blob读取时候，根据已打开的blob结构中记录的信息，可以获取该blob所有cluster的LBA起始位置，并根据读取位置的offset信息，计算相应的LBA地址。最后向SPDK bdev层发送异步的读请求，并等待I/O完成。BlobFS所提供的读操作为同步读，I/O完成后会在callback函数中，通过信号量通知BlobFS完成信号，至此文件读取结束。</li><li>Cache buffer tree是由多层树结构组成。最底层Level 0叶子节点为buffer node，是用于存放数据的buffer。Level 0以上的其它层中，均为tree node，用于构建树的索引结构。</li></ul><h4 id=文件写入>文件写入</h4><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867527828855.jpeg data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867527828855.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867527828855.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867527828855.jpeg 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867527828855.jpeg title=https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867527828855.jpeg></p><ul><li>在进行文件写入时，首先会根据文件当前的写入位置检查是否符合cache buffer写入需求，若满足，则直接将数据写入到cache buffer中，同时触发异步的flush操作。在flush的过程中，BlobFS触发Blob的写操作，将cache buffer中的数据，写入到文件对应blob的相应位置。若不满足cache buffer的写入需求，BlobFS则直接触发文件对应的blob的写操作。</li></ul><h3 id=blob代码案例>blob代码案例</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * We&#39;ll use this struct to gather housekeeping hello_context to pass between
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * our events and callbacks.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//该类为收集信息，并作为事件回调的存储信息介质
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> spdk_blob_store <span style=color:#f92672>*</span>bs;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> spdk_blob <span style=color:#f92672>*</span>blob;
+</span></span><span style=display:flex><span>	spdk_blob_id blobid;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> spdk_io_channel <span style=color:#f92672>*</span>channel;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>uint8_t</span> <span style=color:#f92672>*</span>read_buff;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>uint8_t</span> <span style=color:#f92672>*</span>write_buff;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>uint64_t</span> io_unit_size;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> rc;
+</span></span><span style=display:flex><span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Free up memory that we allocated.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>hello_cleanup</span>(<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>spdk_free</span>(hello_context<span style=color:#f92672>-&gt;</span>read_buff);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>spdk_free</span>(hello_context<span style=color:#f92672>-&gt;</span>write_buff);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>free</span>(hello_context);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Callback routine for the blobstore unload.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>unload_complete</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>cb_arg, <span style=color:#66d9ef>int</span> bserrno)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context <span style=color:#f92672>=</span> cb_arg;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>spdk_app_stop</span>(hello_context<span style=color:#f92672>-&gt;</span>rc);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Unload the blobstore, cleaning up as needed.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>unload_bs</span>(<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>msg, <span style=color:#66d9ef>int</span> bserrno)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> (hello_context<span style=color:#f92672>-&gt;</span>bs) {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> (hello_context<span style=color:#f92672>-&gt;</span>channel) {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>spdk_bs_free_io_channel</span>(hello_context<span style=color:#f92672>-&gt;</span>channel);
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>spdk_bs_unload</span>(hello_context<span style=color:#f92672>-&gt;</span>bs, unload_complete, hello_context);
+</span></span><span style=display:flex><span>	} <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>spdk_app_stop</span>(bserrno);
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Callback routine for the deletion of a blob.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//13、删除blob完成
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>delete_complete</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>arg1, <span style=color:#66d9ef>int</span> bserrno)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context <span style=color:#f92672>=</span> arg1;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>SPDK_NOTICELOG</span>(<span style=color:#e6db74>&#34;entry</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+</span></span><span style=display:flex><span>	<span style=color:#75715e>/* We&#39;re all done, we can unload the blobstore. */</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>unload_bs</span>(hello_context, <span style=color:#e6db74>&#34;&#34;</span>, <span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Function for deleting a blob.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//12、删除blob
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>delete_blob</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>arg1, <span style=color:#66d9ef>int</span> bserrno)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context <span style=color:#f92672>=</span> arg1;
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//先关闭blob，然后再删除该blob
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>spdk_bs_delete_blob</span>(hello_context<span style=color:#f92672>-&gt;</span>bs, hello_context<span style=color:#f92672>-&gt;</span>blobid,
+</span></span><span style=display:flex><span>			    delete_complete, hello_context);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Callback function for reading a blob.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//11 、读blob完成后回调
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>read_complete</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>arg1, <span style=color:#66d9ef>int</span> bserrno)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context <span style=color:#f92672>=</span> arg1;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> match_res <span style=color:#f92672>=</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>/* Now let&#39;s make sure things match. */</span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//我们测试一下看读到的数据和我们写入的数据是否相同
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	match_res <span style=color:#f92672>=</span> <span style=color:#a6e22e>memcmp</span>(hello_context<span style=color:#f92672>-&gt;</span>write_buff, hello_context<span style=color:#f92672>-&gt;</span>read_buff,
+</span></span><span style=display:flex><span>			   hello_context<span style=color:#f92672>-&gt;</span>io_unit_size);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> (match_res) {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>unload_bs</span>(hello_context, <span style=color:#e6db74>&#34;Error in data compare&#34;</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>);
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span>;
+</span></span><span style=display:flex><span>	} <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>SPDK_NOTICELOG</span>(<span style=color:#e6db74>&#34;read SUCCESS and data matches!</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//关闭blob，我们写完数据了，这时也就是说我们已经将数据写入到硬盘了，那么我们可以将blob关闭了。
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>spdk_blob_close</span>(hello_context<span style=color:#f92672>-&gt;</span>blob, delete_blob, hello_context);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Function for reading a blob.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//10、读blob中的数据
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>read_blob</span>(<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//还是分配一块内存给readbuffer
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	hello_context<span style=color:#f92672>-&gt;</span>read_buff <span style=color:#f92672>=</span> <span style=color:#a6e22e>spdk_malloc</span>(hello_context<span style=color:#f92672>-&gt;</span>io_unit_size,
+</span></span><span style=display:flex><span>					       <span style=color:#ae81ff>0x1000</span>, NULL, SPDK_ENV_LCORE_ID_ANY,
+</span></span><span style=display:flex><span>					       SPDK_MALLOC_DMA);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>/* Issue the read and compare the results in the callback. */</span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//从blob中读取数据，将读到的数据放入readbuffer
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>spdk_blob_io_read</span>(hello_context<span style=color:#f92672>-&gt;</span>blob, hello_context<span style=color:#f92672>-&gt;</span>channel,
+</span></span><span style=display:flex><span>			  hello_context<span style=color:#f92672>-&gt;</span>read_buff, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, read_complete,
+</span></span><span style=display:flex><span>			  hello_context);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Callback function for writing a blob.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//10：写数据完成后回调
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>write_complete</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>arg1, <span style=color:#66d9ef>int</span> bserrno)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context <span style=color:#f92672>=</span> arg1;
+</span></span><span style=display:flex><span>	<span style=color:#75715e>/* Now let&#39;s read back what we wrote and make sure it matches. */</span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//写完我们可以试一下读blob中的数据
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>read_blob</span>(hello_context);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Function for writing to a blob.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//9. 将数据写入blob
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>blob_write</span>(<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>SPDK_NOTICELOG</span>(<span style=color:#e6db74>&#34;entry</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//要写的数据先要放到一个buffer中，所以我们需要分配一块内存给buffer
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	hello_context<span style=color:#f92672>-&gt;</span>write_buff <span style=color:#f92672>=</span> <span style=color:#a6e22e>spdk_malloc</span>(hello_context<span style=color:#f92672>-&gt;</span>io_unit_size,
+</span></span><span style=display:flex><span>						<span style=color:#ae81ff>0x1000</span>, NULL, SPDK_ENV_LCORE_ID_ANY,
+</span></span><span style=display:flex><span>						SPDK_MALLOC_DMA);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//使用c语言中memset函数，内存空间初始化
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75715e>//memset（地址指针， 值， 大小）将地址指向的区域连续大小的内存区域填充为值
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75715e>//这一步是我们将writebuffer中的数据都填充为0x5a
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>memset</span>(hello_context<span style=color:#f92672>-&gt;</span>write_buff, <span style=color:#ae81ff>0x5a</span>, hello_context<span style=color:#f92672>-&gt;</span>io_unit_size);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//在写操作钱我们需要分配IO
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75715e>//在分配IO的时候我们需要将IO分配到channel上
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	hello_context<span style=color:#f92672>-&gt;</span>channel <span style=color:#f92672>=</span> <span style=color:#a6e22e>spdk_bs_alloc_io_channel</span>(hello_context<span style=color:#f92672>-&gt;</span>bs);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>/* Let&#39;s perform the write, 1 io_unit at offset 0. */</span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//执行blob写操作，将writebuffer中的数据写入blob
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>spdk_blob_io_write</span>(hello_context<span style=color:#f92672>-&gt;</span>blob, hello_context<span style=color:#f92672>-&gt;</span>channel,
+</span></span><span style=display:flex><span>			   hello_context<span style=color:#f92672>-&gt;</span>write_buff,
+</span></span><span style=display:flex><span>			   <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, write_complete, hello_context);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Callback function for sync&#39;ing metadata.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>sync_complete</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>arg1, <span style=color:#66d9ef>int</span> bserrno)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context <span style=color:#f92672>=</span> arg1;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//blob创建并且打开，并resize了，现在我们可以想blob中写入数据了
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>blob_write</span>(hello_context);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 7：blob大小设置完成回调函数
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>resize_complete</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>cb_arg, <span style=color:#66d9ef>int</span> bserrno)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context <span style=color:#f92672>=</span> cb_arg;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>uint64_t</span> total <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//拿到该blob的大小，看他大小是多少个cluster
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	total <span style=color:#f92672>=</span> <span style=color:#a6e22e>spdk_blob_get_num_clusters</span>(hello_context<span style=color:#f92672>-&gt;</span>blob);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>SPDK_NOTICELOG</span>(<span style=color:#e6db74>&#34;resized blob now has USED clusters of %&#34;</span> PRIu64 <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,
+</span></span><span style=display:flex><span>		       total);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//手动同步blob中的元数据，当blob关闭时也会自动完成该动作。
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>spdk_blob_sync_md</span>(hello_context<span style=color:#f92672>-&gt;</span>blob, sync_complete, hello_context);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 6
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Callback function for opening a blob.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>open_complete</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>cb_arg, <span style=color:#66d9ef>struct</span> spdk_blob <span style=color:#f92672>*</span>blob, <span style=color:#66d9ef>int</span> bserrno)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context <span style=color:#f92672>=</span> cb_arg;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>uint64_t</span> free <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	hello_context<span style=color:#f92672>-&gt;</span>blob <span style=color:#f92672>=</span> blob;
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//先查看blobstore中free cluster的数量，也就是实际容量抽象为多少个cluster
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	free <span style=color:#f92672>=</span> <span style=color:#a6e22e>spdk_bs_free_cluster_count</span>(hello_context<span style=color:#f92672>-&gt;</span>bs);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//在使用该blob之前我们需要resize一下，因为他的初始大小为0
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75715e>//第一个参数为需要重置的blob，第二个参数为设置这个blob的大小，设置的单位是cluster，也就是
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75715e>//需要设置这个blob有多少个cluster
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75715e>//这个例子中我们将blobstore中剩余的cluster整个都放入一个blob。
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>spdk_blob_resize</span>(hello_context<span style=color:#f92672>-&gt;</span>blob, free, resize_complete, hello_context);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 5 
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Callback function for creating a blob. 
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>blob_create_complete</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>arg1, spdk_blob_id blobid, <span style=color:#66d9ef>int</span> bserrno)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context <span style=color:#f92672>=</span> arg1;
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//创建blob后系统会返回blobID
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	hello_context<span style=color:#f92672>-&gt;</span>blobid <span style=color:#f92672>=</span> blobid;
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>SPDK_NOTICELOG</span>(<span style=color:#e6db74>&#34;new blob id %&#34;</span> PRIu64 <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, hello_context<span style=color:#f92672>-&gt;</span>blobid);
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//创建完blob后，如果要操作这个blob首先我们需要打开这个blob，打开成功后回调
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>spdk_bs_open_blob</span>(hello_context<span style=color:#f92672>-&gt;</span>bs, hello_context<span style=color:#f92672>-&gt;</span>blobid,
+</span></span><span style=display:flex><span>			  open_complete, hello_context);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#75715e>// 4
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Function for creating a blob.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>create_blob</span>(<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>SPDK_NOTICELOG</span>(<span style=color:#e6db74>&#34;entry</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//调用创建blob的接口函数，创建完成回调
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>spdk_bs_create_blob</span>(hello_context<span style=color:#f92672>-&gt;</span>bs, blob_create_complete, hello_context);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 3 
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Callback function for initializing the blobstore.
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>bs_init_complete</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>cb_arg, <span style=color:#66d9ef>struct</span> spdk_blob_store <span style=color:#f92672>*</span>bs,
+</span></span><span style=display:flex><span>		 <span style=color:#66d9ef>int</span> bserrno)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context <span style=color:#f92672>=</span> cb_arg;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//Get the io unit size in bytes.
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75715e>//拿到io的单位大小
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	hello_context<span style=color:#f92672>-&gt;</span>io_unit_size <span style=color:#f92672>=</span> <span style=color:#a6e22e>spdk_bs_get_io_unit_size</span>(hello_context<span style=color:#f92672>-&gt;</span>bs);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//blobstore就已经初始化完成了，下面进行创建blob
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>create_blob</span>(hello_context);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>base_bdev_event_cb</span>(<span style=color:#66d9ef>enum</span> spdk_bdev_event_type type, <span style=color:#66d9ef>struct</span> spdk_bdev <span style=color:#f92672>*</span>bdev,
+</span></span><span style=display:flex><span>		   <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>event_ctx)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>SPDK_WARNLOG</span>(<span style=color:#e6db74>&#34;Unsupported bdev event: type %d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, type);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 2。入口函数
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Our initial event that kicks off everything from main().
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>hello_start</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>arg1)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//此时传入的参数是hello_context
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context <span style=color:#f92672>=</span> arg1;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> spdk_bs_dev <span style=color:#f92672>*</span>bs_dev <span style=color:#f92672>=</span> NULL;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> rc;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>SPDK_NOTICELOG</span>(<span style=color:#e6db74>&#34;entry</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//第一个参数指定bdev的名称，bdev可以是nvme，文件IO，或者内存
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75715e>//bdev就是决定下层使用的存储介质，比如nvme或者malloc，或者文件IO
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	rc <span style=color:#f92672>=</span> <span style=color:#a6e22e>spdk_bdev_create_bs_dev_ext</span>(<span style=color:#e6db74>&#34;Malloc0&#34;</span>, base_bdev_event_cb, NULL, <span style=color:#f92672>&amp;</span>bs_dev);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//创建完bdev之后，我们需要创建blobstore，与指定的bdev设备关联上
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>spdk_bs_init</span>(bs_dev, NULL, bs_init_complete, hello_context);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//1
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>argv)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> spdk_app_opts opts <span style=color:#f92672>=</span> {};
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> rc <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span> <span style=color:#f92672>*</span>hello_context <span style=color:#f92672>=</span> NULL;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>SPDK_NOTICELOG</span>(<span style=color:#e6db74>&#34;entry</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>/* Set default values in opts structure. */</span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//设置spdk的默认值
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>spdk_app_opts_init</span>(<span style=color:#f92672>&amp;</span>opts);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//设置名称
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	opts.name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;hello_blob&#34;</span>;
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//配置文件信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	opts.json_config_file <span style=color:#f92672>=</span> argv[<span style=color:#ae81ff>1</span>];
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//给hello_context分配空间
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	hello_context <span style=color:#f92672>=</span> <span style=color:#a6e22e>calloc</span>(<span style=color:#ae81ff>1</span>, <span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>struct</span> <span style=color:#66d9ef>hello_context_t</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//启动到hello_start函数中，并将hello_context作为参数传入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	rc <span style=color:#f92672>=</span> <span style=color:#a6e22e>spdk_app_start</span>(<span style=color:#f92672>&amp;</span>opts, hello_start, hello_context);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=resource>Resource</h3><ul><li>from： <a href=https://cloud.tencent.com/developer/article/1442627 target=_blank rel="external nofollow noopener noreferrer">https://cloud.tencent.com/developer/article/1442627<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-24 17:00:04">更新于 2023-09-24&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/blobstoreblobfs/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5c%e5%ad%98%e5%82%a8%e5%bc%95%e6%93%8e%5cblobstore&amp;blobfs.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/blobstoreblobfs/ data-title=blobstore&amp;blobfs data-hashtags=Storage><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/blobstoreblobfs/ data-hashtag=Storage><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/blobstoreblobfs/ data-title=blobstore&amp;blobfs data-image=https://cdn.pixabay.com/photo/2016/11/04/21/34/beach-1799006_640.jpg><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/storage/>Storage</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/c-%E5%AE%B9%E5%99%A8%E7%B1%BB%E9%A2%98%E7%9B%AE/ class=prev rel=prev title=c++容器类题目><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>c++容器类题目</a>
+<a href=liudongdong1.github.io/beetlsql/ class=next rel=next title=Beetlsql>Beetlsql<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
+<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
+<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>

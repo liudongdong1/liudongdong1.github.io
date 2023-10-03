@@ -1,348 +1,25 @@
-<!DOCTYPE html>
-<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-  <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <meta name="robots" content="noodp" />
-    <title>JavaJVM_字节码指令 - DAY By DAY</title><meta name="author" content="LiuDongdong">
-<meta name="author-link" content="https://liudongdong1.github.io/">
-<meta name="description" content="1. 字节码指令 字节码指令是一个字节长度的，代表着某种特殊操作含义的数字，总数不超过256条（全部字节码指令汇编）。对于大部分与数据类型相关的字" /><meta name="keywords" content='Java' /><meta itemprop="name" content="JavaJVM_字节码指令">
-<meta itemprop="description" content="1. 字节码指令 字节码指令是一个字节长度的，代表着某种特殊操作含义的数字，总数不超过256条（全部字节码指令汇编）。对于大部分与数据类型相关的字">
-<meta itemprop="dateModified" content="2023-09-28T22:47:27+08:00" />
-<meta itemprop="wordCount" content="6696"><meta itemprop="image" content="/logo.png"/>
-<meta itemprop="keywords" content="Java," /><meta property="og:title" content="JavaJVM_字节码指令" />
-<meta property="og:description" content="1. 字节码指令 字节码指令是一个字节长度的，代表着某种特殊操作含义的数字，总数不超过256条（全部字节码指令汇编）。对于大部分与数据类型相关的字" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
-
-<meta property="article:modified_time" content="2023-09-28T22:47:27+08:00" />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/logo.png"/>
-
-<meta name="twitter:title" content="JavaJVM_字节码指令"/>
-<meta name="twitter:description" content="1. 字节码指令 字节码指令是一个字节长度的，代表着某种特殊操作含义的数字，总数不超过256条（全部字节码指令汇编）。对于大部分与数据类型相关的字"/>
-<meta name="application-name" content="DAY By DAY">
-<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/" /><link rel="prev" href="liudongdong1.github.io/jdbcintroduce/" /><link rel="next" href="liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%97%E8%8A%82%E7%A0%81%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "BlogPosting",
-    "headline": "JavaJVM_字节码指令",
-    "inLanguage": "zh-CN",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "liudongdong1.github.io\/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4\/"
-    },"genre": "posts","keywords": "Java","wordcount":  6696 ,
-    "url": "liudongdong1.github.io\/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4\/","dateModified": "2023-09-28T22:47:27+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
-      "@type": "Organization",
-      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
-        "@type": "Person",
-        "name": "liudongdong1"
-      },"description": ""
-  }
-  </script></head>
-  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
-  <div class="header-wrapper" data-github-corner="right">
-    <div class="header-title">
-      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="DAY By DAY"
-    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
-    <nav>
-      <ul class="menu"><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/posts/"
-                
-                
-              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/categories/"
-                
-                
-              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/tags/"
-                
-                
-              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/friends/"
-                title="友情链接"
-                
-              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/about/"
-                
-                
-              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
-          </li><li class="menu-item search" id="search-desktop">
-            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
-            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-            </a>
-            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-            </a>
-            <span class="search-button search-loading" id="search-loading-desktop">
-              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-            </span>
-          </li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header><header class="mobile animate__faster" id="header-mobile">
-  <div class="header-container">
-    <div class="header-wrapper">
-      <div class="header-title">
-        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="/fixit.min.svg"
-    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
-      <div class="menu-toggle" id="menu-toggle-mobile">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-    <nav>
-      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
-            <div class="search mobile" id="search-mobile">
-              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
-              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-              </a>
-              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-              </a>
-              <span class="search-button search-loading" id="search-loading-mobile">
-                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-              </span>
-            </div>
-            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-              取消
-            </a>
-          </li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/posts/"
-                  
-                  
-                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/categories/"
-                  
-                  
-                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/tags/"
-                  
-                  
-                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/friends/"
-                  title="友情链接"
-                  
-                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/about/"
-                  
-                  
-                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
-              class="menu-item text-center"
-            ><a
-                  class="menu-link"
-                  href="https://liudongdong1.github.io/"
-                  title="GitHub"
-                  rel="noopener noreferrer" target="_blank"
-                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
-          </li></ul>
-    </nav>
-  </div>
-</header><div class="search-dropdown desktop">
-    <div id="search-dropdown-desktop"></div>
-  </div>
-  <div class="search-dropdown mobile">
-    <div id="search-dropdown-mobile"></div>
-  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
-      <div class="toc-content" id="toc-content-auto"></div></aside>
-
-  <aside class="aside-custom" id="aside-sakana">
-    
-
-<div class="sakana-widget">
-  <div class="sakana-item" id="takina-widget"></div>
-  <div class="sakana-item" id="chisato-widget"></div>
-</div>
-<script>
-  function initSakanaWidget() {
-    const takina = SakanaWidget.getCharacter('takina')
-    SakanaWidget.registerCharacter('takina-slow', takina);
-    new SakanaWidget({
-      character: 'takina-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#takina-widget');
-
-    const chisato = SakanaWidget.getCharacter('chisato')
-    SakanaWidget.registerCharacter('chisato-slow', chisato);
-    new SakanaWidget({
-      character: 'chisato-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#chisato-widget');
-  }
-</script>
-<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
-</script></aside>
-
-  <article class="page single">
-    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
-        <span>JavaJVM_字节码指令</span>
-      </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
-      liudongdong1</span></span>
-          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/framework/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Framework</a></span></div>
-      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00>
-            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01" >0001-01-01</time>
-          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 6696 字&nbsp;
-        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 14 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="JavaJVM_字节码指令">
-            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
-          </span>&nbsp;</div>
-    </div><div class="featured-image"><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg"
-    data-srcset="https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg, https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg 1.5x, https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg 2x"
-    data-sizes="auto"
-    alt="https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg"
-    title="https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg"/></div><div class="details toc" id="toc-static" kept="true">
-        <div class="details-summary toc-title">
-          <span>目录</span>
-          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-        </div>
-        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#1-字节码指令">1. 字节码指令</a></li>
-        <li><a href="#3-实例">3 实例</a></li>
-        <li><a href="#4如何快捷查看字节码">4.如何快捷查看字节码</a></li>
-        <li><a href="#resource">Resource</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-      </div><div
-      class="content"
-      id="content"
-      
-      
-    ><h3 id="1-字节码指令">1. 字节码指令</h3>
-<p>字节码指令是一个字节长度的，代表着某种特殊操作含义的数字，总数不超过256条（<a href="https://link.juejin.cn/?target=http%3A%2F%2Fwww.blogjava.net%2FDLevin%2Farchive%2F2011%2F09%2F13%2F358497.html"target="_blank" rel="external nofollow noopener noreferrer">全部字节码指令汇编<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>）。对于大部分与数据类型相关的字节码指令，它们的操作码助记符中都有特殊字符来表明专门为那种数据类型服务，如下表：</p>
-<table>
-<thead>
-<tr>
-<th>描述字符</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>i</td>
-<td>基本类型int</td>
-</tr>
-<tr>
-<td>s</td>
-<td>基本类型short</td>
-</tr>
-<tr>
-<td>l</td>
-<td>基本类型long,这里注意不是L，L是最后一个</td>
-</tr>
-<tr>
-<td>f</td>
-<td>基本类型float</td>
-</tr>
-<tr>
-<td>d</td>
-<td>基本类型double</td>
-</tr>
-<tr>
-<td>b</td>
-<td>基本类型byte</td>
-</tr>
-<tr>
-<td>c</td>
-<td>基本类型char</td>
-</tr>
-<tr>
-<td>b</td>
-<td>基本类型boolean</td>
-</tr>
-<tr>
-<td>a</td>
-<td>对象类型引用reference</td>
-</tr>
-</tbody>
-</table>
-<p>这里有一个注意的点，这对于不是整数类型的byte、char、short、boolean。<code>编译器会在编译器或运行期将byte和short类型的数据带符号扩展(Sign-extend)为相应的int类型数据</code>，<code>将boolean和char类型数据零位扩展(Zero-extend)为相应的int数据</code>。同样在处理上诉类型的数组数据是，也会转换为使用int类型的字节码指令来处理。</p>
-<h4 id="1-加载和存储指令">.1. 加载和存储指令。</h4>
-<p>加载和存储指令用于将数据在<code>栈帧中的局部变量表和操作数栈</code>之间来回传输。</p>
-<p><code>&lt;类型&gt;load_&lt;下标&gt;</code>：将一个<code>局部变量加载到操作数栈</code>。例如iload_1，将一个int类型局部变量（下标为1，0一般为this）从局部变量表加载到操作栈，其他的也都类似，例如：dload_2,fload_3。 <code>&lt;类型&gt;store_&lt;下标&gt;</code>：将一个<code>数值从操作数栈栈顶存储到局部变量表</code>。例如istore_3，将一个int类型的数值从操作数栈栈顶存储到局部变量3中，后缀为3，证明局部变量表中已经存在了两个值。 <code>&lt;类型&gt;const_&lt;具体的值&gt;</code>：将一个<code>常量加载到操作数栈</code>。例如iconst_3,将常量3加载到操作数栈。 <code>wide扩展</code>：当上述的下标志超过3时，就不用下划线的方式了，而是使用<code>istore 6</code>，load的写法也是一样。 <code>bipush、sipush、ldc</code>  :当上述的const指令后面的值变得很大时，该指令也会改变。</p>
-<ul>
-<li>当<code> int 取值 -1~5 时</code>，JVM 采用<code> iconst 指令将常量压入栈中</code>。</li>
-<li>当 int 取值 <code>-128~127 </code>时，JVM 采用<code> bipush 指令将常量压入栈中</code>。</li>
-<li>当 int 取值<code> -32768~32767</code> 时，JVM 采用<code> sipush 指令将常量压入栈中</code>。</li>
-<li>当 int 取值<code>-2147483648~2147483647</code>时，JVM 采用<code> ldc 指令将常量压入栈中</code>。</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">save</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> 1<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> b <span style="color:#f92672">=</span> 6<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> c <span style="color:#f92672">=</span> 128<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> d <span style="color:#f92672">=</span> 32768 <span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> f <span style="color:#f92672">=</span> 2<span style="color:#f92672">.</span><span style="color:#a6e22e">0f</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><pre tabindex="0"><code class="language-assembly" data-lang="assembly">Code:
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>JavaJVM_字节码指令 - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="1. 字节码指令 字节码指令是一个字节长度的，代表着某种特殊操作含义的数字，总数不超过256条（全部字节码指令汇编）。对于大部分与数据类型相关的字"><meta name=keywords content="Java"><meta itemprop=name content="JavaJVM_字节码指令"><meta itemprop=description content="1. 字节码指令 字节码指令是一个字节长度的，代表着某种特殊操作含义的数字，总数不超过256条（全部字节码指令汇编）。对于大部分与数据类型相关的字"><meta itemprop=dateModified content="2023-09-28T22:47:27+08:00"><meta itemprop=wordCount content="6696"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="Java,"><meta property="og:title" content="JavaJVM_字节码指令"><meta property="og:description" content="1. 字节码指令 字节码指令是一个字节长度的，代表着某种特殊操作含义的数字，总数不超过256条（全部字节码指令汇编）。对于大部分与数据类型相关的字"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:modified_time" content="2023-09-28T22:47:27+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="JavaJVM_字节码指令"><meta name=twitter:description content="1. 字节码指令 字节码指令是一个字节长度的，代表着某种特殊操作含义的数字，总数不超过256条（全部字节码指令汇编）。对于大部分与数据类型相关的字"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/><link rel=prev href=liudongdong1.github.io/jdbcintroduce/><link rel=next href=liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%97%E8%8A%82%E7%A0%81%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"JavaJVM_字节码指令","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4\/"},"genre":"posts","keywords":"Java","wordcount":6696,"url":"liudongdong1.github.io\/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4\/","dateModified":"2023-09-28T22:47:27+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"liudongdong1"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
+<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>JavaJVM_字节码指令</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle" aria-hidden=true></i>
+liudongdong1</span></span>
+<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/framework/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Framework</a></span></div><div class=post-meta-line><span title="0001-01-01 00:00:00"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=0001-01-01>0001-01-01</time>
+</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 6696 字&nbsp;
+<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 14 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title=JavaJVM_字节码指令>
+<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg data-srcset="https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg, https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg 1.5x, https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg 2x" data-sizes=auto alt=https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg title=https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg></div><div class="details toc" id=toc-static kept=true><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#1-字节码指令>1. 字节码指令</a></li><li><a href=#3-实例>3 实例</a></li><li><a href=#4如何快捷查看字节码>4.如何快捷查看字节码</a></li><li><a href=#resource>Resource</a></li></ul></li></ul></nav></div></div><div class=content id=content><h3 id=1-字节码指令>1. 字节码指令</h3><p>字节码指令是一个字节长度的，代表着某种特殊操作含义的数字，总数不超过256条（<a href="https://link.juejin.cn/?target=http%3A%2F%2Fwww.blogjava.net%2FDLevin%2Farchive%2F2011%2F09%2F13%2F358497.html" target=_blank rel="external nofollow noopener noreferrer">全部字节码指令汇编<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a>）。对于大部分与数据类型相关的字节码指令，它们的操作码助记符中都有特殊字符来表明专门为那种数据类型服务，如下表：</p><table><thead><tr><th>描述字符</th><th>含义</th></tr></thead><tbody><tr><td>i</td><td>基本类型int</td></tr><tr><td>s</td><td>基本类型short</td></tr><tr><td>l</td><td>基本类型long,这里注意不是L，L是最后一个</td></tr><tr><td>f</td><td>基本类型float</td></tr><tr><td>d</td><td>基本类型double</td></tr><tr><td>b</td><td>基本类型byte</td></tr><tr><td>c</td><td>基本类型char</td></tr><tr><td>b</td><td>基本类型boolean</td></tr><tr><td>a</td><td>对象类型引用reference</td></tr></tbody></table><p>这里有一个注意的点，这对于不是整数类型的byte、char、short、boolean。<code>编译器会在编译器或运行期将byte和short类型的数据带符号扩展(Sign-extend)为相应的int类型数据</code>，<code>将boolean和char类型数据零位扩展(Zero-extend)为相应的int数据</code>。同样在处理上诉类型的数组数据是，也会转换为使用int类型的字节码指令来处理。</p><h4 id=1-加载和存储指令>.1. 加载和存储指令。</h4><p>加载和存储指令用于将数据在<code>栈帧中的局部变量表和操作数栈</code>之间来回传输。</p><p><code>&lt;类型>load_&lt;下标></code>：将一个<code>局部变量加载到操作数栈</code>。例如iload_1，将一个int类型局部变量（下标为1，0一般为this）从局部变量表加载到操作栈，其他的也都类似，例如：dload_2,fload_3。 <code>&lt;类型>store_&lt;下标></code>：将一个<code>数值从操作数栈栈顶存储到局部变量表</code>。例如istore_3，将一个int类型的数值从操作数栈栈顶存储到局部变量3中，后缀为3，证明局部变量表中已经存在了两个值。 <code>&lt;类型>const_&lt;具体的值></code>：将一个<code>常量加载到操作数栈</code>。例如iconst_3,将常量3加载到操作数栈。 <code>wide扩展</code>：当上述的下标志超过3时，就不用下划线的方式了，而是使用<code>istore 6</code>，load的写法也是一样。 <code>bipush、sipush、ldc</code> :当上述的const指令后面的值变得很大时，该指令也会改变。</p><ul><li>当<code> int 取值 -1~5 时</code>，JVM 采用<code> iconst 指令将常量压入栈中</code>。</li><li>当 int 取值 <code>-128~127 </code>时，JVM 采用<code> bipush 指令将常量压入栈中</code>。</li><li>当 int 取值<code> -32768~32767</code> 时，JVM 采用<code> sipush 指令将常量压入栈中</code>。</li><li>当 int 取值<code>-2147483648~2147483647</code>时，JVM 采用<code> ldc 指令将常量压入栈中</code>。</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>save</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> a <span style=color:#f92672>=</span> 1<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> b <span style=color:#f92672>=</span> 6<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> c <span style=color:#f92672>=</span> 128<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> d <span style=color:#f92672>=</span> 32768 <span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> f <span style=color:#f92672>=</span> 2<span style=color:#f92672>.</span><span style=color:#a6e22e>0f</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><pre tabindex=0><code class=language-assembly data-lang=assembly>Code:
 	stack=1, locals=6, args_size=1
         0: iconst_1               //将常量1入栈，
         1: istore_1               //将栈顶的1存入局部变量表,下标为1，因为0存储了整个类的this
@@ -355,28 +32,7 @@
         13: fconst_2
         14: fstore        5
         16: return
-</code></pre><h4 id="2-运算指令">.2 运算指令。</h4>
-<p>运算主要分为两种：对<code>整数数据进行运算的指令</code>和对<code>浮点型数据运算的指令</code>，和前面说的一样，对于byte、char、short、和 boolean类型的算数质量都使用int类型的指令替代。整数和浮点数的运算指令在移除和被领出的时候也有各自不同的表现行为。具体的指令也是在运算指令前加上对应的类型即可，例如加法指令：iadd,ladd,fadd,dadd。</p>
-<ul>
-<li>加法指令：（i,l,f,d）add</li>
-<li>减法指令：（i,l,f,d）sub</li>
-<li>乘法法指令：（i,l,f,d）mul</li>
-<li>除法指令：（i,l,f,d）div</li>
-<li>求余指令：（i,l,f,d）rem</li>
-<li>取反指令：（i,l,f,d）neg</li>
-<li>位移指令：  ishl、ishr、iushr、lshl、lshr、lushr</li>
-<li>按位或指令：ior、lor</li>
-<li>按位与指令：iand、land</li>
-<li>按位异或指令：  ixor、lxor</li>
-<li>局部变量自增： iinc（例如for循环中i++）</li>
-<li>比较指令： dcmpg、dcmpl、fcmpg、fcmpl、lcmp</li>
-</ul>
-<h4 id="23-类型转换指令">2.3 类型转换指令。</h4>
-<p>类型转换指令可以<code>将两种不同的数值类型进行相互转换</code>，这些转换一般用于<code>实现用户代码中的显示类型转换操作</code>。</p>
-<p>Java虚拟机直接支持<code>宽化数据类型转换</code>（小范围数据转换为大数据类型）,不需要显示的转换指令，例如int转换long，float和double。举例：<code>int a=10;long b =a</code></p>
-<p>Java虚拟机转换<code>窄化数据类型转换时</code>，<code>必须显示的调用转化指令</code>。举例：<code>long b=10;int a = (long)b</code>。</p>
-<p>类型转换的字节码指令其实就比较简单了，<code>&lt;前类型&gt;2&lt;后类型&gt;</code>，例如i2l,l2i,i2f,i2d。当然这里举的都是基本数据类型，如果是<code>对象</code>，当类似宽化数据类型时就直接使用，当类似<code>窄化数据类型</code>时，需要<code>checkcast</code>指令。</p>
-<pre tabindex="0"><code class="language-assembly" data-lang="assembly">public class Main {
+</code></pre><h4 id=2-运算指令>.2 运算指令。</h4><p>运算主要分为两种：对<code>整数数据进行运算的指令</code>和对<code>浮点型数据运算的指令</code>，和前面说的一样，对于byte、char、short、和 boolean类型的算数质量都使用int类型的指令替代。整数和浮点数的运算指令在移除和被领出的时候也有各自不同的表现行为。具体的指令也是在运算指令前加上对应的类型即可，例如加法指令：iadd,ladd,fadd,dadd。</p><ul><li>加法指令：（i,l,f,d）add</li><li>减法指令：（i,l,f,d）sub</li><li>乘法法指令：（i,l,f,d）mul</li><li>除法指令：（i,l,f,d）div</li><li>求余指令：（i,l,f,d）rem</li><li>取反指令：（i,l,f,d）neg</li><li>位移指令： ishl、ishr、iushr、lshl、lshr、lushr</li><li>按位或指令：ior、lor</li><li>按位与指令：iand、land</li><li>按位异或指令： ixor、lxor</li><li>局部变量自增： iinc（例如for循环中i++）</li><li>比较指令： dcmpg、dcmpl、fcmpg、fcmpl、lcmp</li></ul><h4 id=23-类型转换指令>2.3 类型转换指令。</h4><p>类型转换指令可以<code>将两种不同的数值类型进行相互转换</code>，这些转换一般用于<code>实现用户代码中的显示类型转换操作</code>。</p><p>Java虚拟机直接支持<code>宽化数据类型转换</code>（小范围数据转换为大数据类型）,不需要显示的转换指令，例如int转换long，float和double。举例：<code>int a=10;long b =a</code></p><p>Java虚拟机转换<code>窄化数据类型转换时</code>，<code>必须显示的调用转化指令</code>。举例：<code>long b=10;int a = (long)b</code>。</p><p>类型转换的字节码指令其实就比较简单了，<code>&lt;前类型>2&lt;后类型></code>，例如i2l,l2i,i2f,i2d。当然这里举的都是基本数据类型，如果是<code>对象</code>，当类似宽化数据类型时就直接使用，当类似<code>窄化数据类型</code>时，需要<code>checkcast</code>指令。</p><pre tabindex=0><code class=language-assembly data-lang=assembly>public class Main {
     public static void main(String[] args) {
         int a = 1;
         long b = a;
@@ -400,38 +56,7 @@
         16: checkcast     #4                  // class com/verzqli/snake/Son
         19: astore        5
         21: return
-</code></pre><p>注意上面这个转换时错误的，父类是不能转化为子类的，<code>编译期正常，但是运行是会报错的，这就是checkcast指令</code>的原因。</p>
-<h4 id="24--对象创建和访问指令">2.4  对象创建和访问指令</h4>
-<p>虽然类实例和数组都是对象，但Java虚拟基对<code>类实例和数组的创建与操作使用了不同的字节码指令</code>。对象创建后，就可以通过对象访问指令获取对象实例或者数组实例中的字段或者数组元素，这些指令如下。</p>
-<ul>
-<li><code>new</code>:创建类实例的指令</li>
-<li><code>newarray、anewarray、multianewarray</code>：创建数组的指令</li>
-<li><code>getfield、putfield、getstatic、putstatic</code>：访问类字段（static字段，被称为类变量）和实例字段（非static字段，）。</li>
-<li><code>(b、c、s、i、l、f、d、a)aload</code>:很明显，就是<code>基础数据类型加上aload，将一个数组元素加载到操作数栈。</code></li>
-<li><code>(b、c、s、i、l、f、d、a)astore</code>:同上面一样的原理，将操作数栈栈顶的值存储到数组元素中。</li>
-<li><code>arraylength</code>:取数组长度</li>
-<li><code>instanceof、checkcast</code>：检查类实例类型的指令。</li>
-</ul>
-<h4 id="24--操作数栈管理指令">2.4  操作数栈管理指令</h4>
-<p>如同操作一个普通数据结构中的堆栈那样，Java虚拟机提供了一些直接操作操作数栈的指令。</p>
-<ul>
-<li><code>pop、pop2</code>：将操作数栈栈顶的一个或两个元素出栈。</li>
-<li><code>dup、dup2、dup_x1、dup2_x1、dup_x2、dup2_x2</code>:出站栈顶一个或两个数值并将期值复制一份或两份后重新压入栈顶。</li>
-<li><code>swap</code>:将栈顶两个数互换。</li>
-</ul>
-<h4 id="25--方法调用和返回指令">2.5  方法调用和返回指令。</h4>
-<p>方法调用的指令只要包含下面这5条</p>
-<ul>
-<li><code>invokespecial</code>:用于调用一些<code>需要特殊处理的实例方法</code>，包括实例<code>初始化方法</code>、<code>私有方法和父类方法</code>。</li>
-<li><code>invokestatic</code>:用于<code>调用static方法</code>。</li>
-<li><code>invokeinterface</code>:用于调用<code>接口方法</code>，他会在运行时搜索一个实现了这个接口方法的对象，找出合适的方法进行调用。</li>
-<li><code>invokevirtual</code>:用于<code>调用对象的实例方法</code>，根据对象的实际类型进行分派。</li>
-<li><code>invokedynamic</code>:用于在运行时<code>动态解析出调用点限定符所引用的方法</code>，并执行该方法。前面4条指令的分派逻辑都固话在Java虚拟机内部，而此条指令的分派逻辑是由用户设定的引导方法决定的。</li>
-<li><code>(i,l,f,d, 空)return</code>:根据前面的类型来确定返回的数据类型，为空时表示void</li>
-</ul>
-<h4 id="25--异常处理指令">2.5  异常处理指令。</h4>
-<p>在Java程序中显示抛出异常的操作（throw语句）都由<code>athrow</code>指令来实现。但是处理异常（catch语句）不是由字节码指令来实现的，而是<code>采用异常表来完成</code>的，如下例子。</p>
-<pre tabindex="0"><code class="language-assembly" data-lang="assembly">public class Main {
+</code></pre><p>注意上面这个转换时错误的，父类是不能转化为子类的，<code>编译期正常，但是运行是会报错的，这就是checkcast指令</code>的原因。</p><h4 id=24--对象创建和访问指令>2.4 对象创建和访问指令</h4><p>虽然类实例和数组都是对象，但Java虚拟基对<code>类实例和数组的创建与操作使用了不同的字节码指令</code>。对象创建后，就可以通过对象访问指令获取对象实例或者数组实例中的字段或者数组元素，这些指令如下。</p><ul><li><code>new</code>:创建类实例的指令</li><li><code>newarray、anewarray、multianewarray</code>：创建数组的指令</li><li><code>getfield、putfield、getstatic、putstatic</code>：访问类字段（static字段，被称为类变量）和实例字段（非static字段，）。</li><li><code>(b、c、s、i、l、f、d、a)aload</code>:很明显，就是<code>基础数据类型加上aload，将一个数组元素加载到操作数栈。</code></li><li><code>(b、c、s、i、l、f、d、a)astore</code>:同上面一样的原理，将操作数栈栈顶的值存储到数组元素中。</li><li><code>arraylength</code>:取数组长度</li><li><code>instanceof、checkcast</code>：检查类实例类型的指令。</li></ul><h4 id=24--操作数栈管理指令>2.4 操作数栈管理指令</h4><p>如同操作一个普通数据结构中的堆栈那样，Java虚拟机提供了一些直接操作操作数栈的指令。</p><ul><li><code>pop、pop2</code>：将操作数栈栈顶的一个或两个元素出栈。</li><li><code>dup、dup2、dup_x1、dup2_x1、dup_x2、dup2_x2</code>:出站栈顶一个或两个数值并将期值复制一份或两份后重新压入栈顶。</li><li><code>swap</code>:将栈顶两个数互换。</li></ul><h4 id=25--方法调用和返回指令>2.5 方法调用和返回指令。</h4><p>方法调用的指令只要包含下面这5条</p><ul><li><code>invokespecial</code>:用于调用一些<code>需要特殊处理的实例方法</code>，包括实例<code>初始化方法</code>、<code>私有方法和父类方法</code>。</li><li><code>invokestatic</code>:用于<code>调用static方法</code>。</li><li><code>invokeinterface</code>:用于调用<code>接口方法</code>，他会在运行时搜索一个实现了这个接口方法的对象，找出合适的方法进行调用。</li><li><code>invokevirtual</code>:用于<code>调用对象的实例方法</code>，根据对象的实际类型进行分派。</li><li><code>invokedynamic</code>:用于在运行时<code>动态解析出调用点限定符所引用的方法</code>，并执行该方法。前面4条指令的分派逻辑都固话在Java虚拟机内部，而此条指令的分派逻辑是由用户设定的引导方法决定的。</li><li><code>(i,l,f,d, 空)return</code>:根据前面的类型来确定返回的数据类型，为空时表示void</li></ul><h4 id=25--异常处理指令>2.5 异常处理指令。</h4><p>在Java程序中显示抛出异常的操作（throw语句）都由<code>athrow</code>指令来实现。但是处理异常（catch语句）不是由字节码指令来实现的，而是<code>采用异常表来完成</code>的，如下例子。</p><pre tabindex=0><code class=language-assembly data-lang=assembly>public class Main {
    public static void main(String[] args) throws Exception{
        try {
            Main a=new Main();
@@ -455,9 +80,7 @@ public static void main(java.lang.String[]) throws java.lang.Exception;
        12: aload_1
        13: invokevirtual #5                  // Method java/lang/Exception.printStackTrace:()V
        16: return
-</code></pre><h4 id="26--同步指令">2.6  同步指令</h4>
-<p>Java虚拟机可以支持<code>方法级的同步和方法内部一段指令序列的同步</code>，这两种同步结构都是使用<a href="https://juejin.im/post/6844903840815251469"target="_blank" rel="external nofollow noopener noreferrer">Monitor<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 实现的。 正常情况下Java运行是同步的，无需使用字节码控制。虚拟机可以从<code>方法常量池的方法表结构</code>中的<code>ACC_SYNCHRONIZE</code>访问标志得知一个方法是否声明为同步方法。当方法调用时，调用指令将会检查方法的<code>ACC_SYNCHRONIZE</code>访问表示是否被设置，如果设置了，执行线程就要求先持有<code>Monitor</code>,然后才能执行方法，最后当方法完成时释放<code>Monitor</code>。在方法执行期间，执行线程持有了<code>Monitor</code>，其他任何一个线程都无法在获取到同一个<code>Monitor</code>。如果一个同步方法执行期间抛出了异常，并且在方法内部无法处理次异常，那么这个同步方法所持有的<code>Monitor</code>将在异常抛出到同步方法之外时自动释放。 同步一段指令集序列通常是由<code>synchronized</code>语句块来表示的，Java虚拟机指令集中有<code>monitorenter</code>和<code>monitorexit</code>两条指令来支持<code>synchronized</code>关键字。如下例子</p>
-<pre tabindex="0"><code class="language-assembly" data-lang="assembly">public class Main {
+</code></pre><h4 id=26--同步指令>2.6 同步指令</h4><p>Java虚拟机可以支持<code>方法级的同步和方法内部一段指令序列的同步</code>，这两种同步结构都是使用<a href=https://juejin.im/post/6844903840815251469 target=_blank rel="external nofollow noopener noreferrer">Monitor<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> 实现的。 正常情况下Java运行是同步的，无需使用字节码控制。虚拟机可以从<code>方法常量池的方法表结构</code>中的<code>ACC_SYNCHRONIZE</code>访问标志得知一个方法是否声明为同步方法。当方法调用时，调用指令将会检查方法的<code>ACC_SYNCHRONIZE</code>访问表示是否被设置，如果设置了，执行线程就要求先持有<code>Monitor</code>,然后才能执行方法，最后当方法完成时释放<code>Monitor</code>。在方法执行期间，执行线程持有了<code>Monitor</code>，其他任何一个线程都无法在获取到同一个<code>Monitor</code>。如果一个同步方法执行期间抛出了异常，并且在方法内部无法处理次异常，那么这个同步方法所持有的<code>Monitor</code>将在异常抛出到同步方法之外时自动释放。 同步一段指令集序列通常是由<code>synchronized</code>语句块来表示的，Java虚拟机指令集中有<code>monitorenter</code>和<code>monitorexit</code>两条指令来支持<code>synchronized</code>关键字。如下例子</p><pre tabindex=0><code class=language-assembly data-lang=assembly>public class Main {
     public void main() {
         synchronized (Main.class) {
             System.out.println(&#34;synchronized&#34;);
@@ -491,11 +114,7 @@ public static void main(java.lang.String[]) throws java.lang.Exception;
         23: aload_0                          // 将类this入栈，以便下面调用类的方法
         24: invokespecial #6                  // Method function:()V
         27: return
-</code></pre><p>编译器必须确保无论方法通过何种方式完成，方法中调用过的每条<code>monitorenter</code>指令都必须执行其对应的<code>monitorexit</code>指令，无论这个方法是正常结束还是异常结束。</p>
-<h3 id="3-实例">3 实例</h3>
-<h4 id="例一">例一：</h4>
-<p>相信面试过的人基本地看过这个面试题，然后还扯过值传递还是引用传递这个问题，下面从字节码的角度来分析这个问题。</p>
-<pre tabindex="0"><code class="language-assembly" data-lang="assembly">public class Main {
+</code></pre><p>编译器必须确保无论方法通过何种方式完成，方法中调用过的每条<code>monitorenter</code>指令都必须执行其对应的<code>monitorexit</code>指令，无论这个方法是正常结束还是异常结束。</p><h3 id=3-实例>3 实例</h3><h4 id=例一>例一：</h4><p>相信面试过的人基本地看过这个面试题，然后还扯过值传递还是引用传递这个问题，下面从字节码的角度来分析这个问题。</p><pre tabindex=0><code class=language-assembly data-lang=assembly>public class Main {
     String str=&#34;newStr&#34;;
     String[] array={&#34;newArray1&#34;,&#34;newArray2&#34;};
   public static void main(String[] args) {
@@ -527,37 +146,7 @@ private void change(java.lang.String, java.lang.String[]);
        7: aastore
        8: return
 }
-</code></pre><p>这里main方法的字节码内容可以忽略，主要看这个change方法，下面用图来表示。</p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1, https://gitee.com/github-25970295/blogimgv2022/raw/master/1 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/1"
-    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/1"/></p>
-<p>这是刚进入这个方法的情况，这时候还没有执行方法的内容，局部变量表存了三个值，第一个是this指代这个类，在普通方法内之所以可以拿到外部的全局变量就是因为方法内部的局部变量表的第一个就是类的this，当获取外部变量时，先将这个this入栈<code>aload_0</code>，然后就可以获取到这个类所有的成员变量（也就是外部全局变量）了。 因为这个方法传进来了两个值，这里局部变量表存储的是这两个对象的引用，也就是在堆上的内存地址。</p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532"
-    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532"/></p>
-<p>上面执行了<code>str = &quot;newStrEdit&quot;;</code>这条语句，先ldc指令创建了newStrEdit（0xaaa）字符串入栈，然后<code>astore_1</code>指令将栈顶的值保存再局部变量1中，覆盖了原来的地址，所以这里对局部变量表的修改完全没有影响外面的值。</p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714"
-    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714"/></p>
-<p>上面执行<code>array[0] = &quot;newArrar1Edit&quot;;</code>这条语句，将array的地址入栈，再将要修改的数组下标0入栈，最后创建newArray1Edit字符串入栈。最后调用<code>aastore</code>指令将栈顶的引用型数值（newArray1Edit）、数组下标（0）、数组引用（0xfff）依次出栈，最后将数值存入对应的数组元素中，这里可以看到对这个数组的操作一直都是这个0xfff地址，这个地址和外面的array指向的是同一个数组对象，所以这里修改了，外界的那个array也就同样修改了内容。</p>
-<h4 id="例二">例二：</h4>
-<p>看过前面那个例子应该对局部变量表是什么有所了解，下面这个例子就不绘制上面那个图了。这个例子也是一个常见的面试题，判断<code>try-catch-finally-return</code>的执行顺序。finally是一个最终都会执行的代码块，finally里面的return会覆盖try和catch里面的return,同时在finally里面修改局部变量不会影响try和catch里面的局部变量值，除非trycatch里面返回的值是一个引用类型。</p>
-<pre tabindex="0"><code class="language-assembly" data-lang="assembly"> public static void main(String[] args) {
+</code></pre><p>这里main方法的字节码内容可以忽略，主要看这个change方法，下面用图来表示。</p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/1 data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1, https://gitee.com/github-25970295/blogimgv2022/raw/master/1 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/1 title=https://gitee.com/github-25970295/blogimgv2022/raw/master/1></p><p>这是刚进入这个方法的情况，这时候还没有执行方法的内容，局部变量表存了三个值，第一个是this指代这个类，在普通方法内之所以可以拿到外部的全局变量就是因为方法内部的局部变量表的第一个就是类的this，当获取外部变量时，先将这个this入栈<code>aload_0</code>，然后就可以获取到这个类所有的成员变量（也就是外部全局变量）了。 因为这个方法传进来了两个值，这里局部变量表存储的是这两个对象的引用，也就是在堆上的内存地址。</p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532 data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532 title=https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532></p><p>上面执行了<code>str = "newStrEdit";</code>这条语句，先ldc指令创建了newStrEdit（0xaaa）字符串入栈，然后<code>astore_1</code>指令将栈顶的值保存再局部变量1中，覆盖了原来的地址，所以这里对局部变量表的修改完全没有影响外面的值。</p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714 data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714 title=https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714></p><p>上面执行<code>array[0] = "newArrar1Edit";</code>这条语句，将array的地址入栈，再将要修改的数组下标0入栈，最后创建newArray1Edit字符串入栈。最后调用<code>aastore</code>指令将栈顶的引用型数值（newArray1Edit）、数组下标（0）、数组引用（0xfff）依次出栈，最后将数值存入对应的数组元素中，这里可以看到对这个数组的操作一直都是这个0xfff地址，这个地址和外面的array指向的是同一个数组对象，所以这里修改了，外界的那个array也就同样修改了内容。</p><h4 id=例二>例二：</h4><p>看过前面那个例子应该对局部变量表是什么有所了解，下面这个例子就不绘制上面那个图了。这个例子也是一个常见的面试题，判断<code>try-catch-finally-return</code>的执行顺序。finally是一个最终都会执行的代码块，finally里面的return会覆盖try和catch里面的return,同时在finally里面修改局部变量不会影响try和catch里面的局部变量值，除非trycatch里面返回的值是一个引用类型。</p><pre tabindex=0><code class=language-assembly data-lang=assembly> public static void main(String[] args) {
         Main a=new Main();
         System.out.println(&#34;args = [&#34; + a.testFinally() + &#34;]&#34;);;
     }
@@ -610,11 +199,7 @@ public int testFinally();
             11    16    21   any						//如果11-16发生任何其他异常（catch)，就从21开始
             21    23    21   any						//其实这里有点不太能理解为什么会循环，如果有知道的大佬可以解答一下
 复制代码
-</code></pre><p>在Java1.4之后 Javac编译器 已经不再为 finally 语句生成 jsr 和 ret 指令了， 当异常处理存在finally语句块时，编译器会自动在每一段可能的分支路径之后都将finally语句块的内容冗余生成一遍来实现finally语义。（21~28）。但我们Java代码中，finally语句块是在最后的，编译器在生成字节码时候，其实将finally语句块的执行指令移到了ireturn指令之前，指令重排序了。所以，从字节码层面，我们解释了，为什么finally语句总会执行！</p>
-<p>如果<code>try</code>中有<code>return</code>,会在<code>return</code>之前执行finally中的代码，但是会保存一个副本变量（第五和第十五行）。<code>finally</code>修改原来的变量，但<code>try</code>中<code>return</code>返回的是副本变量，所以如果是赋值操作，即使执行了<code>finally</code>中的代码，变量也不一定会改变，需要看变量是基本类型还是引用类型。 但是如果在finally里面添加一个return，那么第9行和第19行加载的就是<code>finally</code>块里修改的值（iload_1）,再在最后添加一个<code>iload_1</code>和<code>ireturn</code>,感兴趣的可以自己去看一下字节码。</p>
-<h4 id="例三">例三：</h4>
-<p>还是上面那个类似的例子，这里做一下改变</p>
-<pre tabindex="0"><code class="language-assembly" data-lang="assembly"> public static void main(String[] args) {
+</code></pre><p>在Java1.4之后 Javac编译器 已经不再为 finally 语句生成 jsr 和 ret 指令了， 当异常处理存在finally语句块时，编译器会自动在每一段可能的分支路径之后都将finally语句块的内容冗余生成一遍来实现finally语义。（21~28）。但我们Java代码中，finally语句块是在最后的，编译器在生成字节码时候，其实将finally语句块的执行指令移到了ireturn指令之前，指令重排序了。所以，从字节码层面，我们解释了，为什么finally语句总会执行！</p><p>如果<code>try</code>中有<code>return</code>,会在<code>return</code>之前执行finally中的代码，但是会保存一个副本变量（第五和第十五行）。<code>finally</code>修改原来的变量，但<code>try</code>中<code>return</code>返回的是副本变量，所以如果是赋值操作，即使执行了<code>finally</code>中的代码，变量也不一定会改变，需要看变量是基本类型还是引用类型。 但是如果在finally里面添加一个return，那么第9行和第19行加载的就是<code>finally</code>块里修改的值（iload_1）,再在最后添加一个<code>iload_1</code>和<code>ireturn</code>,感兴趣的可以自己去看一下字节码。</p><h4 id=例三>例三：</h4><p>还是上面那个类似的例子，这里做一下改变</p><pre tabindex=0><code class=language-assembly data-lang=assembly> public static void main(String[] args) {
         Main a = new Main();
         System.out.println(&#34;args = [&#34; + a.testFinally1() + &#34;]&#34;);
         System.out.println(&#34;args = [&#34; + a.testFinally2() + &#34;]&#34;);
@@ -650,8 +235,7 @@ public int testFinally();
 args = [starttryfinally]
 args = [starttry]
 复制代码
-</code></pre><p>这里就不列举全局字节码了，两个方法有点多，大家可以自己尝试去看一下。这里做一下说明为什么第一个返回的结果没有<code>finally</code>。 首先这个方法的局部变量表1里面存储了一个StringBuilder地址，执行到try~finally这一部分没什么区别，都是复制了一份变量1的地址到变量3，注意，这两个地址是一样的。 那为什么第二个返回方法少了<code>finally</code>呢，那是因为<code>s.toString()</code>方法这个看起来是在return后面，但其实这个方法属于这个try代码块，分为两步，先调用<code>toString()</code>生成了一个新的字符串<code>starttry</code>然后返回，所以这里的字节码逻辑就如下：</p>
-<pre tabindex="0"><code>      17: aload_1
+</code></pre><p>这里就不列举全局字节码了，两个方法有点多，大家可以自己尝试去看一下。这里做一下说明为什么第一个返回的结果没有<code>finally</code>。 首先这个方法的局部变量表1里面存储了一个StringBuilder地址，执行到try~finally这一部分没什么区别，都是复制了一份变量1的地址到变量3，注意，这两个地址是一样的。 那为什么第二个返回方法少了<code>finally</code>呢，那是因为<code>s.toString()</code>方法这个看起来是在return后面，但其实这个方法属于这个try代码块，分为两步，先调用<code>toString()</code>生成了一个新的字符串<code>starttry</code>然后返回，所以这里的字节码逻辑就如下：</p><pre tabindex=0><code>      17: aload_1
       18: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
       21: astore_2
       22: aload_1
@@ -661,69 +245,9 @@ args = [starttry]
       29: aload_2
       30: areturn
 复制代码
-</code></pre><p>可以很清楚的看到 调用append方法拼接“start”和“try”后，先调用了<code>toString()</code>方法然后将值存入局部变量2。这时候finally没有和上面那样复制一份变量，而是继续使用局部变量1的引用来继续append，最后的结果也存入了局部变量1中，最后返回的是局部变量2中的值<code>starttry</code>，但是要注意此时局部变量1中指向的StringBuilder的值却是<code>starttryfinally</code>，所以这也就是方法1中返回的值。</p>
-<h3 id="4如何快捷查看字节码">4.如何快捷查看字节码</h3>
-<p>如果是ide的话，应该都可以，通过``Setting-&gt;Tools-&gt;External Tools进入 然后创建一个自定义的tools。</p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786"
-    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786"/></p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418"
-    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418"/></p>
-<h3 id="resource">Resource</h3>
-<ul>
-<li><a href="https://juejin.cn/post/6844903983002157070#heading-16"target="_blank" rel="external nofollow noopener noreferrer">https://juejin.cn/post/6844903983002157070#heading-16<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ul>
-</div>
-<div class="post-footer" id="post-footer">
-  <div class="post-info">
-    <div class="post-info-line">
-      <div class="post-info-mod">
-        <span title=2023-09-28&#32;22:47:27>更新于 2023-09-28&nbsp;</span>
-      </div><div class="post-info-license">
-          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
-        </div></div>
-    <div class="post-info-line">
-      <div class="post-info-md"><span><a href="liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80%5cjava%5cjvm%5cJavaJVM_%e5%ad%97%e8%8a%82%e7%a0%81%e6%8c%87%e4%bb%a4.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
-      <div class="post-info-share">
-        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/" data-title="JavaJVM_字节码指令" data-hashtags="Java"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/" data-hashtag="Java"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/" data-title="JavaJVM_字节码指令" data-image="https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
-  </span>
-      </div>
-    </div>
-  </div>
-
-  <div class="post-info-more">
-    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/java/">Java</a></section>
-    <section>
-      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
-    </section>
-  </div>
-
-  <div class="post-nav"><a href="liudongdong1.github.io/jdbcintroduce/" class="prev" rel="prev" title="JDBCIntroduce"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>JDBCIntroduce</a>
-      <a href="liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%97%E8%8A%82%E7%A0%81%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E/" class="next" rel="next" title="JavaJVM_虚拟机字节码执行引擎">JavaJVM_虚拟机字节码执行引擎<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-</article></main><footer class="footer">
-    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
-        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
-            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
-              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
-          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
-        </div></div>
-  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
-        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
-    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
-  </noscript>
-</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
-</html>
+</code></pre><p>可以很清楚的看到 调用append方法拼接“start”和“try”后，先调用了<code>toString()</code>方法然后将值存入局部变量2。这时候finally没有和上面那样复制一份变量，而是继续使用局部变量1的引用来继续append，最后的结果也存入了局部变量1中，最后返回的是局部变量2中的值<code>starttry</code>，但是要注意此时局部变量1中指向的StringBuilder的值却是<code>starttryfinally</code>，所以这也就是方法1中返回的值。</p><h3 id=4如何快捷查看字节码>4.如何快捷查看字节码</h3><p>如果是ide的话，应该都可以，通过``Setting->Tools->External Tools进入 然后创建一个自定义的tools。</p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786 data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786 title=https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418 data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418 title=https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418></p><h3 id=resource>Resource</h3><ul><li><a href=https://juejin.cn/post/6844903983002157070#heading-16 target=_blank rel="external nofollow noopener noreferrer">https://juejin.cn/post/6844903983002157070#heading-16<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-28 22:47:27">更新于 2023-09-28&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5c%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80%5cjava%5cjvm%5cJavaJVM_%e5%ad%97%e8%8a%82%e7%a0%81%e6%8c%87%e4%bb%a4.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/ data-title=JavaJVM_字节码指令 data-hashtags=Java><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/ data-hashtag=Java><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/ data-title=JavaJVM_字节码指令 data-image=https://cdn.stocksnap.io/img-thumbs/280h/HFVKAB39RI.jpg><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/java/>Java</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/jdbcintroduce/ class=prev rel=prev title=JDBCIntroduce><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>JDBCIntroduce</a>
+<a href=liudongdong1.github.io/javajvm_%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%97%E8%8A%82%E7%A0%81%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E/ class=next rel=next title=JavaJVM_虚拟机字节码执行引擎>JavaJVM_虚拟机字节码执行引擎<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
+<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
+<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>

@@ -1,652 +1,271 @@
-<!DOCTYPE html>
-<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-  <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <meta name="robots" content="noodp" />
-    <title>JDBCIntroduce - DAY By DAY</title><meta name="author" content="LiuDongdong">
-<meta name="author-link" content="https://liudongdong1.github.io/">
-<meta name="description" content="JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API，可以为多种关系数据库提供统一访问" /><meta name="keywords" content='Database, Java' /><meta itemprop="name" content="JDBCIntroduce">
-<meta itemprop="description" content="JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API，可以为多种关系数据库提供统一访问">
-<meta itemprop="dateModified" content="2023-09-29T00:32:54+08:00" />
-<meta itemprop="wordCount" content="2050"><meta itemprop="image" content="/logo.png"/>
-<meta itemprop="keywords" content="Database,Java," /><meta property="og:title" content="JDBCIntroduce" />
-<meta property="og:description" content="JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API，可以为多种关系数据库提供统一访问" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="liudongdong1.github.io/jdbcintroduce/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
-
-<meta property="article:modified_time" content="2023-09-29T00:32:54+08:00" />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/logo.png"/>
-
-<meta name="twitter:title" content="JDBCIntroduce"/>
-<meta name="twitter:description" content="JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API，可以为多种关系数据库提供统一访问"/>
-<meta name="application-name" content="DAY By DAY">
-<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/jdbcintroduce/" /><link rel="prev" href="liudongdong1.github.io/jdk_juc/" /><link rel="next" href="liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "BlogPosting",
-    "headline": "JDBCIntroduce",
-    "inLanguage": "zh-CN",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "liudongdong1.github.io\/jdbcintroduce\/"
-    },"genre": "posts","keywords": "Database, Java","wordcount":  2050 ,
-    "url": "liudongdong1.github.io\/jdbcintroduce\/","dateModified": "2023-09-29T00:32:54+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
-      "@type": "Organization",
-      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
-        "@type": "Person",
-        "name": "liudongdong1"
-      },"description": ""
-  }
-  </script></head>
-  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
-  <div class="header-wrapper" data-github-corner="right">
-    <div class="header-title">
-      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="DAY By DAY"
-    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
-    <nav>
-      <ul class="menu"><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/posts/"
-                
-                
-              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/categories/"
-                
-                
-              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/tags/"
-                
-                
-              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/friends/"
-                title="友情链接"
-                
-              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/liudongdong1.github.io/about/"
-                
-                
-              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
-          </li><li class="menu-item search" id="search-desktop">
-            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
-            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-            </a>
-            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-            </a>
-            <span class="search-button search-loading" id="search-loading-desktop">
-              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-            </span>
-          </li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header><header class="mobile animate__faster" id="header-mobile">
-  <div class="header-container">
-    <div class="header-wrapper">
-      <div class="header-title">
-        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
-    class="lazyload logo"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="/fixit.min.svg"
-    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
-    data-sizes="auto"
-    alt="/fixit.min.svg"
-    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
-      <div class="menu-toggle" id="menu-toggle-mobile">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-    <nav>
-      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
-            <div class="search mobile" id="search-mobile">
-              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
-              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
-              </a>
-              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
-              </a>
-              <span class="search-button search-loading" id="search-loading-mobile">
-                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-              </span>
-            </div>
-            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-              取消
-            </a>
-          </li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/posts/"
-                  
-                  
-                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/categories/"
-                  
-                  
-                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/tags/"
-                  
-                  
-                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/friends/"
-                  title="友情链接"
-                  
-                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/liudongdong1.github.io/about/"
-                  
-                  
-                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
-              class="menu-item text-center"
-            ><a
-                  class="menu-link"
-                  href="https://liudongdong1.github.io/"
-                  title="GitHub"
-                  rel="noopener noreferrer" target="_blank"
-                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li><li class="menu-item language">
-            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
-          </li></ul>
-    </nav>
-  </div>
-</header><div class="search-dropdown desktop">
-    <div id="search-dropdown-desktop"></div>
-  </div>
-  <div class="search-dropdown mobile">
-    <div id="search-dropdown-mobile"></div>
-  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
-      <div class="toc-content" id="toc-content-auto"></div></aside>
-
-  <aside class="aside-custom" id="aside-sakana">
-    
-
-<div class="sakana-widget">
-  <div class="sakana-item" id="takina-widget"></div>
-  <div class="sakana-item" id="chisato-widget"></div>
-</div>
-<script>
-  function initSakanaWidget() {
-    const takina = SakanaWidget.getCharacter('takina')
-    SakanaWidget.registerCharacter('takina-slow', takina);
-    new SakanaWidget({
-      character: 'takina-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#takina-widget');
-
-    const chisato = SakanaWidget.getCharacter('chisato')
-    SakanaWidget.registerCharacter('chisato-slow', chisato);
-    new SakanaWidget({
-      character: 'chisato-slow',
-      controls: false,
-      autoFit: true,
-      stroke: {
-        color: "#b4b4b4",
-        width: 2
-      }
-    }).mount('#chisato-widget');
-  }
-</script>
-<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
-</script></aside>
-
-  <article class="page single">
-    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
-        <span>JDBCIntroduce</span>
-      </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
-      liudongdong1</span></span>
-          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/storage/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div>
-      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00>
-            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01" >0001-01-01</time>
-          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 2050 字&nbsp;
-        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="JDBCIntroduce">
-            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
-          </span>&nbsp;</div>
-    </div><div class="featured-image"><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg"
-    data-srcset="https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg, https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg 1.5x, https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg 2x"
-    data-sizes="auto"
-    alt="https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg"
-    title="https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg"/></div><div class="details toc" id="toc-static" kept="true">
-        <div class="details-summary toc-title">
-          <span>目录</span>
-          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-        </div>
-        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-      </div><div
-      class="content"
-      id="content"
-      
-      
-    ><blockquote>
-<p>JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API，可以为<code>多种关系数据库提供统一访问</code>，它由一组用Java语言编写的类和接口组成。JDBC提供了一种基准，据此可以构建更高级的工具和接口，使数据库开发人员能够编写数据库应用程序。</p>
-<ul>
-<li>核心类：DriverManager  Connection  Statement  PreparedStatement  ResultSet</li>
-<li>数据查询处理(INSERT、UPDATE、DELETE)： public int executeUpdate(String sql) throws SQLException</li>
-<li>数据更新处理(SLECT、COUNT…)： public ResultSet executeQuery(String sql) throws SQLException</li>
-</ul>
-</blockquote>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70, https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70"
-    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70"/></p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70-16390126586162"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70-16390126586162, https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70-16390126586162 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70-16390126586162 2x"
-    data-sizes="auto"
-    alt="ResultSet"
-    title="ResultSet"/></p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211209092238005.png"
-    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211209092238005.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211209092238005.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211209092238005.png 2x"
-    data-sizes="auto"
-    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211209092238005.png"
-    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211209092238005.png"/></p>
-<p><img
-    class="lazyload"
-    src="/liudongdong1.github.io/svg/loading.min.svg"
-    data-src="https://img-blog.csdnimg.cn/20200712143134653.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70"
-    data-srcset="https://img-blog.csdnimg.cn/20200712143134653.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20200712143134653.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20200712143134653.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70 2x"
-    data-sizes="auto"
-    alt="PreparedStatement"
-    title="PreparedStatement"/></p>
-<blockquote>
-<ol>
-<li>Statement:用于执行SQL语句的对象</li>
-</ol>
-<ul>
-<li>通过Connection的createStatement()方法来获取</li>
-<li>通过excuteUpdate(sql)可以执行SQL语句</li>
-<li>传入的SQL可以是insert,update或者delete,但是不能是select</li>
-</ul>
-<ol start="2">
-<li>Connection、Statement都是应用程序和数据库服务器的连接  资源，使用后一定要关闭</li>
-</ol>
-<ul>
-<li>需要在finally<code>中关闭Connection和Statement对象 </code>* 异常可以不处理，但是连接一定要关闭</li>
-</ul>
-<ol start="3">
-<li>关闭的顺序：先关闭后获取的,即先关闭Statement，后关闭Connection</li>
-</ol>
-</blockquote>
-<h4 id="0-建表操作">0. 建表操作</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>news<span style="color:#f92672">`</span> (
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>nid<span style="color:#f92672">`</span> int(<span style="color:#ae81ff">11</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> AUTO_INCREMENT,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>title<span style="color:#f92672">`</span> varchar(<span style="color:#ae81ff">30</span>) CHARACTER <span style="color:#66d9ef">SET</span> utf8 <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>read_count<span style="color:#f92672">`</span> int(<span style="color:#ae81ff">11</span>) <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>price<span style="color:#f92672">`</span> double <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>content<span style="color:#f92672">`</span> text CHARACTER <span style="color:#66d9ef">SET</span> utf8,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>pubdate<span style="color:#f92672">`</span> date <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (<span style="color:#f92672">`</span>nid<span style="color:#f92672">`</span>)
-</span></span><span style="display:flex;"><span>) ENGINE<span style="color:#f92672">=</span>InnoDB AUTO_INCREMENT<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">DEFAULT</span> CHARSET<span style="color:#f92672">=</span>utf8
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>websites<span style="color:#f92672">`</span> (
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>id<span style="color:#f92672">`</span> int(<span style="color:#ae81ff">11</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> AUTO_INCREMENT,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> char(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;站点名称&#39;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>url<span style="color:#f92672">`</span> varchar(<span style="color:#ae81ff">255</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>alexa<span style="color:#f92672">`</span> int(<span style="color:#ae81ff">11</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;0&#39;</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;Alexa 排名&#39;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>country<span style="color:#f92672">`</span> char(<span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;国家&#39;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>)
-</span></span><span style="display:flex;"><span>) ENGINE<span style="color:#f92672">=</span>InnoDB AUTO_INCREMENT<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span> <span style="color:#66d9ef">DEFAULT</span> CHARSET<span style="color:#f92672">=</span>utf8;
-</span></span></code></pre></div><h4 id="1-获取连接">1. 获取连接</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 工具类，获取数据库的连接
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DBUtil</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> String URL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:mysql://127.0.0.1:3306/test&#34;</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> String USER<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> String PASSWROD <span style="color:#f92672">=</span><span style="color:#e6db74">&#34;123456&#34;</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Connection connection<span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">static</span><span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>             Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>             <span style="color:#75715e">// 获取数据库连接
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>             connection<span style="color:#f92672">=</span>DriverManager<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">(</span>URL<span style="color:#f92672">,</span>USER<span style="color:#f92672">,</span>PASSWROD<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>             System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;连接成功&#34;</span><span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>         <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>ClassNotFoundException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>             <span style="color:#75715e">// TODO Auto-generated catch block
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>             e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>         <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>             <span style="color:#75715e">// TODO Auto-generated catch block
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>             e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>         <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>     <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>     <span style="color:#75715e">// 返回数据库连接
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Connection <span style="color:#a6e22e">getConnection</span><span style="color:#f92672">(){</span>
-</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">return</span> connection<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>     <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span> <span style="color:#f92672">}</span>
-</span></span></code></pre></div><h4 id="2--批量添加操作">2.  批量&amp;添加操作</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @function: 添加一天flexdata的数据记录
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param flexData: 一条传感器数据
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> Boolean <span style="color:#a6e22e">addFlexData</span><span style="color:#f92672">(</span>FlexData flexData<span style="color:#f92672">){</span>
-</span></span><span style="display:flex;"><span>    String sql<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;insert into table_flex(label,flexdata,timestamp)&#34;</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;values(?,?,?)&#34;</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">boolean</span> result<span style="color:#f92672">=</span><span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        conn<span style="color:#f92672">=</span>getConnection<span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>        pst<span style="color:#f92672">=</span>conn<span style="color:#f92672">.</span><span style="color:#a6e22e">prepareStatement</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>        pst<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span>flexData<span style="color:#f92672">.</span><span style="color:#a6e22e">getLabel</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>        pst<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>2<span style="color:#f92672">,</span>flexData<span style="color:#f92672">.</span><span style="color:#a6e22e">getStringFlexData</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>        pst<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>3<span style="color:#f92672">,</span>flexData<span style="color:#f92672">.</span><span style="color:#a6e22e">getTimestamp</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">=</span>pst<span style="color:#f92672">.</span><span style="color:#a6e22e">execute</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> result<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException throwables<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        throwables<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        closeAll<span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> result<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @function: 批量添加flexdata的数据记录
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param flexDataArrayList: 一系列传感器数据
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addBatchFlexData</span><span style="color:#f92672">(</span>ArrayList<span style="color:#f92672">&lt;</span>FlexData<span style="color:#f92672">&gt;</span>flexDataArrayList<span style="color:#f92672">){</span>
-</span></span><span style="display:flex;"><span>    String sql<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;insert into table_flex(label,flexdata,timestamp)&#34;</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;values(?,?,?)&#34;</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">boolean</span> result<span style="color:#f92672">=</span><span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        conn<span style="color:#f92672">=</span>getConnection<span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>        pst<span style="color:#f92672">=</span>conn<span style="color:#f92672">.</span><span style="color:#a6e22e">prepareStatement</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>0<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span>FlexData flexData <span style="color:#f92672">:</span>flexDataArrayList<span style="color:#f92672">){</span>
-</span></span><span style="display:flex;"><span>            i<span style="color:#f92672">=</span>i<span style="color:#f92672">+</span>1<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>            pst<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span>flexData<span style="color:#f92672">.</span><span style="color:#a6e22e">getLabel</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>            pst<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>2<span style="color:#f92672">,</span>flexData<span style="color:#f92672">.</span><span style="color:#a6e22e">getStringFlexData</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>            pst<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>3<span style="color:#f92672">,</span>flexData<span style="color:#f92672">.</span><span style="color:#a6e22e">getTimestamp</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>            pst<span style="color:#f92672">.</span><span style="color:#a6e22e">addBatch</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>i<span style="color:#f92672">%</span>100<span style="color:#f92672">==</span>0<span style="color:#f92672">){</span>
-</span></span><span style="display:flex;"><span>                pst<span style="color:#f92672">.</span><span style="color:#a6e22e">executeBatch</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>                pst<span style="color:#f92672">.</span><span style="color:#a6e22e">clearBatch</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>        pst<span style="color:#f92672">.</span><span style="color:#a6e22e">executeBatch</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException throwables<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        throwables<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        closeAll<span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><h4 id="3-更新操作">3. 更新操作</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INSERT INTO news(title, read_count, price, content, pubdate) VALUES 
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">(&#39;哈喽&#39;, 1, 20.0, &#39;内容1&#39;, curdate())&#34;</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>String sql2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;UPDATE news SET title=&#39;UPDATE标题1&#39;,read_count=9999 where nid=6;&#34;</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> stmt<span style="color:#f92672">.</span><span style="color:#a6e22e">executeUpdate</span><span style="color:#f92672">(</span>sql2<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;受影响的行数&#34;</span> <span style="color:#f92672">+</span> count<span style="color:#f92672">);</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// 更新学生信息
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">updateStudent</span><span style="color:#f92672">(</span>Student student<span style="color:#f92672">){</span>
-</span></span><span style="display:flex;"><span>    String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;update student set name = ? ,age =?,score = ? where id = ? &#34;</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">boolean</span> result <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        PreparedStatement preparedStatement <span style="color:#f92672">=</span> connection<span style="color:#f92672">.</span><span style="color:#a6e22e">prepareStatement</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>        preparedStatement<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> student<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>        preparedStatement<span style="color:#f92672">.</span><span style="color:#a6e22e">setInt</span><span style="color:#f92672">(</span>2<span style="color:#f92672">,</span> student<span style="color:#f92672">.</span><span style="color:#a6e22e">getAge</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>        preparedStatement<span style="color:#f92672">.</span><span style="color:#a6e22e">setDouble</span><span style="color:#f92672">(</span>3<span style="color:#f92672">,</span> student<span style="color:#f92672">.</span><span style="color:#a6e22e">getScore</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>        preparedStatement<span style="color:#f92672">.</span><span style="color:#a6e22e">setInt</span><span style="color:#f92672">(</span>4<span style="color:#f92672">,</span> student<span style="color:#f92672">.</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>        preparedStatement<span style="color:#f92672">.</span><span style="color:#a6e22e">executeUpdate</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// TODO Auto-generated catch block
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;连接数据库失败&#34;</span><span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><h4 id="4-删除一条记录">4. 删除一条记录</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// 根据id删除一个学生
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">deleteStudent</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">){</span>
-</span></span><span style="display:flex;"><span>    String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;delete from student where id = ?&#34;</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">boolean</span> result <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        PreparedStatement preparedStatement <span style="color:#f92672">=</span> connection<span style="color:#f92672">.</span><span style="color:#a6e22e">prepareStatement</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>        preparedStatement<span style="color:#f92672">.</span><span style="color:#a6e22e">setInt</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> id<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">=</span>preparedStatement<span style="color:#f92672">.</span><span style="color:#a6e22e">execute</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// TODO Auto-generated catch block
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><h4 id="5-查询操作模糊查询">5. 查询操作&amp;模糊查询</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// 根据id查询学生
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> Student <span style="color:#a6e22e">selectStudent</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">){</span>
-</span></span><span style="display:flex;"><span>    String sql <span style="color:#f92672">=</span><span style="color:#e6db74">&#34;select * from student where id =?&#34;</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        PreparedStatement preparedStatement <span style="color:#f92672">=</span> connection<span style="color:#f92672">.</span><span style="color:#a6e22e">prepareStatement</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>        preparedStatement<span style="color:#f92672">.</span><span style="color:#a6e22e">setInt</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> id<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>        ResultSet resultSet <span style="color:#f92672">=</span> preparedStatement<span style="color:#f92672">.</span><span style="color:#a6e22e">executeQuery</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>        Student student <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Student<span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 一条也只能使用resultset来接收
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>resultSet<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">()){</span>
-</span></span><span style="display:flex;"><span>            student<span style="color:#f92672">.</span><span style="color:#a6e22e">setId</span><span style="color:#f92672">(</span>resultSet<span style="color:#f92672">.</span><span style="color:#a6e22e">getInt</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">));</span>
-</span></span><span style="display:flex;"><span>            student<span style="color:#f92672">.</span><span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span>resultSet<span style="color:#f92672">.</span><span style="color:#a6e22e">getString</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">));</span>
-</span></span><span style="display:flex;"><span>            student<span style="color:#f92672">.</span><span style="color:#a6e22e">setAge</span><span style="color:#f92672">(</span>resultSet<span style="color:#f92672">.</span><span style="color:#a6e22e">getInt</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;age&#34;</span><span style="color:#f92672">));</span>
-</span></span><span style="display:flex;"><span>            student<span style="color:#f92672">.</span><span style="color:#a6e22e">setScore</span><span style="color:#f92672">(</span>resultSet<span style="color:#f92672">.</span><span style="color:#a6e22e">getDouble</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;score&#34;</span><span style="color:#f92672">));</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> student<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// TODO: handle exception
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><h5 id="1--like-demo">.1.  Like Demo</h5>
-<blockquote>
-<p>conn.execute(&ldquo;SELECT * FROM article WHERE content LIKE ?&rdquo;, (&rsquo;%&rsquo; + value + &lsquo;%&rsquo;,))</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * SQL 模糊查询，label 数据包含Label
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param Label : 关键词
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @return 结果集
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> ArrayList<span style="color:#f92672">&lt;</span>FlexData<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">executeQueryContain</span><span style="color:#f92672">(</span>String Label<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    String sql<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;select * from table_flex where label like ?&#34;</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    ArrayList<span style="color:#f92672">&lt;</span>FlexData<span style="color:#f92672">&gt;</span>arrayList<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;</span>FlexData<span style="color:#f92672">&gt;();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 获得连接
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        conn <span style="color:#f92672">=</span> getConnection<span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 调用SQL
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        pst <span style="color:#f92672">=</span> conn<span style="color:#f92672">.</span><span style="color:#a6e22e">prepareStatement</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//System.out.println(&#34;select * from table_flex where label like &#39;%?%&#39; &#34;);
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        pst<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span><span style="color:#e6db74">&#34;%&#34;</span><span style="color:#f92672">+</span>Label<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;%&#34;</span><span style="color:#f92672">);</span>   <span style="color:#75715e">// 注意在这里除了若干问题
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">//System.out.println(&#34;2select * from table_flex where label like &#39;%?%&#39; &#34;);
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>pst<span style="color:#f92672">.</span><span style="color:#a6e22e">getParameterMetaData</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 执行
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        rst <span style="color:#f92672">=</span> pst<span style="color:#f92672">.</span><span style="color:#a6e22e">executeQuery</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>rst<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>            arrayList<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FlexData<span style="color:#f92672">(</span>rst<span style="color:#f92672">.</span><span style="color:#a6e22e">getString</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;flexdata&#34;</span><span style="color:#f92672">),</span>rst<span style="color:#f92672">.</span><span style="color:#a6e22e">getString</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;timestamp&#34;</span><span style="color:#f92672">),</span>rst<span style="color:#f92672">.</span><span style="color:#a6e22e">getString</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;label&#34;</span><span style="color:#f92672">)));</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> arrayList<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>e<span style="color:#f92672">.</span><span style="color:#a6e22e">getMessage</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;异常错误&#34;</span><span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        closeAll<span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> arrayList<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><h5 id="2-正则类">.2. 正则类</h5>
-<ul>
-<li>charindex（）——charindex（字符，字符串）&gt;0 –&gt;包含</li>
-<li>%: 表示任意0个或多个字符，可匹配任意类型和长度的字符。有些情况下是中文，需用两个百分号（%%）表示: SELECT * FROM [user] WHERE u_name LIKE ‘%三%’ AND u_name LIKE ‘%猫%’</li>
-<li>_: 表示任意单个字符。匹配单个任意字符，它常用来限定表达式的字符长度语句：</li>
-<li>[]: 表示括号内所列字符中的一个（类似正则表达式）。指定一个字符、字符串或范围，要求所匹配对象为它们中的任一个：SELECT * FROM [user] WHERE u_name LIKE ‘[张李王]三’</li>
-<li>[^ ]: 表示不在括号所列之内的单个字符。其取值和 [] 相同，但它要求所匹配对象为指定字符以外的任一个字符：<code>SELECT * FROM [user] WHERE u_name LIKE ‘[^张李王]三’</code></li>
-</ul>
-<h4 id="6-查询所有">6. 查询所有</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// 查询所有学生，返回List
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> List<span style="color:#f92672">&lt;</span>Student<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">selectStudentList</span><span style="color:#f92672">(){</span>
-</span></span><span style="display:flex;"><span>    List<span style="color:#f92672">&lt;</span>Student<span style="color:#f92672">&gt;</span>students  <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;</span>Student<span style="color:#f92672">&gt;();</span> 
-</span></span><span style="display:flex;"><span>    String sql <span style="color:#f92672">=</span><span style="color:#e6db74">&#34;select * from student &#34;</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        PreparedStatement preparedStatement <span style="color:#f92672">=</span> DBUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">().</span><span style="color:#a6e22e">prepareStatement</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>        ResultSet resultSet <span style="color:#f92672">=</span> preparedStatement<span style="color:#f92672">.</span><span style="color:#a6e22e">executeQuery</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 不能把student在循环外面创建，要不list里面六个对象都是一样的，都是最后一个的值，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// 因为list add进去的都是引用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// Student student = new Student();
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>resultSet<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">()){</span>
-</span></span><span style="display:flex;"><span>            Student student <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Student<span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>            student<span style="color:#f92672">.</span><span style="color:#a6e22e">setId</span><span style="color:#f92672">(</span>resultSet<span style="color:#f92672">.</span><span style="color:#a6e22e">getInt</span><span style="color:#f92672">(</span>1<span style="color:#f92672">));</span>
-</span></span><span style="display:flex;"><span>            student<span style="color:#f92672">.</span><span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span>resultSet<span style="color:#f92672">.</span><span style="color:#a6e22e">getString</span><span style="color:#f92672">(</span>2<span style="color:#f92672">));</span>
-</span></span><span style="display:flex;"><span>            student<span style="color:#f92672">.</span><span style="color:#a6e22e">setAge</span><span style="color:#f92672">(</span>resultSet<span style="color:#f92672">.</span><span style="color:#a6e22e">getInt</span><span style="color:#f92672">(</span>3<span style="color:#f92672">));</span>
-</span></span><span style="display:flex;"><span>            student<span style="color:#f92672">.</span><span style="color:#a6e22e">setScore</span><span style="color:#f92672">(</span>resultSet<span style="color:#f92672">.</span><span style="color:#a6e22e">getDouble</span><span style="color:#f92672">(</span>4<span style="color:#f92672">));</span>
-</span></span><span style="display:flex;"><span>            students<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>student<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// TODO: handle exception
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> students<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><h4 id="7-关闭所有资源">7. 关闭所有资源</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 关闭所有资源
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">closeAll</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 关闭结果集对象
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>rst <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>            rst<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>e<span style="color:#f92672">.</span><span style="color:#a6e22e">getMessage</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 关闭PreparedStatement对象
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>pst <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>            pst<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>e<span style="color:#f92672">.</span><span style="color:#a6e22e">getMessage</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 关闭CallableStatement 对象
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>callableStatement <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>            callableStatement<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>e<span style="color:#f92672">.</span><span style="color:#a6e22e">getMessage</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 关闭Connection 对象
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>conn <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>            conn<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>e<span style="color:#f92672">.</span><span style="color:#a6e22e">getMessage</span><span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><h4 id="resource">Resource</h4>
-<ul>
-<li><a href="https://blog.csdn.net/weixin_48568292/article/details/107299093"target="_blank" rel="external nofollow noopener noreferrer">https://blog.csdn.net/weixin_48568292/article/details/107299093<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ul>
-</div>
-<div class="post-footer" id="post-footer">
-  <div class="post-info">
-    <div class="post-info-line">
-      <div class="post-info-mod">
-        <span title=2023-09-29&#32;00:32:54>更新于 2023-09-29&nbsp;</span>
-      </div><div class="post-info-license">
-          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
-        </div></div>
-    <div class="post-info-line">
-      <div class="post-info-md"><span><a href="liudongdong1.github.io/jdbcintroduce/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5cDatabase%5cJDBCIntroduce.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
-      <div class="post-info-share">
-        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/jdbcintroduce/" data-title="JDBCIntroduce" data-hashtags="Database,Java"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/jdbcintroduce/" data-hashtag="Database"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
-  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/jdbcintroduce/" data-title="JDBCIntroduce" data-image="https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
-  </span>
-      </div>
-    </div>
-  </div>
-
-  <div class="post-info-more">
-    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/database/">Database</a>,&nbsp;<a href="liudongdong1.github.io/tags/java/">Java</a></section>
-    <section>
-      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
-    </section>
-  </div>
-
-  <div class="post-nav"><a href="liudongdong1.github.io/jdk_juc/" class="prev" rel="prev" title="JDK_JUC"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>JDK_JUC</a>
-      <a href="liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/" class="next" rel="next" title="JavaJVM_字节码指令">JavaJVM_字节码指令<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-</article></main><footer class="footer">
-    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
-        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
-            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
-              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
-          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
-        </div></div>
-  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
-        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
-    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
-  </noscript>
-</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
-</html>
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>JDBCIntroduce - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API，可以为多种关系数据库提供统一访问"><meta name=keywords content="Database,Java"><meta itemprop=name content="JDBCIntroduce"><meta itemprop=description content="JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API，可以为多种关系数据库提供统一访问"><meta itemprop=dateModified content="2023-09-29T00:32:54+08:00"><meta itemprop=wordCount content="2050"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="Database,Java,"><meta property="og:title" content="JDBCIntroduce"><meta property="og:description" content="JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API，可以为多种关系数据库提供统一访问"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/jdbcintroduce/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:modified_time" content="2023-09-29T00:32:54+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="JDBCIntroduce"><meta name=twitter:description content="JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API，可以为多种关系数据库提供统一访问"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/jdbcintroduce/><link rel=prev href=liudongdong1.github.io/jdk_juc/><link rel=next href=liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"JDBCIntroduce","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/jdbcintroduce\/"},"genre":"posts","keywords":"Database, Java","wordcount":2050,"url":"liudongdong1.github.io\/jdbcintroduce\/","dateModified":"2023-09-29T00:32:54+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"liudongdong1"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
+<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>JDBCIntroduce</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle" aria-hidden=true></i>
+liudongdong1</span></span>
+<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/storage/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div><div class=post-meta-line><span title="0001-01-01 00:00:00"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=0001-01-01>0001-01-01</time>
+</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 2050 字&nbsp;
+<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title=JDBCIntroduce>
+<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg data-srcset="https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg, https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg 1.5x, https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg 2x" data-sizes=auto alt=https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg title=https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg></div><div class="details toc" id=toc-static kept=true><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li></li></ul></li></ul></nav></div></div><div class=content id=content><blockquote><p>JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API，可以为<code>多种关系数据库提供统一访问</code>，它由一组用Java语言编写的类和接口组成。JDBC提供了一种基准，据此可以构建更高级的工具和接口，使数据库开发人员能够编写数据库应用程序。</p><ul><li>核心类：DriverManager Connection Statement PreparedStatement ResultSet</li><li>数据查询处理(INSERT、UPDATE、DELETE)： public int executeUpdate(String sql) throws SQLException</li><li>数据更新处理(SLECT、COUNT…)： public ResultSet executeQuery(String sql) throws SQLException</li></ul></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70" data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70, https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70" title="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70"></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70-16390126586162" data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70-16390126586162, https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70-16390126586162 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70-16390126586162 2x" data-sizes=auto alt=ResultSet title=ResultSet></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211209092238005.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211209092238005.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211209092238005.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211209092238005.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211209092238005.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211209092238005.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/20200712143134653.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/20200712143134653.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20200712143134653.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20200712143134653.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt=PreparedStatement title=PreparedStatement></p><blockquote><ol><li>Statement:用于执行SQL语句的对象</li></ol><ul><li>通过Connection的createStatement()方法来获取</li><li>通过excuteUpdate(sql)可以执行SQL语句</li><li>传入的SQL可以是insert,update或者delete,但是不能是select</li></ul><ol start=2><li>Connection、Statement都是应用程序和数据库服务器的连接 资源，使用后一定要关闭</li></ol><ul><li>需要在finally<code>中关闭Connection和Statement对象
+</code>* 异常可以不处理，但是连接一定要关闭</li></ul><ol start=3><li>关闭的顺序：先关闭后获取的,即先关闭Statement，后关闭Connection</li></ol></blockquote><h4 id=0-建表操作>0. 建表操作</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> <span style=color:#f92672>`</span>news<span style=color:#f92672>`</span> (
+</span></span><span style=display:flex><span>  <span style=color:#f92672>`</span>nid<span style=color:#f92672>`</span> int(<span style=color:#ae81ff>11</span>) <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span> AUTO_INCREMENT,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>`</span>title<span style=color:#f92672>`</span> varchar(<span style=color:#ae81ff>30</span>) CHARACTER <span style=color:#66d9ef>SET</span> utf8 <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>`</span>read_count<span style=color:#f92672>`</span> int(<span style=color:#ae81ff>11</span>) <span style=color:#66d9ef>DEFAULT</span> <span style=color:#66d9ef>NULL</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>`</span>price<span style=color:#f92672>`</span> double <span style=color:#66d9ef>DEFAULT</span> <span style=color:#66d9ef>NULL</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>`</span>content<span style=color:#f92672>`</span> text CHARACTER <span style=color:#66d9ef>SET</span> utf8,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>`</span>pubdate<span style=color:#f92672>`</span> date <span style=color:#66d9ef>DEFAULT</span> <span style=color:#66d9ef>NULL</span>,
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span> (<span style=color:#f92672>`</span>nid<span style=color:#f92672>`</span>)
+</span></span><span style=display:flex><span>) ENGINE<span style=color:#f92672>=</span>InnoDB AUTO_INCREMENT<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span> <span style=color:#66d9ef>DEFAULT</span> CHARSET<span style=color:#f92672>=</span>utf8
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> <span style=color:#f92672>`</span>websites<span style=color:#f92672>`</span> (
+</span></span><span style=display:flex><span>  <span style=color:#f92672>`</span>id<span style=color:#f92672>`</span> int(<span style=color:#ae81ff>11</span>) <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span> AUTO_INCREMENT,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>`</span>name<span style=color:#f92672>`</span> char(<span style=color:#ae81ff>20</span>) <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span> <span style=color:#66d9ef>DEFAULT</span> <span style=color:#e6db74>&#39;&#39;</span> <span style=color:#66d9ef>COMMENT</span> <span style=color:#e6db74>&#39;站点名称&#39;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>`</span>url<span style=color:#f92672>`</span> varchar(<span style=color:#ae81ff>255</span>) <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span> <span style=color:#66d9ef>DEFAULT</span> <span style=color:#e6db74>&#39;&#39;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>`</span>alexa<span style=color:#f92672>`</span> int(<span style=color:#ae81ff>11</span>) <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span> <span style=color:#66d9ef>DEFAULT</span> <span style=color:#e6db74>&#39;0&#39;</span> <span style=color:#66d9ef>COMMENT</span> <span style=color:#e6db74>&#39;Alexa 排名&#39;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>`</span>country<span style=color:#f92672>`</span> char(<span style=color:#ae81ff>10</span>) <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span> <span style=color:#66d9ef>DEFAULT</span> <span style=color:#e6db74>&#39;&#39;</span> <span style=color:#66d9ef>COMMENT</span> <span style=color:#e6db74>&#39;国家&#39;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span> (<span style=color:#f92672>`</span>id<span style=color:#f92672>`</span>)
+</span></span><span style=display:flex><span>) ENGINE<span style=color:#f92672>=</span>InnoDB AUTO_INCREMENT<span style=color:#f92672>=</span><span style=color:#ae81ff>10</span> <span style=color:#66d9ef>DEFAULT</span> CHARSET<span style=color:#f92672>=</span>utf8;
+</span></span></code></pre></div><h4 id=1-获取连接>1. 获取连接</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * 工具类，获取数据库的连接
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DBUtil</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>     <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> String URL<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;jdbc:mysql://127.0.0.1:3306/test&#34;</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>     <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> String USER<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;root&#34;</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>     <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> String PASSWROD <span style=color:#f92672>=</span><span style=color:#e6db74>&#34;123456&#34;</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>     <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> Connection connection<span style=color:#f92672>=</span><span style=color:#66d9ef>null</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>     <span style=color:#66d9ef>static</span><span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>         <span style=color:#66d9ef>try</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>             Class<span style=color:#f92672>.</span><span style=color:#a6e22e>forName</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;com.mysql.jdbc.Driver&#34;</span><span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>             <span style=color:#75715e>// 获取数据库连接
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>             connection<span style=color:#f92672>=</span>DriverManager<span style=color:#f92672>.</span><span style=color:#a6e22e>getConnection</span><span style=color:#f92672>(</span>URL<span style=color:#f92672>,</span>USER<span style=color:#f92672>,</span>PASSWROD<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>             System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;连接成功&#34;</span><span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>         <span style=color:#f92672>}</span> <span style=color:#66d9ef>catch</span> <span style=color:#f92672>(</span>ClassNotFoundException e<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>             <span style=color:#75715e>// TODO Auto-generated catch block
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>             e<span style=color:#f92672>.</span><span style=color:#a6e22e>printStackTrace</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>         <span style=color:#f92672>}</span> <span style=color:#66d9ef>catch</span> <span style=color:#f92672>(</span>SQLException e<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>             <span style=color:#75715e>// TODO Auto-generated catch block
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>             e<span style=color:#f92672>.</span><span style=color:#a6e22e>printStackTrace</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>         <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>     <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>     <span style=color:#75715e>// 返回数据库连接
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>     <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> Connection <span style=color:#a6e22e>getConnection</span><span style=color:#f92672>(){</span>
+</span></span><span style=display:flex><span>         <span style=color:#66d9ef>return</span> connection<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>     <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span> <span style=color:#f92672>}</span>
+</span></span></code></pre></div><h4 id=2--批量添加操作>2. 批量&添加操作</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * @function: 添加一天flexdata的数据记录
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * @param flexData: 一条传感器数据
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> Boolean <span style=color:#a6e22e>addFlexData</span><span style=color:#f92672>(</span>FlexData flexData<span style=color:#f92672>){</span>
+</span></span><span style=display:flex><span>    String sql<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;insert into table_flex(label,flexdata,timestamp)&#34;</span><span style=color:#f92672>+</span><span style=color:#e6db74>&#34;values(?,?,?)&#34;</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>boolean</span> result<span style=color:#f92672>=</span><span style=color:#66d9ef>false</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span><span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        conn<span style=color:#f92672>=</span>getConnection<span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>        pst<span style=color:#f92672>=</span>conn<span style=color:#f92672>.</span><span style=color:#a6e22e>prepareStatement</span><span style=color:#f92672>(</span>sql<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>        pst<span style=color:#f92672>.</span><span style=color:#a6e22e>setString</span><span style=color:#f92672>(</span>1<span style=color:#f92672>,</span>flexData<span style=color:#f92672>.</span><span style=color:#a6e22e>getLabel</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>        pst<span style=color:#f92672>.</span><span style=color:#a6e22e>setString</span><span style=color:#f92672>(</span>2<span style=color:#f92672>,</span>flexData<span style=color:#f92672>.</span><span style=color:#a6e22e>getStringFlexData</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>        pst<span style=color:#f92672>.</span><span style=color:#a6e22e>setString</span><span style=color:#f92672>(</span>3<span style=color:#f92672>,</span>flexData<span style=color:#f92672>.</span><span style=color:#a6e22e>getTimestamp</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>        result<span style=color:#f92672>=</span>pst<span style=color:#f92672>.</span><span style=color:#a6e22e>execute</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> result<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span> <span style=color:#66d9ef>catch</span> <span style=color:#f92672>(</span>SQLException throwables<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        throwables<span style=color:#f92672>.</span><span style=color:#a6e22e>printStackTrace</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span><span style=color:#66d9ef>finally</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        closeAll<span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> result<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * @function: 批量添加flexdata的数据记录
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * @param flexDataArrayList: 一系列传感器数据
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>addBatchFlexData</span><span style=color:#f92672>(</span>ArrayList<span style=color:#f92672>&lt;</span>FlexData<span style=color:#f92672>&gt;</span>flexDataArrayList<span style=color:#f92672>){</span>
+</span></span><span style=display:flex><span>    String sql<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;insert into table_flex(label,flexdata,timestamp)&#34;</span><span style=color:#f92672>+</span><span style=color:#e6db74>&#34;values(?,?,?)&#34;</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>boolean</span> result<span style=color:#f92672>=</span><span style=color:#66d9ef>false</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span><span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        conn<span style=color:#f92672>=</span>getConnection<span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>        pst<span style=color:#f92672>=</span>conn<span style=color:#f92672>.</span><span style=color:#a6e22e>prepareStatement</span><span style=color:#f92672>(</span>sql<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>int</span> i<span style=color:#f92672>=</span>0<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span><span style=color:#f92672>(</span>FlexData flexData <span style=color:#f92672>:</span>flexDataArrayList<span style=color:#f92672>){</span>
+</span></span><span style=display:flex><span>            i<span style=color:#f92672>=</span>i<span style=color:#f92672>+</span>1<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>            pst<span style=color:#f92672>.</span><span style=color:#a6e22e>setString</span><span style=color:#f92672>(</span>1<span style=color:#f92672>,</span>flexData<span style=color:#f92672>.</span><span style=color:#a6e22e>getLabel</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>            pst<span style=color:#f92672>.</span><span style=color:#a6e22e>setString</span><span style=color:#f92672>(</span>2<span style=color:#f92672>,</span>flexData<span style=color:#f92672>.</span><span style=color:#a6e22e>getStringFlexData</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>            pst<span style=color:#f92672>.</span><span style=color:#a6e22e>setString</span><span style=color:#f92672>(</span>3<span style=color:#f92672>,</span>flexData<span style=color:#f92672>.</span><span style=color:#a6e22e>getTimestamp</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>            pst<span style=color:#f92672>.</span><span style=color:#a6e22e>addBatch</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span><span style=color:#f92672>(</span>i<span style=color:#f92672>%</span>100<span style=color:#f92672>==</span>0<span style=color:#f92672>){</span>
+</span></span><span style=display:flex><span>                pst<span style=color:#f92672>.</span><span style=color:#a6e22e>executeBatch</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>                pst<span style=color:#f92672>.</span><span style=color:#a6e22e>clearBatch</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>        pst<span style=color:#f92672>.</span><span style=color:#a6e22e>executeBatch</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span> <span style=color:#66d9ef>catch</span> <span style=color:#f92672>(</span>SQLException throwables<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        throwables<span style=color:#f92672>.</span><span style=color:#a6e22e>printStackTrace</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span><span style=color:#66d9ef>finally</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        closeAll<span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><h4 id=3-更新操作>3. 更新操作</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span>String sql <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;INSERT INTO news(title, read_count, price, content, pubdate) VALUES 
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>(&#39;哈喽&#39;, 1, 20.0, &#39;内容1&#39;, curdate())&#34;</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>String sql2 <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;UPDATE news SET title=&#39;UPDATE标题1&#39;,read_count=9999 where nid=6;&#34;</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>int</span> count <span style=color:#f92672>=</span> stmt<span style=color:#f92672>.</span><span style=color:#a6e22e>executeUpdate</span><span style=color:#f92672>(</span>sql2<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;受影响的行数&#34;</span> <span style=color:#f92672>+</span> count<span style=color:#f92672>);</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 更新学生信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>updateStudent</span><span style=color:#f92672>(</span>Student student<span style=color:#f92672>){</span>
+</span></span><span style=display:flex><span>    String sql <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;update student set name = ? ,age =?,score = ? where id = ? &#34;</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>boolean</span> result <span style=color:#f92672>=</span> <span style=color:#66d9ef>false</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        PreparedStatement preparedStatement <span style=color:#f92672>=</span> connection<span style=color:#f92672>.</span><span style=color:#a6e22e>prepareStatement</span><span style=color:#f92672>(</span>sql<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>        preparedStatement<span style=color:#f92672>.</span><span style=color:#a6e22e>setString</span><span style=color:#f92672>(</span>1<span style=color:#f92672>,</span> student<span style=color:#f92672>.</span><span style=color:#a6e22e>getName</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>        preparedStatement<span style=color:#f92672>.</span><span style=color:#a6e22e>setInt</span><span style=color:#f92672>(</span>2<span style=color:#f92672>,</span> student<span style=color:#f92672>.</span><span style=color:#a6e22e>getAge</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>        preparedStatement<span style=color:#f92672>.</span><span style=color:#a6e22e>setDouble</span><span style=color:#f92672>(</span>3<span style=color:#f92672>,</span> student<span style=color:#f92672>.</span><span style=color:#a6e22e>getScore</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>        preparedStatement<span style=color:#f92672>.</span><span style=color:#a6e22e>setInt</span><span style=color:#f92672>(</span>4<span style=color:#f92672>,</span> student<span style=color:#f92672>.</span><span style=color:#a6e22e>getId</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>        preparedStatement<span style=color:#f92672>.</span><span style=color:#a6e22e>executeUpdate</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span> <span style=color:#66d9ef>catch</span> <span style=color:#f92672>(</span>SQLException e<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// TODO Auto-generated catch block
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        e<span style=color:#f92672>.</span><span style=color:#a6e22e>printStackTrace</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>        System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;连接数据库失败&#34;</span><span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><h4 id=4-删除一条记录>4. 删除一条记录</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 根据id删除一个学生
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>deleteStudent</span><span style=color:#f92672>(</span><span style=color:#66d9ef>int</span> id<span style=color:#f92672>){</span>
+</span></span><span style=display:flex><span>    String sql <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;delete from student where id = ?&#34;</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>boolean</span> result <span style=color:#f92672>=</span> <span style=color:#66d9ef>false</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        PreparedStatement preparedStatement <span style=color:#f92672>=</span> connection<span style=color:#f92672>.</span><span style=color:#a6e22e>prepareStatement</span><span style=color:#f92672>(</span>sql<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>        preparedStatement<span style=color:#f92672>.</span><span style=color:#a6e22e>setInt</span><span style=color:#f92672>(</span>1<span style=color:#f92672>,</span> id<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>        result<span style=color:#f92672>=</span>preparedStatement<span style=color:#f92672>.</span><span style=color:#a6e22e>execute</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span> <span style=color:#66d9ef>catch</span> <span style=color:#f92672>(</span>SQLException e<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// TODO Auto-generated catch block
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        e<span style=color:#f92672>.</span><span style=color:#a6e22e>printStackTrace</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><h4 id=5-查询操作模糊查询>5. 查询操作&模糊查询</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 根据id查询学生
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>public</span> Student <span style=color:#a6e22e>selectStudent</span><span style=color:#f92672>(</span><span style=color:#66d9ef>int</span> id<span style=color:#f92672>){</span>
+</span></span><span style=display:flex><span>    String sql <span style=color:#f92672>=</span><span style=color:#e6db74>&#34;select * from student where id =?&#34;</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        PreparedStatement preparedStatement <span style=color:#f92672>=</span> connection<span style=color:#f92672>.</span><span style=color:#a6e22e>prepareStatement</span><span style=color:#f92672>(</span>sql<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>        preparedStatement<span style=color:#f92672>.</span><span style=color:#a6e22e>setInt</span><span style=color:#f92672>(</span>1<span style=color:#f92672>,</span> id<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>        ResultSet resultSet <span style=color:#f92672>=</span> preparedStatement<span style=color:#f92672>.</span><span style=color:#a6e22e>executeQuery</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>        Student student <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Student<span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 一条也只能使用resultset来接收
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>while</span><span style=color:#f92672>(</span>resultSet<span style=color:#f92672>.</span><span style=color:#a6e22e>next</span><span style=color:#f92672>()){</span>
+</span></span><span style=display:flex><span>            student<span style=color:#f92672>.</span><span style=color:#a6e22e>setId</span><span style=color:#f92672>(</span>resultSet<span style=color:#f92672>.</span><span style=color:#a6e22e>getInt</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;id&#34;</span><span style=color:#f92672>));</span>
+</span></span><span style=display:flex><span>            student<span style=color:#f92672>.</span><span style=color:#a6e22e>setName</span><span style=color:#f92672>(</span>resultSet<span style=color:#f92672>.</span><span style=color:#a6e22e>getString</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;name&#34;</span><span style=color:#f92672>));</span>
+</span></span><span style=display:flex><span>            student<span style=color:#f92672>.</span><span style=color:#a6e22e>setAge</span><span style=color:#f92672>(</span>resultSet<span style=color:#f92672>.</span><span style=color:#a6e22e>getInt</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;age&#34;</span><span style=color:#f92672>));</span>
+</span></span><span style=display:flex><span>            student<span style=color:#f92672>.</span><span style=color:#a6e22e>setScore</span><span style=color:#f92672>(</span>resultSet<span style=color:#f92672>.</span><span style=color:#a6e22e>getDouble</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;score&#34;</span><span style=color:#f92672>));</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> student<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span> <span style=color:#66d9ef>catch</span> <span style=color:#f92672>(</span>SQLException e<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// TODO: handle exception
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>null</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><h5 id=1--like-demo>.1. Like Demo</h5><blockquote><p>conn.execute(&ldquo;SELECT * FROM article WHERE content LIKE ?&rdquo;, (&rsquo;%&rsquo; + value + &lsquo;%&rsquo;,))</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * SQL 模糊查询，label 数据包含Label
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * @param Label : 关键词
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * @return 结果集
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> ArrayList<span style=color:#f92672>&lt;</span>FlexData<span style=color:#f92672>&gt;</span> <span style=color:#a6e22e>executeQueryContain</span><span style=color:#f92672>(</span>String Label<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    String sql<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;select * from table_flex where label like ?&#34;</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    ArrayList<span style=color:#f92672>&lt;</span>FlexData<span style=color:#f92672>&gt;</span>arrayList<span style=color:#f92672>=</span><span style=color:#66d9ef>new</span> ArrayList<span style=color:#f92672>&lt;</span>FlexData<span style=color:#f92672>&gt;();</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 获得连接
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        conn <span style=color:#f92672>=</span> getConnection<span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 调用SQL
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        pst <span style=color:#f92672>=</span> conn<span style=color:#f92672>.</span><span style=color:#a6e22e>prepareStatement</span><span style=color:#f92672>(</span>sql<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//System.out.println(&#34;select * from table_flex where label like &#39;%?%&#39; &#34;);
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        pst<span style=color:#f92672>.</span><span style=color:#a6e22e>setString</span><span style=color:#f92672>(</span>1<span style=color:#f92672>,</span><span style=color:#e6db74>&#34;%&#34;</span><span style=color:#f92672>+</span>Label<span style=color:#f92672>+</span><span style=color:#e6db74>&#34;%&#34;</span><span style=color:#f92672>);</span>   <span style=color:#75715e>// 注意在这里除了若干问题
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#75715e>//System.out.println(&#34;2select * from table_flex where label like &#39;%?%&#39; &#34;);
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span>        System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span>pst<span style=color:#f92672>.</span><span style=color:#a6e22e>getParameterMetaData</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 执行
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        rst <span style=color:#f92672>=</span> pst<span style=color:#f92672>.</span><span style=color:#a6e22e>executeQuery</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>while</span><span style=color:#f92672>(</span>rst<span style=color:#f92672>.</span><span style=color:#a6e22e>next</span><span style=color:#f92672>())</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>            arrayList<span style=color:#f92672>.</span><span style=color:#a6e22e>add</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> FlexData<span style=color:#f92672>(</span>rst<span style=color:#f92672>.</span><span style=color:#a6e22e>getString</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;flexdata&#34;</span><span style=color:#f92672>),</span>rst<span style=color:#f92672>.</span><span style=color:#a6e22e>getString</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;timestamp&#34;</span><span style=color:#f92672>),</span>rst<span style=color:#f92672>.</span><span style=color:#a6e22e>getString</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;label&#34;</span><span style=color:#f92672>)));</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> arrayList<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span> <span style=color:#66d9ef>catch</span> <span style=color:#f92672>(</span>SQLException e<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span>e<span style=color:#f92672>.</span><span style=color:#a6e22e>getMessage</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>        System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;异常错误&#34;</span><span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span> <span style=color:#66d9ef>finally</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        closeAll<span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> arrayList<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><h5 id=2-正则类>.2. 正则类</h5><ul><li>charindex（）——charindex（字符，字符串）>0 –>包含</li><li>%: 表示任意0个或多个字符，可匹配任意类型和长度的字符。有些情况下是中文，需用两个百分号（%%）表示: SELECT * FROM [user] WHERE u_name LIKE ‘%三%’ AND u_name LIKE ‘%猫%’</li><li>_: 表示任意单个字符。匹配单个任意字符，它常用来限定表达式的字符长度语句：</li><li>[]: 表示括号内所列字符中的一个（类似正则表达式）。指定一个字符、字符串或范围，要求所匹配对象为它们中的任一个：SELECT * FROM [user] WHERE u_name LIKE ‘[张李王]三’</li><li>[^ ]: 表示不在括号所列之内的单个字符。其取值和 [] 相同，但它要求所匹配对象为指定字符以外的任一个字符：<code>SELECT * FROM [user] WHERE u_name LIKE ‘[^张李王]三’</code></li></ul><h4 id=6-查询所有>6. 查询所有</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 查询所有学生，返回List
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>public</span> List<span style=color:#f92672>&lt;</span>Student<span style=color:#f92672>&gt;</span> <span style=color:#a6e22e>selectStudentList</span><span style=color:#f92672>(){</span>
+</span></span><span style=display:flex><span>    List<span style=color:#f92672>&lt;</span>Student<span style=color:#f92672>&gt;</span>students  <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> ArrayList<span style=color:#f92672>&lt;</span>Student<span style=color:#f92672>&gt;();</span> 
+</span></span><span style=display:flex><span>    String sql <span style=color:#f92672>=</span><span style=color:#e6db74>&#34;select * from student &#34;</span><span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        PreparedStatement preparedStatement <span style=color:#f92672>=</span> DBUtil<span style=color:#f92672>.</span><span style=color:#a6e22e>getConnection</span><span style=color:#f92672>().</span><span style=color:#a6e22e>prepareStatement</span><span style=color:#f92672>(</span>sql<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>        ResultSet resultSet <span style=color:#f92672>=</span> preparedStatement<span style=color:#f92672>.</span><span style=color:#a6e22e>executeQuery</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 不能把student在循环外面创建，要不list里面六个对象都是一样的，都是最后一个的值，
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#75715e>// 因为list add进去的都是引用
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#75715e>// Student student = new Student();
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>while</span><span style=color:#f92672>(</span>resultSet<span style=color:#f92672>.</span><span style=color:#a6e22e>next</span><span style=color:#f92672>()){</span>
+</span></span><span style=display:flex><span>            Student student <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Student<span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>            student<span style=color:#f92672>.</span><span style=color:#a6e22e>setId</span><span style=color:#f92672>(</span>resultSet<span style=color:#f92672>.</span><span style=color:#a6e22e>getInt</span><span style=color:#f92672>(</span>1<span style=color:#f92672>));</span>
+</span></span><span style=display:flex><span>            student<span style=color:#f92672>.</span><span style=color:#a6e22e>setName</span><span style=color:#f92672>(</span>resultSet<span style=color:#f92672>.</span><span style=color:#a6e22e>getString</span><span style=color:#f92672>(</span>2<span style=color:#f92672>));</span>
+</span></span><span style=display:flex><span>            student<span style=color:#f92672>.</span><span style=color:#a6e22e>setAge</span><span style=color:#f92672>(</span>resultSet<span style=color:#f92672>.</span><span style=color:#a6e22e>getInt</span><span style=color:#f92672>(</span>3<span style=color:#f92672>));</span>
+</span></span><span style=display:flex><span>            student<span style=color:#f92672>.</span><span style=color:#a6e22e>setScore</span><span style=color:#f92672>(</span>resultSet<span style=color:#f92672>.</span><span style=color:#a6e22e>getDouble</span><span style=color:#f92672>(</span>4<span style=color:#f92672>));</span>
+</span></span><span style=display:flex><span>            students<span style=color:#f92672>.</span><span style=color:#a6e22e>add</span><span style=color:#f92672>(</span>student<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span> <span style=color:#66d9ef>catch</span> <span style=color:#f92672>(</span>SQLException e<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// TODO: handle exception
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> students<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><h4 id=7-关闭所有资源>7. 关闭所有资源</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 关闭所有资源
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>closeAll</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 关闭结果集对象
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>rst <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>            rst<span style=color:#f92672>.</span><span style=color:#a6e22e>close</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span> <span style=color:#66d9ef>catch</span> <span style=color:#f92672>(</span>SQLException e<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>            System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span>e<span style=color:#f92672>.</span><span style=color:#a6e22e>getMessage</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 关闭PreparedStatement对象
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>pst <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>            pst<span style=color:#f92672>.</span><span style=color:#a6e22e>close</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span> <span style=color:#66d9ef>catch</span> <span style=color:#f92672>(</span>SQLException e<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>            System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span>e<span style=color:#f92672>.</span><span style=color:#a6e22e>getMessage</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 关闭CallableStatement 对象
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>callableStatement <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>            callableStatement<span style=color:#f92672>.</span><span style=color:#a6e22e>close</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span> <span style=color:#66d9ef>catch</span> <span style=color:#f92672>(</span>SQLException e<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>            System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span>e<span style=color:#f92672>.</span><span style=color:#a6e22e>getMessage</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 关闭Connection 对象
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>conn <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>            conn<span style=color:#f92672>.</span><span style=color:#a6e22e>close</span><span style=color:#f92672>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span> <span style=color:#66d9ef>catch</span> <span style=color:#f92672>(</span>SQLException e<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>            System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span>e<span style=color:#f92672>.</span><span style=color:#a6e22e>getMessage</span><span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><h4 id=resource>Resource</h4><ul><li><a href=https://blog.csdn.net/weixin_48568292/article/details/107299093 target=_blank rel="external nofollow noopener noreferrer">https://blog.csdn.net/weixin_48568292/article/details/107299093<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-29 00:32:54">更新于 2023-09-29&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/jdbcintroduce/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5cDatabase%5cJDBCIntroduce.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/jdbcintroduce/ data-title=JDBCIntroduce data-hashtags=Database,Java><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/jdbcintroduce/ data-hashtag=Database><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/jdbcintroduce/ data-title=JDBCIntroduce data-image=https://cdn.stocksnap.io/img-thumbs/280h/QW9GTHWZIS.jpg><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/database/>Database</a>,&nbsp;<a href=liudongdong1.github.io/tags/java/>Java</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/jdk_juc/ class=prev rel=prev title=JDK_JUC><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>JDK_JUC</a>
+<a href=liudongdong1.github.io/javajvm_%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/ class=next rel=next title=JavaJVM_字节码指令>JavaJVM_字节码指令<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
+<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
+<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>
