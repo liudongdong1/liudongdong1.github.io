@@ -1,309 +1,622 @@
-<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>BlinkDetection - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="1. 眨眼检测 使用dlib库 眨眼检测 # import the necessary packages from scipy.spatial import distance as dist from imutils.video import FileVideoStream from imutils.video import VideoStream from imutils import face_utils import argparse import imutils import time import dlib import cv2 import os def eye_aspect_ratio(eye): # compute the euclidean distances between the two sets of # vertical eye landmarks (x, y)-coordinates A"><meta name=keywords content="CV,CV"><meta itemprop=name content="BlinkDetection"><meta itemprop=description content="1. 眨眼检测 使用dlib库 眨眼检测 # import the necessary packages from scipy.spatial import distance as dist from imutils.video import FileVideoStream from imutils.video import VideoStream from imutils import face_utils import argparse import imutils import time import dlib import cv2 import os def eye_aspect_ratio(eye): # compute the euclidean distances between the two sets of # vertical eye landmarks (x, y)-coordinates A"><meta itemprop=datePublished content="2020-05-29T15:57:50+00:00"><meta itemprop=dateModified content="2023-09-29T00:27:27+08:00"><meta itemprop=wordCount content="999"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="CV,CV,"><meta property="og:title" content="BlinkDetection"><meta property="og:description" content="1. 眨眼检测 使用dlib库 眨眼检测 # import the necessary packages from scipy.spatial import distance as dist from imutils.video import FileVideoStream from imutils.video import VideoStream from imutils import face_utils import argparse import imutils import time import dlib import cv2 import os def eye_aspect_ratio(eye): # compute the euclidean distances between the two sets of # vertical eye landmarks (x, y)-coordinates A"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/blinkdetection/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-05-29T15:57:50+00:00"><meta property="article:modified_time" content="2023-09-29T00:27:27+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="BlinkDetection"><meta name=twitter:description content="1. 眨眼检测 使用dlib库 眨眼检测 # import the necessary packages from scipy.spatial import distance as dist from imutils.video import FileVideoStream from imutils.video import VideoStream from imutils import face_utils import argparse import imutils import time import dlib import cv2 import os def eye_aspect_ratio(eye): # compute the euclidean distances between the two sets of # vertical eye landmarks (x, y)-coordinates A"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/blinkdetection/><link rel=prev href=liudongdong1.github.io/panda-tutorial/><link rel=next href=liudongdong1.github.io/%E6%A0%91%E8%8E%93%E6%B4%BE%E8%BD%A6%E7%89%8C%E8%AF%86%E5%88%AB/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"BlinkDetection","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/blinkdetection\/"},"genre":"posts","keywords":"CV, CV","wordcount":999,"url":"liudongdong1.github.io\/blinkdetection\/","datePublished":"2020-05-29T15:57:50+00:00","dateModified":"2023-09-29T00:27:27+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"LiuDongdong"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
-<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>BlinkDetection</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://liudongdong1.github.io/ title=作者 target=_blank rel="external nofollow noopener noreferrer author" class=author><img class="lazyload avatar" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/liudongdong1.github.io/images/study-avatar.png data-srcset="/liudongdong1.github.io/images/study-avatar.png, /liudongdong1.github.io/images/study-avatar.png 1.5x, /liudongdong1.github.io/images/study-avatar.png 2x" data-sizes=auto alt=LiuDongdong title=LiuDongdong width=1024 height=1024>&nbsp;LiuDongdong</a></span>
-<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/ai/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;AI</a></span></div><div class=post-meta-line><span title="2020-05-29 15:57:50"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-05-29>2020-05-29</time>
-</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 999 字&nbsp;
-<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title=BlinkDetection>
-<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
-</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png, https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png></div><div class="details toc" id=toc-static kept=true><div class="details-summary toc-title"><span>目录</span>
-<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#1-眨眼检测>1. 眨眼检测</a></li></ul></li></ul></nav></div></div><div class=content id=content><h3 id=1-眨眼检测>1. 眨眼检测</h3><ul><li>使用dlib库 眨眼检测</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># import the necessary packages</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> scipy.spatial <span style=color:#f92672>import</span> distance <span style=color:#66d9ef>as</span> dist
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> imutils.video <span style=color:#f92672>import</span> FileVideoStream
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> imutils.video <span style=color:#f92672>import</span> VideoStream
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> imutils <span style=color:#f92672>import</span> face_utils
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> argparse
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> imutils
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> time
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> dlib
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> cv2
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> os
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>eye_aspect_ratio</span>(eye):
-</span></span><span style=display:flex><span>    <span style=color:#75715e># compute the euclidean distances between the two sets of</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># vertical eye landmarks (x, y)-coordinates</span>
-</span></span><span style=display:flex><span>    A <span style=color:#f92672>=</span> dist<span style=color:#f92672>.</span>euclidean(eye[<span style=color:#ae81ff>1</span>], eye[<span style=color:#ae81ff>5</span>])
-</span></span><span style=display:flex><span>    B <span style=color:#f92672>=</span> dist<span style=color:#f92672>.</span>euclidean(eye[<span style=color:#ae81ff>2</span>], eye[<span style=color:#ae81ff>4</span>])
-</span></span><span style=display:flex><span>    <span style=color:#75715e># compute the euclidean distance between the horizontal</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># eye landmark (x, y)-coordinates</span>
-</span></span><span style=display:flex><span>    C <span style=color:#f92672>=</span> dist<span style=color:#f92672>.</span>euclidean(eye[<span style=color:#ae81ff>0</span>], eye[<span style=color:#ae81ff>3</span>])
-</span></span><span style=display:flex><span>    <span style=color:#75715e># compute the eye aspect ratio</span>
-</span></span><span style=display:flex><span>    ear <span style=color:#f92672>=</span> (A <span style=color:#f92672>+</span> B) <span style=color:#f92672>/</span> (<span style=color:#ae81ff>2.0</span> <span style=color:#f92672>*</span> C)
-</span></span><span style=display:flex><span>    <span style=color:#75715e># return the eye aspect ratio</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> ear
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>threshold <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.27</span>
-</span></span><span style=display:flex><span>shape_predictor <span style=color:#f92672>=</span> os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;backend&#39;</span>, <span style=color:#e6db74>&#34;shape_predictor_68_face_landmarks.dat&#34;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Eye_Detector</span>():
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self):
-</span></span><span style=display:flex><span>        EYE_AR_THRESH <span style=color:#f92672>=</span> threshold
-</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>detector <span style=color:#f92672>=</span> dlib<span style=color:#f92672>.</span>get_frontal_face_detector()
-</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>predictor <span style=color:#f92672>=</span> dlib<span style=color:#f92672>.</span>shape_predictor(shape_predictor)
-</span></span><span style=display:flex><span>        (lStart, lEnd) <span style=color:#f92672>=</span> face_utils<span style=color:#f92672>.</span>FACIAL_LANDMARKS_IDXS[<span style=color:#e6db74>&#34;left_eye&#34;</span>]
-</span></span><span style=display:flex><span>        (rStart, rEnd) <span style=color:#f92672>=</span> face_utils<span style=color:#f92672>.</span>FACIAL_LANDMARKS_IDXS[<span style=color:#e6db74>&#34;right_eye&#34;</span>]
-</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>index <span style=color:#f92672>=</span> [lStart, lEnd, rStart, rEnd]
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>calculate_ear</span>(self, frame):
-</span></span><span style=display:flex><span>        lStart, lEnd, rStart, rEnd <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>index
-</span></span><span style=display:flex><span>        detector, predictor <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>detector, self<span style=color:#f92672>.</span>predictor
-</span></span><span style=display:flex><span>        gray <span style=color:#f92672>=</span> cv2<span style=color:#f92672>.</span>cvtColor(frame, cv2<span style=color:#f92672>.</span>COLOR_BGR2GRAY)
-</span></span><span style=display:flex><span>        <span style=color:#75715e># detect faces in the grayscale frame</span>
-</span></span><span style=display:flex><span>        rects <span style=color:#f92672>=</span> detector(gray, <span style=color:#ae81ff>0</span>)
-</span></span><span style=display:flex><span>        <span style=color:#75715e># loop over the face detections</span>
-</span></span><span style=display:flex><span>        ear <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> rect <span style=color:#f92672>in</span> rects:
-</span></span><span style=display:flex><span>            <span style=color:#75715e># determine the facial landmarks for the face region, then</span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e># convert the facial landmark (x, y)-coordinates to a NumPy</span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e># array</span>
-</span></span><span style=display:flex><span>            shape <span style=color:#f92672>=</span> predictor(gray, rect)
-</span></span><span style=display:flex><span>            shape <span style=color:#f92672>=</span> face_utils<span style=color:#f92672>.</span>shape_to_np(shape)
-</span></span><span style=display:flex><span>            <span style=color:#75715e># extract the left and right eye coordinates, then use the</span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e># coordinates to compute the eye aspect ratio for both eyes</span>
-</span></span><span style=display:flex><span>            leftEye <span style=color:#f92672>=</span> shape[lStart:lEnd]
-</span></span><span style=display:flex><span>            rightEye <span style=color:#f92672>=</span> shape[rStart:rEnd]
-</span></span><span style=display:flex><span>            leftEAR <span style=color:#f92672>=</span> eye_aspect_ratio(leftEye)
-</span></span><span style=display:flex><span>            rightEAR <span style=color:#f92672>=</span> eye_aspect_ratio(rightEye)
-</span></span><span style=display:flex><span>            <span style=color:#75715e># average the eye aspect ratio together for both eyes</span>
-</span></span><span style=display:flex><span>            ear <span style=color:#f92672>=</span> (leftEAR <span style=color:#f92672>+</span> rightEAR) <span style=color:#f92672>/</span> <span style=color:#ae81ff>2.0</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> ear
-</span></span></code></pre></div><ul><li>使用socketio进行通信</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#!/usr/bin/env python3</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> os
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> flask <span style=color:#f92672>import</span> Flask, render_template, request
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> flask_socketio <span style=color:#f92672>import</span> SocketIO, send, emit
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> PIL <span style=color:#f92672>import</span> Image
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> base64
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> io
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> cv2
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> random
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> time
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> flask_sslify <span style=color:#f92672>import</span> SSLify
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> backend <span style=color:#f92672>import</span> Eye_Detector
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># ==================</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># Initialize</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># ==================</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>app <span style=color:#f92672>=</span> Flask(__name__)
-</span></span><span style=display:flex><span>socketio <span style=color:#f92672>=</span> SocketIO(app)
-</span></span><span style=display:flex><span>player_list <span style=color:#f92672>=</span> []
-</span></span><span style=display:flex><span>detector <span style=color:#f92672>=</span> Eye_Detector()
-</span></span><span style=display:flex><span>SSLify(app)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># prevent cached responses(https://stackoverflow.com/questions/47376744/how-to-prevent-cached-response-flask-server-using-chrome)</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> app<span style=color:#f92672>.</span>config[<span style=color:#e6db74>&#34;DEBUG&#34;</span>]:
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@app.after_request</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>after_request</span>(response):
-</span></span><span style=display:flex><span>        response<span style=color:#f92672>.</span>headers[<span style=color:#e6db74>&#34;Cache-Control&#34;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;no-cache, no-store, must-revalidate, public, max-age=0&#34;</span>
-</span></span><span style=display:flex><span>        response<span style=color:#f92672>.</span>headers[<span style=color:#e6db74>&#34;Expires&#34;</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
-</span></span><span style=display:flex><span>        response<span style=color:#f92672>.</span>headers[<span style=color:#e6db74>&#34;Pragma&#34;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;no-cache&#34;</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> response
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># ==================</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># Utils Function</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># ==================</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>find_by_id</span>(_id):
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Find element by id in the player_list.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Args:
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      _id: ID of this player.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Return:
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      index: The index of this player in the player list.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    filt <span style=color:#f92672>=</span> [i <span style=color:#66d9ef>for</span> (i, item) <span style=color:#f92672>in</span> enumerate(player_list) <span style=color:#66d9ef>if</span> item[<span style=color:#e6db74>&#39;id&#39;</span>] <span style=color:#f92672>==</span> _id]
-</span></span><span style=display:flex><span>    index <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span> <span style=color:#66d9ef>if</span> len(filt) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span> <span style=color:#66d9ef>else</span> filt[<span style=color:#ae81ff>0</span>]
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> index
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>find_random_waiting</span>(_id):
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Randomly choose a &#39;waiting&#39; player from the list.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    But it can not choose itself(_id).
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Args:
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      _id: ID of this player.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Return:
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      index: The index of the chosen player in the player list.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    filt <span style=color:#f92672>=</span> [i <span style=color:#66d9ef>for</span> (i, item) <span style=color:#f92672>in</span> enumerate(player_list) <span style=color:#66d9ef>if</span> (
-</span></span><span style=display:flex><span>        item[<span style=color:#e6db74>&#39;status&#39;</span>] <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;waiting&#39;</span> <span style=color:#f92672>and</span> item[<span style=color:#e6db74>&#39;id&#39;</span>] <span style=color:#f92672>!=</span> _id)]
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> len(filt):
-</span></span><span style=display:flex><span>        index <span style=color:#f92672>=</span> random<span style=color:#f92672>.</span>choice(filt)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>:
-</span></span><span style=display:flex><span>        index <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> index
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># ==================</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># Socket-io</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># ==================</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>@socketio.on</span>(<span style=color:#e6db74>&#39;connect&#39;</span>)
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>on_connect</span>():
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Called when the client just connected.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Create a player and push it to the list.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Player:
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      id: Indentifier of the player.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      status: &#39;idle&#39;, &#39;waiting&#39;, &#39;playing&#39;.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      ear: Eye aspect ratio.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      rival: The rival&#39;s id.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      startTime: The start time of the game.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      end: Whether the game has ended. &#39;1&#39; means end, &#39;0&#39; means playing.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    client_id <span style=color:#f92672>=</span> request<span style=color:#f92672>.</span>args[<span style=color:#e6db74>&#39;id&#39;</span>]
-</span></span><span style=display:flex><span>    index <span style=color:#f92672>=</span> find_by_id(client_id)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> index:
-</span></span><span style=display:flex><span>        player_list<span style=color:#f92672>.</span>append({<span style=color:#e6db74>&#39;id&#39;</span>: client_id, <span style=color:#e6db74>&#39;status&#39;</span>: <span style=color:#e6db74>&#39;idle&#39;</span>,
-</span></span><span style=display:flex><span>                            <span style=color:#e6db74>&#39;ear&#39;</span>: <span style=color:#ae81ff>0</span>, <span style=color:#e6db74>&#39;rival&#39;</span>: <span style=color:#66d9ef>None</span>, <span style=color:#e6db74>&#39;startTime&#39;</span>: <span style=color:#ae81ff>0</span>, <span style=color:#e6db74>&#39;end&#39;</span>: <span style=color:#ae81ff>0</span>})
-</span></span><span style=display:flex><span>    print(client_id, <span style=color:#e6db74>&#39;connected !&#39;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>@socketio.on</span>(<span style=color:#e6db74>&#39;_disconnect&#39;</span>)
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>on_disconnect</span>(message):
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Called when the client just disconnected.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Delete the player from the list.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    client_id <span style=color:#f92672>=</span> message[<span style=color:#e6db74>&#39;id&#39;</span>]
-</span></span><span style=display:flex><span>    index <span style=color:#f92672>=</span> find_by_id(client_id)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>del</span> player_list[index]
-</span></span><span style=display:flex><span>    print(client_id, <span style=color:#e6db74>&#39;disconnected !&#39;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>@socketio.on</span>(<span style=color:#e6db74>&#39;set_player_wait&#39;</span>)
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>set_player_wait</span>(message):
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Set the player&#39;s status to &#39;waiting&#39;.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    And then Randomly match a player whose status is also &#39;waiting&#39;.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Args:
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      id: ID of the player.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Emit:
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      get_rival: Tell the player its rival&#39;s id.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    client_id <span style=color:#f92672>=</span> message[<span style=color:#e6db74>&#39;id&#39;</span>]
-</span></span><span style=display:flex><span>    curr_index <span style=color:#f92672>=</span> find_by_id(client_id)
-</span></span><span style=display:flex><span>    player_list[curr_index][<span style=color:#e6db74>&#39;status&#39;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;waiting&#39;</span>
-</span></span><span style=display:flex><span>    print(client_id, <span style=color:#e6db74>&#39;set to waiting...&#39;</span>)
-</span></span><span style=display:flex><span>    <span style=color:#75715e># look for rival</span>
-</span></span><span style=display:flex><span>    rival_index <span style=color:#f92672>=</span> find_random_waiting(client_id)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> rival_index <span style=color:#f92672>!=</span> <span style=color:#66d9ef>None</span>:
-</span></span><span style=display:flex><span>        rival_id <span style=color:#f92672>=</span> player_list[rival_index][<span style=color:#e6db74>&#39;id&#39;</span>]
-</span></span><span style=display:flex><span>        player_list[curr_index][<span style=color:#e6db74>&#39;rival&#39;</span>] <span style=color:#f92672>=</span> rival_id
-</span></span><span style=display:flex><span>        player_list[curr_index][<span style=color:#e6db74>&#39;status&#39;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;playing&#39;</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        player_list[rival_index][<span style=color:#e6db74>&#39;rival&#39;</span>] <span style=color:#f92672>=</span> client_id
-</span></span><span style=display:flex><span>        player_list[rival_index][<span style=color:#e6db74>&#39;status&#39;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;playing&#39;</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        emit(<span style=color:#e6db74>&#39;get_rival&#39;</span>, {<span style=color:#e6db74>&#39;id&#39;</span>: rival_id})
-</span></span><span style=display:flex><span>        print(client_id, <span style=color:#e6db74>&#39;find rival&#39;</span>, rival_id)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>@socketio.on</span>(<span style=color:#e6db74>&#39;set_player_startTime&#39;</span>)
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>set_player_startTime</span>(message):
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Set the player&#39;s startTime.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Args:
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      id: ID of the player.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    client_id <span style=color:#f92672>=</span> message[<span style=color:#e6db74>&#39;id&#39;</span>]
-</span></span><span style=display:flex><span>    curr_index <span style=color:#f92672>=</span> find_by_id(client_id)
-</span></span><span style=display:flex><span>    player_list[curr_index][<span style=color:#e6db74>&#39;startTime&#39;</span>] <span style=color:#f92672>=</span> time<span style=color:#f92672>.</span>time()
-</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#39;startTime&#39;</span>, player_list[curr_index])
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>@socketio.on</span>(<span style=color:#e6db74>&#39;send_image&#39;</span>)
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>send_image</span>(message):
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    1. Convert base64 string from client to np image.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    2. Run &#39;Detector engine&#39; to calculate its value.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    3. Emit new player data to the player.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Args:
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>        uri: Base64 string from client.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>        id: ID of the player.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Emit:
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>        get_arena_data: send arena status to the client including 
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>          EAR1: Eye aspect ratio of this player.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>          EAR2: Eye aspect ratio of its rival.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>          elapsed: Elapsed time since start.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>          end: Whether the game has ended.
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># ===============</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># Process Base64</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># ===============</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    uri, _id <span style=color:#f92672>=</span> message[<span style=color:#e6db74>&#39;uri&#39;</span>], message[<span style=color:#e6db74>&#39;id&#39;</span>]
-</span></span><span style=display:flex><span>    <span style=color:#75715e># split header and body</span>
-</span></span><span style=display:flex><span>    img_data <span style=color:#f92672>=</span> uri<span style=color:#f92672>.</span>split(<span style=color:#e6db74>&#39;,&#39;</span>)[<span style=color:#ae81ff>1</span>]
-</span></span><span style=display:flex><span>    img_data <span style=color:#f92672>=</span> base64<span style=color:#f92672>.</span>b64decode(img_data)
-</span></span><span style=display:flex><span>    image <span style=color:#f92672>=</span> Image<span style=color:#f92672>.</span>open(io<span style=color:#f92672>.</span>BytesIO(img_data))
-</span></span><span style=display:flex><span>    <span style=color:#75715e># bgr</span>
-</span></span><span style=display:flex><span>    array <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array(image)
-</span></span><span style=display:flex><span>    REJECT <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># ===============</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># Set EAR</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># ===============</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    index <span style=color:#f92672>=</span> find_by_id(_id)
-</span></span><span style=display:flex><span>    EAR1 <span style=color:#f92672>=</span> player_list[index][<span style=color:#e6db74>&#39;ear&#39;</span>]
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># If the game has ended, we should not update the player.</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> player_list[index][<span style=color:#e6db74>&#39;end&#39;</span>] <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>:
-</span></span><span style=display:flex><span>        EAR1 <span style=color:#f92672>=</span> detector<span style=color:#f92672>.</span>calculate_ear(array)
-</span></span><span style=display:flex><span>        player_list[index][<span style=color:#e6db74>&#39;ear&#39;</span>] <span style=color:#f92672>=</span> EAR1
-</span></span><span style=display:flex><span>        player_list[index][<span style=color:#e6db74>&#39;uri&#39;</span>] <span style=color:#f92672>=</span> uri
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># Find rival&#39;s EAR.</span>
-</span></span><span style=display:flex><span>    rival_id <span style=color:#f92672>=</span> player_list[index][<span style=color:#e6db74>&#39;rival&#39;</span>]
-</span></span><span style=display:flex><span>    rival_index <span style=color:#f92672>=</span> find_by_id(rival_id)
-</span></span><span style=display:flex><span>    EAR2 <span style=color:#f92672>=</span> player_list[rival_index][<span style=color:#e6db74>&#39;ear&#39;</span>]
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># Calculat elapsed time</span>
-</span></span><span style=display:flex><span>    elapsed <span style=color:#f92672>=</span> time<span style=color:#f92672>.</span>time() <span style=color:#f92672>-</span> player_list[index][<span style=color:#e6db74>&#39;startTime&#39;</span>]
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># EAR &lt; threshold is determined as &#39;blink&#39;.</span>
-</span></span><span style=display:flex><span>    threshold <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.20</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># The first 3 second is not counted.</span>
-</span></span><span style=display:flex><span>    prepare_time <span style=color:#f92672>=</span> <span style=color:#ae81ff>3</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> ((EAR1 <span style=color:#f92672>&lt;</span> threshold <span style=color:#f92672>and</span> EAR1 <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>0</span>) <span style=color:#f92672>or</span> (EAR2 <span style=color:#f92672>&lt;</span> threshold <span style=color:#f92672>and</span> EAR2 <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>0</span>)) <span style=color:#f92672>and</span> elapsed <span style=color:#f92672>&gt;</span> prepare_time:
-</span></span><span style=display:flex><span>        <span style=color:#75715e># The game end. Set player&#39;s status back to &#39;idle&#39;.</span>
-</span></span><span style=display:flex><span>        player_list[index][<span style=color:#e6db74>&#39;end&#39;</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>
-</span></span><span style=display:flex><span>        player_list[index][<span style=color:#e6db74>&#39;status&#39;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;idle&#39;</span>
-</span></span><span style=display:flex><span>        player_list[rival_index][<span style=color:#e6db74>&#39;end&#39;</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>
-</span></span><span style=display:flex><span>        player_list[rival_index][<span style=color:#e6db74>&#39;status&#39;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;idle&#39;</span>
-</span></span><span style=display:flex><span>        emit(<span style=color:#e6db74>&#39;get_arena_data&#39;</span>, {<span style=color:#e6db74>&#39;EAR1&#39;</span>: EAR1, <span style=color:#e6db74>&#39;EAR2&#39;</span>: EAR2, <span style=color:#e6db74>&#39;elapsed&#39;</span>: elapsed, <span style=color:#e6db74>&#39;end&#39;</span>: <span style=color:#ae81ff>1</span>,
-</span></span><span style=display:flex><span>                                <span style=color:#e6db74>&#39;uri1&#39;</span>: player_list[index][<span style=color:#e6db74>&#39;uri&#39;</span>], <span style=color:#e6db74>&#39;uri2&#39;</span>: player_list[rival_index][<span style=color:#e6db74>&#39;uri&#39;</span>]})
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>:
-</span></span><span style=display:flex><span>        emit(<span style=color:#e6db74>&#39;get_arena_data&#39;</span>, {<span style=color:#e6db74>&#39;EAR1&#39;</span>: EAR1,
-</span></span><span style=display:flex><span>                                <span style=color:#e6db74>&#39;EAR2&#39;</span>: EAR2, <span style=color:#e6db74>&#39;elapsed&#39;</span>: elapsed, <span style=color:#e6db74>&#39;end&#39;</span>: <span style=color:#ae81ff>0</span>})
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># ==================</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># Run flask</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># ==================</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>@app.route</span>(<span style=color:#e6db74>&#34;/&#34;</span>)
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>index</span>():
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> render_template(<span style=color:#e6db74>&#39;index.html&#39;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;__main__&#34;</span>:
-</span></span><span style=display:flex><span>    socketio<span style=color:#f92672>.</span>run(app, host<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;0.0.0.0&#39;</span>, port<span style=color:#f92672>=</span><span style=color:#ae81ff>3000</span>,
-</span></span><span style=display:flex><span>                 keyfile<span style=color:#f92672>=</span>os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(<span style=color:#e6db74>&#39;backend&#39;</span>, <span style=color:#e6db74>&#39;server.key&#39;</span>), certfile<span style=color:#f92672>=</span>os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(<span style=color:#e6db74>&#39;backend&#39;</span>, <span style=color:#e6db74>&#39;server.crt&#39;</span>))
-</span></span></code></pre></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-29 00:27:27">更新于 2023-09-29&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/blinkdetection/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5c%e8%a7%86%e8%a7%89%e8%bf%90%e5%8a%a8%5cEye_tracking%5cBlinkDetection.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/blinkdetection/ data-title=BlinkDetection data-hashtags=CV,CV><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/blinkdetection/ data-hashtag=CV><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/blinkdetection/ data-title=BlinkDetection data-image=https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/cv/>CV</a>,&nbsp;<a href=liudongdong1.github.io/tags/cv/>CV</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/panda-tutorial/ class=prev rel=prev title="Panda Tutorial"><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>Panda Tutorial</a>
-<a href=liudongdong1.github.io/%E6%A0%91%E8%8E%93%E6%B4%BE%E8%BD%A6%E7%89%8C%E8%AF%86%E5%88%AB/ class=next rel=next title=树莓派车牌识别>树莓派车牌识别<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
-<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
-<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>BlinkDetection - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="1. 眨眼检测 使用dlib库 眨眼检测 # import the necessary packages from scipy.spatial import distance as dist from imutils.video import FileVideoStream from imutils.video import VideoStream from imutils import face_utils import argparse import imutils import time import dlib import cv2 import os def eye_aspect_ratio(eye): # compute the euclidean distances between the two sets of # vertical eye landmarks (x, y)-coordinates A" /><meta name="keywords" content='CV, CV' /><meta itemprop="name" content="BlinkDetection">
+<meta itemprop="description" content="1. 眨眼检测 使用dlib库 眨眼检测 # import the necessary packages from scipy.spatial import distance as dist from imutils.video import FileVideoStream from imutils.video import VideoStream from imutils import face_utils import argparse import imutils import time import dlib import cv2 import os def eye_aspect_ratio(eye): # compute the euclidean distances between the two sets of # vertical eye landmarks (x, y)-coordinates A"><meta itemprop="datePublished" content="2020-05-29T15:57:50+00:00" />
+<meta itemprop="dateModified" content="2023-09-29T00:27:27+08:00" />
+<meta itemprop="wordCount" content="999"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="CV,CV," /><meta property="og:title" content="BlinkDetection" />
+<meta property="og:description" content="1. 眨眼检测 使用dlib库 眨眼检测 # import the necessary packages from scipy.spatial import distance as dist from imutils.video import FileVideoStream from imutils.video import VideoStream from imutils import face_utils import argparse import imutils import time import dlib import cv2 import os def eye_aspect_ratio(eye): # compute the euclidean distances between the two sets of # vertical eye landmarks (x, y)-coordinates A" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/blinkdetection/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-05-29T15:57:50+00:00" />
+<meta property="article:modified_time" content="2023-09-29T00:27:27+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="BlinkDetection"/>
+<meta name="twitter:description" content="1. 眨眼检测 使用dlib库 眨眼检测 # import the necessary packages from scipy.spatial import distance as dist from imutils.video import FileVideoStream from imutils.video import VideoStream from imutils import face_utils import argparse import imutils import time import dlib import cv2 import os def eye_aspect_ratio(eye): # compute the euclidean distances between the two sets of # vertical eye landmarks (x, y)-coordinates A"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/blinkdetection/" /><link rel="prev" href="liudongdong1.github.io/panda-tutorial/" /><link rel="next" href="liudongdong1.github.io/%E6%A0%91%E8%8E%93%E6%B4%BE%E8%BD%A6%E7%89%8C%E8%AF%86%E5%88%AB/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "BlinkDetection",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/blinkdetection\/"
+    },"genre": "posts","keywords": "CV, CV","wordcount":  999 ,
+    "url": "liudongdong1.github.io\/blinkdetection\/","datePublished": "2020-05-29T15:57:50+00:00","dateModified": "2023-09-29T00:27:27+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "LiuDongdong"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>BlinkDetection</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="https://liudongdong1.github.io/" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img
+    class="lazyload avatar"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/liudongdong1.github.io/images/study-avatar.png"
+    data-srcset="/liudongdong1.github.io/images/study-avatar.png, /liudongdong1.github.io/images/study-avatar.png 1.5x, /liudongdong1.github.io/images/study-avatar.png 2x"
+    data-sizes="auto"
+    alt="LiuDongdong"
+    title="LiuDongdong" width="1024" height="1024"/>&nbsp;LiuDongdong</a></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/ai/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;AI</a></span></div>
+      <div class="post-meta-line"><span title=2020-05-29&#32;15:57:50>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-05-29" >2020-05-29</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 999 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="BlinkDetection">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png, https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-眨眼检测">1. 眨眼检测</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><h3 id="1-眨眼检测">1. 眨眼检测</h3>
+<ul>
+<li>使用dlib库 眨眼检测</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># import the necessary packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy.spatial <span style="color:#f92672">import</span> distance <span style="color:#66d9ef">as</span> dist
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> imutils.video <span style="color:#f92672">import</span> FileVideoStream
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> imutils.video <span style="color:#f92672">import</span> VideoStream
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> imutils <span style="color:#f92672">import</span> face_utils
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> argparse
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> imutils
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> dlib
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> cv2
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">eye_aspect_ratio</span>(eye):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># compute the euclidean distances between the two sets of</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># vertical eye landmarks (x, y)-coordinates</span>
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> dist<span style="color:#f92672">.</span>euclidean(eye[<span style="color:#ae81ff">1</span>], eye[<span style="color:#ae81ff">5</span>])
+</span></span><span style="display:flex;"><span>    B <span style="color:#f92672">=</span> dist<span style="color:#f92672">.</span>euclidean(eye[<span style="color:#ae81ff">2</span>], eye[<span style="color:#ae81ff">4</span>])
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># compute the euclidean distance between the horizontal</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># eye landmark (x, y)-coordinates</span>
+</span></span><span style="display:flex;"><span>    C <span style="color:#f92672">=</span> dist<span style="color:#f92672">.</span>euclidean(eye[<span style="color:#ae81ff">0</span>], eye[<span style="color:#ae81ff">3</span>])
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># compute the eye aspect ratio</span>
+</span></span><span style="display:flex;"><span>    ear <span style="color:#f92672">=</span> (A <span style="color:#f92672">+</span> B) <span style="color:#f92672">/</span> (<span style="color:#ae81ff">2.0</span> <span style="color:#f92672">*</span> C)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># return the eye aspect ratio</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ear
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>threshold <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.27</span>
+</span></span><span style="display:flex;"><span>shape_predictor <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;backend&#39;</span>, <span style="color:#e6db74">&#34;shape_predictor_68_face_landmarks.dat&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Eye_Detector</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        EYE_AR_THRESH <span style="color:#f92672">=</span> threshold
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>detector <span style="color:#f92672">=</span> dlib<span style="color:#f92672">.</span>get_frontal_face_detector()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>predictor <span style="color:#f92672">=</span> dlib<span style="color:#f92672">.</span>shape_predictor(shape_predictor)
+</span></span><span style="display:flex;"><span>        (lStart, lEnd) <span style="color:#f92672">=</span> face_utils<span style="color:#f92672">.</span>FACIAL_LANDMARKS_IDXS[<span style="color:#e6db74">&#34;left_eye&#34;</span>]
+</span></span><span style="display:flex;"><span>        (rStart, rEnd) <span style="color:#f92672">=</span> face_utils<span style="color:#f92672">.</span>FACIAL_LANDMARKS_IDXS[<span style="color:#e6db74">&#34;right_eye&#34;</span>]
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>index <span style="color:#f92672">=</span> [lStart, lEnd, rStart, rEnd]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calculate_ear</span>(self, frame):
+</span></span><span style="display:flex;"><span>        lStart, lEnd, rStart, rEnd <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>index
+</span></span><span style="display:flex;"><span>        detector, predictor <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detector, self<span style="color:#f92672">.</span>predictor
+</span></span><span style="display:flex;"><span>        gray <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>cvtColor(frame, cv2<span style="color:#f92672">.</span>COLOR_BGR2GRAY)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># detect faces in the grayscale frame</span>
+</span></span><span style="display:flex;"><span>        rects <span style="color:#f92672">=</span> detector(gray, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># loop over the face detections</span>
+</span></span><span style="display:flex;"><span>        ear <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> rect <span style="color:#f92672">in</span> rects:
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># determine the facial landmarks for the face region, then</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># convert the facial landmark (x, y)-coordinates to a NumPy</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># array</span>
+</span></span><span style="display:flex;"><span>            shape <span style="color:#f92672">=</span> predictor(gray, rect)
+</span></span><span style="display:flex;"><span>            shape <span style="color:#f92672">=</span> face_utils<span style="color:#f92672">.</span>shape_to_np(shape)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># extract the left and right eye coordinates, then use the</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># coordinates to compute the eye aspect ratio for both eyes</span>
+</span></span><span style="display:flex;"><span>            leftEye <span style="color:#f92672">=</span> shape[lStart:lEnd]
+</span></span><span style="display:flex;"><span>            rightEye <span style="color:#f92672">=</span> shape[rStart:rEnd]
+</span></span><span style="display:flex;"><span>            leftEAR <span style="color:#f92672">=</span> eye_aspect_ratio(leftEye)
+</span></span><span style="display:flex;"><span>            rightEAR <span style="color:#f92672">=</span> eye_aspect_ratio(rightEye)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># average the eye aspect ratio together for both eyes</span>
+</span></span><span style="display:flex;"><span>            ear <span style="color:#f92672">=</span> (leftEAR <span style="color:#f92672">+</span> rightEAR) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2.0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ear
+</span></span></code></pre></div><ul>
+<li>使用socketio进行通信</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> flask <span style="color:#f92672">import</span> Flask, render_template, request
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> flask_socketio <span style="color:#f92672">import</span> SocketIO, send, emit
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> base64
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> io
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> cv2
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> random
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> flask_sslify <span style="color:#f92672">import</span> SSLify
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> backend <span style="color:#f92672">import</span> Eye_Detector
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ==================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Initialize</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ==================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>app <span style="color:#f92672">=</span> Flask(__name__)
+</span></span><span style="display:flex;"><span>socketio <span style="color:#f92672">=</span> SocketIO(app)
+</span></span><span style="display:flex;"><span>player_list <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>detector <span style="color:#f92672">=</span> Eye_Detector()
+</span></span><span style="display:flex;"><span>SSLify(app)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># prevent cached responses(https://stackoverflow.com/questions/47376744/how-to-prevent-cached-response-flask-server-using-chrome)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> app<span style="color:#f92672">.</span>config[<span style="color:#e6db74">&#34;DEBUG&#34;</span>]:
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@app.after_request</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">after_request</span>(response):
+</span></span><span style="display:flex;"><span>        response<span style="color:#f92672">.</span>headers[<span style="color:#e6db74">&#34;Cache-Control&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;no-cache, no-store, must-revalidate, public, max-age=0&#34;</span>
+</span></span><span style="display:flex;"><span>        response<span style="color:#f92672">.</span>headers[<span style="color:#e6db74">&#34;Expires&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        response<span style="color:#f92672">.</span>headers[<span style="color:#e6db74">&#34;Pragma&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;no-cache&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> response
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ==================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Utils Function</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ==================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_by_id</span>(_id):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Find element by id in the player_list.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Args:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      _id: ID of this player.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Return:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      index: The index of this player in the player list.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    filt <span style="color:#f92672">=</span> [i <span style="color:#66d9ef">for</span> (i, item) <span style="color:#f92672">in</span> enumerate(player_list) <span style="color:#66d9ef">if</span> item[<span style="color:#e6db74">&#39;id&#39;</span>] <span style="color:#f92672">==</span> _id]
+</span></span><span style="display:flex;"><span>    index <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span> <span style="color:#66d9ef">if</span> len(filt) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> filt[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> index
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_random_waiting</span>(_id):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Randomly choose a &#39;waiting&#39; player from the list.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    But it can not choose itself(_id).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Args:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      _id: ID of this player.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Return:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      index: The index of the chosen player in the player list.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    filt <span style="color:#f92672">=</span> [i <span style="color:#66d9ef">for</span> (i, item) <span style="color:#f92672">in</span> enumerate(player_list) <span style="color:#66d9ef">if</span> (
+</span></span><span style="display:flex;"><span>        item[<span style="color:#e6db74">&#39;status&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;waiting&#39;</span> <span style="color:#f92672">and</span> item[<span style="color:#e6db74">&#39;id&#39;</span>] <span style="color:#f92672">!=</span> _id)]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> len(filt):
+</span></span><span style="display:flex;"><span>        index <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice(filt)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        index <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> index
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ==================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Socket-io</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ==================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@socketio.on</span>(<span style="color:#e6db74">&#39;connect&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_connect</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Called when the client just connected.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Create a player and push it to the list.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Player:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      id: Indentifier of the player.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      status: &#39;idle&#39;, &#39;waiting&#39;, &#39;playing&#39;.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      ear: Eye aspect ratio.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      rival: The rival&#39;s id.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      startTime: The start time of the game.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      end: Whether the game has ended. &#39;1&#39; means end, &#39;0&#39; means playing.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    client_id <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>args[<span style="color:#e6db74">&#39;id&#39;</span>]
+</span></span><span style="display:flex;"><span>    index <span style="color:#f92672">=</span> find_by_id(client_id)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> index:
+</span></span><span style="display:flex;"><span>        player_list<span style="color:#f92672">.</span>append({<span style="color:#e6db74">&#39;id&#39;</span>: client_id, <span style="color:#e6db74">&#39;status&#39;</span>: <span style="color:#e6db74">&#39;idle&#39;</span>,
+</span></span><span style="display:flex;"><span>                            <span style="color:#e6db74">&#39;ear&#39;</span>: <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;rival&#39;</span>: <span style="color:#66d9ef">None</span>, <span style="color:#e6db74">&#39;startTime&#39;</span>: <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;end&#39;</span>: <span style="color:#ae81ff">0</span>})
+</span></span><span style="display:flex;"><span>    print(client_id, <span style="color:#e6db74">&#39;connected !&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@socketio.on</span>(<span style="color:#e6db74">&#39;_disconnect&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_disconnect</span>(message):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Called when the client just disconnected.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Delete the player from the list.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    client_id <span style="color:#f92672">=</span> message[<span style="color:#e6db74">&#39;id&#39;</span>]
+</span></span><span style="display:flex;"><span>    index <span style="color:#f92672">=</span> find_by_id(client_id)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">del</span> player_list[index]
+</span></span><span style="display:flex;"><span>    print(client_id, <span style="color:#e6db74">&#39;disconnected !&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@socketio.on</span>(<span style="color:#e6db74">&#39;set_player_wait&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">set_player_wait</span>(message):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Set the player&#39;s status to &#39;waiting&#39;.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    And then Randomly match a player whose status is also &#39;waiting&#39;.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Args:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      id: ID of the player.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Emit:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      get_rival: Tell the player its rival&#39;s id.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    client_id <span style="color:#f92672">=</span> message[<span style="color:#e6db74">&#39;id&#39;</span>]
+</span></span><span style="display:flex;"><span>    curr_index <span style="color:#f92672">=</span> find_by_id(client_id)
+</span></span><span style="display:flex;"><span>    player_list[curr_index][<span style="color:#e6db74">&#39;status&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;waiting&#39;</span>
+</span></span><span style="display:flex;"><span>    print(client_id, <span style="color:#e6db74">&#39;set to waiting...&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># look for rival</span>
+</span></span><span style="display:flex;"><span>    rival_index <span style="color:#f92672">=</span> find_random_waiting(client_id)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> rival_index <span style="color:#f92672">!=</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>        rival_id <span style="color:#f92672">=</span> player_list[rival_index][<span style="color:#e6db74">&#39;id&#39;</span>]
+</span></span><span style="display:flex;"><span>        player_list[curr_index][<span style="color:#e6db74">&#39;rival&#39;</span>] <span style="color:#f92672">=</span> rival_id
+</span></span><span style="display:flex;"><span>        player_list[curr_index][<span style="color:#e6db74">&#39;status&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;playing&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        player_list[rival_index][<span style="color:#e6db74">&#39;rival&#39;</span>] <span style="color:#f92672">=</span> client_id
+</span></span><span style="display:flex;"><span>        player_list[rival_index][<span style="color:#e6db74">&#39;status&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;playing&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        emit(<span style="color:#e6db74">&#39;get_rival&#39;</span>, {<span style="color:#e6db74">&#39;id&#39;</span>: rival_id})
+</span></span><span style="display:flex;"><span>        print(client_id, <span style="color:#e6db74">&#39;find rival&#39;</span>, rival_id)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@socketio.on</span>(<span style="color:#e6db74">&#39;set_player_startTime&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">set_player_startTime</span>(message):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Set the player&#39;s startTime.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Args:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      id: ID of the player.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    client_id <span style="color:#f92672">=</span> message[<span style="color:#e6db74">&#39;id&#39;</span>]
+</span></span><span style="display:flex;"><span>    curr_index <span style="color:#f92672">=</span> find_by_id(client_id)
+</span></span><span style="display:flex;"><span>    player_list[curr_index][<span style="color:#e6db74">&#39;startTime&#39;</span>] <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;startTime&#39;</span>, player_list[curr_index])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@socketio.on</span>(<span style="color:#e6db74">&#39;send_image&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">send_image</span>(message):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    1. Convert base64 string from client to np image.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    2. Run &#39;Detector engine&#39; to calculate its value.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    3. Emit new player data to the player.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Args:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        uri: Base64 string from client.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        id: ID of the player.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Emit:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        get_arena_data: send arena status to the client including 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          EAR1: Eye aspect ratio of this player.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          EAR2: Eye aspect ratio of its rival.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          elapsed: Elapsed time since start.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          end: Whether the game has ended.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># ===============</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Process Base64</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># ===============</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    uri, _id <span style="color:#f92672">=</span> message[<span style="color:#e6db74">&#39;uri&#39;</span>], message[<span style="color:#e6db74">&#39;id&#39;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># split header and body</span>
+</span></span><span style="display:flex;"><span>    img_data <span style="color:#f92672">=</span> uri<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;,&#39;</span>)[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    img_data <span style="color:#f92672">=</span> base64<span style="color:#f92672">.</span>b64decode(img_data)
+</span></span><span style="display:flex;"><span>    image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(io<span style="color:#f92672">.</span>BytesIO(img_data))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># bgr</span>
+</span></span><span style="display:flex;"><span>    array <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(image)
+</span></span><span style="display:flex;"><span>    REJECT <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># ===============</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Set EAR</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># ===============</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    index <span style="color:#f92672">=</span> find_by_id(_id)
+</span></span><span style="display:flex;"><span>    EAR1 <span style="color:#f92672">=</span> player_list[index][<span style="color:#e6db74">&#39;ear&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># If the game has ended, we should not update the player.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> player_list[index][<span style="color:#e6db74">&#39;end&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        EAR1 <span style="color:#f92672">=</span> detector<span style="color:#f92672">.</span>calculate_ear(array)
+</span></span><span style="display:flex;"><span>        player_list[index][<span style="color:#e6db74">&#39;ear&#39;</span>] <span style="color:#f92672">=</span> EAR1
+</span></span><span style="display:flex;"><span>        player_list[index][<span style="color:#e6db74">&#39;uri&#39;</span>] <span style="color:#f92672">=</span> uri
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Find rival&#39;s EAR.</span>
+</span></span><span style="display:flex;"><span>    rival_id <span style="color:#f92672">=</span> player_list[index][<span style="color:#e6db74">&#39;rival&#39;</span>]
+</span></span><span style="display:flex;"><span>    rival_index <span style="color:#f92672">=</span> find_by_id(rival_id)
+</span></span><span style="display:flex;"><span>    EAR2 <span style="color:#f92672">=</span> player_list[rival_index][<span style="color:#e6db74">&#39;ear&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Calculat elapsed time</span>
+</span></span><span style="display:flex;"><span>    elapsed <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time() <span style="color:#f92672">-</span> player_list[index][<span style="color:#e6db74">&#39;startTime&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># EAR &lt; threshold is determined as &#39;blink&#39;.</span>
+</span></span><span style="display:flex;"><span>    threshold <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.20</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># The first 3 second is not counted.</span>
+</span></span><span style="display:flex;"><span>    prepare_time <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((EAR1 <span style="color:#f92672">&lt;</span> threshold <span style="color:#f92672">and</span> EAR1 <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">or</span> (EAR2 <span style="color:#f92672">&lt;</span> threshold <span style="color:#f92672">and</span> EAR2 <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)) <span style="color:#f92672">and</span> elapsed <span style="color:#f92672">&gt;</span> prepare_time:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># The game end. Set player&#39;s status back to &#39;idle&#39;.</span>
+</span></span><span style="display:flex;"><span>        player_list[index][<span style="color:#e6db74">&#39;end&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        player_list[index][<span style="color:#e6db74">&#39;status&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;idle&#39;</span>
+</span></span><span style="display:flex;"><span>        player_list[rival_index][<span style="color:#e6db74">&#39;end&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        player_list[rival_index][<span style="color:#e6db74">&#39;status&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;idle&#39;</span>
+</span></span><span style="display:flex;"><span>        emit(<span style="color:#e6db74">&#39;get_arena_data&#39;</span>, {<span style="color:#e6db74">&#39;EAR1&#39;</span>: EAR1, <span style="color:#e6db74">&#39;EAR2&#39;</span>: EAR2, <span style="color:#e6db74">&#39;elapsed&#39;</span>: elapsed, <span style="color:#e6db74">&#39;end&#39;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                                <span style="color:#e6db74">&#39;uri1&#39;</span>: player_list[index][<span style="color:#e6db74">&#39;uri&#39;</span>], <span style="color:#e6db74">&#39;uri2&#39;</span>: player_list[rival_index][<span style="color:#e6db74">&#39;uri&#39;</span>]})
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        emit(<span style="color:#e6db74">&#39;get_arena_data&#39;</span>, {<span style="color:#e6db74">&#39;EAR1&#39;</span>: EAR1,
+</span></span><span style="display:flex;"><span>                                <span style="color:#e6db74">&#39;EAR2&#39;</span>: EAR2, <span style="color:#e6db74">&#39;elapsed&#39;</span>: elapsed, <span style="color:#e6db74">&#39;end&#39;</span>: <span style="color:#ae81ff">0</span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ==================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Run flask</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ==================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">index</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#39;index.html&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    socketio<span style="color:#f92672">.</span>run(app, host<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;0.0.0.0&#39;</span>, port<span style="color:#f92672">=</span><span style="color:#ae81ff">3000</span>,
+</span></span><span style="display:flex;"><span>                 keyfile<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#39;backend&#39;</span>, <span style="color:#e6db74">&#39;server.key&#39;</span>), certfile<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#39;backend&#39;</span>, <span style="color:#e6db74">&#39;server.crt&#39;</span>))
+</span></span></code></pre></div></div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-29&#32;00:27:27>更新于 2023-09-29&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/blinkdetection/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e8%a7%86%e8%a7%89%e8%bf%90%e5%8a%a8%5cEye_tracking%5cBlinkDetection.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/blinkdetection/" data-title="BlinkDetection" data-hashtags="CV,CV"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/blinkdetection/" data-hashtag="CV"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/blinkdetection/" data-title="BlinkDetection" data-image="https://gitee.com/github-25970295/blogImage/raw/master/img/20210501133220.png"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/cv/">CV</a>,&nbsp;<a href="liudongdong1.github.io/tags/cv/">CV</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/panda-tutorial/" class="prev" rel="prev" title="Panda Tutorial"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Panda Tutorial</a>
+      <a href="liudongdong1.github.io/%E6%A0%91%E8%8E%93%E6%B4%BE%E8%BD%A6%E7%89%8C%E8%AF%86%E5%88%AB/" class="next" rel="next" title="树莓派车牌识别">树莓派车牌识别<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

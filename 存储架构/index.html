@@ -1,21 +1,719 @@
-<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>存储架构 - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="高性能，高可用，可伸缩，安全性，扩展性（功能的扩展） 分层设计（应用，服务，数据，管理，分析） 集：一个应用/模块/功能部署在多台物理机器上，通"><meta name=keywords content="Storage"><meta itemprop=name content="存储架构"><meta itemprop=description content="高性能，高可用，可伸缩，安全性，扩展性（功能的扩展） 分层设计（应用，服务，数据，管理，分析） 集：一个应用/模块/功能部署在多台物理机器上，通"><meta itemprop=dateModified content="2023-09-24T17:00:04+08:00"><meta itemprop=wordCount content="3769"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="Storage,"><meta property="og:title" content="存储架构"><meta property="og:description" content="高性能，高可用，可伸缩，安全性，扩展性（功能的扩展） 分层设计（应用，服务，数据，管理，分析） 集：一个应用/模块/功能部署在多台物理机器上，通"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:modified_time" content="2023-09-24T17:00:04+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="存储架构"><meta name=twitter:description content="高性能，高可用，可伸缩，安全性，扩展性（功能的扩展） 分层设计（应用，服务，数据，管理，分析） 集：一个应用/模块/功能部署在多台物理机器上，通"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/><link rel=prev href=liudongdong1.github.io/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/><link rel=next href=liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF%E5%8F%91%E5%B1%95/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"存储架构","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84\/"},"genre":"posts","keywords":"Storage","wordcount":3769,"url":"liudongdong1.github.io\/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84\/","dateModified":"2023-09-24T17:00:04+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"liudongdong1"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
-<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>存储架构</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle" aria-hidden=true></i>
-liudongdong1</span></span>
-<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/storage/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div><div class=post-meta-line><span title="0001-01-01 00:00:00"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=0001-01-01>0001-01-01</time>
-</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3769 字&nbsp;
-<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title=存储架构>
-<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
-</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg data-srcset="https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg, https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg 1.5x, https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg 2x" data-sizes=auto alt=https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg title=https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg></div><div class="details toc" id=toc-static kept=true><div class="details-summary toc-title"><span>目录</span>
-<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#1-存储使用方式分类>1. 存储使用方式分类</a></li><li><a href=#2-存储协议>2. 存储协议</a></li><li><a href=#3-存储链接方式>3. 存储链接方式</a></li><li><a href=#4-分布式存储架构>4. 分布式存储架构</a></li><li><a href=#5-分布式理论>5. 分布式理论</a></li><li><a href=#6-分布式文件系统>6. 分布式文件系统</a></li><li><a href=#google-文件系统>Google 文件系统</a></li><li><a href=#7-分布式键值系统>7. 分布式键值系统</a></li><li><a href=#8-架构设计角度>8. 架构设计角度</a></li></ul></li><li><a href=#resource>Resource</a></li></ul></nav></div></div><div class=content id=content><blockquote><p>高性能，高可用，可伸缩，安全性，扩展性（功能的扩展）</p><p>分层设计（应用，服务，数据，管理，分析）</p><p>集：一个应用/模块/功能部署在多台物理机器上，通过负载均衡对外提供服务</p><p>异步：通过通知和轮询的发那个是告知请求方</p><p>缓存：将数据放在距离用户最近的位置</p><p>冗余：副本，纠删码</p><p>架构前端优化，应用层优化，代码层优化，存储层优化。</p><ul><li>前端优化：网站业务逻辑之前的部分；</li><li>浏览器优化：减少Http请求数，使用浏览器缓存，启用压缩，Css Js位置，Js异步，减少Cookie传输；</li><li>CDN加速，反向代理；</li><li>应用层优化：处理网站业务的服务器。使用缓存，异步，集</li><li>代码优化：合理的架构，多线程，资源复用（对象池，线程池等），良好的数据结构，JVM调优，单例，Cache等；</li><li>存储优化：缓存，固态硬盘，光纤传输，优化读写，磁盘冗余，分布式存储（HDFS），NOSQL等；</li></ul></blockquote><h3 id=1-存储使用方式分类>1. 存储使用方式分类</h3><ul><li><strong>块存储</strong>：体现形式是<code>卷或者硬盘</code>，主要操作对象是磁盘，将<code>裸磁盘空间整个映射给主机使用</code>。在此种方式下操作系统需要对挂载的裸硬盘进<code>行分区、格式化后，才能使用</code>。块存储无法进行文件共享。</li><li><strong>文件存储</strong>：<code>目录和文件</code>，数据以文件的方式存储和访问，按照目录结构进行组织。此种方式也需要<code>挂载，挂载后为一个目录，可直接存取其中的文件</code>；不需要格式化。</li><li><strong>对象存储</strong>：主要操作对象是对象 Object，本质上是键值对存储系统，不需要挂载，直接通过应用接口访问。</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160753118.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160753118.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160753118.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160753118.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160753118.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160753118.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160832539.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160832539.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160832539.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160832539.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160832539.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160832539.png></p><h3 id=2-存储协议>2. 存储协议</h3><ul><li><strong>NFS(Network File System, 网络文件系统)</strong>：主要应用于 Unix 环境下。通过使用 NFS，用户和程序可以象访问本地文件一样访问远端系统上的文件，使得每个计算机的节点能够像使用本地资源一样方便地使用网上资源。换言之，NFS 可用于<code>不同类型计算机、操作系统、网络架构和传输协议运行环境中的网络文件远程访问和共享</code>。<strong>「针对共享文件存储。」</strong></li><li><strong>CIFS（Common Internet File System，公共互联网文件系统)</strong>: 主要应用在 NT/Windows 环境下，其工作原理是让 CIFS 协议运行于 TCP/IP 通信协议之上，让 Unix 计算机可以在网络邻居上被 Windows 计算机看到。<strong>「针对共享文件存储。」</strong></li><li><strong>ISCSI （Internet SCSI／SCSI over IP） ：<strong>主要应用在 Windows 环境下，适用于 TCP／IP 通讯协议，是通过 TCP/IP 网络传输文件时的文件组织格式和数据传输方式。</strong>「针对数据块存储。」</strong></li></ul><h3 id=3-存储链接方式>3. 存储链接方式</h3><h4 id=1-das直接附加存储>.1. DAS(直接附加存储)</h4><blockquote><p><code>直接附加存储方式</code>与我们普通的 PC 存储架构一样，<code>外部存储设备都是直接挂接在服务器内部总线上</code>，数据存储设备是整个服务器结构的一部分，任何客户端想要访问存储设备上的资源就必须要通过服务器。</p><p>**内部 DAS：**在内部 DAS 架构中，<code>存储设备通过服务器机箱内部的并行或串行总线连接到服务器上</code>。但是，物理的总线有距离限制，只能支持短距离的高速数据传输。此外，很多内部总线能连接的设备数目也有限，并且将存储设备放在服务器机箱内部，也会占用大量的空间 ，对服务器其它部件的维护造成困难。
-**外部 DAS：**在外部 DAS 结构中，<code>服务器与外部的存储设备直接相连</code>。在大多数情况下，他们之间<code>通过 FC 协议或者 SCSI 协议进行通信</code>。与内部 DAS 相比，外部 DAS 克服了内部 DAS 对连接设备的距离和数量的限制。另外，外部 DAS 还可以提供存储设备集中化管理，更加方便。</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145707889.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145707889.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145707889.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145707889.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145707889.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145707889.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409142916300.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409142916300.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409142916300.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409142916300.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409142916300.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409142916300.png></p><h4 id=2-nas网络附加存储>.2. NAS（网络附加存储）</h4><blockquote><p>在 NAS 存储结构中，存储系统<code>不再通过 I/O 总线附属于某个特定的服务期或客户机</code>，而是<code>直接通过网络接口直接与网络相连</code>，用户<code>通过网络访问</code>。NAS 实际上是带有一个 “瘦服务器” 的存储设备，作用类似于一个专用的文件服务器，而不是传统通用服务器，去掉了大多数功能，仅仅提供文件系统功能，用于存储服务。</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145904751.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145904751.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145904751.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145904751.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145904751.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145904751.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143222083.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143222083.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143222083.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143222083.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143222083.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143222083.png></p><h4 id=3-san存储区域网络>.3. SAN（存储区域网络）</h4><blockquote><p>SAN (storage area network) 是一种<code>以网络为中心的存储结构</code>，不同于普通以太网，SAN 是位于服务器的后端，为连接服务器、磁盘阵列、带库等存储设备而建立的高性能**「专用网络（光纤通道）」**</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145944181.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145944181.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145944181.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145944181.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145944181.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145944181.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143021150.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143021150.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143021150.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143021150.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143021150.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143021150.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143124505.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143124505.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143124505.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143124505.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143124505.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143124505.png></p><h4 id=4-存储模型比较>.4. 存储模型比较</h4><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135009600.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135009600.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135009600.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135009600.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135009600.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135009600.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135439593.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135439593.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135439593.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135439593.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135439593.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135439593.png></p><h3 id=4-分布式存储架构>4. 分布式存储架构</h3><h4 id=1-是否对称>.1. 是否对称</h4><h5 id=1-对称式>.1. 对称式</h5><blockquote><p>在对称式架构中每个节点的角色均等，共同管理和维护元数据，节点间通过高速网络进行信息同步和互斥锁等操作。</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307150515167.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307150515167.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307150515167.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307150515167.png 2x" data-sizes=auto alt=Swift典型架构 title=Swift典型架构></p><h5 id=2-非对称式>.2. 非对称式</h5><blockquote><p>有<code>专门的一个或者多个节点负责管理元数据</code>，其他节点需要频繁与元数据节点通信以获取<code>最新的元数据比如目录列表、文件属性</code>等等。（元数据节点与存储节点分离）</p></blockquote><blockquote><p>FastDFS 采用的是非对称架构，分为 Tracker server 和 Storage server。</p><ul><li><p>Tracker server 作为中心结点，管理集群拓扑结构，其主要作用是<a href="https://cloud.tencent.com/product/clb?from=10680" target=_blank rel="external nofollow noopener noreferrer">负载均衡<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a>和调度。</p></li><li><p>Storage server 以<code>卷为单位组织</code>，一个卷内包含多台 storage 机器，每个卷中的服务器是镜像关系，数据互为备份，存储空间以卷内容量最小的 storage 为准，所以建议 group 内的多个 storage 尽量配置相同，以免造成存储空间的浪费。</p></li></ul></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/picture2022/raw/master/image-20220307150344740.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/picture2022/raw/master/image-20220307150344740.png, https://gitee.com/github-25970295/blogimgv2022/picture2022/raw/master/image-20220307150344740.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/picture2022/raw/master/image-20220307150344740.png 2x" data-sizes=auto alt="FastDFS 架构" title="FastDFS 架构"></p><h4 id=2-p2p-网络存储>.2. P2P 网络存储</h4><blockquote><p>P2P 网络存储技术的应用使得内容不是存在几台主要的服务器中，而是存在所有用户的个人电脑中。这就为网络存储提供了可能性，可以将<code>网络中的剩余存储空间利用起来，实现网络存储</code>。人们对存储容量的需求是无止境的，提高存储能力的方法有更换能力更强的存储器。另外就是把多个存储器用某种方式连接在一起，实现网络并行存储。相对于现有的网络储存系统而言，应用 P2P 技术将会有更大的优势。P2P 技术的主体就是网络中 Peer，也就是各台客户机，数量很大的。这些客户机的空闲存储空间很多，把这些空间利用起来实现网络存储。</p></blockquote><h4 id=分布式存储种类>分布式存储种类</h4><h5 id=中间控制节点架构--hdfs>中间控制节点架构 -hdfs</h5><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723231819018.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723231819018.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723231819018.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723231819018.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723231819018.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723231819018.png></p><h5 id=完全无中心架构-ceph>完全无中心架构-ceph</h5><ul><li>客户端是通过设备映射关系计算出要写入数据的位置，客户端与中心节点直接通信</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232019679.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232019679.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232019679.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232019679.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232019679.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232019679.png></p><h5 id=完全无中心架构-swift>完全无中心架构-swift</h5><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232248302.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232248302.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232248302.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232248302.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232248302.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232248302.png></p><h3 id=5-分布式理论>5. 分布式理论</h3><h4 id=一致性与可用性>一致性与可用性</h4><ul><li>时间一致性：所有的数据组件的数据在任意时刻都是完全一致的</li><li>事务一致性：只能存在事务开始前，或者事务开始后</li><li>线性一致性</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234131842.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234131842.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234131842.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234131842.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234131842.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234131842.png></p><ul><li>顺序一致性：不同的处理器对变量的写操作必须在所有的处理器上以相同的顺序看到</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234438247.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234438247.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234438247.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234438247.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234438247.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234438247.png></p><ul><li>因果一致性</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234504009.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234504009.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234504009.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234504009.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234504009.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234504009.png></p><ul><li><p>最终一致性：</p></li><li><p>可用性： 如负载均衡，Web服务器，数据服务器等</p></li></ul><h5 id=cap-理论>CAP 理论</h5><ul><li>一致性，可用性，分区容错性</li><li>从服务器角度：如何尽快的将更新的数据分布到整个系统，降低达到最终一致性时间窗口</li><li>从客户端角度：多进程并发访问时，非分布数据库要求更新过的数据能被后续的访问都能看到。</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723235357495.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723235357495.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723235357495.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723235357495.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723235357495.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723235357495.png></p><h4 id=数据分布>数据分布</h4><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70.png" data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=%2csize_16%2ccolor_FFFFFF%2ct_70.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=%2csize_16%2ccolor_FFFFFF%2ct_70.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=%2csize_16%2ccolor_FFFFFF%2ct_70.png 2x" data-sizes=auto alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70.png" title="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70.png"></p><h5 id=哈希分布>哈希分布</h5><ul><li>传统hash：访问数据时，先计算hash值，然后查询元数据服务器，获得该hash值对于的服务器</li><li>一致性hash：ring hash, jump hash</li><li>缺点：破坏数据的有序性，只支持随即读取操作</li></ul><h5 id=顺序分布>顺序分布</h5><ul><li>将大表顺序划分为连续的范围，每个范围成为一个子表， 类似btree</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724000425516.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724000425516.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724000425516.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724000425516.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724000425516.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724000425516.png></p><h5 id=crush-分布>crush 分布</h5><ul><li>通过crush算法将PG映射到一组OSD中，最后把x存放到对应的OSD中。</li><li>crush 算法当增加和删除节点时，怎么进行处理</li></ul><h4 id=数据复制>数据复制</h4><h5 id=强同步复制>强同步复制</h5><ul><li>同步日志操作：主部分将操作日至同步到备副本，备副本回放操作日志，完成后通知主副本，接着主副本修改本机，知道所有操作都完成后通知客户端写入成功。</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001021109.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001021109.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001021109.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001021109.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001021109.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001021109.png></p><h5 id=异步复制>异步复制</h5><ul><li>主副本不需要等待被副本回应，只需要本地修改成功就可以告知客户端写操作成功，另外通知异步机制，比如单独的复制线程将修改操作推送到其他副本。</li></ul><h5 id=nwr复制>NWR复制</h5><ul><li>基于写多个存储设备协议 （Replicated-write protocal）。N： 副本数量， w：写操作副本数量，R为读操作副本数量。</li><li>该协议中不再区分主从设备</li></ul><h4 id=分布式协议>分布式协议</h4><h4 id=跨机房部署>跨机房部署</h4><h3 id=6-分布式文件系统>6. 分布式文件系统</h3><h3 id=google-文件系统>Google 文件系统</h3><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001813510.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001813510.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001813510.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001813510.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001813510.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001813510.png></p><h4 id=taobao-文件系统>Taobao 文件系统</h4><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724002153112.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724002153112.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724002153112.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724002153112.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724002153112.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724002153112.png></p><h4 id=cdn-内容分发网络>CDN 内容分发网络</h4><h3 id=7-分布式键值系统>7. 分布式键值系统</h3><h4 id=amazon-dynamo>Amazon Dynamo</h4><h4 id=taobao-tiar>Taobao Tiar</h4><h4 id=etcd>ETCD</h4><h3 id=8-架构设计角度>8. 架构设计角度</h3><h4 id=可伸缩架构>可伸缩架构</h4><ul><li><p>通过添加/减少硬件（服务器）的方式，提高/降低系统的处理能力。</p></li><li><p>应用层：对应用进行<code>垂直或水平切分</code>。然后<code>针对单一功能进行负载均衡</code>（DNS,HTTP[反向代理],IP,链路层）。</p></li><li><p>服务层：与应用层类似；</p></li><li><p>数据层：<code>分库，分表，NOSQL等</code>；常用算法Hash，一致性Hash。</p></li></ul><h4 id=可扩展架构>可扩展架构</h4><ul><li>模块化，组件化：高内聚，内耦合，提高复用性，扩展性。</li><li>稳定接口：定义稳定的接口，在接口不变的情况下，内部结构可以“随意”变化。</li><li>设计模式：应用面向对象思想，原则，使用设计模式，进行代码层面的设计。</li><li>消息队列：模块化的系统，通过消息队列进行交互，使模块之间的依赖解耦。</li><li>分布式服务：公用模块服务化，提供其他系统使用，提高可重用性，扩展性。</li></ul><h4 id=高可用架构>高可用架构</h4><ul><li>不同层级使用的策略不同，一般采用<code>冗余备份和失效转移</code>解决高可用问题。</li><li>应用层：一般设计为<code>无状态的</code>，对于每次请求，使用哪一台服务器处理是没有影响的。一般使用<code>负载均衡</code>技术（需要解决Session同步问题），实现高可用。</li><li>服务层：<code>负载均衡</code>，<code>分级管理</code>，<code>快速失败（超时设置）</code>，<code>异步调用</code>，<code>服务降级</code>，<code>幂等设计</code>等。</li><li>数据层：<code>冗余备份</code>（冷，热备[同步，异步]，温备），<code>失效转移</code>（确认，转移，恢复）。数据高可用方面著名的理论基础是CAP理论（持久性，可用性，数据一致性[强一致，用户一致，最终一致]）</li></ul><h4 id=大型架构设计>大型架构设计</h4><ul><li>客户层：支持PC浏览器和手机APP。差别是手机APP可以直接访问通过IP访问，反向代理服务器。</li><li><strong>前端层</strong>：使用<code>DNS负载均衡</code>，<code>CDN本地加速</code>以及<code>反向代理服务</code>；</li><li><strong>应用层</strong>：网站应用集；按照<code>业务进行垂直拆分</code>，比如商品应用，会员中心等；</li><li><strong>服务层</strong>：提供公用服务，比如用户服务，订单服务，支付服务等；</li><li><strong>数据层</strong>：支持关系型数据库集（支持读写分离），NOSQL集，分布式文件系统集；以及分布式Cache；</li><li><strong>大数据存储层</strong>：支持应用层和服务层的日志数据收集，关系数据库和NOSQL数据库的结构化和半结构化数据收集；</li><li><strong>大数据处理层</strong>：通过Mapreduce进行离线数据分析或Storm实时数据分析，并将处理后的数据存入关系型数据库。（实际使用中，离线数据和实时数据会按照业务要求进行分类处理，并存入不同的数据库中，供应用层或服务层使用）。</li></ul><h2 id=resource>Resource</h2><ul><li><a href=https://cloud.tencent.com/developer/article/1703986 target=_blank rel="external nofollow noopener noreferrer">https://cloud.tencent.com/developer/article/1703986<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li><a href=https://cuichongxin.blog.csdn.net/article/details/113616740 target=_blank rel="external nofollow noopener noreferrer">https://cuichongxin.blog.csdn.net/article/details/113616740<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li><a href=http://www.360doc.com/content/21/0602/08/57557960_980065610.shtml target=_blank rel="external nofollow noopener noreferrer">http://www.360doc.com/content/21/0602/08/57557960_980065610.shtml<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> todo 进一步完善</li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-24 17:00:04">更新于 2023-09-24&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5c%e5%ad%98%e5%82%a8%e7%bb%93%e6%9e%84%5c%e5%ad%98%e5%82%a8%e6%9e%b6%e6%9e%84.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/ data-title=存储架构 data-hashtags=Storage><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/ data-hashtag=Storage><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/ data-title=存储架构 data-image=https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/storage/>Storage</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/ class=prev rel=prev title=存储系统架构><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>存储系统架构</a>
-<a href=liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF%E5%8F%91%E5%B1%95/ class=next rel=next title=存储技术发展>存储技术发展<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
-<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
-<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>存储架构 - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="高性能，高可用，可伸缩，安全性，扩展性（功能的扩展） 分层设计（应用，服务，数据，管理，分析） 集：一个应用/模块/功能部署在多台物理机器上，通" /><meta name="keywords" content='Storage' /><meta itemprop="name" content="存储架构">
+<meta itemprop="description" content="高性能，高可用，可伸缩，安全性，扩展性（功能的扩展） 分层设计（应用，服务，数据，管理，分析） 集：一个应用/模块/功能部署在多台物理机器上，通">
+<meta itemprop="dateModified" content="2023-09-24T17:00:04+08:00" />
+<meta itemprop="wordCount" content="3769"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Storage," /><meta property="og:title" content="存储架构" />
+<meta property="og:description" content="高性能，高可用，可伸缩，安全性，扩展性（功能的扩展） 分层设计（应用，服务，数据，管理，分析） 集：一个应用/模块/功能部署在多台物理机器上，通" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+
+<meta property="article:modified_time" content="2023-09-24T17:00:04+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="存储架构"/>
+<meta name="twitter:description" content="高性能，高可用，可伸缩，安全性，扩展性（功能的扩展） 分层设计（应用，服务，数据，管理，分析） 集：一个应用/模块/功能部署在多台物理机器上，通"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/" /><link rel="prev" href="liudongdong1.github.io/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/" /><link rel="next" href="liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF%E5%8F%91%E5%B1%95/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "存储架构",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84\/"
+    },"genre": "posts","keywords": "Storage","wordcount":  3769 ,
+    "url": "liudongdong1.github.io\/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84\/","dateModified": "2023-09-24T17:00:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>存储架构</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/storage/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div>
+      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01" >0001-01-01</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3769 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="存储架构">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg"
+    data-srcset="https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg, https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg 1.5x, https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg 2x"
+    data-sizes="auto"
+    alt="https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg"
+    title="https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-存储使用方式分类">1. 存储使用方式分类</a></li>
+        <li><a href="#2-存储协议">2. 存储协议</a></li>
+        <li><a href="#3-存储链接方式">3. 存储链接方式</a></li>
+        <li><a href="#4-分布式存储架构">4. 分布式存储架构</a></li>
+        <li><a href="#5-分布式理论">5. 分布式理论</a></li>
+        <li><a href="#6-分布式文件系统">6. 分布式文件系统</a></li>
+        <li><a href="#google-文件系统">Google 文件系统</a></li>
+        <li><a href="#7-分布式键值系统">7. 分布式键值系统</a></li>
+        <li><a href="#8-架构设计角度">8. 架构设计角度</a></li>
+      </ul>
+    </li>
+    <li><a href="#resource">Resource</a></li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><blockquote>
+<p>高性能，高可用，可伸缩，安全性，扩展性（功能的扩展）</p>
+<p>分层设计（应用，服务，数据，管理，分析）</p>
+<p>集：一个应用/模块/功能部署在多台物理机器上，通过负载均衡对外提供服务</p>
+<p>异步：通过通知和轮询的发那个是告知请求方</p>
+<p>缓存：将数据放在距离用户最近的位置</p>
+<p>冗余：副本，纠删码</p>
+<p>架构前端优化，应用层优化，代码层优化，存储层优化。</p>
+<ul>
+<li>前端优化：网站业务逻辑之前的部分；</li>
+<li>浏览器优化：减少Http请求数，使用浏览器缓存，启用压缩，Css Js位置，Js异步，减少Cookie传输；</li>
+<li>CDN加速，反向代理；</li>
+<li>应用层优化：处理网站业务的服务器。使用缓存，异步，集</li>
+<li>代码优化：合理的架构，多线程，资源复用（对象池，线程池等），良好的数据结构，JVM调优，单例，Cache等；</li>
+<li>存储优化：缓存，固态硬盘，光纤传输，优化读写，磁盘冗余，分布式存储（HDFS），NOSQL等；</li>
+</ul>
+</blockquote>
+<h3 id="1-存储使用方式分类">1. 存储使用方式分类</h3>
+<ul>
+<li><strong>块存储</strong>：体现形式是<code>卷或者硬盘</code>，主要操作对象是磁盘，将<code>裸磁盘空间整个映射给主机使用</code>。在此种方式下操作系统需要对挂载的裸硬盘进<code>行分区、格式化后，才能使用</code>。块存储无法进行文件共享。</li>
+<li><strong>文件存储</strong>：<code>目录和文件</code>，数据以文件的方式存储和访问，按照目录结构进行组织。此种方式也需要<code>挂载，挂载后为一个目录，可直接存取其中的文件</code>；不需要格式化。</li>
+<li><strong>对象存储</strong>：主要操作对象是对象 Object，本质上是键值对存储系统，不需要挂载，直接通过应用接口访问。</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160753118.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160753118.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160753118.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160753118.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160753118.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160753118.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160832539.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160832539.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160832539.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160832539.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160832539.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160832539.png"/></p>
+<h3 id="2-存储协议">2. 存储协议</h3>
+<ul>
+<li><strong>NFS(Network File System, 网络文件系统)</strong>：主要应用于 Unix 环境下。通过使用 NFS，用户和程序可以象访问本地文件一样访问远端系统上的文件，使得每个计算机的节点能够像使用本地资源一样方便地使用网上资源。换言之，NFS 可用于<code>不同类型计算机、操作系统、网络架构和传输协议运行环境中的网络文件远程访问和共享</code>。<strong>「针对共享文件存储。」</strong></li>
+<li><strong>CIFS（Common Internet File System，公共互联网文件系统)</strong>: 主要应用在 NT/Windows 环境下，其工作原理是让 CIFS 协议运行于 TCP/IP 通信协议之上，让 Unix 计算机可以在网络邻居上被 Windows 计算机看到。<strong>「针对共享文件存储。」</strong></li>
+<li><strong>ISCSI （Internet SCSI／SCSI over IP） ：<strong>主要应用在 Windows 环境下，适用于 TCP／IP 通讯协议，是通过 TCP/IP 网络传输文件时的文件组织格式和数据传输方式。</strong>「针对数据块存储。」</strong></li>
+</ul>
+<h3 id="3-存储链接方式">3. 存储链接方式</h3>
+<h4 id="1-das直接附加存储">.1. DAS(直接附加存储)</h4>
+<blockquote>
+<p><code>直接附加存储方式</code>与我们普通的 PC 存储架构一样，<code>外部存储设备都是直接挂接在服务器内部总线上</code>，数据存储设备是整个服务器结构的一部分，任何客户端想要访问存储设备上的资源就必须要通过服务器。</p>
+<p>**内部 DAS：**在内部 DAS 架构中，<code>存储设备通过服务器机箱内部的并行或串行总线连接到服务器上</code>。但是，物理的总线有距离限制，只能支持短距离的高速数据传输。此外，很多内部总线能连接的设备数目也有限，并且将存储设备放在服务器机箱内部，也会占用大量的空间 ，对服务器其它部件的维护造成困难。
+**外部 DAS：**在外部 DAS 结构中，<code>服务器与外部的存储设备直接相连</code>。在大多数情况下，他们之间<code>通过 FC 协议或者 SCSI 协议进行通信</code>。与内部 DAS 相比，外部 DAS 克服了内部 DAS 对连接设备的距离和数量的限制。另外，外部 DAS 还可以提供存储设备集中化管理，更加方便。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145707889.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145707889.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145707889.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145707889.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145707889.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145707889.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409142916300.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409142916300.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409142916300.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409142916300.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409142916300.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409142916300.png"/></p>
+<h4 id="2-nas网络附加存储">.2. NAS（网络附加存储）</h4>
+<blockquote>
+<p>在 NAS 存储结构中，存储系统<code>不再通过 I/O 总线附属于某个特定的服务期或客户机</code>，而是<code>直接通过网络接口直接与网络相连</code>，用户<code>通过网络访问</code>。NAS 实际上是带有一个 “瘦服务器” 的存储设备，作用类似于一个专用的文件服务器，而不是传统通用服务器，去掉了大多数功能，仅仅提供文件系统功能，用于存储服务。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145904751.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145904751.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145904751.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145904751.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145904751.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145904751.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143222083.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143222083.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143222083.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143222083.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143222083.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143222083.png"/></p>
+<h4 id="3-san存储区域网络">.3. SAN（存储区域网络）</h4>
+<blockquote>
+<p>SAN (storage area network) 是一种<code>以网络为中心的存储结构</code>，不同于普通以太网，SAN 是位于服务器的后端，为连接服务器、磁盘阵列、带库等存储设备而建立的高性能**「专用网络（光纤通道）」**</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145944181.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145944181.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145944181.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145944181.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145944181.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145944181.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143021150.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143021150.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143021150.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143021150.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143021150.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143021150.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143124505.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143124505.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143124505.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143124505.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143124505.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143124505.png"/></p>
+<h4 id="4-存储模型比较">.4. 存储模型比较</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135009600.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135009600.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135009600.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135009600.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135009600.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135009600.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135439593.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135439593.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135439593.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135439593.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135439593.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135439593.png"/></p>
+<h3 id="4-分布式存储架构">4. 分布式存储架构</h3>
+<h4 id="1-是否对称">.1. 是否对称</h4>
+<h5 id="1-对称式">.1. 对称式</h5>
+<blockquote>
+<p>在对称式架构中每个节点的角色均等，共同管理和维护元数据，节点间通过高速网络进行信息同步和互斥锁等操作。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307150515167.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307150515167.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307150515167.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307150515167.png 2x"
+    data-sizes="auto"
+    alt="Swift典型架构"
+    title="Swift典型架构"/></p>
+<h5 id="2-非对称式">.2. 非对称式</h5>
+<blockquote>
+<p>有<code>专门的一个或者多个节点负责管理元数据</code>，其他节点需要频繁与元数据节点通信以获取<code>最新的元数据比如目录列表、文件属性</code>等等。（元数据节点与存储节点分离）</p>
+</blockquote>
+<blockquote>
+<p>FastDFS 采用的是非对称架构，分为 Tracker server 和 Storage server。</p>
+<ul>
+<li>
+<p>Tracker server 作为中心结点，管理集群拓扑结构，其主要作用是<a href="https://cloud.tencent.com/product/clb?from=10680"target="_blank" rel="external nofollow noopener noreferrer">负载均衡<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>和调度。</p>
+</li>
+<li>
+<p>Storage server 以<code>卷为单位组织</code>，一个卷内包含多台 storage 机器，每个卷中的服务器是镜像关系，数据互为备份，存储空间以卷内容量最小的 storage 为准，所以建议 group 内的多个 storage 尽量配置相同，以免造成存储空间的浪费。</p>
+</li>
+</ul>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/picture2022/raw/master/image-20220307150344740.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/picture2022/raw/master/image-20220307150344740.png, https://gitee.com/github-25970295/blogimgv2022/picture2022/raw/master/image-20220307150344740.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/picture2022/raw/master/image-20220307150344740.png 2x"
+    data-sizes="auto"
+    alt="FastDFS 架构"
+    title="FastDFS 架构"/></p>
+<h4 id="2-p2p-网络存储">.2. P2P 网络存储</h4>
+<blockquote>
+<p>P2P 网络存储技术的应用使得内容不是存在几台主要的服务器中，而是存在所有用户的个人电脑中。这就为网络存储提供了可能性，可以将<code>网络中的剩余存储空间利用起来，实现网络存储</code>。人们对存储容量的需求是无止境的，提高存储能力的方法有更换能力更强的存储器。另外就是把多个存储器用某种方式连接在一起，实现网络并行存储。相对于现有的网络储存系统而言，应用 P2P 技术将会有更大的优势。P2P 技术的主体就是网络中 Peer，也就是各台客户机，数量很大的。这些客户机的空闲存储空间很多，把这些空间利用起来实现网络存储。</p>
+</blockquote>
+<h4 id="分布式存储种类">分布式存储种类</h4>
+<h5 id="中间控制节点架构--hdfs">中间控制节点架构 -hdfs</h5>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723231819018.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723231819018.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723231819018.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723231819018.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723231819018.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723231819018.png"/></p>
+<h5 id="完全无中心架构-ceph">完全无中心架构-ceph</h5>
+<ul>
+<li>客户端是通过设备映射关系计算出要写入数据的位置，客户端与中心节点直接通信</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232019679.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232019679.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232019679.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232019679.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232019679.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232019679.png"/></p>
+<h5 id="完全无中心架构-swift">完全无中心架构-swift</h5>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232248302.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232248302.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232248302.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232248302.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232248302.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232248302.png"/></p>
+<h3 id="5-分布式理论">5. 分布式理论</h3>
+<h4 id="一致性与可用性">一致性与可用性</h4>
+<ul>
+<li>时间一致性：所有的数据组件的数据在任意时刻都是完全一致的</li>
+<li>事务一致性：只能存在事务开始前，或者事务开始后</li>
+<li>线性一致性</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234131842.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234131842.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234131842.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234131842.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234131842.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234131842.png"/></p>
+<ul>
+<li>顺序一致性：不同的处理器对变量的写操作必须在所有的处理器上以相同的顺序看到</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234438247.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234438247.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234438247.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234438247.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234438247.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234438247.png"/></p>
+<ul>
+<li>因果一致性</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234504009.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234504009.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234504009.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234504009.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234504009.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234504009.png"/></p>
+<ul>
+<li>
+<p>最终一致性：</p>
+</li>
+<li>
+<p>可用性： 如负载均衡，Web服务器，数据服务器等</p>
+</li>
+</ul>
+<h5 id="cap-理论">CAP 理论</h5>
+<ul>
+<li>一致性，可用性，分区容错性</li>
+<li>从服务器角度：如何尽快的将更新的数据分布到整个系统，降低达到最终一致性时间窗口</li>
+<li>从客户端角度：多进程并发访问时，非分布数据库要求更新过的数据能被后续的访问都能看到。</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723235357495.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723235357495.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723235357495.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723235357495.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723235357495.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723235357495.png"/></p>
+<h4 id="数据分布">数据分布</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=%2csize_16%2ccolor_FFFFFF%2ct_70.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=%2csize_16%2ccolor_FFFFFF%2ct_70.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=%2csize_16%2ccolor_FFFFFF%2ct_70.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70.png"/></p>
+<h5 id="哈希分布">哈希分布</h5>
+<ul>
+<li>传统hash：访问数据时，先计算hash值，然后查询元数据服务器，获得该hash值对于的服务器</li>
+<li>一致性hash：ring hash, jump hash</li>
+<li>缺点：破坏数据的有序性，只支持随即读取操作</li>
+</ul>
+<h5 id="顺序分布">顺序分布</h5>
+<ul>
+<li>将大表顺序划分为连续的范围，每个范围成为一个子表， 类似btree</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724000425516.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724000425516.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724000425516.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724000425516.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724000425516.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724000425516.png"/></p>
+<h5 id="crush-分布">crush 分布</h5>
+<ul>
+<li>通过crush算法将PG映射到一组OSD中，最后把x存放到对应的OSD中。</li>
+<li>crush  算法当增加和删除节点时，怎么进行处理</li>
+</ul>
+<h4 id="数据复制">数据复制</h4>
+<h5 id="强同步复制">强同步复制</h5>
+<ul>
+<li>同步日志操作：主部分将操作日至同步到备副本，备副本回放操作日志，完成后通知主副本，接着主副本修改本机，知道所有操作都完成后通知客户端写入成功。</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001021109.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001021109.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001021109.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001021109.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001021109.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001021109.png"/></p>
+<h5 id="异步复制">异步复制</h5>
+<ul>
+<li>主副本不需要等待被副本回应，只需要本地修改成功就可以告知客户端写操作成功，另外通知异步机制，比如单独的复制线程将修改操作推送到其他副本。</li>
+</ul>
+<h5 id="nwr复制">NWR复制</h5>
+<ul>
+<li>基于写多个存储设备协议 （Replicated-write protocal）。N： 副本数量， w：写操作副本数量，R为读操作副本数量。</li>
+<li>该协议中不再区分主从设备</li>
+</ul>
+<h4 id="分布式协议">分布式协议</h4>
+<h4 id="跨机房部署">跨机房部署</h4>
+<h3 id="6-分布式文件系统">6. 分布式文件系统</h3>
+<h3 id="google-文件系统">Google 文件系统</h3>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001813510.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001813510.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001813510.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001813510.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001813510.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001813510.png"/></p>
+<h4 id="taobao-文件系统">Taobao 文件系统</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724002153112.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724002153112.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724002153112.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724002153112.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724002153112.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724002153112.png"/></p>
+<h4 id="cdn-内容分发网络">CDN 内容分发网络</h4>
+<h3 id="7-分布式键值系统">7. 分布式键值系统</h3>
+<h4 id="amazon-dynamo">Amazon Dynamo</h4>
+<h4 id="taobao-tiar">Taobao Tiar</h4>
+<h4 id="etcd">ETCD</h4>
+<h3 id="8-架构设计角度">8. 架构设计角度</h3>
+<h4 id="可伸缩架构">可伸缩架构</h4>
+<ul>
+<li>
+<p>通过添加/减少硬件（服务器）的方式，提高/降低系统的处理能力。</p>
+</li>
+<li>
+<p>应用层：对应用进行<code>垂直或水平切分</code>。然后<code>针对单一功能进行负载均衡</code>（DNS,HTTP[反向代理],IP,链路层）。</p>
+</li>
+<li>
+<p>服务层：与应用层类似；</p>
+</li>
+<li>
+<p>数据层：<code>分库，分表，NOSQL等</code>；常用算法Hash，一致性Hash。</p>
+</li>
+</ul>
+<h4 id="可扩展架构">可扩展架构</h4>
+<ul>
+<li>模块化，组件化：高内聚，内耦合，提高复用性，扩展性。</li>
+<li>稳定接口：定义稳定的接口，在接口不变的情况下，内部结构可以“随意”变化。</li>
+<li>设计模式：应用面向对象思想，原则，使用设计模式，进行代码层面的设计。</li>
+<li>消息队列：模块化的系统，通过消息队列进行交互，使模块之间的依赖解耦。</li>
+<li>分布式服务：公用模块服务化，提供其他系统使用，提高可重用性，扩展性。</li>
+</ul>
+<h4 id="高可用架构">高可用架构</h4>
+<ul>
+<li>不同层级使用的策略不同，一般采用<code>冗余备份和失效转移</code>解决高可用问题。</li>
+<li>应用层：一般设计为<code>无状态的</code>，对于每次请求，使用哪一台服务器处理是没有影响的。一般使用<code>负载均衡</code>技术（需要解决Session同步问题），实现高可用。</li>
+<li>服务层：<code>负载均衡</code>，<code>分级管理</code>，<code>快速失败（超时设置）</code>，<code>异步调用</code>，<code>服务降级</code>，<code>幂等设计</code>等。</li>
+<li>数据层：<code>冗余备份</code>（冷，热备[同步，异步]，温备），<code>失效转移</code>（确认，转移，恢复）。数据高可用方面著名的理论基础是CAP理论（持久性，可用性，数据一致性[强一致，用户一致，最终一致]）</li>
+</ul>
+<h4 id="大型架构设计">大型架构设计</h4>
+<ul>
+<li>客户层：支持PC浏览器和手机APP。差别是手机APP可以直接访问通过IP访问，反向代理服务器。</li>
+<li><strong>前端层</strong>：使用<code>DNS负载均衡</code>，<code>CDN本地加速</code>以及<code>反向代理服务</code>；</li>
+<li><strong>应用层</strong>：网站应用集；按照<code>业务进行垂直拆分</code>，比如商品应用，会员中心等；</li>
+<li><strong>服务层</strong>：提供公用服务，比如用户服务，订单服务，支付服务等；</li>
+<li><strong>数据层</strong>：支持关系型数据库集（支持读写分离），NOSQL集，分布式文件系统集；以及分布式Cache；</li>
+<li><strong>大数据存储层</strong>：支持应用层和服务层的日志数据收集，关系数据库和NOSQL数据库的结构化和半结构化数据收集；</li>
+<li><strong>大数据处理层</strong>：通过Mapreduce进行离线数据分析或Storm实时数据分析，并将处理后的数据存入关系型数据库。（实际使用中，离线数据和实时数据会按照业务要求进行分类处理，并存入不同的数据库中，供应用层或服务层使用）。</li>
+</ul>
+<h2 id="resource">Resource</h2>
+<ul>
+<li><a href="https://cloud.tencent.com/developer/article/1703986"target="_blank" rel="external nofollow noopener noreferrer">https://cloud.tencent.com/developer/article/1703986<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://cuichongxin.blog.csdn.net/article/details/113616740"target="_blank" rel="external nofollow noopener noreferrer">https://cuichongxin.blog.csdn.net/article/details/113616740<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="http://www.360doc.com/content/21/0602/08/57557960_980065610.shtml"target="_blank" rel="external nofollow noopener noreferrer">http://www.360doc.com/content/21/0602/08/57557960_980065610.shtml<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> todo 进一步完善</li>
+</ul>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-24&#32;17:00:04>更新于 2023-09-24&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5c%e5%ad%98%e5%82%a8%e7%bb%93%e6%9e%84%5c%e5%ad%98%e5%82%a8%e6%9e%b6%e6%9e%84.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/" data-title="存储架构" data-hashtags="Storage"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/" data-hashtag="Storage"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/" data-title="存储架构" data-image="https://cdn.pixabay.com/photo/2017/08/04/05/49/baby-2579144__340.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/storage/">Storage</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/" class="prev" rel="prev" title="存储系统架构"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>存储系统架构</a>
+      <a href="liudongdong1.github.io/%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF%E5%8F%91%E5%B1%95/" class="next" rel="next" title="存储技术发展">存储技术发展<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

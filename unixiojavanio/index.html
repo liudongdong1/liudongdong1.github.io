@@ -1,256 +1,670 @@
-<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>UnixIO - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="对于一个套接字上的输入操作，第一步通常涉及等待数据从网络中到达。当所等待分组到达时，它被复制到内核中的某个缓冲区。第二步就是把数据从内核缓冲"><meta name=keywords content="Java,Storage"><meta itemprop=name content="UnixIO"><meta itemprop=description content="对于一个套接字上的输入操作，第一步通常涉及等待数据从网络中到达。当所等待分组到达时，它被复制到内核中的某个缓冲区。第二步就是把数据从内核缓冲"><meta itemprop=datePublished content="2021-05-18T21:31:56+00:00"><meta itemprop=dateModified content="2023-09-28T22:47:27+08:00"><meta itemprop=wordCount content="3890"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="Java,Storage,"><meta property="og:title" content="UnixIO"><meta property="og:description" content="对于一个套接字上的输入操作，第一步通常涉及等待数据从网络中到达。当所等待分组到达时，它被复制到内核中的某个缓冲区。第二步就是把数据从内核缓冲"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/unixiojavanio/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-05-18T21:31:56+00:00"><meta property="article:modified_time" content="2023-09-28T22:47:27+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="UnixIO"><meta name=twitter:description content="对于一个套接字上的输入操作，第一步通常涉及等待数据从网络中到达。当所等待分组到达时，它被复制到内核中的某个缓冲区。第二步就是把数据从内核缓冲"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/unixiojavanio/><link rel=prev href=liudongdong1.github.io/classify_face/><link rel=next href=liudongdong1.github.io/videostability/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"UnixIO","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/unixiojavanio\/"},"genre":"posts","keywords":"Java, Storage","wordcount":3890,"url":"liudongdong1.github.io\/unixiojavanio\/","datePublished":"2021-05-18T21:31:56+00:00","dateModified":"2023-09-28T22:47:27+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"liudongdong1"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
-<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>UnixIO</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle" aria-hidden=true></i>
-liudongdong1</span></span>
-<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/framework/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Framework</a></span></div><div class=post-meta-line><span title="2021-05-18 21:31:56"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-05-18>2021-05-18</time>
-</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3890 字&nbsp;
-<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title=UnixIO>
-<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
-</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg data-srcset="https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg, https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg 1.5x, https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg 2x" data-sizes=auto alt=https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg title=https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg></div><div class="details toc" id=toc-static kept=true><div class="details-summary toc-title"><span>目录</span>
-<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#1-阻塞式-io>1. 阻塞式 I/O</a></li><li><a href=#2-非阻塞式-io>2. 非阻塞式 I/O</a></li><li><a href=#3-io-复用select-和-poll>3. I/O 复用(select 和 poll)</a></li><li><a href=#4-信号驱动式-iosigio>4. 信号驱动式 I/O(SIGIO)</a></li><li><a href=#5-异步-ioaio>5. 异步 I/O(AIO)</a></li><li><a href=#6-javanio>6. JavaNIO</a></li><li><a href=#resource>Resource</a></li></ul></li></ul></nav></div></div><div class=content id=content><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-overview.jpg data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-overview.jpg, https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-overview.jpg 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-overview.jpg 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-overview.jpg title=https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-overview.jpg></p><blockquote><p>对于一个套接字上的输入操作，第一步通常涉及等待数据从网络中到达。当所等待分组到达时，它被复制到内核中的某个缓冲区。第二步就是把数据从内核缓冲区复制到应用进程缓冲区。</p></blockquote><h3 id=1-阻塞式-io>1. 阻塞式 I/O</h3><blockquote><p>应用进程被阻塞，直到数据复制到应用进程缓冲区中才返回。</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>ssize_t</span> <span style=color:#a6e22e>recvfrom</span>(<span style=color:#66d9ef>int</span> sockfd, <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>buf, <span style=color:#66d9ef>size_t</span> len, <span style=color:#66d9ef>int</span> flags, <span style=color:#66d9ef>struct</span> sockaddr <span style=color:#f92672>*</span>src_addr, <span style=color:#66d9ef>socklen_t</span> <span style=color:#f92672>*</span>addrlen);<span style=color:#75715e>//recvfrom 用于接收 Socket 传来的数据，并复制到应用进程的缓冲区 buf 中。这里把 recvfrom() 当成系统调用。
-</span></span></span></code></pre></div><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131528361.png data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131528361.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131528361.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131528361.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131528361.png title=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131528361.png></p><h3 id=2-非阻塞式-io>2. 非阻塞式 I/O</h3><blockquote><p>应用进程执行系统调用之后，内核返回一个错误码。应用进程可以继续执行，但是需要不断的执行系统调用来获知 I/O 是否完成，这种方式称为轮询(polling)。</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131624354.png data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131624354.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131624354.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131624354.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131624354.png title=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131624354.png></p><h3 id=3-io-复用select-和-poll>3. I/O 复用(select 和 poll)</h3><blockquote><p>使用 select 或者 poll 等待数据，并且可以等待多个套接字中的任何一个变为可读，这一过程会被阻塞，当某一个套接字可读时返回。之后再使用 recvfrom 把数据从内核复制到进程中。它可以让单个进程具有处理多个 I/O 事件的能力。又被称为 Event Driven I/O，即事件驱动 I/O。</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803131744993.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803131744993.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803131744993.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803131744993.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803131744993.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803131744993.png></p><h3 id=4-信号驱动式-iosigio>4. 信号驱动式 I/O(SIGIO)</h3><blockquote><p><code>应用进程使用 sigaction 系统调用，内核立即返回，应用进程可以继续执行</code>，也就是说等待数据阶段应用进程是非阻塞的。<code>内核在数据到达时向应用进程发送 SIGIO 信号，应用进程收到之后在信号处理程序中调用 recvfrom 将数据从内核复制到应用进程中</code>。</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131833678.png data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131833678.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131833678.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131833678.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131833678.png title=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131833678.png></p><h3 id=5-异步-ioaio>5. 异步 I/O(AIO)</h3><blockquote><ul><li><p>进行 aio_read 系统调用会立即返回，应用进程继续执行，不会被阻塞，内核会在所有操作完成之后向应用进程发送信号。</p></li><li><p>异步 I/O 与信号驱动 I/O 的区别在于，<code>异步 I/O 的信号是通知应用进程 I/O 完成，而信号驱动 I/O 的信号是通知应用进程可以开始 I/O。</code></p></li></ul></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803132228154.png data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803132228154.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803132228154.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803132228154.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803132228154.png title=https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803132228154.png></p><h3 id=6-javanio>6. JavaNIO</h3><ul><li>Channel 是客户端连接的一个抽象，当每个客户端连接到服务器时，服务器都会为其生成一个 Channel 对象；</li><li>Selector 则是 Java NIO 实现高性能的关键，其本质上使用了 IO 多路复用的原理，通过一个线程不断的监听多个 Channel 连接来实现多所有这些 Channel 事件进行处理，这样的优点在于只需要一个线程就可以处理大量的客户端连接，当有客户端事件到达时，再将其分发出去交由其它线程处理；</li><li>Buffer 从字面上讲是一个缓存，本质上其是一个字节数组，通过 Buffer，可以从 Channel 上读取数据，然后交由下层的处理器进行处理。这里的 Buffer 的优点在于其封装了一套非常简单的用于读取和写入数据 API。</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/ac8e766861004dbfa4db78ea705a7228.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/ac8e766861004dbfa4db78ea705a7228.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/ac8e766861004dbfa4db78ea705a7228.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/ac8e766861004dbfa4db78ea705a7228.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/ac8e766861004dbfa4db78ea705a7228.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/ac8e766861004dbfa4db78ea705a7228.png></p><h4 id=1-channel>1. Channel</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 服务器端：
-</span></span></span><span style=display:flex><span><span style=color:#75715e>// 用于创建一个供服务器使用的ServerSocketChannel实例
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>ServerSocketChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>open</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 绑定一个服务器端口，从而提供对外的服务
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>ServerSocketChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>bind</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 获取一个客户端的Channel连接
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>ServerSocketChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>accept</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 客户端：
-</span></span></span><span style=display:flex><span><span style=color:#75715e>// 用于创建一个供客户端使用的SocketChannel实例
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>SocketChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>open</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 连接参数中指定地址和端口对应的服务器
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>SocketChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>connect</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// ServerSocketChannel和SocketChannel两者兼备的方法
-</span></span></span><span style=display:flex><span><span style=color:#75715e>// 用于指定服务器处理请求的方式是阻塞的还是非阻塞的，对于Java NIO都是以非阻塞的方式进行处理的
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>Channel<span style=color:#f92672>.</span><span style=color:#a6e22e>configureBlocking</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 将当前channel注册到一个Selector上，该方法会返回注册之后得到的SelectionKey对象。
-</span></span></span><span style=display:flex><span><span style=color:#75715e>// 这里在注册Channel的时候可以选择Selector将关注该Channel的哪些事件，可选的有如下几种：
-</span></span></span><span style=display:flex><span><span style=color:#75715e>// SelectionKey.OP_CONNECT：监听Channel建立连接事件
-</span></span></span><span style=display:flex><span><span style=color:#75715e>// SelectionKey.OP_READ：监听Channel的可读取事件，也即客户端已经发送数据过来，此时可以读取
-</span></span></span><span style=display:flex><span><span style=color:#75715e>// SelectionKey.OP_WRITE：监听Channel的可写事件，即当前可以写入数据到Channel中
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>Channel<span style=color:#f92672>.</span><span style=color:#a6e22e>register</span><span style=color:#f92672>(</span>Selector<span style=color:#f92672>,</span> <span style=color:#66d9ef>int</span><span style=color:#f92672>);</span>
-</span></span></code></pre></div><h4 id=2-selector>2. Selector</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 创建一个Selector实例
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>Selector<span style=color:#f92672>.</span><span style=color:#a6e22e>open</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 监听所有注册的Channel，一直阻塞知道有任何一个客户端Channel有相应的事件到达，
-</span></span></span><span style=display:flex><span><span style=color:#75715e>// 需要注意的是，这里的select()方法返回的是当前接收到是事件数目，而不是具体的事件，
-</span></span></span><span style=display:flex><span><span style=color:#75715e>// 具体的事件要通过selectedKeys()方法获取
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>Selector<span style=color:#f92672>.</span><span style=color:#a6e22e>select</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 获取当前所有有事件到达的客户端Channel对应的SelectionKey实例
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>Selector<span style=color:#f92672>.</span><span style=color:#a6e22e>selectedKeys</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 判断当前收到的Channel的事件是否为OP_CONNECT事件
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>SelectionKey<span style=color:#f92672>.</span><span style=color:#a6e22e>isConnectable</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 判断当前收到的Channel的事件是否为OP_READ事件
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>SelectionKey<span style=color:#f92672>.</span><span style=color:#a6e22e>isReadable</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 判断当前收到的Channel的事件是否为OP_WRITE事件
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>SelectionKey<span style=color:#f92672>.</span><span style=color:#a6e22e>isWritable</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 返回当前SelectionKey中所封装的Channel对象
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>SelectionKey<span style=color:#f92672>.</span><span style=color:#a6e22e>channel</span><span style=color:#f92672>();</span>
-</span></span></code></pre></div><h4 id=3-案例代码>3. 案例代码</h4><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/70.jpeg data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/70.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/70.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/70.jpeg 2x" data-sizes=auto alt=服务端流程 title=服务端流程></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Server</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span><span style=color:#f92672>(</span>String<span style=color:#f92672>[]</span> args<span style=color:#f92672>)</span> <span style=color:#66d9ef>throws</span> IOException <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>new</span> Server<span style=color:#f92672>().</span><span style=color:#a6e22e>start</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>start</span><span style=color:#f92672>()</span> <span style=color:#66d9ef>throws</span> IOException <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 创建一个服务器ServerSocketChannel对象
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        ServerSocketChannel serverSocketChannel <span style=color:#f92672>=</span> ServerSocketChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>open</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 将当前服务器绑定到8080端口
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        serverSocketChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>bind</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> InetSocketAddress<span style=color:#f92672>(</span>8080<span style=color:#f92672>));</span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 设置当前channel为非阻塞的模式
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        serverSocketChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>configureBlocking</span><span style=color:#f92672>(</span><span style=color:#66d9ef>false</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 创建一个Selector对象
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        Selector selector <span style=color:#f92672>=</span> Selector<span style=color:#f92672>.</span><span style=color:#a6e22e>open</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 将服务器ServerSocketChannel注册到Selector上，并且监听与客户端建立连接的事件
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        serverSocketChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>register</span><span style=color:#f92672>(</span>selector<span style=color:#f92672>,</span> SelectionKey<span style=color:#f92672>.</span><span style=color:#a6e22e>OP_ACCEPT</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>while</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>true</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 监听ServerSocketChannel上的事件，每秒钟循环一次，
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            <span style=color:#75715e>// 这里select()方法返回的是当前监听得到的事件数目，为0表示当前没有任何事件到达
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>selector<span style=color:#f92672>.</span><span style=color:#a6e22e>select</span><span style=color:#f92672>(</span>1000<span style=color:#f92672>)</span> <span style=color:#f92672>==</span> 0<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>                System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;has no message...&#34;</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>continue</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>            <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 走到这里说明当前有监听的事件到达，获取所有监听的Channel所对应的SelectionKey对象，
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            <span style=color:#75715e>// 这里需要注意的是，前面我们已经将ServerSocketChannel注册到Selector中了，
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            <span style=color:#75715e>// 因而对于ServerSocketChannel，其监听得到的则是SelectionKey.OP_CONNECT事件。
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            <span style=color:#75715e>// 但是下面的代码中，我们也会将与客户端建立的连接Channel注册到Selector中，
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            <span style=color:#75715e>// 因而这里Selector中也会存在接收到的SelectionKey.OP_READ和OP_WRITE事件。
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            Set<span style=color:#f92672>&lt;</span>SelectionKey<span style=color:#f92672>&gt;</span> selectionKeys <span style=color:#f92672>=</span> selector<span style=color:#f92672>.</span><span style=color:#a6e22e>selectedKeys</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 对监听到的事件进行遍历
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            Iterator<span style=color:#f92672>&lt;</span>SelectionKey<span style=color:#f92672>&gt;</span> iterator <span style=color:#f92672>=</span> selectionKeys<span style=color:#f92672>.</span><span style=color:#a6e22e>iterator</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>while</span> <span style=color:#f92672>(</span>iterator<span style=color:#f92672>.</span><span style=color:#a6e22e>hasNext</span><span style=color:#f92672>())</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>                SelectionKey key <span style=color:#f92672>=</span> iterator<span style=color:#f92672>.</span><span style=color:#a6e22e>next</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 这里需要注意的是，Selector在为每个有事件到达的Channel建立SelectionKey对象
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                <span style=color:#75715e>// 之后，其并不会将其移除，如果我们不进行移除，那么下次循环时该事件还会再被处理一次，
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                <span style=color:#75715e>// 因而这里要调用remove()方法移除该SelectionKey
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                iterator<span style=color:#f92672>.</span><span style=color:#a6e22e>remove</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 如果是有新的客户端Channel连接建立，则处理该事件
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>key<span style=color:#f92672>.</span><span style=color:#a6e22e>isAcceptable</span><span style=color:#f92672>())</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>                    accept<span style=color:#f92672>(</span>key<span style=color:#f92672>,</span> selector<span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>                <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 如果客户端连接中有可读取的数据，则处理该事件
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>key<span style=color:#f92672>.</span><span style=color:#a6e22e>isReadable</span><span style=color:#f92672>())</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>                    read<span style=color:#f92672>(</span>key<span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>                <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 如果可往客户端连接中写入数据，则处理该事件
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>key<span style=color:#f92672>.</span><span style=color:#a6e22e>isValid</span><span style=color:#f92672>()</span> <span style=color:#f92672>&amp;&amp;</span> key<span style=color:#f92672>.</span><span style=color:#a6e22e>isWritable</span><span style=color:#f92672>())</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>                    write<span style=color:#f92672>(</span>key<span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>                <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>            <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>accept</span><span style=color:#f92672>(</span>SelectionKey key<span style=color:#f92672>,</span> Selector selector<span style=color:#f92672>)</span> <span style=color:#66d9ef>throws</span> IOException <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 这里由于只有ServerSocketChannel才会有客户端连接建立事件，因而这里可以直接将
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#75715e>// Channel强转为ServerSocketChannel对象
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        ServerSocketChannel serverChannel <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>ServerSocketChannel<span style=color:#f92672>)</span> key<span style=color:#f92672>.</span><span style=color:#a6e22e>channel</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 获取客户端的连接
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        SocketChannel socketChannel <span style=color:#f92672>=</span> serverChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>accept</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>        socketChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>configureBlocking</span><span style=color:#f92672>(</span><span style=color:#66d9ef>false</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 将客户端连接Channel注册到Selector中，并且监听该Channel的OP_READ事件，
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#75715e>// 也即等待客户端发送数据到服务器端
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        socketChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>register</span><span style=color:#f92672>(</span>selector<span style=color:#f92672>,</span> SelectionKey<span style=color:#f92672>.</span><span style=color:#a6e22e>OP_READ</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>read</span><span style=color:#f92672>(</span>SelectionKey key<span style=color:#f92672>)</span> <span style=color:#66d9ef>throws</span> IOException <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 这里只有客户端才会发送数据到服务器，因而可将其强转为SocketChannel对象
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        SocketChannel clientChannel <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>SocketChannel<span style=color:#f92672>)</span> key<span style=color:#f92672>.</span><span style=color:#a6e22e>channel</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>        ByteBuffer buffer <span style=color:#f92672>=</span> ByteBuffer<span style=color:#f92672>.</span><span style=color:#a6e22e>wrap</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> <span style=color:#66d9ef>byte</span><span style=color:#f92672>[</span>1024<span style=color:#f92672>]);</span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 从客户端Channel中读取数据，这里read()方法返回读取到的数据长度，
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#75715e>// 如果为-1，则表示客户端断开连接了
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>int</span> len <span style=color:#f92672>=</span> clientChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>read</span><span style=color:#f92672>(</span>buffer<span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>len <span style=color:#f92672>==</span> <span style=color:#f92672>-</span>1<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>            clientChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>close</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 处理客户端数据
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;**********server: read message**********&#34;</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>        System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> String<span style=color:#f92672>(</span>buffer<span style=color:#f92672>.</span><span style=color:#a6e22e>array</span><span style=color:#f92672>(),</span> 0<span style=color:#f92672>,</span> len<span style=color:#f92672>));</span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 由于已经读取了客户端数据，因而这里将对该Channel感兴趣的事件修改为
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#75715e>// SelectionKey.OP_READ 和OP_WRITE，用于服务器往该Channel中写入数据
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        key<span style=color:#f92672>.</span><span style=color:#a6e22e>interestOps</span><span style=color:#f92672>(</span>SelectionKey<span style=color:#f92672>.</span><span style=color:#a6e22e>OP_READ</span> <span style=color:#f92672>|</span> SelectionKey<span style=color:#f92672>.</span><span style=color:#a6e22e>OP_WRITE</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>write</span><span style=color:#f92672>(</span>SelectionKey key<span style=color:#f92672>)</span> <span style=color:#66d9ef>throws</span> IOException <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        String message <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;message from server&#34;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>        ByteBuffer buffer <span style=color:#f92672>=</span> ByteBuffer<span style=color:#f92672>.</span><span style=color:#a6e22e>wrap</span><span style=color:#f92672>(</span>message<span style=color:#f92672>.</span><span style=color:#a6e22e>getBytes</span><span style=color:#f92672>());</span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 由于上面为客户端Channel设置了可供写入数据的事件，因而这里可以往客户端Channel写入数据
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        SocketChannel clientChannel <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>SocketChannel<span style=color:#f92672>)</span> key<span style=color:#f92672>.</span><span style=color:#a6e22e>channel</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>clientChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>isOpen</span><span style=color:#f92672>())</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>            System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;**********server: write message**********&#34;</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>            System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span>message<span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 往客户端Channel写入数据
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            clientChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>write</span><span style=color:#f92672>(</span>buffer<span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 写入完成后，监听客户端会继续发送的数据
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>if</span> <span style=color:#f92672>(!</span>buffer<span style=color:#f92672>.</span><span style=color:#a6e22e>hasRemaining</span><span style=color:#f92672>())</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>            key<span style=color:#f92672>.</span><span style=color:#a6e22e>interestOps</span><span style=color:#f92672>(</span>SelectionKey<span style=color:#f92672>.</span><span style=color:#a6e22e>OP_READ</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        buffer<span style=color:#f92672>.</span><span style=color:#a6e22e>compact</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Client</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span><span style=color:#f92672>(</span>String<span style=color:#f92672>[]</span> args<span style=color:#f92672>)</span> <span style=color:#66d9ef>throws</span> IOException <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>new</span> Client<span style=color:#f92672>().</span><span style=color:#a6e22e>start</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>start</span><span style=color:#f92672>()</span> <span style=color:#66d9ef>throws</span> IOException <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 创建一个客户端SocketChannel对象
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    SocketChannel channel <span style=color:#f92672>=</span> SocketChannel<span style=color:#f92672>.</span><span style=color:#a6e22e>open</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 设置客户端Channel为非阻塞模式
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    channel<span style=color:#f92672>.</span><span style=color:#a6e22e>configureBlocking</span><span style=color:#f92672>(</span><span style=color:#66d9ef>false</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 创建一个供给客户端使用的Selector对象
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    Selector selector <span style=color:#f92672>=</span> Selector<span style=color:#f92672>.</span><span style=color:#a6e22e>open</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 注册客户端Channel到Selector中，这里客户端Channel首先监听的是OP_CONNECT事件，
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#75715e>// 因为其首先必须与服务器建立连接，然后才能发送和读取数据
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    channel<span style=color:#f92672>.</span><span style=color:#a6e22e>register</span><span style=color:#f92672>(</span>selector<span style=color:#f92672>,</span> SelectionKey<span style=color:#f92672>.</span><span style=color:#a6e22e>OP_CONNECT</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 调用客户端Channel.connect()方法连接服务器，需要注意的是，该方法的调用必须放在
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#75715e>// 上述Channel.register()方法之后，否则在注册之前客户端就已经注册完成，
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#75715e>// 此时Selector就无法收到SelectionKey.OP_CONNECT事件了
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    channel<span style=color:#f92672>.</span><span style=color:#a6e22e>connect</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> InetSocketAddress<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;127.0.0.1&#34;</span><span style=color:#f92672>,</span> 8080<span style=color:#f92672>));</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>while</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>true</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>      <span style=color:#75715e>// 监听客户端Channel的事件，这里会一直等待，直到有监听的事件到达。
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>      <span style=color:#75715e>// 对于客户端，首先监听到的应该是SelectionKey.OP_CONNECT事件，
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>      <span style=color:#75715e>// 然后在后续代码中才会将SelectionKey.OP_READ和WRITE事件注册
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>      <span style=color:#75715e>// 到Selector中
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>      selector<span style=color:#f92672>.</span><span style=color:#a6e22e>select</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>      Set<span style=color:#f92672>&lt;</span>SelectionKey<span style=color:#f92672>&gt;</span> selectionKeys <span style=color:#f92672>=</span> selector<span style=color:#f92672>.</span><span style=color:#a6e22e>selectedKeys</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>      Iterator<span style=color:#f92672>&lt;</span>SelectionKey<span style=color:#f92672>&gt;</span> iterator <span style=color:#f92672>=</span> selectionKeys<span style=color:#f92672>.</span><span style=color:#a6e22e>iterator</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>while</span> <span style=color:#f92672>(</span>iterator<span style=color:#f92672>.</span><span style=color:#a6e22e>hasNext</span><span style=color:#f92672>())</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        SelectionKey key <span style=color:#f92672>=</span> iterator<span style=color:#f92672>.</span><span style=color:#a6e22e>next</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>        iterator<span style=color:#f92672>.</span><span style=color:#a6e22e>remove</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 监听到客户端Channel的SelectionKey.OP_CONNECT事件，并且处理该事件
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>key<span style=color:#f92672>.</span><span style=color:#a6e22e>isConnectable</span><span style=color:#f92672>())</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>          connect<span style=color:#f92672>(</span>key<span style=color:#f92672>,</span> selector<span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 监听到客户端Channel的SelectionKey.OP_WRITE事件，并且处理该事件
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>key<span style=color:#f92672>.</span><span style=color:#a6e22e>isWritable</span><span style=color:#f92672>())</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>          write<span style=color:#f92672>(</span>key<span style=color:#f92672>,</span> selector<span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 监听到客户端Channel的SelectionKey.OP_READ事件，并且处理该事件
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>key<span style=color:#f92672>.</span><span style=color:#a6e22e>isReadable</span><span style=color:#f92672>())</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>          read<span style=color:#f92672>(</span>key<span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>connect</span><span style=color:#f92672>(</span>SelectionKey key<span style=color:#f92672>,</span> Selector selector<span style=color:#f92672>)</span> <span style=color:#66d9ef>throws</span> IOException <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 由于是客户端Channel，因而可以直接强转为SocketChannel对象
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    SocketChannel channel <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>SocketChannel<span style=color:#f92672>)</span> key<span style=color:#f92672>.</span><span style=color:#a6e22e>channel</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>    channel<span style=color:#f92672>.</span><span style=color:#a6e22e>finishConnect</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 连接建立完成后就监听该Channel的WRITE事件，以供客户端写入数据发送到服务器
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    channel<span style=color:#f92672>.</span><span style=color:#a6e22e>register</span><span style=color:#f92672>(</span>selector<span style=color:#f92672>,</span> SelectionKey<span style=color:#f92672>.</span><span style=color:#a6e22e>OP_WRITE</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>write</span><span style=color:#f92672>(</span>SelectionKey key<span style=color:#f92672>,</span> Selector selector<span style=color:#f92672>)</span> <span style=color:#66d9ef>throws</span> IOException <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>    SocketChannel channel <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>SocketChannel<span style=color:#f92672>)</span> key<span style=color:#f92672>.</span><span style=color:#a6e22e>channel</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>    String message <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;message from client&#34;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>    System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;**********client: write message**********&#34;</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>    System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span>message<span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 客户端写入数据到服务器Channel中
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    channel<span style=color:#f92672>.</span><span style=color:#a6e22e>write</span><span style=color:#f92672>(</span>ByteBuffer<span style=color:#f92672>.</span><span style=color:#a6e22e>wrap</span><span style=color:#f92672>(</span>message<span style=color:#f92672>.</span><span style=color:#a6e22e>getBytes</span><span style=color:#f92672>()));</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 数据写入完成后，客户端Channel监听OP_READ事件，以等待服务器发送数据过来
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    channel<span style=color:#f92672>.</span><span style=color:#a6e22e>register</span><span style=color:#f92672>(</span>selector<span style=color:#f92672>,</span> SelectionKey<span style=color:#f92672>.</span><span style=color:#a6e22e>OP_READ</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>read</span><span style=color:#f92672>(</span>SelectionKey key<span style=color:#f92672>)</span> <span style=color:#66d9ef>throws</span> IOException <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>    System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;**********client: read message**********&#34;</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>    SocketChannel channel <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>SocketChannel<span style=color:#f92672>)</span> key<span style=color:#f92672>.</span><span style=color:#a6e22e>channel</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>    ByteBuffer buffer <span style=color:#f92672>=</span> ByteBuffer<span style=color:#f92672>.</span><span style=color:#a6e22e>wrap</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> <span style=color:#66d9ef>byte</span><span style=color:#f92672>[</span>1024<span style=color:#f92672>]);</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 接收到客户端Channel的SelectionKey.OP_READ事件，说明服务器发送数据过来了，
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#75715e>// 此时可以从Channel中读取数据，并且进行相应的处理
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>int</span> len <span style=color:#f92672>=</span> channel<span style=color:#f92672>.</span><span style=color:#a6e22e>read</span><span style=color:#f92672>(</span>buffer<span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>len <span style=color:#f92672>==</span> <span style=color:#f92672>-</span>1<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>      channel<span style=color:#f92672>.</span><span style=color:#a6e22e>close</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>return</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    System<span style=color:#f92672>.</span><span style=color:#a6e22e>out</span><span style=color:#f92672>.</span><span style=color:#a6e22e>println</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> String<span style=color:#f92672>(</span>buffer<span style=color:#f92672>.</span><span style=color:#a6e22e>array</span><span style=color:#f92672>(),</span> 0<span style=color:#f92672>,</span> len<span style=color:#f92672>));</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
-</span></span></code></pre></div><h3 id=resource>Resource</h3><ul><li><a href=https://www.pdai.tech/md/java/io/java-io-nio-select-epoll.html target=_blank rel="external nofollow noopener noreferrer">https://www.pdai.tech/md/java/io/java-io-nio-select-epoll.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li><a href=https://github.91chi.fun//https://github.com/liudongdong1/Chat.git target=_blank rel="external nofollow noopener noreferrer">https://github.91chi.fun//https://github.com/liudongdong1/Chat.git<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> 基于NIO聊天代码阅读记录</li><li>todo? select 底层实现的机制</li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-28 22:47:27">更新于 2023-09-28&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/unixiojavanio/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5c%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80%5cjava%5cjavaIO%5cUnixIO&amp;JavaNIO.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/unixiojavanio/ data-title=UnixIO data-hashtags=Java,Storage><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/unixiojavanio/ data-hashtag=Java><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/unixiojavanio/ data-title=UnixIO data-image=https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/java/>Java</a>,&nbsp;<a href=liudongdong1.github.io/tags/storage/>Storage</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/classify_face/ class=prev rel=prev title=Classify_face><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>Classify_face</a>
-<a href=liudongdong1.github.io/videostability/ class=next rel=next title=VideoStability>VideoStability<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
-<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
-<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>UnixIO - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="对于一个套接字上的输入操作，第一步通常涉及等待数据从网络中到达。当所等待分组到达时，它被复制到内核中的某个缓冲区。第二步就是把数据从内核缓冲" /><meta name="keywords" content='Java, Storage' /><meta itemprop="name" content="UnixIO">
+<meta itemprop="description" content="对于一个套接字上的输入操作，第一步通常涉及等待数据从网络中到达。当所等待分组到达时，它被复制到内核中的某个缓冲区。第二步就是把数据从内核缓冲"><meta itemprop="datePublished" content="2021-05-18T21:31:56+00:00" />
+<meta itemprop="dateModified" content="2023-09-28T22:47:27+08:00" />
+<meta itemprop="wordCount" content="3890"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Java,Storage," /><meta property="og:title" content="UnixIO" />
+<meta property="og:description" content="对于一个套接字上的输入操作，第一步通常涉及等待数据从网络中到达。当所等待分组到达时，它被复制到内核中的某个缓冲区。第二步就是把数据从内核缓冲" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/unixiojavanio/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-05-18T21:31:56+00:00" />
+<meta property="article:modified_time" content="2023-09-28T22:47:27+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="UnixIO"/>
+<meta name="twitter:description" content="对于一个套接字上的输入操作，第一步通常涉及等待数据从网络中到达。当所等待分组到达时，它被复制到内核中的某个缓冲区。第二步就是把数据从内核缓冲"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/unixiojavanio/" /><link rel="prev" href="liudongdong1.github.io/classify_face/" /><link rel="next" href="liudongdong1.github.io/videostability/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "UnixIO",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/unixiojavanio\/"
+    },"genre": "posts","keywords": "Java, Storage","wordcount":  3890 ,
+    "url": "liudongdong1.github.io\/unixiojavanio\/","datePublished": "2021-05-18T21:31:56+00:00","dateModified": "2023-09-28T22:47:27+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>UnixIO</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/framework/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Framework</a></span></div>
+      <div class="post-meta-line"><span title=2021-05-18&#32;21:31:56>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-18" >2021-05-18</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3890 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="UnixIO">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg"
+    data-srcset="https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg, https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg 1.5x, https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg 2x"
+    data-sizes="auto"
+    alt="https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg"
+    title="https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-阻塞式-io">1. 阻塞式 I/O</a></li>
+        <li><a href="#2-非阻塞式-io">2. 非阻塞式 I/O</a></li>
+        <li><a href="#3-io-复用select-和-poll">3. I/O 复用(select 和 poll)</a></li>
+        <li><a href="#4-信号驱动式-iosigio">4. 信号驱动式 I/O(SIGIO)</a></li>
+        <li><a href="#5-异步-ioaio">5. 异步 I/O(AIO)</a></li>
+        <li><a href="#6-javanio">6. JavaNIO</a></li>
+        <li><a href="#resource">Resource</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-overview.jpg"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-overview.jpg, https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-overview.jpg 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-overview.jpg 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-overview.jpg"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-overview.jpg"/></p>
+<blockquote>
+<p>对于一个套接字上的输入操作，第一步通常涉及等待数据从网络中到达。当所等待分组到达时，它被复制到内核中的某个缓冲区。第二步就是把数据从内核缓冲区复制到应用进程缓冲区。</p>
+</blockquote>
+<h3 id="1-阻塞式-io">1. 阻塞式 I/O</h3>
+<blockquote>
+<p>应用进程被阻塞，直到数据复制到应用进程缓冲区中才返回。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">ssize_t</span> <span style="color:#a6e22e">recvfrom</span>(<span style="color:#66d9ef">int</span> sockfd, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">size_t</span> len, <span style="color:#66d9ef">int</span> flags, <span style="color:#66d9ef">struct</span> sockaddr <span style="color:#f92672">*</span>src_addr, <span style="color:#66d9ef">socklen_t</span> <span style="color:#f92672">*</span>addrlen);<span style="color:#75715e">//recvfrom 用于接收 Socket 传来的数据，并复制到应用进程的缓冲区 buf 中。这里把 recvfrom() 当成系统调用。
+</span></span></span></code></pre></div><p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131528361.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131528361.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131528361.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131528361.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131528361.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131528361.png"/></p>
+<h3 id="2-非阻塞式-io">2. 非阻塞式 I/O</h3>
+<blockquote>
+<p>应用进程执行系统调用之后，内核返回一个错误码。应用进程可以继续执行，但是需要不断的执行系统调用来获知 I/O 是否完成，这种方式称为轮询(polling)。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131624354.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131624354.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131624354.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131624354.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131624354.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131624354.png"/></p>
+<h3 id="3-io-复用select-和-poll">3. I/O 复用(select 和 poll)</h3>
+<blockquote>
+<p>使用 select 或者 poll 等待数据，并且可以等待多个套接字中的任何一个变为可读，这一过程会被阻塞，当某一个套接字可读时返回。之后再使用 recvfrom 把数据从内核复制到进程中。它可以让单个进程具有处理多个 I/O 事件的能力。又被称为 Event Driven I/O，即事件驱动 I/O。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803131744993.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803131744993.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803131744993.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803131744993.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803131744993.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803131744993.png"/></p>
+<h3 id="4-信号驱动式-iosigio">4. 信号驱动式 I/O(SIGIO)</h3>
+<blockquote>
+<p><code>应用进程使用 sigaction 系统调用，内核立即返回，应用进程可以继续执行</code>，也就是说等待数据阶段应用进程是非阻塞的。<code>内核在数据到达时向应用进程发送 SIGIO 信号，应用进程收到之后在信号处理程序中调用 recvfrom 将数据从内核复制到应用进程中</code>。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131833678.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131833678.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131833678.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131833678.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131833678.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131833678.png"/></p>
+<h3 id="5-异步-ioaio">5. 异步 I/O(AIO)</h3>
+<blockquote>
+<ul>
+<li>
+<p>进行 aio_read 系统调用会立即返回，应用进程继续执行，不会被阻塞，内核会在所有操作完成之后向应用进程发送信号。</p>
+</li>
+<li>
+<p>异步 I/O 与信号驱动 I/O 的区别在于，<code>异步 I/O 的信号是通知应用进程 I/O 完成，而信号驱动 I/O 的信号是通知应用进程可以开始 I/O。</code></p>
+</li>
+</ul>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803132228154.png"
+    data-srcset="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803132228154.png, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803132228154.png 1.5x, https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803132228154.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803132228154.png"
+    title="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803132228154.png"/></p>
+<h3 id="6-javanio">6. JavaNIO</h3>
+<ul>
+<li>Channel 是客户端连接的一个抽象，当每个客户端连接到服务器时，服务器都会为其生成一个 Channel 对象；</li>
+<li>Selector 则是 Java NIO 实现高性能的关键，其本质上使用了 IO 多路复用的原理，通过一个线程不断的监听多个 Channel 连接来实现多所有这些 Channel 事件进行处理，这样的优点在于只需要一个线程就可以处理大量的客户端连接，当有客户端事件到达时，再将其分发出去交由其它线程处理；</li>
+<li>Buffer 从字面上讲是一个缓存，本质上其是一个字节数组，通过 Buffer，可以从 Channel 上读取数据，然后交由下层的处理器进行处理。这里的 Buffer 的优点在于其封装了一套非常简单的用于读取和写入数据 API。</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/ac8e766861004dbfa4db78ea705a7228.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/ac8e766861004dbfa4db78ea705a7228.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/ac8e766861004dbfa4db78ea705a7228.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/ac8e766861004dbfa4db78ea705a7228.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/ac8e766861004dbfa4db78ea705a7228.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/ac8e766861004dbfa4db78ea705a7228.png"/></p>
+<h4 id="1-channel">1. Channel</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// 服务器端：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 用于创建一个供服务器使用的ServerSocketChannel实例
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>ServerSocketChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">open</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 绑定一个服务器端口，从而提供对外的服务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>ServerSocketChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">bind</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 获取一个客户端的Channel连接
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>ServerSocketChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">accept</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 客户端：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 用于创建一个供客户端使用的SocketChannel实例
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>SocketChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">open</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 连接参数中指定地址和端口对应的服务器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>SocketChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">connect</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// ServerSocketChannel和SocketChannel两者兼备的方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 用于指定服务器处理请求的方式是阻塞的还是非阻塞的，对于Java NIO都是以非阻塞的方式进行处理的
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Channel<span style="color:#f92672">.</span><span style="color:#a6e22e">configureBlocking</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 将当前channel注册到一个Selector上，该方法会返回注册之后得到的SelectionKey对象。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 这里在注册Channel的时候可以选择Selector将关注该Channel的哪些事件，可选的有如下几种：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// SelectionKey.OP_CONNECT：监听Channel建立连接事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// SelectionKey.OP_READ：监听Channel的可读取事件，也即客户端已经发送数据过来，此时可以读取
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// SelectionKey.OP_WRITE：监听Channel的可写事件，即当前可以写入数据到Channel中
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Channel<span style="color:#f92672">.</span><span style="color:#a6e22e">register</span><span style="color:#f92672">(</span>Selector<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">);</span>
+</span></span></code></pre></div><h4 id="2-selector">2. Selector</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// 创建一个Selector实例
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Selector<span style="color:#f92672">.</span><span style="color:#a6e22e">open</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 监听所有注册的Channel，一直阻塞知道有任何一个客户端Channel有相应的事件到达，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 需要注意的是，这里的select()方法返回的是当前接收到是事件数目，而不是具体的事件，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 具体的事件要通过selectedKeys()方法获取
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Selector<span style="color:#f92672">.</span><span style="color:#a6e22e">select</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 获取当前所有有事件到达的客户端Channel对应的SelectionKey实例
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Selector<span style="color:#f92672">.</span><span style="color:#a6e22e">selectedKeys</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 判断当前收到的Channel的事件是否为OP_CONNECT事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>SelectionKey<span style="color:#f92672">.</span><span style="color:#a6e22e">isConnectable</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 判断当前收到的Channel的事件是否为OP_READ事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>SelectionKey<span style="color:#f92672">.</span><span style="color:#a6e22e">isReadable</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 判断当前收到的Channel的事件是否为OP_WRITE事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>SelectionKey<span style="color:#f92672">.</span><span style="color:#a6e22e">isWritable</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 返回当前SelectionKey中所封装的Channel对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>SelectionKey<span style="color:#f92672">.</span><span style="color:#a6e22e">channel</span><span style="color:#f92672">();</span>
+</span></span></code></pre></div><h4 id="3-案例代码">3. 案例代码</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/70.jpeg"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/70.jpeg, https://gitee.com/github-25970295/blogimgv2022/raw/master/70.jpeg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/70.jpeg 2x"
+    data-sizes="auto"
+    alt="服务端流程"
+    title="服务端流程"/></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Server</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">new</span> Server<span style="color:#f92672">().</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">start</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 创建一个服务器ServerSocketChannel对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        ServerSocketChannel serverSocketChannel <span style="color:#f92672">=</span> ServerSocketChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">open</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将当前服务器绑定到8080端口
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        serverSocketChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">bind</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> InetSocketAddress<span style="color:#f92672">(</span>8080<span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 设置当前channel为非阻塞的模式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        serverSocketChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">configureBlocking</span><span style="color:#f92672">(</span><span style="color:#66d9ef">false</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 创建一个Selector对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        Selector selector <span style="color:#f92672">=</span> Selector<span style="color:#f92672">.</span><span style="color:#a6e22e">open</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将服务器ServerSocketChannel注册到Selector上，并且监听与客户端建立连接的事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        serverSocketChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">register</span><span style="color:#f92672">(</span>selector<span style="color:#f92672">,</span> SelectionKey<span style="color:#f92672">.</span><span style="color:#a6e22e">OP_ACCEPT</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 监听ServerSocketChannel上的事件，每秒钟循环一次，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// 这里select()方法返回的是当前监听得到的事件数目，为0表示当前没有任何事件到达
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>selector<span style="color:#f92672">.</span><span style="color:#a6e22e">select</span><span style="color:#f92672">(</span>1000<span style="color:#f92672">)</span> <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;has no message...&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 走到这里说明当前有监听的事件到达，获取所有监听的Channel所对应的SelectionKey对象，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// 这里需要注意的是，前面我们已经将ServerSocketChannel注册到Selector中了，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// 因而对于ServerSocketChannel，其监听得到的则是SelectionKey.OP_CONNECT事件。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// 但是下面的代码中，我们也会将与客户端建立的连接Channel注册到Selector中，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// 因而这里Selector中也会存在接收到的SelectionKey.OP_READ和OP_WRITE事件。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            Set<span style="color:#f92672">&lt;</span>SelectionKey<span style="color:#f92672">&gt;</span> selectionKeys <span style="color:#f92672">=</span> selector<span style="color:#f92672">.</span><span style="color:#a6e22e">selectedKeys</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 对监听到的事件进行遍历
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            Iterator<span style="color:#f92672">&lt;</span>SelectionKey<span style="color:#f92672">&gt;</span> iterator <span style="color:#f92672">=</span> selectionKeys<span style="color:#f92672">.</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">hasNext</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                SelectionKey key <span style="color:#f92672">=</span> iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// 这里需要注意的是，Selector在为每个有事件到达的Channel建立SelectionKey对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#75715e">// 之后，其并不会将其移除，如果我们不进行移除，那么下次循环时该事件还会再被处理一次，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#75715e">// 因而这里要调用remove()方法移除该SelectionKey
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// 如果是有新的客户端Channel连接建立，则处理该事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>key<span style="color:#f92672">.</span><span style="color:#a6e22e">isAcceptable</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                    accept<span style="color:#f92672">(</span>key<span style="color:#f92672">,</span> selector<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// 如果客户端连接中有可读取的数据，则处理该事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>key<span style="color:#f92672">.</span><span style="color:#a6e22e">isReadable</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                    read<span style="color:#f92672">(</span>key<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// 如果可往客户端连接中写入数据，则处理该事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>key<span style="color:#f92672">.</span><span style="color:#a6e22e">isValid</span><span style="color:#f92672">()</span> <span style="color:#f92672">&amp;&amp;</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">isWritable</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                    write<span style="color:#f92672">(</span>key<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">accept</span><span style="color:#f92672">(</span>SelectionKey key<span style="color:#f92672">,</span> Selector selector<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 这里由于只有ServerSocketChannel才会有客户端连接建立事件，因而这里可以直接将
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// Channel强转为ServerSocketChannel对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        ServerSocketChannel serverChannel <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>ServerSocketChannel<span style="color:#f92672">)</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">channel</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 获取客户端的连接
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        SocketChannel socketChannel <span style="color:#f92672">=</span> serverChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">accept</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        socketChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">configureBlocking</span><span style="color:#f92672">(</span><span style="color:#66d9ef">false</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将客户端连接Channel注册到Selector中，并且监听该Channel的OP_READ事件，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// 也即等待客户端发送数据到服务器端
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        socketChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">register</span><span style="color:#f92672">(</span>selector<span style="color:#f92672">,</span> SelectionKey<span style="color:#f92672">.</span><span style="color:#a6e22e">OP_READ</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>SelectionKey key<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 这里只有客户端才会发送数据到服务器，因而可将其强转为SocketChannel对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        SocketChannel clientChannel <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>SocketChannel<span style="color:#f92672">)</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">channel</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        ByteBuffer buffer <span style="color:#f92672">=</span> ByteBuffer<span style="color:#f92672">.</span><span style="color:#a6e22e">wrap</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>1024<span style="color:#f92672">]);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 从客户端Channel中读取数据，这里read()方法返回读取到的数据长度，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// 如果为-1，则表示客户端断开连接了
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">int</span> len <span style="color:#f92672">=</span> clientChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>buffer<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>len <span style="color:#f92672">==</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            clientChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 处理客户端数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;**********server: read message**********&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>buffer<span style="color:#f92672">.</span><span style="color:#a6e22e">array</span><span style="color:#f92672">(),</span> 0<span style="color:#f92672">,</span> len<span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 由于已经读取了客户端数据，因而这里将对该Channel感兴趣的事件修改为
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// SelectionKey.OP_READ 和OP_WRITE，用于服务器往该Channel中写入数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        key<span style="color:#f92672">.</span><span style="color:#a6e22e">interestOps</span><span style="color:#f92672">(</span>SelectionKey<span style="color:#f92672">.</span><span style="color:#a6e22e">OP_READ</span> <span style="color:#f92672">|</span> SelectionKey<span style="color:#f92672">.</span><span style="color:#a6e22e">OP_WRITE</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>SelectionKey key<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        String message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;message from server&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        ByteBuffer buffer <span style="color:#f92672">=</span> ByteBuffer<span style="color:#f92672">.</span><span style="color:#a6e22e">wrap</span><span style="color:#f92672">(</span>message<span style="color:#f92672">.</span><span style="color:#a6e22e">getBytes</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 由于上面为客户端Channel设置了可供写入数据的事件，因而这里可以往客户端Channel写入数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        SocketChannel clientChannel <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>SocketChannel<span style="color:#f92672">)</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">channel</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>clientChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">isOpen</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;**********server: write message**********&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>message<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 往客户端Channel写入数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            clientChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>buffer<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 写入完成后，监听客户端会继续发送的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>buffer<span style="color:#f92672">.</span><span style="color:#a6e22e">hasRemaining</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            key<span style="color:#f92672">.</span><span style="color:#a6e22e">interestOps</span><span style="color:#f92672">(</span>SelectionKey<span style="color:#f92672">.</span><span style="color:#a6e22e">OP_READ</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        buffer<span style="color:#f92672">.</span><span style="color:#a6e22e">compact</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Client</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> Client<span style="color:#f92672">().</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">start</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 创建一个客户端SocketChannel对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    SocketChannel channel <span style="color:#f92672">=</span> SocketChannel<span style="color:#f92672">.</span><span style="color:#a6e22e">open</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 设置客户端Channel为非阻塞模式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    channel<span style="color:#f92672">.</span><span style="color:#a6e22e">configureBlocking</span><span style="color:#f92672">(</span><span style="color:#66d9ef">false</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 创建一个供给客户端使用的Selector对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Selector selector <span style="color:#f92672">=</span> Selector<span style="color:#f92672">.</span><span style="color:#a6e22e">open</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 注册客户端Channel到Selector中，这里客户端Channel首先监听的是OP_CONNECT事件，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 因为其首先必须与服务器建立连接，然后才能发送和读取数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    channel<span style="color:#f92672">.</span><span style="color:#a6e22e">register</span><span style="color:#f92672">(</span>selector<span style="color:#f92672">,</span> SelectionKey<span style="color:#f92672">.</span><span style="color:#a6e22e">OP_CONNECT</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 调用客户端Channel.connect()方法连接服务器，需要注意的是，该方法的调用必须放在
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 上述Channel.register()方法之后，否则在注册之前客户端就已经注册完成，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 此时Selector就无法收到SelectionKey.OP_CONNECT事件了
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    channel<span style="color:#f92672">.</span><span style="color:#a6e22e">connect</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> InetSocketAddress<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;127.0.0.1&#34;</span><span style="color:#f92672">,</span> 8080<span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 监听客户端Channel的事件，这里会一直等待，直到有监听的事件到达。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">// 对于客户端，首先监听到的应该是SelectionKey.OP_CONNECT事件，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">// 然后在后续代码中才会将SelectionKey.OP_READ和WRITE事件注册
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">// 到Selector中
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      selector<span style="color:#f92672">.</span><span style="color:#a6e22e">select</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>      Set<span style="color:#f92672">&lt;</span>SelectionKey<span style="color:#f92672">&gt;</span> selectionKeys <span style="color:#f92672">=</span> selector<span style="color:#f92672">.</span><span style="color:#a6e22e">selectedKeys</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>      Iterator<span style="color:#f92672">&lt;</span>SelectionKey<span style="color:#f92672">&gt;</span> iterator <span style="color:#f92672">=</span> selectionKeys<span style="color:#f92672">.</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">hasNext</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        SelectionKey key <span style="color:#f92672">=</span> iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 监听到客户端Channel的SelectionKey.OP_CONNECT事件，并且处理该事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>key<span style="color:#f92672">.</span><span style="color:#a6e22e">isConnectable</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          connect<span style="color:#f92672">(</span>key<span style="color:#f92672">,</span> selector<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 监听到客户端Channel的SelectionKey.OP_WRITE事件，并且处理该事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>key<span style="color:#f92672">.</span><span style="color:#a6e22e">isWritable</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          write<span style="color:#f92672">(</span>key<span style="color:#f92672">,</span> selector<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 监听到客户端Channel的SelectionKey.OP_READ事件，并且处理该事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>key<span style="color:#f92672">.</span><span style="color:#a6e22e">isReadable</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          read<span style="color:#f92672">(</span>key<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">connect</span><span style="color:#f92672">(</span>SelectionKey key<span style="color:#f92672">,</span> Selector selector<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 由于是客户端Channel，因而可以直接强转为SocketChannel对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    SocketChannel channel <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>SocketChannel<span style="color:#f92672">)</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">channel</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    channel<span style="color:#f92672">.</span><span style="color:#a6e22e">finishConnect</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 连接建立完成后就监听该Channel的WRITE事件，以供客户端写入数据发送到服务器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    channel<span style="color:#f92672">.</span><span style="color:#a6e22e">register</span><span style="color:#f92672">(</span>selector<span style="color:#f92672">,</span> SelectionKey<span style="color:#f92672">.</span><span style="color:#a6e22e">OP_WRITE</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>SelectionKey key<span style="color:#f92672">,</span> Selector selector<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    SocketChannel channel <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>SocketChannel<span style="color:#f92672">)</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">channel</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    String message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;message from client&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;**********client: write message**********&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>message<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 客户端写入数据到服务器Channel中
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    channel<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>ByteBuffer<span style="color:#f92672">.</span><span style="color:#a6e22e">wrap</span><span style="color:#f92672">(</span>message<span style="color:#f92672">.</span><span style="color:#a6e22e">getBytes</span><span style="color:#f92672">()));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 数据写入完成后，客户端Channel监听OP_READ事件，以等待服务器发送数据过来
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    channel<span style="color:#f92672">.</span><span style="color:#a6e22e">register</span><span style="color:#f92672">(</span>selector<span style="color:#f92672">,</span> SelectionKey<span style="color:#f92672">.</span><span style="color:#a6e22e">OP_READ</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>SelectionKey key<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;**********client: read message**********&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    SocketChannel channel <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>SocketChannel<span style="color:#f92672">)</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">channel</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    ByteBuffer buffer <span style="color:#f92672">=</span> ByteBuffer<span style="color:#f92672">.</span><span style="color:#a6e22e">wrap</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>1024<span style="color:#f92672">]);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 接收到客户端Channel的SelectionKey.OP_READ事件，说明服务器发送数据过来了，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 此时可以从Channel中读取数据，并且进行相应的处理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> len <span style="color:#f92672">=</span> channel<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>buffer<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>len <span style="color:#f92672">==</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      channel<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>buffer<span style="color:#f92672">.</span><span style="color:#a6e22e">array</span><span style="color:#f92672">(),</span> 0<span style="color:#f92672">,</span> len<span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="resource">Resource</h3>
+<ul>
+<li><a href="https://www.pdai.tech/md/java/io/java-io-nio-select-epoll.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.pdai.tech/md/java/io/java-io-nio-select-epoll.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://github.91chi.fun//https://github.com/liudongdong1/Chat.git"target="_blank" rel="external nofollow noopener noreferrer">https://github.91chi.fun//https://github.com/liudongdong1/Chat.git<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>  基于NIO聊天代码阅读记录</li>
+<li>todo?  select 底层实现的机制</li>
+</ul>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-28&#32;22:47:27>更新于 2023-09-28&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/unixiojavanio/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80%5cjava%5cjavaIO%5cUnixIO&amp;JavaNIO.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/unixiojavanio/" data-title="UnixIO" data-hashtags="Java,Storage"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/unixiojavanio/" data-hashtag="Java"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/unixiojavanio/" data-title="UnixIO" data-image="https://cdn.pixabay.com/photo/2022/02/18/01/11/beach-7019771__340.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/java/">Java</a>,&nbsp;<a href="liudongdong1.github.io/tags/storage/">Storage</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/classify_face/" class="prev" rel="prev" title="Classify_face"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Classify_face</a>
+      <a href="liudongdong1.github.io/videostability/" class="next" rel="next" title="VideoStability">VideoStability<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

@@ -1,20 +1,478 @@
-<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>虚拟化技术介绍 - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="虚拟化技术（virtualization technology，VT）是云计算的基础。简单的说，虚拟化使得在一台物理的服务器上可以跑多台虚拟机"><meta name=keywords content="Storage"><meta itemprop=name content="虚拟化技术介绍"><meta itemprop=description content="虚拟化技术（virtualization technology，VT）是云计算的基础。简单的说，虚拟化使得在一台物理的服务器上可以跑多台虚拟机"><meta itemprop=dateModified content="2023-09-24T17:00:04+08:00"><meta itemprop=wordCount content="3468"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="Storage,"><meta property="og:title" content="虚拟化技术介绍"><meta property="og:description" content="虚拟化技术（virtualization technology，VT）是云计算的基础。简单的说，虚拟化使得在一台物理的服务器上可以跑多台虚拟机"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:modified_time" content="2023-09-24T17:00:04+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="虚拟化技术介绍"><meta name=twitter:description content="虚拟化技术（virtualization technology，VT）是云计算的基础。简单的说，虚拟化使得在一台物理的服务器上可以跑多台虚拟机"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/><link rel=prev href=liudongdong1.github.io/%E7%B2%98%E5%8C%85%E6%8B%86%E5%8C%85/><link rel=next href=liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E5%AD%98%E5%82%A8/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"虚拟化技术介绍","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D\/"},"genre":"posts","keywords":"Storage","wordcount":3468,"url":"liudongdong1.github.io\/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D\/","dateModified":"2023-09-24T17:00:04+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"liudongdong1"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
-<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>虚拟化技术介绍</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle" aria-hidden=true></i>
-liudongdong1</span></span>
-<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/storage/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div><div class=post-meta-line><span title="0001-01-01 00:00:00"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=0001-01-01>0001-01-01</time>
-</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3468 字&nbsp;
-<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title=虚拟化技术介绍>
-<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
-</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg data-srcset="https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg, https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg 1.5x, https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg 2x" data-sizes=auto alt=https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg title=https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg></div><div class="details toc" id=toc-static kept=true><div class="details-summary toc-title"><span>目录</span>
-<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#1-虚拟化类型>1. 虚拟化类型</a></li><li><a href=#2-硬件虚拟化>2. 硬件虚拟化</a></li><li><a href=#3-kvm-概述>3. KVM 概述</a></li><li><a href=#resource>Resource</a></li></ul></li></ul></nav></div></div><div class=content id=content><blockquote><p><code>虚拟化技术（virtualization technology，VT）</code>是云计算的基础。简单的说，虚拟化使得在一台物理的服务器上可以跑多台虚拟机，虚拟机共享物理机的 <code>CPU</code>、<code>内存</code>、<code>IO</code>、<code>网络</code> 等硬件资源，但逻辑上虚拟机之间是相互隔离的。</p><ul><li>系统虚拟化，存储虚拟化，网络虚拟化，GPU 虚拟化，硬件支持虚拟化</li><li>通过 virt-what 查看具体的虚拟化技术</li></ul></blockquote><blockquote><p>在 ESXi 中，所有虚拟化功能都在内核实现。Xen 内核仅实现 CPU 与内存虚拟化， IO 虚拟化与调度管理由 Domain0（主机上启动的第一个管理 VM）实现。KVM 内核实现 CPU 与内存虚拟化，QEMU 实现 IO 虚拟化，通过 Linux 进程调度器实现 VM 管理。</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203132014.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203132014.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203132014.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203132014.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203132014.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203132014.png></p><h3 id=1-虚拟化类型>1. 虚拟化类型</h3><blockquote><p><code>物理机</code> 将自己的硬件资源虚拟化，并提供给 <code>Guest</code> 一般通过 <code>Hypervisor</code> 的程序实现。<code>Hypervisor</code> 是为客户端操作系统提供虚拟机环境的软件，根据实现方式和所处的位置，分为两种</p></blockquote><h4 id=11-型虚拟化>.1.1 型虚拟化</h4><p><code>Hypervisor</code> 直接安装在物理机上，多个虚拟机在 <code>Hypervisor</code> 上运行。<code>Hypervisor</code> 实现方式一般是一个特殊定制的 <code>Linux</code> 系统。<code>Xen</code> 和 <code>VMWare</code> 的 <code>ESXi</code> 都属于这个类型。</p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503155756205.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503155756205.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503155756205.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503155756205.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503155756205.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503155756205.png></p><h4 id=2-2-型虚拟化>.2. 2 型虚拟化</h4><p>物理机上首先安装常规的操作系统，比如 <code>Redhat</code>、<code>Ubuntu</code> 和 <code>Windows</code>。<code>Hypervisor</code> 作为 OS 上的一个<code>程序</code>模块运行，并对管理虚拟机进行管理。<code>KVM</code>、<code>VirtualBox</code> 和 <code>VMWare Workstation</code> 都属于这个类型。</p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/2.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/2.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/2.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/2.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/2.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/2.png></p><blockquote><ul><li>aws : Amazon Web Services</li><li>docker : This is a Docker container.</li><li>hyperv : This is Microsoft Hyper-V hypervisor.</li><li>lxc : This process is running in a Linux LXC container.</li><li>kvm : This guest is running on the KVM hypervisor using hardware acceleration.</li><li>openvz : The guest appears to be running inside an OpenVZ or Virtuozzo container.</li><li>parallels : The guest is running inside Parallels Virtual Platform (Parallels Desktop, Parallels Server).</li><li>qemu : This is QEMU hypervisor using software emulation.</li><li>virt : Some sort of virtualization appears to be present, but we are not sure what it is.</li><li>virtualbox : This is a VirtualBox guest.</li><li>vmware : The guest appears to be running on VMware hypervisor.</li><li>xen The guest appears to be running on Xen hypervisor.</li><li>xen-hvm : This is a Xen guest fully virtualized (HVM).</li></ul></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503210104119.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503210104119.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503210104119.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503210104119.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503210104119.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503210104119.png></p><h3 id=2-硬件虚拟化>2. 硬件虚拟化</h3><h4 id=1-cpu-虚拟化>.1. CPU 虚拟化</h4><p>物理服务器上通常配置 2 个物理 pCPU（Socket），每个 CPU 有多个核（core）；开启超线程 Hyper-Threading 技术后，每个 core 有 2 个线程（Thread）；在虚拟化环境中一个 Thread 对应一个 vCPU。在 KVM 中每一个 VM 就是一个用户空间的 QEMU 进程，分配给 Guest 的 vCPU 就是该进程派生的一个线程 Thread，由 Linux 内核动态调度到基于时分复用的物理 pCPU 上运行。KVM 支持设置 CPU 亲和性，将 vCPU 绑定到特定物理 pCPU，如通过 libvirt 驱动指定从 NUMA 节点为 Guest 分配 vCPU 与内存。KVM 支持 vCPU 超分（over-commit）使得分配给 Guest 的 vCPU 数量超过物理 CPU 线程总量。</p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg, https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg title=https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg></p><blockquote><p>KVM 是依赖于硬件辅助的全虚拟化（如 Inter-VT、AMD-V），目前也通过 virtio 驱动实现半虚拟化以提升性能。Inter-VT 引入新的执行模式：VMM 运行在 VMX Root 模式， GuestOS 运行在 VMX Non-root 模式，执行特权指令时两种模式可以切换。</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203426483.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203426483.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203426483.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203426483.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203426483.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203426483.png></p><h4 id=2-内存虚拟化>.2. 内存虚拟化</h4><p>内存虚拟化的目的是给虚拟客户机操作系统提供一个从 0 地址开始的连续物理内存空间，同时在多个客户机之间实现隔离和调度。在虚拟化环境中，内存地址的访问会涉及如下四个概念：</p><p>1）<code>客户机虚拟地址，GVA</code>（Guest Virtual Address）</p><p>2）客户机物理地址，GPA（Guest Physical Address）</p><p>3）宿主机虚拟地址，HVA（Host Virtual Address）</p><p>4）<code>宿主机物理地址，HPA</code>（Host Physical Address）</p><h5 id=1-eptvpid>1. EPT&amp;VPID</h5><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203614913.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203614913.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203614913.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203614913.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203614913.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203614913.png></p><p>内存虚拟化就是要将 GVA 转化为最终能够访问的 HPA。在没有硬件提供的内存虚拟化之前，系统通过**影子页表（**Shadow Page Table) 完成这一转化。内存的访问和更新通常是非常频繁的，要维护影子页表中对应关系会非常复杂，开销也较大。同时需要为每一个客户机都维护一份影子页表，当客户机数量较多时，其影子页表占用的内存较大也会是一个问题。</p><ul><li><p>Intel CPU 在硬件设计上就引入了 <strong>EPT</strong>（Extended Page Tables，扩展页表），从而<code>将 GVA 到 HPA 的转换通过硬件来实现</code>。这个转换分为两步。首先，<code>通过客户机 CR3 寄存器将 GVA 转化为 GPA，然后通过查询 EPT 来实现 GPA 到 HPA 的转化</code>。</p></li><li><p>CPU 使用 TLB（Translation Lookaside Buffer）缓存线性虚拟地址到物理地址的映射，地址转换时 CPU 先根据 GPA 先查找 TLB，如果未找到映射的 HPA，将根据页表中的映射填充 TLB，再进行地址转换。不同 Guest 的 vCPU 切换执行时需要刷新 TLB，影响了内存访问效率。Intel 引入了 VPID（Virtual-Processor Identifier）技术<code>在硬件上为 TLB 增加一个标志，每个 TLB 表项与一个 VPID 关联</code>，<code>唯一对应一个 vCPU，当 vCPU 切换时可根据 VPID 找到并保留已有的 TLB 表项</code>，减少 TLB 刷新。</p></li></ul><h5 id=2-thp>.2. THP</h5><p>x86 CPU 默认使用 4KB 的内存页面，目前已经支持 2MB，1GB 的内存大页（Huge Page）。<code>使用大页内存可减少内存页数与页表项数，节省了页表所占用的 CPU 缓存空间，同时也减少内存地址转换次数，以及 TLB 失效和刷新的次数，从而提升内存使用效率与性能</code>。但使用内存大页也有一些弊端：如大页必须在使用前准备好；应用程序必须显式地使用大页（一般是调用 mmap、shmget 或使用 libhugetlbfs 库进行封装）；需要超级用户权限来挂载 hugetlbfs 文件系统；如果<code>大页内存没有实际使用会造成内存浪费等</code>。2009 年实现的透明大页 THP（Transparent Hugepage）技术创建了一个抽象层，能够自动创建、管理和使用传统大页，实现发挥大页优势同时也规避以上弊端。当前主流的 Linux 版本都默认支持。KVM 中可以在 Host 和 Guest 中同时使用 THB 技术。</p><h5 id=3--内存超分>.3. 内存超分</h5><blockquote><p>由于 Guest 使用内存时采用瘦分配按需增加的模式，KVM 支持内存超分（Over-Commit）使得<code>分配给 Guest 的内存总量大于实际物理内存总量</code></p></blockquote><p>1） <strong>内存交换（Swapping）</strong>：当系统内存不够用时，把部分长时间未操作的内存交换到磁盘上配置的 Swap 分区，等相关程序需要运行时再恢复到内存中。</p><p>2） <strong>气球（Ballooning）</strong>：通过 virtio_balloon 驱动实现动态调整 Guest 与 Host 的可用内存空间。气球中的内存是 Host 可使用，Guest 不能使用。当 Host 内存不足时，可以使气球膨胀，从而回收部分已分配给 Guest 的内存。当 Guest 内存不足时可请求压缩气球，从 Host 申请更多内存使用。</p><p>3） <strong>页共享（Page Sharing）</strong>：通过 KSM（Kernel Samepage Merging）让内核扫描正在运行进程的内存。如果发现完全相同的内存页就会合并为单一内存页，并标志位写时复制 COW（Copy On Write）。如果有进程尝试修改该内存页，将复制一个新的内存页供其使用。KVM 中 QEMU 通过 madvise 系统调用告知内核那些内存可以合并，通过配置开关控制是否企业 KSM 功能。Guest 就是 QEMU 进程，如果多个 Guest 运行相同 OS 或应用，且不常更新，使用 KSM 能大幅提升内存使用效率与性能。当然扫描和对比内存需要消耗 CPU 资源对性能会有一定影响。</p><h4 id=3-设备虚拟化>.3. 设备虚拟化</h4><p>（1）<strong>设备模拟</strong>：在虚拟机监控器中模拟一个传统的 I/O 设备的特性，比如在<code> QEMU</code> 中模拟一个 Intel 的千兆网卡或者一个 IDE 硬盘驱动器，在客户机中就暴露为对应的硬件设备。客户机中的 I/O 请求都由虚拟机监控器捕获并模拟执行后返回给客户机。</p><p>（2）<strong>前后端驱动接口</strong>：在虚拟机监控器与客户机之间定义一种全新的适合于虚拟化环境的交互接口，比如常见的 <code>virtio 协议</code>就是在客户机中暴露为 virtio-net、virtio-blk 等网络和磁盘设备，在 QEMU 中实现相应的 virtio 后端驱动。</p><p>（3）<strong>设备直接分配</strong>：将一个物理设备，如一个网卡或硬盘驱动器直接分配给客户机使用，这种情况下 I/O 请求的链路中很少需要或基本不需要虚拟机监控器的参与，所以性能很好。</p><p>（4）<strong>设备共享分配</strong>：其实是设备直接分配方式的一个扩展。在这种模式下，一个（具有特定特性的）物理设备可以支持多个虚拟机功能接口，可以将虚拟功能接口独立地分配给不同的客户机使用。如 SR-IOV 就是这种方式的一个标准协议。</p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503204219179.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503204219179.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503204219179.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503204219179.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503204219179.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503204219179.png></p><h3 id=3-kvm-概述>3. KVM 概述</h3><blockquote><p>KVM 就是在硬件辅助虚拟化技术之上构建起来的<strong>虚拟机监控器</strong>。当然，并非要所有这些硬件虚拟化都支持才能运行 KVM 虚拟化，KVM 对硬件<strong>最低的依赖是</strong> CPU 的硬件虚拟化支持（也就是说，KVM 可以运行在所有支持 CPU 虚拟化的机器上）</p></blockquote><p>（1）<strong>KVM 内核模块</strong>，它属于标准 Linux 内核的一部分，是一个专门提供虚拟化功能的模块，主要负责<code> CPU 和内存的虚拟化</code>，包括：<code>客户机的创建、虚拟内存的分配、CPU 执行模式的切换、vCPU 寄存器的访问、vCPU 的执行</code>。</p><p>（2）<strong>QEMU 用户态工具</strong>，它是一个普通的 Linux 进程，为客户机提供<code>设备模拟的功能</code>，包括模拟 BIOS、PCI/PCIE 总线、磁盘、网卡、显卡、声卡、键盘、鼠标等。同时它通过 ioctl 系统调用与内核态的 KVM 模块进行交互。</p><p>KVM 是在硬件虚拟化支持下的<strong>完全虚拟化技术</strong>，所以它能支持在<strong>相应硬件</strong>上能运行的几乎所有的操作系统，x86 下如：Linux、Windows、FreeBSD、MacOS 等。KVM 的基础架构如图所示。在 KVM 虚拟化架构下，<strong>每个客户机就是一个 QEMU 进程</strong>，在一个宿主机上有多少个虚拟机就会有多少 QEMU 进程；客户机中的每一个虚拟 CPU 对应 QEMU 进程中的一个执行线程；一个宿主机中只有一个 KVM 内核模块，所有客户机都与这个内核模块进行交互。</p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503202834999.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503202834999.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503202834999.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503202834999.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503202834999.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503202834999.png></p><h3 id=resource>Resource</h3><ul><li><a href="https://www.xiexianbin.cn/virtualization-technology/index.html?to_index=1" target=_blank rel="external nofollow noopener noreferrer">https://www.xiexianbin.cn/virtualization-technology/index.html?to_index=1<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li><a href=https://zhuanlan.zhihu.com/p/105499858 target=_blank rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/105499858<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a></li><li><a href=https://github.com/yifengyou/learn-kvm target=_blank rel="external nofollow noopener noreferrer">https://github.com/yifengyou/learn-kvm<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden=true></i></a> to learning</li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-24 17:00:04">更新于 2023-09-24&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5c%e8%99%9a%e6%8b%9f%e5%8c%96%e6%8a%80%e6%9c%af%5c%e8%99%9a%e6%8b%9f%e5%8c%96%e6%8a%80%e6%9c%af%e4%bb%8b%e7%bb%8d.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/ data-title=虚拟化技术介绍 data-hashtags=Storage><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/ data-hashtag=Storage><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/ data-title=虚拟化技术介绍 data-image=https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/storage/>Storage</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/%E7%B2%98%E5%8C%85%E6%8B%86%E5%8C%85/ class=prev rel=prev title=粘包拆包><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>粘包拆包</a>
-<a href=liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E5%AD%98%E5%82%A8/ class=next rel=next title=虚拟化存储>虚拟化存储<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
-<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
-<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>虚拟化技术介绍 - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="虚拟化技术（virtualization technology，VT）是云计算的基础。简单的说，虚拟化使得在一台物理的服务器上可以跑多台虚拟机" /><meta name="keywords" content='Storage' /><meta itemprop="name" content="虚拟化技术介绍">
+<meta itemprop="description" content="虚拟化技术（virtualization technology，VT）是云计算的基础。简单的说，虚拟化使得在一台物理的服务器上可以跑多台虚拟机">
+<meta itemprop="dateModified" content="2023-09-24T17:00:04+08:00" />
+<meta itemprop="wordCount" content="3468"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Storage," /><meta property="og:title" content="虚拟化技术介绍" />
+<meta property="og:description" content="虚拟化技术（virtualization technology，VT）是云计算的基础。简单的说，虚拟化使得在一台物理的服务器上可以跑多台虚拟机" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+
+<meta property="article:modified_time" content="2023-09-24T17:00:04+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="虚拟化技术介绍"/>
+<meta name="twitter:description" content="虚拟化技术（virtualization technology，VT）是云计算的基础。简单的说，虚拟化使得在一台物理的服务器上可以跑多台虚拟机"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/" /><link rel="prev" href="liudongdong1.github.io/%E7%B2%98%E5%8C%85%E6%8B%86%E5%8C%85/" /><link rel="next" href="liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E5%AD%98%E5%82%A8/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "虚拟化技术介绍",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D\/"
+    },"genre": "posts","keywords": "Storage","wordcount":  3468 ,
+    "url": "liudongdong1.github.io\/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D\/","dateModified": "2023-09-24T17:00:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>虚拟化技术介绍</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/storage/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Storage</a></span></div>
+      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01" >0001-01-01</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3468 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="虚拟化技术介绍">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg"
+    data-srcset="https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg, https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg 1.5x, https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg 2x"
+    data-sizes="auto"
+    alt="https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg"
+    title="https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-虚拟化类型">1. 虚拟化类型</a></li>
+        <li><a href="#2-硬件虚拟化">2. 硬件虚拟化</a></li>
+        <li><a href="#3-kvm-概述">3. KVM 概述</a></li>
+        <li><a href="#resource">Resource</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><blockquote>
+<p><code>虚拟化技术（virtualization technology，VT）</code>是云计算的基础。简单的说，虚拟化使得在一台物理的服务器上可以跑多台虚拟机，虚拟机共享物理机的 <code>CPU</code>、<code>内存</code>、<code>IO</code>、<code>网络</code> 等硬件资源，但逻辑上虚拟机之间是相互隔离的。</p>
+<ul>
+<li>系统虚拟化，存储虚拟化，网络虚拟化，GPU 虚拟化，硬件支持虚拟化</li>
+<li>通过 virt-what 查看具体的虚拟化技术</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>在 ESXi 中，所有虚拟化功能都在内核实现。Xen 内核仅实现 CPU 与内存虚拟化， IO 虚拟化与调度管理由 Domain0（主机上启动的第一个管理 VM）实现。KVM 内核实现 CPU 与内存虚拟化，QEMU 实现 IO 虚拟化，通过 Linux 进程调度器实现 VM 管理。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203132014.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203132014.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203132014.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203132014.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203132014.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203132014.png"/></p>
+<h3 id="1-虚拟化类型">1. 虚拟化类型</h3>
+<blockquote>
+<p><code>物理机</code> 将自己的硬件资源虚拟化，并提供给 <code>Guest</code> 一般通过 <code>Hypervisor</code> 的程序实现。<code>Hypervisor</code> 是为客户端操作系统提供虚拟机环境的软件，根据实现方式和所处的位置，分为两种</p>
+</blockquote>
+<h4 id="11-型虚拟化">.1.1 型虚拟化</h4>
+<p><code>Hypervisor</code> 直接安装在物理机上，多个虚拟机在 <code>Hypervisor</code> 上运行。<code>Hypervisor</code> 实现方式一般是一个特殊定制的 <code>Linux</code> 系统。<code>Xen</code> 和 <code>VMWare</code> 的 <code>ESXi</code> 都属于这个类型。</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503155756205.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503155756205.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503155756205.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503155756205.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503155756205.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503155756205.png"/></p>
+<h4 id="2-2-型虚拟化">.2. 2 型虚拟化</h4>
+<p>物理机上首先安装常规的操作系统，比如 <code>Redhat</code>、<code>Ubuntu</code> 和 <code>Windows</code>。<code>Hypervisor</code> 作为 OS 上的一个<code>程序</code>模块运行，并对管理虚拟机进行管理。<code>KVM</code>、<code>VirtualBox</code> 和 <code>VMWare Workstation</code> 都属于这个类型。</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/2.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/2.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/2.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/2.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/2.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/2.png"/></p>
+<blockquote>
+<ul>
+<li>aws : Amazon Web Services</li>
+<li>docker : This is a Docker container.</li>
+<li>hyperv : This is Microsoft Hyper-V hypervisor.</li>
+<li>lxc : This process is running in a Linux LXC container.</li>
+<li>kvm : This guest is running on the KVM hypervisor using hardware acceleration.</li>
+<li>openvz : The guest appears to be running inside an OpenVZ or Virtuozzo container.</li>
+<li>parallels : The guest is running inside Parallels Virtual Platform (Parallels Desktop, Parallels Server).</li>
+<li>qemu : This is QEMU hypervisor using software emulation.</li>
+<li>virt : Some sort of virtualization appears to be present, but we are not sure what it is.</li>
+<li>virtualbox : This is a VirtualBox guest.</li>
+<li>vmware : The guest appears to be running on VMware hypervisor.</li>
+<li>xen The guest appears to be running on Xen hypervisor.</li>
+<li>xen-hvm : This is a Xen guest fully virtualized (HVM).</li>
+</ul>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503210104119.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503210104119.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503210104119.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503210104119.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503210104119.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503210104119.png"/></p>
+<h3 id="2-硬件虚拟化">2. 硬件虚拟化</h3>
+<h4 id="1-cpu-虚拟化">.1. CPU 虚拟化</h4>
+<p>物理服务器上通常配置 2 个物理 pCPU（Socket），每个 CPU 有多个核（core）；开启超线程 Hyper-Threading 技术后，每个 core 有 2 个线程（Thread）；在虚拟化环境中一个 Thread 对应一个 vCPU。在 KVM 中每一个 VM 就是一个用户空间的 QEMU 进程，分配给 Guest 的 vCPU 就是该进程派生的一个线程 Thread，由 Linux 内核动态调度到基于时分复用的物理 pCPU 上运行。KVM 支持设置 CPU 亲和性，将 vCPU 绑定到特定物理 pCPU，如通过 libvirt 驱动指定从 NUMA 节点为 Guest 分配 vCPU 与内存。KVM 支持 vCPU 超分（over-commit）使得分配给 Guest 的 vCPU 数量超过物理 CPU 线程总量。</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg, https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg"/></p>
+<blockquote>
+<p>KVM 是依赖于硬件辅助的全虚拟化（如 Inter-VT、AMD-V），目前也通过 virtio 驱动实现半虚拟化以提升性能。Inter-VT 引入新的执行模式：VMM 运行在 VMX Root 模式， GuestOS 运行在 VMX Non-root 模式，执行特权指令时两种模式可以切换。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203426483.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203426483.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203426483.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203426483.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203426483.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203426483.png"/></p>
+<h4 id="2-内存虚拟化">.2. 内存虚拟化</h4>
+<p>内存虚拟化的目的是给虚拟客户机操作系统提供一个从 0 地址开始的连续物理内存空间，同时在多个客户机之间实现隔离和调度。在虚拟化环境中，内存地址的访问会涉及如下四个概念：</p>
+<p>1）<code>客户机虚拟地址，GVA</code>（Guest Virtual Address）</p>
+<p>2）客户机物理地址，GPA（Guest Physical Address）</p>
+<p>3）宿主机虚拟地址，HVA（Host Virtual Address）</p>
+<p>4）<code>宿主机物理地址，HPA</code>（Host Physical Address）</p>
+<h5 id="1-eptvpid">1. EPT&amp;VPID</h5>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203614913.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203614913.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203614913.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203614913.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203614913.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203614913.png"/></p>
+<p>内存虚拟化就是要将 GVA 转化为最终能够访问的 HPA。在没有硬件提供的内存虚拟化之前，系统通过**影子页表（**Shadow Page Table) 完成这一转化。内存的访问和更新通常是非常频繁的，要维护影子页表中对应关系会非常复杂，开销也较大。同时需要为每一个客户机都维护一份影子页表，当客户机数量较多时，其影子页表占用的内存较大也会是一个问题。</p>
+<ul>
+<li>
+<p>Intel CPU 在硬件设计上就引入了 <strong>EPT</strong>（Extended Page Tables，扩展页表），从而<code>将 GVA 到 HPA 的转换通过硬件来实现</code>。这个转换分为两步。首先，<code>通过客户机 CR3 寄存器将 GVA 转化为 GPA，然后通过查询 EPT 来实现 GPA 到 HPA 的转化</code>。</p>
+</li>
+<li>
+<p>CPU 使用 TLB（Translation Lookaside Buffer）缓存线性虚拟地址到物理地址的映射，地址转换时 CPU 先根据 GPA 先查找 TLB，如果未找到映射的 HPA，将根据页表中的映射填充 TLB，再进行地址转换。不同 Guest 的 vCPU 切换执行时需要刷新 TLB，影响了内存访问效率。Intel 引入了 VPID（Virtual-Processor Identifier）技术<code>在硬件上为 TLB 增加一个标志，每个 TLB 表项与一个 VPID 关联</code>，<code>唯一对应一个 vCPU，当 vCPU 切换时可根据 VPID 找到并保留已有的 TLB 表项</code>，减少 TLB 刷新。</p>
+</li>
+</ul>
+<h5 id="2-thp">.2. THP</h5>
+<p>x86 CPU 默认使用 4KB 的内存页面，目前已经支持 2MB，1GB 的内存大页（Huge Page）。<code>使用大页内存可减少内存页数与页表项数，节省了页表所占用的 CPU 缓存空间，同时也减少内存地址转换次数，以及 TLB 失效和刷新的次数，从而提升内存使用效率与性能</code>。但使用内存大页也有一些弊端：如大页必须在使用前准备好；应用程序必须显式地使用大页（一般是调用 mmap、shmget 或使用 libhugetlbfs 库进行封装）；需要超级用户权限来挂载 hugetlbfs 文件系统；如果<code>大页内存没有实际使用会造成内存浪费等</code>。2009 年实现的透明大页 THP（Transparent Hugepage）技术创建了一个抽象层，能够自动创建、管理和使用传统大页，实现发挥大页优势同时也规避以上弊端。当前主流的 Linux 版本都默认支持。KVM 中可以在 Host 和 Guest 中同时使用 THB 技术。</p>
+<h5 id="3--内存超分">.3.  内存超分</h5>
+<blockquote>
+<p>由于 Guest 使用内存时采用瘦分配按需增加的模式，KVM 支持内存超分（Over-Commit）使得<code>分配给 Guest 的内存总量大于实际物理内存总量</code></p>
+</blockquote>
+<p>1） <strong>内存交换（Swapping）</strong>：当系统内存不够用时，把部分长时间未操作的内存交换到磁盘上配置的 Swap 分区，等相关程序需要运行时再恢复到内存中。</p>
+<p>2） <strong>气球（Ballooning）</strong>：通过 virtio_balloon 驱动实现动态调整 Guest 与 Host 的可用内存空间。气球中的内存是 Host 可使用，Guest 不能使用。当 Host 内存不足时，可以使气球膨胀，从而回收部分已分配给 Guest 的内存。当 Guest 内存不足时可请求压缩气球，从 Host 申请更多内存使用。</p>
+<p>3） <strong>页共享（Page Sharing）</strong>：通过 KSM（Kernel Samepage Merging）让内核扫描正在运行进程的内存。如果发现完全相同的内存页就会合并为单一内存页，并标志位写时复制 COW（Copy On Write）。如果有进程尝试修改该内存页，将复制一个新的内存页供其使用。KVM 中 QEMU 通过 madvise 系统调用告知内核那些内存可以合并，通过配置开关控制是否企业 KSM 功能。Guest 就是 QEMU 进程，如果多个 Guest 运行相同 OS 或应用，且不常更新，使用 KSM 能大幅提升内存使用效率与性能。当然扫描和对比内存需要消耗 CPU 资源对性能会有一定影响。</p>
+<h4 id="3-设备虚拟化">.3. 设备虚拟化</h4>
+<p>（1）<strong>设备模拟</strong>：在虚拟机监控器中模拟一个传统的 I/O 设备的特性，比如在<code> QEMU</code> 中模拟一个 Intel 的千兆网卡或者一个 IDE 硬盘驱动器，在客户机中就暴露为对应的硬件设备。客户机中的 I/O 请求都由虚拟机监控器捕获并模拟执行后返回给客户机。</p>
+<p>（2）<strong>前后端驱动接口</strong>：在虚拟机监控器与客户机之间定义一种全新的适合于虚拟化环境的交互接口，比如常见的 <code>virtio 协议</code>就是在客户机中暴露为 virtio-net、virtio-blk 等网络和磁盘设备，在 QEMU 中实现相应的 virtio 后端驱动。</p>
+<p>（3）<strong>设备直接分配</strong>：将一个物理设备，如一个网卡或硬盘驱动器直接分配给客户机使用，这种情况下 I/O 请求的链路中很少需要或基本不需要虚拟机监控器的参与，所以性能很好。</p>
+<p>（4）<strong>设备共享分配</strong>：其实是设备直接分配方式的一个扩展。在这种模式下，一个（具有特定特性的）物理设备可以支持多个虚拟机功能接口，可以将虚拟功能接口独立地分配给不同的客户机使用。如 SR-IOV 就是这种方式的一个标准协议。</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503204219179.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503204219179.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503204219179.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503204219179.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503204219179.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503204219179.png"/></p>
+<h3 id="3-kvm-概述">3. KVM 概述</h3>
+<blockquote>
+<p>KVM 就是在硬件辅助虚拟化技术之上构建起来的<strong>虚拟机监控器</strong>。当然，并非要所有这些硬件虚拟化都支持才能运行 KVM 虚拟化，KVM 对硬件<strong>最低的依赖是</strong> CPU 的硬件虚拟化支持（也就是说，KVM 可以运行在所有支持 CPU 虚拟化的机器上）</p>
+</blockquote>
+<p>（1）<strong>KVM 内核模块</strong>，它属于标准 Linux 内核的一部分，是一个专门提供虚拟化功能的模块，主要负责<code> CPU 和内存的虚拟化</code>，包括：<code>客户机的创建、虚拟内存的分配、CPU 执行模式的切换、vCPU 寄存器的访问、vCPU 的执行</code>。</p>
+<p>（2）<strong>QEMU 用户态工具</strong>，它是一个普通的 Linux 进程，为客户机提供<code>设备模拟的功能</code>，包括模拟 BIOS、PCI/PCIE 总线、磁盘、网卡、显卡、声卡、键盘、鼠标等。同时它通过 ioctl 系统调用与内核态的 KVM 模块进行交互。</p>
+<p>KVM 是在硬件虚拟化支持下的<strong>完全虚拟化技术</strong>，所以它能支持在<strong>相应硬件</strong>上能运行的几乎所有的操作系统，x86 下如：Linux、Windows、FreeBSD、MacOS 等。KVM 的基础架构如图所示。在 KVM 虚拟化架构下，<strong>每个客户机就是一个 QEMU 进程</strong>，在一个宿主机上有多少个虚拟机就会有多少 QEMU 进程；客户机中的每一个虚拟 CPU 对应 QEMU 进程中的一个执行线程；一个宿主机中只有一个 KVM 内核模块，所有客户机都与这个内核模块进行交互。</p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503202834999.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503202834999.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503202834999.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503202834999.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503202834999.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503202834999.png"/></p>
+<h3 id="resource">Resource</h3>
+<ul>
+<li><a href="https://www.xiexianbin.cn/virtualization-technology/index.html?to_index=1"target="_blank" rel="external nofollow noopener noreferrer">https://www.xiexianbin.cn/virtualization-technology/index.html?to_index=1<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/105499858"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/105499858<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://github.com/yifengyou/learn-kvm"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/yifengyou/learn-kvm<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>  to learning</li>
+</ul>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-24&#32;17:00:04>更新于 2023-09-24&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e5%ad%98%e5%82%a8%e8%ae%be%e8%ae%a1%5c%e8%99%9a%e6%8b%9f%e5%8c%96%e6%8a%80%e6%9c%af%5c%e8%99%9a%e6%8b%9f%e5%8c%96%e6%8a%80%e6%9c%af%e4%bb%8b%e7%bb%8d.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/" data-title="虚拟化技术介绍" data-hashtags="Storage"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/" data-hashtag="Storage"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/" data-title="虚拟化技术介绍" data-image="https://cdn.pixabay.com/photo/2022/05/08/14/30/couple-7182248__340.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/storage/">Storage</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/%E7%B2%98%E5%8C%85%E6%8B%86%E5%8C%85/" class="prev" rel="prev" title="粘包拆包"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>粘包拆包</a>
+      <a href="liudongdong1.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96%E5%AD%98%E5%82%A8/" class="next" rel="next" title="虚拟化存储">虚拟化存储<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

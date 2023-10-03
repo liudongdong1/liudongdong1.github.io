@@ -1,121 +1,793 @@
-<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>鸟哥私房菜-基础学习篇 - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="1. 主机规划与磁盘分区 .1. 各设备在linux中的文件名 .2. MSDOS（MBR） 早期的 Linux 系统为了相容于 Windows 的磁盘，因此使用的是支持 Windows 的 MBR（Mast"><meta name=keywords content="Linux"><meta itemprop=name content="鸟哥私房菜-基础学习篇"><meta itemprop=description content="1. 主机规划与磁盘分区 .1. 各设备在linux中的文件名 .2. MSDOS（MBR） 早期的 Linux 系统为了相容于 Windows 的磁盘，因此使用的是支持 Windows 的 MBR（Mast"><meta itemprop=datePublished content="2020-04-16T22:21:29+00:00"><meta itemprop=dateModified content="2023-09-24T17:00:03+08:00"><meta itemprop=wordCount content="4104"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="Linux,"><meta property="og:title" content="鸟哥私房菜-基础学习篇"><meta property="og:description" content="1. 主机规划与磁盘分区 .1. 各设备在linux中的文件名 .2. MSDOS（MBR） 早期的 Linux 系统为了相容于 Windows 的磁盘，因此使用的是支持 Windows 的 MBR（Mast"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-04-16T22:21:29+00:00"><meta property="article:modified_time" content="2023-09-24T17:00:03+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="鸟哥私房菜-基础学习篇"><meta name=twitter:description content="1. 主机规划与磁盘分区 .1. 各设备在linux中的文件名 .2. MSDOS（MBR） 早期的 Linux 系统为了相容于 Windows 的磁盘，因此使用的是支持 Windows 的 MBR（Mast"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87/><link rel=prev href=liudongdong1.github.io/wpfintroduce/><link rel=next href=liudongdong1.github.io/hexo-blog-introduce/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"鸟哥私房菜-基础学习篇","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87\/"},"genre":"posts","keywords":"Linux","wordcount":4104,"url":"liudongdong1.github.io\/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87\/","datePublished":"2020-04-16T22:21:29+00:00","dateModified":"2023-09-24T17:00:03+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"liudongdong1"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
-<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>鸟哥私房菜-基础学习篇</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle" aria-hidden=true></i>
-liudongdong1</span></span>
-<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/linux/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Linux</a></span></div><div class=post-meta-line><span title="2020-04-16 22:21:29"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-04-16>2020-04-16</time>
-</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 4104 字&nbsp;
-<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title=鸟哥私房菜-基础学习篇>
-<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
-</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg data-srcset="https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg, https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg 1.5x, https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg 2x" data-sizes=auto alt=https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg title=https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg></div><div class="details toc" id=toc-static kept=true><div class="details-summary toc-title"><span>目录</span>
-<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#1-主机规划与磁盘分区>1. 主机规划与磁盘分区</a></li><li><a href=#2-linux操作>2. Linux操作</a></li><li><a href=#3-文件>3. 文件</a></li><li><a href=#4-软件相关>4. 软件相关</a></li><li><a href=#5-服务systemctl>5. 服务systemctl</a></li><li><a href=#6-内核>6. 内核</a></li></ul></li></ul></nav></div></div><div class=content id=content><h3 id=1-主机规划与磁盘分区>1. 主机规划与磁盘分区</h3><h4 id=1-各设备在linux中的文件名>.1. 各设备在linux中的文件名</h4><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408100703112.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408100703112.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408100703112.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408100703112.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408100703112.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408100703112.png></p><h4 id=2-msdosmbr>.2. MSDOS（MBR）</h4><ul><li>早期的 Linux 系统为了相容于 Windows 的磁盘，因此使用的是<code>支持 Windows 的 MBR（Master Boot Record, 主要开机纪录区）</code> 的方式来处理<code>开机管理程序与分区表</code>！而开机管理程序纪录区与分区表则通放在磁盘的第一个扇区， 这个<code>扇区通常是 512Bytes 的大小</code> （旧的磁盘 扇区都是 512Bytes ），所以说，第一个扇区 512Bytes 会有这两个数据：<ul><li>主要开机记录区（Master Boot Record, MBR）：可以<code>安装开机管理程序</code>的地方，有446 Bytes</li><li>分区表（partition table）：记录<code>整颗硬盘分区的状态</code>，有64 Bytes 由于分区表所在区块仅有64 Bytes容量，因此最多仅能有四组记录区，每组记录区记录了该区段的启始与结束的柱面号码。(可以采用延申分区来划分多个磁盘)</li></ul></li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101141509.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101141509.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101141509.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101141509.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101141509.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101141509.png></p><blockquote><p>延伸分区的目的是使用额 外的扇区来记录分区信息，延伸分区本身并不能被拿来格式化。 然后我们可以通过延伸分区所指向的那个区块继续作分区的记录。这五个由延伸分区继续切出来的分区，就被称为逻辑分区（logical partition）。</p><p><code>主要分区与延伸分区最多可以有四笔（硬盘的限制） 延伸分区最多只能有一个（操作系统的限制）</code></p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101535803.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101535803.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101535803.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101535803.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101535803.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101535803.png></p><h4 id=3-gpt-磁盘分区表partition-table>.3. GPT 磁盘分区表（（partition table）</h4><ul><li>与 MBR 仅使用第一个 512Bytes 区块来纪录不同， GPT 使用了 34 个 LBA 区块来纪录分区信息！</li><li>GPT 除了前面 34 个 LBA 之外，整个磁盘的最后 33 个 LBA 也拿来作为另一个备份！</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408104340830.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408104340830.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408104340830.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408104340830.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408104340830.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408104340830.png></p><ul><li><strong>LBA0(MBR相容区块)：</strong> 与 MBR 模式相似的，这个相容区块也分为两个部份，一个就是跟之前 446 Bytes 相似的区块，储存了第一阶段的开机管理程序！ 而在原本的分区表的纪录区内，这个相容模式仅放入一个特殊标志的分区，用来表示此磁盘为 GPT 格式之意。</li><li><strong>LBA1 （GPT 表头纪录）</strong>： 纪录了<code>分区表本身的位置与大小</code>，<code>同时纪录了备份用的 GPT 分区</code> （就是前面谈到的在最后 34 个 LBA 区块）<code> 放置的位 置</code>， 同时放置了<code>分区表的检验机制码</code> （CRC32），操作系统可以根据这个检验码来判断 GPT 是否正确</li><li><strong>LBA2-33 （实际纪录分区信息处）:</strong> LBA2 区块开始，每个 LBA 都可以纪录 4 笔分区纪录，所以在默认的情况下，总共可以有 4*32 = 128 笔分区纪录.GPT 在每笔纪录中分别 提供了 64bits 来记载开始/结束的扇区号码</li></ul><h4 id=4-bios-搭配-mbrgpt-的开机流程>.4. BIOS 搭配 MBR/GPT 的开机流程</h4><ul><li>CMOS是记录各项硬件参数且嵌入在主板上面的储存器，BIOS则是 一个写入到主板上的一个固件</li></ul><blockquote><ol><li><p>BIOS：开机主动执行的固件，会认识第一个可开机的设备；</p></li><li><p>MBR：第一个可开机设备的第一个扇区内的主要开机记录区块，内含开机管理程序；</p></li><li><p>开机管理程序（boot loader）：一支可读取核心文件来执行的软件； Boot loader则是操作系统安装在MBR上面的一套软件了, <code>提供菜单</code>：使用者可以选择不同的开机项目，这也是多重开机的重要功能！ <code>载入核心文件</code>：直接指向可开机的程序区段来开始操作系统； <code>转交其他loader</code>：将开机管理功能转交给其他loader负责。</p></li><li><p>核心文件：开始操作系统的功能</p></li></ol></blockquote><h4 id=5-uefi-bios-搭配-gpt-开机的流程>.5. UEFI BIOS 搭配 GPT 开机的流程</h4><ul><li>UEFI主要是想要取代 BIOS 这个固件界面，因此我们也称 UEFI为 UEFIBIOS 就是了。UEFI使用 C 程序语言，比起使用组合语言的传 统 BIOS 要更容易开发！也因为使用 C 语言来撰写，因此如果开发者够厉害，甚至可以在 UEFI开机阶段就让该系统了解 TCP/IP 而直接上 网！</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408110430346.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408110430346.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408110430346.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408110430346.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408110430346.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408110430346.png></p><h3 id=2-linux操作>2. Linux操作</h3><h4 id=1-关机>.1. 关机</h4><ul><li>数据同步写入磁盘： sync</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#f92672>[</span>dmtsai@study ~<span style=color:#f92672>]</span>$ su - <span style=color:#75715e># 这个指令在让你的身份变成 root ！下面请输入 root 的密码！</span>
-</span></span><span style=display:flex><span>Password: <span style=color:#75715e># 就这里！请输入安装时你所设置的 root 密码！</span>
-</span></span><span style=display:flex><span>Last login: Mon Jun <span style=color:#ae81ff>1</span> 16:10:12 CST <span style=color:#ae81ff>2015</span> on pts/0
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># sync</span>
-</span></span></code></pre></div><ul><li>shutdown</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># /sbin/shutdown [-krhc] [时间] [警告讯息]</span>
-</span></span><span style=display:flex><span>选项与参数：
-</span></span><span style=display:flex><span>-k ： 不要真的关机，只是发送警告讯息出去！
-</span></span><span style=display:flex><span>-r ： 在将系统的服务停掉之后就重新开机（常用）
-</span></span><span style=display:flex><span>-h ： 将系统的服务停掉后，立即关机。 （常用）
-</span></span><span style=display:flex><span>-c ： 取消已经在进行的 shutdown 指令内容。
-</span></span><span style=display:flex><span>时间 ： 指定系统关机的时间！时间的范例下面会说明。若没有这个项目，则默认 <span style=color:#ae81ff>1</span> 分钟后自动进行。
-</span></span><span style=display:flex><span>范例：
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># /sbin/shutdown -h 10 &#39;I will shutdown after 10 mins&#39;</span>
-</span></span><span style=display:flex><span>Broadcast message from root@study.centos.vbird （Tue 2015-06-02 10:51:34 CST）:
-</span></span><span style=display:flex><span>I will shutdown after <span style=color:#ae81ff>10</span> mins The system is going down <span style=color:#66d9ef>for</span> power-off at Tue 2015-06-02 11:01:34 CST!
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># shutdown -h now</span>
-</span></span><span style=display:flex><span>立刻关机，其中 now 相当于时间为 <span style=color:#ae81ff>0</span> 的状态
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># shutdown -h 20:25</span>
-</span></span><span style=display:flex><span>系统在今天的 20:25 分会关机，若在21:25才下达此指令，则隔天才关机
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># shutdown -h +10</span>
-</span></span><span style=display:flex><span>系统再过十分钟后自动关机
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># shutdown -r now</span>
-</span></span><span style=display:flex><span>系统立刻重新开机
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># shutdown -r +30 &#39;The system will reboot&#39;</span>
-</span></span><span style=display:flex><span>再过三十分钟系统会重新开机，并显示后面的讯息给所有在线上的使用者
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># shutdown -k now &#39;This system will reboot&#39;</span>
-</span></span><span style=display:flex><span>仅发出警告信件的参数！系统并不会关机啦！吓唬人！
-</span></span></code></pre></div><h4 id=2-文件目录配置依据-fhs>.2. 文件目录配置依据-FHS</h4><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408112433082.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408112433082.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408112433082.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408112433082.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408112433082.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408112433082.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134247976.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134247976.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134247976.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134247976.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134247976.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134247976.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134307088.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134307088.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134307088.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134307088.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134307088.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134307088.png><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134745707.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134745707.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134745707.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134745707.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134745707.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134745707.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134807939.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134807939.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134807939.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134807939.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134807939.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134807939.png></p><h4 id=3-usr--val>.3. /usr & /val</h4><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135042584.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135042584.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135042584.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135042584.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135042584.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135042584.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135209162.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135209162.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135209162.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135209162.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135209162.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135209162.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135253015.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135253015.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135253015.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135253015.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135253015.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135253015.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408195806304.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408195806304.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408195806304.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408195806304.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408195806304.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408195806304.png></p><h3 id=3-文件>3. 文件</h3><h4 id=1-非纯文本文件查看>.1. 非纯文本文件查看</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># od [-t TYPE] 文件</span>
-</span></span><span style=display:flex><span>选项或参数：
-</span></span><span style=display:flex><span>-t ：后面可以接各种“类型 （TYPE）”的输出，例如：
-</span></span><span style=display:flex><span>a ：利用默认的字符来输出；
-</span></span><span style=display:flex><span>c ：使用 ASCII 字符来输出
-</span></span><span style=display:flex><span>d<span style=color:#f92672>[</span>size<span style=color:#f92672>]</span> ：利用十进制（decimal）来输出数据，每个整数占用 size Bytes ；
-</span></span><span style=display:flex><span>f<span style=color:#f92672>[</span>size<span style=color:#f92672>]</span> ：利用浮点数值（floating）来输出数据，每个数占用 size Bytes ；
-</span></span><span style=display:flex><span>o<span style=color:#f92672>[</span>size<span style=color:#f92672>]</span> ：利用八进位（octal）来输出数据，每个整数占用 size Bytes ；
-</span></span><span style=display:flex><span>x<span style=color:#f92672>[</span>size<span style=color:#f92672>]</span> ：利用十六进制（hexadecimal）来输出数据，每个整数占用 size Bytes ；
-</span></span><span style=display:flex><span>范例一：请将/usr/bin/passwd的内容使用ASCII方式来展现！
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># od -t c /usr/bin/passwd</span>
-</span></span><span style=display:flex><span><span style=color:#ae81ff>0000000</span> <span style=color:#ae81ff>177</span> E L F <span style=color:#ae81ff>002</span> <span style=color:#ae81ff>001</span> <span style=color:#ae81ff>001</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span>
-</span></span><span style=display:flex><span><span style=color:#ae81ff>0000020</span> <span style=color:#ae81ff>003</span> <span style=color:#ae81ff>\0</span> &gt; <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>001</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>364</span> <span style=color:#ae81ff>3</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span>
-</span></span><span style=display:flex><span><span style=color:#ae81ff>0000040</span> @ <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> x e <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span>
-</span></span><span style=display:flex><span><span style=color:#ae81ff>0000060</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> @ <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>8</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\t</span> <span style=color:#ae81ff>\0</span> @ <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>035</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>034</span> <span style=color:#ae81ff>\0</span>
-</span></span><span style=display:flex><span><span style=color:#ae81ff>0000100</span> <span style=color:#ae81ff>006</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>005</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> @ <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span> <span style=color:#ae81ff>\0</span>
-</span></span><span style=display:flex><span>.....（后面省略）....
-</span></span><span style=display:flex><span><span style=color:#75715e># 最左边第一栏是以 8 进位来表示Bytes数。以上面范例来说，第二栏0000020代表开头是</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 第 16 个 byes （2x8） 的内容之意。</span>
-</span></span><span style=display:flex><span>范例二：请将/etc/issue这个文件的内容以8进位列出储存值与ASCII的对照表
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># od -t oCc /etc/issue</span>
-</span></span><span style=display:flex><span><span style=color:#ae81ff>0000000</span> <span style=color:#ae81ff>134</span> <span style=color:#ae81ff>123</span> <span style=color:#ae81ff>012</span> <span style=color:#ae81ff>113</span> <span style=color:#ae81ff>145</span> <span style=color:#ae81ff>162</span> <span style=color:#ae81ff>156</span> <span style=color:#ae81ff>145</span> <span style=color:#ae81ff>154</span> <span style=color:#ae81ff>040</span> <span style=color:#ae81ff>134</span> <span style=color:#ae81ff>162</span> <span style=color:#ae81ff>040</span> <span style=color:#ae81ff>157</span> <span style=color:#ae81ff>156</span> <span style=color:#ae81ff>040</span>
-</span></span><span style=display:flex><span><span style=color:#ae81ff>\ </span>S <span style=color:#ae81ff>\n</span> K e r n e l <span style=color:#ae81ff>\ </span>r o n
-</span></span><span style=display:flex><span><span style=color:#ae81ff>0000020</span> <span style=color:#ae81ff>141</span> <span style=color:#ae81ff>156</span> <span style=color:#ae81ff>040</span> <span style=color:#ae81ff>134</span> <span style=color:#ae81ff>155</span> <span style=color:#ae81ff>012</span> <span style=color:#ae81ff>012</span>
-</span></span><span style=display:flex><span>a n <span style=color:#ae81ff>\ </span>m <span style=color:#ae81ff>\n</span> <span style=color:#ae81ff>\n</span>
-</span></span><span style=display:flex><span><span style=color:#ae81ff>0000027</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 如上所示，可以发现每个字符可以对应到的数值为何！要注意的是，该数值是 8 进位喔！</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 例如 S 对应的记录数值为 123 ，转成十进制：1x8^2+2x8+3=83。</span>
-</span></span></code></pre></div><h4 id=2-文件相关命令>.2. 文件相关命令</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$file 查看文件类型
-</span></span><span style=display:flex><span>$which <span style=color:#f92672>[</span>-a<span style=color:#f92672>]</span> command  <span style=color:#75715e># 查看文件目录 根据“PATH”这个环境变量所规范的路径，去搜寻“可执行文件”的文件名～ 所以，重点是找出“可执行文件”而已！且 which 后面接的是“完整文件名”喔！若加上 -a 选项，则可以列出所有的可以找到的同名可执行文件，而非仅显示第一个而已！</span>
-</span></span><span style=display:flex><span>$locate pwd
-</span></span><span style=display:flex><span>$find /etc -name <span style=color:#e6db74>&#39;*httpd*&#39;</span>
-</span></span></code></pre></div><ul><li><strong>由文件找出正在使用该文件的程序fuser</strong></li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408200040194.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408200040194.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408200040194.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408200040194.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408200040194.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408200040194.png></p><ul><li><strong>列出被程序所打开的文件文件名 lsof</strong></li></ul><h4 id=3-文件系统特性>.3. 文件系统特性</h4><ul><li><code>superblock</code>：记录此 filesystem 的整体信息，包括<code>inode/block的总量、使用量、剩余量， 以及文件系统的格式与相关信息等</code>；</li><li><code>inode</code>：记录文件的属性，一个文件占用一个inode，同时记录此文件的数据所在的 block 号码；</li><li><code>block</code>：实际<code>记录文件的内容，若文件太大时，会占用多个 block</code> 。</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160045309.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160045309.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160045309.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160045309.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160045309.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160045309.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160147950.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160147950.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160147950.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160147950.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160147950.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160147950.png></p><ul><li>原则上，block 的大小与数量在格式化完就不能够再改变了（除非重新格式化）；</li><li>每个 block 内最多只能够放置一个文件的数据；</li><li>承上，如果文件大于 block 的大小，则一个文件会占用多个 block 数量；</li><li>承上，若文件小于 block ，则该 block 的剩余容量就不能够再被使用了（磁盘空间会浪费）。</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160522848.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160522848.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160522848.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160522848.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160522848.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160522848.png></p><ul><li>将 inode 记录 block 号码的区域定义为12个直接，一个间接, 一个双间接与一个三间接记 录区。</li></ul><h4 id=4-du--df>.4. du & df</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>范例二：将容量结果以易读的容量格式显示出来
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># df -h Filesystem Size Used Avail Use% Mounted on</span>
-</span></span><span style=display:flex><span>/dev/mapper/centos-root 10G 3.3G 6.8G 33% /
-</span></span><span style=display:flex><span>devtmpfs 613M <span style=color:#ae81ff>0</span> 613M 0% /dev
-</span></span><span style=display:flex><span>tmpfs 623M 80K 623M 1% /dev/shm
-</span></span><span style=display:flex><span>tmpfs 623M 25M 599M 4% /run
-</span></span><span style=display:flex><span>tmpfs 623M <span style=color:#ae81ff>0</span> 623M 0% /sys/fs/cgroup
-</span></span><span style=display:flex><span>/dev/mapper/centos-home 5.0G 67M 5.0G 2% /home
-</span></span><span style=display:flex><span>/dev/vda2 1014M 131M 884M 13% /boot
-</span></span><span style=display:flex><span><span style=color:#75715e># 不同于范例一，这里会以 G/M 等容量格式显示出来，比较容易看啦</span>
-</span></span></code></pre></div><ul><li>由于 df 主要读取的数据几乎都是针对一整个文件系统，因此读取的范围主要是在 Superblock 内的信息， 所以这个指令显示结果的速度 非常的快速！</li><li>du 这个指令其实会直接到文件系统内去搜寻所有的文件数据.</li></ul><h4 id=5-磁盘分区>.5. 磁盘分区</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># lsblk [-dfimpt] [device]</span>
-</span></span><span style=display:flex><span>选项与参数：
-</span></span><span style=display:flex><span>-d ：仅列出磁盘本身，并不会列出该磁盘的分区数据
-</span></span><span style=display:flex><span>-f ：同时列出该磁盘内的文件系统名称
-</span></span><span style=display:flex><span>-i ：使用 ASCII 的线段输出，不要使用复杂的编码 （再某些环境下很有用）
-</span></span><span style=display:flex><span>-m ：同时输出该设备在 /dev 下面的权限数据 （rwx 的数据）
-</span></span><span style=display:flex><span>-p ：列出该设备的完整文件名！而不是仅列出最后的名字而已。
-</span></span><span style=display:flex><span>-t ：列出该磁盘设备的详细数据，包括磁盘伫列机制、预读写的数据量大小等
-</span></span><span style=display:flex><span>范例一：列出本系统下的所有磁盘与磁盘内的分区信息
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># lsblk</span>
-</span></span><span style=display:flex><span>NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
-</span></span><span style=display:flex><span>sr0 11:0 <span style=color:#ae81ff>1</span> 1024M <span style=color:#ae81ff>0</span> rom
-</span></span><span style=display:flex><span>vda 252:0 <span style=color:#ae81ff>0</span> 40G <span style=color:#ae81ff>0</span> disk <span style=color:#75715e># 一整颗磁盘</span>
-</span></span><span style=display:flex><span>|-vda1 252:1 <span style=color:#ae81ff>0</span> 2M <span style=color:#ae81ff>0</span> part
-</span></span><span style=display:flex><span>|-vda2 252:2 <span style=color:#ae81ff>0</span> 1G <span style=color:#ae81ff>0</span> part /boot
-</span></span><span style=display:flex><span><span style=color:#e6db74>`</span>-vda3 252:3 <span style=color:#ae81ff>0</span> 30G <span style=color:#ae81ff>0</span> part
-</span></span><span style=display:flex><span>|-centos-root 253:0 <span style=color:#ae81ff>0</span> 10G <span style=color:#ae81ff>0</span> lvm / <span style=color:#75715e># 在 vda3 内的其他文件系统</span>
-</span></span><span style=display:flex><span>|-centos-swap 253:1 <span style=color:#ae81ff>0</span> 1G <span style=color:#ae81ff>0</span> lvm <span style=color:#f92672>[</span>SWAP<span style=color:#f92672>]</span>
-</span></span><span style=display:flex><span><span style=color:#e6db74>`</span>-centos-home 253:2 <span style=color:#ae81ff>0</span> 5G <span style=color:#ae81ff>0</span> lvm /home
-</span></span></code></pre></div><ul><li><code>UUID 是全域单一识别码 （universally unique identifier）</code>，Linux 会将系统内所有的设备都给予一个独一无二的识别码， 这个识别 码就可以拿来作为挂载或者是使用这个设备/文件系统之用了</li><li>“MBR 分区表请使用 fdisk 分区， GPT 分区表请使用 gdisk 分区！”</li></ul><h5 id=1-gdisk>1. gdisk</h5><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162713811.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162713811.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162713811.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162713811.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162713811.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162713811.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162913242.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162913242.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162913242.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162913242.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162913242.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162913242.png></p><ul><li><strong>partprobe 更新 Linux 核心的分区表信息</strong></li></ul><blockquote><p>不要去处理一个正在使用中的分区！例如，我们的系统现在已经使用了 /dev/vda2 ，那如果你要删除 /dev/vda2 的话， 必须要先 将 /dev/vda2 卸载，否则直接删除该分区的话，虽然磁盘还是慧写入正确的分区信息，但是核心会无法更新分区表的信息的！</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408163124586.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408163124586.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408163124586.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408163124586.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408163124586.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408163124586.png></p><h5 id=2-格式化--挂载>2. 格式化 & 挂载</h5><ul><li>EXT4 文件系统 mkfs.ext4</li><li>XFS 文件系统 mkfs.xfs</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>blkid /dev/vda4 <span style=color:#75715e>#找出 /dev/vda4 的 UUID 后，用该 UUID 来挂载文件系统到 /data/xfs 内</span>
-</span></span><span style=display:flex><span>mount UUID<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;e0a6af55-26e7-4cb7-a515-826a8bd29e90&#34;</span> /data/xfs
-</span></span></code></pre></div><ul><li>单一文件系统不应该被重复挂载在不同的挂载点（目录）中；</li><li>单一目录不应该重复挂载多个文件系统；</li><li>要作为挂载点的目录，理论上应该都是空目录才是</li></ul><h4 id=6-使用实体分区创建-swap>6. 使用实体分区创建 swap</h4><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164109135.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164109135.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164109135.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164109135.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164109135.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164109135.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164217554.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164217554.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164217554.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164217554.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164217554.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164217554.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164237875.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164237875.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164237875.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164237875.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164237875.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164237875.png></p><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164258020.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164258020.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164258020.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164258020.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164258020.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164258020.png></p><h4 id=7-lvm-相关介绍>7. LVM 相关介绍</h4><ul><li>LVM 的作法是<code>将几个实体的 partitions （或 disk） 通过软件组合成为一块看起来是独立的大磁盘 （VG） ，然后将这块大 磁盘再经过分区成为可使用分区 （LV）</code>， 最终就能够挂载使用了。</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408194314913.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408194314913.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408194314913.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408194314913.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408194314913.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408194314913.png></p><h3 id=4-软件相关>4. 软件相关</h3><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171534087.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171534087.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171534087.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171534087.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171534087.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171534087.png></p><ul><li>通常不同的 distribution 所释出的 RPM 文件，并不能用在其他的 distributions 上。</li></ul><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171734001.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171734001.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171734001.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171734001.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171734001.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171734001.png></p><h3 id=5-服务systemctl>5. 服务systemctl</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#f92672>[</span>root@study ~<span style=color:#f92672>]</span><span style=color:#75715e># systemctl [command] [unit]</span>
-</span></span><span style=display:flex><span>command 主要有：
-</span></span><span style=display:flex><span>start ：立刻启动后面接的 unit
-</span></span><span style=display:flex><span>stop ：立刻关闭后面接的 unit
-</span></span><span style=display:flex><span>restart ：立刻关闭后启动后面接的 unit，亦即执行 stop 再 start 的意思
-</span></span><span style=display:flex><span>reload ：不关闭后面接的 unit 的情况下，重新载入配置文件，让设置生效
-</span></span><span style=display:flex><span>enable ：设置下次开机时，后面接的 unit 会被启动
-</span></span><span style=display:flex><span>disable ：设置下次开机时，后面接的 unit 不会被启动
-</span></span><span style=display:flex><span>status ：目前后面接的这个 unit 的状态，会列出有没有正在执行、开机默认执行否、登录等信息等！
-</span></span><span style=display:flex><span>is-active ：目前有没有正在运行中
-</span></span><span style=display:flex><span>is-enable ：开机时有没有默认要启用这个 unit
-</span></span></code></pre></div><h3 id=6-内核>6. 内核</h3><h4 id=1-内核稳定版本链接>.1. 内核稳定版本链接</h4><ul><li>核心官网：http://www.kernel.org/</li><li>交大资科：ftp://linux.cis.nctu.edu.tw/kernel/linux/kernel/</li><li>国高中心：ftp://ftp.twaren.net/pub/Unix/Kernel/linux/kernel/</li></ul><h4 id=2-核心代码目录>.2. 核心代码目录</h4><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164733509.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164733509.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164733509.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164733509.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164733509.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164733509.png></p><h4 id=3-单一模块编译>.3. 单一模块编译</h4><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408165238691.png data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408165238691.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408165238691.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408165238691.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408165238691.png title=https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408165238691.png></p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-24 17:00:03">更新于 2023-09-24&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5cLinux%5c%e9%b8%9f%e5%93%a5%e7%a7%81%e6%88%bf%e8%8f%9c-%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%af%87.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87/ data-title=鸟哥私房菜-基础学习篇 data-hashtags=Linux><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87/ data-hashtag=Linux><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87/ data-title=鸟哥私房菜-基础学习篇 data-image=https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/linux/>Linux</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/wpfintroduce/ class=prev rel=prev title=WpfIntroduce><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>WpfIntroduce</a>
-<a href=liudongdong1.github.io/hexo-blog-introduce/ class=next rel=next title="Hexo Blog Introduce">Hexo Blog Introduce<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
-<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
-<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>鸟哥私房菜-基础学习篇 - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="1. 主机规划与磁盘分区 .1. 各设备在linux中的文件名 .2. MSDOS（MBR） 早期的 Linux 系统为了相容于 Windows 的磁盘，因此使用的是支持 Windows 的 MBR（Mast" /><meta name="keywords" content='Linux' /><meta itemprop="name" content="鸟哥私房菜-基础学习篇">
+<meta itemprop="description" content="1. 主机规划与磁盘分区 .1. 各设备在linux中的文件名 .2. MSDOS（MBR） 早期的 Linux 系统为了相容于 Windows 的磁盘，因此使用的是支持 Windows 的 MBR（Mast"><meta itemprop="datePublished" content="2020-04-16T22:21:29+00:00" />
+<meta itemprop="dateModified" content="2023-09-24T17:00:03+08:00" />
+<meta itemprop="wordCount" content="4104"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="Linux," /><meta property="og:title" content="鸟哥私房菜-基础学习篇" />
+<meta property="og:description" content="1. 主机规划与磁盘分区 .1. 各设备在linux中的文件名 .2. MSDOS（MBR） 早期的 Linux 系统为了相容于 Windows 的磁盘，因此使用的是支持 Windows 的 MBR（Mast" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-04-16T22:21:29+00:00" />
+<meta property="article:modified_time" content="2023-09-24T17:00:03+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="鸟哥私房菜-基础学习篇"/>
+<meta name="twitter:description" content="1. 主机规划与磁盘分区 .1. 各设备在linux中的文件名 .2. MSDOS（MBR） 早期的 Linux 系统为了相容于 Windows 的磁盘，因此使用的是支持 Windows 的 MBR（Mast"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87/" /><link rel="prev" href="liudongdong1.github.io/wpfintroduce/" /><link rel="next" href="liudongdong1.github.io/hexo-blog-introduce/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "鸟哥私房菜-基础学习篇",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87\/"
+    },"genre": "posts","keywords": "Linux","wordcount":  4104 ,
+    "url": "liudongdong1.github.io\/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87\/","datePublished": "2020-04-16T22:21:29+00:00","dateModified": "2023-09-24T17:00:03+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>鸟哥私房菜-基础学习篇</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/linux/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Linux</a></span></div>
+      <div class="post-meta-line"><span title=2020-04-16&#32;22:21:29>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-04-16" >2020-04-16</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 4104 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="鸟哥私房菜-基础学习篇">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg"
+    data-srcset="https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg, https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg 1.5x, https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg 2x"
+    data-sizes="auto"
+    alt="https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg"
+    title="https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-主机规划与磁盘分区">1. 主机规划与磁盘分区</a></li>
+        <li><a href="#2-linux操作">2. Linux操作</a></li>
+        <li><a href="#3-文件">3. 文件</a></li>
+        <li><a href="#4-软件相关">4. 软件相关</a></li>
+        <li><a href="#5-服务systemctl">5. 服务systemctl</a></li>
+        <li><a href="#6-内核">6. 内核</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><h3 id="1-主机规划与磁盘分区">1. 主机规划与磁盘分区</h3>
+<h4 id="1-各设备在linux中的文件名">.1. 各设备在linux中的文件名</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408100703112.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408100703112.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408100703112.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408100703112.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408100703112.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408100703112.png"/></p>
+<h4 id="2-msdosmbr">.2. MSDOS（MBR）</h4>
+<ul>
+<li>早期的 Linux 系统为了相容于 Windows 的磁盘，因此使用的是<code>支持 Windows 的 MBR（Master Boot Record, 主要开机纪录区）</code> 的方式来处理<code>开机管理程序与分区表</code>！而开机管理程序纪录区与分区表则通放在磁盘的第一个扇区， 这个<code>扇区通常是 512Bytes 的大小</code> （旧的磁盘 扇区都是 512Bytes ），所以说，第一个扇区 512Bytes 会有这两个数据：
+<ul>
+<li>主要开机记录区（Master Boot Record, MBR）：可以<code>安装开机管理程序</code>的地方，有446 Bytes</li>
+<li>分区表（partition table）：记录<code>整颗硬盘分区的状态</code>，有64 Bytes 由于分区表所在区块仅有64 Bytes容量，因此最多仅能有四组记录区，每组记录区记录了该区段的启始与结束的柱面号码。(可以采用延申分区来划分多个磁盘)</li>
+</ul>
+</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101141509.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101141509.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101141509.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101141509.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101141509.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101141509.png"/></p>
+<blockquote>
+<p>延伸分区的目的是使用额 外的扇区来记录分区信息，延伸分区本身并不能被拿来格式化。 然后我们可以通过延伸分区所指向的那个区块继续作分区的记录。这五个由延伸分区继续切出来的分区，就被称为逻辑分区（logical partition）。</p>
+<p><code>主要分区与延伸分区最多可以有四笔（硬盘的限制） 延伸分区最多只能有一个（操作系统的限制）</code></p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101535803.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101535803.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101535803.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101535803.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101535803.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101535803.png"/></p>
+<h4 id="3-gpt-磁盘分区表partition-table">.3. GPT 磁盘分区表（（partition table）</h4>
+<ul>
+<li>与 MBR 仅使用第一个 512Bytes 区块来纪录不同， GPT 使用了 34 个 LBA 区块来纪录分区信息！</li>
+<li>GPT 除了前面 34 个 LBA 之外，整个磁盘的最后 33 个 LBA 也拿来作为另一个备份！</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408104340830.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408104340830.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408104340830.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408104340830.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408104340830.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408104340830.png"/></p>
+<ul>
+<li><strong>LBA0(MBR相容区块)：</strong> 与 MBR 模式相似的，这个相容区块也分为两个部份，一个就是跟之前 446 Bytes 相似的区块，储存了第一阶段的开机管理程序！ 而在原本的分区表的纪录区内，这个相容模式仅放入一个特殊标志的分区，用来表示此磁盘为 GPT 格式之意。</li>
+<li><strong>LBA1 （GPT 表头纪录）</strong>： 纪录了<code>分区表本身的位置与大小</code>，<code>同时纪录了备份用的 GPT 分区</code> （就是前面谈到的在最后 34 个 LBA 区块）<code> 放置的位 置</code>， 同时放置了<code>分区表的检验机制码</code> （CRC32），操作系统可以根据这个检验码来判断 GPT 是否正确</li>
+<li><strong>LBA2-33 （实际纪录分区信息处）:</strong>  LBA2 区块开始，每个 LBA 都可以纪录 4 笔分区纪录，所以在默认的情况下，总共可以有 4*32 = 128 笔分区纪录.GPT 在每笔纪录中分别 提供了 64bits 来记载开始/结束的扇区号码</li>
+</ul>
+<h4 id="4-bios-搭配-mbrgpt-的开机流程">.4. BIOS 搭配 MBR/GPT 的开机流程</h4>
+<ul>
+<li>CMOS是记录各项硬件参数且嵌入在主板上面的储存器，BIOS则是 一个写入到主板上的一个固件</li>
+</ul>
+<blockquote>
+<ol>
+<li>
+<p>BIOS：开机主动执行的固件，会认识第一个可开机的设备；</p>
+</li>
+<li>
+<p>MBR：第一个可开机设备的第一个扇区内的主要开机记录区块，内含开机管理程序；</p>
+</li>
+<li>
+<p>开机管理程序（boot loader）：一支可读取核心文件来执行的软件； Boot loader则是操作系统安装在MBR上面的一套软件了, <code>提供菜单</code>：使用者可以选择不同的开机项目，这也是多重开机的重要功能！ <code>载入核心文件</code>：直接指向可开机的程序区段来开始操作系统； <code>转交其他loader</code>：将开机管理功能转交给其他loader负责。</p>
+</li>
+<li>
+<p>核心文件：开始操作系统的功能</p>
+</li>
+</ol>
+</blockquote>
+<h4 id="5-uefi-bios-搭配-gpt-开机的流程">.5. UEFI BIOS 搭配 GPT 开机的流程</h4>
+<ul>
+<li>UEFI主要是想要取代 BIOS 这个固件界面，因此我们也称 UEFI为 UEFIBIOS 就是了。UEFI使用 C 程序语言，比起使用组合语言的传 统 BIOS 要更容易开发！也因为使用 C 语言来撰写，因此如果开发者够厉害，甚至可以在 UEFI开机阶段就让该系统了解 TCP/IP 而直接上 网！</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408110430346.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408110430346.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408110430346.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408110430346.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408110430346.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408110430346.png"/></p>
+<h3 id="2-linux操作">2. Linux操作</h3>
+<h4 id="1-关机">.1. 关机</h4>
+<ul>
+<li>数据同步写入磁盘： sync</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>dmtsai@study ~<span style="color:#f92672">]</span>$ su - <span style="color:#75715e"># 这个指令在让你的身份变成 root ！下面请输入 root 的密码！</span>
+</span></span><span style="display:flex;"><span>Password: <span style="color:#75715e"># 就这里！请输入安装时你所设置的 root 密码！</span>
+</span></span><span style="display:flex;"><span>Last login: Mon Jun <span style="color:#ae81ff">1</span> 16:10:12 CST <span style="color:#ae81ff">2015</span> on pts/0
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># sync</span>
+</span></span></code></pre></div><ul>
+<li>shutdown</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># /sbin/shutdown [-krhc] [时间] [警告讯息]</span>
+</span></span><span style="display:flex;"><span>选项与参数：
+</span></span><span style="display:flex;"><span>-k ： 不要真的关机，只是发送警告讯息出去！
+</span></span><span style="display:flex;"><span>-r ： 在将系统的服务停掉之后就重新开机（常用）
+</span></span><span style="display:flex;"><span>-h ： 将系统的服务停掉后，立即关机。 （常用）
+</span></span><span style="display:flex;"><span>-c ： 取消已经在进行的 shutdown 指令内容。
+</span></span><span style="display:flex;"><span>时间 ： 指定系统关机的时间！时间的范例下面会说明。若没有这个项目，则默认 <span style="color:#ae81ff">1</span> 分钟后自动进行。
+</span></span><span style="display:flex;"><span>范例：
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># /sbin/shutdown -h 10 &#39;I will shutdown after 10 mins&#39;</span>
+</span></span><span style="display:flex;"><span>Broadcast message from root@study.centos.vbird （Tue 2015-06-02 10:51:34 CST）:
+</span></span><span style="display:flex;"><span>I will shutdown after <span style="color:#ae81ff">10</span> mins The system is going down <span style="color:#66d9ef">for</span> power-off at Tue 2015-06-02 11:01:34 CST!
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># shutdown -h now</span>
+</span></span><span style="display:flex;"><span>立刻关机，其中 now 相当于时间为 <span style="color:#ae81ff">0</span> 的状态
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># shutdown -h 20:25</span>
+</span></span><span style="display:flex;"><span>系统在今天的 20:25 分会关机，若在21:25才下达此指令，则隔天才关机
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># shutdown -h +10</span>
+</span></span><span style="display:flex;"><span>系统再过十分钟后自动关机
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># shutdown -r now</span>
+</span></span><span style="display:flex;"><span>系统立刻重新开机
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># shutdown -r +30 &#39;The system will reboot&#39;</span>
+</span></span><span style="display:flex;"><span>再过三十分钟系统会重新开机，并显示后面的讯息给所有在线上的使用者
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># shutdown -k now &#39;This system will reboot&#39;</span>
+</span></span><span style="display:flex;"><span>仅发出警告信件的参数！系统并不会关机啦！吓唬人！
+</span></span></code></pre></div><h4 id="2-文件目录配置依据-fhs">.2. 文件目录配置依据-FHS</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408112433082.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408112433082.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408112433082.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408112433082.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408112433082.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408112433082.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134247976.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134247976.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134247976.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134247976.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134247976.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134247976.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134307088.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134307088.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134307088.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134307088.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134307088.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134307088.png"/><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134745707.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134745707.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134745707.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134745707.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134745707.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134745707.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134807939.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134807939.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134807939.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134807939.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134807939.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134807939.png"/></p>
+<h4 id="3-usr--val">.3. /usr &amp; /val</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135042584.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135042584.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135042584.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135042584.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135042584.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135042584.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135209162.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135209162.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135209162.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135209162.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135209162.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135209162.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135253015.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135253015.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135253015.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135253015.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135253015.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135253015.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408195806304.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408195806304.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408195806304.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408195806304.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408195806304.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408195806304.png"/></p>
+<h3 id="3-文件">3. 文件</h3>
+<h4 id="1-非纯文本文件查看">.1. 非纯文本文件查看</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># od [-t TYPE] 文件</span>
+</span></span><span style="display:flex;"><span>选项或参数：
+</span></span><span style="display:flex;"><span>-t ：后面可以接各种“类型 （TYPE）”的输出，例如：
+</span></span><span style="display:flex;"><span>a ：利用默认的字符来输出；
+</span></span><span style="display:flex;"><span>c ：使用 ASCII 字符来输出
+</span></span><span style="display:flex;"><span>d<span style="color:#f92672">[</span>size<span style="color:#f92672">]</span> ：利用十进制（decimal）来输出数据，每个整数占用 size Bytes ；
+</span></span><span style="display:flex;"><span>f<span style="color:#f92672">[</span>size<span style="color:#f92672">]</span> ：利用浮点数值（floating）来输出数据，每个数占用 size Bytes ；
+</span></span><span style="display:flex;"><span>o<span style="color:#f92672">[</span>size<span style="color:#f92672">]</span> ：利用八进位（octal）来输出数据，每个整数占用 size Bytes ；
+</span></span><span style="display:flex;"><span>x<span style="color:#f92672">[</span>size<span style="color:#f92672">]</span> ：利用十六进制（hexadecimal）来输出数据，每个整数占用 size Bytes ；
+</span></span><span style="display:flex;"><span>范例一：请将/usr/bin/passwd的内容使用ASCII方式来展现！
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># od -t c /usr/bin/passwd</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0000000</span> <span style="color:#ae81ff">177</span> E L F <span style="color:#ae81ff">002</span> <span style="color:#ae81ff">001</span> <span style="color:#ae81ff">001</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0000020</span> <span style="color:#ae81ff">003</span> <span style="color:#ae81ff">\0</span> &gt; <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">001</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">364</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0000040</span> @ <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> x e <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0000060</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> @ <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\t</span> <span style="color:#ae81ff">\0</span> @ <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">035</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">034</span> <span style="color:#ae81ff">\0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0000100</span> <span style="color:#ae81ff">006</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">005</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> @ <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span> <span style="color:#ae81ff">\0</span>
+</span></span><span style="display:flex;"><span>.....（后面省略）....
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 最左边第一栏是以 8 进位来表示Bytes数。以上面范例来说，第二栏0000020代表开头是</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 第 16 个 byes （2x8） 的内容之意。</span>
+</span></span><span style="display:flex;"><span>范例二：请将/etc/issue这个文件的内容以8进位列出储存值与ASCII的对照表
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># od -t oCc /etc/issue</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0000000</span> <span style="color:#ae81ff">134</span> <span style="color:#ae81ff">123</span> <span style="color:#ae81ff">012</span> <span style="color:#ae81ff">113</span> <span style="color:#ae81ff">145</span> <span style="color:#ae81ff">162</span> <span style="color:#ae81ff">156</span> <span style="color:#ae81ff">145</span> <span style="color:#ae81ff">154</span> <span style="color:#ae81ff">040</span> <span style="color:#ae81ff">134</span> <span style="color:#ae81ff">162</span> <span style="color:#ae81ff">040</span> <span style="color:#ae81ff">157</span> <span style="color:#ae81ff">156</span> <span style="color:#ae81ff">040</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">\ </span>S <span style="color:#ae81ff">\n</span> K e r n e l <span style="color:#ae81ff">\ </span>r o n
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0000020</span> <span style="color:#ae81ff">141</span> <span style="color:#ae81ff">156</span> <span style="color:#ae81ff">040</span> <span style="color:#ae81ff">134</span> <span style="color:#ae81ff">155</span> <span style="color:#ae81ff">012</span> <span style="color:#ae81ff">012</span>
+</span></span><span style="display:flex;"><span>a n <span style="color:#ae81ff">\ </span>m <span style="color:#ae81ff">\n</span> <span style="color:#ae81ff">\n</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0000027</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 如上所示，可以发现每个字符可以对应到的数值为何！要注意的是，该数值是 8 进位喔！</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 例如 S 对应的记录数值为 123 ，转成十进制：1x8^2+2x8+3=83。</span>
+</span></span></code></pre></div><h4 id="2-文件相关命令">.2. 文件相关命令</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$file 查看文件类型
+</span></span><span style="display:flex;"><span>$which <span style="color:#f92672">[</span>-a<span style="color:#f92672">]</span> command  <span style="color:#75715e"># 查看文件目录 根据“PATH”这个环境变量所规范的路径，去搜寻“可执行文件”的文件名～ 所以，重点是找出“可执行文件”而已！且 which 后面接的是“完整文件名”喔！若加上 -a 选项，则可以列出所有的可以找到的同名可执行文件，而非仅显示第一个而已！</span>
+</span></span><span style="display:flex;"><span>$locate pwd
+</span></span><span style="display:flex;"><span>$find /etc -name <span style="color:#e6db74">&#39;*httpd*&#39;</span>
+</span></span></code></pre></div><ul>
+<li><strong>由文件找出正在使用该文件的程序fuser</strong></li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408200040194.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408200040194.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408200040194.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408200040194.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408200040194.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408200040194.png"/></p>
+<ul>
+<li><strong>列出被程序所打开的文件文件名 lsof</strong></li>
+</ul>
+<h4 id="3-文件系统特性">.3. 文件系统特性</h4>
+<ul>
+<li><code>superblock</code>：记录此 filesystem 的整体信息，包括<code>inode/block的总量、使用量、剩余量， 以及文件系统的格式与相关信息等</code>；</li>
+<li><code> inode</code>：记录文件的属性，一个文件占用一个inode，同时记录此文件的数据所在的 block 号码；</li>
+<li><code> block</code>：实际<code>记录文件的内容，若文件太大时，会占用多个 block</code> 。</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160045309.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160045309.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160045309.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160045309.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160045309.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160045309.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160147950.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160147950.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160147950.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160147950.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160147950.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160147950.png"/></p>
+<ul>
+<li>原则上，block 的大小与数量在格式化完就不能够再改变了（除非重新格式化）；</li>
+<li>每个 block 内最多只能够放置一个文件的数据；</li>
+<li>承上，如果文件大于 block 的大小，则一个文件会占用多个 block 数量；</li>
+<li>承上，若文件小于 block ，则该 block 的剩余容量就不能够再被使用了（磁盘空间会浪费）。</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160522848.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160522848.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160522848.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160522848.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160522848.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160522848.png"/></p>
+<ul>
+<li>将 inode 记录 block 号码的区域定义为12个直接，一个间接, 一个双间接与一个三间接记 录区。</li>
+</ul>
+<h4 id="4-du--df">.4. du &amp; df</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>范例二：将容量结果以易读的容量格式显示出来
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># df -h Filesystem Size Used Avail Use% Mounted on</span>
+</span></span><span style="display:flex;"><span>/dev/mapper/centos-root 10G 3.3G 6.8G 33% /
+</span></span><span style="display:flex;"><span>devtmpfs 613M <span style="color:#ae81ff">0</span> 613M 0% /dev
+</span></span><span style="display:flex;"><span>tmpfs 623M 80K 623M 1% /dev/shm
+</span></span><span style="display:flex;"><span>tmpfs 623M 25M 599M 4% /run
+</span></span><span style="display:flex;"><span>tmpfs 623M <span style="color:#ae81ff">0</span> 623M 0% /sys/fs/cgroup
+</span></span><span style="display:flex;"><span>/dev/mapper/centos-home 5.0G 67M 5.0G 2% /home
+</span></span><span style="display:flex;"><span>/dev/vda2 1014M 131M 884M 13% /boot
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 不同于范例一，这里会以 G/M 等容量格式显示出来，比较容易看啦</span>
+</span></span></code></pre></div><ul>
+<li>由于 df 主要读取的数据几乎都是针对一整个文件系统，因此读取的范围主要是在 Superblock 内的信息， 所以这个指令显示结果的速度 非常的快速！</li>
+<li>du 这个指令其实会直接到文件系统内去搜寻所有的文件数据.</li>
+</ul>
+<h4 id="5-磁盘分区">.5. 磁盘分区</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># lsblk [-dfimpt] [device]</span>
+</span></span><span style="display:flex;"><span>选项与参数：
+</span></span><span style="display:flex;"><span>-d ：仅列出磁盘本身，并不会列出该磁盘的分区数据
+</span></span><span style="display:flex;"><span>-f ：同时列出该磁盘内的文件系统名称
+</span></span><span style="display:flex;"><span>-i ：使用 ASCII 的线段输出，不要使用复杂的编码 （再某些环境下很有用）
+</span></span><span style="display:flex;"><span>-m ：同时输出该设备在 /dev 下面的权限数据 （rwx 的数据）
+</span></span><span style="display:flex;"><span>-p ：列出该设备的完整文件名！而不是仅列出最后的名字而已。
+</span></span><span style="display:flex;"><span>-t ：列出该磁盘设备的详细数据，包括磁盘伫列机制、预读写的数据量大小等
+</span></span><span style="display:flex;"><span>范例一：列出本系统下的所有磁盘与磁盘内的分区信息
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># lsblk</span>
+</span></span><span style="display:flex;"><span>NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+</span></span><span style="display:flex;"><span>sr0 11:0 <span style="color:#ae81ff">1</span> 1024M <span style="color:#ae81ff">0</span> rom
+</span></span><span style="display:flex;"><span>vda 252:0 <span style="color:#ae81ff">0</span> 40G <span style="color:#ae81ff">0</span> disk <span style="color:#75715e"># 一整颗磁盘</span>
+</span></span><span style="display:flex;"><span>|-vda1 252:1 <span style="color:#ae81ff">0</span> 2M <span style="color:#ae81ff">0</span> part
+</span></span><span style="display:flex;"><span>|-vda2 252:2 <span style="color:#ae81ff">0</span> 1G <span style="color:#ae81ff">0</span> part /boot
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>-vda3 252:3 <span style="color:#ae81ff">0</span> 30G <span style="color:#ae81ff">0</span> part
+</span></span><span style="display:flex;"><span>|-centos-root 253:0 <span style="color:#ae81ff">0</span> 10G <span style="color:#ae81ff">0</span> lvm / <span style="color:#75715e"># 在 vda3 内的其他文件系统</span>
+</span></span><span style="display:flex;"><span>|-centos-swap 253:1 <span style="color:#ae81ff">0</span> 1G <span style="color:#ae81ff">0</span> lvm <span style="color:#f92672">[</span>SWAP<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>-centos-home 253:2 <span style="color:#ae81ff">0</span> 5G <span style="color:#ae81ff">0</span> lvm /home
+</span></span></code></pre></div><ul>
+<li><code>UUID 是全域单一识别码 （universally unique identifier）</code>，Linux 会将系统内所有的设备都给予一个独一无二的识别码， 这个识别 码就可以拿来作为挂载或者是使用这个设备/文件系统之用了</li>
+<li>“MBR 分区表请使用 fdisk 分区， GPT 分区表请使用 gdisk 分区！”</li>
+</ul>
+<h5 id="1-gdisk">1. gdisk</h5>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162713811.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162713811.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162713811.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162713811.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162713811.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162713811.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162913242.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162913242.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162913242.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162913242.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162913242.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162913242.png"/></p>
+<ul>
+<li><strong>partprobe 更新 Linux 核心的分区表信息</strong></li>
+</ul>
+<blockquote>
+<p>不要去处理一个正在使用中的分区！例如，我们的系统现在已经使用了 /dev/vda2 ，那如果你要删除 /dev/vda2 的话， 必须要先 将 /dev/vda2 卸载，否则直接删除该分区的话，虽然磁盘还是慧写入正确的分区信息，但是核心会无法更新分区表的信息的！</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408163124586.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408163124586.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408163124586.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408163124586.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408163124586.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408163124586.png"/></p>
+<h5 id="2-格式化--挂载">2. 格式化 &amp; 挂载</h5>
+<ul>
+<li>EXT4 文件系统 mkfs.ext4</li>
+<li>XFS 文件系统 mkfs.xfs</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>blkid /dev/vda4 <span style="color:#75715e">#找出 /dev/vda4 的 UUID 后，用该 UUID 来挂载文件系统到 /data/xfs 内</span>
+</span></span><span style="display:flex;"><span>mount UUID<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;e0a6af55-26e7-4cb7-a515-826a8bd29e90&#34;</span> /data/xfs
+</span></span></code></pre></div><ul>
+<li>单一文件系统不应该被重复挂载在不同的挂载点（目录）中；</li>
+<li>单一目录不应该重复挂载多个文件系统；</li>
+<li>要作为挂载点的目录，理论上应该都是空目录才是</li>
+</ul>
+<h4 id="6-使用实体分区创建-swap">6. 使用实体分区创建 swap</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164109135.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164109135.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164109135.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164109135.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164109135.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164109135.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164217554.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164217554.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164217554.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164217554.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164217554.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164217554.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164237875.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164237875.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164237875.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164237875.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164237875.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164237875.png"/></p>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164258020.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164258020.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164258020.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164258020.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164258020.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164258020.png"/></p>
+<h4 id="7-lvm-相关介绍">7. LVM 相关介绍</h4>
+<ul>
+<li>LVM 的作法是<code>将几个实体的 partitions （或 disk） 通过软件组合成为一块看起来是独立的大磁盘 （VG） ，然后将这块大 磁盘再经过分区成为可使用分区 （LV）</code>， 最终就能够挂载使用了。</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408194314913.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408194314913.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408194314913.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408194314913.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408194314913.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408194314913.png"/></p>
+<h3 id="4-软件相关">4. 软件相关</h3>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171534087.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171534087.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171534087.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171534087.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171534087.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171534087.png"/></p>
+<ul>
+<li>通常不同的 distribution 所释出的 RPM 文件，并不能用在其他的 distributions 上。</li>
+</ul>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171734001.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171734001.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171734001.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171734001.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171734001.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171734001.png"/></p>
+<h3 id="5-服务systemctl">5. 服务systemctl</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@study ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl [command] [unit]</span>
+</span></span><span style="display:flex;"><span>command 主要有：
+</span></span><span style="display:flex;"><span>start ：立刻启动后面接的 unit
+</span></span><span style="display:flex;"><span>stop ：立刻关闭后面接的 unit
+</span></span><span style="display:flex;"><span>restart ：立刻关闭后启动后面接的 unit，亦即执行 stop 再 start 的意思
+</span></span><span style="display:flex;"><span>reload ：不关闭后面接的 unit 的情况下，重新载入配置文件，让设置生效
+</span></span><span style="display:flex;"><span>enable ：设置下次开机时，后面接的 unit 会被启动
+</span></span><span style="display:flex;"><span>disable ：设置下次开机时，后面接的 unit 不会被启动
+</span></span><span style="display:flex;"><span>status ：目前后面接的这个 unit 的状态，会列出有没有正在执行、开机默认执行否、登录等信息等！
+</span></span><span style="display:flex;"><span>is-active ：目前有没有正在运行中
+</span></span><span style="display:flex;"><span>is-enable ：开机时有没有默认要启用这个 unit
+</span></span></code></pre></div><h3 id="6-内核">6. 内核</h3>
+<h4 id="1-内核稳定版本链接">.1. 内核稳定版本链接</h4>
+<ul>
+<li>核心官网：http://www.kernel.org/</li>
+<li>交大资科：ftp://linux.cis.nctu.edu.tw/kernel/linux/kernel/</li>
+<li>国高中心：ftp://ftp.twaren.net/pub/Unix/Kernel/linux/kernel/</li>
+</ul>
+<h4 id="2-核心代码目录">.2. 核心代码目录</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164733509.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164733509.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164733509.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164733509.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164733509.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164733509.png"/></p>
+<h4 id="3-单一模块编译">.3. 单一模块编译</h4>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408165238691.png"
+    data-srcset="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408165238691.png, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408165238691.png 1.5x, https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408165238691.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408165238691.png"
+    title="https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408165238691.png"/></p>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-24&#32;17:00:03>更新于 2023-09-24&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5cLinux%5c%e9%b8%9f%e5%93%a5%e7%a7%81%e6%88%bf%e8%8f%9c-%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%af%87.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87/" data-title="鸟哥私房菜-基础学习篇" data-hashtags="Linux"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87/" data-hashtag="Linux"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/%E9%B8%9F%E5%93%A5%E7%A7%81%E6%88%BF%E8%8F%9C-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AF%87/" data-title="鸟哥私房菜-基础学习篇" data-image="https://cdn.pixabay.com/photo/2022/04/01/09/08/particles-7104407__340.jpg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/linux/">Linux</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/wpfintroduce/" class="prev" rel="prev" title="WpfIntroduce"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>WpfIntroduce</a>
+      <a href="liudongdong1.github.io/hexo-blog-introduce/" class="next" rel="next" title="Hexo Blog Introduce">Hexo Blog Introduce<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

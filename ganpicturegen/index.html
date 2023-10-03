@@ -1,206 +1,502 @@
-<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>GANPictureGen - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="通过简单的图片生成模型，了解GAN的工作过程 #coding=utf-8 from PIL import Image from keras.models import Sequential from keras.layers import Dense,Activation,BatchNormalization,Reshape,UpSampling2D,\ Conv2D,MaxPooling2D,Flatten import numpy as np from keras.optimizers import SGD from keras.datasets import mnist import math # 定义生成器模型 def Generator_model(): # 下面搭建生成器的架"><meta name=keywords content="PyTorch,CV"><meta itemprop=name content="GANPictureGen"><meta itemprop=description content="通过简单的图片生成模型，了解GAN的工作过程 #coding=utf-8 from PIL import Image from keras.models import Sequential from keras.layers import Dense,Activation,BatchNormalization,Reshape,UpSampling2D,\ Conv2D,MaxPooling2D,Flatten import numpy as np from keras.optimizers import SGD from keras.datasets import mnist import math # 定义生成器模型 def Generator_model(): # 下面搭建生成器的架"><meta itemprop=datePublished content="2020-10-10T08:56:09+00:00"><meta itemprop=dateModified content="2023-09-28T23:09:59+08:00"><meta itemprop=wordCount content="1448"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="PyTorch,CV,"><meta property="og:title" content="GANPictureGen"><meta property="og:description" content="通过简单的图片生成模型，了解GAN的工作过程 #coding=utf-8 from PIL import Image from keras.models import Sequential from keras.layers import Dense,Activation,BatchNormalization,Reshape,UpSampling2D,\ Conv2D,MaxPooling2D,Flatten import numpy as np from keras.optimizers import SGD from keras.datasets import mnist import math # 定义生成器模型 def Generator_model(): # 下面搭建生成器的架"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/ganpicturegen/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-10-10T08:56:09+00:00"><meta property="article:modified_time" content="2023-09-28T23:09:59+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="GANPictureGen"><meta name=twitter:description content="通过简单的图片生成模型，了解GAN的工作过程 #coding=utf-8 from PIL import Image from keras.models import Sequential from keras.layers import Dense,Activation,BatchNormalization,Reshape,UpSampling2D,\ Conv2D,MaxPooling2D,Flatten import numpy as np from keras.optimizers import SGD from keras.datasets import mnist import math # 定义生成器模型 def Generator_model(): # 下面搭建生成器的架"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/ganpicturegen/><link rel=prev href=liudongdong1.github.io/fftnn/><link rel=next href=liudongdong1.github.io/flowerclassifypytorch/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"GANPictureGen","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/ganpicturegen\/"},"genre":"posts","keywords":"PyTorch, CV","wordcount":1448,"url":"liudongdong1.github.io\/ganpicturegen\/","datePublished":"2020-10-10T08:56:09+00:00","dateModified":"2023-09-28T23:09:59+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"liudongdong1"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
-<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>GANPictureGen</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle" aria-hidden=true></i>
-liudongdong1</span></span>
-<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/ai/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;AI</a></span></div><div class=post-meta-line><span title="2020-10-10 08:56:09"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-10-10>2020-10-10</time>
-</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1448 字&nbsp;
-<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title=GANPictureGen>
-<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
-</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg, https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg title=https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg></div><div class=content id=content><blockquote><p>通过简单的图片生成模型，了解GAN的工作过程</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#coding=utf-8</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> PIL <span style=color:#f92672>import</span> Image
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> keras.models <span style=color:#f92672>import</span> Sequential
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> keras.layers <span style=color:#f92672>import</span> Dense,Activation,BatchNormalization,Reshape,UpSampling2D,\
-</span></span><span style=display:flex><span>    Conv2D,MaxPooling2D,Flatten
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span>  np
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> keras.optimizers <span style=color:#f92672>import</span> SGD
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> keras.datasets <span style=color:#f92672>import</span> mnist
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> math
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 定义生成器模型</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Generator_model</span>():
-</span></span><span style=display:flex><span>    <span style=color:#75715e># 下面搭建生成器的架构，首先导入序贯模型</span>
-</span></span><span style=display:flex><span>    model <span style=color:#f92672>=</span> Sequential()
-</span></span><span style=display:flex><span>    <span style=color:#75715e># 添加一个全连接层，输入为100维向量，输出为1024维</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Dense(input_dim<span style=color:#f92672>=</span><span style=color:#ae81ff>100</span>, output_dim<span style=color:#f92672>=</span><span style=color:#ae81ff>1024</span>))
-</span></span><span style=display:flex><span>    <span style=color:#75715e># 添加一个激活函数tanh</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Activation(<span style=color:#e6db74>&#39;tanh&#39;</span>))
-</span></span><span style=display:flex><span>    <span style=color:#75715e># 添加一个全连接层，输出维128×7×7维度</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Dense(<span style=color:#ae81ff>128</span><span style=color:#f92672>*</span><span style=color:#ae81ff>7</span><span style=color:#f92672>*</span><span style=color:#ae81ff>7</span>))
-</span></span><span style=display:flex><span>    <span style=color:#75715e># 添加一个批量归一化层，该层在每个batch上将前一层的激活值重新规范化，即使得其输出均值接近于0，标准差接近于1</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(BatchNormalization())
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Activation(<span style=color:#e6db74>&#39;tanh&#39;</span>))
-</span></span><span style=display:flex><span>    <span style=color:#75715e># Reshape层用来将输入shape转换为特定的shape</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Reshape((<span style=color:#ae81ff>7</span>,<span style=color:#ae81ff>7</span>,<span style=color:#ae81ff>128</span>),input_shape<span style=color:#f92672>=</span>(<span style=color:#ae81ff>128</span>,<span style=color:#ae81ff>7</span>,<span style=color:#ae81ff>7</span>)))
-</span></span><span style=display:flex><span>    <span style=color:#75715e># 2维上采样层，即将数据的行和列分别重复2次</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(UpSampling2D(size<span style=color:#f92672>=</span>(<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>2</span>)))
-</span></span><span style=display:flex><span>    <span style=color:#75715e># 添加一个2维卷积层，卷积核大小维5×5，激活函数为tanh，共64个卷积核，并采用padding使图像尺寸保持不变</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Conv2D(<span style=color:#ae81ff>64</span>,(<span style=color:#ae81ff>5</span>,<span style=color:#ae81ff>5</span>),padding<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;same&#39;</span>))
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Activation(<span style=color:#e6db74>&#39;tanh&#39;</span>))
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(UpSampling2D(size<span style=color:#f92672>=</span>(<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>2</span>)))
-</span></span><span style=display:flex><span>    <span style=color:#75715e># 卷积核设为1即输出图像的维度</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Conv2D(<span style=color:#ae81ff>1</span>,(<span style=color:#ae81ff>5</span>,<span style=color:#ae81ff>5</span>),padding<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;same&#39;</span>))
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Activation(<span style=color:#e6db74>&#39;tanh&#39;</span>))
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> model
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 定义判别器模型</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Discriminator_model</span>():
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>=</span>Sequential()
-</span></span><span style=display:flex><span>    <span style=color:#75715e># 添加二维卷积层，卷积核大小为5×5，激活函数为tanh，</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(
-</span></span><span style=display:flex><span>        Conv2D(<span style=color:#ae81ff>64</span>,(<span style=color:#ae81ff>5</span>,<span style=color:#ae81ff>5</span>),
-</span></span><span style=display:flex><span>        padding<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;same&#39;</span>,
-</span></span><span style=display:flex><span>        input_shape<span style=color:#f92672>=</span>(<span style=color:#ae81ff>28</span>,<span style=color:#ae81ff>28</span>,<span style=color:#ae81ff>1</span>))
-</span></span><span style=display:flex><span>    )
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Activation(<span style=color:#e6db74>&#39;tanh&#39;</span>))
-</span></span><span style=display:flex><span>    <span style=color:#75715e>#添加最大池化层，pool_size取（2，2）使得图片在原来维度上变为一半</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(MaxPooling2D(pool_size<span style=color:#f92672>=</span>(<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>2</span>)))
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Conv2D(<span style=color:#ae81ff>128</span>,(<span style=color:#ae81ff>5</span>,<span style=color:#ae81ff>5</span>)))
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Activation(<span style=color:#e6db74>&#39;tanh&#39;</span>))
-</span></span><span style=display:flex><span>    <span style=color:#75715e>#卷积层过渡到全连接层</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Flatten())
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Dense(<span style=color:#ae81ff>1024</span>))
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Activation(<span style=color:#e6db74>&#39;tanh&#39;</span>))
-</span></span><span style=display:flex><span>    <span style=color:#75715e>#一个节点进行二值分类</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Dense(<span style=color:#ae81ff>1</span>))
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(Activation(<span style=color:#e6db74>&#39;sigmoid&#39;</span>))
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> model
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#将生成器和判别器连结成为GAN模型</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>GAN_model</span>(g,d):
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>=</span>Sequential()
-</span></span><span style=display:flex><span>    <span style=color:#75715e>#先添加Generator，再令Discriminator不可训练（即固定d）</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(g)
-</span></span><span style=display:flex><span>    d<span style=color:#f92672>.</span>trainable<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>
-</span></span><span style=display:flex><span>    model<span style=color:#f92672>.</span>add(d)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> model
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#生成图片进行拼接</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Combine_image</span>(generated_images):
-</span></span><span style=display:flex><span>    num <span style=color:#f92672>=</span> generated_images<span style=color:#f92672>.</span>shape[<span style=color:#ae81ff>0</span>]<span style=color:#75715e>#图片数目</span>
-</span></span><span style=display:flex><span>    width <span style=color:#f92672>=</span> int(math<span style=color:#f92672>.</span>sqrt(num))
-</span></span><span style=display:flex><span>    height <span style=color:#f92672>=</span> int(math<span style=color:#f92672>.</span>ceil(float(num)<span style=color:#f92672>/</span>width))
-</span></span><span style=display:flex><span>    shape <span style=color:#f92672>=</span> generated_images<span style=color:#f92672>.</span>shape[<span style=color:#ae81ff>1</span>:<span style=color:#ae81ff>3</span>]<span style=color:#75715e>#图片形状取其1-3维，第一维是num</span>
-</span></span><span style=display:flex><span>    image <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>zeros((height<span style=color:#f92672>*</span>shape[<span style=color:#ae81ff>0</span>],width<span style=color:#f92672>*</span>shape[<span style=color:#ae81ff>1</span>]),
-</span></span><span style=display:flex><span>                     dtype <span style=color:#f92672>=</span> generated_images<span style=color:#f92672>.</span>dtype)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> index,img <span style=color:#f92672>in</span> enumerate(generated_images):
-</span></span><span style=display:flex><span>        i <span style=color:#f92672>=</span> int(index<span style=color:#f92672>/</span>width)
-</span></span><span style=display:flex><span>        j <span style=color:#f92672>=</span> index<span style=color:#f92672>%</span>width
-</span></span><span style=display:flex><span>        image[i<span style=color:#f92672>*</span>shape[<span style=color:#ae81ff>0</span>]:(i<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>)<span style=color:#f92672>*</span>shape[<span style=color:#ae81ff>0</span>],j<span style=color:#f92672>*</span>shape[<span style=color:#ae81ff>1</span>]:(j<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>)<span style=color:#f92672>*</span>shape[<span style=color:#ae81ff>1</span>]]<span style=color:#f92672>=</span>img[:,:,<span style=color:#ae81ff>0</span>]
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> image
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#训练GAN</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Train</span>(Batch_size):
-</span></span><span style=display:flex><span>    (X_train,y_train),(X_test,y_test)<span style=color:#f92672>=</span>mnist<span style=color:#f92672>.</span>load_data()
-</span></span><span style=display:flex><span>    <span style=color:#75715e>#归一化</span>
-</span></span><span style=display:flex><span>    X_train <span style=color:#f92672>=</span> (X_train<span style=color:#f92672>.</span>astype(np<span style=color:#f92672>.</span>float32)<span style=color:#f92672>-</span><span style=color:#ae81ff>127.5</span>)<span style=color:#f92672>/</span><span style=color:#ae81ff>127.5</span>
-</span></span><span style=display:flex><span>    X_train <span style=color:#f92672>=</span> X_train[:,:,:,<span style=color:#66d9ef>None</span>]
-</span></span><span style=display:flex><span>    x_test <span style=color:#f92672>=</span> X_test[:,:,:,<span style=color:#66d9ef>None</span>]
-</span></span><span style=display:flex><span>    <span style=color:#75715e>#将定义好的Generator和Discriminator赋值给特定变量</span>
-</span></span><span style=display:flex><span>    g <span style=color:#f92672>=</span> Generator_model()
-</span></span><span style=display:flex><span>    d <span style=color:#f92672>=</span> Discriminator_model()
-</span></span><span style=display:flex><span>    g<span style=color:#f92672>.</span>load_weights(<span style=color:#e6db74>&#39;generator_weight&#39;</span>,<span style=color:#66d9ef>True</span>)
-</span></span><span style=display:flex><span>    d<span style=color:#f92672>.</span>load_weights(<span style=color:#e6db74>&#39;discriminator_weight&#39;</span>,<span style=color:#66d9ef>True</span>)
-</span></span><span style=display:flex><span>    d_on_g <span style=color:#f92672>=</span> GAN_model(g,d)
-</span></span><span style=display:flex><span>    <span style=color:#75715e>#利用SGD优化器</span>
-</span></span><span style=display:flex><span>    d_optim <span style=color:#f92672>=</span> SGD(lr<span style=color:#f92672>=</span><span style=color:#ae81ff>0.001</span>,momentum<span style=color:#f92672>=</span><span style=color:#ae81ff>0.9</span>,nesterov<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
-</span></span><span style=display:flex><span>    g_optim <span style=color:#f92672>=</span> SGD(lr<span style=color:#f92672>=</span><span style=color:#ae81ff>0.001</span>,momentum<span style=color:#f92672>=</span><span style=color:#ae81ff>0.9</span>,nesterov<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
-</span></span><span style=display:flex><span>    <span style=color:#75715e>#对G、D和GAN进行编译</span>
-</span></span><span style=display:flex><span>    g<span style=color:#f92672>.</span>compile(loss<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;binary_crossentropy&#39;</span>, optimizer<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;SGD&#34;</span>)
-</span></span><span style=display:flex><span>    d_on_g<span style=color:#f92672>.</span>compile(loss<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;binary_crossentropy&#39;</span>, optimizer<span style=color:#f92672>=</span>g_optim)
-</span></span><span style=display:flex><span>    <span style=color:#75715e>#前一个架构再固定D的情况下训练了G，故此处需先设置D为可训练</span>
-</span></span><span style=display:flex><span>    d<span style=color:#f92672>.</span>trainable <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
-</span></span><span style=display:flex><span>    d<span style=color:#f92672>.</span>compile(loss<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;binary_crossentropy&#39;</span>,optimizer<span style=color:#f92672>=</span>d_optim)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> epoch <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>30</span>):
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#34;Epoch is&#34;</span>,epoch)
-</span></span><span style=display:flex><span>        <span style=color:#75715e>#计算一个epoch所需要的迭代次数。</span>
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#34;Number of batches is &#34;</span>,int(X_train<span style=color:#f92672>.</span>shape[<span style=color:#ae81ff>0</span>]<span style=color:#f92672>/</span>Batch_size))
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>#一个epoch内进行迭代训练</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> index <span style=color:#f92672>in</span> range(int(X_train<span style=color:#f92672>.</span>shape[<span style=color:#ae81ff>0</span>]<span style=color:#f92672>/</span>Batch_size)):
-</span></span><span style=display:flex><span>            <span style=color:#75715e># 随机生成均匀分布，上下边界为1和-1，输出Batch_size×100个样本</span>
-</span></span><span style=display:flex><span>            noise <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>random<span style=color:#f92672>.</span>uniform(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>1</span>,size<span style=color:#f92672>=</span>(Batch_size,<span style=color:#ae81ff>100</span>))
-</span></span><span style=display:flex><span>            <span style=color:#75715e>#抽取一个批量的真实照片</span>
-</span></span><span style=display:flex><span>            image_batch <span style=color:#f92672>=</span> X_train[index <span style=color:#f92672>*</span> Batch_size:(index <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>) <span style=color:#f92672>*</span> Batch_size]
-</span></span><span style=display:flex><span>            <span style=color:#75715e>#生成的图片使用G对随机噪声进行推断</span>
-</span></span><span style=display:flex><span>            generated_images <span style=color:#f92672>=</span> g<span style=color:#f92672>.</span>predict(noise, verbose<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>#每经过100次迭代输出一张生成的图片</span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> index <span style=color:#f92672>%</span> <span style=color:#ae81ff>100</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>:
-</span></span><span style=display:flex><span>                image <span style=color:#f92672>=</span> Combine_image(generated_images)
-</span></span><span style=display:flex><span>                <span style=color:#75715e>#逆归一化</span>
-</span></span><span style=display:flex><span>                image <span style=color:#f92672>=</span> image <span style=color:#f92672>*</span> <span style=color:#ae81ff>127.5</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>127.5</span>
-</span></span><span style=display:flex><span>                Image<span style=color:#f92672>.</span>fromarray(image<span style=color:#f92672>.</span>astype(np<span style=color:#f92672>.</span>uint8))<span style=color:#f92672>.</span>save(
-</span></span><span style=display:flex><span>                    <span style=color:#e6db74>&#34;./GAN_Picture_train/&#34;</span> <span style=color:#f92672>+</span> str(epoch) <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;_&#34;</span><span style=color:#f92672>+</span> str(index) <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;.png&#34;</span>
-</span></span><span style=display:flex><span>                )
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>#将真实的图片和生成的图片以数组的形式拼接再一起，真实图片在上，生成图片在下</span>
-</span></span><span style=display:flex><span>            X <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>concatenate((image_batch,generated_images))
-</span></span><span style=display:flex><span>            <span style=color:#75715e>#生成真假标签，即一个包含两倍批量大小的列表，前一个批量均为1，代表真，后一个批量均为0，代表生成图片</span>
-</span></span><span style=display:flex><span>            y <span style=color:#f92672>=</span> [<span style=color:#ae81ff>1</span>] <span style=color:#f92672>*</span> Batch_size <span style=color:#f92672>+</span> [<span style=color:#ae81ff>0</span>] <span style=color:#f92672>*</span> Batch_size
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>#判别器的损失；在一个batch的数据上进行一次参数更新</span>
-</span></span><span style=display:flex><span>            d_loss <span style=color:#f92672>=</span> d<span style=color:#f92672>.</span>train_on_batch(X,y)
-</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>&#34;batch </span><span style=color:#e6db74>%d</span><span style=color:#e6db74> d_loss : </span><span style=color:#e6db74>%f</span><span style=color:#e6db74>&#34;</span> <span style=color:#f92672>%</span> (index,d_loss))
-</span></span><span style=display:flex><span>            <span style=color:#75715e>#随机生成均匀分布噪声</span>
-</span></span><span style=display:flex><span>            noise <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>random<span style=color:#f92672>.</span>uniform(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>1</span>,(Batch_size,<span style=color:#ae81ff>100</span>))
-</span></span><span style=display:flex><span>            <span style=color:#75715e>#固定D</span>
-</span></span><span style=display:flex><span>            d<span style=color:#f92672>.</span>trainable <span style=color:#f92672>=</span> <span style=color:#66d9ef>False</span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>#计算生成器损失；在一个batch的数据上进行一次参数更新</span>
-</span></span><span style=display:flex><span>            g_loss <span style=color:#f92672>=</span> d_on_g<span style=color:#f92672>.</span>train_on_batch(noise,[<span style=color:#ae81ff>1</span>]<span style=color:#f92672>*</span>Batch_size)
-</span></span><span style=display:flex><span>            <span style=color:#75715e>#令D可训练</span>
-</span></span><span style=display:flex><span>            d<span style=color:#f92672>.</span>trainable <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
-</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>&#34;batch </span><span style=color:#e6db74>%d</span><span style=color:#e6db74> g_loss : </span><span style=color:#e6db74>%f</span><span style=color:#e6db74>&#34;</span> <span style=color:#f92672>%</span>(index,g_loss))
-</span></span><span style=display:flex><span>            <span style=color:#75715e>#每100次迭代保存一次G和D的权重</span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> index<span style=color:#f92672>%</span><span style=color:#ae81ff>100</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>9</span>:
-</span></span><span style=display:flex><span>                g<span style=color:#f92672>.</span>save_weights(<span style=color:#e6db74>&#39;generator_weight&#39;</span>,<span style=color:#66d9ef>True</span>)
-</span></span><span style=display:flex><span>                d<span style=color:#f92672>.</span>save_weights(<span style=color:#e6db74>&#39;discriminator_weight&#39;</span>,<span style=color:#66d9ef>True</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#产生图片</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Generate</span>(Batch_size,nice<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>):
-</span></span><span style=display:flex><span>    <span style=color:#75715e>#调用Generator</span>
-</span></span><span style=display:flex><span>    g <span style=color:#f92672>=</span> Generator_model()
-</span></span><span style=display:flex><span>    g<span style=color:#f92672>.</span>compile(loss<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;binary_crossentropy&#39;</span>,optimizer<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;SGD&#34;</span>)
-</span></span><span style=display:flex><span>    <span style=color:#75715e>#加载权重</span>
-</span></span><span style=display:flex><span>    g<span style=color:#f92672>.</span>load_weights(<span style=color:#e6db74>&#39;generator_weight&#39;</span>)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> nice:
-</span></span><span style=display:flex><span>        d <span style=color:#f92672>=</span> Discriminator_model()
-</span></span><span style=display:flex><span>        d<span style=color:#f92672>.</span>compile(loss<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;binary_crossentropy&#39;</span>,optimizer<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;SGD&#34;</span>)
-</span></span><span style=display:flex><span>        d<span style=color:#f92672>.</span>load_weights(<span style=color:#e6db74>&#39;disriminator_weight&#39;</span>)
-</span></span><span style=display:flex><span>        noise <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>random<span style=color:#f92672>.</span>uniform(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>1</span>,(Batch_size<span style=color:#f92672>*</span><span style=color:#ae81ff>20</span>,<span style=color:#ae81ff>100</span>))
-</span></span><span style=display:flex><span>        generated_images <span style=color:#f92672>=</span> g<span style=color:#f92672>.</span>predict(noise,verbose<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>)
-</span></span><span style=display:flex><span>        d_pret <span style=color:#f92672>=</span> d<span style=color:#f92672>.</span>predict(generated_images,verbose<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>)
-</span></span><span style=display:flex><span>        <span style=color:#75715e>#产生0到Batch_size*20的数，步长为1</span>
-</span></span><span style=display:flex><span>        index <span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>arange(<span style=color:#ae81ff>0</span>,Batch_size<span style=color:#f92672>*</span><span style=color:#ae81ff>20</span>)
-</span></span><span style=display:flex><span>        <span style=color:#75715e>#转换形状</span>
-</span></span><span style=display:flex><span>        index<span style=color:#f92672>.</span>resize((Batch_size<span style=color:#f92672>*</span><span style=color:#ae81ff>20</span>,<span style=color:#ae81ff>1</span>))
-</span></span><span style=display:flex><span>        pre_with_index <span style=color:#f92672>=</span>list(np<span style=color:#f92672>.</span>append(d_pret,index,axis<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>))<span style=color:#75715e>#axis=1表示沿着行向量的方向</span>
-</span></span><span style=display:flex><span>        pre_with_index<span style=color:#f92672>.</span>sort(key<span style=color:#f92672>=</span><span style=color:#66d9ef>lambda</span> x:x[<span style=color:#ae81ff>0</span>],reverse<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)<span style=color:#75715e>#reverse=True表示升序；key=lambda x:x[0]指明所根据的字段进行排序</span>
-</span></span><span style=display:flex><span>        nice_images <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>zeros((Batch_size,)<span style=color:#f92672>+</span>generated_images<span style=color:#f92672>.</span>shape[<span style=color:#ae81ff>1</span>:<span style=color:#ae81ff>3</span>],dtype<span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>float32)
-</span></span><span style=display:flex><span>        nice_images <span style=color:#f92672>=</span> nice_images[:,:,:,<span style=color:#66d9ef>None</span>]
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(Batch_size):
-</span></span><span style=display:flex><span>            idx <span style=color:#f92672>=</span> int(pre_with_index[i][<span style=color:#ae81ff>1</span>])
-</span></span><span style=display:flex><span>            nice_images[i,:,:,<span style=color:#ae81ff>0</span>] <span style=color:#f92672>=</span> generated_images[idx,:,:,<span style=color:#ae81ff>0</span>]
-</span></span><span style=display:flex><span>        image <span style=color:#f92672>=</span> Combine_image(nice_images)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>:
-</span></span><span style=display:flex><span>        <span style=color:#75715e>#随机生成正态分布噪声</span>
-</span></span><span style=display:flex><span>        noise <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>random<span style=color:#f92672>.</span>uniform(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, (Batch_size, <span style=color:#ae81ff>100</span>))
-</span></span><span style=display:flex><span>        generated_images <span style=color:#f92672>=</span> g<span style=color:#f92672>.</span>predict(noise, verbose<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>)
-</span></span><span style=display:flex><span>        image <span style=color:#f92672>=</span> Combine_image(generated_images)
-</span></span><span style=display:flex><span>    image <span style=color:#f92672>=</span> image<span style=color:#f92672>*</span><span style=color:#ae81ff>127.5</span><span style=color:#f92672>+</span><span style=color:#ae81ff>127.5</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>#保存图片</span>
-</span></span><span style=display:flex><span>    Image<span style=color:#f92672>.</span>fromarray(image<span style=color:#f92672>.</span>astype(np<span style=color:#f92672>.</span>uint8))<span style=color:#f92672>.</span>save(
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;./GAN_Picture/Generate_image3.png&#34;</span>
-</span></span><span style=display:flex><span>    )
-</span></span><span style=display:flex><span>Train(<span style=color:#ae81ff>50</span>)
-</span></span><span style=display:flex><span>Generate(<span style=color:#ae81ff>100</span>)
-</span></span></code></pre></div><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016211524931.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016211524931.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016211524931.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016211524931.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016211524931.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016211524931.png></p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-28 23:09:59">更新于 2023-09-28&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/ganpicturegen/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5c%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%5cmodel%5cGANPictureGen.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/ganpicturegen/ data-title=GANPictureGen data-hashtags=PyTorch,CV><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/ganpicturegen/ data-hashtag=PyTorch><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/ganpicturegen/ data-title=GANPictureGen data-image=https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/pytorch/>Pytorch</a>,&nbsp;<a href=liudongdong1.github.io/tags/cv/>CV</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/fftnn/ class=prev rel=prev title=FFTNN><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>FFTNN</a>
-<a href=liudongdong1.github.io/flowerclassifypytorch/ class=next rel=next title=FlowerClassifyPytorch>FlowerClassifyPytorch<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
-<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
-<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>GANPictureGen - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="通过简单的图片生成模型，了解GAN的工作过程 #coding=utf-8 from PIL import Image from keras.models import Sequential from keras.layers import Dense,Activation,BatchNormalization,Reshape,UpSampling2D,\ Conv2D,MaxPooling2D,Flatten import numpy as np from keras.optimizers import SGD from keras.datasets import mnist import math # 定义生成器模型 def Generator_model(): # 下面搭建生成器的架" /><meta name="keywords" content='PyTorch, CV' /><meta itemprop="name" content="GANPictureGen">
+<meta itemprop="description" content="通过简单的图片生成模型，了解GAN的工作过程 #coding=utf-8 from PIL import Image from keras.models import Sequential from keras.layers import Dense,Activation,BatchNormalization,Reshape,UpSampling2D,\ Conv2D,MaxPooling2D,Flatten import numpy as np from keras.optimizers import SGD from keras.datasets import mnist import math # 定义生成器模型 def Generator_model(): # 下面搭建生成器的架"><meta itemprop="datePublished" content="2020-10-10T08:56:09+00:00" />
+<meta itemprop="dateModified" content="2023-09-28T23:09:59+08:00" />
+<meta itemprop="wordCount" content="1448"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="PyTorch,CV," /><meta property="og:title" content="GANPictureGen" />
+<meta property="og:description" content="通过简单的图片生成模型，了解GAN的工作过程 #coding=utf-8 from PIL import Image from keras.models import Sequential from keras.layers import Dense,Activation,BatchNormalization,Reshape,UpSampling2D,\ Conv2D,MaxPooling2D,Flatten import numpy as np from keras.optimizers import SGD from keras.datasets import mnist import math # 定义生成器模型 def Generator_model(): # 下面搭建生成器的架" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/ganpicturegen/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-10-10T08:56:09+00:00" />
+<meta property="article:modified_time" content="2023-09-28T23:09:59+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="GANPictureGen"/>
+<meta name="twitter:description" content="通过简单的图片生成模型，了解GAN的工作过程 #coding=utf-8 from PIL import Image from keras.models import Sequential from keras.layers import Dense,Activation,BatchNormalization,Reshape,UpSampling2D,\ Conv2D,MaxPooling2D,Flatten import numpy as np from keras.optimizers import SGD from keras.datasets import mnist import math # 定义生成器模型 def Generator_model(): # 下面搭建生成器的架"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/ganpicturegen/" /><link rel="prev" href="liudongdong1.github.io/fftnn/" /><link rel="next" href="liudongdong1.github.io/flowerclassifypytorch/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "GANPictureGen",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/ganpicturegen\/"
+    },"genre": "posts","keywords": "PyTorch, CV","wordcount":  1448 ,
+    "url": "liudongdong1.github.io\/ganpicturegen\/","datePublished": "2020-10-10T08:56:09+00:00","dateModified": "2023-09-28T23:09:59+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>GANPictureGen</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/ai/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;AI</a></span></div>
+      <div class="post-meta-line"><span title=2020-10-10&#32;08:56:09>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-10" >2020-10-10</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1448 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="GANPictureGen">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg, https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg"/></div><div
+      class="content"
+      id="content"
+      
+      
+    ><blockquote>
+<p>通过简单的图片生成模型，了解GAN的工作过程</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#coding=utf-8</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> keras.models <span style="color:#f92672">import</span> Sequential
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> keras.layers <span style="color:#f92672">import</span> Dense,Activation,BatchNormalization,Reshape,UpSampling2D,\
+</span></span><span style="display:flex;"><span>    Conv2D,MaxPooling2D,Flatten
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span>  np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> keras.optimizers <span style="color:#f92672">import</span> SGD
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> keras.datasets <span style="color:#f92672">import</span> mnist
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> math
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 定义生成器模型</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Generator_model</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 下面搭建生成器的架构，首先导入序贯模型</span>
+</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">=</span> Sequential()
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 添加一个全连接层，输入为100维向量，输出为1024维</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Dense(input_dim<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, output_dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1024</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 添加一个激活函数tanh</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;tanh&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 添加一个全连接层，输出维128×7×7维度</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Dense(<span style="color:#ae81ff">128</span><span style="color:#f92672">*</span><span style="color:#ae81ff">7</span><span style="color:#f92672">*</span><span style="color:#ae81ff">7</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 添加一个批量归一化层，该层在每个batch上将前一层的激活值重新规范化，即使得其输出均值接近于0，标准差接近于1</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(BatchNormalization())
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;tanh&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Reshape层用来将输入shape转换为特定的shape</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Reshape((<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">128</span>),input_shape<span style="color:#f92672">=</span>(<span style="color:#ae81ff">128</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">7</span>)))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 2维上采样层，即将数据的行和列分别重复2次</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(UpSampling2D(size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>)))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 添加一个2维卷积层，卷积核大小维5×5，激活函数为tanh，共64个卷积核，并采用padding使图像尺寸保持不变</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Conv2D(<span style="color:#ae81ff">64</span>,(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">5</span>),padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;same&#39;</span>))
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;tanh&#39;</span>))
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(UpSampling2D(size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>)))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 卷积核设为1即输出图像的维度</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Conv2D(<span style="color:#ae81ff">1</span>,(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">5</span>),padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;same&#39;</span>))
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;tanh&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> model
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 定义判别器模型</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Discriminator_model</span>():
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">=</span>Sequential()
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 添加二维卷积层，卷积核大小为5×5，激活函数为tanh，</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(
+</span></span><span style="display:flex;"><span>        Conv2D(<span style="color:#ae81ff">64</span>,(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">5</span>),
+</span></span><span style="display:flex;"><span>        padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;same&#39;</span>,
+</span></span><span style="display:flex;"><span>        input_shape<span style="color:#f92672">=</span>(<span style="color:#ae81ff">28</span>,<span style="color:#ae81ff">28</span>,<span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;tanh&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#添加最大池化层，pool_size取（2，2）使得图片在原来维度上变为一半</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(MaxPooling2D(pool_size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>)))
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Conv2D(<span style="color:#ae81ff">128</span>,(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">5</span>)))
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;tanh&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#卷积层过渡到全连接层</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Flatten())
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Dense(<span style="color:#ae81ff">1024</span>))
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;tanh&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#一个节点进行二值分类</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Dense(<span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;sigmoid&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> model
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#将生成器和判别器连结成为GAN模型</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">GAN_model</span>(g,d):
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">=</span>Sequential()
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#先添加Generator，再令Discriminator不可训练（即固定d）</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(g)
+</span></span><span style="display:flex;"><span>    d<span style="color:#f92672">.</span>trainable<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>add(d)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> model
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#生成图片进行拼接</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Combine_image</span>(generated_images):
+</span></span><span style="display:flex;"><span>    num <span style="color:#f92672">=</span> generated_images<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]<span style="color:#75715e">#图片数目</span>
+</span></span><span style="display:flex;"><span>    width <span style="color:#f92672">=</span> int(math<span style="color:#f92672">.</span>sqrt(num))
+</span></span><span style="display:flex;"><span>    height <span style="color:#f92672">=</span> int(math<span style="color:#f92672">.</span>ceil(float(num)<span style="color:#f92672">/</span>width))
+</span></span><span style="display:flex;"><span>    shape <span style="color:#f92672">=</span> generated_images<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">3</span>]<span style="color:#75715e">#图片形状取其1-3维，第一维是num</span>
+</span></span><span style="display:flex;"><span>    image <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((height<span style="color:#f92672">*</span>shape[<span style="color:#ae81ff">0</span>],width<span style="color:#f92672">*</span>shape[<span style="color:#ae81ff">1</span>]),
+</span></span><span style="display:flex;"><span>                     dtype <span style="color:#f92672">=</span> generated_images<span style="color:#f92672">.</span>dtype)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> index,img <span style="color:#f92672">in</span> enumerate(generated_images):
+</span></span><span style="display:flex;"><span>        i <span style="color:#f92672">=</span> int(index<span style="color:#f92672">/</span>width)
+</span></span><span style="display:flex;"><span>        j <span style="color:#f92672">=</span> index<span style="color:#f92672">%</span>width
+</span></span><span style="display:flex;"><span>        image[i<span style="color:#f92672">*</span>shape[<span style="color:#ae81ff">0</span>]:(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>shape[<span style="color:#ae81ff">0</span>],j<span style="color:#f92672">*</span>shape[<span style="color:#ae81ff">1</span>]:(j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>shape[<span style="color:#ae81ff">1</span>]]<span style="color:#f92672">=</span>img[:,:,<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> image
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#训练GAN</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Train</span>(Batch_size):
+</span></span><span style="display:flex;"><span>    (X_train,y_train),(X_test,y_test)<span style="color:#f92672">=</span>mnist<span style="color:#f92672">.</span>load_data()
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#归一化</span>
+</span></span><span style="display:flex;"><span>    X_train <span style="color:#f92672">=</span> (X_train<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>float32)<span style="color:#f92672">-</span><span style="color:#ae81ff">127.5</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">127.5</span>
+</span></span><span style="display:flex;"><span>    X_train <span style="color:#f92672">=</span> X_train[:,:,:,<span style="color:#66d9ef">None</span>]
+</span></span><span style="display:flex;"><span>    x_test <span style="color:#f92672">=</span> X_test[:,:,:,<span style="color:#66d9ef">None</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#将定义好的Generator和Discriminator赋值给特定变量</span>
+</span></span><span style="display:flex;"><span>    g <span style="color:#f92672">=</span> Generator_model()
+</span></span><span style="display:flex;"><span>    d <span style="color:#f92672">=</span> Discriminator_model()
+</span></span><span style="display:flex;"><span>    g<span style="color:#f92672">.</span>load_weights(<span style="color:#e6db74">&#39;generator_weight&#39;</span>,<span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    d<span style="color:#f92672">.</span>load_weights(<span style="color:#e6db74">&#39;discriminator_weight&#39;</span>,<span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    d_on_g <span style="color:#f92672">=</span> GAN_model(g,d)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#利用SGD优化器</span>
+</span></span><span style="display:flex;"><span>    d_optim <span style="color:#f92672">=</span> SGD(lr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.001</span>,momentum<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9</span>,nesterov<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    g_optim <span style="color:#f92672">=</span> SGD(lr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.001</span>,momentum<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9</span>,nesterov<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#对G、D和GAN进行编译</span>
+</span></span><span style="display:flex;"><span>    g<span style="color:#f92672">.</span>compile(loss<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;binary_crossentropy&#39;</span>, optimizer<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;SGD&#34;</span>)
+</span></span><span style="display:flex;"><span>    d_on_g<span style="color:#f92672">.</span>compile(loss<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;binary_crossentropy&#39;</span>, optimizer<span style="color:#f92672">=</span>g_optim)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#前一个架构再固定D的情况下训练了G，故此处需先设置D为可训练</span>
+</span></span><span style="display:flex;"><span>    d<span style="color:#f92672">.</span>trainable <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>    d<span style="color:#f92672">.</span>compile(loss<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;binary_crossentropy&#39;</span>,optimizer<span style="color:#f92672">=</span>d_optim)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">30</span>):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;Epoch is&#34;</span>,epoch)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#计算一个epoch所需要的迭代次数。</span>
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;Number of batches is &#34;</span>,int(X_train<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">/</span>Batch_size))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#一个epoch内进行迭代训练</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> index <span style="color:#f92672">in</span> range(int(X_train<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">/</span>Batch_size)):
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># 随机生成均匀分布，上下边界为1和-1，输出Batch_size×100个样本</span>
+</span></span><span style="display:flex;"><span>            noise <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>uniform(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,size<span style="color:#f92672">=</span>(Batch_size,<span style="color:#ae81ff">100</span>))
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#抽取一个批量的真实照片</span>
+</span></span><span style="display:flex;"><span>            image_batch <span style="color:#f92672">=</span> X_train[index <span style="color:#f92672">*</span> Batch_size:(index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> Batch_size]
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#生成的图片使用G对随机噪声进行推断</span>
+</span></span><span style="display:flex;"><span>            generated_images <span style="color:#f92672">=</span> g<span style="color:#f92672">.</span>predict(noise, verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#每经过100次迭代输出一张生成的图片</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> index <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                image <span style="color:#f92672">=</span> Combine_image(generated_images)
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">#逆归一化</span>
+</span></span><span style="display:flex;"><span>                image <span style="color:#f92672">=</span> image <span style="color:#f92672">*</span> <span style="color:#ae81ff">127.5</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">127.5</span>
+</span></span><span style="display:flex;"><span>                Image<span style="color:#f92672">.</span>fromarray(image<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8))<span style="color:#f92672">.</span>save(
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;./GAN_Picture_train/&#34;</span> <span style="color:#f92672">+</span> str(epoch) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;_&#34;</span><span style="color:#f92672">+</span> str(index) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.png&#34;</span>
+</span></span><span style="display:flex;"><span>                )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#将真实的图片和生成的图片以数组的形式拼接再一起，真实图片在上，生成图片在下</span>
+</span></span><span style="display:flex;"><span>            X <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate((image_batch,generated_images))
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#生成真假标签，即一个包含两倍批量大小的列表，前一个批量均为1，代表真，后一个批量均为0，代表生成图片</span>
+</span></span><span style="display:flex;"><span>            y <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> Batch_size <span style="color:#f92672">+</span> [<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> Batch_size
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#判别器的损失；在一个batch的数据上进行一次参数更新</span>
+</span></span><span style="display:flex;"><span>            d_loss <span style="color:#f92672">=</span> d<span style="color:#f92672">.</span>train_on_batch(X,y)
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">&#34;batch </span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> d_loss : </span><span style="color:#e6db74">%f</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (index,d_loss))
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#随机生成均匀分布噪声</span>
+</span></span><span style="display:flex;"><span>            noise <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>uniform(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,(Batch_size,<span style="color:#ae81ff">100</span>))
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#固定D</span>
+</span></span><span style="display:flex;"><span>            d<span style="color:#f92672">.</span>trainable <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#计算生成器损失；在一个batch的数据上进行一次参数更新</span>
+</span></span><span style="display:flex;"><span>            g_loss <span style="color:#f92672">=</span> d_on_g<span style="color:#f92672">.</span>train_on_batch(noise,[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>Batch_size)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#令D可训练</span>
+</span></span><span style="display:flex;"><span>            d<span style="color:#f92672">.</span>trainable <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">&#34;batch </span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> g_loss : </span><span style="color:#e6db74">%f</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span>(index,g_loss))
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#每100次迭代保存一次G和D的权重</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> index<span style="color:#f92672">%</span><span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">9</span>:
+</span></span><span style="display:flex;"><span>                g<span style="color:#f92672">.</span>save_weights(<span style="color:#e6db74">&#39;generator_weight&#39;</span>,<span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>                d<span style="color:#f92672">.</span>save_weights(<span style="color:#e6db74">&#39;discriminator_weight&#39;</span>,<span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#产生图片</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Generate</span>(Batch_size,nice<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#调用Generator</span>
+</span></span><span style="display:flex;"><span>    g <span style="color:#f92672">=</span> Generator_model()
+</span></span><span style="display:flex;"><span>    g<span style="color:#f92672">.</span>compile(loss<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;binary_crossentropy&#39;</span>,optimizer<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;SGD&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#加载权重</span>
+</span></span><span style="display:flex;"><span>    g<span style="color:#f92672">.</span>load_weights(<span style="color:#e6db74">&#39;generator_weight&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> nice:
+</span></span><span style="display:flex;"><span>        d <span style="color:#f92672">=</span> Discriminator_model()
+</span></span><span style="display:flex;"><span>        d<span style="color:#f92672">.</span>compile(loss<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;binary_crossentropy&#39;</span>,optimizer<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;SGD&#34;</span>)
+</span></span><span style="display:flex;"><span>        d<span style="color:#f92672">.</span>load_weights(<span style="color:#e6db74">&#39;disriminator_weight&#39;</span>)
+</span></span><span style="display:flex;"><span>        noise <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>uniform(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,(Batch_size<span style="color:#f92672">*</span><span style="color:#ae81ff">20</span>,<span style="color:#ae81ff">100</span>))
+</span></span><span style="display:flex;"><span>        generated_images <span style="color:#f92672">=</span> g<span style="color:#f92672">.</span>predict(noise,verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        d_pret <span style="color:#f92672">=</span> d<span style="color:#f92672">.</span>predict(generated_images,verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#产生0到Batch_size*20的数，步长为1</span>
+</span></span><span style="display:flex;"><span>        index <span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>,Batch_size<span style="color:#f92672">*</span><span style="color:#ae81ff">20</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#转换形状</span>
+</span></span><span style="display:flex;"><span>        index<span style="color:#f92672">.</span>resize((Batch_size<span style="color:#f92672">*</span><span style="color:#ae81ff">20</span>,<span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>        pre_with_index <span style="color:#f92672">=</span>list(np<span style="color:#f92672">.</span>append(d_pret,index,axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))<span style="color:#75715e">#axis=1表示沿着行向量的方向</span>
+</span></span><span style="display:flex;"><span>        pre_with_index<span style="color:#f92672">.</span>sort(key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x:x[<span style="color:#ae81ff">0</span>],reverse<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)<span style="color:#75715e">#reverse=True表示升序；key=lambda x:x[0]指明所根据的字段进行排序</span>
+</span></span><span style="display:flex;"><span>        nice_images <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((Batch_size,)<span style="color:#f92672">+</span>generated_images<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">3</span>],dtype<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>float32)
+</span></span><span style="display:flex;"><span>        nice_images <span style="color:#f92672">=</span> nice_images[:,:,:,<span style="color:#66d9ef">None</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(Batch_size):
+</span></span><span style="display:flex;"><span>            idx <span style="color:#f92672">=</span> int(pre_with_index[i][<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>            nice_images[i,:,:,<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> generated_images[idx,:,:,<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>        image <span style="color:#f92672">=</span> Combine_image(nice_images)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#随机生成正态分布噪声</span>
+</span></span><span style="display:flex;"><span>        noise <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>uniform(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, (Batch_size, <span style="color:#ae81ff">100</span>))
+</span></span><span style="display:flex;"><span>        generated_images <span style="color:#f92672">=</span> g<span style="color:#f92672">.</span>predict(noise, verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        image <span style="color:#f92672">=</span> Combine_image(generated_images)
+</span></span><span style="display:flex;"><span>    image <span style="color:#f92672">=</span> image<span style="color:#f92672">*</span><span style="color:#ae81ff">127.5</span><span style="color:#f92672">+</span><span style="color:#ae81ff">127.5</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#保存图片</span>
+</span></span><span style="display:flex;"><span>    Image<span style="color:#f92672">.</span>fromarray(image<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8))<span style="color:#f92672">.</span>save(
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;./GAN_Picture/Generate_image3.png&#34;</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>Train(<span style="color:#ae81ff">50</span>)
+</span></span><span style="display:flex;"><span>Generate(<span style="color:#ae81ff">100</span>)
+</span></span></code></pre></div><p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016211524931.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016211524931.png, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016211524931.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016211524931.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016211524931.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016211524931.png"/></p>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-28&#32;23:09:59>更新于 2023-09-28&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/ganpicturegen/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%5cmodel%5cGANPictureGen.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/ganpicturegen/" data-title="GANPictureGen" data-hashtags="PyTorch,CV"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/ganpicturegen/" data-hashtag="PyTorch"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/ganpicturegen/" data-title="GANPictureGen" data-image="https://gitee.com/github-25970295/blogImage/raw/master/img/79.jpeg"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/pytorch/">Pytorch</a>,&nbsp;<a href="liudongdong1.github.io/tags/cv/">CV</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/fftnn/" class="prev" rel="prev" title="FFTNN"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>FFTNN</a>
+      <a href="liudongdong1.github.io/flowerclassifypytorch/" class="next" rel="next" title="FlowerClassifyPytorch">FlowerClassifyPytorch<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>

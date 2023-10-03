@@ -1,232 +1,591 @@
-<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>Tricks - DAY By DAY</title><meta name=author content="LiuDongdong"><meta name=author-link content="https://liudongdong1.github.io/"><meta name=description content="1. 数据增强 数据增强是增加深度模型鲁棒性和泛化性能的常用手段，随机翻转、随机裁剪、添加噪声等也被引入到检测任务的训练中来，个人认为数据（监督信"><meta name=keywords content="CV"><meta itemprop=name content="Tricks"><meta itemprop=description content="1. 数据增强 数据增强是增加深度模型鲁棒性和泛化性能的常用手段，随机翻转、随机裁剪、添加噪声等也被引入到检测任务的训练中来，个人认为数据（监督信"><meta itemprop=dateModified content="2023-09-28T23:13:21+08:00"><meta itemprop=wordCount content="3430"><meta itemprop=image content="/logo.png"><meta itemprop=keywords content="CV,"><meta property="og:title" content="Tricks"><meta property="og:description" content="1. 数据增强 数据增强是增加深度模型鲁棒性和泛化性能的常用手段，随机翻转、随机裁剪、添加噪声等也被引入到检测任务的训练中来，个人认为数据（监督信"><meta property="og:type" content="article"><meta property="og:url" content="liudongdong1.github.io/tricks/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts"><meta property="article:modified_time" content="2023-09-28T23:13:21+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/logo.png"><meta name=twitter:title content="Tricks"><meta name=twitter:description content="1. 数据增强 数据增强是增加深度模型鲁棒性和泛化性能的常用手段，随机翻转、随机裁剪、添加噪声等也被引入到检测任务的训练中来，个人认为数据（监督信"><meta name=application-name content="DAY By DAY"><meta name=apple-mobile-web-app-title content="DAY By DAY"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=liudongdong1.github.io/tricks/><link rel=prev href=liudongdong1.github.io/uboot-%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/><link rel=next href=liudongdong1.github.io/transaction/><link rel=stylesheet href=/liudongdong1.github.io/css/style.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Tricks","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"liudongdong1.github.io\/tricks\/"},"genre":"posts","keywords":"CV","wordcount":3430,"url":"liudongdong1.github.io\/tricks\/","dateModified":"2023-09-28T23:13:21+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"LiuDongdong","logo":"\/images\/person.png"},"author":{"@type":"Person","name":"liudongdong1"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script>(window.localStorage?.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("data-theme","dark")</script><div class=wrapper><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=right><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt="DAY By DAY" title="DAY By DAY"><span class=header-title-text></span></a><span id=typeit-header-subtitle-desktop class="typeit header-subtitle"></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=liudongdong1.github.io/ title="DAY By DAY"><img class="lazyload logo" src=/liudongdong1.github.io/svg/loading.min.svg data-src=/fixit.min.svg data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x" data-sizes=auto alt=/fixit.min.svg title=/fixit.min.svg><span class=header-title-text></span></a><span id=typeit-header-subtitle-mobile class="typeit header-subtitle"></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i></a>
-<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/posts/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/categories/><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden=true></i> 分类</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> 标签</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden=true></i> 友链</a></li><li class=menu-item><a class=menu-link href=/liudongdong1.github.io/about/><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden=true></i> 关于</a></li><li class="menu-item text-center"><a class=menu-link href=https://liudongdong1.github.io/ title=GitHub rel="noopener noreferrer" target=_blank><i class='fa-brands fa-github fa-fw' aria-hidden=true></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li><li class="menu-item language"><span role=button aria-label=选择语言 title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden=true></i></span>
-<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container data-page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom id=aside-sakana><div class=sakana-widget><div class=sakana-item id=takina-widget></div><div class=sakana-item id=chisato-widget></div></div><script>function initSakanaWidget(){const e=SakanaWidget.getCharacter("takina");SakanaWidget.registerCharacter("takina-slow",e),new SakanaWidget({character:"takina-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#takina-widget");const t=SakanaWidget.getCharacter("chisato");SakanaWidget.registerCharacter("chisato-slow",t),new SakanaWidget({character:"chisato-slow",controls:!1,autoFit:!0,stroke:{color:"#b4b4b4",width:2}}).mount("#chisato-widget")}</script><script async onload=initSakanaWidget() src=https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js></script></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>Tricks</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle" aria-hidden=true></i>
-liudongdong1</span></span>
-<span class=post-category>收录于 <a href=liudongdong1.github.io/categories/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href=liudongdong1.github.io/categories/ai/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;AI</a></span></div><div class=post-meta-line><span title="0001-01-01 00:00:00"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=0001-01-01>0001-01-01</time>
-</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3430 字&nbsp;
-<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id=busuanzi_container_page_pv class="busuanzi_visitors comment-visitors" data-flag-title=Tricks>
-<i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_page_pv>-</span>&nbsp;次阅读
-</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png data-srcset="https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png, https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png 1.5x, https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png 2x" data-sizes=auto alt=https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png title=https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png></div><div class="details toc" id=toc-static kept=true><div class="details-summary toc-title"><span>目录</span>
-<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#1-数据增强>1. 数据增强</a></li><li><a href=#2-multi-scale-trainingtesting-多尺度训练测试>2. <strong>Multi-scale Training/Testing 多尺度训练/测试</strong></a></li><li><a href=#3box-refinementvoting-预测框微调投票法>3.<strong>Box Refinement/Voting 预测框微调/投票法</strong></a></li><li><a href=#4随机权值平均swa>4.<strong>随机权值平均（SWA</strong>）</a></li><li><a href=#5-其他>5. 其他</a></li></ul></li></ul></nav></div></div><div class=content id=content><h3 id=1-数据增强>1. 数据增强</h3><blockquote><p>数据增强是增加深度模型鲁棒性和泛化性能的常用手段，随机翻转、随机裁剪、添加噪声等也被引入到检测任务的训练中来，个人认为数据（监督信息）的适时传入可能是更有潜力的方向。</p></blockquote><h4 id=1-图像增强>.1. 图像增强</h4><ul><li>源码在mmdet/datasets/extra_aug.py里面，包括RandomCrop、brightness、contrast、saturation、ExtraAugmentation等等图像增强方法。</li><li>添加位置是train_pipeline或test_pipeline这个地方（一般train进行增强而test不需要），例如数据增强RandomFlip，flip_ratio代表随机翻转的概率：</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>train_pipeline <span style=color:#f92672>=</span> [
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;LoadImageFromFile&#39;</span>),
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;LoadAnnotations&#39;</span>, with_bbox<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>),
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Resize&#39;</span>, img_scale<span style=color:#f92672>=</span>(<span style=color:#ae81ff>1333</span>, <span style=color:#ae81ff>800</span>), keep_ratio<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>),
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;RandomFlip&#39;</span>, flip_ratio<span style=color:#f92672>=</span><span style=color:#ae81ff>0.5</span>),
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Normalize&#39;</span>, <span style=color:#f92672>**</span>img_norm_cfg),
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Pad&#39;</span>, size_divisor<span style=color:#f92672>=</span><span style=color:#ae81ff>32</span>),
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;DefaultFormatBundle&#39;</span>),
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Collect&#39;</span>, keys<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;img&#39;</span>, <span style=color:#e6db74>&#39;gt_bboxes&#39;</span>, <span style=color:#e6db74>&#39;gt_labels&#39;</span>]),
-</span></span><span style=display:flex><span>]
-</span></span><span style=display:flex><span>test_pipeline <span style=color:#f92672>=</span> [
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;LoadImageFromFile&#39;</span>),
-</span></span><span style=display:flex><span>    dict(
-</span></span><span style=display:flex><span>        type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;MultiScaleFlipAug&#39;</span>,
-</span></span><span style=display:flex><span>        img_scale<span style=color:#f92672>=</span>(<span style=color:#ae81ff>1333</span>, <span style=color:#ae81ff>800</span>),
-</span></span><span style=display:flex><span>        flip<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>,
-</span></span><span style=display:flex><span>        transforms<span style=color:#f92672>=</span>[
-</span></span><span style=display:flex><span>            dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Resize&#39;</span>, keep_ratio<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>),
-</span></span><span style=display:flex><span>            dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;RandomFlip&#39;</span>),
-</span></span><span style=display:flex><span>            dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Normalize&#39;</span>, <span style=color:#f92672>**</span>img_norm_cfg),
-</span></span><span style=display:flex><span>            dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Pad&#39;</span>, size_divisor<span style=color:#f92672>=</span><span style=color:#ae81ff>32</span>),
-</span></span><span style=display:flex><span>            dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;ImageToTensor&#39;</span>, keys<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;img&#39;</span>]),
-</span></span><span style=display:flex><span>            dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Collect&#39;</span>, keys<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;img&#39;</span>]),
-</span></span><span style=display:flex><span>        ])
-</span></span><span style=display:flex><span>]
-</span></span></code></pre></div><h4 id=2-bbox-增强>.2. Bbox 增强</h4><ul><li>源码在mmdet/datasets/custom.py里面，增强源码为：</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>pre_pipeline</span>(self, results):        
-</span></span><span style=display:flex><span>    results[<span style=color:#e6db74>&#39;img_prefix&#39;</span>] <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>img_prefix        
-</span></span><span style=display:flex><span>    results[<span style=color:#e6db74>&#39;seg_prefix&#39;</span>] <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>seg_prefix        
-</span></span><span style=display:flex><span>    results[<span style=color:#e6db74>&#39;proposal_file&#39;</span>] <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>proposal_file        
-</span></span><span style=display:flex><span>    results[<span style=color:#e6db74>&#39;bbox_fields&#39;</span>] <span style=color:#f92672>=</span> []        
-</span></span><span style=display:flex><span>    results[<span style=color:#e6db74>&#39;mask_fields&#39;</span>] <span style=color:#f92672>=</span> []
-</span></span></code></pre></div><h3 id=2-multi-scale-trainingtesting-多尺度训练测试>2. <strong>Multi-scale Training/Testing 多尺度训练/测试</strong></h3><blockquote><p>通过输入更大、更多尺寸的图片进行训练，能够在一定程度上提高检测模型对物体大小的鲁棒性，仅在测试阶段引入多尺度，也可享受大尺寸和多尺寸带来的增益。</p><p>训练时，预先定义几个固定的尺度，每个epoch随机选择一个尺度进行训练。测试时，生成几个不同尺度的feature map，对每个Region Proposal，在不同的feature map上也有不同的尺度，我们选择最接近某一固定尺寸（即检测头部的输入尺寸）的Region Proposal作为后续的输入。</p><p>在[2]中，选择单一尺度的方式被Maxout（element-wise max，逐元素取最大）取代：随机选两个相邻尺度，经过Pooling后使用Maxout进行合并，如下图所示。</p></blockquote><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/20210518222638.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/20210518222638.png, https://gitee.com/github-25970295/blogImage/raw/master/img/20210518222638.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/20210518222638.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/20210518222638.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/20210518222638.png></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>train_pipeline <span style=color:#f92672>=</span> [
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;LoadImageFromFile&#39;</span>),
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;LoadAnnotations&#39;</span>, with_bbox<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>),
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Resize&#39;</span>, img_scale<span style=color:#f92672>=</span>(<span style=color:#ae81ff>1333</span>, <span style=color:#ae81ff>800</span>), keep_ratio<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>), <span style=color:#75715e>#这里可以更换多尺度[(),()]</span>
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;RandomFlip&#39;</span>, flip_ratio<span style=color:#f92672>=</span><span style=color:#ae81ff>0.5</span>),
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Normalize&#39;</span>, <span style=color:#f92672>**</span>img_norm_cfg),
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Pad&#39;</span>, size_divisor<span style=color:#f92672>=</span><span style=color:#ae81ff>32</span>),
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;DefaultFormatBundle&#39;</span>),
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Collect&#39;</span>, keys<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;img&#39;</span>, <span style=color:#e6db74>&#39;gt_bboxes&#39;</span>, <span style=color:#e6db74>&#39;gt_labels&#39;</span>]),
-</span></span><span style=display:flex><span>]
-</span></span><span style=display:flex><span>test_pipeline <span style=color:#f92672>=</span> [
-</span></span><span style=display:flex><span>    dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;LoadImageFromFile&#39;</span>),
-</span></span><span style=display:flex><span>    dict(
-</span></span><span style=display:flex><span>        type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;MultiScaleFlipAug&#39;</span>,
-</span></span><span style=display:flex><span>        img_scale<span style=color:#f92672>=</span>(<span style=color:#ae81ff>1333</span>, <span style=color:#ae81ff>800</span>),
-</span></span><span style=display:flex><span>        flip<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>,
-</span></span><span style=display:flex><span>        transforms<span style=color:#f92672>=</span>[
-</span></span><span style=display:flex><span>            dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Resize&#39;</span>, keep_ratio<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>),
-</span></span><span style=display:flex><span>            dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;RandomFlip&#39;</span>),
-</span></span><span style=display:flex><span>            dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Normalize&#39;</span>, <span style=color:#f92672>**</span>img_norm_cfg),
-</span></span><span style=display:flex><span>            dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Pad&#39;</span>, size_divisor<span style=color:#f92672>=</span><span style=color:#ae81ff>32</span>),
-</span></span><span style=display:flex><span>            dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;ImageToTensor&#39;</span>, keys<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;img&#39;</span>]),
-</span></span><span style=display:flex><span>            dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Collect&#39;</span>, keys<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;img&#39;</span>]),
-</span></span><span style=display:flex><span>        ])
-</span></span><span style=display:flex><span>]
-</span></span></code></pre></div><h3 id=3box-refinementvoting-预测框微调投票法>3.<strong>Box Refinement/Voting 预测框微调/投票法</strong></h3><ul><li>box voting 的阈值，</li><li>不同的输入中<strong>这个框至少出现了几次来</strong>允许它输出，</li><li>得分的阈值，一个目标框的得分低于这个阈值的时候，就删掉这个目标框。</li></ul><h3 id=4随机权值平均swa>4.<strong>随机权值平均（SWA</strong>）</h3><p>SWA 的工作原理。它只保存两个模型，而不是许多模型的集成：</p><ol><li>第一个模型保存模型权值的平均值（WSWA）。在训练结束后，它将是用于预测的最终模型。</li><li>第二个模型（W）将穿过权值空间，基于周期性学习率规划探索权重空间。</li></ol><p><img class=lazyload src=/liudongdong1.github.io/svg/loading.min.svg data-src=https://gitee.com/github-25970295/blogImage/raw/master/img/20210518223011.png data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/20210518223011.png, https://gitee.com/github-25970295/blogImage/raw/master/img/20210518223011.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/20210518223011.png 2x" data-sizes=auto alt=https://gitee.com/github-25970295/blogImage/raw/master/img/20210518223011.png title=https://gitee.com/github-25970295/blogImage/raw/master/img/20210518223011.png></p><h3 id=5-其他>5. 其他</h3><ul><li>更好的先验（YOLOv2）：使用聚类方法统计数据中box标注的大小和长宽比，以更好的设置anchor box的生成配置</li><li>更好的pre-train模型：检测模型的基础网络通常使用ImageNet（通常是ImageNet-1k）上训练好的模型进行初始化，使用更大的数据集（ImageNet-5k）预训练基础网络对精度的提升亦有帮助</li><li>超参数的调整：部分工作也发现如NMS中IoU阈值的调整（从0.3到0.5）也有利于精度的提升，但这一方面尚无最佳配置参照</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># model settings</span>
-</span></span><span style=display:flex><span>model <span style=color:#f92672>=</span> dict(
-</span></span><span style=display:flex><span>  type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;FasterRCNN&#39;</span>,                         <span style=color:#75715e># model类型</span>
-</span></span><span style=display:flex><span>    pretrained<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;modelzoo://resnet50&#39;</span>,          <span style=color:#75715e># 预训练模型：imagenet-resnet50</span>
-</span></span><span style=display:flex><span>    backbone<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>        type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;ResNet&#39;</span>,                         <span style=color:#75715e># backbone类型</span>
-</span></span><span style=display:flex><span>        depth<span style=color:#f92672>=</span><span style=color:#ae81ff>50</span>,                              <span style=color:#75715e># 网络层数</span>
-</span></span><span style=display:flex><span>        num_stages<span style=color:#f92672>=</span><span style=color:#ae81ff>4</span>,                          <span style=color:#75715e># resnet的stage数量</span>
-</span></span><span style=display:flex><span>        out_indices<span style=color:#f92672>=</span>(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>),              <span style=color:#75715e># 输出的stage的序号</span>
-</span></span><span style=display:flex><span>        frozen_stages<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>,                       <span style=color:#75715e># 冻结的stage数量，即该stage不更新参数，-1表示所有的stage都更新参数</span>
-</span></span><span style=display:flex><span>        style<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;pytorch&#39;</span>),                      <span style=color:#75715e># 网络风格：如果设置pytorch，则stride为2的层是conv3x3的卷积层；如果设置caffe，则stride为2的层是第一个conv1x1的卷积层</span>
-</span></span><span style=display:flex><span>    neck<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>        type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;FPN&#39;</span>,                            <span style=color:#75715e># neck类型</span>
-</span></span><span style=display:flex><span>        in_channels<span style=color:#f92672>=</span>[<span style=color:#ae81ff>256</span>, <span style=color:#ae81ff>512</span>, <span style=color:#ae81ff>1024</span>, <span style=color:#ae81ff>2048</span>],    <span style=color:#75715e># 输入的各个stage的通道数</span>
-</span></span><span style=display:flex><span>        out_channels<span style=color:#f92672>=</span><span style=color:#ae81ff>256</span>,                      <span style=color:#75715e># 输出的特征层的通道数</span>
-</span></span><span style=display:flex><span>        num_outs<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span>),                           <span style=color:#75715e># 输出的特征层的数量</span>
-</span></span><span style=display:flex><span>    rpn_head<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>        type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;RPNHead&#39;</span>,                        <span style=color:#75715e># RPN网络类型</span>
-</span></span><span style=display:flex><span>        in_channels<span style=color:#f92672>=</span><span style=color:#ae81ff>256</span>,                       <span style=color:#75715e># RPN网络的输入通道数</span>
-</span></span><span style=display:flex><span>        feat_channels<span style=color:#f92672>=</span><span style=color:#ae81ff>256</span>,                     <span style=color:#75715e># 特征层的通道数</span>
-</span></span><span style=display:flex><span>        anchor_scales<span style=color:#f92672>=</span>[<span style=color:#ae81ff>8</span>],                     <span style=color:#75715e># 生成的anchor的baselen，baselen = sqrt(w*h)，w和h为anchor的宽和高</span>
-</span></span><span style=display:flex><span>        anchor_ratios<span style=color:#f92672>=</span>[<span style=color:#ae81ff>0.5</span>, <span style=color:#ae81ff>1.0</span>, <span style=color:#ae81ff>2.0</span>],         <span style=color:#75715e># anchor的宽高比</span>
-</span></span><span style=display:flex><span>        anchor_strides<span style=color:#f92672>=</span>[<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>8</span>, <span style=color:#ae81ff>16</span>, <span style=color:#ae81ff>32</span>, <span style=color:#ae81ff>64</span>],     <span style=color:#75715e># 在每个特征层上的anchor的步长（对应于原图）</span>
-</span></span><span style=display:flex><span>        target_means<span style=color:#f92672>=</span>[<span style=color:#ae81ff>.0</span>, <span style=color:#ae81ff>.0</span>, <span style=color:#ae81ff>.0</span>, <span style=color:#ae81ff>.0</span>],         <span style=color:#75715e># 均值</span>
-</span></span><span style=display:flex><span>        target_stds<span style=color:#f92672>=</span>[<span style=color:#ae81ff>1.0</span>, <span style=color:#ae81ff>1.0</span>, <span style=color:#ae81ff>1.0</span>, <span style=color:#ae81ff>1.0</span>],      <span style=color:#75715e># 方差</span>
-</span></span><span style=display:flex><span>        use_sigmoid_cls<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>),                 <span style=color:#75715e># 是否使用sigmoid来进行分类，如果False则使用softmax来分类</span>
-</span></span><span style=display:flex><span>    bbox_roi_extractor<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>        type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;SingleRoIExtractor&#39;</span>,                                   <span style=color:#75715e># RoIExtractor类型</span>
-</span></span><span style=display:flex><span>        roi_layer<span style=color:#f92672>=</span>dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;RoIAlign&#39;</span>, out_size<span style=color:#f92672>=</span><span style=color:#ae81ff>7</span>, sample_num<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>),   <span style=color:#75715e># ROI具体参数：ROI类型为ROIalign，输出尺寸为7，sample数为2</span>
-</span></span><span style=display:flex><span>        out_channels<span style=color:#f92672>=</span><span style=color:#ae81ff>256</span>,                                            <span style=color:#75715e># 输出通道数</span>
-</span></span><span style=display:flex><span>        featmap_strides<span style=color:#f92672>=</span>[<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>8</span>, <span style=color:#ae81ff>16</span>, <span style=color:#ae81ff>32</span>]),                             <span style=color:#75715e># 特征图的步长</span>
-</span></span><span style=display:flex><span>    bbox_head<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>        type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;SharedFCBBoxHead&#39;</span>,                     <span style=color:#75715e># 全连接层类型</span>
-</span></span><span style=display:flex><span>        num_fcs<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>,                                   <span style=color:#75715e># 全连接层数量</span>
-</span></span><span style=display:flex><span>        in_channels<span style=color:#f92672>=</span><span style=color:#ae81ff>256</span>,                             <span style=color:#75715e># 输入通道数</span>
-</span></span><span style=display:flex><span>        fc_out_channels<span style=color:#f92672>=</span><span style=color:#ae81ff>1024</span>,                        <span style=color:#75715e># 输出通道数</span>
-</span></span><span style=display:flex><span>        roi_feat_size<span style=color:#f92672>=</span><span style=color:#ae81ff>7</span>,                             <span style=color:#75715e># ROI特征层尺寸</span>
-</span></span><span style=display:flex><span>        num_classes<span style=color:#f92672>=</span><span style=color:#ae81ff>81</span>,                              <span style=color:#75715e># 分类器的类别数量+1，+1是因为多了一个背景的类别</span>
-</span></span><span style=display:flex><span>        target_means<span style=color:#f92672>=</span>[<span style=color:#ae81ff>0.</span>, <span style=color:#ae81ff>0.</span>, <span style=color:#ae81ff>0.</span>, <span style=color:#ae81ff>0.</span>],               <span style=color:#75715e># 均值</span>
-</span></span><span style=display:flex><span>        target_stds<span style=color:#f92672>=</span>[<span style=color:#ae81ff>0.1</span>, <span style=color:#ae81ff>0.1</span>, <span style=color:#ae81ff>0.2</span>, <span style=color:#ae81ff>0.2</span>],            <span style=color:#75715e># 方差</span>
-</span></span><span style=display:flex><span>        reg_class_agnostic<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>))                   <span style=color:#75715e># 是否采用class_agnostic的方式来预测，class_agnostic表示输出bbox时只考虑其是否为前景，后续分类的时候再根据该bbox在网络中的类别得分来分类，也就是说一个框可以对应多个类别</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># model training and testing settings</span>
-</span></span><span style=display:flex><span>train_cfg <span style=color:#f92672>=</span> dict(
-</span></span><span style=display:flex><span>    rpn<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>        assigner<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>            type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;MaxIoUAssigner&#39;</span>,            <span style=color:#75715e># RPN网络的正负样本划分</span>
-</span></span><span style=display:flex><span>            pos_iou_thr<span style=color:#f92672>=</span><span style=color:#ae81ff>0.7</span>,                  <span style=color:#75715e># 正样本的iou阈值</span>
-</span></span><span style=display:flex><span>            neg_iou_thr<span style=color:#f92672>=</span><span style=color:#ae81ff>0.3</span>,                  <span style=color:#75715e># 负样本的iou阈值</span>
-</span></span><span style=display:flex><span>            min_pos_iou<span style=color:#f92672>=</span><span style=color:#ae81ff>0.3</span>,                  <span style=color:#75715e># 正样本的iou最小值。如果assign给ground truth的anchors中最大的IOU低于0.3，则忽略所有的anchors，否则保留最大IOU的anchor</span>
-</span></span><span style=display:flex><span>            ignore_iof_thr<span style=color:#f92672>=-</span><span style=color:#ae81ff>1</span>),               <span style=color:#75715e># 忽略bbox的阈值，当ground truth中包含需要忽略的bbox时使用，-1表示不忽略</span>
-</span></span><span style=display:flex><span>        sampler<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>            type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;RandomSampler&#39;</span>,             <span style=color:#75715e># 正负样本提取器类型</span>
-</span></span><span style=display:flex><span>            num<span style=color:#f92672>=</span><span style=color:#ae81ff>256</span>,                          <span style=color:#75715e># 需提取的正负样本数量</span>
-</span></span><span style=display:flex><span>            pos_fraction<span style=color:#f92672>=</span><span style=color:#ae81ff>0.5</span>,                 <span style=color:#75715e># 正样本比例</span>
-</span></span><span style=display:flex><span>            neg_pos_ub<span style=color:#f92672>=-</span><span style=color:#ae81ff>1</span>,                    <span style=color:#75715e># 最大负样本比例，大于该比例的负样本忽略，-1表示不忽略</span>
-</span></span><span style=display:flex><span>            add_gt_as_proposals<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>),       <span style=color:#75715e># 把ground truth加入proposal作为正样本</span>
-</span></span><span style=display:flex><span>        allowed_border<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>,                     <span style=color:#75715e># 允许在bbox周围外扩一定的像素</span>
-</span></span><span style=display:flex><span>        pos_weight<span style=color:#f92672>=-</span><span style=color:#ae81ff>1</span>,                        <span style=color:#75715e># 正样本权重，-1表示不改变原始的权重</span>
-</span></span><span style=display:flex><span>        smoothl1_beta<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>9.0</span>,                <span style=color:#75715e># 平滑L1系数</span>
-</span></span><span style=display:flex><span>        debug<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>),                         <span style=color:#75715e># debug模式</span>
-</span></span><span style=display:flex><span>    rcnn<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>        assigner<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>            type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;MaxIoUAssigner&#39;</span>,            <span style=color:#75715e># RCNN网络正负样本划分</span>
-</span></span><span style=display:flex><span>            pos_iou_thr<span style=color:#f92672>=</span><span style=color:#ae81ff>0.5</span>,                  <span style=color:#75715e># 正样本的iou阈值</span>
-</span></span><span style=display:flex><span>            neg_iou_thr<span style=color:#f92672>=</span><span style=color:#ae81ff>0.5</span>,                  <span style=color:#75715e># 负样本的iou阈值</span>
-</span></span><span style=display:flex><span>            min_pos_iou<span style=color:#f92672>=</span><span style=color:#ae81ff>0.5</span>,                  <span style=color:#75715e># 正样本的iou最小值。如果assign给ground truth的anchors中最大的IOU低于0.3，则忽略所有的anchors，否则保留最大IOU的anchor</span>
-</span></span><span style=display:flex><span>            ignore_iof_thr<span style=color:#f92672>=-</span><span style=color:#ae81ff>1</span>),               <span style=color:#75715e># 忽略bbox的阈值，当ground truth中包含需要忽略的bbox时使用，-1表示不忽略</span>
-</span></span><span style=display:flex><span>        sampler<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>            type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;RandomSampler&#39;</span>,             <span style=color:#75715e># 正负样本提取器类型</span>
-</span></span><span style=display:flex><span>            num<span style=color:#f92672>=</span><span style=color:#ae81ff>512</span>,                          <span style=color:#75715e># 需提取的正负样本数量</span>
-</span></span><span style=display:flex><span>            pos_fraction<span style=color:#f92672>=</span><span style=color:#ae81ff>0.25</span>,                <span style=color:#75715e># 正样本比例</span>
-</span></span><span style=display:flex><span>            neg_pos_ub<span style=color:#f92672>=-</span><span style=color:#ae81ff>1</span>,                    <span style=color:#75715e># 最大负样本比例，大于该比例的负样本忽略，-1表示不忽略</span>
-</span></span><span style=display:flex><span>            add_gt_as_proposals<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>),        <span style=color:#75715e># 把ground truth加入proposal作为正样本</span>
-</span></span><span style=display:flex><span>        pos_weight<span style=color:#f92672>=-</span><span style=color:#ae81ff>1</span>,                        <span style=color:#75715e># 正样本权重，-1表示不改变原始的权重</span>
-</span></span><span style=display:flex><span>        debug<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>))                         <span style=color:#75715e># debug模式</span>
-</span></span><span style=display:flex><span>test_cfg <span style=color:#f92672>=</span> dict(
-</span></span><span style=display:flex><span>    rpn<span style=color:#f92672>=</span>dict(                                 <span style=color:#75715e># 推断时的RPN参数</span>
-</span></span><span style=display:flex><span>        nms_across_levels<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>,              <span style=color:#75715e># 在所有的fpn层内做nms</span>
-</span></span><span style=display:flex><span>        nms_pre<span style=color:#f92672>=</span><span style=color:#ae81ff>2000</span>,                         <span style=color:#75715e># 在nms之前保留的的得分最高的proposal数量</span>
-</span></span><span style=display:flex><span>        nms_post<span style=color:#f92672>=</span><span style=color:#ae81ff>2000</span>,                        <span style=color:#75715e># 在nms之后保留的的得分最高的proposal数量</span>
-</span></span><span style=display:flex><span>        max_num<span style=color:#f92672>=</span><span style=color:#ae81ff>2000</span>,                         <span style=color:#75715e># 在后处理完成之后保留的proposal数量</span>
-</span></span><span style=display:flex><span>        nms_thr<span style=color:#f92672>=</span><span style=color:#ae81ff>0.7</span>,                          <span style=color:#75715e># nms阈值</span>
-</span></span><span style=display:flex><span>        min_bbox_size<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>),                     <span style=color:#75715e># 最小bbox尺寸</span>
-</span></span><span style=display:flex><span>    rcnn<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>        score_thr<span style=color:#f92672>=</span><span style=color:#ae81ff>0.05</span>, nms<span style=color:#f92672>=</span>dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;nms&#39;</span>, iou_thr<span style=color:#f92672>=</span><span style=color:#ae81ff>0.5</span>), max_per_img<span style=color:#f92672>=</span><span style=color:#ae81ff>100</span>)   <span style=color:#75715e># max_per_img表示最终输出的det bbox数量</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># soft-nms is also supported for rcnn testing</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># e.g., nms=dict(type=&#39;soft_nms&#39;, iou_thr=0.5, min_score=0.05)            # soft_nms参数</span>
-</span></span><span style=display:flex><span>)
-</span></span><span style=display:flex><span><span style=color:#75715e># dataset settings</span>
-</span></span><span style=display:flex><span>dataset_type <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;CocoDataset&#39;</span>                <span style=color:#75715e># 数据集类型</span>
-</span></span><span style=display:flex><span>data_root <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;data/coco/&#39;</span>                    <span style=color:#75715e># 数据集根目录</span>
-</span></span><span style=display:flex><span>img_norm_cfg <span style=color:#f92672>=</span> dict(
-</span></span><span style=display:flex><span>    mean<span style=color:#f92672>=</span>[<span style=color:#ae81ff>123.675</span>, <span style=color:#ae81ff>116.28</span>, <span style=color:#ae81ff>103.53</span>], std<span style=color:#f92672>=</span>[<span style=color:#ae81ff>58.395</span>, <span style=color:#ae81ff>57.12</span>, <span style=color:#ae81ff>57.375</span>], to_rgb<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)   <span style=color:#75715e># 输入图像初始化，减去均值mean并处以方差std，to_rgb表示将bgr转为rgb</span>
-</span></span><span style=display:flex><span>data <span style=color:#f92672>=</span> dict(
-</span></span><span style=display:flex><span>    imgs_per_gpu<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>,                <span style=color:#75715e># 每个gpu计算的图像数量</span>
-</span></span><span style=display:flex><span>    workers_per_gpu<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>,             <span style=color:#75715e># 每个gpu分配的线程数</span>
-</span></span><span style=display:flex><span>    train<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>        type<span style=color:#f92672>=</span>dataset_type,                                                 <span style=color:#75715e># 数据集类型</span>
-</span></span><span style=display:flex><span>        ann_file<span style=color:#f92672>=</span>data_root <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;annotations/instances_train2017.json&#39;</span>,       <span style=color:#75715e># 数据集annotation路径</span>
-</span></span><span style=display:flex><span>        img_prefix<span style=color:#f92672>=</span>data_root <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;train2017/&#39;</span>,                               <span style=color:#75715e># 数据集的图片路径</span>
-</span></span><span style=display:flex><span>        img_scale<span style=color:#f92672>=</span>(<span style=color:#ae81ff>1333</span>, <span style=color:#ae81ff>800</span>),                                             <span style=color:#75715e># 输入图像尺寸，最大边1333，最小边800</span>
-</span></span><span style=display:flex><span>        img_norm_cfg<span style=color:#f92672>=</span>img_norm_cfg,                                         <span style=color:#75715e># 图像初始化参数</span>
-</span></span><span style=display:flex><span>        size_divisor<span style=color:#f92672>=</span><span style=color:#ae81ff>32</span>,                                                   <span style=color:#75715e># 对图像进行resize时的最小单位，32表示所有的图像都会被resize成32的倍数</span>
-</span></span><span style=display:flex><span>        flip_ratio<span style=color:#f92672>=</span><span style=color:#ae81ff>0.5</span>,                                                    <span style=color:#75715e># 图像的随机左右翻转的概率</span>
-</span></span><span style=display:flex><span>        with_mask<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>,                                                   <span style=color:#75715e># 训练时附带mask</span>
-</span></span><span style=display:flex><span>        with_crowd<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>,                                                   <span style=color:#75715e># 训练时附带difficult的样本</span>
-</span></span><span style=display:flex><span>        with_label<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>),                                                  <span style=color:#75715e># 训练时附带label</span>
-</span></span><span style=display:flex><span>    val<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>        type<span style=color:#f92672>=</span>dataset_type,                                                 <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        ann_file<span style=color:#f92672>=</span>data_root <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;annotations/instances_val2017.json&#39;</span>,         <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        img_prefix<span style=color:#f92672>=</span>data_root <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;val2017/&#39;</span>,                                 <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        img_scale<span style=color:#f92672>=</span>(<span style=color:#ae81ff>1333</span>, <span style=color:#ae81ff>800</span>),                                             <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        img_norm_cfg<span style=color:#f92672>=</span>img_norm_cfg,                                         <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        size_divisor<span style=color:#f92672>=</span><span style=color:#ae81ff>32</span>,                                                   <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        flip_ratio<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>,                                                      <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        with_mask<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>,                                                   <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        with_crowd<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>,                                                   <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        with_label<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>),                                                  <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>    test<span style=color:#f92672>=</span>dict(
-</span></span><span style=display:flex><span>        type<span style=color:#f92672>=</span>dataset_type,                                                 <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        ann_file<span style=color:#f92672>=</span>data_root <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;annotations/instances_val2017.json&#39;</span>,         <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        img_prefix<span style=color:#f92672>=</span>data_root <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;val2017/&#39;</span>,                                 <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        img_scale<span style=color:#f92672>=</span>(<span style=color:#ae81ff>1333</span>, <span style=color:#ae81ff>800</span>),                                             <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        img_norm_cfg<span style=color:#f92672>=</span>img_norm_cfg,                                         <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        size_divisor<span style=color:#f92672>=</span><span style=color:#ae81ff>32</span>,                                                   <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        flip_ratio<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>,                                                      <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        with_mask<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>,                                                   <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        with_label<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>,                                                  <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span>        test_mode<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>))                                                   <span style=color:#75715e># 同上</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># optimizer</span>
-</span></span><span style=display:flex><span>optimizer <span style=color:#f92672>=</span> dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;SGD&#39;</span>, lr<span style=color:#f92672>=</span><span style=color:#ae81ff>0.02</span>, momentum<span style=color:#f92672>=</span><span style=color:#ae81ff>0.9</span>, weight_decay<span style=color:#f92672>=</span><span style=color:#ae81ff>0.0001</span>)   <span style=color:#75715e># 优化参数，lr为学习率，momentum为动量因子，weight_decay为权重衰减因子</span>
-</span></span><span style=display:flex><span>optimizer_config <span style=color:#f92672>=</span> dict(grad_clip<span style=color:#f92672>=</span>dict(max_norm<span style=color:#f92672>=</span><span style=color:#ae81ff>35</span>, norm_type<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>))          <span style=color:#75715e># 梯度均衡参数</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># learning policy</span>
-</span></span><span style=display:flex><span>lr_config <span style=color:#f92672>=</span> dict(
-</span></span><span style=display:flex><span>    policy<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;step&#39;</span>,                        <span style=color:#75715e># 优化策略</span>
-</span></span><span style=display:flex><span>    warmup<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;linear&#39;</span>,                      <span style=color:#75715e># 初始的学习率增加的策略，linear为线性增加</span>
-</span></span><span style=display:flex><span>    warmup_iters<span style=color:#f92672>=</span><span style=color:#ae81ff>500</span>,                     <span style=color:#75715e># 在初始的500次迭代中学习率逐渐增加</span>
-</span></span><span style=display:flex><span>    warmup_ratio<span style=color:#f92672>=</span><span style=color:#ae81ff>1.0</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>3</span>,                 <span style=color:#75715e># 起始的学习率</span>
-</span></span><span style=display:flex><span>    step<span style=color:#f92672>=</span>[<span style=color:#ae81ff>8</span>, <span style=color:#ae81ff>11</span>])                         <span style=color:#75715e># 在第8和11个epoch时降低学习率</span>
-</span></span><span style=display:flex><span>checkpoint_config <span style=color:#f92672>=</span> dict(interval<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>)      <span style=color:#75715e># 每1个epoch存储一次模型</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># yapf:disable</span>
-</span></span><span style=display:flex><span>log_config <span style=color:#f92672>=</span> dict(
-</span></span><span style=display:flex><span>    interval<span style=color:#f92672>=</span><span style=color:#ae81ff>50</span>,                          <span style=color:#75715e># 每50个batch输出一次信息</span>
-</span></span><span style=display:flex><span>    hooks<span style=color:#f92672>=</span>[
-</span></span><span style=display:flex><span>        dict(type<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;TextLoggerHook&#39;</span>),      <span style=color:#75715e># 控制台输出信息的风格</span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e># dict(type=&#39;TensorboardLoggerHook&#39;)</span>
-</span></span><span style=display:flex><span>    ])
-</span></span><span style=display:flex><span><span style=color:#75715e># yapf:enable</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># runtime settings</span>
-</span></span><span style=display:flex><span>total_epochs <span style=color:#f92672>=</span> <span style=color:#ae81ff>12</span>                               <span style=color:#75715e># 最大epoch数</span>
-</span></span><span style=display:flex><span>dist_params <span style=color:#f92672>=</span> dict(backend<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;nccl&#39;</span>)              <span style=color:#75715e># 分布式参数</span>
-</span></span><span style=display:flex><span>log_level <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;INFO&#39;</span>                              <span style=color:#75715e># 输出信息的完整度级别</span>
-</span></span><span style=display:flex><span>work_dir <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;./work_dirs/faster_rcnn_r50_fpn_1x&#39;</span> <span style=color:#75715e># log文件和模型文件存储路径</span>
-</span></span><span style=display:flex><span>load_from <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>                                <span style=color:#75715e># 加载模型的路径，None表示从预训练模型加载</span>
-</span></span><span style=display:flex><span>resume_from <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>                              <span style=color:#75715e># 恢复训练模型的路径</span>
-</span></span><span style=display:flex><span>workflow <span style=color:#f92672>=</span> [(<span style=color:#e6db74>&#39;train&#39;</span>, <span style=color:#ae81ff>1</span>)]                       <span style=color:#75715e># 当前工作区名称</span>
-</span></span></code></pre></div><ul><li>学习链接：https://mp.weixin.qq.com/s/W2_AK8p-CX2yNHxbJo77Kg</li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-09-28 23:13:21">更新于 2023-09-28&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=liudongdong1.github.io/tricks/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span><span><a href=https://liudongdong1.github.io/edit/master/content/posts%5c%e8%a7%86%e8%a7%89%e8%bf%90%e5%8a%a8%5cObjectTracking%5cTricks.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=liudongdong1.github.io/tricks/ data-title=Tricks data-hashtags=CV><i class="fa-brands fa-twitter fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=liudongdong1.github.io/tricks/ data-hashtag=CV><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=liudongdong1.github.io/tricks/ data-title=Tricks data-image=https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=liudongdong1.github.io/tags/cv/>CV</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=liudongdong1.github.io/>主页</a></span></section></div><div class=post-nav><a href=liudongdong1.github.io/uboot-%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/ class=prev rel=prev title=uboot启动流程><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>uboot启动流程</a>
-<a href=liudongdong1.github.io/transaction/ class=next rel=next title=Transaction>Transaction<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line powered">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.2.17-RC"><img class=fixit-icon src=/liudongdong1.github.io/fixit.min.svg alt="FixIt logo">&nbsp;FixIt</a></div><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
-<span itemprop=copyrightYear>2020 - 2023</span><span class=author itemprop=copyrightHolder>
-<a href=https://liudongdong1.github.io/ target=_blank rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class=site-time title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden=true></i>&nbsp;<span class=run-times>网站运行中 ...</span></span></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw" aria-hidden=true></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden=true></i></span></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class=variant-numeric>0%</span></div></div><a href=https://liudongdong1.github.io/ title="在 GitHub 上查看源代码" target=_blank rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><div class=reading-progress-bar style=left:0;top:0;--bg-progress:#0076ff;--bg-progress-dark:#fff></div><noscript><div class=noscript-warning>FixIt 主题在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/liudongdong1.github.io/lib/katex/katex.min.css><link rel=stylesheet href=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css><script src=/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js defer></script><script src=/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script src=/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js async defer></script><script src=/liudongdong1.github.io/lib/sharer/sharer.min.js async defer></script><script src=/liudongdong1.github.io/lib/typeit/index.umd.js defer></script><script src=/liudongdong1.github.io/lib/katex/katex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/auto-render.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/copy-tex.min.js defer></script><script src=/liudongdong1.github.io/lib/katex/mhchem.min.js defer></script><script src=/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/liudongdong1.github.io/lib/pangu/pangu.min.js defer></script><script src=/liudongdong1.github.io/lib/cell-watermark/watermark.min.js defer></script><script src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"typeit-header-subtitle-desktop":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`,"typeit-header-subtitle-mobile":`<span style='font-family: MMT,"沐目体";'>吾日三省吾身</span>`},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"2R1K9SKLQZ",algoliaIndex:"index.zh-cn",algoliaSearchKey:"4a226aa1c5c98d6859e4d1386adb2bc7",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},siteTime:"2020-12-18T16:15:22+08:00",typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},duration:-1,speed:100},watermark:{appendto:".wrapper>main",colspacing:30,content:'<img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" /> FixIt 主题',enable:!0,fontfamily:"inherit",fontsize:.85,height:21,opacity:.0125,rotate:15,rowspacing:60,width:150}}</script><script src=/liudongdong1.github.io/js/theme.min.js defer></script><script src=/liudongdong1.github.io/js/custom.min.js defer></script></body></html>
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Tricks - DAY By DAY</title><meta name="author" content="LiuDongdong">
+<meta name="author-link" content="https://liudongdong1.github.io/">
+<meta name="description" content="1. 数据增强 数据增强是增加深度模型鲁棒性和泛化性能的常用手段，随机翻转、随机裁剪、添加噪声等也被引入到检测任务的训练中来，个人认为数据（监督信" /><meta name="keywords" content='CV' /><meta itemprop="name" content="Tricks">
+<meta itemprop="description" content="1. 数据增强 数据增强是增加深度模型鲁棒性和泛化性能的常用手段，随机翻转、随机裁剪、添加噪声等也被引入到检测任务的训练中来，个人认为数据（监督信">
+<meta itemprop="dateModified" content="2023-09-28T23:13:21+08:00" />
+<meta itemprop="wordCount" content="3430"><meta itemprop="image" content="/logo.png"/>
+<meta itemprop="keywords" content="CV," /><meta property="og:title" content="Tricks" />
+<meta property="og:description" content="1. 数据增强 数据增强是增加深度模型鲁棒性和泛化性能的常用手段，随机翻转、随机裁剪、添加噪声等也被引入到检测任务的训练中来，个人认为数据（监督信" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="liudongdong1.github.io/tricks/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+
+<meta property="article:modified_time" content="2023-09-28T23:13:21+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="Tricks"/>
+<meta name="twitter:description" content="1. 数据增强 数据增强是增加深度模型鲁棒性和泛化性能的常用手段，随机翻转、随机裁剪、添加噪声等也被引入到检测任务的训练中来，个人认为数据（监督信"/>
+<meta name="application-name" content="DAY By DAY">
+<meta name="apple-mobile-web-app-title" content="DAY By DAY"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="liudongdong1.github.io/tricks/" /><link rel="prev" href="liudongdong1.github.io/uboot-%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" /><link rel="next" href="liudongdong1.github.io/transaction/" /><link rel="stylesheet" href="/liudongdong1.github.io/css/style.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Tricks",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "liudongdong1.github.io\/tricks\/"
+    },"genre": "posts","keywords": "CV","wordcount":  3430 ,
+    "url": "liudongdong1.github.io\/tricks\/","dateModified": "2023-09-28T23:13:21+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "LiuDongdong","logo": "\/images\/person.png"},"author": {
+        "@type": "Person",
+        "name": "liudongdong1"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="DAY By DAY"
+    title="DAY By DAY"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/liudongdong1.github.io/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="liudongdong1.github.io/" title="DAY By DAY"><img
+    class="lazyload logo"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="/fixit.min.svg"
+    data-srcset="/fixit.min.svg, /fixit.min.svg 1.5x, /fixit.min.svg 2x"
+    data-sizes="auto"
+    alt="/fixit.min.svg"
+    title="/fixit.min.svg"/><span class="header-title-text"></span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/liudongdong1.github.io/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://liudongdong1.github.io/"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language">
+            <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </span>
+            <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+          </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom" id="aside-sakana">
+    
+
+<div class="sakana-widget">
+  <div class="sakana-item" id="takina-widget"></div>
+  <div class="sakana-item" id="chisato-widget"></div>
+</div>
+<script>
+  function initSakanaWidget() {
+    const takina = SakanaWidget.getCharacter('takina')
+    SakanaWidget.registerCharacter('takina-slow', takina);
+    new SakanaWidget({
+      character: 'takina-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#takina-widget');
+
+    const chisato = SakanaWidget.getCharacter('chisato')
+    SakanaWidget.registerCharacter('chisato-slow', chisato);
+    new SakanaWidget({
+      character: 'chisato-slow',
+      controls: false,
+      autoFit: true,
+      stroke: {
+        color: "#b4b4b4",
+        width: 2
+      }
+    }).mount('#chisato-widget');
+  }
+</script>
+<script async onload="initSakanaWidget()" src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.0/lib/sakana.min.js">
+</script></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>Tricks</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      liudongdong1</span></span>
+          <span class="post-category">收录于 <a href="liudongdong1.github.io/categories/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;Categories</a>&ensp;<a href="liudongdong1.github.io/categories/ai/"><i class="fa-regular fa-folder fa-fw"></i>&nbsp;AI</a></span></div>
+      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00>
+            <i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01" >0001-01-01</time>
+          </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3430 字&nbsp;
+        <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="Tricks">
+            <i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png"
+    data-srcset="https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png, https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png 1.5x, https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png 2x"
+    data-sizes="auto"
+    alt="https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png"
+    title="https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png"/></div><div class="details toc" id="toc-static" kept="true">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-数据增强">1. 数据增强</a></li>
+        <li><a href="#2-multi-scale-trainingtesting-多尺度训练测试">2. <strong>Multi-scale Training/Testing 多尺度训练/测试</strong></a></li>
+        <li><a href="#3box-refinementvoting-预测框微调投票法">3.<strong>Box Refinement/Voting 预测框微调/投票法</strong></a></li>
+        <li><a href="#4随机权值平均swa">4.<strong>随机权值平均（SWA</strong>）</a></li>
+        <li><a href="#5-其他">5. 其他</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div
+      class="content"
+      id="content"
+      
+      
+    ><h3 id="1-数据增强">1. 数据增强</h3>
+<blockquote>
+<p>数据增强是增加深度模型鲁棒性和泛化性能的常用手段，随机翻转、随机裁剪、添加噪声等也被引入到检测任务的训练中来，个人认为数据（监督信息）的适时传入可能是更有潜力的方向。</p>
+</blockquote>
+<h4 id="1-图像增强">.1. 图像增强</h4>
+<ul>
+<li>源码在mmdet/datasets/extra_aug.py里面，包括RandomCrop、brightness、contrast、saturation、ExtraAugmentation等等图像增强方法。</li>
+<li>添加位置是train_pipeline或test_pipeline这个地方（一般train进行增强而test不需要），例如数据增强RandomFlip，flip_ratio代表随机翻转的概率：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>train_pipeline <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;LoadImageFromFile&#39;</span>),
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;LoadAnnotations&#39;</span>, with_bbox<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Resize&#39;</span>, img_scale<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1333</span>, <span style="color:#ae81ff">800</span>), keep_ratio<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;RandomFlip&#39;</span>, flip_ratio<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>),
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Normalize&#39;</span>, <span style="color:#f92672">**</span>img_norm_cfg),
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Pad&#39;</span>, size_divisor<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>),
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;DefaultFormatBundle&#39;</span>),
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Collect&#39;</span>, keys<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;img&#39;</span>, <span style="color:#e6db74">&#39;gt_bboxes&#39;</span>, <span style="color:#e6db74">&#39;gt_labels&#39;</span>]),
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>test_pipeline <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;LoadImageFromFile&#39;</span>),
+</span></span><span style="display:flex;"><span>    dict(
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;MultiScaleFlipAug&#39;</span>,
+</span></span><span style="display:flex;"><span>        img_scale<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1333</span>, <span style="color:#ae81ff">800</span>),
+</span></span><span style="display:flex;"><span>        flip<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span>        transforms<span style="color:#f92672">=</span>[
+</span></span><span style="display:flex;"><span>            dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Resize&#39;</span>, keep_ratio<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+</span></span><span style="display:flex;"><span>            dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;RandomFlip&#39;</span>),
+</span></span><span style="display:flex;"><span>            dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Normalize&#39;</span>, <span style="color:#f92672">**</span>img_norm_cfg),
+</span></span><span style="display:flex;"><span>            dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Pad&#39;</span>, size_divisor<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>),
+</span></span><span style="display:flex;"><span>            dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ImageToTensor&#39;</span>, keys<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;img&#39;</span>]),
+</span></span><span style="display:flex;"><span>            dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Collect&#39;</span>, keys<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;img&#39;</span>]),
+</span></span><span style="display:flex;"><span>        ])
+</span></span><span style="display:flex;"><span>]
+</span></span></code></pre></div><h4 id="2-bbox-增强">.2. Bbox 增强</h4>
+<ul>
+<li>源码在mmdet/datasets/custom.py里面，增强源码为：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pre_pipeline</span>(self, results):        
+</span></span><span style="display:flex;"><span>    results[<span style="color:#e6db74">&#39;img_prefix&#39;</span>] <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>img_prefix        
+</span></span><span style="display:flex;"><span>    results[<span style="color:#e6db74">&#39;seg_prefix&#39;</span>] <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>seg_prefix        
+</span></span><span style="display:flex;"><span>    results[<span style="color:#e6db74">&#39;proposal_file&#39;</span>] <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>proposal_file        
+</span></span><span style="display:flex;"><span>    results[<span style="color:#e6db74">&#39;bbox_fields&#39;</span>] <span style="color:#f92672">=</span> []        
+</span></span><span style="display:flex;"><span>    results[<span style="color:#e6db74">&#39;mask_fields&#39;</span>] <span style="color:#f92672">=</span> []
+</span></span></code></pre></div><h3 id="2-multi-scale-trainingtesting-多尺度训练测试">2. <strong>Multi-scale Training/Testing 多尺度训练/测试</strong></h3>
+<blockquote>
+<p>通过输入更大、更多尺寸的图片进行训练，能够在一定程度上提高检测模型对物体大小的鲁棒性，仅在测试阶段引入多尺度，也可享受大尺寸和多尺寸带来的增益。</p>
+<p>训练时，预先定义几个固定的尺度，每个epoch随机选择一个尺度进行训练。测试时，生成几个不同尺度的feature map，对每个Region Proposal，在不同的feature map上也有不同的尺度，我们选择最接近某一固定尺寸（即检测头部的输入尺寸）的Region Proposal作为后续的输入。</p>
+<p>在[2]中，选择单一尺度的方式被Maxout（element-wise max，逐元素取最大）取代：随机选两个相邻尺度，经过Pooling后使用Maxout进行合并，如下图所示。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210518222638.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/20210518222638.png, https://gitee.com/github-25970295/blogImage/raw/master/img/20210518222638.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/20210518222638.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/20210518222638.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/20210518222638.png"/></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>train_pipeline <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;LoadImageFromFile&#39;</span>),
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;LoadAnnotations&#39;</span>, with_bbox<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Resize&#39;</span>, img_scale<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1333</span>, <span style="color:#ae81ff">800</span>), keep_ratio<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>), <span style="color:#75715e">#这里可以更换多尺度[(),()]</span>
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;RandomFlip&#39;</span>, flip_ratio<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>),
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Normalize&#39;</span>, <span style="color:#f92672">**</span>img_norm_cfg),
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Pad&#39;</span>, size_divisor<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>),
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;DefaultFormatBundle&#39;</span>),
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Collect&#39;</span>, keys<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;img&#39;</span>, <span style="color:#e6db74">&#39;gt_bboxes&#39;</span>, <span style="color:#e6db74">&#39;gt_labels&#39;</span>]),
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>test_pipeline <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>    dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;LoadImageFromFile&#39;</span>),
+</span></span><span style="display:flex;"><span>    dict(
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;MultiScaleFlipAug&#39;</span>,
+</span></span><span style="display:flex;"><span>        img_scale<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1333</span>, <span style="color:#ae81ff">800</span>),
+</span></span><span style="display:flex;"><span>        flip<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span>        transforms<span style="color:#f92672">=</span>[
+</span></span><span style="display:flex;"><span>            dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Resize&#39;</span>, keep_ratio<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+</span></span><span style="display:flex;"><span>            dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;RandomFlip&#39;</span>),
+</span></span><span style="display:flex;"><span>            dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Normalize&#39;</span>, <span style="color:#f92672">**</span>img_norm_cfg),
+</span></span><span style="display:flex;"><span>            dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Pad&#39;</span>, size_divisor<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>),
+</span></span><span style="display:flex;"><span>            dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ImageToTensor&#39;</span>, keys<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;img&#39;</span>]),
+</span></span><span style="display:flex;"><span>            dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Collect&#39;</span>, keys<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;img&#39;</span>]),
+</span></span><span style="display:flex;"><span>        ])
+</span></span><span style="display:flex;"><span>]
+</span></span></code></pre></div><h3 id="3box-refinementvoting-预测框微调投票法">3.<strong>Box Refinement/Voting 预测框微调/投票法</strong></h3>
+<ul>
+<li>box voting 的阈值，</li>
+<li>不同的输入中<strong>这个框至少出现了几次来</strong>允许它输出，</li>
+<li>得分的阈值，一个目标框的得分低于这个阈值的时候，就删掉这个目标框。</li>
+</ul>
+<h3 id="4随机权值平均swa">4.<strong>随机权值平均（SWA</strong>）</h3>
+<p>SWA 的工作原理。它只保存两个模型，而不是许多模型的集成：</p>
+<ol>
+<li>第一个模型保存模型权值的平均值（WSWA）。在训练结束后，它将是用于预测的最终模型。</li>
+<li>第二个模型（W）将穿过权值空间，基于周期性学习率规划探索权重空间。</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/liudongdong1.github.io/svg/loading.min.svg"
+    data-src="https://gitee.com/github-25970295/blogImage/raw/master/img/20210518223011.png"
+    data-srcset="https://gitee.com/github-25970295/blogImage/raw/master/img/20210518223011.png, https://gitee.com/github-25970295/blogImage/raw/master/img/20210518223011.png 1.5x, https://gitee.com/github-25970295/blogImage/raw/master/img/20210518223011.png 2x"
+    data-sizes="auto"
+    alt="https://gitee.com/github-25970295/blogImage/raw/master/img/20210518223011.png"
+    title="https://gitee.com/github-25970295/blogImage/raw/master/img/20210518223011.png"/></p>
+<h3 id="5-其他">5. 其他</h3>
+<ul>
+<li>更好的先验（YOLOv2）：使用聚类方法统计数据中box标注的大小和长宽比，以更好的设置anchor box的生成配置</li>
+<li>更好的pre-train模型：检测模型的基础网络通常使用ImageNet（通常是ImageNet-1k）上训练好的模型进行初始化，使用更大的数据集（ImageNet-5k）预训练基础网络对精度的提升亦有帮助</li>
+<li>超参数的调整：部分工作也发现如NMS中IoU阈值的调整（从0.3到0.5）也有利于精度的提升，但这一方面尚无最佳配置参照</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># model settings</span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> dict(
+</span></span><span style="display:flex;"><span>  type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;FasterRCNN&#39;</span>,                         <span style="color:#75715e"># model类型</span>
+</span></span><span style="display:flex;"><span>    pretrained<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;modelzoo://resnet50&#39;</span>,          <span style="color:#75715e"># 预训练模型：imagenet-resnet50</span>
+</span></span><span style="display:flex;"><span>    backbone<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ResNet&#39;</span>,                         <span style="color:#75715e"># backbone类型</span>
+</span></span><span style="display:flex;"><span>        depth<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>,                              <span style="color:#75715e"># 网络层数</span>
+</span></span><span style="display:flex;"><span>        num_stages<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>,                          <span style="color:#75715e"># resnet的stage数量</span>
+</span></span><span style="display:flex;"><span>        out_indices<span style="color:#f92672">=</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>),              <span style="color:#75715e"># 输出的stage的序号</span>
+</span></span><span style="display:flex;"><span>        frozen_stages<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,                       <span style="color:#75715e"># 冻结的stage数量，即该stage不更新参数，-1表示所有的stage都更新参数</span>
+</span></span><span style="display:flex;"><span>        style<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;pytorch&#39;</span>),                      <span style="color:#75715e"># 网络风格：如果设置pytorch，则stride为2的层是conv3x3的卷积层；如果设置caffe，则stride为2的层是第一个conv1x1的卷积层</span>
+</span></span><span style="display:flex;"><span>    neck<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;FPN&#39;</span>,                            <span style="color:#75715e"># neck类型</span>
+</span></span><span style="display:flex;"><span>        in_channels<span style="color:#f92672">=</span>[<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">1024</span>, <span style="color:#ae81ff">2048</span>],    <span style="color:#75715e"># 输入的各个stage的通道数</span>
+</span></span><span style="display:flex;"><span>        out_channels<span style="color:#f92672">=</span><span style="color:#ae81ff">256</span>,                      <span style="color:#75715e"># 输出的特征层的通道数</span>
+</span></span><span style="display:flex;"><span>        num_outs<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>),                           <span style="color:#75715e"># 输出的特征层的数量</span>
+</span></span><span style="display:flex;"><span>    rpn_head<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;RPNHead&#39;</span>,                        <span style="color:#75715e"># RPN网络类型</span>
+</span></span><span style="display:flex;"><span>        in_channels<span style="color:#f92672">=</span><span style="color:#ae81ff">256</span>,                       <span style="color:#75715e"># RPN网络的输入通道数</span>
+</span></span><span style="display:flex;"><span>        feat_channels<span style="color:#f92672">=</span><span style="color:#ae81ff">256</span>,                     <span style="color:#75715e"># 特征层的通道数</span>
+</span></span><span style="display:flex;"><span>        anchor_scales<span style="color:#f92672">=</span>[<span style="color:#ae81ff">8</span>],                     <span style="color:#75715e"># 生成的anchor的baselen，baselen = sqrt(w*h)，w和h为anchor的宽和高</span>
+</span></span><span style="display:flex;"><span>        anchor_ratios<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">2.0</span>],         <span style="color:#75715e"># anchor的宽高比</span>
+</span></span><span style="display:flex;"><span>        anchor_strides<span style="color:#f92672">=</span>[<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">64</span>],     <span style="color:#75715e"># 在每个特征层上的anchor的步长（对应于原图）</span>
+</span></span><span style="display:flex;"><span>        target_means<span style="color:#f92672">=</span>[<span style="color:#ae81ff">.0</span>, <span style="color:#ae81ff">.0</span>, <span style="color:#ae81ff">.0</span>, <span style="color:#ae81ff">.0</span>],         <span style="color:#75715e"># 均值</span>
+</span></span><span style="display:flex;"><span>        target_stds<span style="color:#f92672">=</span>[<span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.0</span>],      <span style="color:#75715e"># 方差</span>
+</span></span><span style="display:flex;"><span>        use_sigmoid_cls<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),                 <span style="color:#75715e"># 是否使用sigmoid来进行分类，如果False则使用softmax来分类</span>
+</span></span><span style="display:flex;"><span>    bbox_roi_extractor<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;SingleRoIExtractor&#39;</span>,                                   <span style="color:#75715e"># RoIExtractor类型</span>
+</span></span><span style="display:flex;"><span>        roi_layer<span style="color:#f92672">=</span>dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;RoIAlign&#39;</span>, out_size<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span>, sample_num<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>),   <span style="color:#75715e"># ROI具体参数：ROI类型为ROIalign，输出尺寸为7，sample数为2</span>
+</span></span><span style="display:flex;"><span>        out_channels<span style="color:#f92672">=</span><span style="color:#ae81ff">256</span>,                                            <span style="color:#75715e"># 输出通道数</span>
+</span></span><span style="display:flex;"><span>        featmap_strides<span style="color:#f92672">=</span>[<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">32</span>]),                             <span style="color:#75715e"># 特征图的步长</span>
+</span></span><span style="display:flex;"><span>    bbox_head<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;SharedFCBBoxHead&#39;</span>,                     <span style="color:#75715e"># 全连接层类型</span>
+</span></span><span style="display:flex;"><span>        num_fcs<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,                                   <span style="color:#75715e"># 全连接层数量</span>
+</span></span><span style="display:flex;"><span>        in_channels<span style="color:#f92672">=</span><span style="color:#ae81ff">256</span>,                             <span style="color:#75715e"># 输入通道数</span>
+</span></span><span style="display:flex;"><span>        fc_out_channels<span style="color:#f92672">=</span><span style="color:#ae81ff">1024</span>,                        <span style="color:#75715e"># 输出通道数</span>
+</span></span><span style="display:flex;"><span>        roi_feat_size<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span>,                             <span style="color:#75715e"># ROI特征层尺寸</span>
+</span></span><span style="display:flex;"><span>        num_classes<span style="color:#f92672">=</span><span style="color:#ae81ff">81</span>,                              <span style="color:#75715e"># 分类器的类别数量+1，+1是因为多了一个背景的类别</span>
+</span></span><span style="display:flex;"><span>        target_means<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">0.</span>],               <span style="color:#75715e"># 均值</span>
+</span></span><span style="display:flex;"><span>        target_stds<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">0.2</span>],            <span style="color:#75715e"># 方差</span>
+</span></span><span style="display:flex;"><span>        reg_class_agnostic<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>))                   <span style="color:#75715e"># 是否采用class_agnostic的方式来预测，class_agnostic表示输出bbox时只考虑其是否为前景，后续分类的时候再根据该bbox在网络中的类别得分来分类，也就是说一个框可以对应多个类别</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># model training and testing settings</span>
+</span></span><span style="display:flex;"><span>train_cfg <span style="color:#f92672">=</span> dict(
+</span></span><span style="display:flex;"><span>    rpn<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>        assigner<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>            type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;MaxIoUAssigner&#39;</span>,            <span style="color:#75715e"># RPN网络的正负样本划分</span>
+</span></span><span style="display:flex;"><span>            pos_iou_thr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.7</span>,                  <span style="color:#75715e"># 正样本的iou阈值</span>
+</span></span><span style="display:flex;"><span>            neg_iou_thr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>,                  <span style="color:#75715e"># 负样本的iou阈值</span>
+</span></span><span style="display:flex;"><span>            min_pos_iou<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>,                  <span style="color:#75715e"># 正样本的iou最小值。如果assign给ground truth的anchors中最大的IOU低于0.3，则忽略所有的anchors，否则保留最大IOU的anchor</span>
+</span></span><span style="display:flex;"><span>            ignore_iof_thr<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>),               <span style="color:#75715e"># 忽略bbox的阈值，当ground truth中包含需要忽略的bbox时使用，-1表示不忽略</span>
+</span></span><span style="display:flex;"><span>        sampler<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>            type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;RandomSampler&#39;</span>,             <span style="color:#75715e"># 正负样本提取器类型</span>
+</span></span><span style="display:flex;"><span>            num<span style="color:#f92672">=</span><span style="color:#ae81ff">256</span>,                          <span style="color:#75715e"># 需提取的正负样本数量</span>
+</span></span><span style="display:flex;"><span>            pos_fraction<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>,                 <span style="color:#75715e"># 正样本比例</span>
+</span></span><span style="display:flex;"><span>            neg_pos_ub<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>,                    <span style="color:#75715e"># 最大负样本比例，大于该比例的负样本忽略，-1表示不忽略</span>
+</span></span><span style="display:flex;"><span>            add_gt_as_proposals<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>),       <span style="color:#75715e"># 把ground truth加入proposal作为正样本</span>
+</span></span><span style="display:flex;"><span>        allowed_border<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,                     <span style="color:#75715e"># 允许在bbox周围外扩一定的像素</span>
+</span></span><span style="display:flex;"><span>        pos_weight<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>,                        <span style="color:#75715e"># 正样本权重，-1表示不改变原始的权重</span>
+</span></span><span style="display:flex;"><span>        smoothl1_beta<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">9.0</span>,                <span style="color:#75715e"># 平滑L1系数</span>
+</span></span><span style="display:flex;"><span>        debug<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>),                         <span style="color:#75715e"># debug模式</span>
+</span></span><span style="display:flex;"><span>    rcnn<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>        assigner<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>            type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;MaxIoUAssigner&#39;</span>,            <span style="color:#75715e"># RCNN网络正负样本划分</span>
+</span></span><span style="display:flex;"><span>            pos_iou_thr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>,                  <span style="color:#75715e"># 正样本的iou阈值</span>
+</span></span><span style="display:flex;"><span>            neg_iou_thr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>,                  <span style="color:#75715e"># 负样本的iou阈值</span>
+</span></span><span style="display:flex;"><span>            min_pos_iou<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>,                  <span style="color:#75715e"># 正样本的iou最小值。如果assign给ground truth的anchors中最大的IOU低于0.3，则忽略所有的anchors，否则保留最大IOU的anchor</span>
+</span></span><span style="display:flex;"><span>            ignore_iof_thr<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>),               <span style="color:#75715e"># 忽略bbox的阈值，当ground truth中包含需要忽略的bbox时使用，-1表示不忽略</span>
+</span></span><span style="display:flex;"><span>        sampler<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>            type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;RandomSampler&#39;</span>,             <span style="color:#75715e"># 正负样本提取器类型</span>
+</span></span><span style="display:flex;"><span>            num<span style="color:#f92672">=</span><span style="color:#ae81ff">512</span>,                          <span style="color:#75715e"># 需提取的正负样本数量</span>
+</span></span><span style="display:flex;"><span>            pos_fraction<span style="color:#f92672">=</span><span style="color:#ae81ff">0.25</span>,                <span style="color:#75715e"># 正样本比例</span>
+</span></span><span style="display:flex;"><span>            neg_pos_ub<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>,                    <span style="color:#75715e"># 最大负样本比例，大于该比例的负样本忽略，-1表示不忽略</span>
+</span></span><span style="display:flex;"><span>            add_gt_as_proposals<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),        <span style="color:#75715e"># 把ground truth加入proposal作为正样本</span>
+</span></span><span style="display:flex;"><span>        pos_weight<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>,                        <span style="color:#75715e"># 正样本权重，-1表示不改变原始的权重</span>
+</span></span><span style="display:flex;"><span>        debug<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>))                         <span style="color:#75715e"># debug模式</span>
+</span></span><span style="display:flex;"><span>test_cfg <span style="color:#f92672">=</span> dict(
+</span></span><span style="display:flex;"><span>    rpn<span style="color:#f92672">=</span>dict(                                 <span style="color:#75715e"># 推断时的RPN参数</span>
+</span></span><span style="display:flex;"><span>        nms_across_levels<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,              <span style="color:#75715e"># 在所有的fpn层内做nms</span>
+</span></span><span style="display:flex;"><span>        nms_pre<span style="color:#f92672">=</span><span style="color:#ae81ff">2000</span>,                         <span style="color:#75715e"># 在nms之前保留的的得分最高的proposal数量</span>
+</span></span><span style="display:flex;"><span>        nms_post<span style="color:#f92672">=</span><span style="color:#ae81ff">2000</span>,                        <span style="color:#75715e"># 在nms之后保留的的得分最高的proposal数量</span>
+</span></span><span style="display:flex;"><span>        max_num<span style="color:#f92672">=</span><span style="color:#ae81ff">2000</span>,                         <span style="color:#75715e"># 在后处理完成之后保留的proposal数量</span>
+</span></span><span style="display:flex;"><span>        nms_thr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.7</span>,                          <span style="color:#75715e"># nms阈值</span>
+</span></span><span style="display:flex;"><span>        min_bbox_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>),                     <span style="color:#75715e"># 最小bbox尺寸</span>
+</span></span><span style="display:flex;"><span>    rcnn<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>        score_thr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.05</span>, nms<span style="color:#f92672">=</span>dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;nms&#39;</span>, iou_thr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>), max_per_img<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)   <span style="color:#75715e"># max_per_img表示最终输出的det bbox数量</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># soft-nms is also supported for rcnn testing</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># e.g., nms=dict(type=&#39;soft_nms&#39;, iou_thr=0.5, min_score=0.05)            # soft_nms参数</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># dataset settings</span>
+</span></span><span style="display:flex;"><span>dataset_type <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;CocoDataset&#39;</span>                <span style="color:#75715e"># 数据集类型</span>
+</span></span><span style="display:flex;"><span>data_root <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;data/coco/&#39;</span>                    <span style="color:#75715e"># 数据集根目录</span>
+</span></span><span style="display:flex;"><span>img_norm_cfg <span style="color:#f92672">=</span> dict(
+</span></span><span style="display:flex;"><span>    mean<span style="color:#f92672">=</span>[<span style="color:#ae81ff">123.675</span>, <span style="color:#ae81ff">116.28</span>, <span style="color:#ae81ff">103.53</span>], std<span style="color:#f92672">=</span>[<span style="color:#ae81ff">58.395</span>, <span style="color:#ae81ff">57.12</span>, <span style="color:#ae81ff">57.375</span>], to_rgb<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)   <span style="color:#75715e"># 输入图像初始化，减去均值mean并处以方差std，to_rgb表示将bgr转为rgb</span>
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> dict(
+</span></span><span style="display:flex;"><span>    imgs_per_gpu<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,                <span style="color:#75715e"># 每个gpu计算的图像数量</span>
+</span></span><span style="display:flex;"><span>    workers_per_gpu<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,             <span style="color:#75715e"># 每个gpu分配的线程数</span>
+</span></span><span style="display:flex;"><span>    train<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span>dataset_type,                                                 <span style="color:#75715e"># 数据集类型</span>
+</span></span><span style="display:flex;"><span>        ann_file<span style="color:#f92672">=</span>data_root <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;annotations/instances_train2017.json&#39;</span>,       <span style="color:#75715e"># 数据集annotation路径</span>
+</span></span><span style="display:flex;"><span>        img_prefix<span style="color:#f92672">=</span>data_root <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;train2017/&#39;</span>,                               <span style="color:#75715e"># 数据集的图片路径</span>
+</span></span><span style="display:flex;"><span>        img_scale<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1333</span>, <span style="color:#ae81ff">800</span>),                                             <span style="color:#75715e"># 输入图像尺寸，最大边1333，最小边800</span>
+</span></span><span style="display:flex;"><span>        img_norm_cfg<span style="color:#f92672">=</span>img_norm_cfg,                                         <span style="color:#75715e"># 图像初始化参数</span>
+</span></span><span style="display:flex;"><span>        size_divisor<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>,                                                   <span style="color:#75715e"># 对图像进行resize时的最小单位，32表示所有的图像都会被resize成32的倍数</span>
+</span></span><span style="display:flex;"><span>        flip_ratio<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>,                                                    <span style="color:#75715e"># 图像的随机左右翻转的概率</span>
+</span></span><span style="display:flex;"><span>        with_mask<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,                                                   <span style="color:#75715e"># 训练时附带mask</span>
+</span></span><span style="display:flex;"><span>        with_crowd<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,                                                   <span style="color:#75715e"># 训练时附带difficult的样本</span>
+</span></span><span style="display:flex;"><span>        with_label<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),                                                  <span style="color:#75715e"># 训练时附带label</span>
+</span></span><span style="display:flex;"><span>    val<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span>dataset_type,                                                 <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        ann_file<span style="color:#f92672">=</span>data_root <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;annotations/instances_val2017.json&#39;</span>,         <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        img_prefix<span style="color:#f92672">=</span>data_root <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;val2017/&#39;</span>,                                 <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        img_scale<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1333</span>, <span style="color:#ae81ff">800</span>),                                             <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        img_norm_cfg<span style="color:#f92672">=</span>img_norm_cfg,                                         <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        size_divisor<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>,                                                   <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        flip_ratio<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,                                                      <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        with_mask<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,                                                   <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        with_crowd<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,                                                   <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        with_label<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),                                                  <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>    test<span style="color:#f92672">=</span>dict(
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span>dataset_type,                                                 <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        ann_file<span style="color:#f92672">=</span>data_root <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;annotations/instances_val2017.json&#39;</span>,         <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        img_prefix<span style="color:#f92672">=</span>data_root <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;val2017/&#39;</span>,                                 <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        img_scale<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1333</span>, <span style="color:#ae81ff">800</span>),                                             <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        img_norm_cfg<span style="color:#f92672">=</span>img_norm_cfg,                                         <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        size_divisor<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>,                                                   <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        flip_ratio<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,                                                      <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        with_mask<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,                                                   <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        with_label<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,                                                  <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span>        test_mode<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>))                                                   <span style="color:#75715e"># 同上</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># optimizer</span>
+</span></span><span style="display:flex;"><span>optimizer <span style="color:#f92672">=</span> dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;SGD&#39;</span>, lr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.02</span>, momentum<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9</span>, weight_decay<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0001</span>)   <span style="color:#75715e"># 优化参数，lr为学习率，momentum为动量因子，weight_decay为权重衰减因子</span>
+</span></span><span style="display:flex;"><span>optimizer_config <span style="color:#f92672">=</span> dict(grad_clip<span style="color:#f92672">=</span>dict(max_norm<span style="color:#f92672">=</span><span style="color:#ae81ff">35</span>, norm_type<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>))          <span style="color:#75715e"># 梯度均衡参数</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># learning policy</span>
+</span></span><span style="display:flex;"><span>lr_config <span style="color:#f92672">=</span> dict(
+</span></span><span style="display:flex;"><span>    policy<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;step&#39;</span>,                        <span style="color:#75715e"># 优化策略</span>
+</span></span><span style="display:flex;"><span>    warmup<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;linear&#39;</span>,                      <span style="color:#75715e"># 初始的学习率增加的策略，linear为线性增加</span>
+</span></span><span style="display:flex;"><span>    warmup_iters<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>,                     <span style="color:#75715e"># 在初始的500次迭代中学习率逐渐增加</span>
+</span></span><span style="display:flex;"><span>    warmup_ratio<span style="color:#f92672">=</span><span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span>,                 <span style="color:#75715e"># 起始的学习率</span>
+</span></span><span style="display:flex;"><span>    step<span style="color:#f92672">=</span>[<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">11</span>])                         <span style="color:#75715e"># 在第8和11个epoch时降低学习率</span>
+</span></span><span style="display:flex;"><span>checkpoint_config <span style="color:#f92672">=</span> dict(interval<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)      <span style="color:#75715e"># 每1个epoch存储一次模型</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># yapf:disable</span>
+</span></span><span style="display:flex;"><span>log_config <span style="color:#f92672">=</span> dict(
+</span></span><span style="display:flex;"><span>    interval<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>,                          <span style="color:#75715e"># 每50个batch输出一次信息</span>
+</span></span><span style="display:flex;"><span>    hooks<span style="color:#f92672">=</span>[
+</span></span><span style="display:flex;"><span>        dict(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;TextLoggerHook&#39;</span>),      <span style="color:#75715e"># 控制台输出信息的风格</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># dict(type=&#39;TensorboardLoggerHook&#39;)</span>
+</span></span><span style="display:flex;"><span>    ])
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># yapf:enable</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># runtime settings</span>
+</span></span><span style="display:flex;"><span>total_epochs <span style="color:#f92672">=</span> <span style="color:#ae81ff">12</span>                               <span style="color:#75715e"># 最大epoch数</span>
+</span></span><span style="display:flex;"><span>dist_params <span style="color:#f92672">=</span> dict(backend<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;nccl&#39;</span>)              <span style="color:#75715e"># 分布式参数</span>
+</span></span><span style="display:flex;"><span>log_level <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;INFO&#39;</span>                              <span style="color:#75715e"># 输出信息的完整度级别</span>
+</span></span><span style="display:flex;"><span>work_dir <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;./work_dirs/faster_rcnn_r50_fpn_1x&#39;</span> <span style="color:#75715e"># log文件和模型文件存储路径</span>
+</span></span><span style="display:flex;"><span>load_from <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>                                <span style="color:#75715e"># 加载模型的路径，None表示从预训练模型加载</span>
+</span></span><span style="display:flex;"><span>resume_from <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>                              <span style="color:#75715e"># 恢复训练模型的路径</span>
+</span></span><span style="display:flex;"><span>workflow <span style="color:#f92672">=</span> [(<span style="color:#e6db74">&#39;train&#39;</span>, <span style="color:#ae81ff">1</span>)]                       <span style="color:#75715e"># 当前工作区名称</span>
+</span></span></code></pre></div><ul>
+<li>学习链接：https://mp.weixin.qq.com/s/W2_AK8p-CX2yNHxbJo77Kg</li>
+</ul>
+</div>
+<div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-09-28&#32;23:13:21>更新于 2023-09-28&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="liudongdong1.github.io/tricks/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://liudongdong1.github.io/edit/master/content/posts%5c%e8%a7%86%e8%a7%89%e8%bf%90%e5%8a%a8%5cObjectTracking%5cTricks.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="liudongdong1.github.io/tricks/" data-title="Tricks" data-hashtags="CV"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="liudongdong1.github.io/tricks/" data-hashtag="CV"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="liudongdong1.github.io/tricks/" data-title="Tricks" data-image="https://cdn.pixabay.com/photo/2021/04/27/13/32/birds-6211541__340.png"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="liudongdong1.github.io/tags/cv/">CV</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="liudongdong1.github.io/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="liudongdong1.github.io/uboot-%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" class="prev" rel="prev" title="uboot启动流程"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>uboot启动流程</a>
+      <a href="liudongdong1.github.io/transaction/" class="next" rel="next" title="Transaction">Transaction<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.17-RC"><img class="fixit-icon" src="/liudongdong1.github.io/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://liudongdong1.github.io/"target="_blank" rel="external nofollow noopener noreferrer">LiuDongdong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div><div class="footer-line ibruce">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><a href="https://liudongdong1.github.io/" title="在 GitHub 上查看源代码"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #0076ff;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/liudongdong1.github.io/lib/katex/katex.min.css"><link rel="stylesheet" href="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.css"><script src="/liudongdong1.github.io/lib/autocomplete/autocomplete.min.js" defer></script><script src="/liudongdong1.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/liudongdong1.github.io/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/liudongdong1.github.io/lib/sharer/sharer.min.js" async defer></script><script src="/liudongdong1.github.io/lib/typeit/index.umd.js" defer></script><script src="/liudongdong1.github.io/lib/katex/katex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/auto-render.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/copy-tex.min.js" defer></script><script src="/liudongdong1.github.io/lib/katex/mhchem.min.js" defer></script><script src="/liudongdong1.github.io/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/liudongdong1.github.io/lib/pangu/pangu.min.js" defer></script><script src="/liudongdong1.github.io/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e","typeit-header-subtitle-mobile":"\u003cspan style='font-family: MMT,\"沐目体\";'\u003e吾日三省吾身\u003c/span\u003e"},"enablePWA":true,"enablePangu":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"2R1K9SKLQZ","algoliaIndex":"index.zh-cn","algoliaSearchKey":"4a226aa1c5c98d6859e4d1386adb2bc7","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2020-12-18T16:15:22+08:00","typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"\u003cimg class=\"fixit-icon\" src=\"/fixit.min.svg\" alt=\"FixIt logo\" /\u003e FixIt 主题","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/liudongdong1.github.io/js/theme.min.js" defer></script><script src="/liudongdong1.github.io/js/custom.min.js" defer></script></body>
+</html>
