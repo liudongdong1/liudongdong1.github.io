@@ -250,7 +250,7 @@ Figure \ref{Fig.main} has two sub-figures, fig. \ref{Fig.main}\ref{Fig.sub.1} is
 
 > 可以使用 `graphbox` 宏包。它给 `\includegraphics[]{}` 增加了几个选项，其中就有控制纵向对齐的 `align=t|c|b` 选项。
 
-```latex
+<!-- ```latex
 \documentclass{article}
 %\usepackage{graphicx}
 \usepackage{graphbox} % loads graphicx
@@ -268,7 +268,7 @@ Figure \ref{Fig.main} has two sub-figures, fig. \ref{Fig.main}\ref{Fig.sub.1} is
 \test{align=t}
 \test{align=c}
 \end{document}
-```
+``` -->
 
 > 在`minipage`内容的最前面加上 `\vspace{0pt}` 这样，`\vspace{0pt}` 就是 `minipage`内容的第一行，他们是零高度，图片自然就顶部对齐了。
 
