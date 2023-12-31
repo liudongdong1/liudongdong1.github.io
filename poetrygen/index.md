@@ -27,13 +27,13 @@
 - **Recurrent Context Model (RCM)**：`句子级别的RNN`，根据历史生成句子的向量，输出下一个要生成句子的Context向量。
 - **Recurrent Generation Model (RGM)**：`字符级别RNN`，根据RCM输出的Context向量和该句之前已经生成的字符，输出下一个字符的概率分布。解码的时候根据RGM模型输出的概率和语言模型概率加权以后，生成下一句诗歌，由人工规则保证押韵。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523103709542.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523103709542.png)
 
 ##### .3. Attention-base model
 
 > 模型[3]是`基于attention的encoder-decoder框架`，将`历史已经生成的内容作为源语言`，将下一句话作为目标语言进行翻译。需要用户提供第一句话，然后由第一句生成第二句，第一，二句生成第三句，并不断重复这个过程，直到生成完整诗歌。基于Attention机制配合LSTM，可以学习更长的诗歌，同时在一定程度上，可以保证前后语义的连贯性。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523103833003.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523103833003.png)
 
 ##### .4. Planning based Neural Network PG
 
@@ -42,9 +42,9 @@
 > - **规划模型**：将代表用户写作意图的Query作为输入，生成一个写作大纲。`写作大纲是一个由主题词组成的序列`，第i个主题词代表第i句的主题。
 > - **生成模型**：基于encoder-decoder框架。有两个encoder,`其中一个encoder将主题词作为输入`，`另外一个encoder将历史生成的句子拼在一起作为输入`，`由decoder生成下一句话`。decoder生成的时候，利用Attention机制，对主题词和历史生成内容的向量一起做打分，由模型来决定生成的过程中各部分的重要性。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523104102116.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523104102116.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523104130020.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523104130020.png)
 
 ##### .5. RNN with Iterative Polishing Shema
 
@@ -53,19 +53,19 @@
 > - **句子级别RNN**：输入句子向量表示，`输出下一个句子的Context向量`。
 > - **字符级别RNN**：`输入Context向量和历史生成字符`，输出`下一个字符的概率分布`。当一句生成结束的时候，字符级别RNN的最后一个向量，作为表示这个句子的向量，送给句子级别RNN。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523104417394.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523104417394.png)
 
 ##### .6. Generating Topical Poetry
 
 > 模型[6]基于encoder-decoder框架，分为两步。先根据`用户输入的关键词得到每句话的最后一个词`，这些词都押韵且与用户输入相关。`再将这些押韵词作为一个序列，送给encoder,由decoder生成整个诗歌`。这种机制一方面保证了押韵，另外一方面，和之前提到的规划模型类似，在一定程度上避免了主题漂移问题。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523104620302.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523104620302.png)
 
 ##### .7. SeqGAN
 
 > 模型[7]将图像中的`对抗生成网络`，用到文本生成上。`生成网络是一个RNN，直接生成整首诗歌`。而`判别网络是一个CNN。用于判断这首诗歌是人写的`，还是机器生成的，并通过强化学习的方式，将梯度回传给生成网络。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523104730231.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523104730231.png)
 
 ##### .8. [GPT2-Chinese**](https://github.com/Morizeyao/GPT2-Chinese)
 

@@ -260,15 +260,15 @@ private void change(java.lang.String, java.lang.String[]);
 
 这里main方法的字节码内容可以忽略，主要看这个change方法，下面用图来表示。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1)
 
 这是刚进入这个方法的情况，这时候还没有执行方法的内容，局部变量表存了三个值，第一个是this指代这个类，在普通方法内之所以可以拿到外部的全局变量就是因为方法内部的局部变量表的第一个就是类的this，当获取外部变量时，先将这个this入栈`aload_0`，然后就可以获取到这个类所有的成员变量（也就是外部全局变量）了。 因为这个方法传进来了两个值，这里局部变量表存储的是这两个对象的引用，也就是在堆上的内存地址。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274398099532)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1-16274398099532)
 
 上面执行了`str = "newStrEdit";`这条语句，先ldc指令创建了newStrEdit（0xaaa）字符串入栈，然后`astore_1`指令将栈顶的值保存再局部变量1中，覆盖了原来的地址，所以这里对局部变量表的修改完全没有影响外面的值。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274399820714)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1-16274399820714)
 
 上面执行`array[0] = "newArrar1Edit";`这条语句，将array的地址入栈，再将要修改的数组下标0入栈，最后创建newArray1Edit字符串入栈。最后调用`aastore`指令将栈顶的引用型数值（newArray1Edit）、数组下标（0）、数组引用（0xfff）依次出栈，最后将数值存入对应的数组元素中，这里可以看到对这个数组的操作一直都是这个0xfff地址，这个地址和外面的array指向的是同一个数组对象，所以这里修改了，外界的那个array也就同样修改了内容。
 
@@ -400,9 +400,9 @@ args = [starttry]
 
 如果是ide的话，应该都可以，通过``Setting->Tools->External Tools进入 然后创建一个自定义的tools。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400287786)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1-16274400287786)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1-16274400346418)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1-16274400346418)
 
 ### Resource
 

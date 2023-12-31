@@ -42,7 +42,7 @@ previous work:
 
 - **system overview**:
 
-![Dilated conv](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211017154840462.png)
+![Dilated conv](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211017154840462.png)
 
 (a) 普通卷积，1-dilated convolution，卷积核的感受野为3×3
 
@@ -50,13 +50,13 @@ previous work:
 
 (c) 扩张卷积，4-dilated convolution，卷积核的感受野为15×15
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211017152143221.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211017152143221.png)
 
 - (a):  regular sampling grid(green points) of stardard convolution
 - (b): deformed sampling locations (dark blue points) with augmented offsets (light blue arraws) in deformable convolution.
 - (c)(d): deformable convolution generalizes various transformations for scale, aspect ratio and rotation.
 
-![Deformable Convolution](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211017152518659.png)
+![Deformable Convolution](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211017152518659.png)
 
 ```python
 res5a_branch2a_relu = mx.symbol.Activation(name='res5a_branch2a_relu', data=scale5a_branch2a, act_type='relu')
@@ -67,7 +67,7 @@ res5a_branch2b = mx.contrib.symbol.DeformableConvolution(name='res5a_branch2b', 
                                                          stride=(1, 1), dilate=(2, 2), no_bias=True)
 ```
 
-![Deformable RoI pooling](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211017152930371.png)
+![Deformable RoI pooling](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211017152930371.png)
 
 ```python
 def get_deformable_roipooling(self, name, data, rois, output_dim, spatial_scale, param_name, group_size=1, pooled_size=7,
@@ -89,7 +89,7 @@ def get_deformable_roipooling(self, name, data, rois, output_dim, spatial_scale,
 - `sampling using a regular grid R over the input feature map x;` the grid R defines the receptive field size and dilation.
 - `summation of sampled values weighted by w.`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211017153049167.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211017153049167.png)
 
 
 ---

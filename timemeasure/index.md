@@ -1,7 +1,7 @@
 # TimeMeasure
 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1734b1eef8bd5f34tplv-t2oaga2asx-watermark.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1734b1eef8bd5f34tplv-t2oaga2asx-watermark.awebp)
 
 #### 1. System.currentTimeMillis
 

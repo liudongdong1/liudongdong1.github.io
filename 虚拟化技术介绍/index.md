@@ -8,7 +8,7 @@
 
 > 在 ESXi 中，所有虚拟化功能都在内核实现。Xen 内核仅实现 CPU 与内存虚拟化， IO 虚拟化与调度管理由 Domain0（主机上启动的第一个管理 VM）实现。KVM 内核实现 CPU 与内存虚拟化，QEMU 实现 IO 虚拟化，通过 Linux 进程调度器实现 VM 管理。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203132014.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503203132014.png)
 
 ### 1. 虚拟化类型
 
@@ -18,13 +18,13 @@
 
 `Hypervisor` 直接安装在物理机上，多个虚拟机在 `Hypervisor` 上运行。`Hypervisor` 实现方式一般是一个特殊定制的 `Linux` 系统。`Xen` 和 `VMWare` 的 `ESXi` 都属于这个类型。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503155756205.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503155756205.png)
 
 #### .2. 2 型虚拟化
 
 物理机上首先安装常规的操作系统，比如 `Redhat`、`Ubuntu` 和 `Windows`。`Hypervisor` 作为 OS 上的一个`程序`模块运行，并对管理虚拟机进行管理。`KVM`、`VirtualBox` 和 `VMWare Workstation` 都属于这个类型。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/2.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/2.png)
 
 > - aws : Amazon Web Services
 > - docker : This is a Docker container.
@@ -40,7 +40,7 @@
 > - xen The guest appears to be running on Xen hypervisor.
 > - xen-hvm : This is a Xen guest fully virtualized (HVM).
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503210104119.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503210104119.png)
 
 ### 2. 硬件虚拟化
 
@@ -48,11 +48,11 @@
 
 物理服务器上通常配置 2 个物理 pCPU（Socket），每个 CPU 有多个核（core）；开启超线程 Hyper-Threading 技术后，每个 core 有 2 个线程（Thread）；在虚拟化环境中一个 Thread 对应一个 vCPU。在 KVM 中每一个 VM 就是一个用户空间的 QEMU 进程，分配给 Guest 的 vCPU 就是该进程派生的一个线程 Thread，由 Linux 内核动态调度到基于时分复用的物理 pCPU 上运行。KVM 支持设置 CPU 亲和性，将 vCPU 绑定到特定物理 pCPU，如通过 libvirt 驱动指定从 NUMA 节点为 Guest 分配 vCPU 与内存。KVM 支持 vCPU 超分（over-commit）使得分配给 Guest 的 vCPU 数量超过物理 CPU 线程总量。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-8d1b327ffe85af1d10dd8b4b42960345_720w.jpg)
 
 > KVM 是依赖于硬件辅助的全虚拟化（如 Inter-VT、AMD-V），目前也通过 virtio 驱动实现半虚拟化以提升性能。Inter-VT 引入新的执行模式：VMM 运行在 VMX Root 模式， GuestOS 运行在 VMX Non-root 模式，执行特权指令时两种模式可以切换。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203426483.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503203426483.png)
 
 
 
@@ -70,7 +70,7 @@
 
 ##### 1. EPT&VPID
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503203614913.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503203614913.png)
 
 内存虚拟化就是要将 GVA 转化为最终能够访问的 HPA。在没有硬件提供的内存虚拟化之前，系统通过**影子页表（**Shadow Page Table) 完成这一转化。内存的访问和更新通常是非常频繁的，要维护影子页表中对应关系会非常复杂，开销也较大。同时需要为每一个客户机都维护一份影子页表，当客户机数量较多时，其影子页表占用的内存较大也会是一个问题。
 
@@ -102,7 +102,7 @@ x86 CPU 默认使用 4KB 的内存页面，目前已经支持 2MB，1GB 的内�
 
 （4）**设备共享分配**：其实是设备直接分配方式的一个扩展。在这种模式下，一个（具有特定特性的）物理设备可以支持多个虚拟机功能接口，可以将虚拟功能接口独立地分配给不同的客户机使用。如 SR-IOV 就是这种方式的一个标准协议。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503204219179.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503204219179.png)
 
 ### 3. KVM 概述
 
@@ -114,7 +114,7 @@ x86 CPU 默认使用 4KB 的内存页面，目前已经支持 2MB，1GB 的内�
 
 KVM 是在硬件虚拟化支持下的**完全虚拟化技术**，所以它能支持在**相应硬件**上能运行的几乎所有的操作系统，x86 下如：Linux、Windows、FreeBSD、MacOS 等。KVM 的基础架构如图所示。在 KVM 虚拟化架构下，**每个客户机就是一个 QEMU 进程**，在一个宿主机上有多少个虚拟机就会有多少 QEMU 进程；客户机中的每一个虚拟 CPU 对应 QEMU 进程中的一个执行线程；一个宿主机中只有一个 KVM 内核模块，所有客户机都与这个内核模块进行交互。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503202834999.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503202834999.png)
 
 ### Resource
 

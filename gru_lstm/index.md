@@ -3,21 +3,21 @@
 
 ## 0. [RNN](https://pytorch.org/docs/stable/generated/torch.nn.RNN.html?highlight=rnn#torch.nn.RNN)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210601233048262.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210601233048262.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210601233227000.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210601233227000.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210601233315122.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210601233315122.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210601233342773.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210601233342773.png)
 
 ### .2. conditional RNN
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210601234205991.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210601234205991.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210601232942714.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210601232942714.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715152425359.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715152425359.png)
 $$
 h_t=f(x_t,h_{t-1})\\
 h_t:=tanh(W_{xh}x_t+W_{hh}h_{t-1})
@@ -25,17 +25,17 @@ $$
 
 - 计算目标：反向传播时，损失函数$l$ 对$t$ 时刻隐含状态向量$h_t$的偏导。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715153026772.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715153026772.png)
 
-![奇异值分解](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715153116147.png)
+![奇异值分解](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715153116147.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20200715153213869.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715153213869.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715152805715.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715152805715.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715153248257.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715153248257.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715153319948.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715153319948.png)
 
 ## 1. GRU
 
@@ -43,18 +43,18 @@ $$
 
 【输入输出结构】
 
-![GRU 输入输出结构](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715150335901.png)
+![GRU 输入输出结构](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715150335901.png)
 
 【内部结构】
 
 - r： 控制重置门控；
 -  z： 为控制更新门控；门控信号越接近1，代表”记忆“下来的数据越多；而越接近0则代表”遗忘“的越多。
 
-![r、z门控](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715150451699.png)
+![r、z门控](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715150451699.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715150732447.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715150732447.png)
 
-![GRU内部结构图](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715150823373.png)
+![GRU内部结构图](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715150823373.png)
 
 【更新表达式】
 $$
@@ -69,11 +69,11 @@ $$
 
 > *CLASS*`torch.nn.``GRU`(**args*, ***kwargs*)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210601232328315.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210601232328315.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210601232437633.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210601232437633.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210601232131136.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210601232131136.png)
 
 ```python
 >>> rnn = nn.GRU(10, 20, 2)
@@ -82,15 +82,15 @@ $$
 >>> output, hn = rnn(input, h0)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210601232030199.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210601232030199.png)
 
 学习于：https://zhuanlan.zhihu.com/p/32481747
 
 ## 2. LSTM
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715152100266.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715152100266.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210601111032053.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210601111032053.png)
 
 > *CLASS*`torch.nn.``LSTM`(**args*, ***kwargs*)
 >
@@ -131,9 +131,9 @@ $$
 
 1.  first distribute training of LSTM RNNs using asynchronous stochastic gradient descent optimization on a large cluster of machine.
 2.  <font color=red>speech database TIMIT</font>   ，and the test it on a large vocabulary speech recognition task Google Voice Search Task.
-3.  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191107175908610.png)
-4.  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191107175932338.png)
-5.  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191107180015999.png)
+3.  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191107175908610.png)
+4.  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191107175932338.png)
+5.  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191107180015999.png)
 6.  <font color="red">how to calculate the total number of parameters and the computational complexity with a moderate number of inputs.</font>
 7.  <font color=red>Eigen matrix library</font> c++ 矩阵计算库
 
@@ -145,7 +145,7 @@ $$
 2. take advantage of the complementarity of CNNs,LSTMs,DNNs by combining them into one unified architecture,and proposed architecture CLDNN on a variety of large vocabulary tasks.[LVCSR]
 3. previous paper train the three models separately and then the ouput were combined through a combination layer.In this we train in a unified structure.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191107164140509.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191107164140509.png)
 
 ### Paper《Improved Semantic Representations from Tree-Structured LSTM》
 
@@ -164,22 +164,22 @@ $$
 
 5. Datastructure:
 
-   ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191107170547474.png)
+   ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191107170547474.png)
 
-   ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191107175047377.png)
+   ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191107175047377.png)
 
-   ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191107175004057.png)
+   ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191107175004057.png)
 
-   ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191107175029530.png)
+   ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191107175029530.png)
 
-   ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191107175216506.png)
+   ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191107175216506.png)
 
-   ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191107175316285.png)
+   ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191107175316285.png)
 
    
 
    1. different from LSTM is that gating vectors and memory cell updates are dependent on the states of possibly many child units. Tree-LSTM unit contains one forget gate Fjk for each child k. to selective incorporate information from each child.
-   2. <font color=red>Classification model:</font>![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191107181300853.png)
+   2. <font color=red>Classification model:</font>![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191107181300853.png)
    3. <font color=red>Semantic Relatedness of Sentence Pairs</font> : given a sentence pair,predict a real-valued similarity score in some range.
 
 
@@ -194,21 +194,21 @@ $$
 
 #### Chart&Analyse:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566270826264.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566270826264.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566296477248.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566296477248.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566296655723.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566296655723.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566296724323.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566296724323.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566296763577.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566296763577.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566296840233.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566296840233.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566296878693.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566296878693.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566296938089.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566296938089.png)
 
 #### Code:
 
@@ -225,19 +225,19 @@ $$
 
 #### Chart&Analyse:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566298936435.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566298936435.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566298989314.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566298989314.png)
 
 Ft表示遗忘门限，It表示输入门限， ̃Ct表示前一时刻cell状态、Ct表示cell状态（这里就是循环发生的地方），Ot表示输出门限，Ht表示当前单元的输出，Ht-1表示前一时刻单元的输出
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566298945343.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566298945343.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566298976892.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566298976892.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566299008061.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566299008061.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566299037440.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566299037440.png)
 
 
 

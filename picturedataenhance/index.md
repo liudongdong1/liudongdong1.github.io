@@ -22,7 +22,7 @@ class Resize(object):
 
 ### 2. Clip
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200814102802185.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200814102802185.png)
 
 ```python
 class Clip(object):
@@ -42,7 +42,7 @@ class Clip(object):
 
 ### 3. Normalize or Standardize
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200814102952673.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200814102952673.png)
 
 ```python
 class Normalize(object):
@@ -162,13 +162,13 @@ class Sharpen(object):
 
 > 本质上，它是一种[数据平滑技术](http://en.wikipedia.org/wiki/Smoothing)（data smoothing）；所谓"模糊"，可以理解成每一个像素都取周边像素的平均值。图像都是连续的，越靠近的点关系越密切，越远离的点关系越疏远。因此，加权平均更合理，距离越近的点权重越大，距离越远的点权重越小。权重的分配使用高斯模型；
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027094643798.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027094643798.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027094436977.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027094436977.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027094542433.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027094542433.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027094506667.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027094506667.png)
 
 ```python
 class GaussianBlur(object):

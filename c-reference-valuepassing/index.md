@@ -62,7 +62,7 @@ public class Process{
 
 ## 4. JVM
 
-![JVM](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200513220321548.png)
+![JVM](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200513220321548.png)
 
 1. 程序计数器: 存储每个线程下一步将执行的JVM指令。
 2. JVM栈(JVM Stack): JVM栈是线程私有的，每个线程创建的同时都会创建JVM栈，JVM栈中存放的为当前线程中局部基本类型的变量（java中定义的八种基本类型：boolean、char、byte、short、int、long、float、double）、部分的返回结果以及Stack Frame(每个方法都会开辟一个自己的栈帧)，<font color=red>非基本类型的对象在JVM栈上仅存放一个指向堆上的地址</font>
@@ -73,7 +73,7 @@ public class Process{
 
 JVM是基于栈来操作的，每一个线程有自己的操作栈，遇到方法调用时会开辟栈帧，它含有自己的返回值，局部变量表，操作栈，以及对常量池的符号引用。 如果是基本类型，则存放在栈里的是值，如果是对象，存放在栈上是对象在堆上存放的地址。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200513220653291.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200513220653291.png)
 
 ---
 

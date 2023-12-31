@@ -99,35 +99,35 @@ previous work:
 
 - **Problem Formulation**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223092845392.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223092845392.png)
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223092906125.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223092906125.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223093357368.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223093357368.png)
 
 **CTC_Loss**: 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223093649877.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223093649877.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223093518165.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223093518165.png)
 
 **LSTM_Loss**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223093740963.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223093740963.png)
 
 ![image-20191223093756890](../../../../MEGA/MEGAsync/actionPrediction/ActionPrediction.assets/image-20191223093756890.png)
 
 **The Whole NetworkLoss**:
 
-![image-20191223093851361](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223093851361.png)
+![image-20191223093851361](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223093851361.png)
 
 ![image-20191223093859610](../../../../MEGA/MEGAsync/actionPrediction/ActionPrediction.assets/image-20191223093859610.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223093025875.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223093025875.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223093947114.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223093947114.png)
 
 #### Evaluation
 
@@ -135,17 +135,17 @@ previous work:
   - Dataset: 
     - RWTH-PHOENIX-Weather multi-signer [25] for German SLR
     - CSL [23] for Chinese SLR
-- **Evaluate Methods**: ![image-20191223094117184](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223094117184.png)
+- **Evaluate Methods**: ![image-20191223094117184](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223094117184.png)
 - The window size is set to be 8 with a stride of 4,the 3D-ResNet is pre-trained on an isolated sign language recognition dataset released in [43]
 - **Performance**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223094423096.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223094423096.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223094431353.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223094431353.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223094443353.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223094443353.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223094507331.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223094507331.png)
 
 #### Conclusion
 
@@ -223,17 +223,17 @@ previous work:
 - RGB camera-based: <font color=red> poor lighting conditions or generally uncontrolled backgrounds, privacy </font>
 - Kinect-based: hard to capture the hand shape information
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191224090129594.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191224090129594.png)
 
-- Leap Motion is able to extract skeleton joints of the fingers, palms and forearms from the raw infrared images.![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191224090111350.png)
+- Leap Motion is able to extract skeleton joints of the fingers, palms and forearms from the raw infrared images.![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191224090111350.png)
 
 #### Methods
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191224084552045.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191224084552045.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191224090211496.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191224090211496.png)
 
 1.  a temporal sequence of 3D coordinates of the skeleton joints of !ngers, palms and forearms
 2.  the key characteristics of ASL signs including hand shape, hand movement and relative location of two hands    spatio-temporal trajectories of ASL characteristics
@@ -244,16 +244,16 @@ previous work:
 
 - Savitzky-Golay flter [37] to improve the signal to noise ratio of the raw skeleton joints data
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191224090953165.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191224090953165.png)
 
-- extract hand shape: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191224092151069.png)
-- hand movement information:![image-20191224092217948](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191224092217948.png)
+- extract hand shape: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191224092151069.png)
+- hand movement information:![image-20191224092217948](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191224092217948.png)
 
 **【Word-Level ASL Translation】**： translation errors when different signs share very similar characteristics at the beginning of the signs
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191224092513888.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191224092513888.png)
 
-- Hierarchical Bidirectional RNN for Single-Sign Modeling:![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191224092932396.png)
+- Hierarchical Bidirectional RNN for Single-Sign Modeling:![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191224092932396.png)
 
 **【Sentence level Translation】** using CTC network
 
@@ -298,27 +298,27 @@ previous work:
 
 【Qustion 1】 the scales of human skelons vary largely depending on their location and actions
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422104952789.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422104952789.png)
 $$
 f_t^i=f_t^g+f_t^{l,i};f^g=(x^g,y^g,w,h),f^{l,i}=(x^{l,i},y^{l,i})
 $$
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422105234027.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422105234027.png)
 
 【qustion 2】how to fuse local and global features
 
 - propose MPED-RNN models, consisting two recurrent encoder-decoder network branches, each of them dedicated to one of the components, each branch of them has the single-encoder-dual-decoder architecture with three RNNS: Encoder,Reconstructing Decoder and Predicting Decoder.
 - use Gated Recurrnet Units in every segment of MPED_RNN for its simplicity and similar performance to LSTM
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422105321588.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422105321588.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422105656331.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422105656331.png)
 
 【qurestion 3】 how to detect video anomalies?
 
 1. **Extract segments**: select the overlapping skeleton segments by using sliding window of size T and stride s on the trajectory
 2. **Estimate segment losses**: decompose the segment to two sub-component, feed all segment features to the traind MPED-RNN, output the normality loss
-3. **Gather skeleton anomaly score**:  the measure the conformity of a sequence to the model given both the past and future context, using voting scheme to gather the losses of related segments into an anomaly score of each skeleton instance:![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422111136464.png)
-4. Calculate frame anomaly score: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422111221056.png)
+3. **Gather skeleton anomaly score**:  the measure the conformity of a sequence to the model given both the past and future context, using voting scheme to gather the losses of related segments into an anomaly score of each skeleton instance:![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422111136464.png)
+4. Calculate frame anomaly score: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422111221056.png)
 
 #### Evaluation
 
@@ -373,20 +373,20 @@ $$
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422150129902.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422150129902.png)
 
 【Qustion 1】less annotation learning
 
 - only video-level labels indicating the presence of an anomaly in the whole video is needed. A video containing anomalies is labeled as positive and a video without any anomaly is labeled as negative.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422150330960.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422150330960.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422150529485.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422150529485.png)
 
 【qustion 2】 how to detect anomaly activities without much precise annotation?
 
 - Deep MIL Ranking model:  the scores of instances in the anomalous bag should be sparse,    the anomaly score should vary smoothly between video segments.
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422150817733.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422150817733.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -426,7 +426,7 @@ $$
 
 - action prediction mainly lies in the lack of discriminative action information for the partially observed videos. partially observed videos often contain incomplete action executions thus have less action information than the fully observed ones.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202141323929.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202141323929.png)
 
 - the existing action recognition systems can be directly used for action prediction by treating partial videos as full videos.
 
@@ -445,7 +445,7 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202143008477.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202143008477.png)
 
 [**Question one**] how to Learn Action Knowledge from Full Videos
 
@@ -458,19 +458,19 @@ $$
 
 To encourage large distances between embeddings from different classes:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202143440633.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202143440633.png)
 
 [**Qustion Two**] Transferring Action Knowledge to Partial Videos
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202143637577.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202143637577.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202143706194.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202143706194.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202143144128.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202143144128.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202143845522.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202143845522.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202143753309.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202143753309.png)
 
 #### Conclusion
 
@@ -548,33 +548,33 @@ previous work:
 
 - **Problem Formulation**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202132446815.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202132446815.png)
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202134658266.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202134658266.png)
 
 【Qustion 1】how to construct hierarchy construction?
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202132617020.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202132617020.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202134937117.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202134937117.png)
 
 【Qustion 2】Model formulation
 
 define X : person example     $Y={y_i}_{i=1}^L$   ,L the total number of levels of the hierarchy and $y_i$ is the index of the corresponding moveme at level i.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202135449997.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202135449997.png)
 
-![image-20191202135543989](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202135543989.png)
+![image-20191202135543989](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202135543989.png)
 
 【Qustion 3】 optimization problem
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202135652819.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202135652819.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202135725669.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202135725669.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202135751580.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202135751580.png)
 
 #### Conclusion
 
@@ -622,12 +622,12 @@ define X : person example     $Y={y_i}_{i=1}^L$   ,L the total number of levels 
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130152232740.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191130152232740.png)
 
 - **Keypoint detection** : detect all visible key-points belonging to any person in the image .
   - 具体计算heatmap 到时再细看 ， short-range offset vector is to improve the keypoint localization accuracy.  <font color=red>aggregate the heatmap and short-range offsets via Hough voting into 2-D Hough score maps
 - **Grouping keypoints into person detection instances**    Fast greedy decoding algorithm
-- **Instance-level person segmentation** : Given the set of keypoint-level person instance detections, the task of our method’s egmentation stage is to identify pixels that belong to people (recognition) and associate them with the detected person instances (grouping)![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130154003763.png)
+- **Instance-level person segmentation** : Given the set of keypoint-level person instance detections, the task of our method’s egmentation stage is to identify pixels that belong to people (recognition) and associate them with the detected person instances (grouping)![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191130154003763.png)
 - **Semantic person segmentation  && Associating segments with instances via geometric embeddings**
 
 #### Notes <font color=orange>去加强了解</font>
@@ -676,16 +676,16 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191118093649383.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191118093649383.png)
 
 【Qustion 1】Using LSTM to encode the location of each person.And model human-human interaction via a Pooling Module (PM). After tobs we pool hidden states of all the people present inthe scene to get a pooled tensor Pi for each person.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191118094457342.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191118094457342.png)
 
 condition the generationof output trajectories by initializing the hidden state of the decoder as to produce future scenarios which are consistent
-with the past![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191118094655624.png)
+with the past![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191118094655624.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191118094908418.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191118094908418.png)
 
 Discriminator. The discriminator consists of a separate encoder. Specifically, it takes as input Treal = [Xi, Yi] or fake = [Xi, Yˆi] and classifies them as real/fake
 
@@ -693,9 +693,9 @@ Discriminator. The discriminator consists of a separate encoder. Specifically, i
 
 - passing the input coordinates through a MLP followed by symmetric function(Max-Pooling).use relative coordinates for translation invariance  we augment the input to the pooling module with relative position of each person with respect to person i.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191118095339973.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191118095339973.png)
 
-[question3 ] diverse sample generation . propose a variety lossfunction that encourages the network to produce diverse sample .generate k possible out put samples and choose the best prediction in L2 sense ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191118100138050.png)
+[question3 ] diverse sample generation . propose a variety lossfunction that encourages the network to produce diverse sample .generate k possible out put samples and choose the best prediction in L2 sense ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191118100138050.png)
 
 #### Conclusion
 
@@ -736,7 +736,7 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191124134305103.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191124134305103.png)
 
 【Qustion 1】Spatial stream  $ Temporal stream
 
@@ -746,13 +746,13 @@ Temporal stream: stacking 10 optical flow images for temporal stream has been co
 
 [model 1] **Temporal Segment LSTM**:  using 25 to divide the sampled video frames into several segments, a temporal pooling layer is applied to extrct distinguishing features from each of the segments.and LSTM is used ot extract the embedded features from all segments.
 
- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191124140942805.png)
+ ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191124140942805.png)
 
 [model 2] Temporal-ConvNet :leveraging the temporal relation across diferent frames.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191124141556429.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191124141556429.png)
 
-![image-20191124141419689](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20191124141419689.png)
+![image-20191124141419689](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191124141419689.png)
 
 different types o faction have different temporal characteristics and different kernels in different layers essentially search for different actions by expoiting different receptive fields to encode the temporal characteristics.
 
@@ -774,7 +774,7 @@ different types o faction have different temporal characteristics and different 
 - [ ] code available: 
 - [ ] [6] fusion stage   Convolutional two-stream network fusion for video action recognition
 - [ ] Temporal segment networks: Towards good practices for deep action recognition
-- [ ] optical methods Brox[2] or TV-L1[29],and the results ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191124141955787.png)
+- [ ] optical methods Brox[2] or TV-L1[29],and the results ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191124141955787.png)
 
 **level**:   2019 winter conference on application of computer vision
 **author**: Erwin Wu   Tokyo Institute of Technology
@@ -828,8 +828,8 @@ previous work:
 #### Methods
 
 - **Problem Formulation**:forecasting of 3D pose from a single image and the model fitting and collision detection.
-- **system overview**:![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116143629118.png)
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116152552658.png)
+- **system overview**:![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116143629118.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116152552658.png)
 
 【Qustion 1】<font color=red>how to estmate 2D pose?</font> cropped using bounding box tracker.
 
@@ -839,21 +839,21 @@ use ResNet50[10] to allow the convolutional layer to regress the 2D joint data
 
 using optical flow and joint positions data to do a regression on the LSTMs.  developed a sparse optical flow called Keypoint Lattice-Optical Flow ,creates several lattice points and only calculates the optical flows of the lattice points which close to keypoint.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116153025285.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116153025285.png)
 
 【Qustion 3】 <font color=red>3D pose recovery?</font>  [20] an effective 3D pose recovery  using VNect network
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116153558928.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116153558928.png)
 
 【Qustion 4】<font color=red>How to understand person's position and detect the collision in virtual environment ?</font>
 
 using 3D model to represent user and have a surface to collide with one another.
 
-using makehumanAPI to gernerate 3D model![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116154051111.png)
+using makehumanAPI to gernerate 3D model![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116154051111.png)
 
 divided model into more than 200 segments,called 'hulls',each of these hulls contains a convex(凸) collider .detect a collision between two hulls using basic convex polytopes.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116154239879.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116154239879.png)
 
 #### Evaluation
 
@@ -867,19 +867,19 @@ divided model into more than 200 segments,called 'hulls',each of these hulls con
 
   **RealTimePerformance**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116155736081.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116155736081.png)
 
 **Pose forecasting accuracy:**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116155725964.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116155725964.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116155800489.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116155800489.png)
 
 **User case study:**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116161933715.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116161933715.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116162001653.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116162001653.png)
 
 #### Contribution
 
@@ -933,43 +933,43 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191122164724372.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191122164724372.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191122164824683.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191122164824683.png)
 
 【Qustion 1】how to extract 25 body point and COG?    论文[14] 需要学一下
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191122165225765.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191122165225765.png)
 
 [解决问题2]Neural Network design ?
 
 combine past 10 frames of 26 data as a one learning dataset .(joints+COG position)*3 demensions(x,y,z)* * 10 frames=780
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191122165657463.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191122165657463.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191122165302517.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191122165302517.png)
 
 [解决问题3] 损失函数 和 优化器选择
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191122165849130.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191122165849130.png)
 
-![image-20191122170046854](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20191122170046854.png)
+![image-20191122170046854](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191122170046854.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191122171352648.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191122171352648.png)
 
 #### Evaluation
 
 - **Environment**:   
   - Dataset:   Kinect V2  eleven subject to jump as many time as they could ,one duration for one minute. they allow to jump either ways in random order and the distance less than 2.5m. 
   - laptop(CPU: intel core-i7-7820HK 2.9-3.9Ghz,GPU: Nvidia Geforece GTX 1080)  3.32ms for COG NN  matrix operation, 5.75ms for redering bone image less than 33ms for measuring depth map and 3D position of 25 body joints and COG
-  - ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191122171323598.png)
-  - ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191122170458248.png)
+  - ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191122171323598.png)
+  - ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191122170458248.png)
 - 
 
 #### Conclusion
 
-- 均方误差MSE   注:RMSE（即MSE的平方根)![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191122171538058.png)
-- 平均绝对误差（MAE）![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191122171610156.png)
+- 均方误差MSE   注:RMSE（即MSE的平方根)![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191122171538058.png)
+- 平均绝对误差（MAE）![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191122171610156.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -1040,41 +1040,41 @@ previous work:
 
 #### Methods
 
-- **Problem Formulation**:![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191109103802813.png)
+- **Problem Formulation**:![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191109103802813.png)
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191109103550662.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191109103550662.png)
 
 【Qustion 1】<font color=red>how to model the person's appearance and body movement about every individual in a scene</font>?
 
 - utilize a pre-trained object detection model with "**RoIAlign[8**]" to extrace fixed size CNN features for each person bounding box. for every person ,average the feature along the spatial dimentions and feed them into LSTM encoder   -> obtain T*d ,where d is the hidden size of the LSTM.
-- utilize a person key-point detection model trained on MSCOCO dataset[6] to extract preson keypoint information.we apply <font color=red>the linear transformation to embed the keypoint coordinates ,这里的线性处理不理解</font>before feed into LSTM.->obtain T*d ,where d is the hidden size of the LSTM![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191109111014991.png)
+- utilize a person key-point detection model trained on MSCOCO dataset[6] to extract preson keypoint information.we apply <font color=red>the linear transformation to embed the keypoint coordinates ,这里的线性处理不理解</font>before feed into LSTM.->obtain T*d ,where d is the hidden size of the LSTM![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191109111014991.png)
 
 【Qustion 2】<font color=red>how to model the interaction between a person and their surroundings,person-scene and person-object</font>
 
-- Person-scene: <font color=red>whether the person is near the sidewolk or grass</font> use a **pre-trained scene segmentation model[4]** to extract pixel-level scene semantic classes(10 class eg.roads , sidewalks...) for each frame. the scene   the semantic features are integeres of the size T * h * w ,Given a person's xy coordinate ,we pool the scene features at the person;s current location from the convolution feature map.  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191109111844802.png)
+- Person-scene: <font color=red>whether the person is near the sidewolk or grass</font> use a **pre-trained scene segmentation model[4]** to extract pixel-level scene semantic classes(10 class eg.roads , sidewalks...) for each frame. the scene   the semantic features are integeres of the size T * h * w ,Given a person's xy coordinate ,we pool the scene features at the person;s current location from the convolution feature map.  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191109111844802.png)
 
-- Person-object: <font color=red>how far away the person is to the other person or object</font>models the **geometric relation** and **the object type** of all objects/persons in the scene.在论文[9]中证明了这个方法的高效性![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191109112732633.png)
+- Person-object: <font color=red>how far away the person is to the other person or object</font>models the **geometric relation** and **the object type** of all objects/persons in the scene.在论文[9]中证明了这个方法的高效性![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191109112732633.png)
 
   - geometric relation:                   
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191109112036904.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191109112036904.png)
 
   - object type: 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191109112647171.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191109112647171.png)
 
 【Qustion 3】<font color=red>how to predict the trajectory ?</font> using effective focal attention[17]  ,原始模型见[7]
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191109113310088.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191109113310088.png)
 
-![image-20191109113735888](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20191109113735888.png)
+![image-20191109113735888](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191109113735888.png)
 
-【Qustion 4】<font color=red>how to predict activity ?</font> introduce an auxiliary task :activity location prediction in addition to predicting the future activity label of the person .![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191109114434310.png)
+【Qustion 4】<font color=red>how to predict activity ?</font> introduce an auxiliary task :activity location prediction in addition to predicting the future activity label of the person .![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191109114434310.png)
 
 - activity location prediction with Manhattan Grid  (location classification(to predict correct grid block in which the  final location coordinates reside),location regression(to predict the deviation of the grid block center to final location coordinate))   <font color=red>how to accurate localization using multi-scale features in a cost-effective way</font>
-- activity label prediction: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191109142619975.png)
+- activity label prediction: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191109142619975.png)
 
 #### Evaluation
 
@@ -1136,32 +1136,32 @@ previous work:
 - they use hand-craft functions(人工特征) to model interactions for specific settings rather than inferring them in data driven fashion.
 - they focus on modeling interactions among people in close proximity to each other(to avoid immediate collisions), don‘t anticipate interactions that could occur in the more distant future.
 - RNN model for sequence prediction (speech recognition , caption generation , machine translation , image/vedio classification, human dynamic)
-  - Model  and <font color=red>Gated Recurrent Units[12]</font>  most common methods.
+  - LSTM  and <font color=red>Gated Recurrent Units[12]</font>  most common methods.
   - [20] predict isolated handwriting sequence 
 
 #### Methods
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191112092925006.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191112092925006.png)
 
 【定义问题1】every person has different motion pattern,they move with different velocities ,acceleration and have different gaits ,how to model person-specific motion properties from a limited set of initial observation corrosponding to the person
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191112092949875.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191112092949875.png)
 
-![image-20191112093015584](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20191112093015584.png)
+![image-20191112093015584](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191112093015584.png)
 
 【定义问题2】 every person has a different number of neighbors and in very dese crowds,the number could prohibitively high?
 
  a compact representaion "Social " pooling layers ,and preserve the spatial information through grid based pooling .
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191112094414250.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191112094414250.png)
 
 【定义问题3】 how to estimate the Position?
 
-![image-20191112100947577](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20191112100947577.png)
+![image-20191112100947577](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191112100947577.png)
 
 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191112101003868.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191112101003868.png)
 
 【定义问题4】 how to deal with occupancy map pooling?
 
@@ -1170,7 +1170,7 @@ the Social LSTM model can be used to pool any set of features from neighboring t
 #### Evaluation
 
 - **Environment**: ETH  ,UCY
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191112101541086.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191112101541086.png)
 
 #### Conclusion
 
@@ -1188,7 +1188,7 @@ the Social LSTM model can be used to pool any set of features from neighboring t
 
 - [ ] Theano: A cpu and gpu math compiler in python
 
-- [x] bivariate Gaussian distribution多元正态分布![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191121101725026.png)
+- [x] bivariate Gaussian distribution多元正态分布![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191121101725026.png)
 
 
 
@@ -1226,11 +1226,11 @@ the Social LSTM model can be used to pool any set of features from neighboring t
 - **Application Area**:understand the intention of road users involved to ensure their safety and secure the traffic flow.
 - **Purpose**:  estimate TTC.
 - **System_Design**: 
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191106112647294.png)
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191106111040275.png)
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191106111058015.png)
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191106111116174.png)
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191106111520160.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191106112647294.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191106111040275.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191106111058015.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191106111116174.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191106111520160.png)
 
 #### Proble Statement
 
@@ -1258,13 +1258,13 @@ we select some cues from the JAAD [1] public data set in order to solve this iss
 
 Applying a generic object detector based on the public RetineNet[2], the author handled the Resnet50[19]CNN architecture for the classification task with the Keras public open-source implementation described in [2],all the training process is based on the JAAD dataset,which provides an annotation of pedestrians with behavioral tags and pedestrians without behaciors tags.
 
-![image-20191106112333433](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20191106112333433.png)
+![image-20191106112333433](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191106112333433.png)
 
 【定义问题2】how to split the pedestrian Joint Attention for Autonomous Driving into four class?   previous work
 
 【定义问题3】how to estimate Time to cross?
 
-![image-20191106112423122](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20191106112423122.png)
+![image-20191106112423122](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191106112423122.png)
 
 #### Evaluation
 
@@ -1326,11 +1326,11 @@ previous work:
 
 #### Methods
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191112104005467.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191112104005467.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191112114633868.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191112114633868.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191112114906902.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191112114906902.png)
 
 【定义问题1】Featurization Modules
 
@@ -1338,7 +1338,7 @@ previous work:
 
 - Hand Raise detection: neck ,chest, shoulder elbow wrist and compute the direction unit vectors btween all pairs of these points,and compute the distance between all pairs of points ,normalized by the distance between all pairs of these points.
 
-- Upper Body detection: utilize the same eight upper body keypoints  to predict arms at rest, arms at closed and hands on face.![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191112115847153.png)
+- Upper Body detection: utilize the same eight upper body keypoints  to predict arms at rest, arms at closed and hands on face.![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191112115847153.png)
 
 - Smile Detection: ten mouth landmarks on the outer lip and ten landmarks on the inner lip. compute direction unit vectors from the left lip corner to all other points  SVM to binary classifaction.
 
@@ -1346,7 +1346,7 @@ previous work:
 
 - Head Oriention & Class Gaze : Using a perspective-n-point algorithm[50] in combination with anthropometric face data[53],produces a coarse 3D orientation of the head for each body.
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191112121139650.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191112121139650.png)
 
 - Body Position & Classroom Topology: perspective-n-point produces the orientation for each body founded in a scene ,and estimate 3D position in real world coordinates. to reveal the classroom topologies and help illuminate spatial patterns in the class.
 
@@ -1359,7 +1359,7 @@ previous work:
 #### Evaluation
 
 - **Environment**: 
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191112121150907.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191112121150907.png)
 
 #### Conclusion
 
@@ -1428,15 +1428,15 @@ previous work:
   - [47] further simplified their body-part relationship graph for faster inference in single-frame model and formulated articulated human tracking as spatial-temporal grouping of part proposals.
   - [49] detect individual key-points and predict their relative displacements,using greedy decoding method.
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191111163031878.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191111163031878.png)
 
 #### Methods
 
 **system overview**: given a color image of size w*h ,produces the 2D positions of anatomical key-points for each person in the image.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191111163106168.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191111163106168.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191111182334970.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191111182334970.png)
 
 【Question1】how to detect limbs and bodypart?
 
@@ -1472,7 +1472,7 @@ for calculate the confidence body part: the value at location $p\epsilon R^2 \qu
 
 【Question2】Given a set of detected body parts ,how do we assemble them to form the full-body poses o fan unknown number of people？<font color=red> ecodes both the location and orientation, don’t reduce the region of support of a limbs to a single point</font>
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191129113237565.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191129113237565.png)
 
 $X_{j_1,k} ,X_{j_2,k}$  : the groundtruth positions of body parts j1,j2 from the limb c.
 $$
@@ -1482,9 +1482,9 @@ ground-truth part affinity field : $L_c^*(p)=\frac{1}{n_c(p)}\sum_kL_{c,k}^*(p)\
 
 eg: for two candidate part locations $d_{j_1}\quad d_{j2}$,we sample the predicted part affinity field, Lc alone the line segment to measure the confidence in their association:$E=\int_{u=0}^{u=1}{L_c(p(u))*\frac {d_{j2}-d{j1}}{||d_j2-d_j1||^2}du}dx$     where p(u) interpolates the position of two body parts dj1,dj2 ,$p(u)=(1-u)d_{j1}+ud_{j2}$
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191125091725286-1577068664572.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191125091725286-1577068664572.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191129115349521.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191129115349521.png)
 
 a set of body part detection candidates Dj for multiple people,where $D_j={d_j^m :for\quad j\epsilon {1...J},m\epsilon {1,...,N_j}} $ where Nj is the number of candidates of part j, and $d_j^m\epsilon R^2$ is the location of m-th detection candidate of body part 
 
@@ -1492,7 +1492,7 @@ define $z_{j_1,j_2}^{mn}\epsilon (0,1)$ to indicate wether two detection candida
 $$
 Z={z_{j_1j_2}^{mn}:for \quad j_1,j_2\epsilon (1,...,J),m\epsilon(1,...,N_{j_1}),n\epsilon(1,...,N_{j_2})}​
 $$
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191129121106421.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191129121106421.png)
 
 1. choose the minimal number of edges to obtain a spanning tree skeleton of human pose rather than using the complete graph
 2. decompose the matching problem into a set of bipartite matching subproblems and determine the matching in adjacent tree nodes independently.
@@ -1500,7 +1500,7 @@ $$
 #### Evaluation
 
 - **Environment**: 
-  - datasets : MPII human multi-person dataset[66] consisting of 3844 training and 1758 testing groups of multiple interacting individuals in highly articulated pose with 14 body parts, COCO keypoint challenge dataset  requires simultaneously detecting people and localizing 17 key-points
+  - Dataset : MPII human multi-person dataset[66] consisting of 3844 training and 1758 testing groups of multiple interacting individuals in highly articulated pose with 14 body parts, COCO keypoint challenge dataset  requires simultaneously detecting people and localizing 17 key-points
 
 #### Conclusion
 
@@ -1575,35 +1575,35 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200229112040352.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200229112040352.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200229115749562.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200229115749562.png)
 
 **[Input Define]**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200229114736296.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200229114736296.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200229114716246.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200229114716246.png)
 
 **[Multiple Persons]**
 
 - early fusion: all joints from multiple persons are stacked as input of the network, zero padding if less than pre-defined maximal number
 - Late fusion:  input of multiple persons go through the same subnetwork and their conv6 features maps are merged with either concatenation along channels or element-wise maximum/mean operation
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200229114756753.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200229114756753.png)
 
 **[Loss Function Define]**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200229115411034.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200229115411034.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200229115422855.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200229115422855.png)
 
 #### Evaluation
 
 - **Environment**:   
   - Dataset: 
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200229115851023.png)
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200229115907932.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200229115851023.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200229115907932.png)
 
 #### Conclusion
 
@@ -1651,15 +1651,15 @@ Human Pose Estimation</b>
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201019210140895.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201019210140895.png)
 
 【**Single Hourglass module **】
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201019210700629.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201019210700629.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201019210520022.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201019210520022.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201020134658441.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201020134658441.png)
 
 ```python
 #coding=utf-8
@@ -1855,31 +1855,31 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309105620041.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309105620041.png)
 
 【**Pose Machines**】
 
-![image-20200309105711936](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309105711936.png)
+![image-20200309105711936](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309105711936.png)
 
 ![image-20200309105732538](../../../../MEGA/MEGAsync/actionPrediction/skeleton.assets/image-20200309105732538.png)
 
-![image-20200309105745261](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309105745261.png)
+![image-20200309105745261](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309105745261.png)
 
 **【Convolutional Pose Machines】**
 
 - Keypoint Localization Using Local Image Evidence:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309105837745.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309105837745.png)
 
 - Sequential Prediction with Learned Spatial Context Features:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309105933784.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309105933784.png)
 
 -  Learning in Convolutional Pose Machines
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309110012428.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309110012428.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309110025606.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309110025606.png)
 
 
 
@@ -1949,7 +1949,7 @@ input RGB-D data, classify and localize objects in 3D space.
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200307115907354.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200307115907354.png)
 
 **【Model 1】Frustum Proposal**
 
@@ -1958,9 +1958,9 @@ input RGB-D data, classify and localize objects in 3D space.
 
 **【Model 2】3D Instance Segmentation**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200307120512402.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200307120512402.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200307120608061.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200307120608061.png)
 
 **【Model 3】3D Instance Segmentation PointNet**
 
@@ -1977,9 +1977,9 @@ input RGB-D data, classify and localize objects in 3D space.
 - **Environment**:   
   - Dataset: KITTI  , 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200307121349449.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200307121349449.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200307121605990.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200307121605990.png)
 
 #### Conclusion
 
@@ -1991,7 +1991,7 @@ input RGB-D data, classify and localize objects in 3D space.
 - KITTI 3D object detection:  http://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d   contain datasets, many methods and compare.<font color=red>如果后面学习和使用到3D object detection 可以从这里学习</font>
 - bird's eye view detection benchmarks
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200307122059591.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200307122059591.png)
 
 **level**: ICCV   CCF_B
 **author**:         National Institute of Advanced Industrial Science and Technology
@@ -2030,15 +2030,15 @@ for Action Recognition</b>
 
 - Residual block
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223101841019.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223101841019.png)
 
 #### Methods
 
 - **network design**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223101025170.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223101025170.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223101347554.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223101347554.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -2065,7 +2065,7 @@ for Action Recognition</b>
 
 - **Application Area**:realtime motion-driven 3D game character control,self-immersion in 3D virtual and augmented reality and human-computer interaction.
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191118101846038.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191118101846038.png)
 
 - **Purpose**:  <font color=red>stable 3D skeletal motion capture from a single camera in real-time</font>
 
@@ -2083,13 +2083,13 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191118103828661.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191118103828661.png)
 
 【Qustion 1】how to use CNN to regress Pose by single RGB image?
 
-extending the 2D heatmap formulation to 3D using three additional location-maps(x,yz,) per joint j , captureing the root-relative locations (x,y,z) respectively.![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191118110049931.png)
+extending the 2D heatmap formulation to 3D using three additional location-maps(x,yz,) per joint j , captureing the root-relative locations (x,y,z) respectively.![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191118110049931.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191121100234719.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191121100234719.png)
 
 #### Contribution
 
@@ -2102,7 +2102,7 @@ extending the 2D heatmap formulation to 3D using three additional location-maps(
 
 - [x] heatmap based bodyjoint detection formulation  ,heatmap is the distribution of confidence probability of body part. 
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191121094023973.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191121094023973.png)
 
 # 
 

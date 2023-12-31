@@ -47,7 +47,7 @@ protected int next(int bits) {
 >
 > **在多线程中就可以因为启动时间相同，而导致多个线程在每一步操作中都会生成相同的随机数**。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211202230246216.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211202230246216.png)
 
 ##### .1. 基本使用
 

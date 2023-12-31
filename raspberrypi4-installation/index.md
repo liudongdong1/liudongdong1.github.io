@@ -5,11 +5,11 @@
 
 ## 1. 引脚介绍
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200508112423709.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200508112423709.png)
 
 ![](https://img-blog.csdn.net/20171013145614407?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzE2MjAzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200508152243708.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200508152243708.png)
 
 > Raspberry Pi 4 采用了博通 BCM2711 SoC，包含四个 1.5GHz Cortex A72 CPU 核心，与 Raspberry Pi 3 的四核 Cortex A53 CPU 相比，Raspberry Pi 4 的内存**可选 1GB、2GB 和 4GB DDR4**，比 Pi 3 的 1GB RAM 不知高到哪里去了。Raspberry Pi 4 包含两个 USB 2 端口、两个 USB 3 端口，通过一个 USB-C 端口供电，此外还有千兆以太网接口和耳机接口，两个 micro HDMI 端口，支持两台 4K 显示器。
 
@@ -131,7 +131,7 @@ sudo nano /etc/dhcpcd.conf
 4. 输入vncserver ,会在最后一行显示端口号
 5. 使用VNC Viewer软件或其他登录
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200508151641901.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200508151641901.png)
 
 > 错误： VNC View 连接 Cannot currently show the desktop 
 >
@@ -234,7 +234,7 @@ sudo reboot
 
 1.打开Python 3编辑器，例如**Thonny Python IDE**：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200514094638461.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200514094638461.png)
 
 2. 打开一个新文件并将其另存为`camera.py`。
 

@@ -9,7 +9,7 @@
 
 todo？ 结合代码理解这个第三方库设计思想
 
-![img](https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzM2OTU1MzMy,size_16,color_FFFFFF,t_70%23pic_center.png)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzM2OTU1MzMy,size_16,color_FFFFFF,t_70%23pic_center.png)
 
 ### Resource
 

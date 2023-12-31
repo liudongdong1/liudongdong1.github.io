@@ -13,7 +13,7 @@
 
 Github：https://github.com/PaddlePaddle/PaddleOCR
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201031144739913.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201031144739913.png)
 
 ---
 

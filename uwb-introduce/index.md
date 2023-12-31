@@ -21,9 +21,9 @@
 - **地磁定位技术：** Magnetometer
 - **惯性定位技术：** Accelerometer， Gyroscope， IMU
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429170356767.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429170356767.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429170413736.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429170413736.png)
 
 #### 0.2  基于位置服务（LBS）
 
@@ -39,7 +39,7 @@ LBS系统主要基于定位技术和网络通信技术两大支撑，其中定�
 
 &emsp;&emsp;超宽带无线通信技术（UWB）是一种无载波通信技术，UWB不使用载波，而是使用短的能量脉冲序列，并通过<font color=red>正交频分调制或直接排序将脉冲</font>扩展到一个频率范围内。UWB的主要特点是传输速率高、空间容量大、成本低、功耗低等。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429162149692.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429162149692.png)
 
 &emsp;&emsp;超宽带室内定位系统则包括UWB接收器、UWB参考标签和主动UWB标签。定位过程中由UWB接收器接收标签发射的UWB信号，通过过滤电磁波传输过程中夹杂的各种噪声干扰，得到含有效信息的信号，再通过中央处理单元进行测距定位计算分析。
 
@@ -67,13 +67,13 @@ $$
 
 同理得到： $d_{i,23},d_{i,34},d_{i,14}$  示意图如下：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429164030335.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429164030335.png)
 
 #### 2.2  信号强度
 
 &emsp;&emsp;RSSI(Receive Signal Strength Indicator)通过测量无线信号在接收端的功率大小并根据无线信号的Friis传输模型计算出收发端之间的距离。
  ![](https://math.jianshu.com/math?formula=%5Cbegin%7Bgathered%7D%20P_r%5BdBm%5D%20%3D%20P_t%5BdBm%5D%20%2B%20G_t%5BdB%5D%20%2B%20G_r%5BdB%5D%20-%20L%5BdB%5D%20-%2020%5Clog_%7B10%7D(4%5Cpi%20d%2F%5Clambda)%20%5C%5C%20%5CDownarrow%20%5C%5C%20d%20%3D%20%5Cfrac%7B%5Clambda%7D%7B4%5Cpi%7D%2010%5E%7B(P_t%20-%20P_r%20%2B%20G_t%20%2B%20G_r%20-%20L)%2F20%7D%20%5C%5C%20%5Cend%7Bgathered%7D)
- [其中](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429171842598.png)，$P_r/P_t$分别表示接收/发送信号功率级，$G_R/G_T$分别表示接收/发送天线增益，$L$表示PCB、连接线、连接器等带来的损耗，$d$表示设备间距离，$\lambda$表示无线信号的中心波长。
+ [其中](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429171842598.png)，$P_r/P_t$分别表示接收/发送信号功率级，$G_R/G_T$分别表示接收/发送天线增益，$L$表示PCB、连接线、连接器等带来的损耗，$d$表示设备间距离，$\lambda$表示无线信号的中心波长。
 
 从Friis传输模型中可以看出，RSSI的测距结果受收发天线设计，多径传播，非视距传播，直接路径损耗等环境因数影响较大，实际应用中测距精度~10m量级，远低于基于时间戳测距的方法，因而基于RSSI的方法很少直接用于UWB定位。
 
@@ -85,11 +85,11 @@ $$
 
 SS-TWR(Single-Sided Two-Way Ranging)算法中测距请求设备发起测距请求，而测距响应设备监听并响应测距请求，然后测距请求设备利用所有时间戳信息计算出设备间的飞行时间。
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429172413251.png" alt="image-20200429172413251" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429172413251.png" alt="image-20200429172413251" style="zoom:50%;" />
 
 #### 2.4 到达角（AOA）到达相位差（PDOA）
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429172125457.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429172125457.png)
 
 ### 3. UWB 定位优势
 
@@ -172,7 +172,7 @@ UWB信号的特点说明它在定位上具有低成本、抗多径干扰、穿�
   - UWB 在方案中的主要作用是完成车端和钥匙端的测距。
   - NFC 主要负责出厂时的秘钥注入，以及在 BLE、UWB 同时失效时（例如，手机和钥匙同时没电）作为备用预案，确保可以用 NFC 刷开车门并启动车辆。
 
-![]https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220118150408259.png)
+![]https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220118150408259.png)
 
 > 车端架构中，与 UWB 相关的设备为 `UWB 锚点`与`解算单元（中控）`。其中 `UWB 锚点`包含了 UWB 射频和天线模组，`实现钥匙与车身的测距功能`。`解算单元里内置了 BLE 蓝牙模组，实现与钥匙端的通信`；解算单元同时负责接收 UWB 锚点信息，解算出钥匙与车身的相对位置关系，然后将位置信息再传输到车内其它的控制器（例如：BCM 与 DCU），从而进一步实现基于位置的应用层服务。
 
@@ -207,9 +207,9 @@ UWB信号的特点说明它在定位上具有低成本、抗多径干扰、穿�
 
   ###### Application:
 
-  1. UWB sensor networks, UWB RFID ,and UWB positioning system (FC只是限于13.56MHz的频段！而RFID的频段有低频（125KHz到135KHz），高频（13.56MHz）和超高频（860MHz到960MHz之间) factors that influence the distance the ware transfer: 天气影响 ，天线增益 高度， 供电能量， 频率（频率越高自由空间损耗越大，通讯距离越近） 阻碍物![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191204185429509.png)
+  1. UWB sensor networks, UWB RFID ,and UWB positioning system (FC只是限于13.56MHz的频段！而RFID的频段有低频（125KHz到135KHz），高频（13.56MHz）和超高频（860MHz到960MHz之间) factors that influence the distance the ware transfer: 天气影响 ，天线增益 高度， 供电能量， 频率（频率越高自由空间损耗越大，通讯距离越近） 阻碍物![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191204185429509.png)
   
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191204185449376.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191204185449376.png)
   
   3. transferring large amounts of data in short-range for home or office networking
   2. short range voice ,data , video applications
@@ -223,7 +223,7 @@ UWB信号的特点说明它在定位上具有低成本、抗多径干扰、穿�
   10. assessing enemy locations and tracking troops
 
 <center class="half">
-    <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191204181401744.png" width=40%/><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191204181422217.png" width=40%/>
+    <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191204181401744.png" width=40%/><img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191204181422217.png" width=40%/>
 </center>
 ### 参考学习
 

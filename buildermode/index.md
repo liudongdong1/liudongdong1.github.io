@@ -71,7 +71,7 @@ public class Computer {
 
 ### 3. builder 模式
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210306121424477.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210306121424477.png)
 
 - Director类使用者使用组合方式直接和builder 基类进行打交道，通过开闭原则传入具体的builder实例，通过多态的方式构建不同的实例的builder类型
 - ConcreteBuilder与产品打交道， ConcreteBuilder里面通过与产品类组合方式
@@ -152,7 +152,7 @@ public class Client {
 
 - todo？ 学习完整的调用过程，以及背后的原理
 
-![image-20221126134946193](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221126134946193.png)
+![image-20221126134946193](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221126134946193.png)
 
 #### .3. [ImageLoader](https://juejin.cn/post/6844903650783920135)
 

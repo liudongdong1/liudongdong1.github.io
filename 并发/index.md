@@ -9,7 +9,7 @@
 >
 > `CSP` 是一种消息传递模型，通过在 `goroutine` 之间传递数据来传递消息，而不是对数据进行加锁来实现同步访问。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAd29odTExMDQ=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center.jpeg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAd29odTExMDQ=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center.jpeg)
 
 ### 1. goroutine启动
 

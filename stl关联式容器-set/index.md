@@ -242,7 +242,7 @@ int main() {
 
 ### 3. 常用函数
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/693265793dc17bbcf9ec15d8ce097ac4.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/693265793dc17bbcf9ec15d8ce097ac4.png)
 
 ### 4. multiset
 

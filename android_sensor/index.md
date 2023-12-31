@@ -5,13 +5,13 @@
 >
 > **传感器的种类**：可以从不同的角度对传感器进行划分，转换原理(传感器工作的基本物理或化学 效应)；用途；输出信号以及制作材料和工艺等。一般是按工作原来来分：物理传感器与化学传感器 两类！
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211109085703629.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211109085703629.png)
 
 ### 1. Sensor架构
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211109090518291.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211109090518291.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211109090548692.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211109090548692.png)
 
 - Application Framework： Sensor应用程序通过Sensor应用框架来获取sensor数据，应用框架层的Sensor Manager通过JNI与C++层进行通信。
 - Sensor Libraries: Sensor中间层主要由Sensor Manager、Sensor service和Sensor硬件抽象层组成。
@@ -19,7 +19,7 @@
 - Event Dev: Evdev提供了一种访问/dev/input/eventX输入设备事件的通用方法。
 - AccelerometerDriver: 驱动通过SIRQ和I2C总线与MMA7660模组进行通信。SIRQ用来产生传感器事件中断。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211109091822424.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211109091822424.png)
 
 ### 2. 查看手机支持的传感器
 
@@ -490,7 +490,7 @@ protected boolean registerListenerImpl(SensorEventListener listener, Sensor sens
 
 ### 4. 通讯方式
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211109093121753.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211109093121753.png)
 
 > - 客户端
 >   - SensorManager.cpp
@@ -510,7 +510,7 @@ protected boolean registerListenerImpl(SensorEventListener listener, Sensor sens
 >   - SensorDevice
 >     - 负责与HAL读取数据
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211109092103749.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211109092103749.png)
 
 ### Resource
 

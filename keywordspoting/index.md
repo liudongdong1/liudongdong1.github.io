@@ -29,15 +29,15 @@
   - the memory keeps each inference's state isolated from subsequent runs, just pushing new entries and popping old ones based on the memory size T configured for the layer.
   - by stacking the SVDF layers to extending the receptive field of the network.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201203171840369.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201203171840369.png)
 
 - Method to train end-to-end neural network
   - label generation
     - input sequence pairs$<X_t,c>$, $x_t$ is the 1D tensor corresponding to log-mel filter-band energies produced by  front end handle;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201203182041755.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201203182041755.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201203182151232.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201203182151232.png)
 
 ---
 

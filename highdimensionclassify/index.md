@@ -22,15 +22,15 @@
 
 - to extract the deep spectral-spatial features and solve the sample problem of insufficiency and imbalance.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211016205251462.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211016205251462.png)
 
-![GCLAM](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211016205712811.png)
+![GCLAM](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211016205712811.png)
 
-![GCL](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211016205741143.png)
+![GCL](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211016205741143.png)
 
 > Two-dimensional t-SNE visualization of features. Data distributions of the labeled samples in the original feature space(the first row) and the convolutional feature space (the second row).
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211016205448820.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211016205448820.png)
 
 
 ---

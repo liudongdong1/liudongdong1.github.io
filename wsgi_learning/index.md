@@ -9,7 +9,7 @@
 - 进行内容后处理，例如应用XSLT样式表。
 - uwsgi的启动可以把参数加载命令行中，也可以是配置文件 .ini, .xml, .yaml 配置文件中
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210626221123557.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210626221123557.png)
 
 ```python
 uwsgi --ini uwsgi.ini             # 启动

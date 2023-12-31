@@ -42,15 +42,15 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917153603165.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917153603165.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917154314885.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917154314885.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917154400343.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917154400343.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917154910999.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917154910999.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917155046781.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917155046781.png)
 
 #### Notes <font color=orange>去加强了解</font>
 

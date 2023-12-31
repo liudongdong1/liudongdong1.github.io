@@ -5,13 +5,13 @@
 >
 > 还是得通过实战，自己来读一下代码，了解背后的实现机制。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009215336308.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009215336308.png)
 
 ### 1. Unsafe
 
 #### .1. Java JDK
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009194524091.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009194524091.png)
 
 #### .2.netty
 
@@ -19,11 +19,11 @@
 >
 > Unsafe用于处理Channel对应网络IO的底层操作。ChannelHandler处理回调事件时产生的相关网络IO操作最终也会委托给Unsafe执行。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009195257533.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009195257533.png)
 
 ### 2. 初始化EventLoopGroup
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009195011148.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009195011148.png)
 
 > 在服务器启动的常规代码里，首先是实例化NioEventLoopGroup和ServerBootstrap。
 
@@ -56,7 +56,7 @@ public final class ThreadPerTaskExecutor implements Executor {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/7c99415ff57243f094c2095f4032fbactplv-k3u1fbpfcp-watermark.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/7c99415ff57243f094c2095f4032fbactplv-k3u1fbpfcp-watermark.awebp)
 
 > EventLoop本质上是一个线程池，EventLoop内部维护着一个线程Thread和几个阻塞队列，所以EventLoop可以看成只有一个线程的线程池（SingleThreadPool）
 

@@ -3,7 +3,7 @@
 
 > Go 语言被设计成一门应用于搭载 Web 服务器，存储集群或类似用途的巨型中央服务器的系统编程语言。对于高性能分布式系统领域而言，Go 语言无疑比大多数其它语言有着更高的开发效率。它提供了海量并行的支持，这对于游戏服务端的开发而言是再好不过了。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/640.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/640.png)
 
 ### 1. 语法结构
 
@@ -29,7 +29,7 @@ func main() {   // { 不能在单独的行上
 
 ### 2. 数据类型
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaHUxMTA0,size_16,color_FFFFFF,t_70#pic_center.jpeg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaHUxMTA0,size_16,color_FFFFFF,t_70#pic_center.jpeg)
 
 | 序号 | 类型和描述                                                   |
 | :--- | :----------------------------------------------------------- |

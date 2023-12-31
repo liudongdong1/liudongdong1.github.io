@@ -16,7 +16,7 @@
 - 通过`对应搜索和变换估计`两个过程来`减小几何投影误差`。这两个过程交替进行，直到几何重投影误差最小。在已知精确对应的情况下，变换估计有一个闭环形式的解。
 - 提取`三维点云的特征`并找到`精确的对应关系`。然后，使用这些对应关系来`估计具有单独变换估计阶段的变换`。
 
-![点云配准分类](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111006168.png)
+![点云配准分类](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211024111006168.png)
 
 （a）一种`基于优化的点云配准框架`。给定两个输入点云，`迭代估计这些点云之间的对应关系和变换`。算法输出最优变换T作为最终变换矩阵。
 
@@ -25,7 +25,7 @@
 - 不需要训练数据，可以很好地推广到未知场景。
 - 局限性在于，需要`许多复杂的策略来克服噪声、异常值、密度变化和部分重叠的变化，这将增加计算成本`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112518330.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211024112518330.png)
 
 （b）基于`特征学习的点云配准框架`。给定两个输入点云，利用深度神经网络对特征进行估计。然后，对应和变换估计(Ransac算法）迭代运行以估计最终变换矩阵T。
 
@@ -35,13 +35,13 @@
 
 > 3DMatch 总体框架，3DMatch从RGBD图像训练并行网络。3DMatch的输入是三维体素数据，`输出是一个局部面片的512维特征`。3DMatch可以提取三维点云的局部特征。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112558653.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211024112558653.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112656009.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211024112656009.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112720732.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211024112720732.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111750220.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211024111750220.png)
 
 （c）一个基于`端到端学习的点云配准框架`。给定两个输入点云，使用端到端框架来估计最终变换矩阵T。
 
@@ -51,15 +51,15 @@
 -  它既可以利用传统数学理论的优点，又能利用深层神经网络的优点。
 - 回归方法将变换参数估计看作黑匣子，距离度量在基于坐标的欧氏空间中进行测量，`该空间对噪声和密度差敏感`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112809624.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211024112809624.png)
 
 （d）一个`跨源点云配准框架`。在给定两个输入点云的情况下，设计了一个配准框架来克服跨源问题并估计最终的变换矩阵T。
 
 - CSGM[41]将配准问题转化为图匹配问题，并利用图匹配理论来克服这些挑战.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024111837596.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211024111837596.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211024112829897.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211024112829897.png)
 
 ### 3. 同源点云配准
 

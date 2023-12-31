@@ -3,15 +3,15 @@
 
 > 广义上存储都是指数据中心里面使用的存储设备，这里面包含了`存储硬件系统、软件系统、存储网络和存储解决方案`。存储软件系统对存储中的数据提供管理，将多种存储硬件和软件组合起来形成解决方案可以满足业务较高的数据管理需求，比如数据整合的解决方案、容灾备份的解决方案。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/%E4%B8%AD%E5%BF%83%E4%B8%BB%E9%A2%98.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/%E4%B8%AD%E5%BF%83%E4%B8%BB%E9%A2%98.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409115428256.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409115428256.png)
 
 ## 1. 存储技术发展
 
 ### .1. DAS架构
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409115642285.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409115642285.png)
 
 - **直连存储（DAS）**：是一种存储设备与服务器直接相连的架构。DAS 为服务器提供块级的存储服务（不是文件系统级）。DAS 的例子有：服务器内部的硬盘，直接连接到服务器上的磁带库，直接连接到服务器上的外部的硬盘盒。基于存储设备与服务器间的位置关系，DAS 分为内部 DAS 和外部 DAS 两类。
   - **内部 DAS**：在内部 DAS 架构中，`存储设备通过服务器机箱内部的并行或串行总线连接到服务器上`。但是，物理的总线有距离限制，只能支持短距离的高速数据传输。此外，很多内部总线能连接的设备数目也有限，并且将存储设备放在服务器机箱内部，也会占用大量的空间 ，对服务器其它部件的维护造成困难。
@@ -19,21 +19,21 @@
 
 ### .2. NAS 架构
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409115839455.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409115839455.png)
 
 - **网络附加存储（Network Attached Storage，NAS）**是`连接到一个局域网的基于 IP 的文件共享设备`。NAS 通过文件级的数据访问和共享提供存储资源，使客户能够以最小的存储管理开销快速直接共享文件；采用 NAS 可以不用建立多个文件服务器，是首选的文件共享存储解决方案； NAS 还有助于消除用户访问通用服务器时的瓶颈；NAS 使用网络和文件共享协议进行归档和存储，这些协议包括进行数据传输的 TCP/IP 和提供远程文件服务的 CIFS、NFS。
 - UNIX 和 Microsoft Windows 用户能够通过 NAS 无缝共享相同的数据，通常有 NAS 和 FTP 两种数据共享方式。采用 NAS 共享的时候，UNIX 通常使用用 NFS，Windows 使用 CIFS。随着网络技术的发展，NAS 扩展到用于满足企业访问数据高性能和高可靠性的需求。 NAS 设备是专用的、高性能的、高速的、单一用途的文件服务和存储系统。 NAS 客户端和服务器之间通过 IP 网络通讯，大多数 NAS 设备支持多种接口和网络。 NAS 设备使用自己的操作系统和集成的硬件、软件组件，满足特定的文件服务需求。NAS 对操作系统和文件 I/O 进行了优化，执行文件 I/O 比一般用途的服务器更好。NAS 设备比传统的服务器能接入更多的客户机，达到对传统服务器进行整合目的。
 
 ### .3. FC SAN 架构
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409120006346.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409120006346.png)
 
 - **存储区域网络 (Storage Area Networks，SAN)：**是一个用在服务器和存储资源之间的、专用的、高性能的网络体系。它为了实现`大量原始数据的传输而进行了专门的优化`。因此，可以把 `FC SAN 看成是对 SCSI 协议在长距离应用上的扩展`。FC SAN 使用的典型协议组是 SCSI 和 Fiber Channel 。 Fiber Channel 特别适合这项应用，原因在于一方面它可以传输大块数据，另一方面它能够实现远距离传输。
 - FC SAN 的市场主要集中在高端的，企业级的存储应用上。这些应用对于性能，冗余度和数据的可获得性都有很高的要求。像存储阵列，备份设备等组件都可以称为存储设备。
 
 ### .4. IP SAN 架构
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409120124553.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409120124553.png)
 
 - 以 TCP/IP 协议为底层传输协议，采用以太网作为承载介质构建起来的存储区域网络架构。
 - 实现 IP SAN 的典型协议是 iSCSI，它`定义了 SCSI 指令集在 IP 网络中传输的封装方式`。
@@ -46,18 +46,18 @@
 
 ### .1. 融合存储
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409120250302.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409120250302.png)
 
 ### .2. [云存储](https://so.csdn.net/so/search?q=云存储&spm=1001.2101.3001.7020)：分布式存储
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409120330405.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409120330405.png)
 
 - 分布式存储简单的来说，将标准 x86 服务器的本地 HDD、SSD 等存储介质组织成一个大规模的存储资源池，然后将数据分散存储到多个数据存储服务器上。
 - 分布式存储目前多借鉴 Google 的经验，在众多的服务器搭建一个分布式文件系统，再在这个分布式文件系统上实现相关的数据存储业务。
 
 ### .3. 云储存：软件定义存储
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409120403854.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409120403854.png)
 
 - 软件定义存储将通用 X86 服务器的本地 HDD、SSD 等介质通过[分布式](https://so.csdn.net/so/search?q=分布式&spm=1001.2101.3001.7020)技术组织成大规模存储资源池，对非虚拟化环境的上层应用和虚拟机提供工业界标准的 SCSI 和 iSCSI 接口。
 
@@ -65,7 +65,7 @@
 
 ### .1. 软件定义全融合云存储
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409120641430.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409120641430.png)
 
 - **FusionStorage 软件定义的全融合云存储**，基于标准 X86 硬件平台构建极致性能、极致扩展、开放兼容的存储资源池，为金融、运营商、政府公共事业的新兴云应用按需提供块、文件、对象多存储服务。
 - 产品既具备分布式架构的极致性能、弹性与灵活性，助力客户业务敏捷，又具有企业级产品的可靠性与可用性，从容应对互联网化、云化及大数据应用新挑战。

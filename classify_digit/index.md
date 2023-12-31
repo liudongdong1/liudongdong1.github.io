@@ -203,7 +203,7 @@ plt.colorbar(imshow_handle, cax=ax, orientation='horizontal')
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210522204703033.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210522204703033.png)
 
 
 ---

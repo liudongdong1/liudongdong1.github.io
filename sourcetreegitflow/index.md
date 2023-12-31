@@ -7,19 +7,19 @@
 
 - 配置密钥 SourceTree → Tools → Options
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210902094921632.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210902094921632.png)
 
 ### 2. GitFlow
 
 #### .1. 流程
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/workflow.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/workflow.png)
 
 #### .2. 持续化交付
 
 > 编码 -> 构建 -> 集成 -> 测试 -> 交付 -> 部署
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210902095126026.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210902095126026.png)
 
 
 

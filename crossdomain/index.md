@@ -5,7 +5,7 @@
 >
 > Domain adaptation generally assumes that the two domains have the same conditional distributions, but different marginal distributions.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006201042249.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006201042249.png)
 
 ## 1. Resource
 
@@ -45,19 +45,19 @@
 
 - **Problem Formulation**:
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006164014178.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006164014178.png)
 
 - **system overview**:
 
 > The proposed method consists of (a) fixed ratio-based mixup, (b) confidence-based learning, e.g., bidirectional matching with the positive pseudo-labels and self-penalization with the negative pseudo-labels, and (c) consistency regularization.   
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006160100542.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006160100542.png)
 
 **【Module One】** **Fixed Ratio-based Mixup**
 
 - a data augmentation method to increase the robustness of model when learning from corrupt labels.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006165030071.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006165030071.png)
 
 **【Module Two】** **Confidence-based learning**
 
@@ -66,20 +66,20 @@
 - Bidirectinal Matching with positive pseudo-labels:
   - when one network assigns the class probability of input above a certain threshold r, we assume that this predicted label as a pseudo-label(positive pseudo-labels).
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006183316923.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006183316923.png)
 
 - self-penalization with negative pseudo-labels:
   - since the nagetive psudo-label is unlikely to be a correct label, we need to increase the proballibity values of all other classes except for this negative pseudo-label. And optimize the output probability corresponding to the nagative pseudo-label to be close to zero.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006183823708.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006183823708.png)
 
 **【Module Three】Consistency Regularization**
 
 > to ensure a stable convergence of training both models, and the trained models should be regularized to have consistent results in the same space. helps to construct the domain bridging by ensuring that two models trained from the different domain spaces maintain consistency in the same area between the source and target domain.  ？？ 为什么同一个图片，俩个模型输出的结果都要求对呢？ `回答： 这里的xi是俩这个域混合之后的图像。loss=fixmix_sd_loss+fixmix_td_loss+bim_sd_loss+bim_td_loss+cr_loss`.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006184724627.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006184724627.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006185403466.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006185403466.png)
 
 #### Evaluation
 

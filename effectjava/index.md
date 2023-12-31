@@ -346,11 +346,11 @@ public class Test {
 
 ##### .5.3. 重用那些已知不会修改的可变对象
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210511105326262.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210511105326262.png)
 
 ##### .5.4. mapkeyset
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210511110539945.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210511110539945.png)
 
 ##### .5.5. 优先使用基本数据类型而不是装箱基本类型，要当心无意识的自动装箱。
 
@@ -428,7 +428,7 @@ public class Stack {
 
 #### .7. 避免使用终结方法
 
-![image-20210511112412381](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210511112412381.png)
+![image-20210511112412381](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210511112412381.png)
 
 ### 2. 对所有对象通用方法
 

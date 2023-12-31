@@ -20,21 +20,21 @@ array([1, 1, 1])
 array([2, 2])
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010104858838.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201010104858838.png)
 
 
 
 - **[Torch.max()](https://pytorch.org/docs/stable/generated/torch.max.html), 注意这里返回俩个值**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010105908365.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201010105908365.png)
 
 - **Torch.sum()**   0: 按列sum； 1: 按行sum；
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010110825280.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201010110825280.png)
 
 - **BATCHNORM2D**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201021110219308.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021110219308.png)
 
 ### 1. model.py
 

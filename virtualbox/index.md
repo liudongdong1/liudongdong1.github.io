@@ -20,11 +20,11 @@ iface eth0 inet dhcp
 
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201216204330355.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201216204330355.png)
 
 > 选择【高级】-->【端口转发】，将虚拟机的端口22映射为任一端口，如2222其他的服务也可以做相同的设置，22是ssh的服务端口。`ssh -p2222 user@宿主机IP`, 可以使用例如vscode之类编写代码。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201216204425002.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201216204425002.png)
 
 
 

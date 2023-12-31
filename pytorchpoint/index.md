@@ -29,7 +29,7 @@ torch.cuda.empty_cache()
 
 #### 1.3. Tensor 处理
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200830084404.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200830084404.png)
 
 ```python
 tensor = torch.randn(3,4,5)

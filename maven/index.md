@@ -8,7 +8,7 @@
 >
 > 当项目编译时，Maven首先从本地仓库中寻找项目所需的Jar包，若本地仓库没有，再到[Maven的中央仓库](https://mvnrepository.com/)下载所需Jar包。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619202909850.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210619202909850.png)
 
 ### 1. 命令
 
@@ -447,7 +447,7 @@ converted（仓库管理员从 Maven 1 POM转换过来），partner（直接从�
 
 ### 5. 多模块管理
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210626222552541.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210626222552541.png)
 
 > 注意：在依赖引用过程中，千万不可以出现循环依赖，比如 client 引用了 service，service 也引用了 client，如果出现这种情况 maven 在打包的时候会直接报错
 

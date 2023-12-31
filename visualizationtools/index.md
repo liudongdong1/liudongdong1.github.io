@@ -5,13 +5,13 @@
 
 > 3d plotting for Python in the Jupyter notebook based on IPython widgets using WebGL
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/screencast_quiver.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/screencast_quiver.gif)
 
 ### 2. [bokeh](https://github.com/bokeh/bokeh)
 
 > Interactive Data Visualization in the browser, from Python
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210902152656850.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210902152656850.png)
 
 [Awesome dataviz](https://github.com/fasouto/awesome-dataviz)
 

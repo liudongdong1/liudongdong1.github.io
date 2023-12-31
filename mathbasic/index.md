@@ -6,7 +6,7 @@
 
 - 损失函数：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201015233935401.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201015233935401.png)
 
 > E(w)是**损失函数（又称误差函数）**，`E`即Evaluate，有时候写成`L`即Loss
 > tn 是测试集的真实输出，又称目标变量【对应第一幅图中的蓝色点】
@@ -17,35 +17,35 @@
 
 - 损失函数+正则化
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201015234054348.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201015234054348.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201015234157084.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201015234157084.png)
 
 > λ被称为正则化系数，**越大，这个限制越强**
 
 - 一般正则化
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201015234342609.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201015234342609.png)
 
 > 另 $q=2;\quad X=\{x_1,x_2\}; W=\{w_1,w_2\}; q=[0.5:4]$; 则横轴是w1, 纵坐标是w2; z轴代表 正则项的值；
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201015234817880.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201015234817880.png)
 
-![image-20201015234838468](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201015234838468.png)
+![image-20201015234838468](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201015234838468.png)
 
 > 蓝色的圆圈表示没有经过限制的**损失函数在寻找最小值过程**中，w的不断迭代（随最小二乘法，最终目的还是使损失函数最小）变化情况，**表示的方法是等高线，z轴的值就是** E(w)；目标函数（误差函数）就是**求蓝圈+红圈的和的最小值**，而这个值通在很多情况下是**两个曲面相交的地方**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201015235032537.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201015235032537.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201015235529378.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201015235529378.png)
 
 ### 2. 线性代数
 
-- 仿射变换（Affine Transformation）![仿射变换（Affine Transformation）](https://gitee.com/github-25970295/blogImage/raw/master/img/仿射变换（Affine Transformation）.gif)
+- 仿射变换（Affine Transformation）![仿射变换（Affine Transformation）](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/仿射变换（Affine Transformation）.gif)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016003001811.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201016003001811.png)
 
-![36-Matrix1](https://gitee.com/github-25970295/blogImage/raw/master/img/36-Matrix1.gif)
+![36-Matrix1](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/36-Matrix1.gif)
 
 > Step1：i绿色i（x轴）进行移动（变换）
 > Step2：红色 j（y轴）进行移动（变换）
@@ -55,17 +55,17 @@
 
 - 矩阵乘法
 
-![42-Cal](https://gitee.com/github-25970295/blogImage/raw/master/img/42-Cal.gif)
+![42-Cal](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/42-Cal.gif)
 
 - 计算行列式
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016003723928.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201016003723928.png)
 
 - 线性方程组：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016003850373.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201016003850373.png)
 
-![62-xv](https://gitee.com/github-25970295/blogImage/raw/master/img/62-xv.gif)
+![62-xv](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/62-xv.gif)
 
 - 零空间：  变换后**落在原点的向量**的集合，称为**这个矩阵**（再次强调矩阵 = 变换的数字表达）的**零空间或核**
 
@@ -75,53 +75,53 @@
 >
 > 【注意】压缩就是变换，变换就是矩阵，其实说的就是矩阵满秩 = 列空间 + 零空间。
 
-![64-NullSpace](https://gitee.com/github-25970295/blogImage/raw/master/img/64-NullSpace.gif)
+![64-NullSpace](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/64-NullSpace.gif)
 
 > `n*m` 的几何意义是将**m维空间（输入空间）映射到n维空间（输出空间）**上；  矩阵乘法从右向左读；
 
 - 点积：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016004601739.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201016004601739.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016004623382.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201016004623382.png)
 
-![74-DualityAll](https://gitee.com/github-25970295/blogImage/raw/master/img/74-DualityAll.gif)
+![74-DualityAll](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/74-DualityAll.gif)
 
 - 叉积：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016005152810.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201016005152810.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016005114480.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201016005114480.png)
 
-![84-Volum](https://gitee.com/github-25970295/blogImage/raw/master/img/84-Volum.gif)
+![84-Volum](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/84-Volum.gif)
 
 - 求特征值
 
-![image-20201016005903476](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016005903476.png)
+![image-20201016005903476](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201016005903476.png)
 
-![102-Lambda](https://gitee.com/github-25970295/blogImage/raw/master/img/102-Lambda.gif)
+![102-Lambda](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/102-Lambda.gif)
 
 - 矩阵与函数
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016010052045.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201016010052045.png)
 
-![image-20201016010104592](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016010104592.png)
+![image-20201016010104592](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201016010104592.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016010128833.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201016010128833.png)
 
 ### 3. 几种基本函数
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027144127893.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027144127893.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027144143984.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027144143984.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027144203831.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027144203831.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027144216739.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027144216739.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027144235857.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027144235857.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027144254996.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027144254996.png)
 
 
 
@@ -129,13 +129,13 @@
 
 **正态分布**的[概率密度函数](http://zh.wikipedia.org/wiki/概率密度函数)均值为μ [方差](http://zh.wikipedia.org/wiki/方差)为σ2 (或[标准差](http://zh.wikipedia.org/wiki/標準差)σ)是[高斯函数](http://zh.wikipedia.org/wiki/高斯函數)的一个实例：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201106152113676.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201106152113676.png)
 
 **累积分布函数**： [累积分布函数](http://zh.wikipedia.org/wiki/累积分布函数)是指随机变量*X*小于或等于*x*的概率
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201106152245618.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201106152245618.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201106153226099.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201106153226099.png)
 
 ```python
 def average(data):
@@ -247,7 +247,7 @@ plt.hist(a, bins =  [0,20,40,60,80,100]) #  绘制数据分布条形图
   -  a 和 b 形状相同，即满足 **a.shape == b.shape**，那么 a*b 的结果就是 a 与 b 数组对应位相乘。
   - 运算中的 2 个数组的形状不同时，numpy 将自动触发广播机制。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201115192633403.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201115192633403.png)
 
 | `reshape` | 不改变数据的条件下修改形状                           |
 | --------- | ---------------------------------------------------- |

@@ -3,7 +3,7 @@
 
 > A **Bloom filter** is a space-efficient [probabilistic](https://en.wikipedia.org/wiki/Probabilistic) [data structure](https://en.wikipedia.org/wiki/Data_structure), conceived by [Burton Howard Bloom](https://en.wikipedia.org/w/index.php?title=Burton_Howard_Bloom&action=edit&redlink=1) in 1970, that is used to test whether an [element](https://en.wikipedia.org/wiki/Element_(mathematics)) is a member of a [set](https://en.wikipedia.org/wiki/Set_(computer_science)). a query returns either "possibly in set" or "definitely not in set". the shortcoming of this structure is that the more elements that are added to the set, the larger the probability of false positives. and , Bloom filters do not store the data items at all, and a separate solution must be provided for the actual storage
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572229700748.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572229700748.png)
 
 **level**: IEEE International Conference on Computer Communications  INFCOM CCFA
 **author**: Tong Yang
@@ -52,29 +52,29 @@ previous work:
 
 use two version: Static Sign Bits version and Dynamic Sign Bits version, split each counter into two parts,sign bits ,and counting bits,when sign bits are all 0,increment the counting bits normally,else increment the counting bits with a probability calculated by the value of sign bits.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572159985155.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572159985155.png)
 
 for Static Version: the buckets structure as follows:
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572160032609.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572160032609.png)
 
 so the total count of the buckets is:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572160089664.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572160089664.png)
 
 insertion algorithm:
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572160126512.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572160126512.png)
 
 query algorithm:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572160151034.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572160151034.png)
 
 【定义子问题2】how to determine how many bits should be assigned for the sign bits?  Using the dynamic sign bit version .
 
 for dynamic counter structure:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572160188069.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572160188069.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572160351224.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572160351224.png)
 
 #### Evaluation
 
@@ -113,7 +113,7 @@ for dynamic counter structure:
 
 这篇文章主要讲述了 如何在网络流找出Top-k个大象流问题，使用decay概率方式有效的过滤大部分老鼠流，在fingerprint collsion方面提出的理论可以学习使用。
 
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572153854005.png)这里每个bucket 中fingerprintfield counterfield 各占多少字节是固定的，文中提到如果counterfield 都比较大时 添加新的array，这里能不能采用动态算法调节FP，C 间的存储空间
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572153854005.png)这里每个bucket 中fingerprintfield counterfield 各占多少字节是固定的，文中提到如果counterfield 都比较大时 添加新的array，这里能不能采用动态算法调节FP，C 间的存储空间
 - only focus  on handle top-k flows detection, cann't handle other flow measurement tasks(flow size estimation,entropy detection),cant support weighted updates.
 - Fingerprint 值文中没具体指出用什么来计算
 - Top-k里面存储的是流的ID，当流很大的情况下记录那个ID会不会溢出，虽然只有K个ID值，能不能也用新的hash函数计算
@@ -123,7 +123,7 @@ for dynamic counter structure:
 
 - **Application Area**: dynamically scheduling elephant flows,network capacity planning ,anomaly detection ,caching of forwarding table entries. data mining,information retrieval,databases,security
 - **Purpose**: Finding the Top-k elephant flows  and achieve space-accuracy balance by actively removing small flows through decaying while minimizing the impact on large flows. 
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572145566768.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572145566768.png)
 
 #### Problem&Challenge Statement
 
@@ -143,17 +143,17 @@ A new algorithm HeavyKeeper which uses the similar strategy called count-with-ex
 
 【定义问题1】 how to keep the flow ?  design a data structure called HeavyKeeper, and using Min-heap to store the K-top elephant flows
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572145776329.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572145776329.png)
 
 【定义问题2】how to insert and query package ？
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572145990086.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572145990086.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572146007970.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572146007970.png)
 
 【定义问题3】how to distinguish the elephant flow and mouse flow ? using decay Probability.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572146396956.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572146396956.png)
 
 【定义问题4】how to deal with the fingerprint collision detection caused by hash collision?
 
@@ -161,9 +161,9 @@ a mouse flow fj mapped to the same bucket has the same fingerprint as fi, i.e., 
 collisions. estimated size is drastically over-estimated  if flow has a fingerprint collision in all d arrays,
 the mouse flow fj will probably be inserted into the min-heap.    using IDs of flow instead of fingerprints(memory limited)   Still using  fingerprint ,propose a solution based on the Theorem. 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572146666813.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572146666813.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572146837647.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572146837647.png)
 
 【定义问题5】in the worst case, when a new flow arrives,if all values of its mapped d counters are large enough, it could never be inserted into some buckets  using extra global counter to record ,if >threshold,add a new array.
 
@@ -171,7 +171,7 @@ the mouse flow fj will probably be inserted into the min-heap.    using IDs of f
 
 插入流程：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572147118119.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572147118119.png)
 
 #### Evaluation
 
@@ -226,15 +226,15 @@ the eye-catching point of this article are as follows:
 
 - Data Model
 
-![1572313895442](https://gitee.com/github-25970295/blogImage/raw/master/img/1572313895442.png)
+![1572313895442](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572313895442.png)
 
 - System Architecture
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572314058134.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572314058134.png)
 
 - 【question 1】 how to compress Gradient values ?
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1572314125372.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1572314125372.png)
 
 #### Notes
 

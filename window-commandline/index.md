@@ -95,7 +95,7 @@ shell:startup
 %programdata%\Microsoft\Windows\Start Menu\Programs\Startup
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210707170127650.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210707170127650.png)
 
 
 

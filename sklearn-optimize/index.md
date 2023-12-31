@@ -13,7 +13,7 @@
 >
 > 5.**遇到不懂的问题，多查看sklearn官方文档，这是一个逐渐积累和提升的过程**。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210414094200.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210414094200.png)
 
 ### 1. [GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html?highlight=grid%20search#sklearn.model_selection.GridSearchCV)
 
@@ -165,7 +165,7 @@ print(best_estimator)
 print(grid.best_score_)
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210414095030.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210414095030.png)
 
 ##### .4. **MLPClassifier**
 
@@ -283,7 +283,7 @@ plt.grid(False)
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210522185021612.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210522185021612.png)
 
 ##### .7. Selecting dimensionality reduction with Pipeline
 
@@ -535,7 +535,7 @@ class mymodel():
 
 >  [`HalvingGridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.HalvingGridSearchCV.html#sklearn.model_selection.HalvingGridSearchCV) and [`HalvingRandomSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.HalvingRandomSearchCV.html#sklearn.model_selection.HalvingRandomSearchCV) can be used as drop-in replacement for [`GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV) and [`RandomizedSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html#sklearn.model_selection.RandomizedSearchCV). Successive Halving is an iterative selection process illustrated in the figure below. `The first iteration is run with a small amount of resources`, where the resource typically corresponds to the number of training samples, but can also be an arbitrary integer parameter such as `n_estimators` in a random forest. `Only a subset of the parameter candidates are selected for the next iteration`, which will be run with an increasing amount of allocated resources. `Only a subset of candidates will last until the end of the iteration process`, and the best parameter candidate is the one that has the highest score on the last iteration.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210414101408.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210414101408.png)
 
 #### 2.1. 函数介绍
 

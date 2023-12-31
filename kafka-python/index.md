@@ -17,15 +17,15 @@
 > - consumergroup: 每个Consumer属于一个特定的Consumer Group，`一条消息可以发送到多个不同的Consumer Group`，但是`一个Consumer Group中只能有一个Consumer能够消费该消息`
 > - Partion: 一个topic可以分为多个partition，每个partition内部是有序的
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/v2-aa36f2bbc1a6ff0d8f03aad80759bb01_720w.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-aa36f2bbc1a6ff0d8f03aad80759bb01_720w.jpg)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16642395-cb6fccc9314e4278)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16642395-cb6fccc9314e4278)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721210716067.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721210716067.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/v2-23dcdca68db7e5406e3f036297f68c4d_720w.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-23dcdca68db7e5406e3f036297f68c4d_720w.jpg)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210719182618893.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210719182618893.png)
 
 - cleaner-offset-checkpoint: 存了`每个log的最后清理offset`
 - meta.properties: [broker.id](http://broker.id/) 信息
@@ -93,7 +93,7 @@ for msg in consumer:
 
 #### 2. [KafkaProducer](https://kafka-python.readthedocs.io/en/master/apidoc/KafkaProducer.html)
 
-![《kafka实战教程(python操作kafka)，kafka配置文件详解》](https://gitee.com/github-25970295/blogpictureV2/raw/master/jUbM73.jpg)
+![《kafka实战教程(python操作kafka)，kafka配置文件详解》](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/jUbM73.jpg)
 
 > 创建`ProducerRecord必须包含Topic和Value`，key和partition可选。然后，`序列化key和value对象为ByteArray`，并发送到网络。消息`发送到partitioner`。如果创建ProducerRecord时指定了partition，此时partitioner啥也不用做，简单的返回指定的partition即可。如果未指定partition，`partitioner会基于ProducerRecord的key生成partition`。producer选择好partition后，增加record到对应topic和partition的batch record。最后，`专有线程负责发送batch record到合适的Kafka broker`。
 >
@@ -287,25 +287,25 @@ consumer2 = KafkaConsumer('my-topic',
 
 > Kafka 性能高效，采集日志时业务无感知以及Hadoop/ODPS 等离线仓库存储和 Storm/Spark 等实时在线分析对接的特性决定它非常适合作为"日志收集中心"。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210722101827282.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210722101827282.png)
 
 #### .2. **网站活动跟踪**
 
 > 通过消息队列 Kafka 版可以`实时收集网站活动数据（包括用户浏览页面、搜索及其他行为等）`。发布-订阅的模式可以根据不同的业务数据类型，将消息发布到不同的 Topic；还可通过订阅消息的实时投递，将`消息流用于实时监控与业务分析或加载到 Hadoop、ODPS 等离线数据仓库系统进行离线处理`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210722101936221.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210722101936221.png)
 
 #### .3. 流计算
 
 > `股市走向分析、气象数据测控、网站用户行为分析等领域`，由于数据产生快、实时性强、数据量大，所以很难统一采集并入库存储后再做处理，这便导致传统的数据处理架构不能满足需求。而`大数据消息中间件 Kafka 以及 Storm/Samza/Spark 等流计算引擎的出现，可以根据业务需求对数据进行计算分析，最终把结果保存或者分发给需要的组件。`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210722102127668.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210722102127668.png)
 
 #### .4. 数据中转枢纽
 
 > 近年来`KV存储（HBase）、搜索（ElasticSearch）、流式处理（Storm/Spark Streaming/Samza）、时序数据库（OpenTSDB）`等专用系统应运而生，产生了同一份数据集需要被注入到多个专用系统内的需求。利用大数据消息中间件 Kafka 作为数据中转枢纽，同份数据可以被导入到不同专用系统中。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210722102238409.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210722102238409.png)
 
 #### Resouce
 

@@ -22,7 +22,7 @@
 
 - leverage low-level vendor APIs such as InfiniBandTM Verbs, IntelR Performance Scaled Messaging 2 (PSM2), and CrayR Generic Network Interface (GNI) by y using OFI libfabric [16] as the intermediate layer that abstracts RDMA capabilities for RDMA-capable networks or emulated RMA (over point-to-point) for noncapable networks.
 
-![](../../../../../blogimgv2022/image-20220730104725547.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730104725547.png)
 
 ### Multi-Core Architecture Support
 
@@ -56,14 +56,14 @@ send RPCs back to themselves
 - 为了提供灵活的组合，RPC API 不能特定于任何实现，而只能依赖于源和目标概念。然后可以一致地使用 RPC 机制在不同的服务“服务器”和“客户端”之间进行通信。
 - 使用代理模式，或者硬件支持的 SEP 模式
 
-![](../../../../../blogimgv2022/image-20220730111134107.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730111134107.png)
 
 ### Resilience and Fault Tolerance
 
 - 允许服务在发生故障（例如，节点故障、服务组件无响应）后恢复，而不会影响性能，只需为取消挂起的操作提供强大的支持，`回收 RPC 操作先前分配的本地资源并从故障中正常恢复。 `
 - 如果涉及的任何对等方不再响应，则 RPC 和批量数据传输操作都可能被中断，在这种情况下，必须取消挂起的操作。取消无法完成的操作，无论是因为发生了故障还是达到了超时，对于达到正确的完成都是必要的。
 
-![](../../../../../blogimgv2022/image-20220730111635964.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730111635964.png)
 
 ## Function
 
@@ -79,7 +79,7 @@ send RPCs back to themselves
   - CCI plugin contributed by ORNL
   - Libfabric plugin contributed by Intel
 
-![](../../../../../blogimgv2022/image-20220730093238545.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730093238545.png)
 
 ## Architecture
 
@@ -88,11 +88,11 @@ send RPCs back to themselves
 > 3. the [bulk layer](https://mercury-hpc.github.io/user/hg_bulk/), which provides the necessary components for handling large arguments---this implies large data transfers through RMA;
 > 4. the (*optional*) [high-level RPC layer](https://mercury-hpc.github.io/user/hg_macros/), which aims at providing a convenience API, builds on top of the lower layers and provides macros for generating RPC stubs as well as serialization and deserialization functions.
 
-![](../../../../../blogimgv2022/image-20220730091152203.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730091152203.png)
 
-![](../../../../../blogimgv2022/image-20220730104034328.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730104034328.png)
 
-![](../../../../../blogimgv2022/image-20220730102906929.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730102906929.png)
 
 ### [Network Abstraction Layer](https://mercury-hpc.github.io/user/na/)
 
@@ -369,7 +369,7 @@ MERCURY_REGISTER(hg_class, func_name, in_struct_type_name, out_struct_type_name,
 
 ### 相关使用案例--Mochi
 
-![](../../../../../blogimgv2022/image-20220730102455807.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730102455807.png)
 
 - 其他： DAOS / DeltaFS / UnifyCR / Dataspaces / ParaView / Visit / SOS / Faodel
 
@@ -381,7 +381,7 @@ MERCURY_REGISTER(hg_class, func_name, in_struct_type_name, out_struct_type_name,
 4. **target:** execute call
 5. **target:** post send with serialized response; **Origin:** make `progess`
 
-![](../../../../../blogimgv2022/Screenshot from 2022-07-30 09-41-39.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Screenshot from 2022-07-30 09-41-39.png)
 
 ### Progress Model
 
@@ -403,7 +403,7 @@ do {
 } while (ret == HG_SUCCESS);
 ```
 
-![](../../../../../blogimgv2022/image-20220730095114525.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730095114525.png)
 
 ### RPC 代码
 
@@ -497,7 +497,7 @@ hg_return_t open_rpc_cb(hg_handle_t handle)
 - `Memory buffer(s) `abstracted by handle 
 - Handle must be serialized and exchanged using other means
 
-![](../../../../../blogimgv2022/image-20220730100912164.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730100912164.png)
 
 - 客户端代码
 
@@ -558,7 +558,7 @@ hg_return_t HG_Bulk_create(
 - make use of boost preprocessor for macro definition
   - generate serialization / deserialization functions and structure that contains parameters.
 
-![](../../../../../blogimgv2022/image-20220730102020501.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730102020501.png)
 
 ## Resource
 

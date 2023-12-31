@@ -3,7 +3,7 @@
 
 ### 1. PDF&CDF&PMF
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201203105337963.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201203105337963.png)
 
 ### 2.  code
 

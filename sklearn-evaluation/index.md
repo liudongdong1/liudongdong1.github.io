@@ -3,7 +3,7 @@
 
 ### 1. Cross-validation
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210522101535048.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210522101535048.png)
 
 - cross_val_score
 
@@ -199,7 +199,7 @@ plt.show()
 print(f"Correlation of models:\n {model_scores.transpose().corr()}")
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210522185417500.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210522185417500.png)
 
 #### 2. Compare model
 
@@ -328,7 +328,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210522195234766.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210522195234766.png)
 
 ### 4. ConfusionMatrix
 

@@ -3,9 +3,9 @@
 
 > 声音以波的形式传播，即声波（Sound Wave）。当我们以波的视角来理解声音时，却又大繁若简起来：仅凭频率（Frequency）、幅度（Magnitude）、相位（Phase）便构成了波及其叠加的所有，声音的不同音高（Pitch）、音量（Loudness）、音色（Timbre）也由这些基本“粒子”组合而来。`人耳对频率的接受范围大致为 20 Hz至20 kHz。`
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201120193700192.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201120193700192.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121165439718.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121165439718.png)
 
 ## 1. 语音交互优劣
 
@@ -26,7 +26,7 @@
   - `声学回声`
 - 心理负担。交互方式不一样，例如：不太愿意通过语音来进行交互，特别是在一些公共场合
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121143146814.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121143146814.png)
 
 #### 1.3. 前端处理意义
 
@@ -36,23 +36,23 @@
 
 ## 2.语言介绍
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201120194312704.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201120194312704.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201120194701096.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201120194701096.png)
 
-![频谱图](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201120194906952.png)
+![频谱图](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201120194906952.png)
 
 > 真正的语音不需要额外的注解，但对于数字化的语音来说，还需要额外的信息对文件格式进行说明，如`信道、采样率、精度、时长等`，并有文件大小=格式信息+信道数*采样率*精度*时长。频谱图种，颜色明暗表示频带能量大小，较亮的条纹即是共振峰（Formant)。
 
 ## 3. 信号处理算法
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121154523846.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121154523846.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121152759027.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121152759027.png)
 
 > 橙色部分表示多通道处理模块，蓝色部分表示单通道处理模块，红色部分表示后端识别合成等模块。麦克风阵列采集的语音首先利用参考源对各通道的信号进行回波消除，然后确定声源的方向信息，进而通过波束形成算法来增强目标方向的声音，再通过混响消除方法抑制混响；需要强调的是可以先进行多通道混响消除再进行波束形成，也可以先进行波束形成再进行单通道混响消除。经过上述处理后的单路语音进行后置滤波消除残留的音乐噪声，然后通过自动增益算法调节各个频带的能量后最为前端处理的输出，将输出的音频传递给后端进行识别和理解。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121143619989.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121143619989.png)
 
 #### 3.1.  回声消除(AEC)
 
@@ -63,9 +63,9 @@
 > - 首先将产生的回声信号在数值上取反，线性地叠加在回声信号上，将产生的回声信号抵消，实现电路回声的初步消除。
 > - 添加一个非线性处理器，其实质是一个阻挡信号的开关，将残余的回声信号经过非线性处理之后，就可以实现电路回声的消除.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121144123282.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121144123282.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121144355900.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121144355900.png)
 
 - **声学回声**
 
@@ -73,7 +73,7 @@
 >
 > **间接回声**：远端扬声器将语音信号播放出来后，语音信号经过复杂多变的墙面反射后由远端麦克风将其拾取。间接回声的大小与房间环境、物品摆放以及墙面吸引系数等等因素有关，因此间接回声是一种**非线性信号**。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121144525125.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121144525125.png)
 
 - **声场环境材料处理**
   - 墙壁、天花板换成吸音材料，有效的较少声音的反射，
@@ -84,23 +84,23 @@
 - **自适应回声抵消**
   - 通过自适应算法来调整滤波器的迭代更新系数，估计出一个期望信号，逼近经过实际回声路径的回声信号，也就是去模拟回声信号，然后从麦克风采集的混合信号中减去这个模拟回声，达到回声抵消的功能。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121145211534.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121145211534.png)
 
 - **LMS 算法介绍：**
 
 运用最小均方误差准则，对于LMS算法，其滤波器系数迭代公式为
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121150323433.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121150323433.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121150401231.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121150401231.png)
 
 - **NLMS算法**
 
 > 归一化最小均方（NLMS）算法是LMS算法的一个扩展，利用**可变的步长因子代替固定的步长因子，就得到了NLMS算法**，它通过计算最大步长值绕过了这个问题。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121150617280.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121150617280.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121151021922.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121151021922.png)
 
 
 
@@ -108,9 +108,9 @@
 
 > `混响是由语音的多径效应所产生`，在数学表达上是一个近场的纯净语音信号去卷积一个房间的冲击响应函数（RIR），这样的话能得到一个混响的语音信号。下图种蓝色部分为早期混响，橙色部分为晚期混响；在语音去混响任务中，更多的关注于对晚期混响的抑制。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121152840168.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121152840168.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121153038991.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121153038991.png)
 
 - **盲反卷积法**[NeelyandAllen，1979]：直接去估计房间冲击响应函数的逆函数，如果把RIR当做是一个滤波器的话，我们直接去估计RIR的一个逆滤波器，然后把逆滤波器作用在带有混响的语音上，就得到了纯净语音信号。`只能假设完全没有噪声的场景，并且假设房间的冲击响应函数RIR是不变的`，只有在这种比较严格的假设之下，才能得到相对较好的结果，但是这种假设在我们的实际情况当中是不会得到满足的，所以这种技术缺陷也是比较明显的）
 - **加权预测误差**[WPE，Takuya，2012]：因为语音信号具有`线性预测特性`(如果把语音信号当做是一系列采样点信号的话，那么下一个采样点可以用当前时刻以及当前时刻之前的若干采样点的值去预测出下一个时刻采样点的值)，`WPE认为混响可以分为早期混响和晚期混响`，早期混响对于我们人的听觉感受系统没有负向作用，相反可能还有正面作用；晚期混响相对于房间冲击响应的拖尾的声音。那么加权预测误差则是希望估计一个最优的线性预测滤波器，这个滤波器的作用能够将房间冲击响应函数消除晚期混响的影响，多用于多通道。适用于单通道和多通道场景，多通道效果更好。www.kecl.ntt.co.jp/icl/signal/takuya/research/dereverberation.html
@@ -131,7 +131,7 @@
 
 #### 3.4. 波束成形（Beamforming)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121153809081.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121153809081.png)
 
 #### 3.5. 语音降噪（NS）
 
@@ -147,14 +147,14 @@
   - 两大类方法：`masking&&mapping`
   - 通过DNN、CNN、RNN或者GAN，在频域或时域实现（多为频域）
 
-![增强前后](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121153928823.png)
+![增强前后](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121153928823.png)
 
 #### 3.6. 自动增益控制（AGC)
 
 - 动态范围控制（Dynamic Range Control）
 - 自动增益控制（Automatic Gain Control）
 
-![AGC前后](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121154021231.png)
+![AGC前后](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121154021231.png)
 
 ## 4. 学习链接
 

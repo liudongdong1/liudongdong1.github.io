@@ -37,7 +37,7 @@
 -  PolySync[41] provides an integrated development environment for the backend framework of self-driving technology.
 - ROS
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200614073656730.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200614073656730.png)
 
 #### Methods
 
@@ -45,9 +45,9 @@
 
 - **system overview**:
 
-![Basic Control&Data Flow](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200614072728804.png)
+![Basic Control&Data Flow](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200614072728804.png)
 
-![Software stack](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200614072905488.png)
+![Software stack](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200614072905488.png)
 
 【**Function Module**】**Sensing**
 
@@ -89,13 +89,13 @@
 >
 > **Vehicle Control:** to deal with phenomenon that the steering and the throttle of the ego-vehicle are successfully controlled in accordance with the velocity and angle output causing the trajectory deviate, using PID control, and updating the waypoints in consideration of obstacles in the heading lane area.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200614091914605.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200614091914605.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200614082848509.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200614082848509.png)
 
 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200625164643570.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200625164643570.png)
 
 https://mp.weixin.qq.com/s/XxEakqch2lVBP_rOd7HBmw
 

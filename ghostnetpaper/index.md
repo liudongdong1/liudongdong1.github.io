@@ -18,9 +18,9 @@
 1. apply a series of linear transformations with cheap cost to generate many ghost feature maps that could fully reveal information undelying intrinsic features;
 2. source code:https://github.com/huawei-noah/ghostnet
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210317190822273.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210317190822273.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210317191330156.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210317191330156.png)
 
 
 

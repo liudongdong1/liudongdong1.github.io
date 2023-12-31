@@ -17,27 +17,27 @@
 
 - **Embedding based kernels**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210609150700077.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210609150700077.png)
 
 #### .1. Graph Encoding
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210609153508184.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210609153508184.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210609153829280.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210609153829280.png)
 
 > an encoder is given asingle vertex and it is expected to predict its neighbors
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210609151146576.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210609151146576.png)
 
 #### .2. Cross-Graph Attention
 
 > an attention mechanism for aligning graphs basedon a set of encoded graph representations.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210609151931270.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210609151931270.png)
 
 #### .3. DDGK
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210609152603353.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210609152603353.png)
 
 ### Resouces
 

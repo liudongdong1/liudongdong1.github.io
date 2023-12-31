@@ -193,7 +193,7 @@ for i, suptitle in zip([1, 3, 5], suptitles):
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210522204223565.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210522204223565.png)
 
 ### 2. Map data to normal distribution
 
@@ -346,7 +346,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210522210521.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210522210521.png)
 
 #### .1. Strateges
 
@@ -431,7 +431,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210522210815.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210522210815.png)
 
 ### 4. Feature Scaling
 
@@ -532,7 +532,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210522211134973.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210522211134973.png)
 
 #### .2. Different Scalers
 

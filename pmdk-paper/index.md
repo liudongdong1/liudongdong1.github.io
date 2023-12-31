@@ -28,7 +28,7 @@ Scientific Computing
 
 -  PMOs are memory allocated objects and can only be accessed and shared via persistent pointers. For instance, with Intel’s PMDK libpmemobj API, each stored object on PM is represented by an object handle of type PMEMoid
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220806225625291.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220806225625291.png)
 
 - accessing and sharing a PMO requires an additional metadata mapping or index of objects with user or application provided semantics, and persisted along with memory objects
 
@@ -41,13 +41,13 @@ Scientific Computing
 - employs PMDK provided transactions to ensure atomicity and consistency. 
 - The metadata is indexed and managed in a lightweight persistent key-value (KV) store with a persistent B+-tree storage backend
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220806230051614.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220806230051614.png)
 
 > - Multiple compute nodes can create a shared namespace abstraction atop the shared PM pool via the MOSIQS library and directly store and manage memory objects on these namespaces.
 >
 > - .Multiple processes running at these compute nodes can access and share PMOs via namespace abstraction.
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220806230302500.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220806230302500.png)
 
 > - The `metadata extractor `is responsible to `extract and populate the object name` and `PMEMoid mappings`.
 > -  The `sharing manager` is responsible to enable the `data sharing among applications and collaborators. `
@@ -61,7 +61,7 @@ Scientific Computing
 > - `query manager` is to serve the query requests from the users/scientists and applications.
 > - MOSIQS `creates the shared PM pool` via libpmempool API [19]. Any object inside the PM pool is reachable via `Root object pointer`. When an application opens a pool, it is given a privilege to access the global memory Root pointer, which allows applications to locate the PMOs by accessing metadata stored in the pool KV store. The memory allocations and deallocations are conducted via libpmem at the lower level inside libpmemobj.
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220806231548711.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220806231548711.png)
 
 -  The OID denotes the PMO object, whereas GID refers to the group metadata object.
 - encapsulate each operation as a transaction backed by a logging approach

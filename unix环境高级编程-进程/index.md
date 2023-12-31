@@ -3,7 +3,7 @@
 
 ### 1. c程序启动&终止
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220410123656556.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220410123656556.png)
 
 ### 2. 环境表
 
@@ -11,13 +11,13 @@
 int main(int argc, char *argv[], char *envp[]);
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220410123925381.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220410123925381.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220410124208665.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220410124208665.png)
 
 - 通过size命令可以进行查看
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220410124253276.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220410124253276.png)
 
 ---
 

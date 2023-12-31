@@ -10,11 +10,11 @@
 
 ### 1. Alexnet 网络模型
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210512225816.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210512225816.png)
 
 > **N = (W − F + 2P ) / S + 1**:  其中W是输入图片大小，F是卷积核或池化核的大小， P是padding的像素个数 ，S是步距
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210512230856.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210512230856.png)
 
 - 卷积层1
 

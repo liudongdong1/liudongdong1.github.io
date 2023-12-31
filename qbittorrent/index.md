@@ -11,7 +11,7 @@
 
 > **qBittorrent是一款安全、合法的下载软件**，可在国内各大软件平台搜索下载，也可以前往**qBittorrent官网**下载，网址： [https://www.qbittorrent.org](https://www.qbittorrent.org/)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210731115341128.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210731115341128.png)
 
 ### 2. 使用方法
 
@@ -31,7 +31,7 @@
 - https://opentrackers.org/
 - https://newtrackon.com/list                                        这两个列表质量也挺高 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210731141119551.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210731141119551.png)
 
 #### .2. 尝试多个BT种子、磁力链接，选择最有人气的
 
@@ -43,15 +43,15 @@
 
 #### .4. 设置更高的下载优先级别
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210731141249675.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210731141249675.png)
 
 #### .5. 搜索引擎插件
 
 - https://github.com/qbittorrent/search-plugins/wiki/Unofficial-search-plugins
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210731145736859.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210731145736859.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210731151934185.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210731151934185.png)
 
 ### 3. 种子网址
 

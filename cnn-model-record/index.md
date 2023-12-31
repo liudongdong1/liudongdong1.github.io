@@ -7,7 +7,7 @@
 
 > 一维卷积主要用于对只有一个维度的时间序列提取特征，比如信号、股价、天气、文本以及自然语言处理领域。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201011195051641.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201011195051641.png)
 
 # 2. [Conv Calculation](https://ezyang.github.io/convolution-visualizer/index.html)
 
@@ -25,9 +25,9 @@
 
 **输入矩阵、权重矩阵、输出矩阵这三者之间的相互决定关系**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101124419.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021101124419.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021101107678.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021101107678.png)
 $$
 H_{out} = \left\lfloor\frac{H_{in}  + 2 \times \text{padding}[0] - \text{dilation}[0]
                         \times (\text{kernel_size}[0] - 1) - 1}{\text{stride}[0]} + 1\right\rfloor
@@ -48,9 +48,9 @@ example one: 标准卷积计算
 > \- 假设 batch_size = 256，
 > \- 则输出矩阵的高度/宽度为 (227 - 11) / 4 + 1 = 55
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132214697.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201010132214697.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010132327322.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201010132327322.png)
 
 ```python
 tf.keras.layers.Conv2D(
@@ -149,12 +149,12 @@ def Generator_model():
 
 # 3. 3D 卷积（C3D)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195154368.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201011195154368.png)
 
 > 与2D卷积不同之处在于，输入的图像多了一个 depth 维度，即输入为(1, depth, height, width)，卷积核也多了一个k_d维度，因此卷积核在输入3D图像的空间维度（height和width维）和depth维度上均进行滑窗操作，每次滑窗与 (k_d, k_h, k_w) 窗口内的values进行相关操作，得到输出3D图像中的一个value。
 >  针对多通道，输入大小为(3, depth, height, width)，则与2D卷积的操作一样，每次滑窗与3个channels上的 (k_d, k_h, k_w) 窗口内的所有values进行相关操作，得到输出3D图像中的一个value。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011195227311.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201011195227311.png)
 
 # 4.Paper Reading
 
@@ -195,9 +195,9 @@ def Generator_model():
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124108672.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191130124108672.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130124633940.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191130124633940.png)
 
 - Dense connectivit
 
@@ -207,7 +207,7 @@ $$
 
 - Composite function:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130125645770.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191130125645770.png)
 
 - Pooling layers: down-sampling layers changing the size of feature maps,refering to layers between blocks as transition layers which do convolution and pooling. the transition layers consist of a batch of normalization layer and 1*1 convolutional layer followed by a 2*2 average pooling layer
 - **Growth Rate**: the $l_th$ layers has k0+k*(l-1) input feature-map, k0 is the number of channels in the input layer.
@@ -246,7 +246,7 @@ $$
 
 #### Proble Statement
 
-- Deep networks naturally integrate low/mid/high level features and classifiers in an end-to-end multi-layer fashion,and the level of features can be enriched by the number of stacked layers.![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130131715128.png)
+- Deep networks naturally integrate low/mid/high level features and classifiers in an end-to-end multi-layer fashion,and the level of features can be enriched by the number of stacked layers.![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191130131715128.png)
 
 previous work:
 
@@ -256,9 +256,9 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132128156.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191130132128156.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130132712377.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191130132712377.png)
 
 Figure 3. Example network architectures for ImageNet. Left: the VGG-19 model [40] (19.6 billion FLOPs) as a reference. Mid-
 dle: a plain network with 34 parameter layers (3.6 billion FLOPs).
@@ -304,14 +304,14 @@ more details and other variants.
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130133741574.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191130133741574.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130151104006.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191130151104006.png)
 
 - Mask R-CNN adopts the same two-stage procedure with an identical first stage(RPN),in the second stage .in parrallel to predicting the class and box offset, Mask R-CNN also outputs a binary mask for each RoI.
 - Loss Function     $L = L cls + L box + L mask$ 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191130150329761.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191130150329761.png)
 
 - we predict m* m mask from each ROI using an FCN[24],allowing each layer in the mask branch to maintain the explicit m*m object  spatial layout without collapsing it into a vector representation that lacks dimensions.
 - RoIAlign : RoIPool first quantizes a floating-number RoI to the discrete granularity of the feature map, this quantized RoI is then subdivided into spatial bins which are themselves quantized, and finally feature values covered by each bin are aggregated(usually by max pooling) <font color=red> we avoid any quantization of the RoI boundaries or bins (i.e., we use x/16 instead of [x/16]). We use bilinear interpolation [18] to compute the exact values of the input features at four regularly sampled locations in each RoI bin,

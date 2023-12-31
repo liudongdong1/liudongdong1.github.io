@@ -73,7 +73,7 @@ url="c.xinbaoku.com"
 echo ${url: 2: 9}   #biancheng
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403141030515.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403141030515.png)
 
 ##### .5. 数组操作
 
@@ -110,7 +110,7 @@ echo ${array_new[@]}  #也可以写作 ${array_new[*]}
 
 ##### .6. 函数传参
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403140308952.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403140308952.png)
 
 ```shell
 funWithParam(){
@@ -205,7 +205,7 @@ fi
 
 ##### .7. 数学计算命令
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403142046933.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403142046933.png)
 
 ```shell
 echo $((++a))  #如果++在a的前面，输出整个表达式时，先进行自增或自减计算，因为a为9，且要自增1，所以输出10。
@@ -295,7 +295,7 @@ ls /usr/bin -al > log.$today
 
 ##### .2. 输入相关
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403141725747.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403141725747.png)
 
 ```shell
 #超时计数输入

@@ -62,7 +62,7 @@ public final class R {
 
 ### 2. 访问使用
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/Center.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Center.png)
 
 - /res/raw下面的文件(子文件夹是访问不到的了)的访问方式是通过Resources，并且必须提供资源的Id
 

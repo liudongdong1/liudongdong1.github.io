@@ -3,7 +3,7 @@
 
 > `torch.nn.``Linear`(*in_features*, *out_features*, *bias=True*)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210529191622728.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210529191622728.png)
 
 ```python
 [docs]class Linear(Module):

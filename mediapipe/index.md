@@ -10,9 +10,9 @@
 3. **Ready-to-use solutions:** cutting-edge ML solutions demonstrating full power of the framework
 4. **Free and Open Source**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200824115410.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200824115410.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200824115501.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200824115501.png)
 
 # 2.PaperReading
 
@@ -98,7 +98,7 @@
 - no packets are dropped, and the processing is fully deterministic;
 - the node becomes ready to process data as soon as possible given the guarantees above.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831085500.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831085500.png)
 
 【**Flow Control**】
 
@@ -107,7 +107,7 @@
 - a simple back-pressure system: throttles the execution of upstream nodes when the packets buffered on a stream reach limit; by maintaining deterministic behavior and includes a deadlock avoidance system that relaxes configured limits;
 - a richer node-based system: consists of inserting special nodes which can drop packets according to real-time constraints;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831090000.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831090000.png)
 
 【GPU support】
 
@@ -122,7 +122,7 @@
   - Timeline View
   - Graph view
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831090454.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831090454.png)
 
 
 
@@ -130,7 +130,7 @@
 
 - Object Detection
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831090533.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831090533.png)
 
 > -  In the detection branch, a frame-selection node ﬁrst selects frames to go through detection based on limiting frequency or scene-change analysis, and passes them to the detector while dropping the irrelevant frames. 
 > - The objectdetection node consumes an ML model and the associated label map as input side packets, performs ML inference on the incoming selected frames using an inference engine (e.g., [12] or [2]) and outputs detection results.
@@ -140,14 +140,14 @@
 - FaceLandmark
   - demultiplexing node splits the packets in the input stream into interleaving subsets of packets, with subset going into a separate output stream;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831091200.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831091200.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
   - Beam[1]; Apache beam: An advanced uniﬁed programming model. 
   -  Dataflow[5];  Thedataﬂowmodel: Apracticalapproach to balancing correctness, latency, and cost in massive-scale, unbounded,out-of-orderdataprocessing
   - Gstream[8];  https: //gstreamer.freedesktop.org/, 
-  - CV4.0(graph api[9])；OpenCV Graph API. Intel Corporation, 2018. 
+  - opencv4.0(graph api[9])；OpenCV Graph API. Intel Corporation, 2018. 
 
 **level**: 
 **author**: Valentin Bazarevsky (google research)
@@ -172,7 +172,7 @@
 1. blazepose, a lightweight convolutional neural network architecture for human pose estimation that is tailored for real-time inference on mobile devices.
 2. produces 33 body keypoints for a single person and runs at over 30    frames per second on a Pixel 2 phone.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200821200224.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200821200224.png)
 
 #### Research Objective
 
@@ -183,13 +183,13 @@
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200821195628.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200821195628.png)
 
 > a lightweight body pose detector followed by a pose tracker network, the tracker predicts keypoint coordinates, the presence of the person on the current frame, and the refined region of interest for the current frame, when the tracker indicates that there is no human present, we re-run the detector network on the next frame.
 
 【Person Detector】use a fast on-device face-detector as a proxy for a person detector. the middle point between the person's hips, the size of the circle circumscribing the whole person, and incline(the angle between the lines connecting the two mid-shoulder and mid-hip points).
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200821212805.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200821212805.png)
 
 > - use the heatmap and offset loss only in the training stage and remove the corresponding output layers from the model before running the inference. use the heatmap to supervise the lightweight embedding, 
 >
@@ -198,7 +198,7 @@
 > - utilize skip-connections between all the stages of the network to achieve a balance between high and low-level features.
 > - for invisible points, simulate occlusions during training and introduce a per-point visibility classifier that indicates whether a particular point is occluded and if the position prediction is deemed inaccurate.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200821213938.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200821213938.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -235,7 +235,7 @@
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200821214746.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200821214746.png)
 
 **【BlazePalm Detector】**
 
@@ -249,11 +249,11 @@
 
 **【Hand Landmark Model】**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200821220035.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200821220035.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200821220256.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200821220256.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200821220320.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200821220320.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -261,24 +261,24 @@
 >
 > http://matov.me/isometric-toolset/  能不能将2.5D坐标转化为3D坐标。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201101104102167.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201101104102167.png)
 
   - [x] multi-handDetection pipeline
 - **multi_hand_detection_gpu**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200916212815466.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200916212815466.png)
 
 - **multi_hand_landmark_gpu**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200916214124663.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200916214124663.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200916214222259.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200916214222259.png)
 
 
 
 - **multi_hand_renderer_gpu**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200916221843111.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200916221843111.png)
 
 
 
@@ -305,7 +305,7 @@
 3. this methods can be used to accurately control the pupil movements of a virtual puppet, and lends liveliness and energy to it, run 50FPs on model phones.
 4. detects 5 points of the pupil, outer iris circle and eye contour for each eye;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831094224.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831094224.png)
 
 #### System Overview
 
@@ -323,7 +323,7 @@
 
 > for the pupil pointing inwards, using the vertex of the pupil and vertex of eye corner, and measure the displacement $D_{current}$ between these two vertices and compare it to two empirically derived displacements $D_{neutral}$ , the displacement with the minimum activation of the blend shape and $D_{activated}$ the displacement measured using maximum activation of the blend shape. 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831100400.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831100400.png)
 
 【**Real-time heuristics calibratin**】
 
@@ -331,11 +331,11 @@
 >
 > employ the standard score calculation algorithm with a few modificaitons, the main idea of the filter is to check the displacement on every iteration and add it to a circular buffer of the trusted displacement if it falls within the specified confidence interval, and the calibrated displacement is calculated as an average of the trusted displacement, the standard deviation of these trusted displacements is used as the confidence interval in the next iteration.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831102522.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831102522.png)
 
 #### Evaluation
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831102637.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831102637.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -351,7 +351,7 @@
 
 > AutoFlip provides a fully automatic solution to smart video reframing, making use of state-of-the-art ML-enabled object detection and tracking technologies to intelligently understand video content. AutoFlip detects changes in the composition that signify scene changes in order to isolate scenes for processing. Within each shot, video analysis is used to identify salient content before the scene is reframed by selecting a camera mode and path optimized for the contents.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200825153825.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200825153825.png)
 
 - **Shot (Scene) Detection**: 
 
@@ -362,7 +362,7 @@
 
 > AutoFlip automatically chooses an optimal refremingn strategy, stationary, paining or tracking, depending on the way obects behave during the scene.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/jitter_combined.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/jitter_combined.gif)
 
 > **Top:** Camera paths resulting from following the bounding boxes from frame-to-frame. **Bottom:** Final smoothed camera paths generated using [Euclidean-norm](https://en.wikipedia.org/wiki/Norm_(mathematics)#Euclidean_norm) path formation. **Left:** Scene in which objects are moving around, requiring a tracking camera path. **Right:** Scene where objects stay close to the same position; a stationary camera covers the content for the full duration of the scene.
 
@@ -373,9 +373,9 @@
 - **Real-World 3D Training Data**: With the arrival of [ARCore](https://developers.google.com/ar) and [ARKit](https://developer.apple.com/augmented-reality/), [hundreds of millions](https://arinsider.co/2019/05/13/arcore-reaches-400-million-devices/) of smartphones now have AR capabilities and the ability to capture additional information during an AR session, including the camera pose, sparse [3D point clouds](https://en.wikipedia.org/wiki/Point_cloud), estimated lighting, and planar surfaces.
 - **AR Synthetic Data Generation:** AR Synthetic Data Generation, places virtual objects into scenes that have AR session data, which allows us to leverage camera poses, detected planar surfaces, and estimated lighting to generate placements that are physically probable and with lighting that matches the scene.
 
-![Network architecture and post-processing for 3D object detection.](https://gitee.com/github-25970295/blogImage/raw/master/img/20200825170636.png)
+![Network architecture and post-processing for 3D object detection.](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200825170636.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200825170655.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200825170655.png)
 
 > Sample results of our network — [**left**] original 2D image with estimated bounding boxes, [**middle**] object detection by Gaussian distribution, [**right**] predicted segmentation mask.
 
@@ -388,7 +388,7 @@
 - **Motion Detection: ** by calculating the difference between two frames with some additional tricks that take the movements detected in a few frames
 - **Area of Interest:** manually mask out the area where they don't want the camera to see.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200825173215.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200825173215.png)
 
 ### 3.4. Iris Tracking and Depth Estimation
 
@@ -398,7 +398,7 @@
 
 - Depth-from-Iris from a single Image: <font color=red>by relying on the fact that the horizontal iris diameter of the human eye remains roughly constant at 11.7+-0.5 mm across a wide population, along with some simple geometric arguments.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200825174114.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200825174114.png)
 
 ---
 

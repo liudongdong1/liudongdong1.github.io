@@ -3,7 +3,7 @@
 
 >1byte = 8 bit； 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210419170144.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210419170144.png)
 
 ### 1. 强制转化截取和 精确转化
 
@@ -31,7 +31,7 @@ public byte[] toBytes(int number){
 
 - 大端模式&小端模式
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210419170518.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210419170518.png)
 
 ### 2. 进制转化
 

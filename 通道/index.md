@@ -348,7 +348,7 @@ func main() {
 >
 >  **先统一 `Add` ，再并发 `Done` ，最后 `Wait`** 这种标准方式，来使用 `WaitGroup` 值。 尤其不要在调用 `Wait` 方法的同时，并发地通过调用 `Add` 方法去增加其计数器的值，因为这也有可能引发 `panic` 。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaHUxMTA0,size_16,color_FFFFFF,t_70#pic_center-16537042929663.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaHUxMTA0,size_16,color_FFFFFF,t_70#pic_center-16537042929663.png)
 
 ```go
 package main

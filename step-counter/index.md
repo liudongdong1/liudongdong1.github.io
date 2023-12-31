@@ -34,9 +34,9 @@
 - **在 detectorPeak 中** 规定连续上升两次，并且波峰值大于 20 才认为是一个有效波峰（目的也是过滤 掉波形上的抖动）
 - **在 peakValleyThread averageValue 中** 滚动记录四个有效波峰波谷差值并计算平均值，再梯度化。合适的 ThreadValue 会过滤抖动，且识别步点。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521220341636.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521220341636.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521223025624.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521223025624.png)
 
 > 如上图所示，可以通过矢量加速度的 斜率正负进行判断。3轴加速度传感器采集数据->滤波->二次波峰监测，波峰数就是步数。另外得有一些防抖动方法：连续监测到3（或其它）个波峰才开始算。
 
@@ -48,11 +48,11 @@
 
 ### 1. 代码类结构
 
-![代码阅读](https://gitee.com/github-25970295/blogimgv2022/raw/master/%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB.png)
+![代码阅读](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB.png)
 
 ### 2. StepService 执行时序图
 
-![StepService_onCreate](https://gitee.com/github-25970295/blogimgv2022/raw/master/StepService_onCreate.png)
+![StepService_onCreate](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/StepService_onCreate.png)
 
 **1.如果先bindService,再startService:**
 在bind的Activity退出的时候,Service会执行unBind方法而不执行onDestory方法,因为有startService方法调用过,所以Activity与Service解除绑定后会有一个与调用者没有关连的Service存在

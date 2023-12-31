@@ -11,7 +11,7 @@
 >
 > decode()方法被调用时将会传入一个`包含了传入数据的ByteBuf`，以及一个`用来添加解码消息的List`。对这个方法的调用将会重复进行，直到确定没有新的元素被添加到该List，或者该ByteBuf 中没有更多可读取的字节时为止。然后，`如果该List 不为空，那么它的内容将会被传递给ChannelPipeline 中的下一个ChannelInboundHandler`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009160601207.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009160601207.png)
 
 - 定长处理的消息解码器
 
@@ -46,7 +46,7 @@ public class FixedLengthFrameDecoder extends ByteToMessageDecoder {
 
 > decode(ChannelHandlerContext ctx,I msg,List out): 对于每个需要被解码为另一种格式的入站消息来说，该方法都将会被调用。解码消息随后会被传递给ChannelPipeline中的下一个ChannelInboundHandler
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009160642434.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009160642434.png)
 
 #### .3. TooLongFrameException
 
@@ -70,7 +70,7 @@ public class MsgPackEncode extends MessageToByteEncoder<Object> {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009161533484.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009161533484.png)
 
 #### .2. MessageToMessageEncoder
 
@@ -92,7 +92,7 @@ public class AbsIntegerEncoder extends
 }
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009161558246.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009161558246.png)
 
 ### 3. 内置编解码器和ChannelHandler
 
@@ -100,7 +100,7 @@ public class AbsIntegerEncoder extends
 
 > 为了支持SSL/TLS，Java 提供了javax.net.ssl 包，它的SSLContext 和SSLEngine类使得实现解密和加密相当简单直接。Netty 通过一个名为SslHandler 的ChannelHandler实现利用了这个API，其中SslHandler 在内部使用SSLEngine 来完成实际的工作。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009162115628.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009162115628.png)
 
 #### .2. HTTP 系列
 
@@ -112,15 +112,15 @@ public class AbsIntegerEncoder extends
 - HttpResponseDecoder 将字节解码为HttpResponse、HttpContent 和LastHttpContent 消息
 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009162252925.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009162252925.png)
 
 ##### 2. HTTP 聚合消息
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009162330631.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009162330631.png)
 
 ##### 3. HTTP压缩
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009162350906.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009162350906.png)
 
 
 

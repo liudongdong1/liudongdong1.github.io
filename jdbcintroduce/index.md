@@ -7,11 +7,11 @@
 > - 数据查询处理(INSERT、UPDATE、DELETE)： public int executeUpdate(String sql) throws SQLException
 > - 数据更新处理(SLECT、COUNT…)： public ResultSet executeQuery(String sql) throws SQLException
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70)
 
-![ResultSet](https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70-16390126586162)
+![ResultSet](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70-16390126586162)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211209092238005.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211209092238005.png)
 
 ![PreparedStatement](https://img-blog.csdnimg.cn/20200712143134653.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80ODU2ODI5Mg==,size_16,color_FFFFFF,t_70)
 

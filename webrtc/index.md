@@ -34,7 +34,7 @@
 > 4. 用来`建立安全连接的关键数据`
 > 5. `网络配置：外界所看到的的网络上的数据，比如IP地址、端口`等
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201217210209019.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201217210209019.png)
 
 ##### 2.1.   NAT 技术
 
@@ -60,7 +60,7 @@
 
 ###### 2.1.3. NAT穿越
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201217213147425.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201217213147425.png)
 
 - **STUN**： 
   - `探测和发现通讯对方是否躲在防火墙或者NAT路由器后面`。
@@ -76,7 +76,7 @@
 
 ##### 3.1. 全网状模型
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201217210448227.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201217210448227.png)
 
 > 多个浏览器通过Web服务器访问网站，浏览器之间的通话并不通过任何流媒体服务器，而是直接通过对等连接，通过UDP来实现浏览器之间的通信。这个叫做全网状模型。
 >
@@ -106,13 +106,13 @@
 - P2P 内网穿透：STUN / TURN / ICE / Trickle ICE
 - 信令与 SDP 协商：HTTP / WebSocket / SIP、 Offer Answer 模型
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201217210926980.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201217210926980.png)
 
-- **[MediaStream](https://www.html5rocks.com/en/tutorials/webrtc/basics/#toc-mediastream)：**通过MediaStream的API能够通过`设备的摄像头及话筒获得视频、音频的同步流`。![**WebRTC内部结构**](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201217211113147.png)
-- **[RTCPeerConnection](https://www.html5rocks.com/en/tutorials/webrtc/basics/#toc-rtcpeerconnection)：**RTCPeerConnection是WebRTC用于构建`点对点之间稳定、高效的流传输的组件`。![**WebRTC 协议栈**](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201217211132306.png)
+- **[MediaStream](https://www.html5rocks.com/en/tutorials/webrtc/basics/#toc-mediastream)：**通过MediaStream的API能够通过`设备的摄像头及话筒获得视频、音频的同步流`。![**WebRTC内部结构**](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201217211113147.png)
+- **[RTCPeerConnection](https://www.html5rocks.com/en/tutorials/webrtc/basics/#toc-rtcpeerconnection)：**RTCPeerConnection是WebRTC用于构建`点对点之间稳定、高效的流传输的组件`。![**WebRTC 协议栈**](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201217211132306.png)
 - **[RTCDataChannel](https://www.html5rocks.com/en/tutorials/webrtc/basics/#toc-rtcdatachannel)：**RTCDataChannel使得浏览器之间（点对点）建立一个`高吞吐量、低延时的信道`，用于传输任意数据。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201217212024597.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201217212024597.png)
 
 > WebRTC使用RTCPeerConnection来在浏览器之间传递流数据，这个流数据通道是点对点的，不需要经过服务器进行中转。但是这并不意味着我们能抛弃服务器，我们仍然需要它来为我们传递信令（signaling）来建立这个信道。WebRTC没有定义用于建立信道的信令的协议：信令并不是RTCPeerConnection API的一部分。
 >
@@ -120,7 +120,7 @@
 
 > RTCDataChannel API就是用来干这个的，基于它我们可以在浏览器之间传输任意数据。DataChannel是建立在PeerConnection上的，不能单独使用。建立RTCPeerConnection连接之后，两端可以打开一或多个信道交换文本或二进制数据。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201217212226979.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201217212226979.png)
 
 #### 6. 学习资源
 

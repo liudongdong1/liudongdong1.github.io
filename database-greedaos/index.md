@@ -7,7 +7,7 @@
 
 > 一个将对象映射到SQLite数据库中的轻量且快速的ORM（object / relational mapping）解决方案。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/webp.webp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/webp.webp)
 
 - **DaoMaster**：Dao中的管理者。它保存了`sqlitedatebase对象`以及`操作DAO classes（`注意：不是对象）。其提供了一些`创建和删除table的静态方法`，其`内部类OpenHelper和DevOpenHelper实现了SQLiteOpenHelper，并创建数据库的框架`。
 - **DaoSession**：会话层。`操作具体的DAO对象`（注意：是对象），比如各种getter方法。

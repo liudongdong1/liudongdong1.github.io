@@ -56,7 +56,7 @@ netstat -tunlp
 > 123456：这个是密码
 > /etc/x11vnc.pass：保存在这个路径下的 “x11vnc.pass” 文件
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210118235103487.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210118235103487.png)
 
 ### 4. 黑客工具
 

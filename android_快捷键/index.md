@@ -9,7 +9,7 @@ Ctrl + H	全局查找内容	Edit-Find-Find in Path
 Ctrl + E	显示最近编辑过的文件	
 `Alt + Enter`	显示快捷选项 (快速修复错误，导入包、提取资源、Implements等等)	kemap-Other-Show Intention Options
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221115203038064.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221115203038064.png)
 
 `Ctrl + O`	快速`查找/显示当前类中的方法和成员`	Navigate-File Structure
 Alt + Shift + M	重构（提取）选中的代码为新方法	Refactor-Extract-Method

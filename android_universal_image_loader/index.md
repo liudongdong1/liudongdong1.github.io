@@ -24,7 +24,7 @@ public static void initImageLoader(Context context) {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/ImageLoaderConfiguration.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ImageLoaderConfiguration.png)
 
 ##### 提供对外接口
 
@@ -63,13 +63,13 @@ public Bitmap loadImageSync(String uri, ImageSize targetImageSize, DisplayImageO
 
 ###### displayImage 函数执行流程
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221201155317236.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221201155317236.png)
 
 - display 函数执行时序图
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221202094654317.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221202094654317.png)
 
-![Task Flow](https://gitee.com/github-25970295/blogimgv2022/raw/master/UIL_Flow.png)
+![Task Flow](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/UIL_Flow.png)
 
 ##### Task 相关，采用ThreadPoolExecutor 线程池方式创建Executor
 
@@ -78,28 +78,28 @@ new ThreadPoolExecutor(threadPoolSize, threadPoolSize, 0L, TimeUnit.MILLISECONDS
       createThreadFactory(threadPriority, "uil-pool-"));
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221202100758377.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221202100758377.png)
 
 ProcessAndDisplayImageTask 流程
 
 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221201163345026.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221201163345026.png)
 
 #### Download 工具
 
-![Package download](https://gitee.com/github-25970295/blogimgv2022/raw/master/Package%20download.png)
+![Package download](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Package%20download.png)
 
 #### imageaware
 
 - 一个view，用于显示 Drawable 或者Bitmap数据
 - 了解里面 Reference 用法  todo？
 
-![Packageimageaware](https://gitee.com/github-25970295/blogimgv2022/raw/master/Packageimageaware.png)
+![Packageimageaware](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Packageimageaware.png)
 
 #### Bitmap绘制工具
 
-![Package display](https://gitee.com/github-25970295/blogimgv2022/raw/master/Package%20display.png)
+![Package display](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Package%20display.png)
 
 #### 监听类
 
@@ -118,7 +118,7 @@ RemoteViewsAdapter.RemoteAdapterConnectionCallback {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221202101137173.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221202101137173.png)
 
 #### 方法类的写法
 

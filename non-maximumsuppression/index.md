@@ -17,13 +17,13 @@
 
 IOU calculation is actually used to measure the overlap between two proposals.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200819182123933.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200819182123933.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200819183146527.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200819183146527.png)
 
 > <font color=red>**Soft-NMS**</font> The idea is very simple — **“instead of completely removing the proposals with high IOU and high confidence, reduce the confidences of the proposals proportional to IOU value”**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200819191158638.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200819191158638.png)
 
 
 

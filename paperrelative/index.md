@@ -17,7 +17,7 @@
 
 1. design one such unistroke keyboard system with optimized character placement based on frequenctly used digraphs and trigraphs.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210119195510106.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210119195510106.png)
 
 #### Module
 
@@ -39,11 +39,11 @@
       - divide sorted points into 3 parts as: left(0-6), mid(7-14), right(15-21)
       - each part: sort based on y distance; sort consecutive pairs of points based x distance;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210119200203556.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210119200203556.png)
 
 - **Tracker the laser:** using the average of a fixed number of frames to represent the position;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210119200742617.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210119200742617.png)
 
 
 
@@ -70,17 +70,17 @@
 
 #### Chart&Analyse:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1571817295530.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1571817295530.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1571817340622.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1571817340622.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1571817351729.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1571817351729.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/1571817368504.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1571817368504.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1571817386271.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1571817386271.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1571817396275.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1571817396275.png)
 
 > Carver, Charles J., et al. "AmphiLight: Direct Air-Water Communication with Laser Light." *17th {USENIX} Symposium on Networked Systems Design and Implementation ({NSDI} 20)*. 2020.
 
@@ -123,7 +123,7 @@ previous work:
   - limited communication between assets underwater and in the air.
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210119205131576.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210119205131576.png)
 
 > Sami S, Tan S R X, Sun B, et al. LAPD: Hidden Spy Camera Detection using Smartphone Time-of-Flight Sensors[C]//Proceedings of the 19th **ACM Conference on Embedded Networked Sensor Systems**. **2021**: 288-301. CCF_B
 
@@ -156,7 +156,7 @@ previous work:
 
 previous work:
 
-- `specialized equipment` like commercial "hidden camera detectors" but` yield low detection rates`![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220118223130718.png)
+- `specialized equipment` like commercial "hidden camera detectors" but` yield low detection rates`![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220118223130718.png)
 - analyze the wireless traffic that the cameras generate can `only detect the presence of the hidden cameras, except their locations.`
 - failed when the video record in local memory card.
 
@@ -168,9 +168,9 @@ previous work:
 
 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220118220426147.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220118220426147.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220121191628644.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220121191628644.png)
 
 > - **Depth map:** a ToF sensor captures depth information by emitting light from a laser, receiving its reflections, and storing the data in a two-dimensional depth map;
 > - **Depth map:** a confidence measure of the estimated depth to indicate its accuracy and validity.
@@ -185,7 +185,7 @@ previous work:
   - first guides the user to move to within 20 cm of the object to saturate the ToF sensor。
   - then asks them to gradually move further from the object
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220121191708778.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220121191708778.png)
 
 【Challenge 1】**different objects that embed the hidden cameras may cause varying reflectivity**
 
@@ -205,7 +205,7 @@ previous work:
 
 #### Evaluation
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220121192018342.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220121192018342.png)
 
 - camera housings; hidden camera modules, lighting conditions, smartphone types.
 

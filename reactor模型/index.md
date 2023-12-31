@@ -5,7 +5,7 @@
 > 2. 将事件多路分解以及分配相应的事件服务进行处理，这个分派采用server集中处理（dispatch）
 > 3. 分解的事件以及对应的事件服务应用从分派服务中分离出去（handler）
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009164914588.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009164914588.png)
 
 ### 1. BIO模式
 
@@ -106,7 +106,7 @@ private void register(SelectionKey key) throws Exception {
 
 #### .1. 单Reactor单线程模型
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009192446053.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009192446053.png)
 
 > 其中Reactor线程，负责多路分离套接字，有新连接到来触发connect 事件之后，交由Acceptor进行处理，有IO读写事件之后交给hanlder 处理。
 >
@@ -171,7 +171,7 @@ class Reactor implements Runnable {
 
 #### .2. 单Reactor多线程模型
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009193442676.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009193442676.png)
 
 ```java
 /**
@@ -224,7 +224,7 @@ class MultiThreadHandler implements Runnable {
 
 #### .3. 多Reactor多线程模型
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009193654253.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009193654253.png)
 
 > 1. mainReactor负责监听server socket，用来`处理新连接的建立`，将建立的socketChannel指定注册给subReactor。
 > 2. subReactor维护自己的selector, 基于mainReactor 注册的socketChannel多路分离IO读写事件，读写网络数据，对业务处理的功能，另其扔给worker线程池来完成。

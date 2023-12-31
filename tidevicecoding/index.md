@@ -10,13 +10,13 @@
 >
 > - `rangeFFT （对一个chirp 的sample）`和`dopplerFFT（对一个Frame的不同chirp) `，`AzimuthRRF(对virtual antenna 维度)`
 
-![chirp data](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901095219270.png)
+![chirp data](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901095219270.png)
 
 ### 1. Profile
 
 #### .1. 配置参数
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901170138432.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901170138432.png)
 
 ##### .1. start frequency
 
@@ -24,7 +24,7 @@
 
 ##### .3. Idle time
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901170333232.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901170333232.png)
 
 ##### .4. ADC start time(不懂)
 
@@ -36,17 +36,17 @@
 
 `The ramp end time is the sum of (a) the ADC start time, (b) the ADC sampling time and (c) the excess ramping time at the end of the ramp.  `
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901170741261.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901170741261.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901170108543.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901170108543.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901164155446.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901164155446.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901164232154.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901164232154.png)
 
 #### .2. procedure
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901171106832.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901171106832.png)
 
 ```python
 # Imports
@@ -56,7 +56,7 @@ import matplotlib.pyplot as plt
 
 ### 1. 距离计算
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901100023673.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901100023673.png)
 
 #### 1. Range FFT
 
@@ -81,23 +81,23 @@ plt.title('Interpreting a Single Chirp')
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901095419698.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901095419698.png)
 
 #### 2. 单位转化
 
 ##### .1. 原理推导
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211026185621170.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211026185621170.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211026185933268.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211026185933268.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211026190042611.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211026190042611.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211026190139735.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211026190139735.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901164424552.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901164424552.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901164659831.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901164659831.png)
 
 > complex 2x and real smapling modes: IF=0.9*(ADC_sampling)/2
 
@@ -168,7 +168,7 @@ chirp_bandwidth
 print(ranges)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901095734148.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901095734148.png)
 
 ### 2. 速度计算
 
@@ -203,7 +203,7 @@ plt.title('Interpreting a Single Frame - Range')
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901101058961.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901101058961.png)
 
 #### .3. Doppler FFT
 
@@ -229,11 +229,11 @@ plt.title('Interpreting a Single Frame - Doppler')
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901101436884.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901101436884.png)
 
 > That line in the `middle at doppler bin 64 is called zero doppler`, meaning everything along that line is `static/not moving relative to the radar`. This means everything to the `left (bins<64) is negative doppler, or moving towards the radar `and the opposite for the other half of the doppler bins.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211028103918183.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211028103918183.png)
 
 - `rangeFFT （对一个chirp 的sample）`和`dopplerFFT（对一个Frame的不同chirp) `先后顺序影响不大；
 
@@ -254,11 +254,11 @@ print('Max power difference: ', np.abs(fft_2d - rfft_2d).max())  #Max power diff
 
 ##### .1. 原理推导
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211028092818353.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211028092818353.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211028093021780.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211028093021780.png)
 
-![image-20211028093131613](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211028093131613.png)
+![image-20211028093131613](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211028093131613.png)
 
 All the units of the data we produced are of some type of "bin". Similarly to range resolution, we `have a doppler resolution aka velocity resolution`. 
 
@@ -316,11 +316,11 @@ plt.title('Interpreting a Single Frame - Doppler')
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901105825831.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901105825831.png)
 
 ### 3. 角度计算
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901111120724.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901111120724.png)
 
 #### .1. Range FFT
 
@@ -353,7 +353,7 @@ plt.title('Interpreting a Single Frame - Range')
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901111228073.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901111228073.png)
 
 #### .2. Doppler FFT
 
@@ -369,7 +369,7 @@ plt.title('Interpreting a Single Frame - Doppler')
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901111309395.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901111309395.png)
 
 #### .3.  Azimuth FFT
 
@@ -387,11 +387,11 @@ plt.title('Interpreting a Single Frame - Azimuth')
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901111409348.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901111409348.png)
 
 #### .4. 原理推导
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210901165336582.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210901165336582.png)
 
 ### 4. Noise Removal
 
@@ -431,7 +431,7 @@ def clutter_removal(input_val, axis=0):
 >
 > - 虚警率(false alarm rate）是雷达通过噪声或其他干扰信号发现错误信号的速率. 它是在没有有效目标存在的情况下, 检测到雷达目标存在的一种度量.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211028104240757.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211028104240757.png)
 
 #### .3. **动态阈值分割(dynamic thresholding)**
 
@@ -439,7 +439,7 @@ def clutter_removal(input_val, axis=0):
 >
 > - **CFAR** 根据车辆周围环境变化检测阈值. 通过实现恒定的虚警率, 可以解决虚警问题.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211028104419947.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211028104419947.png)
 
 ##### 1. Cell Averaging CFAR (CA-CFAR)
 
@@ -447,7 +447,7 @@ def clutter_removal(input_val, axis=0):
 
 FFT bins是在通过多个啁啾的`Range Doppler FFT`生成的. **CA-CFAR**使用滑动窗口遍历整个FFT bins . 每个窗口由以下单元格组成：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211028105734872.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211028105734872.png)
 
 - **Cell Under Test**：通过`比较信号电平和噪声估计值(阈值)来检测目标是否存在的单元`.
 - **Training Cells**：在训练单元上`测量噪声水平`. 训练单元可以分为两个区域, 滞后于CUT的单元称为`滞后训练单元,` 而`领先于CUT的单元称为前导训练单元`. 通过对训练单元下的噪声进行平均来估计噪声. 在某些情况下, 采用前导或滞后的噪声平均值, 而在其他情况下, 则合并前导和滞后的噪声平均值, 并考虑两者中较高的一个用于噪声水平估计. 训练单元的数量应根据环境确定. 如果交通场景繁忙, 则应使用较少的训练单元, 因为间隔较近的目标会影响噪声估计.
@@ -456,7 +456,7 @@ FFT bins是在通过多个啁啾的`Range Doppler FFT`生成的. **CA-CFAR**使�
 
 ###### .1. 1d CA-CFAR
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211028111153793.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211028111153793.png)
 
 1. 确定训练单元和保卫单元的数量
 2. 开始在整个FFT 1D阵列上一次滑动一个单元格的窗口. 总窗口大小应为：2（T + G）+ CUT
@@ -531,15 +531,15 @@ hold on, plot (cell2mat(circshift(signal_cfar,(T+G))),'g--','LineWidth',4);
 legend('Signal','CFAR Threshold','detection')
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211028110327085.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211028110327085.png)
 
 ###### .2. 2D CA-CFAR
 
 > 二维恒虚警类似于一维恒虚警, 但在`距离多普勒块的两个维度上都实现了`. 2D CA-CFAR包括训练单元,被测单元以及保护单元, 以防止目标信号对噪声估计的影响.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211028110438197.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211028110438197.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211028111210885.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211028111210885.png)
 
 1. 确定每个维度Tr和Td的训练单元数. 同样, 选择保护单元格Gr和Gd的数量.
 2. 在整个单元矩阵上滑动待测单元(CUT).
@@ -628,7 +628,7 @@ end
 RDM(RDM~=0 & RDM~=1) = 0;
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211028110714250.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211028110714250.png)
 
 ##### 2. Ordered Statistics CFAR (OS CFAR)
 

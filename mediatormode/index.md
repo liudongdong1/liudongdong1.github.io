@@ -20,7 +20,7 @@
 >
 > **协调作用（行为性）**：中介者可以更进一步的对同事之间的关系进行封装，同事可以一致的和中介者进行交互，而不需要指明中介者需要具体怎么做，中介者根据封装在自身内部的协调逻辑，对同事的请求进行进一步处理，将同事成员之间的关系行为进行分离和封装。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210306124827527.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210306124827527.png)
 
 ```java
 package net.biancheng.c.mediator;
@@ -110,7 +110,7 @@ class ConcreteColleague2 extends Colleague {
 
 > 有三种数据库 Mysql、Redis、Elasticsearch，其中的 Mysql 作为主数据库，当增加一条数据时**需要**同步到另外两个数据库中；Redis 作为缓存数据库，当增加一条数据时**不需要**同步到另外另个数据库；而 Elasticsearch 作为大数据查询数据库，有一个统计功能，当增加一条数据时**只需要**同步到 Mysql.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705164722840.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705164722840.png)
 
 ```java
 public abstract class AbstractDatabase {
@@ -299,7 +299,7 @@ public class Client {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705165059858.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705165059858.png)
 
 ### 2. Timer
 

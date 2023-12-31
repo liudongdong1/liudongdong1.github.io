@@ -3,7 +3,7 @@
 
 > 依赖注入可以实现解耦，达到高内聚低耦合的目的，保证代码的健壮性、灵活性和可维护性。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1240.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1240.png)
 
 ### 1. 依赖注入方式
 
@@ -247,7 +247,7 @@ DaggerPersonComponent.builder().dataModule(new DataModule()).build().inject(this
 - 包含方式——这里就用到了我们**@SubComponent**注解，用@SubComponent标记接口或者抽象类，表示它可以被包含。一个Component可以包含一个或多个Component，而且被包含的Component还可以继续包含其他的Component。说起来跟Activity包含Fragment方式很像。
 - 继承方式——用一个Component继承另外一个Component。
 
-![img](https://gitee.com/github-25970295/blogimgv2022/raw/master/1240-16711803693944.png)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1240-16711803693944.png)
 
 - https://toutiao.io/posts/x5ekcg/preview
 

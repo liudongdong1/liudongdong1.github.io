@@ -6,7 +6,7 @@
 > - 内存溢出：Out Of Memory，OOM。是指程序在申请内存时，没有足够的内存空间供其使用。
 > - 内存泄漏：Memory leak，是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄露危害可以忽略，但内存泄露堆积后果很严重，无论多少内存,迟早会被占光。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210604092524764.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210604092524764.png)
 
 #### .1. 程序计数器
 

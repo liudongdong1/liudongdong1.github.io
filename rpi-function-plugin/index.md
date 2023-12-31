@@ -136,7 +136,7 @@ sudo bash install.sh
 
 > `Motion detector`, Full body detection, Upper body detection, `Cat face detection,`` Smile detection`, Face detection (haar cascade), Silverware detection, Face detection (lbp), and `Sending email notifications`
 
-![image-20210616141650169](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210616141650169.png)
+![image-20210616141650169](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210616141650169.png)
 
 ---
 

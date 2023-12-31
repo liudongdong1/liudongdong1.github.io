@@ -5,9 +5,9 @@
 
 > `ByteBuf 维护了两个不同的索引`，名称以read 或者write 开头的ByteBuf 方法，将会推进其对应的索引. 如果打算读取字节直到readerIndex 达到和writerIndex 同样的值时会发生什么。在那时，你将会到达“可以读取的”数据的末尾.试图读取超出该点的数据将会触发一个IndexOutOf-BoundsException。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009162909372.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009162909372.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009162936542.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009162936542.png)
 
 ### 1. 分配方式
 
@@ -25,7 +25,7 @@
 
 #### .4. Unpooled缓冲区
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009163415328.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009163415328.png)
 
 ### 2. ByteBuf操作
 
@@ -53,7 +53,7 @@
 
 > 可写字节分段是指一个拥有未定义内容的、写入就绪的内存区域。新分配的缓冲区的writerIndex 的默认值为0。任何名称以write 开头的操作都将从当前的writerIndex 处开始写数据，并将它增加已经写入的字节数。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211009163847209.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211009163847209.png)
 
 #### .4. 索引管理
 

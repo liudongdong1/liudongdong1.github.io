@@ -23,27 +23,27 @@ clothes classification, attribute prediction, clothing item retrieval.
 
 - introduce DeepFashion, a large-scale clothes dataset with comprehensive annotations.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223160104102.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223160104102.png)
 
 - propose FashionNet,which learns `clothing features` by jointly `predicting clothing attributes and landmarks`. the landmarks are human labeled:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223160228492.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223160228492.png)
 
 -  FashionNet work pipeline:   can be used to predict the landmark of clothes.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223160438816.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223160438816.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223160510415.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223160510415.png)
 
 ##### Relative
 
 - (a) Additional landmark locations improve clothes recognition. (b) Massive attributes lead to better partition of the clothing feature space.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223155654297.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223155654297.png)
 
 - Relative datasets
 
-![image-20210223155820943](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223155820943.png)
+![image-20210223155820943](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223155820943.png)
 
 - clothing recognition and retrieval: hand-craft features like sift, hog, color histogram.
 
@@ -73,15 +73,15 @@ clothes classification, attribute prediction, clothing item retrieval.
 
   -  (d) Optional reestimate of pose using clothing estimates (note the improvement in her left arm prediction, compared to the original incorrect estimate down along the side of her body).
 
-    ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223161459743.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223161459743.png)
 
 - Prototype garment search application results. Query photo (left column) retrieves similar clothing items (right columns) independent of pose and with high visual similarity.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223161201232.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223161201232.png)
 
 - dataset create funciton:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223162134723.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223162134723.png)
 
 ##### Scenarios suitable
 
@@ -105,13 +105,13 @@ clothes classification, attribute prediction, clothing item retrieval.
   - can predict the occluded cloth part more accurately than the commonly used surface skinning, and non-rigid warping.
   - the observed cloth details, suh as wrinkles, can be reconstructed by formulating data fitting as a physical process.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223162822865.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223162822865.png)
 
-![pipelines](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223163215023.png)
+![pipelines](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223163215023.png)
 
 - Cloth simulation: 这部分没有看，里面有
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223163503575.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223163503575.png)
 
 > Patel, Chaitanya, Zhouyingcheng Liao, and Gerard Pons-Moll. "Tailornet: Predicting clothing in 3d as a function of human pose, shape and garment style." *Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition*. 2020.
 
@@ -135,7 +135,7 @@ clothes classification, attribute prediction, clothing item retrieval.
   - High frequency of pose dependent deformations for K prototype shape-style pairs are separately computed and mixed using a RBF kernel to get the final high frequency of the deformations.
   -  The low and high frequency predictions are added to get the unposed garment output, which is posed to using standard skinning to get the garment
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223164238842.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223164238842.png)
 
 ##### Relative
 
@@ -144,7 +144,7 @@ clothes classification, attribute prediction, clothing item retrieval.
   - Data-driven cloth models:
   - Pixel based models:
 
-![Relative work](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210223164357336.png)
+![Relative work](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210223164357336.png)
 
 > Chance, Greg, et al. "“elbows out”—predictive tracking of partially occluded pose for robot-assisted dressing." *IEEE Robotics and Automation Letters* 3.4 (2018): 3598-3605.
 
@@ -179,16 +179,16 @@ clothes classification, attribute prediction, clothing item retrieval.
 
 - Example categories of body shapes, with styling tips and recommended dresses for each, according to fashion blogs
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210224122356267.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210224122356267.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210224122312681.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210224122312681.png)
 
 #### Relative 
 
 - Trained largely from images of slender fashionistas and celebrities (bottom row), existing methods ignore body shape’s effect on clothing recommendation and exclude much of the spectrum of real body shapes.
 - Our proposed embedding considers diverse body shapes (top row) and learns which garments flatter which across the spectrum of the real population. `address the influence of body shape on garment compatibility or style`.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210224104055992.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210224104055992.png)
 
 - **Fashion Styles and compatibility:** 
   - recognition problems, like `matching items seen on the street to a catalog searching for products`, or `parsing an outfit into garments`.

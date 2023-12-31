@@ -41,13 +41,13 @@ previous work:
 
 #### Methods
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200902100811.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200902100811.png)
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200902100620.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200902100620.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200902100712.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200902100712.png)
 
 **【Adaptive Attention】** to determinate the global and local feature weights by distinguishing input types;
 
@@ -55,23 +55,23 @@ previous work:
 
 **【Test One】 Accuracy comparison**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200902101215.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200902101215.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200902101319.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200902101319.png)
 
 **【Test two】The Impact of Adaptive model**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200902101537.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200902101537.png)
 
 **【Test three】Ablation Study of the GeM Pooling**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200902101600.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200902101600.png)
 
 **【Test four】Performance comparison of global and head-shoulder features**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200902101630.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200902101630.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200902101706.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200902101706.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -122,7 +122,7 @@ previous work:
 
 > takes adjacent frame pairs as input to perform joint detection and tracking in a single regression model that simultaneously regress the paired bounding boxes for targets that appear in both of the two adjacent frames;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200902104022.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200902104022.png)
 
 > - end-to-end model using adjacent frame pair as input and generating the box pair representing the same target;
 > - convert the challenging corss-frame association problem into pair-wise object detection problem;

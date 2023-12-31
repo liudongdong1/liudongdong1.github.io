@@ -5,9 +5,9 @@
 
 ### 1. 中低端 SAN/NAS 融合存储架构：双控制器
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409133029764.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409133029764.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409133343520.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409133343520.png)
 
 - `写入数据在双控 CACHE 中各保存一份，避免单控故障导致数据丢失`。
 - `每个控制板的后端分别接入物理磁盘的环路` —— 业务负载均衡，提升整体系统性能
@@ -16,7 +16,7 @@
 
 ### 2. 高端 SAN 阵列架构：多控制器
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409133504379.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409133504379.png)
 
 - `数据平面采用 PCIe 互联`，引擎内 4 控通过背板 PCIe 通道互联，提供高达 128GB/s 的框内互联带宽。引擎间采用双交换组网，PCIe 光缆互联，提供 128GB/s 的引擎间互联带宽。控制器间数据转发与镜像优先使用框内背板互联通道，背板互联通道不可达时，选择引擎间交换通道。系统总数据交换带宽（包括引擎内和引擎间）高达 640GB/s。
 - `管理控制平面采用 GE 组网`，SVP 的两个网口形成两个管理平面，所有引擎和交换机都同时接入两个管理平面。在 GE 网络故障时，管理控制平面还可以复用数据平面的 PCIe 通道传输管理控制器消息。
@@ -24,7 +24,7 @@
 
 ### 3. 高端 SAN 阵列架构：网格存储
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409133649079.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409133649079.png)
 
 - 网格存储被业内称为革命性的新一代存储架构，它是采用了`大规模并行的分布式网格存储技术`，使用了 “Scale out”(横向扩展) 的存储架构，利用多路网格模块并行分担存储负荷，并通过细粒度数据分布算法保证数据的恒定均衡分布，它不但提高了系统的可靠性、可用性和存取效率，还易于扩展。
 - 在网格存储系统里面，没有任何主控的模块，系统由一个个的网格组成 的。每个网格叫数据模块，每个独立的数据模块包括紧耦合的 CPU 处理能力，缓存能力加上磁盘存储能力。
@@ -35,37 +35,37 @@
 
 ### 4. 集群 NAS 存储架构
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409133839686.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409133839686.png)
 
 ### 5. 分布式存储架构：有中心节点
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409133935708.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409133935708.png)
 
 ### 6. 分布式对象存储架构
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409134011184.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409134011184.png)
 
 ## 2. 存储组件
 
 ### 1. 盘控制分离控制框
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409134149249.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409134149249.png)
 
 
 
 ### 2.  2U 2.5 硬盘框
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409134238917.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409134238917.png)
 
 ### 3. 4U 2.5 硬盘框
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409134305367.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409134305367.png)
 
 ### 4. 机械硬盘
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409134455485.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409134455485.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409134657767.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409134657767.png)
 
 ## Resource
 

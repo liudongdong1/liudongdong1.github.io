@@ -20,15 +20,15 @@ widget.setWindowTitle('Hello World')
 widget.show()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210122074434357.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210122074434357.png)
 
-![settings.json set QT folder](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210201072322427.png)
+![settings.json set QT folder](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210201072322427.png)
 
 #### 2. 界面设计
 
 使用qt designer 或者使用vscode集成的qt designer 进行ui控件等布局，正对具体的控件属性布局使用css样式， 右击控件，样式，添加css代码。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210124192752484.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210124192752484.png)
 
 ##### 2.0. 窗口控件
 
@@ -47,7 +47,7 @@ widget.show()
 - **QWidget**： 作为QMainWindow和QWidget的父类，并未细化到主窗口或者对话框，作为通用窗口类，如果不确定具体使用哪种窗口类，就可以使用该类。
 - **自适应布局：** Qt中如果想实现`窗体内空间随着窗体大小调整`，必须使用布局管理，常用的布局管理有QHBoxLayout、QVBoxLayout、QGridLayout，空的地方使用spacer控件进行填充。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210126111321167.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210126111321167.png)
 
 #### 3. python 使用ui布局文件
 
@@ -186,9 +186,9 @@ def initUI(self):
     self.setCentralWidget(main_widget)
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210126222423686.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210126222423686.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210126222221780.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210126222221780.png)
 
 > QWidget类是所有用户界面对象的基类。
 >
@@ -196,9 +196,9 @@ def initUI(self):
 >
 > 一个没有嵌入到其他Widget中的Widget称为window
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210126212855842.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210126212855842.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210126212916447.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210126212916447.png)
 
 ##### 5.1. QMovie
 
@@ -259,7 +259,7 @@ mb.setDetailedText('<h3>详情文本</h3>')
 mb.show()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210125223028646.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210125223028646.png)
 
 > QMessageBox().question(None, "询问", "确认删除？", QMessageBox.Yes|QMessageBox.No, QMessageBox.No)
 >
@@ -273,9 +273,9 @@ mb.show()
 
 ##### 5.7.  QCalendarWidget
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210125221103165.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210125221103165.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210718090324044.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210718090324044.png)
 
 ```c++
 # 左右两边的箭头
@@ -462,7 +462,7 @@ def plotFlexData(self):
 - http://www.python3.vip/tut/py/gui/pyqtgraph-1/#%E6%9B%B2%E7%BA%BF%E5%9B%BE-%E7%A4%BA%E4%BE%8B
 - https://www.learnpyqt.com/tutorials/plotting-pyqtgraph/
 - https://github.com/pyqtgraph/pyqtgraph
-- https://github.com/learnpyqt/15-minute-apps/blob/master/currency/currency.py![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210317181134655.png)
+- https://github.com/learnpyqt/15-minute-apps/blob/master/currency/currency.py![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210317181134655.png)
 
 ##### 5.11  LCDNumber
 
@@ -850,7 +850,7 @@ w.show()
 a.exec_()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210726203409320.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210726203409320.png)
 
 #### 6. 自定义组件
 
@@ -957,7 +957,7 @@ if __name__ == "__main__":
 
 ##### 1. 夸夸机器人
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210726202405139.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210726202405139.png)
 
 ```python
 from PyQt5.QtWidgets import *
@@ -1107,14 +1107,14 @@ if __name__ == '__main__':
 
 - Qt 常用函数功能封装：https://github.com/PyQt5/PyQt
 - Qt教程： https://wizardforcel.gitbooks.io/wudi-qt4/content/34.html
-- 窗口布局： https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210126111321167.png
+- 窗口布局： https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210126111321167.png
 - QDarkStyleSheet:    运行python example.py 可以查看各种qt案件样式
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210126112035071.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210126112035071.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210126112117998.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210126112117998.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210126112140274.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210126112140274.png)
 
 
 

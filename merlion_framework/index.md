@@ -3,7 +3,7 @@
 
 > 首先时间序列的任务主要包括**时间序列异常点检测及时间序列的预测**，其中时间序列的预测又包括单变量时间序列预测，和多变量时间序列预测。在时间序列预测的方法论上，主要又分为传统的计量方法，如ARIMA等；及最近兴起的机器学习的方法，如LSTM、树模型（Random Forest，GBDT）及Transformer等。对于常用的时序研究工具包的功能对比如下：   [Merlion](https://opensource.salesforce.com/Merlion/v1.0.1/merlion.html)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102163918222.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102163918222.png)
 
 - [`merlion.models`](https://opensource.salesforce.com/Merlion/v1.0.1/merlion.models.html#module-merlion.models): A library of models unified under a single shared interface, with specializations for anomaly detection and forecasting. More specifically, we have
   - [`merlion.models.anomaly`](https://opensource.salesforce.com/Merlion/v1.0.1/merlion.models.anomaly.html#module-merlion.models.anomaly): Anomaly detection models
@@ -18,9 +18,9 @@
 - [`merlion.evaluate`](https://opensource.salesforce.com/Merlion/v1.0.1/merlion.evaluate.html#module-merlion.evaluate): Evaluation metrics & pipelines to simulate the live deployment of a time series model for any task.
 - [`merlion.plot`](https://opensource.salesforce.com/Merlion/v1.0.1/merlion.html#module-merlion.plot): Automated visualization of model outputs for univariate time series
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102164955181.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102164955181.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102165004734.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102165004734.png)
 
 ### 1. Anomaly Detectors
 
@@ -55,7 +55,7 @@ ax.axvline(metadata[metadata.trainval].index[-1], ls="--", lw=2, c="k")
 plot_anoms(ax, TimeSeries.from_pd(metadata.anomaly))
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102182612865.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102182612865.png)
 
 ```python
 from merlion.utils import TimeSeries
@@ -208,7 +208,7 @@ for model in [model1, model2, model3]:
     print()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102183921939.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102183921939.png)
 
 ---
 

@@ -42,7 +42,7 @@
 
 JBossCache是基于自家的JGroups进行集群间的数据通信，JGroups使用协议栈的方式来实现收发数据包的各种所需特性自由组合，数据包接收和发送时要经过每层协议栈的up()和down()方法，其中的NAKACK栈用于保障各个包的有效顺序以及重发。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/712711-20200419163017838-58300787.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/712711-20200419163017838-58300787.png)
 
  
 
@@ -56,7 +56,7 @@ JBossCache是基于自家的JGroups进行集群间的数据通信，JGroups使�
 
 测试期间发现服务端不定时抛出内存溢出异常，服务不一定每次都出现异常，但假如正式考试时崩溃一次，那估计整场电子考试都会乱套。网站管理员尝试过把堆内存调到最大，32位系统最多到1.6GB基本无法再加大了，而且开大了基本没效果，抛出内存溢出异常好像还更加频繁。加入-XX：+HeapDumpOnOutOfMemoryError参数，居然也没有任何反应，抛出内存溢出异常时什么文件都没有产生。无奈之下只好挂着jstat紧盯屏幕，发现垃圾收集并不频繁，Eden区、Survivor区、老年代以及方法区的内存全部都很稳定，压力并不大，但就是照样不停抛出内存溢出异常。最后，在内存溢出后从系统日志中找到异常堆栈如代码清单5-1所示。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/712711-20200419163104208-303299269.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/712711-20200419163104208-303299269.png)
 
  看到异常堆栈应该就清楚这个抛出内存溢出异常是怎么回事了。我们知道操作系统对每个进程能管理的内存是有限制的，这台服务器使用的32位Windows平台的限制是2GB，其中划了1.6GB给Java堆，而Direct Memory耗用的内存并不算入这1.6GB的堆之内，因此它最大也只能在剩余的0.4GB空间中再分出一部分而已。在此应用中导致溢出的关键是`垃圾收集进行时，虚拟机虽然会对直接内存进行回收，但是直接内存却不能像新生代、老年代那样，发现空间不足了就主动通知收集器进行垃圾回收，它只能等待老年代满后Full GC出现后，“顺便”帮它清理掉内存的废弃对象。否则就不得不一直等到抛出内存溢出异常时，先捕获到异常，再在Catch块里面通过System.gc()命令来触发垃圾收集`。但如果Java虚拟机再打开了-XX：+DisableExplicitGC开关，禁止了人工触发垃圾收集的话，那就只能眼睁睁看着堆中还有许多空闲内存，自己却不得不抛出内存溢出异常了。而本案例中使用的CometD 1.1.1框架，正好有大量的NIO操作需要使用到直接内存。
 
@@ -82,7 +82,7 @@ JBossCache是基于自家的JGroups进行集群间的数据通信，JGroups使�
 
 一个基于B/S的MIS系统，硬件为两台双路处理器、8GB内存的HP系统，服务器是WebLogic 9.2（与第二个案例中那套是同一个系统）。正常运行一段时间后，最近发现在运行期间频繁出现集群节点的虚拟机进程自动关闭的现象，留下了一个hs_err_pid###.log文件后，虚拟机进程就消失了，两台物理机器里的每个节点都出现过进程崩溃的现象。从系统日志中注意到，每个节点的虚拟机进程在崩溃之前，都发生过大量相同的异常，见代码清单5-2。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/712711-20200419163237283-827867464.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/712711-20200419163237283-827867464.png)
 
  这是一个远端断开连接的异常，通过系统管理员了解到系统最近与一个OA门户做了集成，在MIS系统工作流的待办事项变化时，要通过Web服务通知OA门户系统，把待办事项的变化同步到OA门户之中。通过SoapUI测试了一下同步待办事项的几个Web服务，发现调用后竟然需要长达3分钟才能返回，并且返回结果都是超时导致的连接中断。
 
@@ -92,7 +92,7 @@ JBossCache是基于自家的JGroups进行集群间的数据通信，JGroups使�
 
 一个后台RPC服务器，使用64位Java虚拟机，内存配置为-Xms4g-Xmx8g-Xmn1g，使用ParNew加CMS的收集器组合。平时对外服务的Minor GC时间约在30毫秒以内，完全可以接受。`但业务上需要每10分钟加载一个约80MB的数据文件到内存进行数据分析，这些数据会在内存中形成超过100万个HashMap<Long，Long>Entry，在这段时间里面Minor GC就会造成超过500毫秒的停顿，对于这种长度的停顿时间就接受不了了，具体情况如下面的收集器日志所示。`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/712711-20200419163318439-56142341.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/712711-20200419163318439-56142341.png)
 
  观察这个案例的日志，平时Minor GC时间很短，原因是新生代的绝大部分对象都是可清除的，在Minor GC之后Eden和Survivor基本上处于完全空闲的状态。但是在分析数据文件期间，800MB的Eden空间很快被填满引发垃圾收集，但Minor GC之后，新生代中绝大部分对象依然是存活的。我们知道ParNew收集器使用的是复制算法，这个算法的高效是建立在大部分对象都“朝生夕灭”的特性上的，如果存活对象过多，把这些对象复制到Survivor并维持这些对象引用的正确性就成为一个沉重的负担，因此导致垃圾收集的暂停时间明显变长。
 
@@ -106,7 +106,7 @@ JBossCache是基于自家的JGroups进行集群间的数据通信，JGroups使�
 
 因为是桌面程序，所需的内存并不大（-Xmx256m），所以开始并没有想到是垃圾收集导致的程序停顿，但是加入参数-XX：+PrintGCApplicationStoppedTime-XX：+PrintGCDate-Stamps-Xloggc：gclog.log后，从收集器日志文件中确认了停顿确实是由垃圾收集导致的，大部分收集时间都控制在100毫秒以内，但偶尔就出现一次接近1分钟的长时间收集过程。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/712711-20200419163408472-2037143564.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/712711-20200419163408472-2037143564.png)
 
  
 
@@ -118,7 +118,7 @@ JBossCache是基于自家的JGroups进行集群间的数据通信，JGroups使�
 
 有一个比较大的承担公共计算任务的离线HBase集群，运行在JDK 8上，使用G1收集器。每天都有大量的MapReduce或Spark离线分析任务对其进行访问，同时有很多其他在线集群Replication过来的数据写入，因为集群读写压力较大，而离线分析任务对延迟又不会特别敏感，所以将-XX：MaxGCPauseMillis参数设置到了500毫秒。不过运行一段时间后发现垃圾收集的停顿经常达到3秒以上，而且实际垃圾收集器进行回收的动作就只占其中的几百毫秒，现象如以下日志所示。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/712711-20200419163451362-414429794.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/712711-20200419163451362-414429794.png)
 
  请注意，前面两个是处理器时间，而最后一个是时钟时间，它们的区别是处理器时间代表的是线程占用处理器一个核心的耗时计数，而时钟时间就是现实世界中的时间计数。如果是单核单线程的场景下，这两者可以认为是等价的，但如果是多核环境下，同一个时钟时间内有多少处理器核心正在工作，就会有多少倍的处理器时间被消耗和记录下来。
 
@@ -126,7 +126,7 @@ JBossCache是基于自家的JGroups进行集群间的数据通信，JGroups使�
 
 日志显示这次垃圾收集一共花费了0.14秒，但其中用户线程却足足停顿了有2.26秒，两者差距已经远远超出了正常的TTSP（Time To Safepoint）耗时的范畴。所以先加入参数-XX：+PrintSafepointStatistics和-XX：PrintSafepointStatisticsCount=1去查看安全点日志，具体如下所示：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/712711-20200419163524701-1225378222.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/712711-20200419163524701-1225378222.png)
 
  
 
@@ -140,7 +140,7 @@ HotSpot原本提供了-XX：+UseCountedLoopSafepoints参数去强制在可数循
 
 笔者机器的Eclipse运行平台是32位Windows 7系统，虚拟机为HotSpot 1.5 b64。硬件为ThinkPad X201，Inteli5 CPU，4GB物理内存。在初始的配置文件eclipse.ini中，除了指定JDK的路径、设置最大堆为512MB以及开启了JMX管理（需要在VisualVM中收集原始数据）外，未作任何改动，原始配置内容如代码清单5-3所示。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/712711-20200419163613425-465790987.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/712711-20200419163613425-465790987.png)
 
  为了与调优后的结果进行量化对比，调优开始前笔者先做了一次初始数据测试。测试用例很简单，就是收集从Eclipse启动开始，直到所有插件加载完成为止的总耗时以及运行状态数据，虚拟机的运行数据通过VisualVM及其扩展插件VisualGC进行采集。测试过程中反复启动数次Eclipse直到测试结果稳定后，取最后一次运行的结果作为数据样本（为了避免操作系统未能及时进行磁盘缓存而产生的影响），数据样本如图5-2所示。
 
@@ -150,9 +150,9 @@ HotSpot原本提供了-XX：+UseCountedLoopSafepoints参数去强制在可数循
 
  Eclipse启动的总耗时没有办法从监控工具中直接获得，因为VisualVM不可能知道Eclipse运行到什么阶段算是启动完成。为了测试的准确性，笔者写了一个简单的Eclipse插件，用于统计Eclipse的启动耗时。由于代码十分简单，且本书并不是Eclipse RCP的开发教程，所以只列出代码清单5-4供读者参考，不再延伸。如果读者需要这个插件，可以使用下面的代码自己编译即可。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/712711-20200419163700037-1022076431.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/712711-20200419163700037-1022076431.png)
 
- ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/712711-20200419163717283-589431574.png)
+ ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/712711-20200419163717283-589431574.png)
 
  客观地说，考虑到该机器硬件的条件，15秒的启动时间其实还在可接受范围以内，但是从VisualGC中反映的数据上看，存在的问题是非用户程序时间（图5-2中的Compile Time、Class Load Time、GC Time）占比非常之高，占了整个启动过程耗时的一半以上（这里存在少许夸张成分，因为如即时编译等动作是在后台线程完成的，用户程序在此期间也正常并发执行，最多就是速度变慢，所以并没有占用一半以上的绝对时间）。虚拟机后台占用太多时间也直接导致Eclipse在启动后的使用过程中经常有卡顿的感觉，进行调优还是有较大价值的。
 
@@ -160,13 +160,13 @@ HotSpot原本提供了-XX：+UseCountedLoopSafepoints参数去强制在可数循
 
 各位读者不必失望，Sun公司给的JDK 6性能白皮书描述的众多相对于JDK 5的提升并不至于全部是广告词，尽管总启动时间并没有减少，但在查看运行细节的时候，却发现了一件很令人玩味的事情：在JDK 6中启动完Eclipse所消耗的类加载时间比JDK 5长了接近一倍，读者注意不要看反了，这里写的是JDK 6的类加载比JDK 5慢一倍，测试结果见代码清单5-7，反复测试多次仍然是相似的结果。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/712711-20200419164001022-1885844129.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/712711-20200419164001022-1885844129.png)
 
  在本例中类加载时间上的差距并不能作为一个具有普适性的测试结论去说明JDK 6的类加载必然比JDK 5慢，笔者测试了自己机器上的Tomcat和GlassFish启动过程，并没有出现类似的差距。在国内最大的Java社区中，笔者发起过关于此问题的讨论。从参与者反馈的测试结果来看，此问题只在一部分机器上存在，而且在JDK 6的各个更新包之间，测试结果也存在很大差异。
 
 经多轮试验后，发现在笔者机器上两个JDK进行类加载时，字节码验证部分耗时差距尤其严重，暂且认为是JDK 6中新加入类型检查验证器时，可能在某些机器上会影响到以前类型检查验证器的工作[插图]。考虑到实际情况，Eclipse使用者甚多，它的编译代码我们可以认为是安全可靠的，可以不需要在加载的时候再进行字节码验证，因此通过参数-Xverify：none禁止掉字节码验证过程也可作为一项优化措施。加入这个参数后，两个版本的JDK类加载速度都有所提高，此时JDK 6的类加载速度仍然比JDK 5要慢，但是两者的耗时已经接近了很多，测试结果如代码清单5-8所示。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/712711-20200419164022760-1169283779.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/712711-20200419164022760-1169283779.png)
 
  关于类与类加载的话题，譬如刚刚提到的字节码验证是怎么回事，本书专门规划了两个章节进行详细讲解，在此暂不再展开了。
 

@@ -11,11 +11,11 @@ From：https://dzone.com/articles/kafka-detailed-design-and-ecosystem
 > - Schema Registry 则用于`管理那些使用 Avro 来记录 Kafka 数据的模式`;
 > - 而 Kafka MirrorMaker 用于`将集群的数据复制到另一个集群里去`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210722100727487.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210722100727487.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210722101053177.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210722101053177.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210722101209532.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210722101209532.png)
 
 - Kafka Connect Sources 是 Kafka 记录的来源，而 Kafka Connect Sinks 则是这一记录的目的地。
 

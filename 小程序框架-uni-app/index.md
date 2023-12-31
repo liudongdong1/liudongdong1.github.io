@@ -12,7 +12,7 @@
 > - 支持原生插件，见插件市场：[https://ext.dcloud.net.cn](https://ext.dcloud.net.cn/)
 > - 支持App原生工程里嵌入uni小程序sdk。
 
-![img](https://gitee.com/github-25970295/picture2023/raw/master/29448a55-2785-4296-9248-913dbda9de7f.png)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/29448a55-2785-4296-9248-913dbda9de7f.png)
 
 - 创建 uni-app 工具：https://uniapp.dcloud.net.cn/quickstart-cli.html#%E8%BF%90%E8%A1%8C%E3%80%81%E5%8F%91%E5%B8%83uni-app
 - uni-app 插件：https://ext.dcloud.net.cn/

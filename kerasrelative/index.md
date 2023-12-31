@@ -142,7 +142,7 @@ processed_sequences = TimeDistributed(model)(input_sequences)
 
 #### Multi-input and multi-output models
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/multi-input-multi-output-graph.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/multi-input-multi-output-graph.png)
 
 ```python
 from keras.layers import Input,Embedding,LSTM,Dense

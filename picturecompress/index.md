@@ -1,7 +1,7 @@
 # PictureCompress
 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200814165610056.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200814165610056.png)
 
 ## 1. 鲁班图片压缩算法
 

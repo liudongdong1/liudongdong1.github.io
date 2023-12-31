@@ -32,7 +32,7 @@ FUSE分为三大模块：
 - LibFUSE模块（用户态）：用户程序在用户空间实现LibFUSE库封装的文件系统操作；LibFUSE实现文件系统主要框架、对“用户实现的文件系统操作代码“的封装、mount管理、通过字符设备/dev/fuse与内核模块通信；
 - 用户程序模块（用户态）
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/ebabcdb3fe854af5bf19e011c53d3b1e.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ebabcdb3fe854af5bf19e011c53d3b1e.png)
 
 - 一个内核模块： 加载时被注册成 Linux 虚拟文件系统的一个 fuse 文件系统驱动。实现和VFS的对接，实现一个能被用户空间打开的设备。该块设备作为fuse daemon与内核通信的桥梁，fuse daemon通过/dev/fuse读取fuse request，处理后将reply写入/dev/fuse。
 
@@ -42,7 +42,7 @@ FUSE分为三大模块：
 > - IO先进内核，经过VFS传递给内核的FUSE文件系统模块
 > - 内核FUSE模块把请求发送给用户态，由hello程序接受并处理，处理完成后，响应原路返回
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/79fd78fab286405d89b8e79e91401a6a.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/79fd78fab286405d89b8e79e91401a6a.png)
 
 内核 FUSE 模块在内核态中间做协议封装和协议解析的工作，它接收从VFS下来的请求并按照 FUSE 协议转发到用户态，然后接收用户态的响应，并随后回复给用户。FUSE在这条IO路径是做了一个透明中转站的作用，用户完全不感知这套框架。内核 fuse.ko用于接收VFS下来的IO请求，然后封装成 FUSE 数据包，转发给用户态，其内核也是一个文件系统，其满足文件系统的几个数据结构
 

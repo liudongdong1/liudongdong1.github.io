@@ -62,7 +62,7 @@
 
 ## 2. Arduino Mega2560
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200408111825624.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200408111825624.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 - 基于ATmega2560的主控开发板，采用USB接口
 - 具有54路数字输入/输出口，16路模拟输入，4路UART接口，一个16MHz晶体振荡器，一个USB口，一个电源插座，一个ICSP header和一个复位按钮。
@@ -93,16 +93,16 @@
 
 #### 2.2.4. **使用电源接口为Arduino供电**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210120181401581.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210120181401581.png)
 
 ## 3. IDE使用
 
-1. get an arduino board and usb cable![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200408104715951.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+1. get an arduino board and usb cable![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200408104715951.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 2. download the arduino IDE :http://www.arduino.cc/en/Main/Software
 3. connect the board,  the green power(labelled PWR) go on.
 4. install the driver, if download, you will find the USB Serial Port to see your board
-5. open arduino examples: file->examples                        ![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200408105057219.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
-6. select your board:                                     ![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200408105255207.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+5. open arduino examples: file->examples                        ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200408105057219.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+6. select your board:                                     ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200408105255207.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 7. select your serial port
 8. upload your program
 
@@ -331,9 +331,9 @@ void loop()
 
 > 使用串口调试工具例如XCOM V2.0.exe，进行AT命令操作，设置主从模式后会自动进行配对。注意工作电压3.3v。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210205235604849.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210205235604849.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210205235524626.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210205235524626.png)
 
 ```c++
 #include <SoftwareSerial.h>
@@ -404,7 +404,7 @@ void loop() {
 
 IDE -》项目--》加载库，导入库，   导入成功后就可以在IDE上直接查看到与库相关的例子
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200519203955639.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200519203955639.png)
 
 > 直接将压缩包解压到IDE安装路径下的libraries文件夹，然后直接打开IDE就行了！
 >
@@ -413,7 +413,7 @@ IDE -》项目--》加载库，导入库，   导入成功后就可以在IDE上�
 - 本地库目录查看方式：   文件--》偏好设置--》库文件目录
 - 一个库的目录格式：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200519204735688.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200519204735688.png)
 
 ## 6. 串口操作
 
@@ -789,7 +789,7 @@ void loop() {
 
 Arduino 开发板没有接入任何设备，模拟口电压为0.02v左右，但是读取到的模拟量呈现一定波形，不知道什么原因？
 
-![Phenomena1](https://gitee.com/github-25970295/blogImage/raw/master/img/Phenomena1.png)
+![Phenomena1](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Phenomena1.png)
 
 ```c
 // These constants won't change:
@@ -884,7 +884,7 @@ SoftwareSerial: https://wiki.nxez.com/arduino:libraries:softwareserial
 
 ## 12. 问题记录
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210131204902585.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210131204902585.png)
 
 - 板子对应的电压引脚是有电压的，但是hex文件无法烧录进去，尝试了不同的flash方法，认为板子坏了，重新买了一个。 
 

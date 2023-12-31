@@ -9,7 +9,7 @@
 pip install -r requirements.txt
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201031133710134.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201031133710134.png)
 
 | Model                                                        | APval    | APtest   | AP50     | SpeedGPU  | FPSGPU  |      | params | FLOPS  |
 | ------------------------------------------------------------ | -------- | -------- | -------- | --------- | ------- | ---- | ------ | ------ |
@@ -98,9 +98,9 @@ tqdm>=4.41.0
 
 数据集：[Safety-Helmet-Wearing-Dataset](https://github.com/njvisionpower/Safety-Helmet-Wearing-Dataset) 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201031121449831.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201031121449831.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201031120637196.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201031120637196.png)
 
 ```yaml
 #custom_data.yml --> create data
@@ -115,15 +115,15 @@ names: ['person', 'head', 'helmet']
 
 - **Create Label**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201031121025402.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201031121025402.png)
 
 - **Anchor K-means 介绍**
 
 > bounding box由左上角顶点和右下角顶点表示，即$(x_1,y_1,x_2,y_2)$; 对box做聚类时，我们只需要box的宽和高作为特征，并且由于数据集中图片的大小可能不同，还需要先使用图片的宽和高对box的宽和高做归一化;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201031123734283.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201031123734283.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201031123805207.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201031123805207.png)
 
 > 1. 随机选取K个box作为初始anchor；
 > 2. 使用IOU度量，将每个box分配给与其距离最近的anchor；

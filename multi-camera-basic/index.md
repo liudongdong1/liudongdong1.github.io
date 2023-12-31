@@ -13,7 +13,7 @@ FairMOT: A Simple Baseline for Multi-Object Tracking, arXiv 2020（代码已开�
 
 > FairMOT 会对每一个像素进行预测，预测其是否是物体的中心、物体的大小和以其为中心的图像区域的 Re-ID 特征。检测和跟踪两个任务都是以“当前像素”为中心，所以不存在对齐的问题，也不存在严重的顾此失彼的不公平问题。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200630080422531.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200630080422531.png)
 
 ## 2. 姿态估计
 
@@ -21,7 +21,7 @@ FairMOT: A Simple Baseline for Multi-Object Tracking, arXiv 2020（代码已开�
 
 Optimizing Network Structure for 3D Human Pose Estimation, ICCV 2019
 
-![Pose Estimation](https://gitee.com/github-25970295/blogImage/raw/master/img/微信图片_20200630080540.gif)
+![Pose Estimation](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/微信图片_20200630080540.gif)
 
 ​		单目三维人体姿态估计的目标是从单张图像恢复人体关节点的三维坐标。在成像过程中深度信息的丢失导致该任务存在很强的歧义，比较前期的工作经常通过引入人体测量学约束、低维流行表达或时间平滑约束等先验信息来降低歧义。
 
@@ -51,7 +51,7 @@ Optimizing Network Structure for 3D Human Pose Estimation, ICCV 2019
 
 ```html
 <figure class="third">
-    <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200630103514026.png" width="200" alt="相机在各个位置拍摄Mark图像，通过图像处理方法得到Mark坐标"/><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200630103433760.png" width="200" alt="单个标定板"/>
+    <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200630103514026.png" width="200" alt="相机在各个位置拍摄Mark图像，通过图像处理方法得到Mark坐标"/><img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200630103433760.png" width="200" alt="单个标定板"/>
 </figure>
 ```
 
@@ -70,7 +70,7 @@ Optimizing Network Structure for 3D Human Pose Estimation, ICCV 2019
 
 > 对于有些大幅面物体 ，可以通过拍摄多幅图像，每幅图像覆盖物体的不同的部分。如果摄像机经过标定并且它们与一个共有的世界坐标系之间的相对关系已知，就可以通过不同的图像进行精确测量。 甚至可以将多幅图像拼接为一副覆盖整个物体的大图，这个可以通过将每幅图像都校正到同一个测量平面上实现。在结果图像上，可以直接在世界坐标系中进行测量。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200630110059490.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200630110059490.png)
 
 ## 4. 图像拼接
 
@@ -78,9 +78,9 @@ Optimizing Network Structure for 3D Human Pose Estimation, ICCV 2019
 >
 > 针对不同的拼接方式可以分为图像拼接、视频拼接、全景拼接。针对图像拼接可以分为像素相似与特征相似；视频拼接又分为固定相机、移动相机；全景拼接分为单相机、相机列阵、鱼眼相机列阵。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210204080156421.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210204080156421.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210204080428186.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210204080428186.png)
 
 
 

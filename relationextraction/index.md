@@ -34,7 +34,7 @@
 
 #### Supervised Methods
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201125133919042.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201125133919042.png)
 
 - difficult to extend to new entity-relation types for want of labeled data;
 - extensions to higher order entity relations are difficult as well;
@@ -64,13 +64,13 @@
 
 - **Tree Kernels**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201125134001281.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201125134001281.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201125134158391.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201125134158391.png)
 
 #### Semi-Supervised
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201125134900608.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201125134900608.png)
 
 - ##### DIPRE
 
@@ -82,11 +82,11 @@
 >
 > work pipline: The system matches each relation candidate with all patterns and only keeps candidates that have similarity score greater than some threshold. Next, Snowball assigns a high confidence score for a relation candidate when the candidate is matched by many tuples with high similarity to pattern that the system confident in. Finally, the new relation is added to the seed set and the process is repeated iteratively
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201125135623816.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201125135623816.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201125135738664.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201125135738664.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201125135819932.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201125135819932.png)
 
 - **KnowItAll**
 
@@ -99,7 +99,7 @@
 > 2） Single-Pass Extractor: 抽取阶段，对待抽取句子进行浅层语义分析，标注其中的词性和名词短语。对名词短语，如果满足某种条件，则作为候选三元组，之后利用第一步的分类器进行分类，打分。过滤出可信的三元组，同时记录其出现的频次。
 > 3）Redundancy-based Assesor , 基于冗余的评价器，对抽取的三元组进行评价，进一步提高效果
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201125140820963.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201125140820963.png)
 
 #### Beyond Binary Relations
 
@@ -111,13 +111,13 @@
 
 测试数据集合SemEval-2010 Task-8 
 
-![image-20201123160420523](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201123160420523.png)
+![image-20201123160420523](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201123160420523.png)
 
 ## 3. Project
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201123163752444.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201123163752444.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201123163856515.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201123163856515.png)
 
 学习资料：
 

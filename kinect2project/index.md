@@ -15,21 +15,21 @@
 > - 红外基础 D2D（显示红外线摄像头的实时捕捉画面 具有重置功能），红外基础 WPF
 > -  Kinect融合基础，Kinect融合器的基础知识, 手势生成器查看器 [[配图介绍]](http://brightguo.com/kinect2-official-sdk-samples/)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/psb-2.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/psb-2.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/psb-10.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/psb-10.png)
 
-![psb (14)](https://gitee.com/github-25970295/blogpictureV2/raw/master/psb-14.png)
+![psb (14)](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/psb-14.png)
 
-![psb (18)](https://gitee.com/github-25970295/blogpictureV2/raw/master/psb-18.png)
+![psb (18)](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/psb-18.png)
 
-![psb (26)](https://gitee.com/github-25970295/blogpictureV2/raw/master/psb-26.png)
+![psb (26)](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/psb-26.png)
 
-![kinect fusion Explorer-WPF ](https://gitee.com/github-25970295/blogpictureV2/raw/master/psb-31.png)
+![kinect fusion Explorer-WPF ](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/psb-31.png)
 
 ### 2. **[Kinect-Gait-Analysis](https://github.com/ahhda/Kinect-Gait-Analysis)**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210725230139447.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210725230139447.png)
 
 ### 3. **[ OpenDepthSensor](https://github.com/jing-interactive/OpenDepthSensor)**
 
@@ -81,11 +81,11 @@ pcl = Cloud(dynamic=True, simultaneously=True, depth=True, color=False, body=Tru
 pcl.visualize()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image_6.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image_6.png)
 
 ### 6. **[kinect2-opencv](https://github.com/m6c7l/kinect2-opencv)**
 
-![kinect2-opencv](https://gitee.com/github-25970295/blogpictureV2/raw/master/kinect2-opencv.png)
+![kinect2-opencv](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/kinect2-opencv.png)
 
 > - Camera: raw and altered images from RGB camera, IR and depth sensor
 > - Tracker: ROI and color trackers
@@ -158,7 +158,7 @@ for _, color_img, depth_map in kinect.iter_frames():
 kinect.disconnect()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/59576877-e8f68c00-9086-11e9-826b-eceb6eb80573.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/59576877-e8f68c00-9086-11e9-826b-eceb6eb80573.gif)
 
 ![](https://user-images.githubusercontent.com/6625384/59576903-088db480-9087-11e9-96f6-251240d25f0c.gif)
 

@@ -5,7 +5,7 @@
 >
 > 一个 etcd 集群，通常会由 3 个或者 5 个节点组成，多个节点之间通过 Raft 一致性算法的完成分布式一致性协同，算法会选举出一个主节点作为 leader，由 leader 负责数据的同步与数据的分发。当 leader 出现故障后系统会自动地选取另一个节点成为 leader，并重新完成数据的同步。客户端在多个节点中，仅需要选择其中的任意一个就可以完成数据的读写，内部的状态及数据协同由 etcd 自身完成。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec569c66ba18tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16eeec569c66ba18tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp)
 
 ### API
 
@@ -29,7 +29,7 @@
 
 在 etcd 中会运行一个**周期性的 Compaction 的机制**来清理历史数据，将一段时间之前的同一个 Key 的多个历史版本数据清理掉。最终的结果是灰色的 b+tree 依旧保持单调递增，但可能会出现一些空洞。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56c2ade062tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16eeec56c2ade062tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp)
 
 ### 分布式租约--lease
 
@@ -40,15 +40,15 @@
 
 #### 元数据存储
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cacb26a0tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16eeec56cacb26a0tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp)
 
 #### 服务发现
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56cdbaa6d2tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16eeec56cdbaa6d2tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp)
 
 #### 分布式选举
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/16eeec56ce76b1b6tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16eeec56ce76b1b6tplv-t2oaga2asx-zoom-in-crop-mark3024000.awebp)
 
 ### etcd 命令
 

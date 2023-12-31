@@ -13,23 +13,23 @@
 
 - 平稳
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521111628100.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521111628100.png)
 
 - 不平稳，无趋势，有周期差异
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521111646799.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521111646799.png)
 
 - 不平稳，无趋势，无周期差异
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521111657428.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521111657428.png)
 
 - 不平稳，有趋势，有周期差异
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521111709262.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521111709262.png)
 
 - 不平稳，有趋势，无周期差异
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521111717749.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521111717749.png)
 
 | NO.  | 类型                         | 波动值 | 趋势 | 同环比差异 | 模型选择      |
 | :--- | :--------------------------- | :----- | :--- | :--------- | :------------ |
@@ -48,7 +48,7 @@
 
 > 将非平稳时间序列转化成平稳时间序列，包含三种类型：结构变化、差分平稳、确定性去趋势。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521112505013.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521112505013.png)
 
 - **结构变化**
 
@@ -103,7 +103,7 @@
 
 #### 3. 回归模型
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521113216905.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521113216905.png)
 
 ### 4. **AutoEncoder模型**
 
@@ -111,7 +111,7 @@
 >
 >  AutoEncoder是一种典型的无监督方法，可以将其扩展为Variational AutoEncoder，或者引入情景信息，从而扩展为Conditional Variational AutoEncoder。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210518225641.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210518225641.png)
 
 ```python
 def create_sequences(values, steps=n_steps):
@@ -145,7 +145,7 @@ dota_model = model.fit(
 )
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210518225825.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210518225825.png)
 
 ### Resouce
 

@@ -8,9 +8,9 @@
 
 #### .1. Collection
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220314143226382.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220314143226382.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210510223825.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210510223825.png)
 
 - **Collection接口**: 是集合类的根接口，Java中没有提供这个接口的直接的实现类。但是却让其被继承产生了两个接口，就是`Set和List`。`Set中不能包含重复的元素`。`List是一个有序的集合`，可以包含重复的元素，提供了按索引访问的方式。
 
@@ -77,9 +77,9 @@ System.out.println("键"+e.getKey () + "的值为" + e.getValue());
 - ArrayList
   - 不考虑到线程的安全因素，一般用arraylist效率比较高。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220314143518319.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220314143518319.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220314143634834.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220314143634834.png)
 
 ### 2.  ArrayList基本操作
 

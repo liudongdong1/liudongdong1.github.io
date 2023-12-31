@@ -37,13 +37,13 @@ previous work:
 
 > provided a scene mesh and RGBD sequence with body occlusion, recovers a realistic global motion, with natural person-scene interactions.  The markers trajectories(left) and accelerations(right) of each stage are shown at the bottom, as well as a walking sequence from AMASS.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211103102647565.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211103102647565.png)
 
 #### Evaluation
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102185206231.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102185206231.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102185224112.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102185224112.png)
 
 > Wang, Yue, et al. "DETR3D: 3D Object Detection from Multi-view Images via 3D-to-2D Queries." *arXiv preprint arXiv:2110.06922* (2021). [pdf](chrome-extension://ikhdkkncnoglghljlkmcimlnlhkeamad/pdf-viewer/web/viewer.html?file=https%3A%2F%2Fopenreview.net%2Fpdf%3Fid%3DxHnJS2GYFDz) [code](https://github.com/WangYueFt/detr3d)
 >
@@ -76,7 +76,7 @@ previous work:
 >
 > 2D features are transformed to refine the object queries by projecting the 3D reference point into the image space.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211106154832864.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211106154832864.png)
 
 > Jiang W, Xue H, Miao C, et al. Towards 3D human pose construction using WiFi[C]//Proceedings of the 26th Annual International Conference on Mobile Computing and Networking. 2020: 1-14.  [[video](https://www.youtube.com/watch?v=puU4EvBTPxA)]
 
@@ -101,13 +101,13 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211129152221849.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211129152221849.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211129152839987.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211129152839987.png)
 
 - transformed th eraw CSI data extracted from M distributed antennas into a sequence of input data.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211129152903257.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211129152903257.png)
 
 
 

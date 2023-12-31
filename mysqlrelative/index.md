@@ -5,13 +5,13 @@
 
 * 查询语句的执行流程如下：权限校验（如果命中缓存）--->查询缓存--->分析器--->优化器--->权限校验--->执行器--->引擎
 * 更新语句执行流程如下：分析器---->权限校验---->执行器--->引擎---redo log(prepare 状态)--->binlog--->redo log(commit状态)
-* **连接器：**身份认证和权限相关(登录 MySQL 的时候)。![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210709233330122.png)
+* **连接器：**身份认证和权限相关(登录 MySQL 的时候)。![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210709233330122.png)
 * **查询缓存：**执行查询语句的时候，`会先查询缓存（MySQL 8.0 版本后移除，因为这个功能不太实用）`。
 * **分析器：** 没有命中缓存的话，SQL 语句就会经过分析器，分析器说白了就是要先看你的 SQL 语句要干嘛，再检查你的 SQL 语句语法是否正确。
 * **优化器：**按照 MySQL 认为最优的方案去执行。
 * **执行器：**执行语句，然后从存储引擎返回数据。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624183525647.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210624183525647.png)
 
 * **Server 层**：主要包括连接器、查询缓存、分析器、优化器、执行器等，所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图，函数等，还有一个通用的日志模块 binglog 日志模块。
 * **存储引擎**： 主要负责数据的存储和读取，采用可以替换的插件式架构，支持 `InnoDB、MyISAM、Memory 等多个存储引擎`，其中 InnoDB 引擎有自有的日志模块 redolog 模块。**现在最常用的存储引擎是 InnoDB，它从 MySQL 5.5.5 版本开始就被当做默认存储引擎了。**
@@ -191,7 +191,7 @@ SET GLOBAL time_zone = 'Europe/Helsinki';
 
   > Timestamp 在不同版本的 MySQL 中有细微差别。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624183128485.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210624183128485.png)
 
 #### .2. 数值型时间戳
 
@@ -265,7 +265,7 @@ SELECT * FROM post WHERE post.id IN (123,456,567,9098,8904);
 > - **I/O 线程** : 负责从主服务器上读取二进制日志，并写入从服务器的中继日志中。
 > - **SQL 线程** : 负责读取中继日志并重放其中的 SQL 语句。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210709232849857.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210709232849857.png)
 
 #### .2. 读写分离
 

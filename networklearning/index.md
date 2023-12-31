@@ -9,7 +9,7 @@
   - DNS;   ARP;   RARP;
 - internet and web programming: 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208183139193.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208183139193.png)
 
 - **Goals:**
   - **Performance –** It is measured in terms of transit time and response time.
@@ -24,7 +24,7 @@
   - **Security –** It means protecting data from unauthorized access.
 - **Media:**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208183510240.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208183510240.png)
 
 ### 2. Data Link
 
@@ -44,11 +44,11 @@
 
 > 使用路由器后，Internet用户无法访问到局域网内的主机，因此不能访问内网搭建的Web、FTP、Mail等服务器。虚拟服务器功能可以实现将内网的服务器映射到Internet，从而实现服务器对外开放。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208190110382.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208190110382.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208210148525.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208210148525.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208210330567.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208210330567.png)
 
 #### 3.2. VPN 路由器
 
@@ -60,7 +60,7 @@
 
 ##### 3.2.1.传统VPN架设方案
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208191953609.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208191953609.png)
 
 - 路由器A能上网就行了,假设路由器A的网关是192.168.1.1;
 
@@ -83,31 +83,31 @@
 - 准备：两台或两台以上蒲公英路由器
 - 登录智能组网管理平台，点击【添加路由器】;填写SN码和设备名称就可以了。通过【智能组网】—— 【立即创建网络】开始组网。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208192235866.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208192235866.png)
 
 #### 3.3. 静态路由
 
 在一个公司网络中，不仅可以通过无线路由器B连接外网，还可以通过无线路由器A来连接公司内网服务器。在不修改本地连接的IP地址及网关情况下，公司电脑需要能够同时访问外网和内网服务器。配置实例如下图：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208192815202.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208192815202.png)
 
 PC默认将不与自己在同一网段的数据发送给网关192.168.1.1，即无线路由器B。路由器B接收到数据后，检查数据包的目的地址。如果发现目的IP为10.70.1.0的数据包，则路由器会发送一个ICMP重定向数据包给PC，告知PC后续发往10.70.1.0网段的数据包，都发送给192.168.1.2，即路由器A即可。这样PC就可以直接访问公司内网服务器了。
 
 - 使用路由器管理地址登陆路由器B管理界面，点击“路由功能”菜单，选择“静态路由表”，点击“添加新条目”按钮，在静态路由表中填写相应的参数。
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208193049723.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208193049723.png)
 
 - `route print` : 打印路由表信息
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208193726116.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208193726116.png)
 
 > 指明了到达目的网段的下一跳地址，可以将其描述为，192.168.2.91 或者192.168.2.115前往本地路由表中未知的网段时，会选择默认路由进行传递，（全0代表全网），此时他的下一跳地址就是192.168.2.1。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208194048155.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208194048155.png)
 
 - `display ip routing-talbe` : 查看路由表：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208194318243.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208194318243.png)
 
 - **Destination/mask**：目的/掩码，指明了目的网段或者主机，使用掩码来区分究竟是网段还是主机，当你配置完IP地址后，路由表中会自动生成直连与本地的路由，其中127.0.0.0/8和127.0.0.1/32代表本地的环回口地址。
 - **Proto（protocol）**：协议，用来指明这条路由是通过什么方式来获取到的，其中Direct代表直连获取，除去直连还有static代表静态，ospf代表从OSPF中获取，RIP代表从rip协议中获取的，诸如此类，还有许多。
@@ -115,7 +115,7 @@ PC默认将不与自己在同一网段的数据发送给网关192.168.1.1，即�
 - **next-hop：下一跳地址。**用来指明到达目的网络应该将路由传递给谁。
 - **Interface：**出接口。用于指明到达目的网络的本地出接口，与下一跳同理，一般运用于出口设备没有固定ip地址的环境，此时必须使用出接口。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208195116683.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208195116683.png)
 
 ```shell
 # traceroute 172.22.102.250
@@ -128,7 +128,7 @@ traceroute to 172.22.102.250 (172.22.102.250), 30 hops max, 38 byte packets
 
 > 在网络任何地方都可以管理到路由器，进行实时、安全的管控配置。远程WEB管理功能，可以实现在接入互联网的地方即可远程管理路由器。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201208195525879.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201208195525879.png)
 
 #### 3.5. UPnP
 
@@ -141,7 +141,7 @@ traceroute to 172.22.102.250 (172.22.102.250), 30 hops max, 38 byte packets
 - 方法一：
   - 点击链接 http://www.net.cn/static/customercare/yourIP.asp 抓取自己的IP地址
   - tracert <刚才获取的IP>
-  - ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210124191303322.png)
+  - ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210124191303322.png)
 - 路由器ip查看： 输入cmd ——然后输入**ipcongfig**——然后按回车键，就可以看到下面有一个`Default Gateway`就可以看见IP了
 
 ### 4. 学习资源

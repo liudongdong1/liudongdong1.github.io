@@ -11,7 +11,7 @@
 
 #### .1. 生命周期
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/81425fe178072c8d6b216275d3c223ca.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/81425fe178072c8d6b216275d3c223ca.png)
 
 - onCreate(): 会在 Activity 第一次创建时进行调用，在这个方法中通常会做 Activity `初始化相关的操作`，例如：`加载布局、绑定事件等`。
 - onStart(): 在 Activity 由`不可见变为可见的时候调用`，但是还不能和用户进行交互。
@@ -68,7 +68,7 @@ A:: onPause -> A:: onStop -> A:: onDestroy
 - 系统Intent匹配时会严格区分对待这些组件，时Activity（startActivity），Service（startService） 还是BroadcastReceiver（SendBroadcast）.
 - 系统将Intent和对应组件类型中的所有intent-filter 进行匹配，寻找最佳效果。 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221130184333188.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221130184333188.png)
 
 ##### 1. 显示启动
 
@@ -101,7 +101,7 @@ startActivity(intent);
 
 - 简单数据传递
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211107225251570.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211107225251570.png)
 
 - 传递数组
 
@@ -416,20 +416,20 @@ startActivityForResult(intent, 0);
 
 #### .5. 启动模式
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/8500d96e0dbf278df981b2f1310442e2-166883070091660.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/8500d96e0dbf278df981b2f1310442e2-166883070091660.png)
 
 ##### 1. standard
 
 > 每启动一次，都会创建一个新的Activity实例。启动的生命周期为：onCreate()->onStart()->onResume()
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108083016701.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108083016701.png)
 
 ##### 2. singleTop
 
 - 如果任务栈顶已经存在需要启动的目标Activity，则直接启动，并会回调onNewIntent()方法，生命周期顺序为： onPause() ->onNewIntent()->onResume()
 - 如果任务栈上顶没有需要启动的目标Activity，则创建新的实例，此时生命周期顺序为： onCreate()->onStart()->onResume()
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108083334735.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108083334735.png)
 
 ##### 3. SingleTask
 
@@ -438,17 +438,17 @@ startActivityForResult(intent, 0);
 - 当启动的Activity目标任务栈不存在时，则以此启动Activity为根Activity创建目标任务栈，并切换到前面
 - D为singleTask模式
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108083436941.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108083436941.png)
 
 - 当启动的Activity存在时，则会直接切换到Activity所在的任务栈，并且任务栈中在Activity上面的所有其他Activity都出栈（调用destroy()），此时启动的Activity位于任务栈顶，并且会回调onNewIntent()方法。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108083510183.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108083510183.png)
 
 ##### 4. singleInstance
 
 > singleInstance名称是单例模式，即App运行时，该Activity只有一个实例。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108083558464.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108083558464.png)
 
 
 ---

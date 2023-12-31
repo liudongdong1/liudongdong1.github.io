@@ -15,9 +15,9 @@ protected:
 }; 
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411154131578.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411154131578.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411154251849.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411154251849.png)
 
 ### 2. 构造&添加
 
@@ -174,11 +174,11 @@ void vector<T, Alloc>::insert(iterator position, size_type n, const T& x)
         # endif /* __STL_USE_EXCEPTIONS */ 
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411161923466.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411161923466.png)
 
 ### 3. 常用函数
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/c6798c11f83f42defcca4dec775ec7d4.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/c6798c11f83f42defcca4dec775ec7d4.png)
 
 ### Resource
 

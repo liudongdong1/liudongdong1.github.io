@@ -16,7 +16,7 @@ if (o instanceof Set) {       // Raw type
 //一旦确定 o 对象是一个 Set，则必须将其转换为通配符 Set<?>，而不是原始类型 Set
 ```
 
-![image-20210520083453610](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210520083453610.png)
+![image-20210520083453610](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210520083453610.png)
 
 ### 2. 消除非检查警告
 

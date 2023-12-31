@@ -7,7 +7,7 @@
 
 > A small kernel module to` set up the device`, `map device memory to user-space` and `register interrupts`. In many cases, the standard uio_pci_generic module included in the Linux kernel can provide the uio capability. For some devices which lack support for legacy interrupts, e.g. virtual function (VF) devices, the igb_uio module may be needed in place of uio_pci_generic.
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503135539378.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503135539378.png)
 
 **用户驱动工作流程**
 
@@ -68,13 +68,13 @@ int main(int argc, char **argv)
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503135701273.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503135701273.png)
 
 #### .2. VFIO
 
 > 向用户态开放了 IOMMU 接口，通过 IOCTL 配置 IOMMU 将 DMA 地址空间映射并将其限制在进程虚拟地址空间。`IOMMU 提供了 IO 设备访问实际物理内存的一套机制`。在虚拟化领域，`内部实现了 guest 虚机内存地址和 host 内存地址的转换`
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503140332056.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503140332056.png)
 
 #### .3. PCI BAR
 
@@ -88,9 +88,9 @@ int main(int argc, char **argv)
 
 ### 2. SPDK
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/webp-16515581918284.webp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/webp-16515581918284.webp)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/13192585-50cc2d2e5782db65.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/13192585-50cc2d2e5782db65.png)
 
 ### Resource
 

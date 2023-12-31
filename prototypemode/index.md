@@ -14,7 +14,7 @@
 
 ### 1. 简单模式
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705094513926.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705094513926.png)
 
 > **客户(Client)角色**：**客户类**提出创建对象的请求；
 >
@@ -77,7 +77,7 @@ public class ConcretePrototype2 extends Prototype {
 
 ### 2. 登记模式
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705094659388.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705094659388.png)
 
 > **客户(Client)角色**：**客户类**提出创建对象的请求；
 >
@@ -184,7 +184,7 @@ public class Person implements Cloneable{
 
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMjI2MDk0MTMzNTY3.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMjI2MDk0MTMzNTY3.png)
 
 ### Resource
 

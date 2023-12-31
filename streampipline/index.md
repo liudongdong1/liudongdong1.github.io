@@ -11,7 +11,7 @@
 
 ### 1. Stream Pipeline
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/Stream_pipeline_example-163056665569226.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Stream_pipeline_example-163056665569226.png)
 
 > 结束操作不会创建新的流水线阶段(Stage)，直观的说就是流水线的链表不会在往后延伸了。结束操作会创建一个包装了自己操作的Sink，这也是流水线中最后一个Sink，这个Sink只需要处理数据而不需要将结果传递给下游的Sink（因为没有下游）。
 >
@@ -88,7 +88,7 @@ public static void main(String[] args) {
 
 > Fork/Join最核心的地方就是利用了现代硬件设备多核,在一个操作时候会有空闲的CPU,那么如何利用好这个空闲的cpu就成了提高性能的关键,而这里我们要提到的工作窃取（work-stealing）算法就是整个Fork/Join框架的核心理念,工作窃取（work-stealing）算法是指某个线程从其他队列里窃取任务来执行。  
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/13932958-dbceae46ea7c15c3-163056705416727.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/13932958-dbceae46ea7c15c3-163056705416727.png)
 
 #### .2. 缺点
 

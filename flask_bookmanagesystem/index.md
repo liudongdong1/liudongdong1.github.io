@@ -353,7 +353,7 @@ if __name__ == '__main__':
 
 #### 3.2. SQLAlchemy
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201114233802590.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201114233802590.png)
 
 | Engine  | 连接         | 驱动引擎             |
 | ------- | ------------ | -------------------- |
@@ -431,7 +431,7 @@ session.commit()
 | 不支持组合查询，只能连续调用filter变相实现 | 参数是**kwargs，支持组合查询 |
 |             支持and，or和in等              |                              |
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201114233611631.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201114233611631.png)
 
 #### 3.3. flask-wtf&&wtf
 
@@ -508,7 +508,7 @@ def login():
 
 - 首次登录
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201115000918252.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201115000918252.png)
 
 ```python
 def login_user(user, remember=False, force=False, fresh=True):
@@ -533,7 +533,7 @@ def login_user(user, remember=False, force=False, fresh=True):
 
 - 非首次登录
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201115001837082.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201115001837082.png)
 
 ```python
 @app.route('/')
@@ -634,7 +634,7 @@ url_for('static', filename='style.css')
 
 #### 3.6. Layui 模板学习使用
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201115094825916.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201115094825916.png)
 
 #### 3.7. 学习记录 
 
@@ -644,7 +644,7 @@ url_for('static', filename='style.css')
 - 后续自己编写相关系统的时候可以具体在学习 block 块使用规则。
 - 项目效果； 如果做`物联网可以添加卡片式的那种显示效果`；
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201115095655445.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201115095655445.png)
 
 学习链接
 

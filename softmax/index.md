@@ -5,13 +5,13 @@
 
 > **softmax用于多分类过程中**，它将多个神经元的输出，映射到（0,1）区间内。假设我们有一个数组，V，Vi表示V中的第i个元素，那么这个元素的softmax值就是$S_i=\frac{e^j}{\sum_je^j}$
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210326105054.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210326105054.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210326105149.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210326105149.png)
 
 但是，这样有一个缺点，就是指数$e^{f_{y_i}}$可能会特别大，这样可能导致内存不足，计算不稳定等问题。那么可以在分子分母同乘一个常数C，一般C取为 $logC=-maxf_i$;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210326110005.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210326110005.png)
 
 ```python
 # 那么将f中的值平移到最大值为0：

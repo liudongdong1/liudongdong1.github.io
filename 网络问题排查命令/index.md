@@ -149,7 +149,7 @@ wget –spider url #测试下载链接是否可用等等
 
 ### 7. 文件夹共享
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200828150147.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200828150147.png)
 
 > 访问目录： /mnt/hgfs/winshare 
 
@@ -220,7 +220,7 @@ local_max_rate=0                    本地用户最大传输速率（字节/秒�
 > - 使用方式一：Mobaterm 使用sftp 连接，使用ftp的时候，上传有问题：**Error EElFTPSError: Data channel transfer error (error code is 10054)**
 > - 使用方式二： 文件夹操作： ftp://192.168.2.133/
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210124165341332.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210124165341332.png)
 
 - **Samba**
 
@@ -234,7 +234,7 @@ sudo smbpasswd -a pi
 #window 上输入 ：   \\192.168.2.104\pi
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200508170115935.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200508170115935.png)
 
 - samba 配置文件详解： https://blog.csdn.net/ma111000522/article/details/75949065
 - 案例： https://www.cnblogs.com/kevingrace/p/5569993.html
@@ -309,7 +309,7 @@ remove() {# 卸载停止服务,把安转时写入的文件全部删除
 }
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200828215528.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200828215528.png)
 
 注意端口需要和json文件配置的一样
 
@@ -317,7 +317,7 @@ remove() {# 卸载停止服务,把安转时写入的文件全部删除
 
 2.HTTP代理
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200828215922.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200828215922.png)
 
 3.SSL/TLS代理
 
@@ -325,7 +325,7 @@ remove() {# 卸载停止服务,把安转时写入的文件全部删除
 
 > Sock5代理服务器则是把你的网络数据请求通过一条连接你和代理服务器之间的通道，由服务器转发到目的地。你没有加入任何新的网络，只是http/socks数据经过代理服务器的转发送出，并从代理服务器接收回应。你与代理服务器通信过程不会被额外处理，如果你用https，那本身就是加密的。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200828220120.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200828220120.png)
 
 - PAC 模式：
 
@@ -361,9 +361,9 @@ ldd@ldd:~/v2ray$ sudo /etc/init.d/networking restart
 - 排查一： 是不是代理的问题；
 - 排查二： 设置dns服务器： 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210125100911944.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210125100911944.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210125101700537.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210125101700537.png)
 
 - 排查四： 清除电脑dns缓存
 

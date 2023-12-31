@@ -13,7 +13,7 @@ String s4 = new String("Runoob");   // String 对象创建
 String s5 = new String("Runoob");   // String 对象创建
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/java-string-1-2020-12-01.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/java-string-1-2020-12-01.png)
 
 #### 2. 格式化字符串
 
@@ -73,11 +73,11 @@ String.format("浮点型变量的值为 " +
 
 ##### .2. 占位符
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211210091844780.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211210091844780.png)
 
 #### 5. StringBuffer & StringBuilder
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211210092406229.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211210092406229.png)
 
 - public StringBuffer append(String s)： 将指定的字符串追加到此字符序列。
 - public StringBuffer reverse()： 将此字符序列用其`反转`形式取代。
@@ -92,7 +92,7 @@ String.format("浮点型变量的值为 " +
 
 > SimpleDateFormat是Java提供的一个格式化和解析日期的工具类。它允许进行格式化（日期 -> 文本）、解析（文本 -> 日期）和规范化。SimpleDateFormat 使得可以选择任何用户定义的日期-时间格式的模式。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-0bf024c6e22519d64744de579d68b309_720w.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-0bf024c6e22519d64744de579d68b309_720w.jpg)
 
 ```java
 public static String toLongDateString(Date dt){

@@ -29,25 +29,25 @@ $$
 
 其中，$F$表示全局转化函数(global transition function)，$G$表示全局输出函数(global output function)，分别是所有节点$f$和$g$的叠加形式
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/graph_type.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/graph_type.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/propa_step.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/propa_step.png)
 
 不同类别模型的Aggregator计算方法和Updater计算方法如下表
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/gnn_table.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/gnn_table.png)
 
 > Fey M, Lenssen J E. Fast graph representation learning with PyTorch Geometric[J]. arXiv preprint arXiv:1903.02428, 2019. [[pdf](https://scholar.google.com/scholar_url?url=https://arxiv.org/pdf/1903.02428&hl=zh-CN&sa=T&oi=gsb-gga&ct=res&cd=0&d=8986807541681358909&ei=M1LMYND3EsSsywSBmKRw&scisig=AAGBfm2Raynm1DnoD_UxQ8L7vr2Nf8M3xQ)]
 >
 > Rozemberczki B, Scherer P, He Y, et al. PyTorch Geometric Temporal: Spatiotemporal Signal Processing with Neural Machine Learning Models[J]. arXiv preprint arXiv:2104.07788, 2021. [geometrictemporal](https://github.com/benedekrozemberczki/pytorch_geometric_temporal)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/table.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/table.png)
 
 ### 1. Structure
 
 > provide easy to use data iterators which are parametrized with spatiotemporal data. These iterators can serve snapshots which are formed by a single graph or multiple graphs which are batched together with the block diagonal batching trick.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210617111513969.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210617111513969.png)
 
 - **Temporal signal iterators**
   - `StaticGraphTemporalSignal` - Is designed for **temporal signals** defined on a **static** graph.
@@ -61,7 +61,7 @@ $$
   - `data.y`: Target to train against (may have arbitrary shape), *e.g.*, node-level targets of shape `[num_nodes, *]` or graph-level targets of shape `[1, *]`
   - `data.pos`: Node position matrix with shape `[num_nodes, num_dimensions]`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618090628020.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618090628020.png)
 
 ```python
 #创建了一个新的Data
@@ -129,11 +129,11 @@ train_dataset, test_dataset = temporal_signal_split(dataset, train_ratio=0.8)
 
 - **Mini-Batch**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618092943939.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618092943939.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618093025169.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618093025169.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618160343566.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618160343566.png)
 
 ##### 1. Planetoid 类实例化流程
 
@@ -415,7 +415,7 @@ dataset[0]
   - `Incremental:` the loss is back-propagated and model wights are updated after each temporal snapshot;
   - `Cumulative:` aggregated loss from every temporal snapshot and update weights with optimizer per epoch.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210617112633539.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210617112633539.png)
 
 - [Convolutional Layers](https://pytorch-geometric.readthedocs.io/en/latest/modules/nn.html#convolutional-layers)
 - [Dense Convolutional Layers](https://pytorch-geometric.readthedocs.io/en/latest/modules/nn.html#dense-convolutional-layers)
@@ -430,26 +430,26 @@ dataset[0]
 
 #### .2. MessagePassing&neighborhood aggregation
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618160144302.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618160144302.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618095312400.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618095312400.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618155312167.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618155312167.png)
 
-![image-20210618095445424](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618095445424.png)
+![image-20210618095445424](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618095445424.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618160311559.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618160311559.png)
 
 - `MessagePassing(aggr="add", flow="source_to_target", node_dim=-2)`: Defines the aggregation scheme to use (`"add"`, `"mean"` or `"max"`) and the flow direction of message passing (either `"source_to_target"` or `"target_to_source"`). Furthermore, the `node_dim` attribute indicates along which axis to propagate.
 - `MessagePassing.propagate(edge_index, size=None, **kwargs)`: The initial call to start propagating messages. Takes in the edge indices and all additional data which is needed to construct messages and to update node embeddings. Note that [`propagate()`](https://pytorch-geometric.readthedocs.io/en/latest/modules/nn.html#torch_geometric.nn.conv.message_passing.MessagePassing.propagate) is not limited to exchange messages in symmetric adjacency matrices of shape `[N, N]` only, but can also exchange messages in general sparse assignment matrices, *.e.g.*, bipartite graphs, of shape `[N, M]` by passing `size=(N, M)` as an additional argument. If set to [`None`](https://docs.python.org/3/library/constants.html#None), the assignment matrix is assumed to be symmetric. For bipartite graphs with two independent sets of nodes and indices, and each set holding its own information, this split can be marked by passing the information as a tuple, *e.g.* `x=(x_N, x_M)`.
 - `MessagePassing.message(...)`: Constructs messages to node i in analogy to ϕϕfor each edge in (j,i)∈E(j,i)∈E if `flow="source_to_target"` and (i,j)∈E(i,j)∈E if `flow="target_to_source"`. Can take any argument which was initially passed to `propagate()`. In addition, tensors passed to `propagate()` can be mapped to the respective nodes ii and jj by appending `_i` or `_j` to the variable name, *.e.g.* `x_i` and `x_j`. Note that we generally refer to ii as the central nodes that aggregates information, and refer to jj as the neighboring nodes, since this is the most common notation.
 - `MessagePassing.update(aggr_out, ...)`: Updates node embeddings in analogy to γγ for each node i∈Vi∈V. Takes in the output of aggregation as first argument and any argument which was initially passed to [`propagate()`](https://pytorch-geometric.readthedocs.io/en/latest/modules/nn.html#torch_geometric.nn.conv.message_passing.MessagePassing.propagate).
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618104838632.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618104838632.png)
 
 ##### .1. [GCN Layer](https://pytorch-geometric.readthedocs.io/en/latest/notes/create_gnn.html#id2)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618095657408.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618095657408.png)
 
 > 1. Add self-loops to the adjacency matrix.
 > 2. Linearly transform node feature matrix.
@@ -494,11 +494,11 @@ class GCNConv(MessagePassing):
         return norm.view(-1, 1) * x_j
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618103522520.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618103522520.png)
 
 ##### .2.[Edge Convolution](https://pytorch-geometric.readthedocs.io/en/latest/notes/create_gnn.html#id3)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618100719167.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618100719167.png)
 
 ```python
 import torch
@@ -874,7 +874,7 @@ for epoch in range(1, 201):
 
 - **GCN**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618121248908.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618121248908.png)
 
 ```python
 from torch_geometric.nn import GCNConv
@@ -930,7 +930,7 @@ for epoch in range(1, 201):
 
 - **Graph classification**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618131022161.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618131022161.png)
 
 ```python
 import torch
@@ -1128,7 +1128,7 @@ print(data)   #Data(face=[3, 2], pos=[4, 3], y=[1])=>Data(pos=[256, 3], y=[1])
 visualize_points(data.pos)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618133509868.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618133509868.png)
 
 > `PointNet++` processes `point clouds iteratively` by following a `simple grouping, neighborhood aggregation and downsampling scheme:`
 >
@@ -1136,7 +1136,7 @@ visualize_points(data.pos)
 > 2. The **neighborhood aggregation phase** executes a Graph Neural Network layer that, for each point,` aggregates information from its direct neighbors `(given by the graph constructed in the previous phase). This allows PointNet++ to capture local context at different scales.
 > 3. The **downsampling phase** implements a pooling scheme suitable for point clouds with potentially different sizes. We will ignore this phase for now and will come back later to it.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618132211963.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618132211963.png)
 
 - **knn_graph**
 
@@ -1154,11 +1154,11 @@ print(data.edge_index.shape)
 visualize_points(data.pos, edge_index=data.edge_index)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618132356302.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618132356302.png)
 
 - **Neighborhood Aggregation**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618132502775.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618132502775.png)
 
 ```python
 from torch.nn import Sequential, Linear, ReLU
@@ -1294,7 +1294,7 @@ for epoch in range(1, 51):
 
 > **Cluster-GCN** ([Chiang et al. (2019)](https://arxiv.org/abs/1905.07953), which is based on` pre-partitioning the graph into subgraphs on which one can operate in a mini-batch fashion`.
 
-![image-20210618134507044](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210618134507044.png)
+![image-20210618134507044](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210618134507044.png)
 
 ```python
 import torch
@@ -1643,7 +1643,7 @@ node_label = node_label.astype(int)
 print(Adj[0, :,:], edge_feature[0, :, :], node_feature[0, :, :])
 ```
 
-![image-20210621114008066](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210621114008066.png)
+![image-20210621114008066](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210621114008066.png)
 
 #### .2. Graph Classification
 

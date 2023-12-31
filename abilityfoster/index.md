@@ -3,9 +3,9 @@
 
 > 不懂得做产品，你不懂得营销，你不懂得供应链，你不懂得财务，你不懂得法律，你不懂得和人沟通，你不懂得管理;
 
-  ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210408205356805.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210408205356805.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210408205450269.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210408205450269.png)
 
 ### 1. 理解一个行业
 
@@ -16,9 +16,9 @@
 
 > 对于行业的宏观和微观情况有大致的了解，包括但不限于：`市场规模`、`核心驱动`、`政策环境`、`上游态势`、`目标客户`、`竞争形态`、`各种模式`、重要人物、行业术语、`核心指标`等等；然后逐步升级为从点到线的过程。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423134204918.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423134204918.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423135435690.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423135435690.png)
 
 - **了解行业的目的**
 
@@ -32,42 +32,42 @@
 
     > 通过行业增长率、市场集中度、竞争状况、市场规模、利润率、技术成熟度等指标，将一个行业从兴起到衰落分成幼稚期、成长期、成熟期和衰退期四个发展阶段。
 
-    ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423135803946.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423135803946.png)
 
-    ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423140011309.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423140011309.png)
 
   - **宏观经济PEST分析**
 
     > 对企业发展的宏观环境的分析，宏观环境又称为一般环境，是影响一切行业和企业的各种宏观力量。PEST是从**政治（Politics）**、**经济（Economic**）、**社会（Society）**、**技术（Technology）**四个方面
 
-    ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423140133935.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423140133935.png)
 
-    ![image-20210423140153921](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423140153921.png)
+    ![image-20210423140153921](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423140153921.png)
 
   - **行业的细分领域**，细分领域之下，可了解每个细分领域中的典型竞品。
 
-    ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423140238597.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423140238597.png)
 
-    ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423140251624.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423140251624.png)
 
   - **行业价值链**
 
     > 理解产业结构，分析供应商与消费者之间联接、分析价值链每个环节中产生的价值、分析垂直整合度（后向与前向）、分析价值链每个环节上的产业结构和公司集中度。
 
-    ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423141201384.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423141201384.png)
 
 - **心怀模型去收集数据点**，SWOT分析框架和波特五力模型构建行业框架
 
   > 尽可能多的搜集行业相关的信息，行业的过去、现状如何，行业内监管机构及其政策; `最近上市公司的招股说明书`去了解;《咨询顾问如何搜集数据》
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423134406988.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423134406988.png)
 
 - **提高数据点的质量**，阅读几篇引用数最多的`论文综述`。`优质的论文综述与行业综述`都有相同特点：信息完整且错误少、数据翔实、思路清晰甚至可以提供一个全新的思考该领域的框架或角度。
   - 从事这个行业的`知名企业有哪些`，我们对行业的了解也要`细化到公司针对的细分市场`。行业内定位不同的公司有着不同的需求结构。也可以`了解这个领域的知名专家有哪些`，他们有什么观点，有什么著作。
   - **读企业报表**
-  - **挖知名创始人**![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423140538186.png)
+  - **挖知名创始人**![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423140538186.png)
 - 花时间从事资料收集以及后期的**整理、归纳和提升**
-  - **行业发展历史、现今规模，建立起整体认知**![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423134825073.png)
+  - **行业发展历史、现今规模，建立起整体认知**![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423134825073.png)
   - 通过行业规模、融资情况等了解行业大体呈现的发展趋势。
   - 关注标杆企业和行业的典型应用领域
   - 行业提供的服务类型、盈利模式、面向的市场用户等行业情况。
@@ -75,14 +75,14 @@
   - 了解产业链上下游企业产品及服务
   - 关注行业热点事件及动态
 - **连线、升华框架进行未来走势的预测**
-  - 国际间比对研究连线，行业内各要素比对和互动连线等![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423134737981.png)
+  - 国际间比对研究连线，行业内各要素比对和互动连线等![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423134737981.png)
 
 - 资料搜集
   - [行业报告网站](https://www.iimedia.cn/c1040/73099.html)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423135701590.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423135701590.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210423140429545.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210423140429545.png)
 
 ### 2. 快速搞懂一家公司
 
@@ -116,7 +116,7 @@
 
 #### .4. 分析框架
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220206194445830.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220206194445830.png)
 
 - **宏观** 宏观经济理论告诉我们，长期看周期，短期看波动， 找到`领先指标`，判断这件事情必然发生。比如中国的老龄化，“年龄”就是一个指标，年龄结构和发展理论决定了老龄化必然发生; 
   - 如果公司提供的原材料或者工业类产品，并且产品价格历史上有周期性的大幅波动，则认为它是对宏观敏感的 - 如果公司提供的是消费品，而且是必需品，那么是对宏观不敏感的；如果是非必需品，则对宏观敏感
@@ -170,11 +170,11 @@
 - 绩效评估：全面绩效评估，并为学习和发展提供同级反馈，而不仅仅是急于衡量标准，也不仅仅是为了奖励。 
 - 奖励：激励共同战胜竞争对手的成功，而不是针对固定的业绩评估合同。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220206202052557.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220206202052557.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-026518cc439fd68405ddc1d0a2d8ac4a_r.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-026518cc439fd68405ddc1d0a2d8ac4a_r.jpg)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220206203655518.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220206203655518.png)
 
 #### 胜任力模型
 

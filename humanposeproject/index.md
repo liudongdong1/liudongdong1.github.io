@@ -10,7 +10,7 @@
 - Code for obtaining `2D and 3D pose from a depth image`.
 - 11 months ago.    star12
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210819141418882.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210819141418882.png)
 
 #### 2. [depth_human_synthesis](https://github.com/idiap/depth_human_synthesis)
 
@@ -27,15 +27,15 @@
 > -  anchor points able to capture global-local spatial context information are densely set on depth image as local regressors for the joints. They contribute to predict the positions of the joints in ensemble way to enhance generalization ability. 
 > - star 208, 12 month ago;
 
-![pipeline](https://gitee.com/github-25970295/blogpictureV2/raw/master/A2Jpipeline.png)
+![pipeline](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/A2Jpipeline.png)
 
 ##### .1.  [NYU](https://jonathantompson.github.io/NYU_Hand_Pose_Dataset.htm) hand pose dataset:
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/NYU_1.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/NYU_1.png)
 
 ##### .2. [ITOP](https://www.alberthaque.com/projects/viewpoint_3d_pose/) body pose dataset:
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/ITOP_1.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ITOP_1.png)
 
 #### 4. [depth-pose-estimation](https://github.com/Mostro-Complexity/depth-pose-estimation)
 
@@ -43,7 +43,7 @@
 >
 > - 3 years ago; star 7;
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/header.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/header.png)
 
 #### 5. [b_depth_estimator](https://github.com/echen4628/b_depth_estimator)
 
@@ -70,9 +70,9 @@
 > - Our S2R-DepthNet (Synthetic to Real DepthNet) can be well generalized to unseen real-world data directly even though it is only trained on synthetic data. S2R-DepthNet consists of: a) a` Structure Extraction (STE) module which extracts a domaininvariant structural representation` from an image by disentangling the image into domain-invariant structure and domain-specific style components, b) `a Depth-specific Attention (DSA) module, which learns task-specific knowledge to suppress depth-irrelevant structures for better depth estimation and generalization`, and c) a depth prediction module (DP) to` predict depth from the depth-specific representation.`
 > - star 79, 3 months ago;
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/overview.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/overview.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/intro.PNG)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/intro.PNG)
 
 #### 8. [PENet_ICRA2021](https://github.com/JUGGHM/PENet_ICRA2021)
 
@@ -83,7 +83,7 @@
 > -  This paper proposes a two-branch backbone that consists of a color-dominant branch and a depth-dominant branch to exploit and fuse two modalities thoroughly. More specifically, one branch` inputs a color image and a sparse depth map to predict a dense depth map`. The other branch takes as `inputs the sparse depth map and the previously predicted depth map, and outputs a dense depth map as well`. The depth maps predicted from two branches are complimentary to each other and therefore they are adaptively fused.
 > -  a simple geometric convolutional layer to encode 3D geometric cues. The geometric encoded backbone conducts the fusion of different modalities at multiple stages, leading to good depth completion results.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210819142532697.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210819142532697.png)
 
 #### 9. [depthai_movenet](https://github.com/geaxgx/depthai_movenet)
 
@@ -92,7 +92,7 @@
 >   - in Host mode, the cropping algorithm runs on the host cpu. Only this mode allows images or video files as input. The flow of information between the host and the device is bi-directional: in particular, the host sends frames or cropping instructions to the device;
 >   - in Edge mode, the cropping algorithm runs on the MyriadX. So, in this mode, all the functional bricks of MoveNet (inference, determination of the cropping region for next frame, cropping) are executed on the device. The only information exchanged are the body keypoints and optionally the camera video frame.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/movenet_nodes.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/movenet_nodes.png)
 
 - demo: codehttps://github.com/geaxgx/openvino_movenet
 
@@ -130,9 +130,9 @@
 >
 > - 使用RGBD数据，得到粗糙的静态面部模型
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210822163814188.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210822163814188.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210822163832544.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210822163832544.png)
 
 
 ---

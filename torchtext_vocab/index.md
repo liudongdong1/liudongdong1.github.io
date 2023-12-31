@@ -15,9 +15,9 @@
 >
 > torchtext.data.Iterator: 迭代器，用来生成 batch
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162627905.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027162627905.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027180456476.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027180456476.png)
 
 ### 1.Data 相关类
 
@@ -34,13 +34,13 @@ torchtext.data.Batch(data=None,dataset=None,device=None)
 torchtext.data.Example
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027162219368.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027162219368.png)
 
 - > **Field**: Torchtext采用了一种声明式的方法来加载数据：你来告诉Torchtext你希望的数据是什么样子的，剩下的由torchtext来处理。field在默认的情况下都期望一个输入是一组单词的序列，并且将单词映射成整数。这个映射被称为vocab。如果一个field已经被数字化了并且不需要被序列化，可以将参数设置为use_vocab=False以及sequential=False。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027174530628.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027174530628.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027173439055.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027173439055.png)
 
 ####  1.2.  具体使用
 
@@ -174,7 +174,7 @@ list(ngrams_iterator(token_list, 2))
 # >>> ['here', 'here we', 'we', 'we are', 'are']
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027181930226.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027181930226.png)
 
 > 所谓构建词表，即需要给每个单词编码，也就是用数字表示每个单词，这样才能传入模型。
 
@@ -203,11 +203,11 @@ vec = text.vocab.GloVe(name='6B', dim=50)
 ret = vec.get_vecs_by_tokens(tokens, lower_case_backup=True)
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027175126164.png)
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175126164.png" alt="image-20201027175126164" style="zoom:33%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027175126164.png" alt="image-20201027175126164" style="zoom:33%;" />
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027175043317.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027175043317.png)
 
 ### 3. 构建迭代器
 
@@ -288,7 +288,7 @@ bleu_score(candidate_corpus, references_corpus)
 
 > ROUGEROUGE 由 Chin-Yew Lin 在 2004 年的论文[《ROUGE: A Package for Automatic Evaluation of Summaries》](https://www.aclweb.org/anthology/W04-1013.pdf)中提出。与 BLEUBLEU 类似，通过统计生成的摘要与参考摘要集合之间重叠的基本单元（nn 元组）的数目来评估摘要的质量，该方法已成为自动文摘系统评价的主流方法。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027183228807.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027183228807.png)
 
 ### 6. MultiHeadAttention
 

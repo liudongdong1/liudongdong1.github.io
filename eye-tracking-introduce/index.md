@@ -8,7 +8,7 @@
 > - 论文链接：https://arxiv.org/abs/2105.09803
 > - 项目链接：https://github.com/NVlabs/weakly-supervised-gaze
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210528104346661.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210528104346661.png)
 
 **level**:    visapp cited by 334
 **author**:Fabian Timm
@@ -42,9 +42,9 @@
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200407162422047.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200407162422047.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200407162455332.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200407162455332.png)
 
 #### Conclusion
 
@@ -55,12 +55,12 @@
 #### Notes 
 
   - c++:  drishti-master
-  - python: eye-tracker![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429155547489.png)
+  - python: eye-tracker![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429155547489.png)
   - 基于google vision                       基于opencv
 
 <figure class="second">
-	<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410121540479.png" width=35% height=250>
-    <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410121622569.png" width=35% height=250>
+	<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410121540479.png" width=35% height=250>
+    <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410121622569.png" width=35% height=250>
 </figure>
 > Abdelkareem Bedri, Diana Li, Rushil Khurana, Kunal Bhuwalka, and Mayank Goel. 2020. FitByte: Automatic Diet Monitoring in Unconstrained Situations Using Multimodal Sensing on Eyeglasses. In *Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems* (*CHI '20*). Association for Computing Machinery, New York, NY, USA, 1–12. DOI:https://doi.org/10.1145/3313831.3376869
 
@@ -76,15 +76,15 @@
 
 #### Summary
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210203084558388.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210203084558388.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210203085202343.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210203085202343.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210203090958185.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210203090958185.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210203091509352.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210203091509352.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210203091819812.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210203091819812.png)
 
 - Introduce FitByte, a multi-modal sensing approach on a pair of eyeglasses that tracks all phases of food intake.
   - chewing by monitoring jaw motion using four gyroscopes around the wearer's ears;
@@ -122,9 +122,9 @@
 
 - given many users use their phone's camera to unlock the phone, the camera is the perfect sensor to sense the usage context too.  based on that the interiors of the cars are very similar, the exact placement, color, texture, etc. of the objects such as handlebar, sunroof, visor, windows might change but the basic geometry remains consistant.
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210203083446419.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210203083446419.png)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210203083605728.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210203083605728.png)
 
 > Christoph Schröder, Sahar Mahdie Klim Al Zaidawi, Martin H.U. Prinzler, Sebastian Maneth, and Gabriel Zachmann. 2020. Robustness of Eye Movement Biometrics Against Varying Stimuli and Varying Trajectory Length. In *Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems* (*CHI '20*). Association for Computing Machinery, New York, NY, USA, 1–7. DOI:https://doi.org/10.1145/3313831.3376534
 
@@ -155,7 +155,7 @@
 
   - RAN dataset, participants observed a randomly moving dot on the screen,
 
-    ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210203075256974.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210203075256974.png)
 
 > Chun Yu, Ke Sun, Mingyuan Zhong, Xincheng Li, Peijun Zhao, and Yuanchun Shi. 2016. One-Dimensional Handwriting: Inputting Letters and Words on Smart Glasses. *Proceedings of the 2016 CHI Conference on Human Factors in Computing Systems*. Association for Computing Machinery, New York, NY, USA, 71–82. DOI:https://doi.org/10.1145/2858036.2858542
 
@@ -177,9 +177,9 @@
   - minimize levels of stroke lengths: to perform stroke gestures accurately and efficiently.
   - Single stroke input: to perform stroke gestures efficiently.
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210202225458759.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210202225458759.png)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210203074604154.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210203074604154.png)
 
   > Gesture desing for individual charatersl, the red arrows starting with a cirvle are the fist strokes in traditional handwriting, letters e,s, z are rotated 90 degrees counterclockwise, black arrwos repersent the proposed design for one-dimensional gesture.
 
@@ -189,7 +189,7 @@
 
 - **Multi-step interation**
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210202224418678.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210202224418678.png)
 
   - GesText allows user to input gesture with two-step directional gestures.
 
@@ -197,13 +197,13 @@
 
   - Swipeboard divides the QWERTY keyboard on very small touchscreen into nine region.
 
-  - **Unistroke letters**: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210202224519171.png)
+  - **Unistroke letters**: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210202224519171.png)
 
     - Graffiti : resemble handwritten Roman;
 
     - EdgeWrite:  the alphabet was designed to mimic its handwritten counterparts for quick learning. the gestures recognition was performed based on the sequence of corners that were hit.
 
-      ![image-20210202224734676](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210202224734676.png)
+      ![image-20210202224734676](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210202224734676.png)
 
 > Jun Gong, Yang Zhang, Xia Zhou, and Xing-Dong Yang. 2017. Pyro: Thumb-Tip Gesture Recognition Using Pyroelectric Infrared Sensing. In *Proceedings of the 30th Annual ACM Symposium on User Interface Software and Technology* (*UIST '17*). Association for Computing Machinery, New York, NY, USA, 553–563. DOI:https://doi.org/10.1145/3126594.3126615
 
@@ -224,7 +224,7 @@ Pyroelectric Infrared Sensing
 - developed a self-contained prototype consisting of the infrared pyoelectric sensor (PIR sensor), a custom sensing circuit and software for signal processing and machine learning.
 - PIR sensor is energy-efficient and generates very little heat.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210202222512388.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210202222512388.png)
 
 #### Relative
 
@@ -246,13 +246,13 @@ Pyroelectric Infrared Sensing
 
 #### Summary
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210202214710223.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210202214710223.png)
 
 - first conducted a study to understand the natural expectation of the handedness of the keys in a QWERTY layout for users. using two index finger, the size of the input space doubles, thus the keys are larger and less crowded, which is helpful for reducing tapping errors.
 - the text input can be carried out unobtrusively and even with the user looking at the keyboard, leading a better performance when compared with eyes-on input and save screen real estate for devices with limited screen space.
 - a printed 3×3 capacitive touch sensor matrix with diamond-shaped electrodes of 5 mm diameter and 6.5mm center-to-center spacing. Our prototype was developed using a flexible printed circuit (FPC). The sensor is 0.025 – 0.125 mm thick and 21.5mm × 27mm wide. 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210202221241703.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210202221241703.png)
 
 #### Relative
 
@@ -288,15 +288,15 @@ Pyroelectric Infrared Sensing
   - pupil size--> estimate the cognitive load of  a person in a given task.
   - eye-related information.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210221224646821.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210221224646821.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210221224708600.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210221224708600.png)
 
 ## 1. 开源项目
 
 - https://github.com/SpEm1822/Eye-Trackin-Gaze-Prediction
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210301211659983.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210301211659983.png)
 
 ## 一、眼动发展现状
 
@@ -314,13 +314,13 @@ Pyroelectric Infrared Sensing
 
 **2.眼动追踪眼镜硬件情况**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/eye.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/eye.jpg)
 
 **3.中美眼动追踪技术相关专利情况**
 
 2019年专利情况：在映维网上每隔几天就会公开最新的AR/VR方面给的专利技术，其中包括AMD、Apple、Facebook、Google、Intel、Magic Leap、Microsoft、Nvidia、Oculus、Qualcomm、Sony、Valve这些公司。我们整理出从1月-9月这段时间每一个月与眼动追踪技术相关的技术专利占比的示意图。显而易见，国外的AR/VR的领头羊公司在眼动追踪技术的布局上显得越来越重视，尤其是微软、Magic leap以及Facebook。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200514095527200.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200514095527200.png)
 
 映维网公开的国际VR/AR眼动追踪相关专利占比统计，图中眼动相关专利来自微软、谷歌、Facebook等知名公司。
 
@@ -388,7 +388,7 @@ Pyroelectric Infrared Sensing
 
 **解决方案和效果：**智能眼镜系统通过光波导镜片动态的射出几种不同视觉深度的图像到眼镜的视网膜上进行成像，眼动追踪系统捕获视网膜上所成的几种不同视觉深度图像的反射光影像，计算机系统可以使用各种图像处理算法来确定患者何时适当地聚焦在图像上，并且随后确定用户的光学屈光度处方。例如图像处理算法包括可以在分析中使用图像质量分析/对比度峰值检测技术。同样，Scheiner双针孔对齐，也可以使用Shack-Hartmann网格对准和/或视网膜反射中和。当测得眼睛的屈光度时，系统可以控制变焦显示透镜投射适应用户眼球屈光度的影像。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200514095843345.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200514095843345.png)
 
 
 
@@ -400,7 +400,7 @@ Pyroelectric Infrared Sensing
 
 ![](https://pic1.zhimg.com/80/v2-4677012419514a8749d414561208ef50_720w.jpg)瞳孔对亮度的响应示意图：强光和暗光下瞳孔的大小情况
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200514100017231.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200514100017231.png)
 
 ​                                                                 
 
@@ -552,7 +552,7 @@ Magicleap专利 眼动相机的面部表情 [http://NO.US](https://link.zhihu.co
 
 ![图1 人眼正视图](https://pic1.zhimg.com/80/v2-6c46e5ab8068015d19d274d0083cd1d4_720w.jpg)
 
-![人眼生理结构图](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200514100129261.png)
+![人眼生理结构图](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200514100129261.png)
 
 (1)**巩膜：**是人类眼球白色的外围部分，是保护眼球内部结构的最外层纤维膜。
 
@@ -574,7 +574,7 @@ Magicleap专利 眼动相机的面部表情 [http://NO.US](https://link.zhihu.co
 
 ![](https://pic1.zhimg.com/v2-9987e95461f79c78f756dfe2a34ca194_b.jpg)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410121203551.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410121203551.png)
 
 - 基于眼睛视频分析（VOG，Video oculographic）的“非侵入式”技术，其基本原理是：将一束光线（近红外光）和一台摄像机对准被试者的眼睛，通过光线和后端分析来推断被试者注视的方向，摄像机则记录交互的过程。
 
@@ -601,7 +601,7 @@ Magicleap专利 眼动相机的面部表情 [http://NO.US](https://link.zhihu.co
 
 ##### 项目三： 眼动仪
 
-- 眼动仪是一种能够跟踪测量眼球位置及眼球运动信息的一种设备，在视觉系统、心理学、认知语言学的研究中有广泛的应用。![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410120045735.png)
+- 眼动仪是一种能够跟踪测量眼球位置及眼球运动信息的一种设备，在视觉系统、心理学、认知语言学的研究中有广泛的应用。![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410120045735.png)
 
 - 指标：
 
@@ -613,11 +613,11 @@ Magicleap专利 眼动相机的面部表情 [http://NO.US](https://link.zhihu.co
 
   - 眼动轨迹：测试出用户的视线在网页上移动的轨迹和关注的重点部位，可以帮助研究者对页面设计进行改进。研究者基于以上眼动仪记录的信息对网页的信息进行了调整，将重要信息放在用户关注点集中的位置。
 
-    ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410120253799.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410120253799.png)
 
   - 热点图：热点图主要用来<font color=red>反映用户浏览和注视的情况</font>。红色代表浏览和注视最集中的区域，黄色和绿色代表目光注视较少的区域，可帮助研究者了解界面或产品的哪些特点是最受关注或容易被人忽视的，此外还可以为汇总数据提供视觉参考。热点图可以应用于AB测试，设计师可以分析AB各版的优点与不足，从而进行选定方案及改进。
 
-    ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410120346062.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410120346062.png)
 
   - 机场可穿戴式眼动追踪与导向标识系统研究
 

@@ -42,7 +42,7 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212200315957.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212200315957.png)
 
 - **Review encoder:** using cnn to extract semantic features of reviews from words, and use personalized word-level attention to select more important words in a review for each user/item.
   - User: $U$;  Item: $I$; rating matrix: $D \in R^{|U|*|I|}$;  text review collection: $D \in R^{|U|*|I|}$; single review written by user u for item i: $d_{u,i}=\{w_1,w_2,...,w_t\}$; 
@@ -50,19 +50,19 @@ previous work:
     - transform the review $d_{u,i}$ into a matrix $M_{u,i}=[w_1,...,w_t]$, $w_k$ via word embeddign of word $w_k$;
   - using CNN to extract the semantic features of text reviews;
     - K is the number of filters and $W_j$ is the weight matrix of the j-th filter. feature matrix of the review $C\in R^{k*T}$, each column in C represents the semantic feature of the k-th word in the review.
-    - ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212201708010.png)
+    - ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212201708010.png)
   - Personalized Attention Vector over Word Level;
-    - represent all users and items into low-dimensional vectors via an embedding layer based on their IDs($u_{id}$;![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212202027350.png)
+    - represent all users and items into low-dimensional vectors via an embedding layer based on their IDs($u_{id}$;![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212202027350.png)
   - user-specific attention over word  level
-    - not all words of a review are equally important for the representation of the review meaning.![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212202705873.png)
-    - A is the harmony matrix in attention, $q_w^u$ : is the attention vector for user u obtained , $z_k$: is the representations of the k-th word above, $\alpha_i$ is the attention weight of the i-th word in the review. and obtain the `representation of the i-th review of the user u` via aggregating feature vectors of all words：![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212203041219.png)
+    - not all words of a review are equally important for the representation of the review meaning.![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212202705873.png)
+    - A is the harmony matrix in attention, $q_w^u$ : is the attention vector for user u obtained , $z_k$: is the representations of the k-th word above, $\alpha_i$ is the attention weight of the i-th word in the review. and obtain the `representation of the i-th review of the user u` via aggregating feature vectors of all words：![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212203041219.png)
 - **user/item encoder**: apply personalized review-level attention to learn the user/item representation via aggregating all the reviews representations according to their weights.
-  - Personalized attention vectors over review level: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212203319737.png)
+  - Personalized attention vectors over review level: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212203319737.png)
   - User-specific attention over review level: 
     - review set: $d_u=\{d_{u,1},...,d_{u,N}\}$; 
-    - apply attention to highlight those informative reviews and de-emphasize those meaningless. To compute the weight $\beta_j$ of the j-th review of the i-th user:![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212203619411.png)
-    - obtain the text feature $Pu$ of user u :![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212203633841.png)
-- **Rating Prediction:** predict ratings based on the Pu, Pi, and concatenate them feed into FM;![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212203833443.png)
+    - apply attention to highlight those informative reviews and de-emphasize those meaningless. To compute the weight $\beta_j$ of the j-th review of the i-th user:![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212203619411.png)
+    - obtain the text feature $Pu$ of user u :![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212203633841.png)
+- **Rating Prediction:** predict ratings based on the Pu, Pi, and concatenate them feed into FM;![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212203833443.png)
 
 > Wu, C., Wu, F., An, M., Huang, J., Huang, Y., & Xie, X. (2019). Neural news recommendation with attentive multi-view learning. *arXiv preprint arXiv:1907.05576*.
 
@@ -106,28 +106,28 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212205816231.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212205816231.png)
 
 - **News Encoder:** learn representation of news from different kinds of news information, such as titles, bodies and topic categories.
   - title encoder:  
     - word embedding to converted word sequence of title into a sequence of word vectors$[e_1^t,...,e_M^t]$;
-    -  CNN to learn contextual word representations by capturing their local contexts. and the sequence of contextual word representations defined: $[c_1^t,...,c_M^t]$;![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212210418225.png)
-    - word-attention network: to select important words within the context of each news title, the attention weight of the $i_{th}$ word in a news title as $\alpha_i^t$: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212210743107.png)
-    - summation of the contextual representations of its words weighted by their attention weights: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212210857061.png)
+    -  CNN to learn contextual word representations by capturing their local contexts. and the sequence of contextual word representations defined: $[c_1^t,...,c_M^t]$;![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212210418225.png)
+    - word-attention network: to select important words within the context of each news title, the attention weight of the $i_{th}$ word in a news title as $\alpha_i^t$: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212210743107.png)
+    - summation of the contextual representations of its words weighted by their attention weights: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212210857061.png)
   - Body encoder:  word embedding; CNN, attention network;  and the workflow like above handle;
   - category encoder: incorporate both the category and subcategory information for news representation learning;
-    - input: the ID of the category and the ID of the subcategory;![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212211159499.png)
+    - input: the ID of the category and the ID of the subcategory;![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212211159499.png)
   - attentive pooling: 
-    - propose a view-level attention network to model the informativeness of different kinds of news information for learning news representations.![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212211542126.png)
-- **User Encoder:**  apply a news attention network to learn more informative user representations by selecting important news. the attention weight of $i_{th}$ news browsed by a user $\alpha_i^n$ as : ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212211752267.png)
-  - user presentation: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212211827628.png)
+    - propose a view-level attention network to model the informativeness of different kinds of news information for learning news representations.![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212211542126.png)
+- **User Encoder:**  apply a news attention network to learn more informative user representations by selecting important news. the attention weight of $i_{th}$ news browsed by a user $\alpha_i^n$ as : ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212211752267.png)
+  - user presentation: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212211827628.png)
 - **Click Predictor: **
   - the representation of a candidate news $D^c$ as $r_c$;
   - the representation of user u as u;
   - the click probability score $y=u^Tr_c$;
 - **Model Training: **
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212212253683.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212212253683.png)
 
 > Wu, F., Qiao, Y., Chen, J. H., Wu, C., Qi, T., Lian, J., ... & Zhou, M. (2020, July). Mind: A large-scale dataset for news recommendation. In *Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics* (pp. 3597-3606).
 
@@ -164,7 +164,7 @@ previous work:
 
 #### Common Methods
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212232033298.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212232033298.png)
 
 ##### General Reconmendation
 
@@ -187,21 +187,21 @@ previous work:
 
 - **Representation Methods**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212234510899.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212234510899.png)
 
 - **Pre-trained Language Models**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212234345004.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212234345004.png)
 
 
 
 - **Different News Information**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212234622253.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212234622253.png)
 
 - **User Interest Modeling**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212234657757.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212234657757.png)
 
 > Graham, S., Min, J. K., & Wu, T. (2019, September). Microsoft recommenders: tools to accelerate developing recommender systems. In *Proceedings of the 13th ACM Conference on Recommender Systems* (pp. 542-543).
 
@@ -225,9 +225,9 @@ previous work:
    - **Evaluation**: calculating common metrics;
    - **Tuning:** Hyperparameter tuning tools;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212235443285.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212235443285.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201212235515215.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201212235515215.png)
 
 > Wang, H., Zhang, F., Xie, X., & Guo, M. (2018, April). DKN: Deep knowledge-aware network for news recommendation. In *Proceedings of the 2018 world wide web conference* (pp. 1835-1844).
 
@@ -268,17 +268,17 @@ previous work:
 
 - **Knowledge graph embedding:**  translation-based methods
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213090211799.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213090211799.png)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213091159628.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213091159628.png)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213091303062.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213091303062.png)
 
 - **CNN representation**
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213091353118.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213091353118.png)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213091656629.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213091656629.png)
 
 #### Methods
 
@@ -290,7 +290,7 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213092412404.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213092412404.png)
 
 - **Knowledge Distillation:** 
   - distinguish knowledge entities in news content, using  [entity linking](http://nlpprogress.com/english/entity_linking.html) to disambiguate mentions in texts by associating them with predefined entities in knowledge graph;
@@ -298,15 +298,15 @@ previous work:
   - expand the knowledge sub-graph to all entities within one hop of identified ones;
   - using graph embedding methods to learn the entity embeddings;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213092613584.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213092613584.png)
 
 - **Extracting additional contextual information for each entity**
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213093326382.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213093326382.png)
 
-  - given the context of entity e, the context embedding is calculated as the average of its contextual entities:![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213093511606.png)
+  - given the context of entity e, the context embedding is calculated as the average of its contextual entities:![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213093511606.png)
 
-    ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213093531326.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213093531326.png)
 
 - **Knowledge-aware CNN**
 
@@ -318,25 +318,25 @@ previous work:
 
   - propose a multi-channel and word-entity-aligned KCNN for combining word semantics and knowledge information;
 
-    ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213094058038.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213094058038.png)
 
   - **Attention-based User Interest Extraction:**
 
       - a user's interest in news topics may be various, and user's clicked items are supposed to have different impacts on the candidate news $t_j$;
 
-        ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213094359078.png)
+        ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213094359078.png)
 
-    - the embedding of user i with respect to the candidate news $t_j$ : ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213094500760.png)
+    - the embedding of user i with respect to the candidate news $t_j$ : ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213094500760.png)
 
-    - given user i embedding e(i), and candidate news tj embedding e(tj), the probability of user clicking news tj is predicted: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213094617934.png)
+    - given user i embedding e(i), and candidate news tj embedding e(tj), the probability of user clicking news tj is predicted: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213094617934.png)
 
 #### Experiment
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213094706080.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213094706080.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213094737690.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213094737690.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213094820735.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213094820735.png)
 
 > He, X., Deng, K., Wang, X., Li, Y., Zhang, Y., & Wang, M. (2020). LightGCN: Simplifying and Powering Graph Convolution Network for Recommendation. *arXiv preprint arXiv:2002.02126*.
 
@@ -357,7 +357,7 @@ previous work:
 3. LightGCN learns user and item embeddings by linearly propagating them on the user-item and interaction graph, and uses the weighted sum of the embeddings learned at all layers as the final embeddings;
 4. empirically show that two common design in GCN, feature transformation and nonlinear activation, have no positive effect on the effectiveness of collaborative filtering;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213100910274.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213100910274.png)
 
 
 
@@ -385,7 +385,7 @@ previous work:
 
 #### System framework:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210112201103585.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210112201103585.png)
 
 - **Configuration:** select & modify the experiment setup ( dataset, model, and hyperparameters).
 
@@ -393,21 +393,21 @@ previous work:
 
   - data preprocessing: 
 
-    ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210112201518616.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210112201518616.png)
 
   - Dataset Class: focuses on processing the input data into a unified format;
   - DataLoader Class:   reformulates data for supporting various models.
 
 - ​	**Model Modules: **
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210112202023902.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210112202023902.png)
 
 - **System Class:**
   
   - aims to set up models for accomplishing the CRS task, `distribute the tensor data from dataloader to corresponding models,` `train the models with proper optimization strategy` and conduct `evaluation with specified protocals`.
-- **Evaluation Modeules: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210112202505598.png)**
+- **Evaluation Modeules: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210112202505598.png)**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210112202555907.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210112202555907.png)
 
 
 

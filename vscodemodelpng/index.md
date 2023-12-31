@@ -11,7 +11,7 @@
 
 > Touvron, Hugo, et al. "Going deeper with image transformers." *arXiv preprint arXiv:2103.17239* (2021).
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210608102053013.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210608102053013.png)
 
 ---
 

@@ -11,7 +11,7 @@
 > <sub>([ESRGAN](https://github.com/xinntao/ESRGAN), [EDVR](https://github.com/xinntao/EDVR), [DNI](https://github.com/xinntao/DNI), [SFTGAN](https://github.com/xinntao/SFTGAN))</sub>
 > <sub>([HandyView](https://gitee.com/xinntao/HandyView), [HandyFigure](https://gitee.com/xinntao/HandyFigure), [HandyCrawler](https://gitee.com/xinntao/HandyCrawler), [HandyWriting](https://gitee.com/xinntao/HandyWriting))</sub>
 
-![overall_structure](https://gitee.com/github-25970295/blogpictureV2/raw/master/picture/overall_structure.png)
+![overall_structure](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/picture/overall_structure.png)
 
 > 1. 准备数据. 参见 [DatasetPreparation_CN.md](DatasetPreparation_CN.md)
 > 1. 修改Config文件. Config文件在 `options` 目录下面. 具体的Config配置含义, 可参考 [Config说明](Config_CN.md)
@@ -533,7 +533,7 @@ logger:
 >
 > 结构相似性的基本观点为图片是高度结构化的，相邻像素之间有很强的关联性。而这样的关联性体现了图像中物体的结构信息。人类的视觉系统在观看图片时习惯于抽取这样的结构信息。因此在设计品质用以衡量图片失真程度时，结构性失真的衡量是很重要的一环。` SSIM取值范围[0,1]，值越大，表示图像失真越小`
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211022113012993.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211022113012993.png)
 
 #### .2. MSSIM
 
@@ -545,15 +545,15 @@ logger:
 >
 > `FID的数值越小，表示两个高斯分布越接近，GAN的性能越好`。实践中发现，FID对噪声具有比较好的鲁棒性，能够对生成图像的质量有比较好的评价，其给出的分数与人类的视觉判断比较一致，并且FID的计算复杂度并不高，虽然FID只考虑的样本的一阶矩和二阶矩，但整体而言，FID还是比较有效的，其理论上的不足之处在于：高斯分布的简化假设在实际中并不成立。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211022150812381.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211022150812381.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211022150755790.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211022150755790.png)
 
 #### .4. PSNR
 
 > Peak signal-to-noise ratio, 峰值信噪比，是一个表示`信号最大可能功率和影响它的表示精度的破坏性噪声功率的比值的工程术语`。峰值信噪比经常用作图像压缩等领域中信号重建质量的测量方法，它常简单地通过均方误差（MSE）进行定义。`数值越大表示失真越小`.
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211022145737268.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211022145737268.png)
 
 ### 6. 训练测试命令
 
@@ -583,15 +583,15 @@ python basicsr/test.py -opt options/test/SRResNet_SRGAN/test_MSRResNet_x4.yml
 
 #### .1. 代码目录
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/v2-af0541341b79960a452ed9a4d756beef_b.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-af0541341b79960a452ed9a4d756beef_b.jpg)
 
 - basicsr目录
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/v2-8f043bb9b91a5f2c3d2cd42b2d7f1fef_b.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-8f043bb9b91a5f2c3d2cd42b2d7f1fef_b.jpg)
 
 - scripts 文件
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/v2-1434197ea0db5a763191383be47d2942_b.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-1434197ea0db5a763191383be47d2942_b.jpg)
 
 ### Resource
 

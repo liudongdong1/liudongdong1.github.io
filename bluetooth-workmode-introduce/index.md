@@ -13,15 +13,15 @@
 
 > 低功耗蓝牙（BluetoothLow Energy），简称BLE。蓝牙低能耗无线技术利用许多智能手段最大限度地降低功耗。蓝牙低能耗架构共有两种芯片构成：`单模芯片和双模芯片`。蓝牙单模器件是蓝牙规范中新出现的一种只支持蓝牙低能耗技术的芯片——是专门针对ULP操作优化的技术的一部分。蓝牙单模芯片可以和其它单模芯片及双模芯片通信，此时后者需要使用自身架构中的蓝牙低能耗技术部分进行收发数据。双模芯片也能与标准蓝牙技术及使用传统蓝牙架构的其它双模芯片通信。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521171951850.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521171951850.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211129100658165.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211129100658165.png)
 
 注：按应用可分为数据`蓝牙模块`和`语音蓝牙模块`，前者完成无线数据传输，后者完成语音和立体声音频的无线数据传输。
 
 ### 1.2. 蓝牙协议组成
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527182619005.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200527182619005.png)
 
 蓝牙协议体系中的协议按SIG的关注程度分为四层：
 
@@ -39,7 +39,7 @@
 
 ### 1.3. 蓝牙基本架构
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527182726206.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200527182726206.png)
 
 #### 1.3.1 底层硬件模块
 
@@ -79,7 +79,7 @@ Bluetooth Profile是蓝牙设备间数据通信的无线接口规范。目前有
 
 #### 1.3.3. 蓝牙协议栈层次
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527182816190.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200527182816190.png)
 
 - **物理层（PHY）**：射频传输。
 - **链路层（LL）**：控制射频状态，包括等待、广告、扫描、初始化、连接。
@@ -93,13 +93,13 @@ Bluetooth Profile是蓝牙设备间数据通信的无线接口规范。目前有
   - Characteristic: `ble主从机的通信均是通过characteristic来实现`，可以理解为一个标签，通过这个标签可以获取或者写入想要的内容，例如加速度计的 X/Y/Z 三轴值。
   - UUID： 统一识别码，我们刚才提到的service和characteristic，都需要一个唯一的uuid来标识
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211117112619047.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211117112619047.png)
 
 - **通用访问配置文件层（GAP）**：对所有蓝牙设备提供共同的功能，如传输模式和访问程序、协议和应用描述。GAP服务包含设备发现、连接模式、安全、认证、联合模型和服务发现。
 
 ### 1.4. 通信过程
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521173001501.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521173001501.png)
 
 ## 2. 蓝牙工作模式
 
@@ -107,7 +107,7 @@ Bluetooth Profile是蓝牙设备间数据通信的无线接口规范。目前有
 
 > 在主机模式下的蓝牙模块可以对周围设备进行搜索并选择需要连接的从机进行连接。可以发送和接收数据，也可以设置默认连接从机的MAC地址，这样模块一上电就可以查找此从机模块并进行连接。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521171002588.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521171002588.png)
 
 > 典型案例：`beacon处于广播模式时，一般会被设置成了不可连接的状态`，Beacon 会每隔一定的时间（SKYLAB的beacon为100毫秒）广播一个数据包到周围，作为独立的蓝牙主机在执行扫描动作时，会间隔地接收到 Beacon 广播出来的数据包。该数据包内容最多可以包含 31 个字节的内容。同时，在主机接收到广播包时，其中会指示该广播包来自于哪一个蓝牙从机 MAC 地址(每个 Beacon 拥有唯一的 MAC 地址)的从机设备和当前的接收发送信号强度指示值(RSSI)为多少。
 >
@@ -123,13 +123,13 @@ Bluetooth Profile是蓝牙设备间数据通信的无线接口规范。目前有
 
 > 在这种模式下蓝牙模块可以进行`一对多的广播`。用户可以`通过AT指令设置模块广播的数据`，模块可以在低功耗的模式下持续的进行广播，应用于极低功耗，小数据量，单向传输的应用场合，比如信标、广告牌、室内定位、物料跟踪等。这类模块有蓝牙4.1模块：HY-264018W、HY-264027P；蓝牙4.2模块：HY-40R201P、HY-40R204P。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521171144385.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521171144385.png)
 
 ### 2.4. Mesh 组网模式
 
 > 此模式下，可以简单的将多个模块加入到网络中来，利用星型网络和中继技术，每个网络可以连接超过65000个节点，网络和网络还可以互连，最终可将无数蓝牙模块通过手机或平板进行互联或直接操控。并且不需要网关，即使某一个设备出现故障也会跳过并选择最近的设备进行传输。整个联网过程只需要设备上电并设置通讯密码就可以自动组网，真正实现简单互联。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521171235972.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521171235972.png)
 
 注：这种模式下会受到一定限制，首先是因为模块传输过程中需要不断切换模式，导致传输数据的量每次限制到20字节，并且传输速度会有几秒的延迟，这种场景类似于UDP的方式，并不能保证数据一定会被送达目的模块。
 
@@ -139,19 +139,19 @@ Bluetooth Profile是蓝牙设备间数据通信的无线接口规范。目前有
 
 > 蓝牙灯控方案说明：手机蓝牙和彩灯上的蓝牙模块进行配对，实现APP命令控制彩灯蓝牙，实现不同的功能，比如可以通过色板、声音调节喜欢的颜色、亮度等。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521173355565.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521173355565.png)
 
 ### 3.2 智能锁方案
 
 > 蓝牙智能锁方案说明：智能锁中内置BLE蓝牙模块HY-40R204，手机通过APP读取智能锁蓝牙信息，尝试配对，并发送开锁请求到服务器端，服务器端向手机发送开锁指令，手机接受到指令，通过蓝牙再把指令发送给智能锁进行解锁。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521173423277.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521173423277.png)
 
 ### 3.3. 蓝牙MAC地址扫描打印
 
 > 包含蓝牙MAC地址读取设备、MAC地址读取软件、MAC地址管理软件、二维码生成软件、二维码打印驱动的一整套解决方案。蓝牙MAC地址扫描打印解决方案说明：把低功耗蓝牙模块（比如昇润科技的BLE蓝牙4.2模块HY-40R204）充当主机角色，扫描周边设备，根据广播名称过滤，筛选出周边信号最强的设备，获取MAC地址；获取MAC地址后，通过串口将数据发送给标签打印机，标签打印机打印出符合要求的二维码。以二维码的形式将蓝牙MAC地址打印出来，方便蓝牙产品对蓝牙MAC地址进行读取，能够有效提高工作效率。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521173535475.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521173535475.png)
 
 ### 3.4. Mesh 智能家居组网
 
@@ -161,15 +161,15 @@ Bluetooth Profile是蓝牙设备间数据通信的无线接口规范。目前有
 
 > Beacon是建立在低功耗蓝牙协议基础上的一种广播协议，同时它也是拥有这个协议的一款低功耗蓝牙从机设备。<font color=red>Beacon设备，通常放在室内的某个固定位置，每隔一定时间广播一个数据包到周围，作为独立的蓝牙主机在扫描时，会间隔地接收到 Beacon广播出来的数据包，可以用在超市商品促销</font>，用来向走进它的顾客推送促销信息或者优惠券等，或者通过当前接收发送信号强度指示值(RSSI)、和MAC地址解析等来进行复杂的数据运算，进而对顾客进行室内定位。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521173905860.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521173905860.png)
 
 ## 4. HC-08 4.0模块
 
 > ​		HC-08蓝牙串口通信模块是新一代的基于Bluetooth Specification V4.0 BLE蓝牙协议 的数传模块。无线工作频段为 2.4GHzISM，调制方式是 GFSK。模块最大发射功率为4dBm， 接收灵敏度-93dBm，空旷环境下和 iphone4s 可以实现 80米超远距离通信。 模块大小26.9mm×13mm×2.2mm，集成了邮票封装孔和排针焊接孔，既可以贴片封 装，也又可以焊接排针，很方便嵌入应用系统之内。自带LED 状态指示灯，可直观判断蓝牙 的连接状态。 模块采用 TI的 CC2540F256 芯片，配置256K 字节空间，支持 AT 指令，用户可根据 需要更改角色（主、从模式）以及串口波特率、设备名称等参数，使用灵活。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200519222634002.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200519222634002.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521174717901.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521174717901.png)
 
 - <font color=red>工作电压   2.2v-3.6v</font>
 
@@ -177,7 +177,7 @@ Bluetooth Profile是蓝牙设备间数据通信的无线接口规范。目前有
 >
 > HC-05上电开机，红灯快闪，按住按键或EN拉高， HC-05进入AT命令模式，默认波特率是9600；此模式我们叫正常模式。正常模式下只有按住按键或拉高EN才处于AT命令模式状态。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200519223233710.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200519223233710.png)
 
 | 指令          | 响应                                                         | 说明                                                         |
 | ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -200,11 +200,11 @@ Bluetooth Profile是蓝牙设备间数据通信的无线接口规范。目前有
 
 使用USB-TTL 工具，通过串口测试工具进行测试，之前AT指令一直发送失败，但是数据透传没有问题。重启下电脑可以了
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521165637752.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521165637752.png)
 
-![ ](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211115164408938.png)
+![ ](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211115164408938.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521185424254.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521185424254.png)
 
 ## 5. Android 开发记录
 
@@ -214,7 +214,7 @@ Bluetooth Profile是蓝牙设备间数据通信的无线接口规范。目前有
 
 > Android 4.2 版本系统之前，Google 一直使用的是 Linux 官方 Bluetooth 协议栈，即知名老牌开源项目` BlueZ`。BlueZ 实际上是由高通公司在2001年5月基于 GPL 协议发布的一个开源项目，该项目仅发布一个月后就被 Linux 之父 Linux Torvalds 纳入了 Linux 内核，并做为 Linux 2.4.6 内核的官方 Bluetooth 协议栈。随着 Android 设备的流行，BlueZ 也得到了极大的完善和扩展。例如 Android 4.1 版本系统中 BlueZ 的版本升级为4.93，它支持 Bluetooth 核心规范 4.0，并实现了绝大部分的 Profile。从Android 4.2 即 Jelly Bean 开始，Google 便在 Android 源码中推出了它和博通公司一起开发的 `BlueDroid `以替代 BlueZ。
 
-![android-4.2-bluedroid-structure](https://gitee.com/github-25970295/blogimgv2022/raw/master/android-4.2-bluedroid-structure.jpg)
+![android-4.2-bluedroid-structure](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/android-4.2-bluedroid-structure.jpg)
 
 **Android支持的蓝牙协议栈：Bluz，BlueDroid，BLE**；
 
@@ -224,7 +224,7 @@ Bluetooth Profile是蓝牙设备间数据通信的无线接口规范。目前有
 
 #### .2. 关键代码
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211206085800758.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211206085800758.png)
 
 ##### 1. BluetoothAdapter
 

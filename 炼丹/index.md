@@ -5,7 +5,7 @@
 
 >越大的batch-size使用越大的学习率。原理很简单，越大的`batch-size`意味着我们学习的时候，收敛方向的`confidence`越大，我们前进的方向更加坚定，而小的`batch-size`则显得比较杂乱，毫无规律性，因为相比批次大的时候，批次小的情况下无法照顾到更多的情况，所以需要小的学习率来保证不至于出错。可以看下图`损失Loss`与`学习率Lr`的关系：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210906215354829.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210906215354829.png)
 
 ### 2. 零碎点
 
@@ -28,7 +28,7 @@
 
 ### 4. **差分学习率与迁移学习**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210906220237413.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210906220237413.png)
 
 >随着层数的增加，神经网络学习到的特征越抽象。因此，下图中的卷积层和全连接层的学习率也应该设置的不一样，一般来说，卷积层设置的学习率应该更低一些，而全连接层的学习率可以适当提高。
 >
@@ -39,7 +39,7 @@
 >- rnn的dim和embdding size,`一般从128上下开始调整`. batch size,一般从128左右开始调整. batch size合适最重要,并不是越大越好.
 >- dropout的位置比较有讲究, 对于RNN,建议放到输入->RNN与RNN->输出的位置.关于RNN如何用dropout,可以参考这篇论文:http://arxiv.org/abs/1409.2329[15], dropout 对小数据防止过拟合有很好效果，值一般设为0.5
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210906220852768.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210906220852768.png)
 
 
 

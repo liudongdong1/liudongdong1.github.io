@@ -3,7 +3,7 @@
 
 > Spring 是一种轻量级开发框架，旨在提高开发人员的开发效率以及系统的可维护性。Spring 官网：<https://spring.io/>。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624155620668.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210624155620668.png)
 
 ### 1. Spring IOC&AOP
 

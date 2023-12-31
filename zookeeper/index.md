@@ -13,11 +13,11 @@
 
 #### .1. 角色
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/2020060621.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/2020060621.png)
 
 #### .2. 网路结构
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/2020060622.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/2020060622.png)
 
 - Leader和各个follower是互相通信的，对于zk系统的数据都是保存在内存里面的，同样也会备份一份在磁盘上。
 - 对于每个zk节点而言，可以看做每个zk节点的命名空间是一样的，也就是有同样的数据。（可查看下面的树结构）
@@ -28,7 +28,7 @@
 
 > 与linux文件系统不同的是，linux文件系统有目录和文件的区别，而zk统一叫做znode，一个znode节点可以包含子znode，同时也可以包含数据。比如/Nginx/conf，/是一个znode，/Nginx是/的子znode，/Nginx还可以包含数据，数据内容就是所有安装Nginx的机器IP，/Nginx/conf是/Nginx子znode，它也可以包含内容，数据就是Nginx的配置文件内容。在应用中，我们可以通过这样一个路径就可以获得所有安装Nginx的机器IP列表，还可以获得这些机器上Nginx的配置文件。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/2020060623.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/2020060623.png)
 
 #### .4. 读写数据
 

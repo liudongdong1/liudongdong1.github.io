@@ -25,29 +25,29 @@
 > - 加窗对`频率和幅值的影响是关联的`，对于时域的单个频率信号，加窗之后的频谱就是将窗谱的谱峰位置平移到信号的频率处，然后进行垂直缩放。说明加窗的影响取决于窗的功率谱，也就容易理解为什么总常看到对窗特征主瓣、旁瓣等的描述。
 > - `主瓣变宽`就可能与附近的频率的谱相叠加，意味着`更难找到叠加后功率谱中最大的频率点`，即降低了频率分辨率，较难定位中心频率。`旁瓣多`意味着信号`功率泄露多，主瓣被削弱了，即幅值精度降低了`。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121163030377.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121163030377.png)
 
 > 通常时域上加窗更为普遍，时域截断效应带来了频谱的泄漏，窗函数是为了减小这个截断效应，被设计成一组加权系数w(n)。域加窗在时域上表现的是点乘，因此在频域上则表现为卷积。卷积可以被看成是一个平滑的过程，相当于一组具有特定函数形状的滤波器，因此，原始信号中在某一频率点上的能量会结合滤波器的形状表现出来，从而减小泄漏。
 >
 > - 对线性调频信号(LFM)的时域加窗会导致主瓣变宽而旁瓣得到明显降低，并且最大幅值也有所降低
 
-![时域加窗](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102110346914.png)
+![时域加窗](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102110346914.png)
 
-![频率加窗](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102110541564.png)
+![频率加窗](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102110541564.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121162806166.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121162806166.png)
 
 > 如果仅要求`精确读出主瓣频率，而不考虑幅值精度`，则可选用主瓣宽度比较窄而便于分辨的矩形窗，例如测量物体的自振频率等；如果分析窄带信号，且有较强的干扰噪声，则应选用旁瓣幅度小的窗函数，如汉宁窗、三角窗等；对于`随时间按指数衰减的函数`，可采用`指数窗`来提高信噪比。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121162342722.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121162342722.png)
 
 #### 2.2. 信号分帧
 
 > 在分帧中，相邻两帧之间会有一部分重叠，帧长(wlen) = 重叠(overlap)+帧移(inc)，如果相邻两帧之间不重叠，那么由于窗函数的形状，截取到的语音帧边缘会出现损失，所以要设置重叠部分。inc为帧移，表示后一帧第前一帧的偏移量，fs表示采样率，fn表示一段语音信号的分帧数。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121163426097.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121163426097.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121163512186.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121163512186.png)
 
 ```python
 #没有加窗的语音分帧
@@ -120,7 +120,7 @@ def enframe(signal, nw, inc, winfunc):
 
 #### 2.3.  短时时域处理
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121184731295.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121184731295.png)
 
 - `短时能量和短时平均幅度`
   - `区分浊音和清音段`，因为浊音的短时能量E(i)比清音大很多；
@@ -198,9 +198,9 @@ plt.tight_layout()
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122000001935.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122000001935.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102112057675.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102112057675.png)
 
 > mel频率倒谱系数(MFCC)，线性预测系数(LPC)，线性预测倒谱系数(LPCC)，线谱频率(LSF)，离散小波变换(DWT)，感知线性预测(PLP)
 
@@ -277,13 +277,13 @@ def spectrum_magnitude(frames, NFFT):
 
 > **梅尔频率倒谱系数**(MFCC)，MFCC首先计算信号的功率谱，然后用滤波器组和离散余弦变换的组合来提取特征。人耳在接收声音时呈现非线性状态，对高频的更不敏感，因此`Mel刻度在低频区分辨度较高`，在高频区分辨度较低，`与频率之间的换算`关系。滤波器组中的每个滤波器都是三角形的，`中心频率为f(m)` ，中心频率处的响应为1，并向0线性减小，直到达到两个相邻滤波器的中心频率，其中响应为0，`各f(m)之间的间隔随着m值的增大而增宽`。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121215912320.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121215912320.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121221407705.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121221407705.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121221423367.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121221423367.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121215252948.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121215252948.png)
 
 ```python
 import numpy
@@ -365,7 +365,7 @@ ylabel('频率(Hz)')
 title('“概率”语谱图')
 ```
 
-![功率谱计算](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121234847152.png)
+![功率谱计算](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121234847152.png)
 
 ##### 2.3.4. [Librosa 库使用](https://www.cnblogs.com/LXP-Never/p/11561355.html)
 
@@ -396,7 +396,7 @@ plt.show()
 
 > 横轴是时间轴，纵轴是振幅轴, 高频语音信号的倒谱分析给出了低频域[29]的小源滤波器可分性。低阶倒谱系数对谱斜率敏感，而高阶倒谱系数对噪声[15]敏感。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201122095224766.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122095224766.png)
 
 ##### 2.3.7. 线谱频率(LSF)
 
@@ -408,7 +408,7 @@ plt.show()
 
 ##### 2.3.9. 感知线性预测(PLP)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122101238672.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122101238672.png)
 
 |                        | 滤波器系数 | 滤波器的形状 | 建模方法     | 速度的计算 | 系数类型      | 抗噪声能力 | 对量化/附加噪声的灵敏度 | 可靠性 | 捕获频率 |
 | ---------------------- | ---------- | ------------ | ------------ | ---------- | ------------- | ---------- | ----------------------- | ------ | -------- |
@@ -423,7 +423,7 @@ plt.show()
 
 > `奈奎斯特采样定理`，只有采样频率高于声音信号最高**频率**的两倍时，才能把数字信号表示的声音还原成为原来的声音。`带宽`：采样频率的一半，最高频率等于采样频率的一半。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121223210707.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121223210707.png)
 
 ##### 2.4.1. 插值法
 
@@ -509,23 +509,23 @@ plt.show()
 
 #### 2.5. 滤波
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201121231447009.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121231447009.png)
 
 ##### 2.5.1. butterworth低通滤波器
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121231628339.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121231628339.png)
 
 ##### 2.5.2. 切比雪夫I形状滤波器
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121231833697.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121231833697.png)
 
 ##### 2.5.3. 切比雪夫2形状滤波器
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121231923712.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121231923712.png)
 
 ##### 2.5.4. 椭圆低通滤波器
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121232013593.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121232013593.png)
 
 ##### 2.5.5.  频域滤波
 
@@ -615,7 +615,7 @@ Augmentation = add_noise1(x=wav_data, w=0.004)
 
 - 控制信噪比
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201121233538338.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201121233538338.png)
 
 ```python
 def add_noise2(x, snr):
@@ -681,7 +681,7 @@ Augmentation = pitch_shifting(wav_data, sr=fs, n_steps=-6, bins_per_octave=12)
 
 ##### 2.7.2. 峰值信噪比（PSNR）
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122001115395.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122001115395.png)
 
 ##### 2.7.3. 分段信噪比（SegSNR）
 
@@ -812,25 +812,25 @@ print(pred_test_y)  # ['apple', 'banana', 'kiwi', 'lime', 'orange', 'peach', 'pi
 
 > CVC（Clear Voice Capture）是通话软件降噪技术。主要针对通话过程中产生的回声。通过全双工麦克风消噪软件，提供通话的回声和环境噪音消除功能，是目前蓝牙通话耳机中最先进的降噪技术。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122102106150.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122102106150.png)
 
 ### 5. 声源定位
 
 > FRIDA和MUSIC算法的鲁棒性较好，其次是SRP-PHAT和TOPS，再次WAVES和CSSM算法。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122140742280.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122140742280.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122134459424.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122134459424.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122134526910.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122134526910.png)
 
 #### 5.1. GCC-SRP
 
 > 互相关方法具有计算量小，实时性好而被大多数系统中使用，其`基于阵元之间的差异时间差`(Time-Delay/Frequency-Delay)进而`提取出声源距离阵元的位置信息`，根据不同的麦克风对就可以在三维空间中唯一确定一个声源. 基本思想是在可能的空间点中做波束合成，然后根据合成后的各个方向上的功率最大值认为是声源方法。用GCC-PHAT方法得到具有陡峭峰值互相关函数，找到互相关最大时的点，结合采样频率Fs与与麦克风间距dFs与与麦克风间距d，就可以得到方向信息。
 
-- 互相关可以用来描述两个信号之间的相似性;离散信号xk,yk的互相关函数定义为:![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122140953113.png)
-- 取使得互相关系数最大的延时值作为TDOA的估计:![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122141017679.png)
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122141236829.png)![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122141341097.png)
+- 互相关可以用来描述两个信号之间的相似性;离散信号xk,yk的互相关函数定义为:![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122140953113.png)
+- 取使得互相关系数最大的延时值作为TDOA的估计:![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122141017679.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122141236829.png)![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122141341097.png)
 
 #### 5.2. Music
 
@@ -838,29 +838,29 @@ print(pred_test_y)  # ['apple', 'banana', 'kiwi', 'lime', 'orange', 'peach', 'pi
 
 > 通过信号和噪声子空间多个频率成分的正交关系估计声源方位，TOPS可用于一维和二维阵列.	
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122142655944.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122142655944.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122142715490.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122142715490.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201122142737407.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122142737407.png)
 
 - 窄带编辑
 
 > **窄带意味着信号在阵列上的延迟比信号的时域宽度小得多，从而信号包络沿这列的延迟可以忽略不计，故阵列孔径内的各振元复包络不变。反之，若复包络有变化，则通常认为是宽带信号。**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122142946919.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122142946919.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122143322461.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122143322461.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122143400195.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122143400195.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122143441337.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122143441337.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122143700814.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122143700814.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122144036148.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122144036148.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122143945998.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122143945998.png)
 
 #### 5.4. FRIDA
 
@@ -868,17 +868,17 @@ print(pred_test_y)  # ['apple', 'banana', 'kiwi', 'lime', 'orange', 'peach', 'pi
 
 #### 6.1. ML based
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122145237780.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122145237780.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201031150702720.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201031150702720.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122145545772.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122145545772.png)
 
 波束形成技术(BF, beamforming) 2.盲源分离技术(BSS, blind source seperation) 3.时频掩码技术(T-F masking, time-frequency masking)
 
 > 一般使用理想二值掩蔽方法来生产mask，对于时频表示的语音信号，输出有几个信号就会生成几个mask矩阵，以两个说话人为例，在每个时频点比较两个说话人语音能量的大小，将能量大的一方的mask矩阵对应位置的值设为1，另一个mask矩阵的对应位置设为0。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201031152021286.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201031152021286.png)
 
 
 
@@ -886,11 +886,11 @@ print(pred_test_y)  # ['apple', 'banana', 'kiwi', 'lime', 'orange', 'peach', 'pi
 
 > Deep Clustering算法训练神经网络为输入特征中的每个元素生成一个具有区分性的嵌入向量（embedding），之后利用聚类算法，如K-means，对生产的embedding进行聚类，得出不同类别即是不同说话人的信号分离结果图。Deep Clustering性能和泛化性能(训练在英文，测试在中文等情况)都比较好，但缺点是它不是一个end to end的方法，因为聚类方法不能训练。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201031152325894.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201031152325894.png)
 
 > TasNet（Time-domain Audio Separation Network）是时域的方法(直接输入混合语音，不经过STFT等变化得到声音特征)，由编码器、分离网络、解码组成，与频域方法相比，编码过程不是固定的而是网络学到的(论文中认为对于语音而言STFT并不一定是最佳编码方式，有两点证实了此观点，论文中对编码器输出增加非负的约束会使模型变差，对编解码器增加互逆的关联约束使模型变差，即同一信号经过编码器再经过解码器得到同一信号)，通过分离网络得到两个mask，学到的mask与编码器输出相乘再经过解码器得分离的声音，训练过程使用前文提到的PIT方法，编解码器都是一维卷积（相当于全连接层线性变换），实验结果展示幅度和相位信息都被编码器学习到了特征之中。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201031152501949.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201031152501949.png)
 
 - [Lightweight and Optimized Sound Source Localization and Tracking Methods for Open and Closed Microphone Array Configurations](https://www.youtube.com/watch?v=n7y2rLAnd5I)
 

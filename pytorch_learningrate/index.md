@@ -127,7 +127,7 @@ for epoch in range(10):
 
 #### 7. 自定义调整学习率 LambdaLR
 
-![image-20210531084712294](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210531084712294.png)
+![image-20210531084712294](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210531084712294.png)
 
 ```python
 torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda, last_epoch=-1)

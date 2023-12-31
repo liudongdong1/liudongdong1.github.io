@@ -31,11 +31,11 @@
 >
 > ④、主机上安装的 VICON 公司的 `Nexus 软件可以得到每个 Camera 所采集的反光球的二维坐 标，通过特有的算法，把二维数据合成三维空间数据`，从而完成数据的捕捉，数据文件采用 C3D 文件格式。
 
-![8摄像头架构](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102093623571.png)
+![8摄像头架构](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102093623571.png)
 
-![32摄像头架构](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102093746130.png)
+![32摄像头架构](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102093746130.png)
 
-![实物图](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102093955537.png)
+![实物图](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102093955537.png)
 
 <video src="C:/Users/liudongdong/OneDrive%20-%20tju.edu.cn/%E6%96%87%E6%A1%A3/Tencent%20Files/3463264078/Video/C05552074D7BA19629EAD3052D32CDFA.mp4"></video>
 

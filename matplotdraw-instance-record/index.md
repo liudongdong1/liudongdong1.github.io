@@ -100,7 +100,7 @@ ax2.bar(x, y,color=['r', 'g', 'b']) # 或者color='rgb' , color='#FFE4C4'
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200603184902401.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200603184902401.png)
 
 ### 2.1 并列柱状图
 
@@ -120,7 +120,7 @@ ax.legend()
 plt.show()
 ```
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200603185015379.png" alt="image-20200603185015379" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200603185015379.png" alt="image-20200603185015379" style="zoom:50%;" />
 
 ### 2.2 正负条形柱
 
@@ -155,7 +155,7 @@ for x,y in enumerate(price):
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200603185235694.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200603185235694.png)
 
 ```python
 import matplotlib.pyplot as plt
@@ -245,7 +245,7 @@ plt.show()
 plt.savefig("./pngresult/validation/{}.png".format(savename))
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20200729104606159.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200729104606159.png)
 
 ```python
 import matplotlib.pyplot as plt
@@ -480,7 +480,7 @@ plt.title('直方图数据添加分布曲线')
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200603203349970.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200603203349970.png)
 
 ```python
 #多类型直方图
@@ -605,7 +605,7 @@ plt.axis('equal')
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200603210904775.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200603210904775.png)
 
 ```python
 #定义饼状图的标签，标签是列表
@@ -624,7 +624,7 @@ plt.axis('equal')
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200603210952182.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200603210952182.png)
 
 ```python
 import matplotlib.pyplot as plt
@@ -671,7 +671,7 @@ plt.title('芝麻信用失信用户教育水平分布')
 plt.show()
 ```
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200603211114601.png" alt="image-20200603211114601" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200603211114601.png" alt="image-20200603211114601" style="zoom:50%;" />
 
 - 颜色表：https://blog.csdn.net/CD_Don/article/details/88070453
 - 图例位置：
@@ -760,7 +760,7 @@ plt.show()
         plt.savefig("./data/1.png")
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201210110138677.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201210110138677.png)
 
 ```python
 labels_map = {
@@ -804,7 +804,7 @@ for y, cls in enumerate(classes):
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210529112951199.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210529112951199.png)
 
 ## 10. 绘制混淆矩阵
 

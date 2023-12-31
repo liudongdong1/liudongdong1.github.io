@@ -5,11 +5,11 @@
 
 - 数据孤岛问题严重，由于安全问题、竞争关系和审批流程等因素，数据在行业、甚至是在公司内部以“孤岛”的形式存在。
 
-  ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523161326465.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523161326465.png)
 
 - 重视数据隐私和安全已经成为世界性的趋势，在国外，2018年5月，欧盟的[《通用数据保护条例》](https://link.zhihu.com/?target=https%3A//gdpr-info.eu/)(General Data Protection Regulation,GDPR)正式开始生效,该条例对于数据保护做出了严格规定。同时在国内，对于数据保护的力度越来越严格，国家先后发布《网络安全法》、[《信息](https://link.zhihu.com/?target=https%3A//www.tc260.org.cn/upload/2018-01-24/1516799764389090333.pdf)[安全技术 个人信息安全规范》](https://link.zhihu.com/?target=https%3A//www.tc260.org.cn/upload/2018-01-24/1516799764389090333.pdf)和[《互联网个人信息安全保护指南》](https://link.zhihu.com/?target=http%3A//www.beian.gov.cn/portal/topicDetail%3Fid%3D88)等法律法规，同时公安部也在严厉打击数据安全犯罪行为。在这样的背景之下，即便行业有意共享数据，也面临政策、法律合规的严峻问题。
 
-  ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523161357774.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523161357774.png)
 
 - 传统机器学习：数据集中的过程中有出现数据泄露的风险。基于云的AI解决方案以及API，这种模式使用户无法控制AI产品的使用以及个人隐私数据，而通过数据集中公司却可以做到垄断数据。
 
@@ -17,14 +17,14 @@
 
 #### .1. 基于硬件可信执行环境技术的可行计算（TEE： Trusted Execution Environment)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200409213309662.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200409213309662.png)
 
 #### .2. 基于密码学的多方安全计算（MPC：Multi-party Computation）
 
-MPC 方案的大致原理如下图所示：<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200409213309662.png" style="zoom:150%;" />
+MPC 方案的大致原理如下图所示：<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200409213309662.png" style="zoom:150%;" />
 
 - 混淆电路（Garbled Circuit）：任意函数最后在计算机语言内部都是由加法器、乘法器、移位器、选择器等电路表示，而这些电路最后都可以仅由 AND 和 XOR 两种逻辑门组成。一个门电路其实就是一个真值表，假设我们把门电路的输入输出都使用不同的密钥加密，设计一个加密后的真值表，这个门从控制流的角度来看还是一样的，但是输入输出信息都获得了保护。
-- 秘密分享（Secret Sharing）：将每个数字随机拆散成多个数并分发到多个参与方那里。然后每个参与方拿到的都是原始数据的一部分，一个或少数几个参与方无法还原出原始数据，只有大家把各自的数据凑在一起时才能还原真实数据。![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429183836278.png)
+- 秘密分享（Secret Sharing）：将每个数字随机拆散成多个数并分发到多个参与方那里。然后每个参与方拿到的都是原始数据的一部分，一个或少数几个参与方无法还原出原始数据，只有大家把各自的数据凑在一起时才能还原真实数据。![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429183836278.png)
 
 #### .3. 联邦学习
 
@@ -43,19 +43,19 @@ MPC 方案的大致原理如下图所示：<img src="https://gitee.com/github-25
 
 - 横向联邦学习：比如不同地区的银行间，他们的业务相似（特征相似），但用户不同（样本不同）
 
-  ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523160032949.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523160032949.png)
 
 - 纵向联邦学习：比如同一地区的商超和银行，他们触达的用户都为该地区的居民（样本相同），但业务不同（特征不同）。
 
-  ![image-20210523160125470](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523160125470.png)
+  ![image-20210523160125470](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523160125470.png)
 
 - 联邦迁移学习：如不同地区的银行和商超间的联合。主要适用于以深度神经网络为基模型的场景。迁移学习的核心是，找到`源领域和目标领域之间的相似性（不变量）`。
 
-  ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523160717864.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523160717864.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523155802328.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523155802328.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429184116690.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429184116690.png)
 
 ##### .2.  挑战
 
@@ -86,7 +86,7 @@ MPC 方案的大致原理如下图所示：<img src="https://gitee.com/github-25
 - 底层使用 Intel 的 SGX 技术，并可兼容其它 TEE 实现。目前，基于 SGX 的共享学习已支持集群化的模型在线预测和离线训练。
 - 在线预测
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429183704788.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429183704788.png)
 
 - 与传统分布式框架不同的地方在于，每个服务启动时会到集群管理中心（ClusterManager，简称 CM）进行注册，并维持心跳，CM 发现有多个代码相同的 Enclave 进行了注册后，会通知这些 Enclave 进行密钥同步，Enclave 收到通知后，会通过远程认证相互确认身份。当确认彼此的 Enclave 签名完全相同时，会通过安全通道协商并同步密钥。
 - 通过集群化方案解决了在线服务的负载均衡，故障转移，动态扩缩容，机房灾备等问题；
@@ -95,7 +95,7 @@ MPC 方案的大致原理如下图所示：<img src="https://gitee.com/github-25
 - 通过提供易用性的开发框架，使得用户在开发业务逻辑时，完全不需要关心分布式化的逻辑；
 - 通过提供 Provision 代理机制，确保 SGX 机器不需要连接外网，提升了系统安全性。
 
-- 模型离线训练：![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429184014744.png)
+- 模型离线训练：![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429184014744.png)
 - 步骤流程：
 
   - 机构用户从 Data Lab 下载加密工具
@@ -107,7 +107,7 @@ MPC 方案的大致原理如下图所示：<img src="https://gitee.com/github-25
 
 #### **2.2 基于 MPC 的共享学习**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429184033960.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429184033960.png)
 
 - 安全技术层：安全技术层提供基础的安全技术实现，比如在前面提到的秘密分享、同态加密、混淆电路，另外还有一些跟安全密切相关的，例如差分隐私技术、DH 算法等等；
 
@@ -115,7 +115,7 @@ MPC 方案的大致原理如下图所示：<img src="https://gitee.com/github-25
 
 - 安全机器学习算法：有了基础算子，就可以很方便的进行安全机器学习算法的开发，这里的技术难点在于，如何尽量复用已有算法和已有框架，我们在这里做了一些有益的尝试，但也遇到了很大的挑战。
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429184047309.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429184047309.png)
 
 - 机构用户从 Data Lab 下载训练服务并本地部署
 
@@ -129,7 +129,7 @@ MPC 方案的大致原理如下图所示：<img src="https://gitee.com/github-25
 
 - Worker 之间根据下发的训练任务，通过多方安全协议交互完成训练任务
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200429184100859.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200429184100859.png)
 
 ### 4. Tensorflow框架[分布式训练策略](https://cloud.tencent.com/developer/article/1421382)
 
@@ -139,17 +139,17 @@ MPC 方案的大致原理如下图所示：<img src="https://gitee.com/github-25
 
 #### 4.2 数据并行
 
-- 数据并行在多个设备上放置相同的模型，各个设备采用不同的训练样本对模型训练。每个Worker拥有模型的完整副本并且进行各自单独的训练。![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410092017809.png)
+- 数据并行在多个设备上放置相同的模型，各个设备采用不同的训练样本对模型训练。每个Worker拥有模型的完整副本并且进行各自单独的训练。![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410092017809.png)
 - **异步并行**：梯度失效问题（stale gradients）
 
-  - 各个设备完成一个mini-batch训练之后，不需要等待其它节点，直接去更新模型的参数。从下图中可以看到，在每一轮迭代时，不同设备会读取参数最新的取值，但因为不同设备读取参数取值的时间不一样，所以得到的值也有可能不一样。根据当前参数的取值和随机获取的一小部分训练数据，不同设备各自运行反向传播的过程并独立地更新参数。![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410092457696.png)
+  - 各个设备完成一个mini-batch训练之后，不需要等待其它节点，直接去更新模型的参数。从下图中可以看到，在每一轮迭代时，不同设备会读取参数最新的取值，但因为不同设备读取参数取值的时间不一样，所以得到的值也有可能不一样。根据当前参数的取值和随机获取的一小部分训练数据，不同设备各自运行反向传播的过程并独立地更新参数。![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410092457696.png)
 - 同步并行：
 
   - 所有的设备都是采用相同的模型参数来训练，等待所有设备的mini-batch训练完成后，收集它们的梯度后执行模型的一次参数更新。在同步模式下，所有的设备同时读取参数的取值，并且当反向传播算法完成之后同步更新参数的取值。单个设备不会单独对参数进行更新，而会等待所有设备都完成反向传播之后再统一更新参数 。
 
 <div style="float:left;border:solid 1px 000;margin:2px;">
-    <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410092617194.png" width=40% height="200" >
-    <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410092726202.png" width=40% height="200" >
+    <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410092617194.png" width=40% height="200" >
+    <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410092726202.png" width=40% height="200" >
 </div>
 
 
@@ -157,22 +157,22 @@ MPC 方案的大致原理如下图所示：<img src="https://gitee.com/github-25
 
 - **分布式并行模式**：深度学习模型的训练是一个迭代的过程，如图2所示。在每一轮迭代中，前向传播算法会根据当前参数的取值计算出在一小部分训练数据上的预测值，然后反向传播算法再根据损失函数计算参数的梯度并更新参数。在并行化地训练深度学习模型时，不同设备（GPU或CPU）可以在不同训练数据上运行这个迭代的过程，而不同并行模式的区别在于不同的参数更新方式。
 
-  <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410092208013.png" width="450" height="200" >
+  <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410092208013.png" width="450" height="200" >
 
 #### 5.1 Parameter Server架构（PS）
 
 - 在PS架构中，集群中的节点被分为两类：parameter server和worker。其中parameter server存放模型的参数，而worker负责计算参数的梯度。在每个迭代过程，worker从parameter sever中获得参数，然后将计算的梯度返回给parameter server，parameter server聚合从worker传回的梯度，然后更新参数，并将新的参数广播给worker。<font color=red>当worker数量较多时，ps节点的网络带宽将成为系统的瓶颈</font>
 
-  <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410093002069.png" width="450" height="200" >
+  <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410093002069.png" width="450" height="200" >
 
 #### **5.2 Ring AllReduce架构**
 
 - 各个设备都是worker，没有中心节点来聚合所有worker计算的梯度。Ring AllReduce算法将 device 放置在一个逻辑环路（logical ring）中。每个 device 从上行的device 接收数据，并向下行的 deivce 发送数据，因此可以充分利用每个 device 的上下行带宽。
 
  <figure class="third">
-     <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410093340868.png" width=33%>
-     <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410093714868.png" width=33%>
-     <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410093728287.png" width=30%>
+     <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410093340868.png" width=33%>
+     <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410093714868.png" width=33%>
+     <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410093728287.png" width=30%>
 </figure>
 
 
@@ -193,7 +193,7 @@ MPC 方案的大致原理如下图所示：<img src="https://gitee.com/github-25
 - 蜂巢系统：平安科技自主研发的联邦智能系统
 - 点石平台：百度研发的可信云端计算及联合建模平台
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523161215978.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523161215978.png)
 
 #### 6.1 FATE联邦学习框架
 
@@ -209,7 +209,7 @@ MPC 方案的大致原理如下图所示：<img src="https://gitee.com/github-25
 
 <img src="https://pic4.zhimg.com/80/v2-2841daf33f2802a25cad14a50b2b2927_720w.jpg" alt="img" style="zoom:80%;" />
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200411105256021.png" alt="image-20200411105256021" style="zoom:80%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200411105256021.png" alt="image-20200411105256021" style="zoom:80%;" />
 
 ##### 安装部署  
 
@@ -249,7 +249,7 @@ python run_test.py default_env.json -s ./demo/temp_testsuite.json
 
 1） FAETE 运行job主要通过fate_flow模块来完成，<font color=red>FATE-Flow是用于联邦学习的端到端Pipeline系统</font>，它由一系列高度灵活的组件构成,专为高性能的联邦学习任务而设计。其中包括数据处理、建模、训练、验证、发布和在线推理等功能.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/federated_learning_pipeline.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/federated_learning_pipeline.png)
 
 2）支持以下功能
 
@@ -270,7 +270,7 @@ python run_test.py default_env.json -s ./demo/temp_testsuite.json
 - 定义输入, 包括数据, 模型或isometric_model(仅用于FeatureSelection)
 - 定义输出, 包括数据和模型
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200411104629489.png" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200411104629489.png" style="zoom:50%;" />
 
 - DSL 编写规则
 
@@ -294,7 +294,7 @@ python run_test.py default_env.json -s ./demo/temp_testsuite.json
 
 - Pipeline 运行实例
 
-  <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200411105052994.png" alt="image-20200411105052994" style="zoom:50%; align=center;" />
+  <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200411105052994.png" alt="image-20200411105052994" style="zoom:50%; align=center;" />
 
 - Fate-Flow部署在``$PYTHONPATH/fate_flow/``中，它依赖两个配置文件：``$PYTHONPATH/arch/conf/server.conf``, ``$PYTHONPATH/fate_flow/settings.py``
 

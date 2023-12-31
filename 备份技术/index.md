@@ -10,7 +10,7 @@
 
 ### 1.备份系统组成
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409205828071.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409205828071.png)
 
 - 备份服务器：维护所有的配置信息（客户端，介质代理，备份设备等），管理所有的作业和历史任务记录，提供 GUI/WEB 等管理界面
 
@@ -29,7 +29,7 @@
   > - RPO (Recovery Point Objective)：可以承受的`最大数据丢失量`。
   > - RTO (Recovery Time Objective)：可以`承受的最长停机时间`。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409205930863.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409205930863.png)
 
 ### 2. 备份类型
 

@@ -6,7 +6,7 @@
 > - Lucene是一个开放源代码的`全文检索引擎工具包`，它不是一个完整的全文检索引擎，Lucene提供了完整的查询引擎和索引引擎，目的是为软件开发人员提供一个简单易用的工具包，以方便的在目标系统中实现全文检索的功能，或者以Lucene为基础构建全文检索引擎。
 > - Solr的目标是打造一款`企业级的搜索引擎系统`，它是一个搜索引擎服务，可以独立运行，通过Solr可以非常快速的构建企业的搜索引擎，通过Solr也可以高效的完成站内搜索功能。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211204222537150.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211204222537150.png)
 
 ### Resource
 

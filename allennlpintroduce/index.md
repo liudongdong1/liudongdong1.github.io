@@ -5,7 +5,7 @@
 
 ## 1. Text Classification
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201022211754511.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201022211754511.png)
 
 | Spam filtering     | Detect and filter spam emails | Email                   | Spam / Not spam          |
 | ------------------ | ----------------------------- | ----------------------- | ------------------------ |
@@ -14,11 +14,11 @@
 
 - **Reading Data**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201022212005872.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201022212005872.png)
 
 - **Model**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201022212412613.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201022212412613.png)
 
 ## 2. Train with script
 
@@ -537,7 +537,7 @@ python allennlp-server/server_simple.py \
 
 - **Field&&Instance**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201022222221588.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201022222221588.png)
 
 > A `Field` contains one piece of data for one example that is passed through your model. `Fields` get converted to tensors in a model, either as an input or an output, after being converted to IDs and batched & padded.
 
@@ -575,11 +575,11 @@ python allennlp-server/server_simple.py \
 > - Combination of GloVe and character CNNs
 > - wordpieces and BERT
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201022230601867.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201022230601867.png)
 
 - **GloVe**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201022230658192.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201022230658192.png)
 
 > 1. Tokenizer (Text → Tokens)
 > 2. TextField, TokenIndexer, and Vocabulary (Tokens → Ids)

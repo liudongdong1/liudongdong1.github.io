@@ -13,7 +13,7 @@
 - 需要监控副本的场景。例如：监控一个对象的属性，但是监控又不应该作为系统的主业务来调用，它只能是边缘调用，即使出现监控不准、错误报警也影响不大，因此，一般做法是备份一个主线程中的对象，然后由分析程序来分析。
 - 数据库连接的事务管理使用的就是备忘录模式。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210306125655710.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210306125655710.png)
 
 - 棋类游戏中的悔棋过程
 

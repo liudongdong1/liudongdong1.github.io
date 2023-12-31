@@ -1,7 +1,7 @@
 # UnixIO
 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-overview.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/java-io-overview.jpg)
 
 > 对于一个套接字上的输入操作，第一步通常涉及等待数据从网络中到达。当所等待分组到达时，它被复制到内核中的某个缓冲区。第二步就是把数据从内核缓冲区复制到应用进程缓冲区。
 
@@ -13,25 +13,25 @@
 ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *src_addr, socklen_t *addrlen);//recvfrom 用于接收 Socket 传来的数据，并复制到应用进程的缓冲区 buf 中。这里把 recvfrom() 当成系统调用。
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131528361.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210803131528361.png)
 
 ### 2. 非阻塞式 I/O
 
 > 应用进程执行系统调用之后，内核返回一个错误码。应用进程可以继续执行，但是需要不断的执行系统调用来获知 I/O 是否完成，这种方式称为轮询(polling)。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131624354.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210803131624354.png)
 
 ### 3. I/O 复用(select 和 poll)
 
 > 使用 select 或者 poll 等待数据，并且可以等待多个套接字中的任何一个变为可读，这一过程会被阻塞，当某一个套接字可读时返回。之后再使用 recvfrom 把数据从内核复制到进程中。它可以让单个进程具有处理多个 I/O 事件的能力。又被称为 Event Driven I/O，即事件驱动 I/O。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803131744993.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210803131744993.png)
 
 ### 4. 信号驱动式 I/O(SIGIO)
 
 > `应用进程使用 sigaction 系统调用，内核立即返回，应用进程可以继续执行`，也就是说等待数据阶段应用进程是非阻塞的。`内核在数据到达时向应用进程发送 SIGIO 信号，应用进程收到之后在信号处理程序中调用 recvfrom 将数据从内核复制到应用进程中`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803131833678.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210803131833678.png)
 
 ### 5. 异步 I/O(AIO)
 
@@ -39,7 +39,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 >
 > - 异步 I/O 与信号驱动 I/O 的区别在于，`异步 I/O 的信号是通知应用进程 I/O 完成，而信号驱动 I/O 的信号是通知应用进程可以开始 I/O。`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803132228154.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210803132228154.png)
 
 ### 6. JavaNIO
 
@@ -47,7 +47,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 - Selector 则是 Java NIO 实现高性能的关键，其本质上使用了 IO 多路复用的原理，通过一个线程不断的监听多个 Channel 连接来实现多所有这些 Channel 事件进行处理，这样的优点在于只需要一个线程就可以处理大量的客户端连接，当有客户端事件到达时，再将其分发出去交由其它线程处理；
 - Buffer 从字面上讲是一个缓存，本质上其是一个字节数组，通过 Buffer，可以从 Channel 上读取数据，然后交由下层的处理器进行处理。这里的 Buffer 的优点在于其封装了一套非常简单的用于读取和写入数据 API。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/ac8e766861004dbfa4db78ea705a7228.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ac8e766861004dbfa4db78ea705a7228.png)
 
 #### 1. Channel
 
@@ -101,7 +101,7 @@ SelectionKey.channel();
 
 #### 3. 案例代码
 
-![服务端流程](https://gitee.com/github-25970295/blogimgv2022/raw/master/70.jpeg)
+![服务端流程](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/70.jpeg)
 
 ```java
 public class Server {

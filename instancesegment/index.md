@@ -4,19 +4,19 @@
 - present a simple, fully-convolutional model for real-time instance segmentation that faster than any previous competitive approach.
 - `generating a set of prototype masks` and `predicting per-instance mask coefficients`. And produce instance masks by linearly combining the prototypes with the mask coefficients.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210308002640634.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210308002640634.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210308003525274.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210308003525274.png)
 
 - prototype generation: predicts a set of k prototype masks for the entire image.
   - taking protonet from deeper backbone features produces more robust masks, and higher resolution prototypes result in both higher quality masks and better performance on smaller objects.
   - predicts k mask coefficients, one corresponding to each prototype.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210308090006101.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210308090006101.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210308091343761.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210308091343761.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210308091420813.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210308091420813.png)
 
 Relative
 
@@ -31,25 +31,25 @@ Relative
 
 - backbone结构
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210308093910226.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210308093910226.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210308092221562.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210308092221562.png)
 
 - FPN 结构
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210308092453440.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210308092453440.png)
 
 - proto结构
 
 > Protonet 的设计是受到了 Mask R-CNN 的启发，它由若干卷积层组成。其输入是0，其输出的 mask 维度是 138*138*32，即 32 个 prototype mask，每个大小是 138*138。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/20200120163709273.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200120163709273.png)
 
 - predict_head
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210308094136106.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210308094136106.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/20200120172944570.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200120172944570.png)
 
 > 'loc'：每个anchorbox的预测偏移量，形状为（1，19248，4）
 >
@@ -87,7 +87,7 @@ Relative
 > - 论文链接：https://arxiv.org/abs/2105.08965
 > - 项目链接：https://github.com/halbielee/EPS
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210528104226031.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210528104226031.png)
 
 ---
 

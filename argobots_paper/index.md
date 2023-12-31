@@ -14,7 +14,7 @@ Library
 </b>
 </div>
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220730211342377-16691013698119.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730211342377-16691013698119.png)
 
 > SM1 in ES1 has one associated private pool, PM11, and SM2 in ES2 has two private pools, PM21 and PM22.
 >
@@ -70,7 +70,7 @@ Library
   - balance three competing goals: `programmability (i.e., ensuring that the service itself is easy to debug and maintain), performance for concurrent workloads, and minimal interference with colocated applications.`
 - Unlike conventional OS-level threads, ULTs are inexpensive to create and consume minimal resources while waiting for a blocking I/O operation. Each ULT can cooperatively yield when appropriate so that other ULTs (i.e., concurrent requests) can make progress, thereby enabling a high degree of I/O operation concurrency with minimal resource consumption
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220730215322082.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730215322082.png)
 
 - **abt-io**, provides thin wrappers for common POSIX I/O function calls such as open(), pwrite(), and close().
   - Internally, the wrappers `delegate blocking system calls to a separate Argobots pool `as shown in Figure 12. `The calling ULT is suspended while the I/O operation is in progress`, thereby allowing other service threads to make progress until the I/O operation completes.
@@ -81,7 +81,7 @@ Library
   - The scheduler can use the `epoll() system call to block`, and the pool can `write() to an eventfd() file descriptor to notify it when new work units are added.`
   -  The abt-snoozer library uses the `libev [45] event loop` and `asynchronous event watchers `to abstract this functionality for greater portability
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220730215517985.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730215517985.png)
 
 ### Resource
 

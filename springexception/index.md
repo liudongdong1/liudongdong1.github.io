@@ -3,7 +3,7 @@
 
 > Spring MVC 通过 **HandlerExceptionResolver** 处理程序的异常，包括 Handler映射、数据绑定以及目标方法执行 时发生的异常。SpringMVC 提供的 HandlerExceptionResolver 的实现类
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210628135210911.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210628135210911.png)
 
 ### 1. 全局异常捕获处理
 

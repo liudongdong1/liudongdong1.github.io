@@ -8,9 +8,9 @@
 - 一种加速搜索的方法indexIVFFlat（倒排文件）。起始就是使用k-means建立聚类中心，然后通过查询最近的聚类中心，然后比较聚类中所有向量得到相似的向量。
 - 在建立 IndexFlatL2 和IndexIVFFlat都会全量存储所有向量在内存中，为了满足大的数据需求，faiss提供了一种基于 Product Quantizer（乘积量化）的压缩算法，编码向量大小到指定的字节数。此时，存储的向量是压缩过的，查询的距离也是近似的
 
-![faiss(1)：简介 安装 与 原理3](https://gitee.com/github-25970295/blogpictureV2/raw/master/7f69e05a5138467d79e0600f65a131f71603442485964.png)
+![faiss(1)：简介 安装 与 原理3](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/7f69e05a5138467d79e0600f65a131f71603442485964.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/d397f39e81914aa043c27c99593c93bf1603442485963.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/d397f39e81914aa043c27c99593c93bf1603442485963.png)
 
 ### 1. 相似搜索方法
 
@@ -40,19 +40,19 @@
 > - PQ算法可以理解为是对vector quantization做了一次分治，首先`把原始的向量空间分解为m个低维向量空间的笛卡尔积`，并对分解得到的`低维向量空间分别做量化`.
 > - 把原始D维向量（比如D=128）`分成m组`（比如m=4），每组就是D∗=D/m维的子向量（比如D∗=D/m=128/4=32)，各自用kmeans算法学习到一个码本，然后`这些码本的笛卡尔积就是原始D维向量对应的码本`。用qj表示第j组子向量，用Cj表示其对应学习到的码本，那么原始D维向量对应的码本就是C=C1×C2×…×Cm。用k∗表示子向量的聚类中心点数或者说码本大小，那么原始D维向量对应的聚类中心点数或者说码本大小就是k=(k∗)m。可以看到m=1或者m=D是PQ算法的2种极端情况，对m=1，PQ算法就回退到vector quantization，对m=D，PQ算法相当于对原始向量的每一维都用kmeans算出码本。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211005191301786.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211005191301786.png)
 
 > 基于这些量化器做相似搜索。有2种方法做相似搜索，一种是SDC(symmetric distance computation)，另一种是ADC(asymmetric distance computation)。SDC算法和ADC算法的区别在于是否要对查询向量x做量化;
 >
 > - x是查询向量(query vector)，y是数据集中的某个向量，目标是要在数据集中找到x的相似向量。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211005185722040.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211005185722040.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211005190115941.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211005190115941.png)
 
-![SDC 计算流程](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211005192528860.png)
+![SDC 计算流程](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211005192528860.png)
 
-![ADC 计算流程](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211005192552954.png)
+![ADC 计算流程](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211005192552954.png)
 
 #### .1. 改进算法
 
@@ -69,7 +69,7 @@
 > - 计算d(x,y): 对r(x)分组，计算每组中r(x)的特征子集到pq_centroids的距离。根据ADC的技巧，计算x与y的距离可以用计算x与q(y)的距离，而q(y)就是pq_centroids表中的某项，因此已经得到了x到y的近似距离。
 > - 最大堆排序： 堆中每个元素代表数据库中y与x的距离，堆顶元素的距离最大，只要是比堆顶元素小的元素，代替堆顶元素，调整堆，直到判断完所有的y。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/2017-08-05-understanding-product-quantization-figure5.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/2017-08-05-understanding-product-quantization-figure5.jpg)
 
 > 对IVFADC的3点补充说明：
 >

@@ -11,7 +11,7 @@
 
 ### 0. Architecture
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210324204040.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210324204040.png)
 
 - **javafx.animation** - 包含用于向JavaFX节点添加基于`过渡的动画（如填充，淡入淡出，旋转，缩放和平移）`的类。
 - **javafx.application** - 包含一组负责``JavaFX应用程序生命周期的类``。
@@ -33,7 +33,7 @@
 
 - 页面编辑，并将Fxml文件生成对应的代码；
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210326195015.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210326195015.png)
 
 ### 2. TestFx
 
@@ -45,7 +45,7 @@
 
 > 在代码中***`javafx.application.Application 类是所有Fx程序的入口，`\***每一个javaFx程序都可以理解为是一个应用，Fx程序中的自定义类继承并重写其start()类后，便具备了作为当前Fx程序的启动入口。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210324204704.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210324204704.png)
 
 ```java
 public class Main extends Application {
@@ -89,7 +89,7 @@ public class Main extends Application {
 - **Pane** - 窗格是所有布局窗格的基类，例如**AnchorPane, BorderPane, DialogPane**等。此类属于一个名为**AnchorPane, BorderPane, DialogPane**的包。
 - chart: 有两个子类，分别是**PieChart**和**XYChart** 。 这两个又具有子类，如**AreaChart, BarChart, BubbleChart**等，用于在JavaFX中绘制不同类型的XY平面图。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210324204939.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210324204939.png)
 
 #### 3.2. Event
 
@@ -128,7 +128,7 @@ playButton.setOnMouseClicked((new EventHandler<MouseEvent>() {
 }));
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210324210040.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210324210040.png)
 
 #### 3.3. UI控件
 
@@ -259,11 +259,11 @@ src/main
 
 #### 4.1. **[ maps](https://github.com/gluonhq/maps)**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210324215744.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210324215744.png)
 
 #### 4.2. [CalendarFX](https://github.com/dlsc-software-consulting-gmbh/CalendarFX)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210324215823.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210324215823.png)
 
 #### 4.3. [octillect](https://github.com/zero-based/octillect)
 
@@ -271,9 +271,9 @@ src/main
 
 #### 4.4. [MusicPlayer](https://github.com/Mpmart08/MusicPlayer)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210326195314.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210326195314.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/Package model.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Package model.png)
 
 ### 5. Resource
 
@@ -286,19 +286,19 @@ src/main
 
 - 查看本机的jdk版本：命令提示符输入：java -version
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210326093757.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210326093757.png)
 
 - 修改IDEA当中的Project项目中的jdk版本
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210326093819.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210326093819.png)
 
 - 修改modules中的sdk
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210326093845.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210326093845.png)
 
 - File-->Setting -->Build,Execution,Deployment-->Complier-->Java Complier
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210326093916.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210326093916.png)
 
 ---
 

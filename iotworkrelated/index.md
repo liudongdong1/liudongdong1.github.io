@@ -4,11 +4,11 @@
 - **Concentrate your bets:** focus on select use cases and tackle barriers to adoption such as security, ROI, IT and operational technology integration. Package IoT solutions into scalable products that you then can roll out to customers.
 - **Don't try alone:** partnerships tend to be more effective with selective approach based on the use case;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913201309487.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913201309487.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913201425666.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913201425666.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913201520549.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913201520549.png)
 
 **level**: 
 **author**: Kartikeya Bhardwaj, CA,USA; WeiChen(Carnegie Mellon University); Radu Marculescu(Texas at Austing)
@@ -57,13 +57,13 @@
 
 > communication aware model compression[3] which account for the hardware constraints and communication costs resulting from distributed inference;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831162216.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831162216.png)
 
 >  (a) Federated Learning is a new distributed training paradigm at the intersection of data privacy and network of devices, (b) Data-independent model compression aims to compress deep networks without using private datasets – This inference problem is at the intersection of hardware constraints and data privacy, (c) Communication-aware model compression is a new distributed inference paradigm at the intersection of hardware constraints and network of devices: Exploit the network of devices to collaboratively obtain low-latency, high-accuracy intelligence at the edge, (d) Prior model compression methods focus on the hardware constraints at device-level, but not the other two critical challenges: Key techniques include Pruning, Quantization, and Knowledge Distillation (KD).
 
 【**Direction One**】**Federated Learning**(FedMax&&FedAvg)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831162519.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831162519.png)
 
 **【Direction two】Data-Independent Model Compression**
 
@@ -82,7 +82,7 @@
 > - the centroids represent the average activations in a cluster, which is the mean activations, and the activation from real images are not used;
 > - metadata also contains principle components for each cluster.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831163643.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831163643.png)
 
 **【Direction Three】Communication-aware model compression**
 
@@ -94,11 +94,11 @@
 >
 > - features for various classes are learned at different filters in CNNs, these activation patterns reveal how teacher's knowledge gets distributed at the final convolution layer, which can be used to create a filter activation network[3] that represent <font color=red>how the teacher's knowledge about various classes is organized into filters, and then partition this network via community detection; </font>
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831172202.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831172202.png)
 
 >  (a) Prior KD [12]: Distributing large student models that do not ﬁt on a single memory-limited IoT device leads to heavy communication a teach layer. (b) NoNN [3] results in disjoint students that can ﬁt on individual devices: Filters at teacher’s ﬁnal convolution layer (representing knowledge about different classes) can be partitioned to train individual students which results in minimal communication until the ﬁnal layer (Figure adopted from [5]).
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831172425.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831172425.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -135,13 +135,13 @@ miguelangel.lopez@satec.es
 
 #### Chart&Analyse:
 
-![1571877725494](https://gitee.com/github-25970295/blogImage/raw/master/img/1571877725494.png)
+![1571877725494](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1571877725494.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1571877760207.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1571877760207.png)
 
 1. NVNet Framework
 
-   ![](https://gitee.com/github-25970295/blogImage/raw/master/img/1571878362198.png)
+   ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1571878362198.png)
 
 
 
@@ -174,7 +174,7 @@ miguelangel.lopez@satec.es
 
 - current implementations of IoT platforms are based on centralised architectures 
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202124407187.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202124407187.png)
 
 #### Methods
 
@@ -188,7 +188,7 @@ miguelangel.lopez@satec.es
 
 **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202124802126.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202124802126.png)
 
 - Monitoring the platform in runtime to abtain insight into the system and its processes
   - Quality of Device (battery life , precision , and sending rate...)
@@ -201,17 +201,17 @@ miguelangel.lopez@satec.es
   - Devices services layer ( data filtering , communication service , power plan ,Over-The-Air(permits updates over the air to always keep a device’s software up-to-date))
 - Custom application layer
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202124729502.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202124729502.png)
 
 
 
 **Gateway Architecure**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202124820316.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202124820316.png)
 
 **EndDevice Architecture:**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202124844922.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202124844922.png)
 
 
 
@@ -226,18 +226,18 @@ miguelangel.lopez@satec.es
 - 多特征基元的融合，在做线、面特征提取时，这是很工程化而且很依赖技巧，目前没有特别好的方法能够把线面的特征做到特别的通用、鲁棒。在另外一个层面，当我们进行参数化或者数据关联时，如果使用很差的原始输入，会产生很多误差和干扰。除此之外，图像特征和激光特征如何进行提取？几何特征之间如何实现紧耦合，这都是进行多源耦合会面临的问题
 - 语义信息融合到传统或者经典SLAM框架里，甚至能够像人一样地对语义进行认知
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200414112018699.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200414112018699.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200414112039578.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200414112039578.png)
 
 #### 多传感器
 
 - Paper: LIC-Fusion
-- 完成了传感器的标定工作，并且提出了环视鱼眼相机、轮速计陀螺仪融合方法，实现了基于环视相机和陀螺仪的融合估计。之后还完成了激光、相机、加速计和陀螺仪紧耦合的多传感器融合的里程计框架，叫LIC-Fusion。还完成了先验激光地图和相机、加速度计和陀螺仪所构成的定位系统。![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200414122817448.png)
+- 完成了传感器的标定工作，并且提出了环视鱼眼相机、轮速计陀螺仪融合方法，实现了基于环视相机和陀螺仪的融合估计。之后还完成了激光、相机、加速计和陀螺仪紧耦合的多传感器融合的里程计框架，叫LIC-Fusion。还完成了先验激光地图和相机、加速度计和陀螺仪所构成的定位系统。![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200414122817448.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202131128445.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202131128445.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191202131200265.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191202131200265.png)
 
 
 

@@ -5,7 +5,7 @@
 
 ![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7d70666e06094bb5b54a51f661fe4823~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220810210400686.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220810210400686.png)
 
 Kubernetes主要由以下几个核心组件组成：
 
@@ -25,17 +25,17 @@ Kubernetes主要由以下几个核心组件组成：
 - Dashboard提供GUI
 - Federation提供跨可用区的集群
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/98593a62139449e281185ab42a0095eetplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/98593a62139449e281185ab42a0095eetplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp)
 
 ![img](https://bbs-img.huaweicloud.com/blogs/img/image3(269).png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220424223135943.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220424223135943.png)
 
 ![img](https://bbs-img.huaweicloud.com/blogs/img/images_162391078762653.png)
 
 ### List-Watch机制控制器架构
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220810210559303.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220810210559303.png)
 
 1、`客户端提交创建请求`，可以通过`API Server的Restful API`，也可以使用`kubectl命令行工具`。支持的数据类型包括JSON和YAML。
 
@@ -51,9 +51,9 @@ Kubernetes主要由以下几个核心组件组成：
 
 7、kubelet根据调度结果`执行Pod创建操作`： 绑定成功后，scheduler会调用APIServer的API在etcd中创建一个boundpod对象，描述在一个工作节点上绑定运行的所有pod信息。运行在每个工作节点上的kubelet也会定期与etcd同步boundpod信息，一旦发现应该在该工作节点上运行的boundpod对象没有更新，则调用Docker API创建并启动pod内的容器。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/af449707a9ba439185a3a937452cf5b1tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/af449707a9ba439185a3a937452cf5b1tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp)
 
-![image.png](https://gitee.com/github-25970295/blogimgv2022/raw/master/92b20772e5164de5a5c9bb076cf0160btplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp)
+![image.png](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/92b20772e5164de5a5c9bb076cf0160btplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp)
 
 ## 1. Node
 

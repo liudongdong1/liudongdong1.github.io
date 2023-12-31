@@ -11,11 +11,11 @@
 
 - F(i)=i*i; 如果新元素起始插入位置为H，但是H已经被占用，则会尝试H+i^2; i=[1,n];
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220412131138470.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220412131138470.png)
 
 #### .3. 开链（链地址法）
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220412131821725.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220412131821725.png)
 
 ### 2. 数据结构
 
@@ -313,7 +313,7 @@ void hashtable<V, K, HF, Ex, Eq, A>::resize(size_type num_elements_hint)
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220412135623759.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220412135623759.png)
 
 #### .2. insert_unique_noresize
 

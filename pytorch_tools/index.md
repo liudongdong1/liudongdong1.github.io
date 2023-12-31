@@ -57,7 +57,7 @@
 
 > 以最轻松的方式在你的机器学习代码中融入深度度量学习，并且容易模块化、高度的灵活性和可拓展性。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/20210517232120.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210517232120.png)
 
 ---
 

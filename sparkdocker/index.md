@@ -1,7 +1,7 @@
 # sparkdocker
 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210227155237722.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210227155237722.png)
 
 #### 1. docker 从0搭建hadoop，spark
 
@@ -198,7 +198,7 @@ vim slaves
 
 ##### 1.2. spark 初步配置
 
-![image-20210227165057910](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210227165057910.png)
+![image-20210227165057910](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210227165057910.png)
 
 - slaves文件
 
@@ -211,7 +211,7 @@ a15ae831e68b
 
 - spark-defaults.conf
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210227164642058.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210227164642058.png)
 
 - spark-env.sh
 

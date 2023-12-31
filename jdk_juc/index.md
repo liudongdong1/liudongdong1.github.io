@@ -1,13 +1,13 @@
 # JDK_JUC
 
 
-![Overview](https://gitee.com/github-25970295/blogpictureV2/raw/master/java-thread-x-juc-overview-1.png)
+![Overview](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/java-thread-x-juc-overview-1.png)
 
-![Lock框架和Tools类](https://gitee.com/github-25970295/blogpictureV2/raw/master/java-thread-x-juc-overview-lock.png)
+![Lock框架和Tools类](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/java-thread-x-juc-overview-lock.png)
 
-![Collection并发集合](https://gitee.com/github-25970295/blogpictureV2/raw/master/java-thread-x-juc-overview-2.png)
+![Collection并发集合](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/java-thread-x-juc-overview-2.png)
 
-![线程池](https://gitee.com/github-25970295/blogpictureV2/raw/master/java-thread-x-juc-executors-1.png)
+![线程池](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/java-thread-x-juc-executors-1.png)
 
 ### 1. Condition 案例
 

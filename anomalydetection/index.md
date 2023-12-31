@@ -13,7 +13,7 @@
 
 > 多为时间序列数据中的异常，即某个时间点的表现与前后时间段内存在较大的差异，那么该异常为一个上下文异常点。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210520234405687.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210520234405687.png)
 
 #### .3. 集体异常
 
@@ -54,7 +54,7 @@ STL是一种单维度时间指标异常检测算法。大致思路是：
 
 当然，还有其他的时间序列分解算法，例如STL、X12-ARIMA、STAMP等。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521081637515.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521081637515.png)
 
 ##### 2. 基于统计学模型预测
 
@@ -89,7 +89,7 @@ STL是一种单维度时间指标异常检测算法。大致思路是：
 
 ###### .1. 标准差分布， 方差分析，卡方检验等
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210520231802510.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210520231802510.png)
 
 ```python
 import numpy as np
@@ -156,7 +156,7 @@ def find_anomalies(random_data):
 anomalies,normal = find_anomalies(data)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210520233333173.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210520233333173.png)
 
 ###### .3.  BOX-COX 转化
 
@@ -168,9 +168,9 @@ anomalies,normal = find_anomalies(data)
 >
 > - 孤立森林算法
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210520231842604.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210520231842604.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210520231859860.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210520231859860.png)
 
 ##### .3.基于偏差方法
 
@@ -319,7 +319,7 @@ LOF容易将边界处的点判断为异常，INFLO在计算密度时，利用k*�
 > - 简单易用且一致的API，只需要几行代码就可以完成异常检测，方便评估大量算法;
 > - 使用即时编译器(JIT)和并行化(parallelization)进行优化，加速算法运行及扩展性(scalability)，可以处理大量数据;
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521082605123.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521082605123.png)
 
 #### .2. [PyOdds](https://github.com/datamllab/pyodds)
 
@@ -356,15 +356,15 @@ LOF容易将边界处的点判断为异常，INFLO在计算密度时，利用k*�
 
 #### .7. Metis时间序列异常检测
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521111126834.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521111126834.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521111153239.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521111153239.png)
 
-![率值](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521111202465.png)
+![率值](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521111202465.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521082850142.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521082850142.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521082909922.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521082909922.png)
 
 ### 6. 数据集
 
@@ -383,9 +383,9 @@ LOF容易将边界处的点判断为异常，INFLO在计算密度时，利用k*�
 
 > The dataset consists of real and synthetic time-series with tagged anomaly points. The dataset tests the detection accuracy of various anomaly-types including outliers and change-points.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521083113842.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521083113842.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521083129476.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521083129476.png)
 
 ### 资源
 

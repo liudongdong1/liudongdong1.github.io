@@ -5,7 +5,7 @@
 >
 > 使用 OpenFeign 的 Spring 应用架构一般分为三个部分，分别为`服务注中心`、`服务提供者`和`服务消费者`。服务提供者向服务注册中心注册自己，然后服务消费者通过 OpenFeign 发送请求时， OpenFeign 会向服务注册中心获取关于服务提供者的信息，然后再向服务提供者发送网络请求。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210627212904996.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210627212904996.png)
 
 ### 1. 注解
 

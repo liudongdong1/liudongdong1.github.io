@@ -7,7 +7,7 @@
 
 > 整个产品外观， 各个功能按键作用，产品内部组成建模，有什么特色组件；使用场景和功能特色；
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210428221345015.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210428221345015.png)
 
 - [科勒卫浴](https://www.bilibili.com/video/BV1RW41147io?from=search&seid=10361940488967858279)
 
@@ -53,89 +53,89 @@
 
 #### .1. 用到**展台的形式**来承载百雀羚的产品
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606151100695.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606151100695.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606151201320.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606151201320.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606133038106.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606133038106.png)
 
-![image-20210606151315532](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606151315532.png)
+![image-20210606151315532](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606151315532.png)
 
 #### .2. **室内的场景**去承载扫地机器人
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606133236575.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606133236575.png)
 
-![image-20210606133440134](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606133440134.png)
+![image-20210606133440134](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606133440134.png)
 
-![image-20210606133628443](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606133628443.png)
+![image-20210606133628443](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606133628443.png)
 
-![image-20210606133728028](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606133728028.png)
+![image-20210606133728028](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606133728028.png)
 
 #### .3. 用项目的概念图
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606135847878.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606135847878.png)
 
-![image-20210606140038212](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606140038212.png)
+![image-20210606140038212](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606140038212.png)
 
 #### .4. 食物照片
 
 > 海报，它的配色来源。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606144532090.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606144532090.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606144710630.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606144710630.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606144845490.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606144845490.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606145005904.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606145005904.png)
 
 #### .5. 答辩
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606152227497.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606152227497.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606152406567.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606152406567.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606152455686.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606152455686.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606152530832.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606152530832.png)
 
 #### .6. 互联网+比赛
 
 > 项目背景，市场痛点，市场需求，国家政策支持，唱片技术，核心优势，技术支撑，商业模式，营销策略，项目进展，团队成员介绍，专家支持，公司规划，财经财务，发展战略
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606153235189.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606153235189.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606153555628.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606153555628.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606153637466.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606153637466.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606153705963.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606153705963.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606153742192.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606153742192.png)
 
 #### .7. 棉花
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606155018075.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606155018075.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606155029744.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606155029744.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606155156076.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606155156076.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606155231550.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606155231550.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606155317085.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606155317085.png)
 
 #### .8. 番茄
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606155523531.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606155523531.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606155543818.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606155543818.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606155613743.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606155613743.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606155652123.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606155652123.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606155719732.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606155719732.png)
 
 ### 资源学习
 

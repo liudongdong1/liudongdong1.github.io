@@ -21,11 +21,11 @@
    1. use the integral image to efficiently compute the difference between the mean gray values in a pair of square image regions.
    2. use the Boosted SCC algorithm to discriminatively select a set of features and combine them to produce a strong description.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210222223342668.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210222223342668.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210222223651396.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210222223651396.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210222223753793.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210222223753793.png)
 
 #### Relative 
 

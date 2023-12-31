@@ -27,7 +27,7 @@
 1. present a geometric approach to reinforce the visual features of each pair of joints based on the IMU,  improving the 2D pose estimation accuracy especially when one joint is occluded.
 2. fit the multi-view 2D poses to the 3D space by an orientation Regularized pictorial Structure Model which jointly minimizes the projection error between the 3D and 2D poses along with the discrepancy between the 3D pose and IMU orientations.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612163514924.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612163514924.png)
 
 #### Research Objective
 
@@ -62,7 +62,7 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612171943527.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612171943527.png)
 
 【Qustion 1】<font color=red> 关键部分不理解,具体细节后面遇到再说</font>
 
@@ -71,7 +71,7 @@ previous work:
   - **Environment**:   
     - Dataset: 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612172211707.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612172211707.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -126,7 +126,7 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200625110657529.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200625110657529.png)
 
 【Module 1】Motion Estimatioln for 3D joints
 
@@ -135,7 +135,7 @@ previous work:
 > 3. apply SORT tracking algorithm[7] to track each person across the vedio sequence.<font color=red> 去了解</font>
 > 4. interpolate and smooth missing or noise keypoints using KF algorithm.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200625134748743.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200625134748743.png)
 
 【Module 2】Global Body Tracking in 3D
 
@@ -150,7 +150,7 @@ previous work:
 - Estimate camera egomotion： potential viewpoint changes across frames.
   - Camera ego-motion estimation from one viewpoint to another requies 3D point clouds of both scenes. To create 3D point of a scene requires two information: 1. the depth map(using DepthWild model[22]); 2. camera intrinsic parameters
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200625135916080.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200625135916080.png)
 
 【Module 3】Generating Virtual Sensor Data
 
@@ -192,11 +192,11 @@ previous work:
 
 > a high sampling rate should be used when data acquisition is performed to reduce the sampling interval and thus reduce the integrationerror. However,this will result in more noise in the measured data and increase the calculation burden.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200620090253185.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200620090253185.png)
 
 **【Knowledge three】Waveform distortion**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200620090545825.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200620090545825.png)
 
 **【Knowledge four】 Velocity waveform correction**
 
@@ -219,9 +219,9 @@ $$
 v_c(t)=v(t)+1/T[v(0)-v(T)]-v(0)  \\
 x_c(t)=x(t)+1/(2T)[v(0)-v(T)]t^2-v(0)t-x(0)
 $$
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200620092722253.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200620092722253.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200620093339022.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200620093339022.png)
 
 
 
@@ -260,7 +260,7 @@ $$
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612111925446.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612111925446.png)
 
 【Qustion 1】how to get body heading information?
 
@@ -276,15 +276,15 @@ $$
   >
   > IMU data is transformed into the same HACF by the device orientation and the same horizontal rotation.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612160431127.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612160431127.png)
 
 #### Evaluation
 
   - **Environment**:   
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612155100851.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612155100851.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612162530065.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612162530065.png)
 **date**: 2017
 **keyword**:
 
@@ -315,7 +315,7 @@ previous work:
 
 - **system overview**: use the IMU to estimate trajectories of natural human motions
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612101206414.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612101206414.png)
 
 【Algorithm】
 
@@ -329,7 +329,7 @@ previous work:
 >
 > concatenate smoothed angular velocities and linear acc from the past 200 frames to construct a 1200 dimensional feature vector
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612103657344.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612103657344.png)
 
 【Question 2】how to correcting acceleration errors?
 
@@ -347,7 +347,7 @@ previous work:
 - the first to integrate sophisticated machine learning techniques with inertial navigation.
 - database of IMU sensor measurements and 3D motion trajectories across multiple human subjects and multiple device placements.( six human, four kinds placements, various type motions including walking forward/backward, side motion, acceleration/deceleration)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612105303609.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612105303609.png)
 **author**:Martin Brossard（MINES Paris Tech)
 **date**: 2019
 **keyword**:
@@ -371,7 +371,7 @@ previous work:
 - tested on KITTI odometry dataset, this article estimates 3D position, velocity, orientation of the vehicle and self-calibrates the IMU biases, and achieve on average a 1.10% translational error and the algorithm competes with top-ranked methods.
 - the code:https://github.com/mbrossar/ai-imu-dr
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624220627710.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624220627710.png)
 
 **level**: UbiComp/ISWC'19
 **author**:Yasuo Katsuhara(Frontier Research Center,Toyata Motor Corp)
@@ -419,7 +419,7 @@ previous work:
 
 - using Perception Neuron2.0 to collect three dimensianal position(x,y,z) of 21 body joints. sampleing interval was 50 ms
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624223907049.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624223907049.png)
 
 【Module 2】Data Processing
 
@@ -428,17 +428,17 @@ previous work:
 - using 3-layer neural networks to forcaset the position.
 - <font color=red> to predict standing up and walking acitvities</font>
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624225012923.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624225012923.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624225645127.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624225645127.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624225813310.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624225813310.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624225901410.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624225901410.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
-  - Paper 7: a mixed reality martial arts training system with RGB camera.
+  - paper 7: a mixed reality martial arts training system with RGB camera.
 
 **level**: Proceedings of the 2020 IEEE/SICE International Symposium on System Integration, Hawaii,USA
 **author**: Wataru Takano
@@ -463,11 +463,11 @@ Paper: Sentence Generation
 4. translating human whole-body motions into descriptions, where multiple words are associated from the human motions by the first model and the second model searches for syntactically consistent sentences consisting of associated words.
 5. seventeen IMU sensors are attached to a performer, the sesulting sensor data are transformed to positions of 34 virtual markers attached to the performer, and human whole body posture is expressed by a feature vector whose elements are positions of the virtual makers in a trunk coordinate system.
 
-#### ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624232127699.png)
+#### ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624232127699.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624232815685.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624232815685.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624232753572.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624232753572.png)
 
 #### Contribution
 
@@ -537,9 +537,9 @@ $$
 w=(Raw_{gyr}-ZRO)/sensitivity_{gyr}
 $$
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200625091630619.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200625091630619.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200625091647837.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200625091647837.png)
 
 - Smoothing Filter: using exponential weighted moving average(EWMA) filter.
 
@@ -549,18 +549,18 @@ $$
 
 【Module 2】Trajectory Reconstruction
 
-- Attitude Estimation&Coordinate Transformation:![Coordinate Systems](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200625092320299.png)
+- Attitude Estimation&Coordinate Transformation:![Coordinate Systems](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200625092320299.png)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200625092412445.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200625092412445.png)
 
 - Gravity Erasion: to get the linear-acc
 - Movement Detection:  
 
 > segment the signals using sliding window and extract features for each segment, and using LDA to classify a segment into moving or stationary signals, and morphological operations are then applied to smooth the classification results obtained by LDA.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200625092926820.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200625092926820.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200625092950136.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200625092950136.png)
 
 - Displacement Calculation: $x(t)=x(t-1)+v(t)*dt$
   $$
@@ -576,13 +576,13 @@ $$
   C(n)tail=(x_{\frac{k}{20}*(n+1)-1},y_{\frac{k}{20}*(n+1)-1})
   $$
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200625094307301.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200625094307301.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200625093913283.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200625093913283.png)
 
 > using above orientation to denote each segment to get the sequence and using DTW or HMM methods to classify.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200625093123952.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200625093123952.png)
 
 - **Image-Based Reconstruction** 
 - **LSTM-Based Time Sequence Methods**

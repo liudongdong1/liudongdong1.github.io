@@ -5,7 +5,7 @@
 
 > 一个类从被加载进内存，到卸载出内存，完整的生命周期包括：加载，验证，准备，解析，初始化，使用，卸载。`不同的阶段往往是穿插着进行的`，加载阶段中可能会激活验证的开始，而验证阶段又有可能激活准备阶段的赋值操作等，但整体的开始顺序是不会变的。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728110102640.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210728110102640.png)
 
 ### 2. 类加载过程
 
@@ -15,7 +15,7 @@
 - 将这个字节流所代表的`静态存储结构`转化为`方法区的运行时数据结构`。
 - 在内存中生成一个代表这个类的`java.lang.Class对象，作为方法区这个类的各种数据的访问入口。`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728121824152.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210728121824152.png)
 
 #### .2. 验证
 
@@ -70,7 +70,7 @@
 
 ### 3. 类加载器
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728123914692.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210728123914692.png)
 
 - 一种是`启动类加载器（Bootstrap ClassLoader）`，这个类加载器`使用C++语言实现`，是虚拟机自身的一部分；
 - 另一种就是所有`其他的类加载器`，这些类加载器都由Java语言实现，独立于虚拟机外部，并且全都继承自抽象类java.lang.ClassLoader。
@@ -122,7 +122,7 @@ public class Test2 {
   - 系统类防止内存中出现多份同样的字节码
   - 保证Java程序安全稳定运行
 
-  ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210728130444041.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210728130444041.png)
 
 ### Resource
 

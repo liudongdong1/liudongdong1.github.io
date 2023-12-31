@@ -19,9 +19,9 @@
 
 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201024204749518.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201024204749518.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201024204807194.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201024204807194.png)
 
 
 

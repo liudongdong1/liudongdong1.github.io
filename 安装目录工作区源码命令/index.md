@@ -7,7 +7,7 @@
 
 ### 1. GOROOT 安装目录说明
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220525221337761.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220525221337761.png)
 
 通过 `go install` 命令，`Go` 程序（这里是标准库中的程序）会被编译成平台相关的归档文件存放到其中。另外，`pkg/tool/linux_amd64` 文件夹存放了使用 `Go` 制作软件时用到的很多强大的命令和工具。
 
@@ -147,9 +147,9 @@ import "lab/a"
 
 ### 6. 标准命令
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220526222110494.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220526222110494.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220526222144721.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220526222144721.png)
 
 - https://blog.csdn.net/wohu1104/article/details/106295007
 

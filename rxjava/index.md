@@ -5,15 +5,15 @@
 
 ### 1. 思维导图
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/webp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/webp)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dhbmd6aGlibzY2Ng==,size_16,color_FFFFFF,t_70)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dhbmd6aGlibzY2Ng==,size_16,color_FFFFFF,t_70)
 
 ### 2. 使用步骤
 
 #### .1 基本观察者模式
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211110093309234.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211110093309234.png)
 
 ##### .1. 创建被观察者（Observable)
 
@@ -61,7 +61,7 @@ Observable observable = Observable.from(words);
 
 ##### .2. 创建观察者 （`Observer` ）并 定义响应事件的行为
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211111153406035.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211111153406035.png)
 
 ```java
 
@@ -197,7 +197,7 @@ Observable.create(new ObservableOnSubscribe<Integer>() {
 
 ### 3. 五种观察者
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211111103134786.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211111103134786.png)
 
 #### .1. Observable 
 
@@ -286,7 +286,7 @@ Observable.just("Hello", "World").subscribe(onNextAction, onErrorAction, onCompl
 
 ### 5. do操作符
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211111104901827.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211111104901827.png)
 
 ```java
 import io.reactivex.Observable;
@@ -320,7 +320,7 @@ public class ExeOrder {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211111105326052.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211111105326052.png)
 
 ### 6. 线程控制
 

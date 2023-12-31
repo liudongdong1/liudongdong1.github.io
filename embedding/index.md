@@ -18,7 +18,7 @@
 >
 > This module is often used to `store word embeddings` and` retrieve them using indices`. The input to the module is a list of indices, and the output is the corresponding word embeddings.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210601101544902.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210601101544902.png)
 
 ```python
 >>> # an Embedding module containing 10 tensors of size 3

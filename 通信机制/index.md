@@ -44,7 +44,7 @@
 
 > 来自 Netflix， 服务器端和客户端都是用 Java 语言编写，因此只能用于Java和基于JVM的语言。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/implementation_list.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/implementation_list.png)
 
 
 

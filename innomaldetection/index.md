@@ -8,7 +8,7 @@
 - 利用**Flip Library (LinkedAI)** 工具合成图像。
 - 扩张特征是一种特殊的卷积网络，在传统的卷积核中插入孔洞。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/20210514225317.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210514225317.png)
 
 #### 3. 数据集
 

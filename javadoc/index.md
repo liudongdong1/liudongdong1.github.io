@@ -314,7 +314,7 @@ public class OrderService {
 
 > 通过IDEA生成Javadoc： Tools --> Generate JavaDoc -->注意要配置编码，如果不配送为生成乱码，还需要配置Output directory
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619155227016.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210619155227016.png)
 
 ---
 

@@ -43,7 +43,7 @@ wide_resnet50_2 = models.wide_resnet50_2(pretrained=True)
 mnasnet = models.mnasnet1_0(pretrained=True)
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017142036494.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201017142036494.png)
 
 ### 2. Semantic Segmentation
 
@@ -55,7 +55,7 @@ mnasnet = models.mnasnet1_0(pretrained=True)
 - [Faster R-CNN ResNet-50 FPN](https://arxiv.org/abs/1506.01497)
 - [Mask R-CNN ResNet-50 FPN](https://arxiv.org/abs/1703.06870)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017143001110.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201017143001110.png)
 
 ### 4. Video Classification
 

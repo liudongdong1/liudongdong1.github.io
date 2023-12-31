@@ -5,9 +5,9 @@
 >
 > 一旦某个应用程序通过ContentProvider 暴露了自己的数据操作接口，那么不管该应用程序是否启动，其他应用程序都可通过该接口来操作该应用程序的内部数据，包括增加数据、删除数据、修改数据、查询数据等。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/162046022fba9845tplv-t2oaga2asx-watermark.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/162046022fba9845tplv-t2oaga2asx-watermark.awebp)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108232739629.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108232739629.png)
 
 ### 0. 关键类
 
@@ -101,7 +101,7 @@ private void AddContact() throws RemoteException, OperationApplicationException 
 - 开发一个ContentProvider的子类，该子类需要实现增、删、改、查等方法。
 - 在AndroidManifest.xml文件中注册该ContentProvider.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108232007139.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108232007139.png)
 
 > ContentProvider组件需要在清单文件声明
 
@@ -492,7 +492,7 @@ public class MainActivity extends Activity
 > - **Client app**：一个普通的客户端软件，通过触发**ACTION_OPEN_DOCUMENT** 和/或 **ACTION_CREATE_DOCUMENT**就可以接收到来自于Document provider返回的内容，比如选择一个图片， 然后返回一个Uri。
 > - **Picker**：`类似于文件管理器的界面`，而且是系统级的界面，提供额访问客户端过滤条件的 Document provider内容的通道，就是起说的那个DocumentsUI程序！
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211109084331128.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211109084331128.png)
 
 #### .2. 客户端调用，并获取返回的Uri
 

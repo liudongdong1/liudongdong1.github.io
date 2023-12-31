@@ -39,13 +39,13 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116180045883.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116180045883.png)
 
 【Qustion 1】Dataset Schedules   ?
 
 both the kind of data and the order in which it is presented during training.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116181737160.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116181737160.png)
 
 #### Conclusion
 
@@ -73,9 +73,9 @@ both the kind of data and the order in which it is presented during training.
 - **Application Area**:
 - **Purpose**:  One stage detectors applied over a regular dense sampling of object locations ,scales and aspectratios.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116183901028.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116183901028.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116184807649.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116184807649.png)
 
 #### Proble Statement
 
@@ -97,7 +97,7 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191116190856305.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191116190856305.png)
 
 #### Conclusion
 

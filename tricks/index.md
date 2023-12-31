@@ -59,7 +59,7 @@ def pre_pipeline(self, results):
 >
 > 在[2]中，选择单一尺度的方式被Maxout（element-wise max，逐元素取最大）取代：随机选两个相邻尺度，经过Pooling后使用Maxout进行合并，如下图所示。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210518222638.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210518222638.png)
 
 ```python
 train_pipeline = [
@@ -102,7 +102,7 @@ test_pipeline = [
 1. 第一个模型保存模型权值的平均值（WSWA）。在训练结束后，它将是用于预测的最终模型。
 2. 第二个模型（W）将穿过权值空间，基于周期性学习率规划探索权重空间。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210518223011.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210518223011.png)
 
 ### 5. 其他
 

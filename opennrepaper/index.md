@@ -18,13 +18,13 @@
 1. train custom models to extract structured relational facts from the plain text, and supports quick model validation for researchers.
 2. source code:  http://github.com/thunlp/OpenNRE, supports `Entity-Oriented Application`, `Setence-Level Relation Extraction`, `Bag-Level Relation Extraction`, `Document-Level Relation Extraction`, `Few-Shot Relation Extraction`,
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210224160304158.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210224160304158.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210224160427226.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210224160427226.png)
 
 - Architecture of OpenNRE
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210224160910665.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210224160910665.png)
 
 ---
 

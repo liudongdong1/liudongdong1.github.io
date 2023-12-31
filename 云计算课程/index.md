@@ -5,17 +5,17 @@
 
 #### 1. IT 系统组成
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403122608142.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403122608142.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403122811184.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403122811184.png)
 
 #### 2. 3种服务模式
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403123003378.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403123003378.png)
 
 #### 3. 云计算架构参考模型
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403123439881.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403123439881.png)
 
 #### 4. 一套完整云计算产品需要解决哪些问题
 
@@ -23,7 +23,7 @@
 - 管理工具 —— 解决如何管理大量虚拟机的问题，包括`创建、启动、停止、备份、迁移虚拟机，以及计算资源的管理和分配`。
 - 交付部分 —— 解决如何让远端的用户使用虚拟机的问题。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403123654345.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403123654345.png)
 
 #### 5. 关键技术- 存储技术
 
@@ -31,13 +31,13 @@
 
 > 存储和 CPU 不在同一台计算机上，如` SAN 和 NAS` 存储是单独的存储设备，它们通过以太网线或者光纤与计算机连接。专门的存储网络设备很贵，随着以太网速度越来越快，基于以太网的存储技术逐渐流行起来，如 iSCSI，10Gbit/s 的网卡能提供 1GB/s 的理论速度。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403124738109.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403124738109.png)
 
 ##### .2. 直接存储
 
 > 存储直接接插到主板上，通过` PATA、SATA、mSATA、SAS、SCSI 或者 PCI-E 接口总线通信`。传统的机械硬盘一般采用 PATA、SATA、SAS、SCSI 接口，相对于外部存储，直接接插主板的机械硬盘的速度优势越来越不明显，但是固态硬盘（如 mSATA、PCI-E）的速度优势还是比较明显的，尤其是 PCI-E 的固态硬盘，代表着业界顶尖的存储技术。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403124836282.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403124836282.png)
 
 ##### .3. 分布式存储
 
@@ -45,7 +45,7 @@
 >
 > 服务器存储局域网（Server SAN）逐渐被数据中心采用，而且发展很快，Ceph 分布式存储系统就属于 Server SAN，被很多云中心采用。目前的软件定义存储（SDS）概念就是分布式存储。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403124947825.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403124947825.png)
 
 ---
 

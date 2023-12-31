@@ -3,7 +3,7 @@
 
 > socket屏蔽了各个协议的通信细节，使得程序员无需关注协议本身，直接使用socket提供的接口来进行互联的不同主机间的进程的通信。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210510111010.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210510111010.png)
 
 ### 1.API
 
@@ -37,7 +37,7 @@
 
   0，如果指定为0，表示由内核根据so_type指定默认的通信协议
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210510111221.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210510111221.png)
 
 > int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 
@@ -73,7 +73,7 @@ int accept(int listen_sockfd, struct sockaddr *addr, socklen_t *addrlen)
 
 这三个参数与bind的三个参数含义一致，不过，此处的后两个参数是传出参数。在使用listen函数告知内核监听的描述符后，内核就会建立两个队列，一个SYN队列，表示接受到请求，但未完成三次握手的连接；另一个是ACCEPT队列，表示已经完成了三次握手的队列。而accept函数就是从ACCEPT队列中拿一个连接，并生成一个新的描述符，新的描述符所指向的结构体so_pcb中的请求端ip地址、请求端端口将被初始化。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210510111521.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210510111521.png)
 
 > 1. 服务器端在调用listen之后，内核会建立两个队列，SYN队列和ACCEPT队列，其中ACCPET队列的长度由backlog指定。
 > 2. 服务器端在调用accpet之后，将阻塞，等待ACCPT队列有元素。
@@ -424,7 +424,7 @@ void main()
 
 #### 2.3. [pyqt通信](https://github.com/Wangler2333/tcp_udp_web_tools-pyqt5)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210510155418975.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210510155418975.png)
 
 - [TCP_Logic](D:\projectBack\tcp_udp_web_tools-pyqt5)
 

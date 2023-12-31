@@ -18,15 +18,15 @@ anchor box其实就是从训练集的所有ground truth box中统计(使用k-mea
 
 ### 1.2 anchor box的计算
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200825115832.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200825115832.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200825120038.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200825120038.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200825120138.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200825120138.png)
 
 ## 2. 至信度
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200825120443.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200825120443.png)
 
 ---
 

@@ -3,7 +3,7 @@
 
 > 性能调优是个大而复杂的系统性问题，涉及 Linux 系统（进程管理，文件系统，磁盘系统，网络 IO 处理等），内核参数调优，常见检测及配置工具的使用等
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/13192585-406c6ead07aec166.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/13192585-406c6ead07aec166.png)
 
 ### 1. CPU
 

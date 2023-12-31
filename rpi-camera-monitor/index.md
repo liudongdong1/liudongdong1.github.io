@@ -38,7 +38,7 @@
 
 - check your configuration running `npm run config:check` in `/home/pi/MagicMirror`
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200507210040338.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200507210040338.png)
 
 Model 官方模块包括： Alert， Calendar， Clock， Current Weather， Hello world， News Feed， Update Notification， Weather Module, Weather Forecast
 
@@ -53,7 +53,7 @@ FileStructure：
 
 硬件清单：https://shop418091054.taobao.com/
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200509141258351.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200509141258351.png)
 
 自美驱动板：
 
@@ -75,9 +75,9 @@ sudo curl -sSL http://a.16302.com/init | sh
 sudo curl -sSL http://a.16302.com/install | sudo python3
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200509143513833.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200509143513833.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200509143703233.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200509143703233.png)
 
 ### **2.1. 配网方法**
 
@@ -318,7 +318,7 @@ project 1：https://www.youtube.com/watch?v=cVmDjJmcd2M
 - 添加电子相册， 修改对应的js代码
 - 添加Monitor监控模块
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200514192013919.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200514192013919.png)
 
 ### 2.8. 代码阅读
 
@@ -615,7 +615,7 @@ hass
 # open  localhost:8123, 注册账号进入主界面
 ```
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200507125144328.png" alt="image-20200507125144328" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200507125144328.png" alt="image-20200507125144328" style="zoom:50%;" />
 
 #### 3.2.3 docker install
 

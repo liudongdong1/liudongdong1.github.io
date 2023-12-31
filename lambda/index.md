@@ -37,7 +37,7 @@ from functools import reduce
 reduce(lambda a,b: a+b,[23,21,45,98])
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201119220126880.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201119220126880.png)
 
 ### 5. Lambda 函数参数 
 

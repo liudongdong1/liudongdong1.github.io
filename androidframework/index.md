@@ -5,11 +5,11 @@
 
 ### 1. Android 系统框架
 
-![image-20221120085004076](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221120085004076.png)
+![image-20221120085004076](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221120085004076.png)
 
 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211107141336894.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211107141336894.png)
 
 > Android系统启动过程由上图从下往上的一个过程是由Boot Loader引导开机，然后依次进入 -> Kernel -> Native -> Framework -> App，接来下简要说说每个过程：
 
@@ -113,9 +113,9 @@ DX 工具将.class文件编译成.dex文件，运行该.dex文件。
   - 释放mutex对象。
 - 当一个进程从从这个区域读数据时候，它将重复同样的步骤，只是将第二步变成读取。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221120110134019.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221120110134019.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221120110146858.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221120110146858.png)
 
 ```
 usage : ipcs -asmq -tclup 
@@ -785,7 +785,7 @@ public static void main(String[] args) {
 
 #### .0. Handler, Looper, Message, MessageQueue 类关系
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221128104919571.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221128104919571.png)
 
 #### .1. **Binder**
 
@@ -797,18 +797,18 @@ public static void main(String[] args) {
 > 2. **[获取服务(getService)](http://gityuan.com/2015/11/15/binder-get-service/)**：Client进程使用某个Service前，须先向ServiceManager中获取相应的Service。该过程：Client是客户端，ServiceManager是服务端。
 > 3. **使用服务**：Client根据得到的Service信息建立与Service所在的Server进程通信的通路，然后就可以直接与Service交互。该过程：client是客户端，server是服务端。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221122110712185.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221122110712185.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221128123857494.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221128123857494.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221123154311314.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221123154311314.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221122101702736.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221122101702736.png)
 
 - 以后自己理解代码调用过程的时候，借鉴这里的分析流程，做好说明
 - Service Manager 不断读取消息的循环中处理客户端请求
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221128151112016.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221128151112016.png)
 
 > `每个Android的进程，只能运行在自己进程所拥有的虚拟地址空间`。对应一个4GB的虚拟地址空间，其中3GB是用户空间，1GB是内核空间，当然内核空间的大小是可以通过参数配置调整的。对于`用户空间，不同进程之间彼此是不能共享的，而内核空间却是可共享的`。Client进程向Server进程通信，恰恰是`利用进程间可共享的内核内存空间来完成底层通信工作的`，Client端与Server端进程往往采用ioctl等方法跟内核空间的驱动进行交互。
 
@@ -827,11 +827,11 @@ Socket通信方式也是C/S架构，比Binder简单很多。在Android系统中�
 
 > `Binder/Socket用于进程间通信`，而``Handler消息机制用于同进程的线程间通信`(`只能用于共享内存地址空间的两个线程间通信)，Handler消息机制是由一组`MessageQueue、Message、Looper、Handler共同组成的`，为了方便且称之为Handler消息机制。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211107143740784.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211107143740784.png)
 
 > 由于工作线程与主线程共享地址空间，即Handler实例对象mHandler位于线程间共享的内存堆上，工作线程与主线程都能直接使用该对象，只需要`注意多线程的同步问题`。工作线程通过mHandler向其成员变量MessageQueue中添加新Message，主线程一直处于loop()方法内，当收到新的Message时按照一定规则分发给相应的handleMessage()方法来处理。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211107144203557.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211107144203557.png)
 
 Low Memory Killer
 
@@ -846,7 +846,7 @@ Anonymous Shared Memory（代码解析87页）
 - 与Linux 内存共享机制有什么区别
 - 代码解析： https://redspider110.github.io/2018/01/17/0043-android-ashmem/
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221120153232402.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221120153232402.png)
 
 ### 6. GUI显示
 
@@ -855,7 +855,7 @@ Anonymous Shared Memory（代码解析87页）
 - SurfaceFlinger 需要手机系统中所有的应用程序绘制的图像数据，然后集中显示到物理屏幕上
 - OpenGL ES 通过ANativeWindow 来与本地窗口系统建立正确的连接。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/Center.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Center.png)
 
 1） 这里的FrameBuffer指显示设备驱动和Gralloc帧缓冲区管理
 
@@ -871,11 +871,11 @@ Anonymous Shared Memory（代码解析87页）
 
 #### .2. WindowManageService(WMS)
 
-![image-20221129092634957](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221129092634957.png)
+![image-20221129092634957](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221129092634957.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221129093908589.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221129093908589.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221129094135012.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221129094135012.png)
 
 ### Resource
 

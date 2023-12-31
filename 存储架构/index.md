@@ -28,9 +28,9 @@
 - **文件存储**：`目录和文件`，数据以文件的方式存储和访问，按照目录结构进行组织。此种方式也需要`挂载，挂载后为一个目录，可直接存取其中的文件`；不需要格式化。
 - **对象存储**：主要操作对象是对象 Object，本质上是键值对存储系统，不需要挂载，直接通过应用接口访问。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160753118.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220307160753118.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307160832539.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220307160832539.png)
 
 ### 2. 存储协议
 
@@ -47,33 +47,33 @@
 >**内部 DAS：**在内部 DAS 架构中，`存储设备通过服务器机箱内部的并行或串行总线连接到服务器上`。但是，物理的总线有距离限制，只能支持短距离的高速数据传输。此外，很多内部总线能连接的设备数目也有限，并且将存储设备放在服务器机箱内部，也会占用大量的空间 ，对服务器其它部件的维护造成困难。
 >**外部 DAS：**在外部 DAS 结构中，`服务器与外部的存储设备直接相连`。在大多数情况下，他们之间`通过 FC 协议或者 SCSI 协议进行通信`。与内部 DAS 相比，外部 DAS 克服了内部 DAS 对连接设备的距离和数量的限制。另外，外部 DAS 还可以提供存储设备集中化管理，更加方便。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145707889.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220307145707889.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409142916300.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409142916300.png)
 
 #### .2. NAS（网络附加存储）
 
 >在 NAS 存储结构中，存储系统`不再通过 I/O 总线附属于某个特定的服务期或客户机`，而是`直接通过网络接口直接与网络相连`，用户`通过网络访问`。NAS 实际上是带有一个 “瘦服务器” 的存储设备，作用类似于一个专用的文件服务器，而不是传统通用服务器，去掉了大多数功能，仅仅提供文件系统功能，用于存储服务。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145904751.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220307145904751.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143222083.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409143222083.png)
 
 #### .3. SAN（存储区域网络）
 
 >SAN (storage area network) 是一种`以网络为中心的存储结构`，不同于普通以太网，SAN 是位于服务器的后端，为连接服务器、磁盘阵列、带库等存储设备而建立的高性能**「专用网络（光纤通道）」**
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307145944181.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220307145944181.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143021150.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409143021150.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409143124505.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409143124505.png)
 
 #### .4. 存储模型比较
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135009600.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409135009600.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409135439593.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409135439593.png)
 
 ### 4. 分布式存储架构
 
@@ -83,7 +83,7 @@
 
 > 在对称式架构中每个节点的角色均等，共同管理和维护元数据，节点间通过高速网络进行信息同步和互斥锁等操作。
 
-![Swift典型架构](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220307150515167.png)
+![Swift典型架构](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220307150515167.png)
 
 ##### .2. 非对称式
 
@@ -95,7 +95,7 @@
 >
 >- Storage server 以`卷为单位组织`，一个卷内包含多台 storage 机器，每个卷中的服务器是镜像关系，数据互为备份，存储空间以卷内容量最小的 storage 为准，所以建议 group 内的多个 storage 尽量配置相同，以免造成存储空间的浪费。
 
-![FastDFS 架构](https://gitee.com/github-25970295/blogimgv2022/picture2022/raw/master/image-20220307150344740.png)
+![FastDFS 架构](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220307150344740.png)
 
 #### .2. P2P 网络存储
 
@@ -105,17 +105,17 @@
 
 ##### 中间控制节点架构 -hdfs
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723231819018.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220723231819018.png)
 
 ##### 完全无中心架构-ceph
 
 - 客户端是通过设备映射关系计算出要写入数据的位置，客户端与中心节点直接通信
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232019679.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220723232019679.png)
 
 ##### 完全无中心架构-swift
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723232248302.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220723232248302.png)
 
 ### 5. 分布式理论
 
@@ -125,15 +125,15 @@
 - 事务一致性：只能存在事务开始前，或者事务开始后
 - 线性一致性
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234131842.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220723234131842.png)
 
 - 顺序一致性：不同的处理器对变量的写操作必须在所有的处理器上以相同的顺序看到
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234438247.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220723234438247.png)
 
 - 因果一致性
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723234504009.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220723234504009.png)
 
 - 最终一致性： 
 
@@ -145,11 +145,11 @@
 - 从服务器角度：如何尽快的将更新的数据分布到整个系统，降低达到最终一致性时间窗口
 - 从客户端角度：多进程并发访问时，非分布数据库要求更新过的数据能被后续的访问都能看到。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220723235357495.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220723235357495.png)
 
 #### 数据分布
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly92aWdvdXJ0eXktemhnLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70.png)
 
 ##### 哈希分布
 
@@ -161,7 +161,7 @@
 
 - 将大表顺序划分为连续的范围，每个范围成为一个子表， 类似btree
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724000425516.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220724000425516.png)
 
 ##### crush 分布
 
@@ -174,7 +174,7 @@
 
 - 同步日志操作：主部分将操作日至同步到备副本，备副本回放操作日志，完成后通知主副本，接着主副本修改本机，知道所有操作都完成后通知客户端写入成功。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001021109.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220724001021109.png)
 
 ##### 异步复制
 
@@ -193,11 +193,11 @@
 
 ### Google 文件系统
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724001813510.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220724001813510.png)
 
 #### Taobao 文件系统
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724002153112.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220724002153112.png)
 
 #### CDN 内容分发网络
 

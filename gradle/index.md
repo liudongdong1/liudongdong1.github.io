@@ -7,7 +7,7 @@
 
 > 确保系统已安装 JDK 1.7及以上，此处将介绍 Gradle 在 Windows 平台下的手动安装。在 https://gradle.org/releases/ 下载最新的 release 包并解压至相应文件夹，然后在系统环境变量添加`GRADLE_HOME`，作者的变量值为`D:\gradle-5.4.1`，最后再将`%GRADLE_HOME%\bin`添加进`Path`变量中即可。在命令行中键入`gradle -v`验证环境搭建结果。 `IDEA`等工具中集成了gradle工具和maven工具，不需要额外下载
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619183659054.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210619183659054.png)
 
 ### 2. Project
 
@@ -15,7 +15,7 @@
 >
 > Gradle 包装器。为了应对团队开发中 Gradle 环境和版本的差异会对编译结果带来的不确定性，使用 Gradle Wrapper，它是一个脚本，可以指定构建版本、快速运行项目，从而达到标准化、提到开发效率。Android Studio 新建项目时自带 Gradle Wrapper，因此 Android 开发者很少单独下载安装 Gradle
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619184207482.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210619184207482.png)
 
 `Gradle 内置 Wrapper Task`，执行 Wrapper Task 就可以在项目目录中生成对应的目录文件。在项目根目录执行`gradle wrapper` 命令即可。之后根目录的文件结构如下
 
@@ -172,7 +172,7 @@ include ':project-world'
 
 ### 4. Android Gradle
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619194112903.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210619194112903.png)
 
 > Android Studio 中的每个项目包含一个或多个含有源代码文件和资源文件的模块，这些模块可以独立构建测试，模块类型包含以下几种
 >
@@ -376,7 +376,7 @@ gradle.taskGraph.afterTask {
 
 ### 6. [gradle plugin](https://www.cnblogs.com/mingfeng002/p/11751119.html)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619194703629.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210619194703629.png)
 
 ### 7. Problem Record
 
@@ -388,7 +388,7 @@ distributionUrl=https\://services.gradle.org/distributions/gradle-4.0-milestone-
 
 通过网址：http://services.gradle.org/distributions/下载,下载之后把下载的文件直接复制到C:\Users\Administrator\.gradle\wrapper\dists\gradle-x.x-all\中时间最近的目录下，单击Android Studio工具栏“Sync Project Gradle Files”或者重启Android Studio，问题就可以解决了。 `或者修改gradle版本也可以`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619195415495.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210619195415495.png)
 
 ### Resource
 

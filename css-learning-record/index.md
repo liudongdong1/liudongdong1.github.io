@@ -57,7 +57,7 @@ ul em{
 
 #### 1.3 MeasureMent Units
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200505161028134.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200505161028134.png)
 
 ### 2. Attribute
 

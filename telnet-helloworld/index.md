@@ -3,7 +3,7 @@
 
 > Netty是 一个异步事件驱动的网络应用程序框架，用于快速开发可维护的高性能协议服务器和客户端。是一个NIO客户端服务器框架，可以快速轻松地开发协议服务器和客户端等网络应用程序。它极大地简化并简化了TCP和UDP套接字服务器等网络编程。Netty经过精心设计，具有丰富的协议，如FTP，SMTP，HTTP以及各种二进制和基于文本的传统协议。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008201945363.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008201945363.png)
 
 > 绿色的部分**Core**核心模块，包括零拷贝、API库、可扩展的事件模型。
 >
@@ -11,7 +11,7 @@
 >
 > 红色的部分**Transport Services**传输服务，包括Socket、Datagram、Http Tunnel等等。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/cc27d56addd74e82b6b6b349c7f3769b.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/cc27d56addd74e82b6b6b349c7f3769b.png)
 
 ### 1. 代码编写
 

@@ -17,7 +17,7 @@ template <class T>
 
 - 迭代器
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411163840421.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411163840421.png)
 
 - list环形数据结构
 
@@ -47,7 +47,7 @@ reference front() { return *begin(); }
 reference back() { return *(--end()); } 
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411164123827.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411164123827.png)
 
 ### 2. 创建
 
@@ -183,7 +183,7 @@ void transfer(iterator position, iterator first, iterator last)
     }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411175827820.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411175827820.png)
 
 ```c++
 //将x结合于position 所指位置之前，x 必须不同于 *this
@@ -274,7 +274,7 @@ template <class T, class Alloc>
 
 ### 4. 常用函数xmind
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/4c6ed408d36fe0f5519875f0e1e73eb8.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/4c6ed408d36fe0f5519875f0e1e73eb8.png)
 
 ### Resource
 

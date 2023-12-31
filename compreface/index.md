@@ -12,13 +12,13 @@
 - **Step 7.** Upload your photo and let our open-source face recognition system match the image against the Face Collection. If you use a UI for face recognition,  you will see the original picture with marks near every face. If you use [REST API](https://gitee.com/mirrors/compreface/blob/master/docs/Rest-API-description.md#recognize-faces-from-a-given-image), you will receive a response in JSON format.
 - demos: tutorial_demo.html： 上传人脸数据文件；webcam_demo.html: 调用实时摄像头实现实时人脸识别。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210913213134551.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210913213134551.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210913213315241.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210913213315241.png)
 
 
 
-![CompreFace architecture diagram](https://gitee.com/github-25970295/blogpictureV2/raw/master/107855144-5db83580-6e29-11eb-993a-46cdc0c82812.png)
+![CompreFace architecture diagram](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/107855144-5db83580-6e29-11eb-993a-46cdc0c82812.png)
 
 ### 2. component
 

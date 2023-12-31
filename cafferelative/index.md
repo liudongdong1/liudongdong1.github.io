@@ -16,9 +16,9 @@ Caffe2 improves Caffe 1.0 in a series of directions:
 - flexibility for future directions such as quantized computation
 - stress tested by the vast scale of Facebook applications
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191208094933945.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191208094933945.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191208095158661.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191208095158661.png)
 
 #### Distribute Training
 

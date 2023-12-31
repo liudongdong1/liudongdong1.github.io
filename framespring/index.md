@@ -14,7 +14,7 @@
 
 ### 1. Component
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619223017545.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210619223017545.png)
 
 - **Spring Core：** 基础,可以说 Spring 其他所有的功能都需要依赖于该类库。主要提供 IoC 依赖注入功能。
 - **Spring  Aspects** ： 该模块为与AspectJ的集成提供支持。

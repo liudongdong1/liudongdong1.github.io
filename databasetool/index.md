@@ -10,7 +10,7 @@ Supports any database which has JDBC driver (which basically means - ANY databas
 - Based on [Eclipse](https://wiki.eclipse.org/Rich_Client_Platform) platform.
 - Uses plugins architecture and provides additional functionality for the following databases: MySQL/MariaDB, PostgreSQL, Greenplum, Oracle, DB2 LUW, Exasol, SQL Server, Sybase/SAP ASE, SQLite, Firebird, H2, HSQLDB, Derby, Teradata, Vertica, Netezza, Informix, etc.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210322090704510.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210322090704510.png)
 
 ### 2. [sql2nosql](https://github.com/facundopadilla/sql2nosql)
 

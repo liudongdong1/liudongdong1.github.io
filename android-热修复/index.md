@@ -9,7 +9,7 @@
 
 ## 1. 热修复方案
 
-![img](https://gitee.com/github-25970295/picture2023/raw/master/v2-a0a52231f04f59c28d2db48778324cdc_r.jpg)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-a0a52231f04f59c28d2db48778324cdc_r.jpg)
 
 | 方案对比   | Sophix               | Tinker                       | nuwa | AndFix | Robust | Amigo |
 | ---------- | -------------------- | ---------------------------- | ---- | ------ | ------ | ----- |
@@ -360,7 +360,7 @@ void replace_7_0(JNIEnv* env, jobject src, jobject dest) {
 }
 ```
 
-![andfix_replace_artmethod](https://gitee.com/github-25970295/picture2023/raw/master/andfix_replace_artmethod.png)
+![andfix_replace_artmethod](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/andfix_replace_artmethod.png)
 
 #####  ArtField & ArtMethod
 
@@ -501,7 +501,7 @@ static jobject methodRestore(JNIEnv* env, jclass type, jobject srcMethod, jlong 
 }
 ```
 
-![my_replace_artmethod](https://gitee.com/github-25970295/picture2023/raw/master/my_replace_artmethod.png)
+![my_replace_artmethod](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/my_replace_artmethod.png)
 
 ## 3. [JavaHook原理](https://zhuanlan.zhihu.com/p/336081084#h5o-10)
 
@@ -509,7 +509,7 @@ static jobject methodRestore(JNIEnv* env, jclass type, jobject srcMethod, jlong 
 
 2、加载补丁时，从补丁包中读取要替换的类及具体替换的方法实现，新建ClassLoader加载补丁dex。当changeQuickRedirect不为null时，可能会执行到accessDispatch从而替换掉之前老的逻辑，达到fix的目的
 
-![img](https://gitee.com/github-25970295/picture2023/raw/master/v2-5ac52a0949ba1a2c4653db859480fe94_720w.webp)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-5ac52a0949ba1a2c4653db859480fe94_720w.webp)
 
 ```java
 public static ChangeQuickRedirect u;
@@ -672,7 +672,7 @@ private static Object combineArray(Object firstArray, Object secondArray) {
 >
 > Tinker自研了`DexDiff/DexMerge算法`。Tinker还支持资源和So包的更新，So补丁包使用`BsDiff`来生成，资源补丁包直接使用文件`md5对比`来生成，针对资源比较大的（默认大于100KB属于大文件）会使用BsDiff来对文件生成差量补丁
 
-![](https://gitee.com/github-25970295/picture2023/raw/master/v2-35324ffac6c8a8fb8cbfb7897bdc16fc_720w.webp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-35324ffac6c8a8fb8cbfb7897bdc16fc_720w.webp)
 
 ## 6. **so修复原理**
 

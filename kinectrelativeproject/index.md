@@ -39,13 +39,13 @@ Azure Kinect DK 开发环境由以下多个 SDK 组成：
 
 ![png](https://img-blog.csdn.net/20180703120303332?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hvbmdiaW5feHU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210204100249440.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210204100249440.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210204100307697.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210204100307697.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210204100217254.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210204100217254.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210204100337343.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210204100337343.png)
 
 ### 2.[LiveScan3D](https://github.com/MarekKowalski/LiveScan3D)
 
@@ -89,7 +89,7 @@ Azure Kinect DK 开发环境由以下多个 SDK 组成：
 
 > Turns any surface into a giant touchpad using kinect
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210119150933293.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210119150933293.png)
 
 ### 5. [kinectron](https://github.com/kinectron/kinectron)
 
@@ -105,13 +105,13 @@ Azure Kinect DK 开发环境由以下多个 SDK 组成：
 
 ### 8. [Kinect-Vision](https://github.com/soumik12345/Kinect-Vision)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210301202846740.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210301202846740.png)
 
 ### 9. [rgbd-kinect-pose](https://github.com/rmbashirov/rgbd-kinect-pose)
 
 > Bashirov R, Ianina A, Iskakov K, et al. Real-time RGBD-based Extended Body Pose Estimation[C]//Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision. 2021: 2807-2816.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210822163959268.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210822163959268.png)
 
 ### 10. [Azure-Kinect-DK-3D-reconstruction](https://github.com/luckyluckydadada/Azure-Kinect-DK-3D-reconstruction)
 

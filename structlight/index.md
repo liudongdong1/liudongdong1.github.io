@@ -5,15 +5,15 @@
 >
 > 一类是基于光速来进行测量的距离传感器（range-sensors），例如 ToF 技术；另一类是利用三角测量法 （triangulation），称为计算机立体视觉（computer stereo vision）。利用这些技术，可以在不接触物体的情况 下，对物体进行测量和建模 [2]。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210325110856.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210325110856.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210325164939.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210325164939.png)
 
 ### 1. 编码原理
 
 > 结构光系统的关键在于使用恰当的图案 C，使得可以将 π1 上图案 中的点 P1 和 π2 上图像上的点 P2 对应，即让 P1 和 P2 对应的是物体表面上的同一个点 P0，这样的话，就可以通过计算直线 P1F1 和 P2F2 的交点来唯一地确定出 P0 在三维空间中的位置。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210325111220.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210325111220.png)
 
 #### 1.1. 直接编码
 
@@ -29,17 +29,17 @@
 
 - 线扫描结构光：比起每次投影一个点，我们`每次投影一条直线`。这种编码方 式称为线扫描结构光。例如，在每个时刻，选取一个特定的 x˜，图案 C 由直线 x1 = ˜x 构成。这样的话，摄 像机就能拍摄到物体表面的一条曲线并且得知这条曲线上每个点对应于 π1 平面上的横坐标。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210325111929.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210325111929.png)
 
 - 基于二进制的时序编码方式：投影器在几个不同 的时刻投射出一系列黑白条纹图案，摄像机在每个时刻拍摄一张图像。在每一张图像中，如果一个点被光线 照射到了，那么把这个点标记为 1，否则标记为 0，将不同图像上这个点的标记连接起来，就得到了一个由 0 和 1 组成的序列，这个序列称为这个点的码字（codeword）。二进制编码的原理就是根据码字来推断出这 个点在投影平面上对应的位置。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210325111912.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210325111912.png)
 
 #### 1.3. 空间编码
 
 > 空间编码的优势在于它只需要一次成像便可以计算出三维信息，可以满足一些实时性要求较高的场合。 缺点在于它比较容易受到环境光线的干扰；同时，由于它依赖于一个点的邻域，当物体表面起伏很大时，一 个点的邻域可能部分被遮挡住了，在这种情况下测量的精度会受到影响。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210325112134.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210325112134.png)
 
 ### 2. 三维测量技术
 
@@ -49,25 +49,25 @@
 
 - ToF(Time of Light技术)：是测量光线从光源发出到摄像机接收所需要的时间，从而乘以光速计算出物体的距离。等辐波强度调制（continuous wave intensity modulation, CWIM）是一种常见的间接测量方法。，只需要测量混合后产生电信号的强度，就可测量出两个信号之间的相位差，进而测量出距离。g ill 和 g ref 是两个同步的高频电路，g ill 驱动光 源发出光线，光照的强度随着时间而呈现正弦状的周期性变化，变化的频率称为调制频率
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210325112531.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210325112531.png)
 
 - RGB双目：非常**依赖纯图像特征匹配**，所以在光照较暗或者过度曝光的情况下效果都非常差，另外如果**被测场景**本身**缺乏纹理**，也**很难**进行**特征提取和匹配**。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210325164731.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210325164731.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210821101219712.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210821101219712.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210325164844.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210325164844.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210325112357.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210325112357.png)
 
 #### 2.2. 应用前景
 
 ##### 2.2.1. 消费电子产品
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210325112711.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210325112711.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210325112811.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210325112811.png)
 
 ##### 2.2.2. 医学
 
@@ -89,11 +89,11 @@
 >
 > ToF相机具备一切优势，`包括阳光干扰、光线变化干扰、隐私、有效距离、深度精度、体积方面`。`dToF相机就是Flash激光雷达`，`iToF就是FMCW激光雷达`。其物理重建3D过程包括点云数据生成和点云配准，点云数据生成主要是坐标变换，点云匹配最常见的是ICP算法（ICP算法由Besl and McKay 1992, Method for registration of 3-D shapes文章提出，该算法已经在PCL库中实现）。ICP算法本质上是基于最小二乘法的最优配准方法。通过选择对应两个点云的关系点，然后重复计算最优变换，直到满足正确配准条件。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210821101748184.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210821101748184.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210821101820834.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210821101820834.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210821101943916.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210821101943916.png)
 
 ### 4.学习链接
 

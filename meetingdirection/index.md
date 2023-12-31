@@ -13,7 +13,7 @@
 
 > 根据长文和短文的标题绘制如下词云图，可以看到今年研究方向主要集中在`Recommendation`和`Retrieval`两个方向，也包括Summarization、Conversations等NLP方向；主要任务包括：Ranking、Cross-domain、Multi-Model/Behavior、Few-Shot、User modeling、Personalization等；热门技术包括：Neural Networks、Knowledge Graph、GNN、Attention、Meta Learning等，其中基于Graph的一类方法依旧是今年的研究热点。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/641)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/641)
 
 > Collaborative Filtering，  Sequential/Session-based Recommendations，  Conversational Recommender System，  News Recommendations，  Cross-domain/Multi-behavior Recommendations， Social Recommendation
 
@@ -23,9 +23,9 @@
 
 >VLDB会议的全称是Very Large Data Bases Conferences，由 VLDB Endowment 主办，来自全球各地的数据库相关领域研究人员、供应商、参与者、应用开发者等共同参与和关注的国际重大学术会议。
 
-![img](https://gitee.com/github-25970295/blogpictureV2/raw/master/v2-68ea62f88e9eca8f7be379d7d3b9b9fc_720w.jpg)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-68ea62f88e9eca8f7be379d7d3b9b9fc_720w.jpg)
 
-![RDMS](https://gitee.com/github-25970295/blogpictureV2/raw/master/v2-2f6d2b9f1f4df1572cfcdf459ec8f63c_720w.jpg)
+![RDMS](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-2f6d2b9f1f4df1572cfcdf459ec8f63c_720w.jpg)
 
 
 
@@ -33,7 +33,7 @@
 
 >ACM SIGKDD（国际知识发现与数据挖掘大会，简称KDD），是机器学习领域的顶级国际学术会议，由ACM（国际计算机学会）创办于1995年，已经连续举办了26届，今年将于8月14日至18日在新加坡举办。目前KDD已经发展成为AI领域最具活力、影响最大的国际学术组织之一，代表了学术界和工业界的研究方向，被中国计算机协会推荐为A类会议。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/JkkpaA6B1TtPQ)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/JkkpaA6B1TtPQ)
 
 ### 4. SIGMOD
 

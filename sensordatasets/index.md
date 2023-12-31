@@ -34,7 +34,7 @@
 
 ### 2.1. [AHRS](https://x-io.co.uk/open-source-imu-and-ahrs-algorithms/)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201125155901178.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201125155901178.png)
 
 ## 3.  相关ADR论文
 

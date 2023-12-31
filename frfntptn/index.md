@@ -30,11 +30,11 @@ sns.heatmap(C2,annot=True)
 # f.savefig('sns_heatmap_confusion_matrix.jpg', bbox_inches='tight')
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210731195028019.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210731195028019.png)
 
 #### 1. [FP、FN、TP、TN](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727181314595.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727181314595.png)
 
 ```python
 tn, fp, fn, tp = confusion_matrix([0, 1, 0, 1], [1, 1, 1, 0]).ravel()
@@ -218,7 +218,7 @@ plt.legend(loc="lower right")
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727182007386.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727182007386.png)
 
 ---
 

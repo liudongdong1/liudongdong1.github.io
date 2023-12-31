@@ -19,11 +19,11 @@
 
 创建方式：客户端和服务端都需要创建，我们先在服务端中创建，然后复制到客户端即可。在 Android Studio 中右键点击新建一个 AIDL 文件
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/f9ec079047ec4780929d9d5632a15ff9.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/f9ec079047ec4780929d9d5632a15ff9.png)
 
 系统就会默认创建一个 aidl 文件夹，文件夹下的目录结构即是工程的包名，AIDL 文件就在其中
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/710c29e5360b48b6b97f8c3b631068a0.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/710c29e5360b48b6b97f8c3b631068a0.png)
 
 ### 2. 实现接口
 
@@ -240,7 +240,7 @@ interface IRemoteService {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221124143552538.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221124143552538.png)
 
 ### 6. Parcel 序列化
 

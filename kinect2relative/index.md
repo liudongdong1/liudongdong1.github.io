@@ -20,7 +20,7 @@
 > - **映射**的概念，比如深度图映射到彩色图的意思是对于`深度图上的一个像素，找到彩色图上的一个像素与之对应`.
 > - Depth Map 类似于灰度图像，只是它的`每个像素值是传感器距离物体的实际距离`。通常RGB图像和Depth图像是配准的，因而`像素点之间具有一对一的对应关系`。深度图像 = 普通的RGB三通道彩色图像 + Depth Map, **图像深度** 是指存储每个像素所用的位数，也用于量度图像的色彩分辨率。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610204607302.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610204607302.png)
 
 > jpg格式属于有损压缩，而png为无损压缩。研究者当然希望传感器精度更高。
 > 同理，在piv,dic等摄影测量的领域，为了保证优化的精度，直接拍摄的rgb图也不会采用jpg格式保存。
@@ -29,7 +29,7 @@
 > cv2.imwrite('./examples/savefig/rgb/image_r_{}.png'.format(str(i).zfill(5)), rgb_map)  cv2.imwrite('./examples/savefig/depth/Tbimage_d_{}.png'.format(str(0).zfill(5)), np.asarray(depth_map,np.uint16))
 > ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610202047942.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610202047942.png)
 
 #### 1. Coordination
 
@@ -37,29 +37,29 @@
 
 > 图像坐标系分为像素和物理两个坐标系种类。数字图像的信息以矩阵形式存储，即一副像素的图像数据存储在维矩阵中。`图像像素坐标系以为原点、以像素为基本单位，U、V分别为水平、垂直方向轴`。图像`物理坐标系以摄像机光轴与图像平面的交点作为原点`、以米或毫米为基本单位，其X、Y轴分别与U、V轴平行。图2-4展示的是两种坐标系之间的位置关系：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610214155636.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610214155636.png)
 
 ##### .2. 摄像机坐标系
 
 > 摄像机坐标系由摄像机的光心及三条、、轴所构成。它的、轴对应平行于图像物理坐标系中的、轴，轴为摄像机的光轴，并与由原点、、轴所组成的平面垂直。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610205431255.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610205431255.png)
 
 ##### .3. 世界坐标系
 
 > 考虑到摄像机位置具有不确定性，因此有必要采用世界坐标系来统一摄像机和物体的坐标关系。世界坐标系由原点及、、三条轴组成。世界坐标与摄像机坐标间有着（2-3）所表达的转换关系
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610205600991.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610205600991.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610205614248.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610205614248.png)
 
 ##### .4. [相机参数含义](https://bbs.huaweicloud.com/blogs/218498)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610213030659.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610213030659.png)
 
 ##### .5. 单目测距
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610212654526.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610212654526.png)
 
 ```python
 #!/usr/bin/python3
@@ -134,15 +134,15 @@ if __name__ == "__main__":
 
 ##### .5. 双目测距
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210726124419575.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210726124419575.png)
 
 #### 2. pykinect2
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610193508669.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610193508669.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610193650032.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610193650032.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610193928519.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610193928519.png)
 
 - read_stream.py
 
@@ -157,7 +157,7 @@ if __name__ == "__main__":
 
 - [mapper.py](https://github.com/KonstantinosAng/PyKinect2-Mapper-Functions/blob/master/mapper.py)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610195517769.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610195517769.png)
 
 #### 2. pylibfreenect2
 

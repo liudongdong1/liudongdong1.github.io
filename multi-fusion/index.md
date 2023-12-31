@@ -16,7 +16,7 @@
 
 - `图注意力机制`: 加入了基于先前LSTM隐藏状态的图像注意模型，输入为当前嵌入的单词和参与的图像特征的拼接[13]。最终LSTM的隐藏状态就被用于一种多模态的融合的表征.堆叠注意力网络(SANs)也被提出使用多层注意力模型对图像进行多次查询，逐步推断出答案，模拟了一个多步骤的推理过程[16]。通过多次迭代实现图像区域的Attention。首先根据图像特征和文本特征生成一个特征注意分布，根据这个分布得到图像每个区域权重和Vi，根据u=Vi+Vq得到一个refine query向量。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201222092442518.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201222092442518.png)
 
 - `图和文本对称注意力机制`:  共注意机制使用对称注意力结构生成attended图像特征向量和attended语言向量[22]。平行共注意力机制采用联合表示的方法模拟推导出图像和语言的注意分布。交替共同注意力机制具有级联结构，首先使用语言特征生成含有注意力的图像向量，然后使用含有注意力的图像向量生成出含注意力的语言向量。
 
@@ -28,9 +28,9 @@
 
 ### 2. 车载雷达融合
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210605153948949.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210605153948949.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210605154148128.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210605154148128.png)
 
 ### 3. 学习链接
 

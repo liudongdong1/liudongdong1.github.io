@@ -16,7 +16,7 @@
 > 稠密光流相反，稀疏光流并不对图像的每个像素点进行逐点计算。它通常需要`指定一组点进行跟踪`，这组点最好具有某种明显的特性，例如Harris角点等，那么跟踪就会相对稳定和可靠。稀疏跟踪的计算开销比稠密跟踪小得多。
 >
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201128125200642.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201128125200642.png)
 
 稠密光流描述图像每个像素向下一帧运动的光流，为了方便表示，使用不同的颜色和亮度表示光流的大小和方向，如图2-2右图的不同颜色。图2-3展示了一种光流和颜色的映射关系，使用颜色表示光流的方向，亮度表示光流的大小。
 
@@ -47,14 +47,14 @@
 
 对于一幅M×N的图像，其傅里叶变换公式如下：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201128154610987.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201128154610987.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201128154743715.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201128154743715.png)
 
 - 实部就可以看成：原图和余弦图的卷积，得到的值我们假设为 **R(u, v)**
 - 虚部可以看成：原图和正弦图的卷积，得到的值我们假设为 **I(u, v)**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201128155117753.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201128155117753.png)
 
 > `低频分量（低频信号）代表着图像中亮度或者灰度值变化缓慢的区域`，也就是图像中大片平坦的区域，描述了图像的主要部分。`高频分量（高频信号）对应着图像变化剧烈的部分`，也就是图像的`边缘（轮廓）或者噪声`以及细节部分。将图像从灰度分布转化到频率分布（频谱图）上去观察图像的特征,图像进行二维傅立叶变换之后得到的`频谱图`，就是`图像梯度的分布图`。具体的，傅立叶频谱图上我们能看到`明暗不一的亮点`，实际是图像上`某一点与邻域点差异的强弱，即梯度的大小`。` 如果一幅图像的各个位置的强度大小相等，则图像只存在低频分量`。从图像的频谱图上看，只有`一个主峰,且位于频率为零`的位置。 也就是说白色代表高频。
 
@@ -82,9 +82,9 @@ plt.subplot(236),plt.imshow(log_shift2center,'gray'),plt.title('log_shift2center
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201128155802727.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201128155802727.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201128160050443.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201128160050443.png)
 
 #### 2.5. 神经动力学
 
@@ -96,11 +96,11 @@ plt.show()
 
 - **亮度不变假设**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201128130513933.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201128130513933.png)
 
 - **邻域光流相似假设**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201128130911572.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201128130911572.png)
 
 #### 3.2. 深度学习
 
@@ -108,9 +108,9 @@ plt.show()
 
 > 该模型的输入为待估计光流的两张图像，输出即为图像每个像素点的光流。我们从Loss的设计，训练数据集和网络设计来分析FlowNet。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201128131038313.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201128131038313.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201128131122682.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201128131122682.png)
 
 ### 4. 学习链接
 

@@ -12,7 +12,7 @@
 
 ## 1. 使用GVM进行包管理
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220525101000944.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220525101000944.png)
 
 ### 1. install
 

@@ -10,7 +10,7 @@
 >- `不能将 GPU 作为调度系统的一种资源来进行灵活的调度`。
 >- 完善容器运行时对 GPU 的支持。如：自动的获取用户层面的 NVIDIA Driver libraries, NVIDIA kernel modules, device ordering 等。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220511192654316.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220511192654316.png)
 
 ### 1. nvidia-docker2.0
 
@@ -18,7 +18,7 @@
 - `nvidia-container-runtime` 才是真正的核心部分，它在原有的 `docker` 容器运行时 `runc` 的基础上增加一个 `prestart hook`，用于调用 libnvidia-container 库。
 - `libnvidia-container` 提供一个库和一个简单的 CLI 工具，使用这个库可以使 NVIDIA GPU 被 Linux 容器使用。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220511193017741.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220511193017741.png)
 
 ```shell
 # docker --> dockerd --> containerd --> containerd-shim -->runc --> container-process

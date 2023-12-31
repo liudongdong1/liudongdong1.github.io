@@ -40,27 +40,27 @@ GIS数据以数字数据的形式表现了现实世界客观对象(公路、土�
 
 汽车导航系统是地理资讯系统的一个特例，它除了`一般的地理资讯系统`的内容以外，还包括了`各条道路的行车及相关信息的数据库`。这个数据库利用[矢量](https://baike.baidu.com/item/矢量)表示行车的`路线、方向、路段等信息`，又利用[网络拓扑](https://baike.baidu.com/item/网络拓扑)的概念来决定最佳行走路线。[地理数据文件](https://baike.baidu.com/item/地理数据文件)(GDF)是为导航系统描述地图数据的[ISO](https://baike.baidu.com/item/ISO)标准。[汽车导航系统](https://baike.baidu.com/item/汽车导航系统)组合了`地图匹配`、[GPS](https://baike.baidu.com/item/GPS)定位和来计算车辆的位置。地图资源数据库也用于`航迹规划、导航，并可能还有主动安全系统、辅助驾驶及位置定位服`务(Location Based Services, LBS)等高级功能。汽车导航系统的数据库应用了地图资源数据库管理。
 
-![img](https://gitee.com/github-25970295/blogpictureV2/raw/master/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWRvbmdkb25nMTk=,size_16,color_FFFFFF,t_70)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWRvbmdkb25nMTk=,size_16,color_FFFFFF,t_70)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 #### .2. **[ arcgis-python-api](https://github.com/Esri/arcgis-python-api)**
 
-将即用`型底图、业务图层和统计图表混合在一起，形成鲜活的动态地图`，以使用简单简明的方式共享地理内容。![](https://gitee.com/github-25970295/blogpictureV2/raw/master/02-fig-2-8-v2-16276341155155.png)
+将即用`型底图、业务图层和统计图表混合在一起，形成鲜活的动态地图`，以使用简单简明的方式共享地理内容。![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/02-fig-2-8-v2-16276341155155.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210730191401908.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210730191401908.png)
 
 #### .3. [cesium](https://github.com/CesiumGS/cesium)
 
 > CesiumJS is a `JavaScript library` for creating `3D globes and 2D maps `in a web browser without a plugin. It uses` WebGL for hardware-accelerated graphics`, and is `cross-platform, cross-browser, and tuned for dynamic-data visualization`.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210730221049511.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210730221049511.png)
 
 #### .4. [QGIS](https://github.com/qgis/QGIS)
 
 > QGIS is a free, open source, cross platform (lin/win/mac) geographical information system (GIS). [map visualization](https://www.flickr.com/groups/2244553@N22/pool/with/50355460063/?rb=1)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210730221313879.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210730221313879.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210730221328730.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210730221328730.png)
 
 #### .5. OSMNX
 
@@ -70,7 +70,7 @@ GIS数据以数字数据的形式表现了现实世界客观对象(公路、土�
 
 > The most `powerful leaflet plugin` for drawing and editing geometry layers
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/68747470733a2f2f66696c652d676d65696c6571666d672e6e6f772e73682f)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/68747470733a2f2f66696c652d676d65696c6571666d672e6e6f772e73682f)
 
 ### Resource
 

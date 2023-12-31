@@ -1,7 +1,7 @@
 # Android_启动流程
 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/webp-166919226600621.webp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/webp-166919226600621.webp)
 
 ### 1. Bootloader
 
@@ -280,11 +280,11 @@ void signal_handler_init() {
 >- Zygote创建应用程序时却只使用了fork，没有调用exec。Android应用中执行的是Java代码，Java代码的不同才造成了应用的区别，而对于运行Java的环境，要求却是一样的。
 >- Zygote初始化时会创建创建虚拟机，同时把需要的系统类库和资源文件加载到内存里面。Zygote fork出子进程后，这个子进程也继承了能正常工作的虚拟机和各类系统资源，接下来子进程只需要装载APK文件的字节码文件就可以运行了。这样应用程序的启动时间就会大大缩短。
 
-![img](https://gitee.com/github-25970295/blogimgv2022/raw/master/webp-166919953084124.webp)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/webp-166919953084124.webp)
 
 - 具体代码解析  todo？ 没有看懂
 
-![img](https://gitee.com/github-25970295/blogimgv2022/raw/master/5713484-27464477f2175cbb.png)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/5713484-27464477f2175cbb.png)
 
 #### .2. AndroidRuntime
 
@@ -313,7 +313,7 @@ AndroidRuntime::AndroidRuntime(char* argBlockStart, const size_t argBlockLength)
 - **mOptions.setCapacity(20);**：预先分配空间来存放传入虚拟机的参数
 - **gCurRuntime = this;**：首先通过的断言判断gCurRuntime是否为空，保证只能被初始化一次
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/webp-166920030983629.webp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/webp-166920030983629.webp)
 
 ```cpp
 /*

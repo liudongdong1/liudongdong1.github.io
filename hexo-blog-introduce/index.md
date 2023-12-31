@@ -79,57 +79,9 @@ hexo generate --watch #监视文件变动
 
 
 - ERROR Process failed: _posts/存储设计/虚拟化技术/Minikube-tutorial.md
-  YAMLException: end of the stream or a document separator is expected at line 2, column 5:
-    date: 2022-05-2 22:10:04
+YAMLException: end of the stream or a document separator is expected at line 2, column 5:
+    date: 2022-05-02 22:10:04
 > 检查：后是否有空格
-
-
-
-## Hugo
-
-- https://yanweixin.github.io/post/hugo-tutorial/ hugo 部署教程
-- hexo gitee 部署教程： https://juejin.cn/post/7079959523976282119
-- hugo 远程部署教程：https://lewky.cn/posts/hugo-1.html/#%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2
-- hugo css 路径问题: https://blog.csdn.net/qq_38250687/article/details/119455302
-```
-chcp 65001
-rem 定义变量延迟环境，关闭回显
-@echo off&setlocal enabledelayedexpansion
-rem 读取config.toml所有内容
-for /f "eol=* tokens=*" %%i  in (config.toml) do (
-rem 设置变量a为每行内容
-set a=%%i
-set "a=!a:http://tablerows.gitee.io/tablerow.github.io/=https://baiban114.github.io/tablerow.github.io/!"
-rem 把修改后的全部行存入$
-echo !a!>>$)
-rem 用$的内容替换原来config.toml内容
-move $ config.toml
-
-hugo -D
-hugo
-cd ./public
-git add -A
-git commit -m "脚本提交"
-git push -u origin master
-
-cd ..
-
-@echo off&setlocal enabledelayedexpansion
-for /f "eol=* tokens=*" %%i  in (config.toml) do (
-set a=%%i
-set "a=!a:https://baiban114.github.io/tablerow.github.io/=http://tablerows.gitee.io/tablerow.github.io/!"
-echo !a!>>$)
-move $ config.toml
-
-hugo -D
-hugo
-cd ./public
-git add -A
-git commit -m "脚本提交"
-git push -u gitee master
-# git remote set-url origin git@github.com:liudongdong1/liudongdong1.github.io.git
-pause
-```
 
 ---
 

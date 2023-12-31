@@ -157,7 +157,7 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (17.1-b03 mixed mode):
 - “内存”页签的作用**相当于可视化的`jstat`命令**，用于监视被收集器管理的虚拟机内存（被收集器直接管理的Java堆和被间接管理的方法区）的变化趋势。
 - **“线程”页签的功能就相当于可视化的`jstack`命令**，遇到**线程停顿的时候可以使用这个页签的功能进行分析**。线程长时间停顿的主要原因有等待外部资源（数据库连接、网络资源、设备资源等）、死循环、锁等待等。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210713085611001.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210713085611001.png)
 
 ### 9. 可视化VisualVM
 
@@ -170,9 +170,9 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (17.1-b03 mixed mode):
 > - dump以及分析堆转存储快照（jmap、jhat）。
 > - 还有很多其他的功能。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210713090117077.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210713090117077.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210713085935854.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210713085935854.png)
 
 ---
 

@@ -15,21 +15,21 @@
 
   TL电平：全双工（逻辑1: 2.4V--5V 逻辑0: 0V--0.5V）. `常见的USB转TTL芯片有CH340、PL2303、FT232、CP2102等`
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210125233112716.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210125233112716.png)
 
 - **RS232：**是电子工业协会(Electronic Industries Association，EIA) 制定的`异步传输标准接口`，同时对应着电平标准和通信协议（时序），其电平标准：`+3V～+15V对应0，-3V～-15V对应1`。rs232 的逻辑电平和TTL 不一样但是协议一样。
 
   RS-232电平：全双工（逻辑1：-15V--5V 逻辑0：+3V--+15V).  `232芯片用于5V单片机，3232芯片用于3.3V单片机。`
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210125232933706.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210125232933706.png)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210125233044458.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210125233044458.png)
 
 - **RS485：**RS485是一种串口接口标准，为了长距离传输采用差分方式传输，传输的是差分信号，抗干扰能力比RS232强很多。两线压差为-(2~6)V表示0，两线压差为+(2~6)V表示1
 
   RS-485：半双工、（逻辑1：+2V--+6V 逻辑0： -6V---2V）这里的电平指AB 两线间的电压差。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210125233352145.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210125233352145.png)
 
 ### 2. Serial Class-pyserial
 
@@ -761,7 +761,7 @@ if __name__ == '__main__':
     sys.exit(app.exec_())
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210125221227180.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210125221227180.png)
 
 #### 3.2. Qt-serial
 

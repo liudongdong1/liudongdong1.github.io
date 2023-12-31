@@ -15,7 +15,7 @@
 
 > 命名实体识别（Named Entity Recognition，简称NER）是信息提取、问答系统、句法分析、机器翻译等应用领域的重要基础工具，在自然语言处理技术走向实用化的过程中占有重要地位。一般来说，**命名实体识别的任务就是识别出待处理文本中三大类（实体类、时间类和数字类）、七小类（人名、机构名、地名、时间、日期、货币和百分比）命名实体。**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201116085824037.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201116085824037.png)
 
 ### 1.1. NLTK
 
@@ -25,9 +25,9 @@ import nltk
 nltk.download()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201116094247020.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201116094247020.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201116094708285.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201116094708285.png)
 
 #### 1.1.1. 语料库
 
@@ -625,13 +625,13 @@ for word, flag in words:
 天安门 ns
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201116165024512.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201116165024512.png)
 
 ## 4. nlp-pyltp
 
 > LTP 是哈工大社会计算与信息检索研究中心历时十年开发的一整套中文语言处理系统。LTP 制定了基于 XML 的语言处理结果表示，并在此基础上提供了一整套自底向上的丰富而且高效的中文语言处理模块 （包括词法、句法、语义等6项中文处理核心技术），以及基于动态链接库（Dynamic Link Library, DLL）的应用程序接口，可视化工具，并且能够以网络服务（Web Service）的形式进行使用。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201116214442582.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201116214442582.png)
 
 ```python
 # 分句子
@@ -699,7 +699,7 @@ recognizer.release()  # 释放模型
 
 > `依存句法` (Dependency Parsing, DP) 通过分析语言单位内成分之间的依存关系揭示其句法结构。 直观来讲，依存句法分析识别句子中的`“主谓宾”、“定状补”`这些语法成分，并分析`各成分之间的关 系`。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201116215205218.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201116215205218.png)
 
 ```python
 # 1）依存句法分析
@@ -736,11 +736,11 @@ labeller.release()  # 释放模型
 
 > `语义角色标注 (Semantic Role Labeling, SRL) `是一种浅层的语义分析技术，标注句子中某些短语为给定谓词的论元 (语义角色) ，如施事、受事、时间和地点等。其能够对问答系统、信息抽取和机器翻译等应用产生推动作用。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201116215730714.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201116215730714.png)
 
 > `语义依存分析 (Semantic Dependency Parsing, SDP)`，分析句子各个语言单位之间的语义关联，并将语义关联以依存结构呈现。 使用语义依存刻画句子语义，好处在于不需要去抽象词汇本身，而是通过词汇所承受的语义框架来描述该词汇，而论元的数目相对词汇来说数量总是少了很多的。语义依存分析目标是跨越句子表层句法结构的束缚，直接获取深层的语义信息。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201116220050224.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201116220050224.png)
 
 ##  5. 学习链接
 

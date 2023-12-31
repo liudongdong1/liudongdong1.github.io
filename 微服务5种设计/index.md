@@ -7,7 +7,7 @@
 > - 微服务是独立的进程，它们可以独立部署。
 > - 它们以轻量级的方式进行通信，不需要任何智能通信通道。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210815210145221.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210815210145221.png)
 
 ### 1. 独享数据库（Database per Microservice）
 
@@ -19,7 +19,7 @@
 > - 在应用范围的保证 ACID 事务变得困难许多。
 > - 细心设计如何拆分单体数据库是一项极具挑战的任务。
 
-![image-20210815210342898](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210815210342898.png)
+![image-20210815210342898](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210815210342898.png)
 
 ### 2. 事件源（Event Sourcing）
 
@@ -44,7 +44,7 @@
 > - 使用 SQL 数据库的低可伸缩性事务型系统
 > - 在服务可以同步交换数据（例如，通过 API）的简单微服务架构中。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210815211051199.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210815211051199.png)
 
 > 事件存储： [EventStoreDB](https://www.eventstore.com/)， [Apache Kafka](https://kafka.apache.org/)， [Confluent Cloud](https://www.confluent.io/confluent-cloud)， [AWS Kinesis](https://aws.amazon.com/kinesis/)， [Azure Event Hub](https://azure.microsoft.com/en-us/services/event-hubs/)， [GCP Pub/Sub](https://cloud.google.com/pubsub)， [Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction)， [MongoDB](https://www.mongodb.com/)， [Cassandra](https://cassandra.apache.org/). [Amazon DynamoDB](https://aws.amazon.com/dynamodb/?trk=ps_a134p000004f2XeAAI&trkCampaign=acq_paid_search_brand&sc_channel=PS&sc_campaign=acquisition_EMEA&sc_publisher=Google&sc_category=Database&sc_country=EMEA&sc_geo=EMEA&sc_outcome=acq&sc_detail=amazon dynamodb&sc_content=DynamoDB_e&sc_matchtype=e&sc_segment=468764879940&sc_medium=ACQ-P|PS-GO|Brand|Desktop|SU|Database|DynamoDB|EMEA|EN|Text|xx|EU&s_kwcid=AL!4422!3!468764879940!e!!g!!amazon dynamodb&ef_id=CjwKCAiAq8f-BRBtEiwAGr3DgRRqVmhD5PL323QFmdBJvvOwzxU1nvrGFdbM8ra-DQViD8jjGn-PGBoCWJYQAvD_BwE:G:s&s_kwcid=AL!4422!3!468764879940!e!!g!!amazon dynamodb)
 >
@@ -73,7 +73,7 @@
 
 - **简单模式**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210815211341109.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210815211341109.png)
 
 - **复杂模式**
 
@@ -81,7 +81,7 @@
 >
 > 对搜索（例如 Apache Solr、Elasticsearch）或读操作（KV 数据库、文档数据库）进行优化的非关系数据库常被用作读存储。许多情况会在需要 SQL 查询的地方使用读可伸缩的关系数据库。非标准化和特殊优化过的数据则保存在读存储中。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210815211435652.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210815211435652.png)
 
 ### 4. Saga
 
@@ -139,7 +139,7 @@
 > - 如果应用程序虽有多个 UI，但使用的 API 相同。
 > - 如果核心微服务不是部署在 DMZ 网络中。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210815211810670.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210815211810670.png)
 
 ### 6. API 网关
 
@@ -177,7 +177,7 @@
 >
 > [API 网关-Azure 架构中心](https://docs.microsoft.com/en-us/azure/architecture/microservices/design/gateway)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210815212435012.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210815212435012.png)
 
 ### 7. Strangler
 
@@ -210,7 +210,7 @@
 >
 > [微服务模式：Strangler 应用程序](https://microservices.io/patterns/refactoring/strangler-application.html)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210815212815745.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210815212815745.png)
 
 ### 8. 断路器
 
@@ -235,7 +235,7 @@
 >
 > API 网关，服务网格，各种断路器库（[Hystrix](https://github.com/Netflix/Hystrix/wiki/How-it-Works)， [Reselience4J](https://github.com/resilience4j/resilience4j)， [Polly](http://www.thepollyproject.org/)）。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210815214709327.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210815214709327.png)
 
 ### 9. 外部化配置
 

@@ -1,7 +1,7 @@
 # FaceRecognition
 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200716092214886.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200716092214886.png)
 
 ## 1. 人脸检测问题
 
@@ -12,13 +12,13 @@
 - **低分辨率**，低分辨率导致人脸尺寸过小
 - **人脸数量过多**，图片中人脸数量多，对检测算法要求较高。例如多目标靠的太近，对于NMS算法会是一种考验，另外数量过多会影响某些算法(图像金字塔类型)的时间复杂度，例如MTCNN
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200716092748448.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200716092748448.png)
 
 > **基于特征的算法**就是通过提取图像中的特征和人脸特征进行匹配，如果匹配上了就说明是人脸，反之则不是。提取的特征是人为设计的特征，例如Haar，FHOG，特征提取完之后，再利用分类器去进行判断。通俗的说就是采用模板匹配，就是用人脸的模板图像与待检测的图像中的各个位置进行匹配，匹配的内容就是提取的特征，然后再利用分类器进行判断是否有人脸
 
 > **基于图像的算法**，将图像分为很多小窗口，然后分别判断每个小窗是否有人脸。通常基于图像的方法依赖于统计分析和机器学习，通过统计分析或者学习的过程来找到人脸和非人脸之间的统计关系来进行人脸检测。最具代表性的就是CNN，CNN用来做人脸检测也是目前效果最好，速度最快的。后面着重介绍CNN相关人脸检测算法。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201219112426981.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201219112426981.png)
 
 ## 2. 工业界常用算法
 
@@ -26,7 +26,7 @@
 
 > MTCNN是kaipeng Zhang在本科阶段研究出来的，它是一个3级联的CNN网络，分为PNet，RNet，ONet，层层递进。PNet的输入是原图经过图像金字塔之后不同尺寸的图片，最后结果由ONet输出。
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200716093313218.png" style="zoom: 67%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200716093313218.png" style="zoom: 67%;" />
 
 ### 2.2. **FaceBoxes、RetinaFace mnet、LFFD**
 
@@ -92,7 +92,7 @@ cv2.waitKey(delay=0)
 cv2.destroyAllWindows()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200826082312.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200826082312.png)
 
 ## 3. 论文阅读
 
@@ -131,7 +131,7 @@ cv2.destroyAllWindows()
 - **Enlarging the receptive field sizes:**  
   - increasing the kernel size of the depthwise part is relatively cheap, and employ 5*5 kernels in model architecture bottlenecks, trading the kernel size increase for the decrease in the total amount of such bottlenecks required to reach a particular receptive field size.  <font color=red>这块看不懂</font>
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831120241.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831120241.png)
 
 - **Feature extractor:** the extractor takes an RGB input of 128*128 pixels and consists of a 2D convolution followed by 5 single BlazeBlocks and 6 double BlazeBlocks.
 - **Anchor scheme:** SSD-like object detection models rely on pre-defined fixed-size base bounding boxes called priors, or anchors in Faster-R-CNN terminology.
@@ -140,11 +140,11 @@ cv2.destroyAllWindows()
   - due to limited variance in human face aspect ratios, limiting the anchors to the 1:1 aspect ratio was found sufficient for accurate face detection;
 - **Post-processing:** replacing the suppression algorithm wiht a blending strategy that estimates the regression parameters of a bounding box as a weighted mean between the overlapping predictions;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831121558.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831121558.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831121622.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831121622.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831121809.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831121809.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -186,23 +186,23 @@ cv2.destroyAllWindows()
 
 - **Problem Formulation**:
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200301104544427.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200301104544427.png)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200301104603166.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200301104603166.png)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200301104625390.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200301104625390.png)
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200301104451015.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200301104451015.png)
 
 **[FaceNet Model1]**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200301104704084.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200301104704084.png)
 
 **[FaceNet Model2]**based on GoogLeNet styleInceptionmodels[16]
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200301104856005.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200301104856005.png)
 
 
 
@@ -213,13 +213,13 @@ cv2.destroyAllWindows()
 - Progressively Growing Neural Networks:grow networks during training and to learn new image categories
 - LMNN
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200716091352035.png" alt="image-20200716091352035" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200716091352035.png" alt="image-20200716091352035" style="zoom:50%;" />
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305173050782.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305173050782.png)
 
 - [triplet based loss](https://en.wikipedia.org/wiki/Triplet_loss)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305175940694.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305175940694.png)
 
 **level**:   CVPR   CCF_A
 **author**: XinLiu (CAS)
@@ -262,19 +262,19 @@ previous work:
   - Learning face representation from scratch.
   - FaceNet
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200304122129244.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200304122129244.png)
 
 #### Methods
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200304122158473.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200304122158473.png)
 
 【Optimation 1】Fast Normalization Layer
 
 Data normalization can speed up convergence, which is recently extended as the batch normalization algorithms.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200304152727485.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200304152727485.png)
 
 **Face Detection:**  using face detection toolkit by VIPL lab of CAS,
 
@@ -284,7 +284,7 @@ Data normalization can speed up convergence, which is recently extended as the b
 
 #### Evaluation
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200304153238679.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200304153238679.png)
 
 #### Conclusion
 
@@ -307,9 +307,9 @@ Data normalization can speed up convergence, which is recently extended as the b
 - DBFace 是一个轻量级的实时人脸识别方法，其有着更快的识别速度与更高的精度。下图展示了多种人脸检测方法在 WiderFace 数据集上的测试效果。可以看到不仅 DBFace 模型的大小最小，其在 Easy、medium、Hard 三个测试任务中均取得了最高的识别精度。
 - WiderFace 是一个关于人脸检测的基准跑分数据集，其中包含 32,203 张图片以及在各方面剧烈的 393,703 张人脸，数据集具有从简单到困难等不同难度的任务。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200716091843597.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200716091843597.png)
 
-![image-20200716091856713](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200716091856713.png)
+![image-20200716091856713](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200716091856713.png)
 
 ### 4.2. Rotation-Invariant FaceDetection
 
@@ -319,7 +319,7 @@ PCN 会抽选识别候选面部图像块，并将朝下的图像块翻转至正�
 
 通过将校准过程分割为几个渐进的步骤，且在早期校准步骤只预测粗略的朝向，PCN 最后能实现精确的校准。此外，每一个校准步骤可以简单地旋转-90°、90°和 180°，因此额外的计算量非常低，这也就是为什么该检测项目能在 CPU 上实时运行的重要原因。通过在逐渐降低的 RIP 范围内执行二元分类（是人脸或不是人脸），PCN 能在 360° RIP 旋转角度内准确地检测到人脸，而本项目重点就是实现这样旋转不变的人脸检测器。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200716091914764.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200716091914764.png)
 
 
 
@@ -755,7 +755,7 @@ recognizer.saveFaceImage('Kareem')
 '''
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210723155206990.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210723155206990.png)
 
 - 检测图像中所有人脸
 
@@ -862,7 +862,7 @@ for face_landmarks in face_landmarks_list:
 
 - Face Detection
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201219111717005.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201219111717005.png)
 
 ### 4.6. [SeetaFace6](https://github.com/tensorflower/seetaFace6Python) 
 
@@ -939,23 +939,23 @@ def PredictAge(self,frame: np.array) -> int:
 > - [ ] [Caffe python inference code](https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB/blob/master/caffe/ultra_face_caffe_inference.py) and [OpencvDNN inference code](https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB/blob/master/caffe/ultra_face_opencvdnn_inference.py)
 > - [ ] 如果要使用的话，可以学习这个项目源代码
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210324090933.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210324090933.png)
 
 ### 4.8. [CompreFace](https://github.com/exadel-inc/CompreFace)
 
 > CompreFace provides `REST API` for `face recognition`, `face verification`, `face detection`, `landmark detection`, `age`, and `gender recognition`. The solution also features a `role management system` that allows you to easily control who has access to your Face Recognition Services.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210611170456149.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210611170456149.png)
 
 ### 4.9. [TFace](https://github.com/Tencent/TFace)
 
 > 基于可信人脸识别的理念，TFace重点关注人脸识别领域的四个研究方向：精准、公平、可解释以及隐私。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210625104637590.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210625104637590.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210625104702814.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210625104702814.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210625104719037.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210625104719037.png)
 
 - **[CurricularFace](https://arxiv.org/abs/2004.00288)** 一种用于人脸识别基础模型训练的损失函数，发表于CVPR2020， 主要的思路是将课程学习的思想结合到常用的人脸识别损失函数，训练过程中自动挖掘困难样本，先易后难渐进学习，提升识别模型训练鲁棒性及难样本识别性能。
 - **[DDL](https://arxiv.org/abs/2002.03662)** 一种用于提升特定场景下人脸识别性能的方法，发表于ECCV2020，主要的思路是针对某一特定场景的难样本，为其寻找一个合适的教师场景，通过拉近两种场景下的人脸相似度分布，从而提升该场景下困难样本的识别性能。
@@ -965,9 +965,9 @@ def PredictAge(self,frame: np.array) -> int:
 
 ## 5. FaceSearching
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201219124037238.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201219124037238.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201219112540276.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201219112540276.png)
 
 1. 单机由于内存和CPU性能限制，能够支持的人脸检索数始终都有上限，所以必须进行集群设计来提高容量。
 2. 10亿级别的人脸库存储是一个问题，按每张图片50K的大小都会是TB级别了。
@@ -981,27 +981,27 @@ def PredictAge(self,frame: np.array) -> int:
 
 ### 5.1. **分布式人脸检索系统框图**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201219113002358.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201219113002358.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201219123840814.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201219123840814.png)
 
 ### 5.2. **人脸动态库方案**
 
 > 在内部验证阶段，使用单机存储固定特征个数（可能是一千万个）的特征库，每个特征对应记录ID、时间戳、摄像机编号等信息。每天新增的特征形成一个单独的小特征库，每天定时把小特征库合并到大特征库，并把大特征库中最旧的同量特征删除，保持特征库的大小。在检索时先对全库进行1:N，根据阈值过滤出部分记录后，再抽取对应记录的额外信息，与页面检索条件进行匹配，返回结果。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201219124313646.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201219124313646.png)
 
 ### 5.3.  ES分布式人脸检索方案
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201219124437959.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201219124437959.png)
 
 ### 5.4. 基于RocksDB的分布式特征索引方案
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201219124854164.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201219124854164.png)
 
 ### 5.5.  基于小特征加速比对的检索方案
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201219125047175.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201219125047175.png)
 
 ## 6. 数据集&学习链接
 

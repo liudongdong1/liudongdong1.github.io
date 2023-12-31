@@ -7,7 +7,7 @@
 
 - 按传输途径分
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210120205336662.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210120205336662.png)
 
 - 有线电视机顶盒
 
@@ -17,13 +17,13 @@
 | **场合**       | 通常用于家庭终端机或酒店、娱乐场所等                         | 通常用于整转平移                                             |                                                              | 用于MPEG-4或H.264的高端应用                                  |                                                              |
 | **主流配置**   | 主频：>100MHzFLASH：2MBRAM：8MB                              | 主频：200MHzFLASH：8MBRAM：32MB                              | 主频：300MHzFLASH：16MBRAM：64MB                             | 主频：300MHzFLASH：16MBRAM：64MB                             | 主频：300MHz~1GHzFLASH：16/32MBRAM：64/128MB                 |
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210120205548504.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210120205548504.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210120205606886.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210120205606886.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210120210011022.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210120210011022.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210120205727937.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210120205727937.png)
 
 > a: RS232即串口，可用于升级系统。
 >
@@ -43,7 +43,7 @@
 
 ### 2. 户户通
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210120211005163.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210120211005163.png)
 
 - http://www.360doc.com/content/17/1112/08/28781113_703063969.shtml
 

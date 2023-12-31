@@ -112,11 +112,11 @@ $ sudo apt-get --purge remove "*nvidia*"
 
 #### .1.  发行版本
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201117203235695.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201117203235695.png)
 
 #### .2. Linux 启动过程
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201117204242635.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201117204242635.png)
 
 1. `内核引导`当计算机打开电源后，首先是`BIOS开机自检`，按照BIOS中设置的启动设备（通常是硬盘）来启动。`操作系统接管硬件`以后，首先`读入 /boot 目录下的内核文件`。
 
@@ -175,7 +175,7 @@ $ sudo apt-get --purge remove "*nvidia*"
 
    3) dmesg 命令设备故障的诊断是非常重要的。在dmesg命令的帮助下进行硬件的连接或断开连接操作时，我们可以看到硬件的检测或者断开连接的信息
 
-   ![image-20191213212239267](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191213212239267.png)
+   ![image-20191213212239267](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191213212239267.png)
 
 4. watch :  execute a program periodically, showing output fullscreen  <font color=red>watch “dmesg | tail -20” </font>
 
@@ -320,11 +320,11 @@ sudo apt-mark unhold linux-image-extra-5.3.0-42-generic
 sudo dpkg -i libcudnn7*.deb
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191206194750114.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191206194750114.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201107092240848.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201107092240848.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191212224333748.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191212224333748.png)
 
 > 如果nvcc --version 没有显示，可能是环境变量没有弄好。
 

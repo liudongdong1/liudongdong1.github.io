@@ -7,7 +7,7 @@
 - **Graphs** 可帮助您`可视化模型`。 在这种情况下，将显示层的Keras图，这可以帮助您确保正确构建。
 - **Distributions** 和 **Histograms** 显示`张量随时间的分布`。 这对于可视化权重和偏差并验证它们是否以预期的方式变化很有用。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210512140806.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210512140806.png)
 
 ### 2. 调用
 
@@ -45,7 +45,7 @@ model.fit(x=x_train,
 
 ### 3. 错误记录
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210512133910100.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210512133910100.png)
 
 ```shell
 tensorboard --logdir logs/scalars
@@ -53,11 +53,11 @@ tensorboard --logdir logs/scalars
 
 1. 检查是否安装对应的环境
 
-   ![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210512133956.png)
+   ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210512133956.png)
 
 2. --logdir 路径是否写对
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210512140722.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210512140722.png)
 
 ### 4. pytorch 使用[tensorboardX](https://pytorch.org/docs/stable/tensorboard.html#torch.utils.tensorboard.writer.SummaryWriter.add_embedding) [官网api](https://pytorch.org/docs/stable/tensorboard.html#torch.utils.tensorboard.writer.SummaryWriter.add_embedding)
 
@@ -80,11 +80,11 @@ for x in range(100):
 
 运行后会生成`train_log/test_log_dir`文件夹，里面的 event file 文件名后缀是`12345678`。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/L3Byb3h5L2h0dHBzL2ltYWdlLnpoYW5neGlhbm4uY29tLzIwMjAwNzAzMTcyMzA5LnBuZw==.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/L3Byb3h5L2h0dHBzL2ltYWdlLnpoYW5neGlhbm4uY29tLzIwMjAwNzAzMTcyMzA5LnBuZw==.jpg)
 
 但是我们指定了`log_dir`，`comment`参数没有生效。如果想要`comment`参数生效，把`SummaryWriter`的初始化改为`writer = SummaryWriter(comment='_scalars', filename_suffix="12345678")`，生成的文件夹如下，`runs`里的子文件夹后缀是`_scalars`。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/L3Byb3h5L2h0dHBzL2ltYWdlLnpoYW5neGlhbm4uY29tLzIwMjAwNzAzMTcyODMyLnBuZw==.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/L3Byb3h5L2h0dHBzL2ltYWdlLnpoYW5neGlhbm4uY29tLzIwMjAwNzAzMTcyODMyLnBuZw==.jpg)
 
 #### .2. add_scalar
 
@@ -175,7 +175,7 @@ writer.add_image("input img", img_grid, 0)
 writer.close()
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210716202400276.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210716202400276.png)
 
 #### .5. AlexNet 卷积核与特征图可视化
 
@@ -213,7 +213,7 @@ for sub_module in alexnet.modules():
                 writer.close()
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210716202556959.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210716202556959.png)
 
 #### .6. AlexNet第一个卷积层的输出进行可视化
 
@@ -249,7 +249,7 @@ if img_transforms is not None:
     writer.close()
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210716202936857.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210716202936857.png)
 
 #### .7. add_graph
 
@@ -395,7 +395,7 @@ plt.show()
 writer.close()
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210716195633883.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210716195633883.png)
 
 #### .12. **官网案例**
 

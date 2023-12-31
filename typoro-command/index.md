@@ -207,9 +207,9 @@ $\emptyset \in \notin \subset \supset \subseteq \supseteq \bigcap \bigcup \bigve
 
 **矩阵：**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201108164058875.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201108164058875.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201108164558410.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201108164558410.png)
 
 ## 4. 主体样式之类
 

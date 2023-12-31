@@ -31,12 +31,12 @@ N+M：将N个数据块和M个校验块随机存储于不同的节点中（因为
 - 写原理：如图1-2所示，用户写入数据Data后被系统切分为4个数据块（D1D4），同时通过EC编码得到2个校验码（C1C2），系统将6个数据块随机存入6个节点中。
   图1-2 使用EC（N+M）写入数据
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/fbbf438379e74751b238e5a1b5651a5d.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/fbbf438379e74751b238e5a1b5651a5d.png)
 
 - 读原理：如图1-3所示，系统从4个节点的不同硬盘中读取数据块（D1~D4），并通过Copy的方式将这4个数据块拼装成Data返回给用户。
   图1-3 使用EC（N+M）读取数据
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/c7bf1857fda844b9ba357a2d0f011a3f.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/c7bf1857fda844b9ba357a2d0f011a3f.png)
 N+M:1（折叠)：将N个数据块和M个校验块随机打散存放于所有节点，每个节点都存在存放M个分片的情况，此时存储池允许故障M块硬盘或1个节点。
 以N=4、M=2、存储节点个数=5为例：
 
@@ -44,12 +44,12 @@ N+M:1（折叠)：将N个数据块和M个校验块随机打散存放于所有节
   此时以Node3存放2个分片为例，故障Node3和其他任意一个节点时，故障的分片数量（3个）超过系统允许故障的个数M（2个），因此当N+M:1（折叠）时，**只允许故障1个节点。**
   图1-4 使用EC（N+M:1）写入数据
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/0719f9ab16ee476c963eb33c5a7f547d.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/0719f9ab16ee476c963eb33c5a7f547d.png)
 
 - 读原理：如图1-5所示，系统从3个节点的不同硬盘中读取数据块（D1~D4），并通过Copy的方式将这4个数据块拼装成Data返回给用户。
   图1-5 使用EC（N+M:1）读取数据
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/06883400751d4508867193847e7f8cac.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/06883400751d4508867193847e7f8cac.png)
 
 > 说明：扩容后，当存储节点数量≥N+M时，系统会通过后台自动均衡将N+M:1展开为N+M。
 
@@ -62,13 +62,13 @@ N+M:1（折叠)：将N个数据块和M个校验块随机打散存放于所有节
 
   图1-6 故障场景写原理（剩余存储节点的数量≥N+M）
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/9c87e7fa21634c1cb97f88692cc26a75.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/9c87e7fa21634c1cb97f88692cc26a75.png)
 
 - 当故障后的剩余存储节点数量＜N+M时，在故障恢复前系统会将新写入的数据缩列为N/2+M，保证IO不中断的同时可靠性级别不降低，故障恢复后，系统冗余配比恢复为N+M。
   以N=4、M=2、存储节点个数=6为例，如图1-7所示，数据Data1在以4+2的冗余配比写入过程中，EC成员节点突然故障，此时为了保证可靠性不变，系统将新写入的数据Data2缩列为2+2冗余配比。
 
   图1-7 数据写入原理（剩余节点数量＜N+M）
-  ![](https://gitee.com/github-25970295/blogimgv2022/raw/master/900015f7cfd1435b9d331c4b3288ad1c.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/900015f7cfd1435b9d331c4b3288ad1c.png)
 
 **故障场景写原理（N+M:1冗余配比)**
 当故障1个节点或M块硬盘后，系统仍然将N+M个数据块和校验块写入所有正常节点中。
@@ -80,10 +80,10 @@ N+M:1（折叠)：将N个数据块和M个校验块随机打散存放于所有节
 
 - 冗余配比N+M：如图1-8所示，Node6和Node5发生故障，无法读取该节点的数据块D2和校验块C1，系统会从其他正常节点读取4个数据D1、D3、D4和C2，并通过解码获取Data返回给用户。
   图1-8 故障场景数据读取原理（N+M）
-  ![](https://gitee.com/github-25970295/blogimgv2022/raw/master/ce9037a270534b3aac19968c75e3ed11.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ce9037a270534b3aac19968c75e3ed11.png)
 - 冗余配比N+M:1：如图1-9所示，Node3发生故障，无法读取该节点的数据块D2、D3，系统会从其他正常节点读取4个数据D4、D1、C1和C2，并通过解码获取Data返回给用户。
   图1-9 故障场景数据读取原理（N+M:1）
-  ![](https://gitee.com/github-25970295/blogimgv2022/raw/master/23d5893828214d10987965a1a5a2ab75.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/23d5893828214d10987965a1a5a2ab75.png)
   **故障场景时EC数据重构原理**
   当系统的EC成员盘或成员节点发生故障后，将读取其他正常盘的N个数据，通过解码的方式获取故障盘的数据块并将其存放至其他正常盘中，具体原理如图1-10所示。
   图1-10 数据重构原理
@@ -95,7 +95,7 @@ N+M:1（折叠)：将N个数据块和M个校验块随机打散存放于所有节
 
 #### 2.3EC冗余配比
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/8d0c23a7c38f475388ae9089414d15ba.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/8d0c23a7c38f475388ae9089414d15ba.png)
 
 ### Resource
 

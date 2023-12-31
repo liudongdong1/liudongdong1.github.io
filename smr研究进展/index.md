@@ -3,13 +3,13 @@
 
 > 随着数据量的持续增长，ＳＭＲ磁盘将会得到广泛应用，其大容量优势和快速的大数据顺序读写等特点非常适合数据备份、 归档存储，以及云存储等领域。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220422224436355.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220422224436355.png)
 
 ### 1. 磁盘结构
 
 > 采用了磁道与磁道间像瓦片一样合理重叠的工艺设 计，以此来减少每个磁道所占用的空间，提高单个盘 片所能容纳的磁道数量以及整个磁盘的存储容量。为什么时部分重叠，而不是正好连接起来？
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220422165321104.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220422165321104.png)
 
 利 用 读 磁 头 的 宽度可以小于写磁头的宽度这一特点，将每 个 磁 道未被其他磁道覆盖的部分设计成读磁头的宽度， 而整 个 磁 道 的 宽 度 则 设 计 成 写 磁 头 的 宽 度。
 
@@ -29,7 +29,7 @@
 - 驱动管理式SMR磁盘在STL的帮助下,可以屏蔽SMR磁盘内部的写放大问题对主机端的文件系统层应用的影响, 使得SMR磁盘与现有文件系统完全兼容
 - 在 磁盘最外围的区域有一部分非叠瓦式磁道（即 磁 道 与磁道之间不互相重叠的非叠瓦式磁道）构 成 的 持 久缓冲区（persistent cache），该缓冲区主要用来缓存 主机请求 的 随 机 写 操 作。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220422170636777.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220422170636777.png)
 
 #### .2. 主机管理式SMR
 
@@ -37,7 +37,7 @@
 - 用户可以根据需求设计和定制专用的SMR磁盘
 - 与现有的系统软件不兼容
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220422170943829.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220422170943829.png)
 
 #### .3. 主机感知式SMR
 
@@ -73,7 +73,7 @@
   - 当使用率0.5-0.75之间时，数据存放在第1，2，4磁道，除写1外不会产生放大影响
   - 当使用率0.75-1时，与传统映射方式一样
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220422215238324.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220422215238324.png)
 
 
 
@@ -85,7 +85,7 @@
 - `在单个磁道带上采用循环日志的结构实现单个磁道带的空间整理`,磁道带与磁道带之间没有关联。每个band都设有1循环日志，该日志有头，尾2个指针，头指针和尾指针之间保持一定的空白距离（用于写入新数据）
   - 回收时，首先看尾指针是否指向有效地数据，若尾部指针指向的是有效地数据，则将尾部指针指向的数据移动到头指针指向位置，回收尾指针指向空间，若尾指针指向的是无效的数据，则不需要移动数据，直接回收尾指针指向空间。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220422215742540.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220422215742540.png)
 
 - `对数据块进行分类`，在空间清理时，通过对不同类型的数据块给予不同的权重来减少所需要移动的数据总量。
   - 热数据块：热点数据，频繁进行更新，清理权重低
@@ -102,7 +102,7 @@
 - `叠瓦式记录数据库`：`SMRDB`，有自己的数据读取方式和存储管理模式，不需要SMR磁盘本身提供任何的数据管理，可以被用作单独的数据库引擎。
 - `基于磁盘阵列的叠瓦式磁记录高性能文件系统`：HiSMRfs可分离`元数据`和`文件数据`,将`访问频繁的元数据存放在固态盘中,而将文件数据存放在叠瓦式磁道带中`﹔可使用文件缓存和替换模块依据文件大小和读取频次来辨别和分离热数据和冷数据﹐并依此将数据分别存放在`不同类型的磁道带上`;可在整个系统中采用模块化的设计,对不同的功能进行封装﹐各层之间仅需要简单的接口管理等。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220422221538251.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220422221538251.png)
 
 #### .2. 磁道带大小可变化
 
@@ -111,11 +111,11 @@
 - `磁盘非覆盖间距`：drive no overlap range， DNOR：对1个逻辑块进行写操作时，与该逻辑块相邻且不会被写操作覆盖的最大逻辑块数。
 - `磁盘孤立间距`：drive isolation distance，DID：对1个逻辑块进行写操作时，与该写操作会覆盖的最远逻辑块相隔的逻辑块数。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220422222906829.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220422222906829.png)
 
 假设写磁头的宽度是3个磁道(对1个磁道进行写会覆盖与其相邻的2个磁道上的数据),在`写逻辑块0时,会覆盖逻辑块23和34`,则`逻辑块0的DNOR 为22(即逻辑块1、逻辑块2、…、逻辑块22),逻辑块0的DID为34(逻辑块1、逻辑块2、…、逻辑块34)`。由于每个逻辑块都有自己的DN-OR和DID值﹐因此对整个磁盘来说﹐磁盘的DNOR值为所有逻辑块的DNOR值中的最小值﹐磁盘的DID为所有逻辑块DNOR值中最大值。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220422224608317.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220422224608317.png)
 
 ### 7.Resource
 

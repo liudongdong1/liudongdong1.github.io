@@ -306,7 +306,7 @@ save kinect.txt -ascii phaseznormal
 >   - N         读N个元素放入列向量  
 >   - [M,N]  按列顺序读取至少一个M×N矩阵的M * N元素。N可以是inf，但M不能。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211004104009893.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211004104009893.png)
 
 #### .3. fprintf
 
@@ -370,7 +370,7 @@ quiver3(x,y,z,u,v,w);
 hold off
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211004113412687.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211004113412687.png)
 
 ```matlab
 %翻转法线以指向传感器位置。此步骤仅用于确定曲面的向内或向外方向。传感器中心设置在x、y、z坐标中。
@@ -396,7 +396,7 @@ quiver3(x, y, z, u, v, w);
 hold off
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211004113516216.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211004113516216.png)
 
 ### 快捷键
 

@@ -13,7 +13,7 @@
 
 **DI(Dependecy Inject,依赖注入)是实现控制反转的一种设计模式，依赖注入就是将实例变量传入到一个对象中去。**
 
-![image-20210624161756607](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624161756607.png)
+![image-20210624161756607](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210624161756607.png)
 
 ### 2. 工厂设计模式
 

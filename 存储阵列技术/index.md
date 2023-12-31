@@ -6,7 +6,7 @@
 > - 控制框：控制框用于处理各种存储业务，并管理[级联](https://so.csdn.net/so/search?q=级联&spm=1001.2101.3001.7020)在控制框下面的硬盘框。
 > - 硬盘框：硬盘框主要用于容纳各种硬盘，为应用服务器提供充足的存储空间。硬盘框组成部件：系统插框、电源模块、风扇模块、级联模块、硬盘模块。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409153259298.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409153259298.png)
 
 - 高可靠性：器件冗余（对控）、硬盘坏道检测 / 修复、磁盘健康分析、多路径技术、BBU 掉电保护、RAID 重构、缓存镜像技术、磁盘保险箱技术、磁盘与拷贝技术、块照 / 克隆技术、LUN 拷贝、远程复制等。
 - 可扩展性：Sacle-out、iSCSI、FC 技术、SAS 技术、PCI-e、FcOE.
@@ -15,7 +15,7 @@
 
 ### 1. 多控技术
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409153549135.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409153549135.png)
 
 ### 2. 磁盘坏道检测技术
 
@@ -32,13 +32,13 @@
 
 ### 3. 磁盘健康分析 DHA
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409153938309.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409153938309.png)
 
 ### 4. 多路径技术
 
 #### .1. 镜像技术
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409154259060.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409154259060.png)
 
 **读策略：**
 
@@ -64,7 +64,7 @@
 2. 当某个硬盘出现故障时：将该硬盘上的迁移数据到热备盘。
 3. 迁移完成后，用新盘替换掉故障盘，数据会 Copy back 到新更换的硬盘上。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409202035310.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409202035310.png)
 
 #### .4. 快照技术
 
@@ -74,14 +74,14 @@
 - 完全可用：可以正常读写。
 - 时间点：数据具有一致性。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409203311626.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409203311626.png)
 
 #### .5. LUN 拷贝技术
 
 - 定义：一种基于块的将源 LUN 的数据复制到目标 LUN 的技术。
 - 应用：通过 LUN 拷贝，实现`分级存储、系统升级、异地备份`等应用需求。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409202334742.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409202334742.png)
 
 ### 5. 高可用性存储技术
 
@@ -89,13 +89,13 @@
 
 - 动态分级存储技术（SmartTier）：`自动将不同活跃度的数据和不同特点的存储介质动态匹配`，提高存储系统性能并降低用户成本。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409202455786.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409202455786.png)
 
 #### .2. SmartQoS 技术
 
 - 是一种性能特性，通过`动态地分配存储系统的资源来满足某些应用程序的特定性能目标`。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409202601159.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409202601159.png)
 
 #### .3. Smart Thin
 
@@ -103,7 +103,7 @@
 - 改进一：采用 SmartThin 技术的 LUN 空间在`创建时不真正分配具体空间，而在需要真正使用空间时，再分配具体空间。`
 - 改进二：有了改进一的基础后，采用 SmartThin 技术的 LUN 空间可以在创建后动态调整大小。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409202830898.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409202830898.png)
 
 ---
 

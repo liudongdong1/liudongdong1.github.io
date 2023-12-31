@@ -11,7 +11,7 @@
 
 ### 0. Architecture
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211104085205535.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211104085205535.png)
 
 - ThingsBoard transports: provides [MQTT](https://thingsboard.io/docs/reference/mqtt-api/), [HTTP](https://thingsboard.io/docs/reference/http-api/), [CoAP](https://thingsboard.io/docs/reference/coap-api/) and [LwM2M](https://thingsboard.io/docs/reference/lwm2m-api/) based APIs 
 - ThingsBoard Core: handling [REST API](https://thingsboard.io/docs/reference/rest-api/) calls and WebSocket [subscriptions](https://thingsboard.io/docs/user-guide/telemetry/#websocket-api). storing up to date information about active device sessions and monitoring device [connectivity state](https://thingsboard.io/docs/user-guide/device-connectivity-status/). 
@@ -20,15 +20,15 @@
 
 #### .1. Monolithic architecture
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211104144533429.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211104144533429.png)
 
 #### .2. Microservice architecture
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211104144631072.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211104144631072.png)
 
 ### 1. Device Connection
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211104085828570.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211104085828570.png)
 
 ### 2. Key Concepts
 
@@ -51,7 +51,7 @@ Each entity supports:
 - **[Time-series data](https://thingsboard.io/docs/user-guide/telemetry/)** - `time-series data points` available for storage, querying and visualization. For example temperature, humidity, battery level;
 - **[Relations](https://thingsboard.io/docs/user-guide/entities-and-relations/#relations)** - `directed connections to other entities`. For example contains, manages, owns, produces.
 
-![Relation](https://gitee.com/github-25970295/blogpictureV2/raw/master/entities-and-relations.svg)
+![Relation](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/entities-and-relations.svg)
 
 #### .2. Tenant Profiles
 
@@ -85,19 +85,19 @@ Each entity supports:
 
 - **server-side attributes:** 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211104093620186.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211104093620186.png)
 
 - **shared attributes**
 
 >The device firmware/application may request the value of the shared attribute(s) or subscribe to the updates of the attribute(s).
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211104093741430.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211104093741430.png)
 
 - **client-side attributes**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211104094318380.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211104094318380.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211104094514206.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211104094514206.png)
 
 #### .5. Time-series Data
 
@@ -122,7 +122,7 @@ Each entity supports:
 > - Constrained device without system clock requests the current timestamp from the platform.
 > - Access Control card reader sends the request to third-party security system to make a decision to open the door and log access.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211104095739006.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211104095739006.png)
 
 - **Server-side RPC**
 
@@ -130,17 +130,17 @@ Each entity supports:
 >
 >- remote control: reboot, turn the engine on/off, change state of the gpio/actuators, change configuration parameters, etc.
 
-![One-way server-side RPC](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211104101226828.png)
+![One-way server-side RPC](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211104101226828.png)
 
-![Two-way server-side RPC](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211104101248198.png)
+![Two-way server-side RPC](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211104101248198.png)
 
 ### 3. Rule Engine
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211104101611044.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211104101611044.png)
 
 ### 4. Gateway
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211104144953580.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211104144953580.png)
 
 - [**MQTT** connector](https://thingsboard.io/docs/iot-gateway/config/mqtt/) to control, configure and collect data from IoT devices that are connected to external MQTT brokers using existing protocols.
 - [**OPC-UA** connector](https://thingsboard.io/docs/iot-gateway/config/opc-ua/) to collect data from IoT devices that are connected to OPC-UA servers.

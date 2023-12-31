@@ -3,7 +3,7 @@
 
 #### 1. Java JDK
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210719190439890.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210719190439890.png)
 
 #### 2. Zookeeper
 
@@ -18,7 +18,7 @@
   - 编辑path系统变量，添加路径：%ZOOKEEPER_HOME%\bin
 - 打开cmd控制台窗口，输入“zkServer“，运行Zookeeper
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210719190921885.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210719190921885.png)
 
 #### 3. Kafka
 
@@ -97,13 +97,13 @@ default.replication.factor=2
 replica.fetch.max.bytes=5242880
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210719194659065.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210719194659065.png)
 
 > Zookeeper 通过cmd窗口启动之后，长时间没有动，需要在cmd窗口按下return或者其他键；
 >
 > 然后重新运行kafka指令
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210719194841921.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210719194841921.png)
 
 > 不要关了这个窗口，启用Kafka前请确保ZooKeeper实例已经准备好并开始运行，这个窗口作为Kafka server。
 
@@ -113,7 +113,7 @@ replica.fetch.max.bytes=5242880
 
 #### 4. 案例测试
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210719200102679.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210719200102679.png)
 
 - **创建主题**： 新建cmd窗口,进入kafka的windows目录下,cd D:\Tools\kafka_2.13-2.8.0\bin\windows,输入以下命令,创建一个叫topic001的主题
 

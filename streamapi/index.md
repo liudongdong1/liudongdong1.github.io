@@ -10,7 +10,7 @@
 > - 调用`Collection.stream()`或者`Collection.parallelStream()`方法
 > - 调用`Arrays.stream(T[] array)`方法
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/Java_stream_Interfaces-163056525279424.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Java_stream_Interfaces-163056525279424.png)
 
 > - **无存储**。stream不是一种数据结构，它只是`某种数据源的一个视图`，数据源可以是一个`数组，Java容器或I/O channel`等。
 > - **为函数式编程而生**。对`stream的任何修改都不会修改背后的数据源`，比如对*stream*执行过滤操作并不会删除被过滤的元素，而是会`产生一个不包含被过滤元素的新stream`。
@@ -75,7 +75,7 @@ stream.map(str -> str.toUpperCase())
 
 > `flatMap()`的作用就相当于把原*stream*中的所有元素都"摊平"之后组成的`Stream`，转换前后元素的个数和类型都可能会改变。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/Stream.flatMap-163056568062925.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Stream.flatMap-163056568062925.png)
 
 ```java
 Stream<List<Integer>> stream = Stream.of(Arrays.asList(1,2), Arrays.asList(3, 4, 5));

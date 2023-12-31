@@ -5,7 +5,7 @@
 >
 > MediaPipe Pose is a ML solution for high-fidelity body pose tracking, inferring `33 3D landmarks `on the whole body from RGB video frames utilizing our [BlazePose](https://ai.googleblog.com/2020/08/on-device-real-time-body-pose-tracking.html) research that also powers the [ML Kit Pose Detection API](https://developers.google.com/ml-kit/vision/pose-detection). Current state-of-the-art approaches rely primarily on powerful desktop environments for inference, whereas our method achieves real-time performance on most modern [mobile phones](https://google.github.io/mediapipe/solutions/pose.html#mobile), [desktops/laptops](https://google.github.io/mediapipe/solutions/pose.html#desktop), in [python](https://google.github.io/mediapipe/solutions/pose.html#python-solution-api) and even on the [web](https://google.github.io/mediapipe/solutions/pose.html#javascript-solution-api).
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/pose_tracking_full_body_landmarks.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/pose_tracking_full_body_landmarks.png)
 
 A list of pose landmarks. Each landmark consists of the following:
 
@@ -283,7 +283,7 @@ handleImage2D('./temp.png')
 handleImage3D("temp.png")
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210806210106163.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210806210106163.png)
 
 ### 5. HandDraw
 

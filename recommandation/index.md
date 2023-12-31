@@ -16,7 +16,7 @@
 - - 标签型（主要是用户在各场景的兴趣偏好）：
   - 关系链型（如游戏中心好友、游戏内好友、开黑好友）可以采用用户关系构造用户关系图，采用 Graph embedding 方法（如 GraphSAGE）来表示用户抽象特征
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201216095340156.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201216095340156.png)
 
 ---
 

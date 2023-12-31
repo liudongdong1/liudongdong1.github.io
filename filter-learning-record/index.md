@@ -166,15 +166,15 @@ filtedData = signal.filtfilt(b, a, data)  #data为要过滤的信号
 >>> plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210411214829941.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210411214829941.png)
 
 ### 2. 频谱\功率谱\倒频谱
 
 > [时间作为参照来观察动态世界的方法我们称其为时域分析，如果另一种方法来观察世界的话，你会发现世界是永恒不变的。（假定是周期的）](https://zhuanlan.zhihu.com/p/19759362)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225217869.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200610225217869.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200610225327148.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200610225327148.png)
 
 >  通常一个信号波形变换到频域后，有的看到有的频率式连续分布在频率轴上的（频率连续的），有的是在频率轴上只出现个别的的频率点（频率离散的）；频率若是离散的则时域是周期的（有规律的波形）；若频域是连续的则时域是非周期的（无规律的波形）；剩下的时域连续和离散只是信号从模拟信号（连续的）采样量化到被计算机处理（离散的）的过程，可以从自己具体的信号来源去选择。
 
@@ -194,7 +194,7 @@ $$
 $$
 E=1/R\int_{-\infty}^{\infty}|f(t)|^2dt
 $$
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611083833017.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200611083833017.png)
 
 #### 2.2. 倒频谱
 
@@ -204,19 +204,19 @@ $$
 
 **调制**：分为幅值调制和频率调制。下面以齿轮的*幅值调制*为例进行说明：齿轮的振动信号主要包括两部分，分别是齿轮啮合振动信号（高频）和齿轮轴的转频振动信号（低频），时域和频域曲线分别如下图所示：
 
-![高频信号和低频信号时域波形](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085332483.png)
+![高频信号和低频信号时域波形](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200611085332483.png)
 
-![高频信号和低频信号的频域波形](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085432069.png)
+![高频信号和低频信号的频域波形](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200611085432069.png)
 
 > 调制就是高低频率信号的混合。**幅值调制从数学上看，相当于两个信号在时域上相乘；而在频域上，相当于两个信号的卷积。**调制后的信号在时域和频域上分别变为：
 
-![调制后的时域信号](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085531551.png)
+![调制后的时域信号](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200611085531551.png)
 
-![调制后的频域信号](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085543847.png)
+![调制后的频域信号](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200611085543847.png)
 
 > 调制后的信号中，除原来的啮合频率分量外，增加了一对分量，它们是以高频信号特征频率为中心，对称分布于两侧，所以称为**边频带**。
 
-![边缘带形成](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611085735068.png)
+![边缘带形成](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200611085735068.png)
 
 > 傅里叶变换处理非平稳信号有天生缺陷。它只能获取一段信号总体上包含哪些频率的成分，但是对各成分出现的时刻并无所知。因此时域相差很大的两个信号，可能频谱图一样。
 
@@ -224,11 +224,11 @@ $$
 
 > 小波直接把傅里叶变换的基给换了——将**无限长的三角函数基**换成了**有限长的会衰减的小波基**。这样**不仅能够获取频率**，还可以**定位到时间**了。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090331061.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200611090331061.png)
 
 对于频率随着时间变化的非平稳信号：这三个时域上有巨大差异的信号，频谱（幅值谱）却非常一致
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090529855.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200611090529855.png)
 
 > 对于这样的非平稳信号，只知道包含哪些频率成分是不够的，我们还想知道各个成分出现的时间。知道信号频率随时间变化的情况，各个时刻的瞬时频率及其幅值——这也就是时频分析。
 
@@ -236,13 +236,13 @@ $$
 
 > 把整个时域过程分解成无数个等长的小过程，每个小过程近似平稳，再傅里叶变换，就知道在哪个时间点上出现了什么频率了。STFT存在一个问题，我们应该用多宽的窗函数？框窄：频率分辨率差， 宽了：时间分辨率差。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090938200.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200611090938200.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611090949400.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200611090949400.png)
 
 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200611091502463.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200611091502463.png)
 
 > 不同于傅里叶变换，变量只有频率ω，小波变换有两个变量：尺度a（scale）和平移量τ（translation）。**尺度**a控制小波函数的**伸缩**，**平移量** τ控制小波函数的**平移**。**尺度**就对应于**频率**（反比），**平移量** τ就对应于**时间**。
 

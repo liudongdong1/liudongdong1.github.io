@@ -545,7 +545,7 @@ PhotoVerifyPassword:
 - “ 这里有光影流年，还有两朵穿衣裳的云，相拥在明天的河岸。”
 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803221618233.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210803221618233.png)
 
 - 这里懒加载实现失败： 通过设置俩个url方式来进行处理
 - 之后添加照片文件的时候，先在 source/gallery目录下面添加文件夹，新建index.md 文件，然后通过脚本在相册文件中添加对应的图片和缩略图，最后在_data目录下的gallary.json文件中添加对应的文件信息。

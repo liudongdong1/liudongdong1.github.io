@@ -7,9 +7,9 @@
 
 > 当用户在桌上“按下”一个虚拟的按键后，手指上反射的激光信号会被摄像头捕捉。随后安装在PC/Mac上的信号处理软件就会进行最核心的工作：通过反射的激光光斑定位用户的指尖位置，并求出对应的按键。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210119180051285.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210119180051285.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210119175248351.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210119175248351.png)
 
 - 红外激光：
 
@@ -17,7 +17,7 @@
 
 > 此时若手指接近桌面，则会阻挡住激光的通路，产生反射，反射的光点画面会被图中摄像头拍摄到。这是一个标准的三角测距的结构设置。细心的读者可能已经发现在前文给出的本制作摄像头拍摄到的画面中手指尖部的白色光斑，这正是安装了线激光器后被手指遮挡产生的反射效果。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210119180006149.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210119180006149.png)
 
 - 识别键盘事件
 
@@ -33,7 +33,7 @@
 >
 > 通过发射超声波并检测反射波的传播时间查来检测目标物体（手指）的位置。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210119175858968.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210119175858968.png)
 
 | **元件**                 | **核心参数**         |
 | ------------------------ | -------------------- |

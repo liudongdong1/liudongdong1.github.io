@@ -5,7 +5,7 @@
 >
 >BlobFS与Blobstore的关系可以理解为Blobstore实现了对Blob的管理，包括Blob的分配、删除、读取、写入、元数据的管理等，而BlobFS是在Blobstore的基础上进行封装的一个轻量级文件系统，用于提供部分对于文件操作的接口，并将对文件的操作转换为对Blob的操作，BlobFS中的文件与Blobstore中的Blob一一对应。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220811215740086.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220811215740086.png)
 
 ## Blobstore
 
@@ -13,7 +13,7 @@
 
  在blobstore中，将SSD中的块划分为多个抽象层，主要由Logical Block、Page、Cluster、Blob组成.
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220811213455418.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220811213455418.png)
 
 - Logical Block：与块设备中所提供的逻辑块相对应，通常为512B或4KiB。
 - Page：由多个连续的Logical Block构成，通常一个page的大小为4KiB，因此一个Page由八个或一个Logical Block构成，取决于Logical Block的大小。在Blobstore中，Page是连续的，即从SSD的LBA 0开始，多个或一个块构成Page 0,接下来是Page 1，依次类推。
@@ -24,11 +24,11 @@
 
 - cluster0用于存放Blobtore的`所有信息以及元数据`，对每个`blob数据块的查找`、`分配`都是依赖cluster 0中所记录的元数据所进行的。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220811214105065.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220811214105065.png)
 
 - super block： `cluster的大小`、`已使用page的起始位置`、`已使用page的个数`、`已使用cluster的起始位置`、`已使用cluster的个数`、`Blobstore的大小`等信息。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220811214232773.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220811214232773.png)
 
 - `Metadata Page Allocation`：用于记录所有`元数据页的分配`情况。在分配或释放元数据页后，将会对metadata page allocation中的数据做相应的修改。
 - `Cluster Allocation`：用于记录所有cluster的分配情况。在分配新的cluster或释放cluster后会对cluster allocation中的数据做相应的修改。
@@ -41,11 +41,11 @@
 
 ## BlobFs
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220811220058695.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220811220058695.png)
 
 > Blob FS在工作状态下会注册两个spdk_io_device，分别是blobfs_md以及blobfs_sync，前者带有md后缀，在Blob FS框架下，这被设计为与元数据(metadata)的操作有关，例如create，后者则是与I/O(read & write)操作有关。`对元数据的操作只能经由reactor 0实现`，其他用户线程或者绑定在其他线程中的reactor对元数据的操作均需要通过SPDK中的消息机制来实现，交由reactor 0来进行处理
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220811220140246.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220811220140246.png)
 
 ### Cache 机制
 
@@ -56,22 +56,22 @@
 | rte_mempool_get                     | spdk_mempool_get                      | 获取内存池中的一个内存单元                                   |
 | rte_mempool_put                     | spdk_mempool_put                      | 将不再使用的内存单元放回内存池中                             |
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220811220425171.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220811220425171.png)
 
 > g_cache_pool_thread。它主要维护了`g_caches`和`g_cache_pool`两个数据结构，前者维护了`所有拥有cache的文件列表`，后者则指向了前文提到的借助`DPDK大页管理所申请到的内存池`。
 
 ### 文件写流程
 
-![image-20220811215351863](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220811215351863.png)
+![image-20220811215351863](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220811215351863.png)
 
 ### 文件读流程
 
 - 内存中cache buffer：在文件读写时，首先会进行read ahead操作，将一部分数据从磁盘预先读取到内存的buffer中。
 - buffer node存储真实的数据，其他层用于构建树的索引，值为offset
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220811215104528.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220811215104528.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220811214829192.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220811214829192.png)
 
 
 

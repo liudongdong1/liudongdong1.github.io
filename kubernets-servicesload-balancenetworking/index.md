@@ -15,7 +15,7 @@
 
 #### .1. service with selectors
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220506102656641.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220506102656641.png)
 
 ```yaml
 apiVersion: v1
@@ -50,7 +50,7 @@ spec:
 
 #### .2. service without selectors
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220506102934990.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220506102934990.png)
 
 when used with a corresponding Endpoints object and without a selector, the Service can abstract other kinds of backends, including ones that run outside the cluster. 
 
@@ -350,7 +350,7 @@ $ kubectl exec my-nginx-3800858182-jr4a2 -- printenv | grep SERVICE
 
 ### 5. Ingress
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220506153948247.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220506153948247.png)
 
 ---
 

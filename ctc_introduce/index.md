@@ -3,7 +3,7 @@
 
 > Connectionist Temporal Classification, an algorithm used to train deep neural networks in speech recognition, handwriting recognition and other sequence problems.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712120505577.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712120505577.png)
 
 ## 1. Problem
 
@@ -27,12 +27,12 @@
 
 ## 3. Alignment
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712122146574.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712122146574.png)
 
 - Often, it <font color=red>doesn’t make sense to force every input step to align to some output</font>. In speech recognition, for example, the input can have stretches of silence with no corresponding output.
 - We <font color=red>have no way to produce outputs with multiple characters in a row</font>. Consider the alignment [h, h, e, l, l, l, o]. Collapsing repeats will produce “helo” instead of “hello”.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712122728313.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712122728313.png)
 
 - the allowed alignments between  $X$ and $Y$ are monotonic
 - the alignment of $X$ to $Y$ is many-to-one.
@@ -40,11 +40,11 @@
 
 ## 4. Searching Methods
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712123313273.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712123313273.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712123742166.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712123742166.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712123934369.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712123934369.png)
 $$
 Z=[ϵ, y_1, ϵ, y_2, …, ϵ, y_U, ϵ]​
 $$
@@ -52,17 +52,17 @@ $$
 
 - **Case 1:**  can’t jump over $z_{s-1}$, the previous token in $Z$.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712143004744.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712143004744.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712143018219.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712143018219.png)
 
 - **Case 2:**  allowed to skip the previous token in $Z$.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712143150923.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712143150923.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712143205370.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712143205370.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712143315752.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712143315752.png)
 
 - **Loss Function:**  for a training set D, the model's parameters are tuned to minimize the negative log-likelihood instead of maximizing the likelihood directly.
 
@@ -77,15 +77,15 @@ Y^*=argmax_Yp(Y|X)\\
 A^*=argmax_A\prod_{t=1}^Tp_t(a_t|X)
 $$
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712144439025.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712144439025.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712144545657.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712144545657.png)
 
 ## 5. Properties of CTC
 
 - **Conditional Independence**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712145053749.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712145053749.png)
 
 - **Alignment Properties**
 

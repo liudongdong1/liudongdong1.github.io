@@ -7,17 +7,17 @@
 >
 > 除了这两种编译器，还有一种直接把 *.java 文件编译成本地机器码的编译器，我们称之**AOT 编译器**。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/1153954-20200106092925007-1022314308.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1153954-20200106092925007-1022314308.png)
 
 ### 1. javac编译过程
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/1153954-20200106094301750-1393681004.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1153954-20200106094301750-1393681004.png)
 
 > 这三个步骤之间的关系和交互顺序如下图所示，可以看到`如果注解处理器在处理注解期间对语法树进行了修改`，编译器将回到解析和填充符号表的过程进行重新处理，直到注解处理器没有再对语法树进行修改为止。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/1153954-20200109090657558-33864349.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1153954-20200109090657558-33864349.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210729081740543-16275178618494.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210729081740543-16275178618494.png)
 
 - **词法分析**：是`将源代码的字符流转变为标记（Token）集合`，`单个字符是程序编写过程的最小元素`，而`标记则是编译过程的最小元素`，`关键字、变量名、字面量、运算符都可以看成标记`。
 -   **语法分析**：是`根据Token序列构造抽象语法树`的过程，抽象语法树（Abstract Syntax Tree，AST）是一种用来`描述程序代码语法结构的树形表示方式`，语法树的每一个节点都代表着程序代码中的语法结构（Construct），例如包、类型、修饰符、运算符、接口、返回值甚至代码注释都可以是一个语法结构。

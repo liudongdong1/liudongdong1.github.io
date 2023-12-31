@@ -5,13 +5,13 @@ http://wiki.ros.org/ROS/Tutorials
 
 ### Section one
 
-![List of Distributions](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210210152119465.png)
+![List of Distributions](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210210152119465.png)
 
 - Every ROS release will be supported on exactly one Ubuntu LTS.
 - LTS releases will not share a common Ubuntu release with any previous releases.
 - ROS releases will not add support for new Ubuntu distributions after their release date.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210210152106253.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210210152106253.png)
 
 ###### FileSystem
 

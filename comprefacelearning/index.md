@@ -13,8 +13,8 @@
 * `email_password` - a password of email provider for authentication. It should be set if `enable_email_server` variable is true
 * `email_from` - this value will see users in `from` fields when they receive emails from CompreFace. Corresponds to `From` field in rfc2822. Optional, if not set, then `email_username` will be used instead
 * `save_images_to_db` - should the CompreFace save photos to the database. Be careful, [migrations](Face-data-migration.md) could be run only if this value is `true`
-* `compreface_api_java_options`  - java options of compreface-api container
-* `compreface_admin_java_options`  - java options of compreface-admin container
+* `compreface_api_java_options` - java options of compreface-api container
+* `compreface_admin_java_options` - java options of compreface-admin container
 * `ADMIN_VERSION` - docker image tag of compreface-admin container
 * `API_VERSION` - docker image tag of compreface-api container
 * `FE_VERSION` - docker image tag of compreface-fe container
@@ -42,8 +42,8 @@ docker-compose stop
 - build own custom-build
 
 1. Upload your model to Google Drive and add it to one the following files into the `Calculator` class:
-   - AI-calculator/src/services/facescan/plugins/facenet/facenet.py
-   - AI-calculator/src/services/facescan/plugins/insightface/insightface.py
+   - embedding-calculator/src/services/facescan/plugins/facenet/facenet.py
+   - embedding-calculator/src/services/facescan/plugins/insightface/insightface.py
 
 2. Take the `docker-compose` file from `/dev` folder as a template
 3. Specify new model name in build arguments. For more information look at [this documentation](https://github.
@@ -122,7 +122,7 @@ function recognizeFace(elem) {
 
 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210626200731382.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210626200731382.png)
 
 ## 3. RestAPI
 

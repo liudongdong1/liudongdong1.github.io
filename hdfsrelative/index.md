@@ -5,7 +5,7 @@ HDFS是hadoop实现的一个分布式文件系统。(Hadoop Distributed File Sys
 
 #### 1. 架构介绍
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210226001055769.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210226001055769.png)
 
 - HDFS采用了1个 Msater(NameNode) 和N个slaves(DataNode)的架构：
 
@@ -20,11 +20,11 @@ HDFS是hadoop实现的一个分布式文件系统。(Hadoop Distributed File Sys
     - 定期向NameNode发送心跳信息，汇报本身及其所有block信息和健康状况
     - 执行来自NameNode的指示，如block的创建，删除，复制，文件读写请求的支持等
 
-![work flow](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210226001505297.png)
+![work flow](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210226001505297.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210226001631645.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210226001631645.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210226001750571.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210226001750571.png)
 
 #### 2. 基本命令
 

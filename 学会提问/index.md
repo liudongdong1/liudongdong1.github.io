@@ -74,11 +74,11 @@
 > 1. `寻找理由所需要的假设，有了这些假设，才能支持结论`
 > 2. `寻找能证明真实性的假设`
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220117215757291.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220117215757291.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220117220400885.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220117220400885.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220117221949300.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220117221949300.png)
 
 ##### .1. 常见的价值观
 
@@ -115,7 +115,7 @@
 - 传统与机会平等价值观冲突
 - 个人责任与集体责任之间冲突
 
-![施瓦茨价值观地图](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220121155508367.png)
+![施瓦茨价值观地图](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220121155508367.png)
 
 > 可以事先知道自己的价值观倾向，然后了解自己容易纠结矛盾的地方事先做好准备。采取 “预设价值观” 的心理学技巧，来帮助自己做好事先准备。
 >
@@ -123,7 +123,7 @@
 
 ##### .3. 价值观与视野
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220121160657300.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220121160657300.png)
 
 > 当你找到最佳选项，沿着这条路径出发，你的价值观、目标和行动都暂时完全一致，所以你内心宁静，动力十足，感觉被梦想叫醒 —— 这就是走心的真人生。但是慢慢的，我们的视野和价值观都会发生改变，就会进入迷茫状态。
 
@@ -149,7 +149,7 @@
 - **把自己当成作者或演讲者：**
 - **避免使用不完全确定的原因作为假设：** 有时候原因也被当作假设使用，不能起到支撑作用
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220118090726269.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220118090726269.png)
 
 #### 6. 推理中存在谬误吗
 

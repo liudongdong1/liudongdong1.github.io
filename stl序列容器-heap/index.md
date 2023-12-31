@@ -5,7 +5,7 @@
 
 ### 1. push_heap
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411200733610.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411200733610.png)
 
 ```c++
 template <class RandomAccessIterator> 
@@ -37,7 +37,7 @@ template <class RandomAccessIterator, class Distance, class T>
 
 ### 2. pop_heap
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411201309194.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411201309194.png)
 
 ```c++
 template <class RandomAccessIterator> 
@@ -88,7 +88,7 @@ template <class RandomAccessIterator, class Distance, class T>
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411201853611.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411201853611.png)
 
 ### 3. sort_heap
 
@@ -163,7 +163,7 @@ int main()
     } 
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411203557894.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411203557894.png)
 
 
 

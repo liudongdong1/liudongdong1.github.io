@@ -171,11 +171,11 @@ with open('data.json', 'r') as f:
 
 https://www.runoob.com/regexp/regexp-syntax.html
 
-- **仅匹配精确短语**![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029132849384.png)
+- **仅匹配精确短语**![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029132849384.png)
 
-- **匹配列表中的字词或短语**![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029132950911.png)
-- **匹配包含不同拼写或特殊字符的字词**![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029133113269.png)
-- **匹配某个特定网域的所有电子邮件地址**![image-20201029133313415](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029133313415.png)
+- **匹配列表中的字词或短语**![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029132950911.png)
+- **匹配包含不同拼写或特殊字符的字词**![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029133113269.png)
+- **匹配某个特定网域的所有电子邮件地址**![image-20201029133313415](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029133313415.png)
 
 #### 1.4. 存储
 
@@ -259,7 +259,7 @@ https://www.runoob.com/regexp/regexp-syntax.html
 - 没得网络服务器或应用服务器，比如直接从CD-ROM（激光唱片-只读存储器）或USB闪存驱动器读取内容，可以通过网络浏览器直接访问。
 - 网站更安全，HTML页面不会受Asp相关漏洞的影响；而且可以减少攻击，防SQL注入。数据库出错时，不影响网站正常访问。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201028223624298.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201028223624298.png)
 
 > 所谓的动态网页，是指跟静态网页相对的一种网页编程技术。静态网页，随着html代码生成，页面的内容和显示效果就不会发生变化了。而动态网页则不然，其显示的页面则是经过Javascript处理数据后生成的结果，可以发生改变。**这些数据的来源有多种，可能是经过Javascript计算生成的，也可能是通过Ajax加载的。**
 >
@@ -285,7 +285,7 @@ https://www.runoob.com/regexp/regexp-syntax.html
 
 - 动态网页地址中的“?”对搜索引擎检索存在一定的问题，搜索引擎一般不可能从一个网站的数据库中访问全部网页，或者出于技术方面的考虑，搜索蜘蛛不去抓取网址中“?”后面的内容，因此采用动态网页的网站在进行搜索引擎推广时需要做一定的技术处理才能适应搜索引擎的要求。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201028223654422.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201028223654422.png)
 
 #### 2.3. 伪静态网页
 
@@ -297,27 +297,27 @@ https://www.runoob.com/regexp/regexp-syntax.html
 
 > 以 [新浪读书——书摘](http://book.sina.com.cn/excerpt/) 为例，介绍如何得到无法筛选出来的Ajax请求链接:在Chrome中打开网页，右键检查，会发现首页中书摘列表包含在一个id为subShowContent1_static的div中，而查看网页源代码会发现id为subShowContent1_static的div为空。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029092325019.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029092325019.png)
 
 并且点击更多书摘或下一页时，网页URL并没有发生变化。这与我们最前面所说的两种情况相同，说明这个网页就是使用 JS 动态加载数据的。
 
 > F12打开调试工具，打开NetWork窗口，F5刷新，可以看到浏览器发送以及接收到的数据记录(我们可以点击上面的 XHR 或者 JS 对这些请求进行过滤)：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029092647745.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029092647745.png)
 
 #### 步骤一. 根据id进行查找
 
 > js 操作页面的数据一定要进行定位，最常用的方法就是使用 id 定位，因为 id 在整个页面中是唯一的，那么我们第一步就是在所有的 js 文件中找和 subShowContent1_static 这个 id 相关的文件，于是我在 network 页面使用 ctrl+f 进行全局搜索。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029093044283.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029093044283.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029093403370.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029093403370.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029095656616.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029095656616.png)
 
 #### 步骤二：断点动态捕获
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029100221196.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029100221196.png)
 
 ```
 #设置断点后 F5 刷新
@@ -325,7 +325,7 @@ https://www.runoob.com/regexp/regexp-syntax.html
 http://feed.mix.sina.com.cn/api/roll/get?callback=xxxxxxxx&pageid=96&lid=560&num=20&page=1
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029100755169.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029100755169.png)
 
 ### 4. 反爬虫
 
@@ -460,11 +460,11 @@ if __name__ == '__main__':
    - [type_name=%E5%89%A7%E6%83%85&type=11&interval_id=100:90&action=](https://movie.douban.com/typerank?type_name=剧情&type=11&interval_id=100:90&action=)
 2. 目标: 爬取电影名称、电影评分
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029112020668.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029112020668.png)
 
 > 通过源代码找不到的情况下，可以在network那刷新，然后重新搜索。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029111302563.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029111302563.png)
 
 ```python
 import requests
@@ -527,7 +527,7 @@ if __name__ == '__main__':
 - URL: 百度搜索腾讯招聘 - 查看工作岗位https://careers.tencent.com/search.html
 - 目标: 职位名称、工作职责、岗位要求
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029112427977.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029112427977.png)
 
 > 确定所要数据所在页面： url 地址可以直接在header里面进行查看
 >
@@ -610,7 +610,7 @@ if __name__ == '__main__':
 
 ##### 任务三：51job网站爬取
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201029205633909.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201029205633909.png)
 
 ```python
 import requests
@@ -904,7 +904,7 @@ projectname/
             __init__.py
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201030094148678.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201030094148678.png)
 
 1. The [Engine](https://doc.scrapy.org/en/latest/topics/architecture.html#component-engine) gets the initial Requests to crawl from the [Spider](https://doc.scrapy.org/en/latest/topics/architecture.html#component-spiders).
 2. The [Engine](https://doc.scrapy.org/en/latest/topics/architecture.html#component-engine) schedules the Requests in the [Scheduler](https://doc.scrapy.org/en/latest/topics/architecture.html#component-scheduler) and asks for the next Requests to crawl.
@@ -1163,9 +1163,9 @@ class DuplicatesPipeline:
 - https://www.runoob.com/python3/python3-json.html
 - crawl:https://doc.scrapy.org/en/latest/topics/architecture.html
 - 后续学习：
-  - Dataset 框架
+  - crawl 框架
   - 分布式反爬虫机制
-  - Datasetlab 平台： https://github.com/crawlab-team/crawlab； https://demo-pro.crawlab.cn/#/spiders/5f9ae48321225400243ed393
+  - crawllab 平台： https://github.com/crawlab-team/crawlab； https://demo-pro.crawlab.cn/#/spiders/5f9ae48321225400243ed393
 
 
 

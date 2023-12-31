@@ -17,9 +17,9 @@
 - move it 各种抓取机器人： https://www.youtube.com/watch?v=7KvF7Dj7bz0
 - 说明文档： chrome-extension://ikhdkkncnoglghljlkmcimlnlhkeamad/pdf-viewer/web/viewer.html?file=https%3A%2F%2Fwww.ohio.edu%2Fmechanical-faculty%2Fwilliams%2Fhtml%2FPDF%2FBaxterKinematics.pdf
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/007Ys3FFgy1gpucfvtvrtj30fq0l80yp.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/007Ys3FFgy1gpucfvtvrtj30fq0l80yp.jpg)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211102104626410.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211102104626410.png)
 
 - 安全因素： 机械臂安全，但是机器人的工具不太安全；
 - 碰撞检测原理大多基于动力学模型与外力观测器，速度越快，误差越大
@@ -59,23 +59,23 @@
 >
 > propose a multi-layered domain adaptation strategy to train the proposed network with only synthetic GT labels, which can then be applied to real depth maps.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211106160816108.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211106160816108.png)
 
 > the model consist of two main branches, a `U-Net that segments the cloth parts` and `a multi-layered domain adaption classifier that helps to reduce the domain gap between real and synthetically generated depth maps`.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211106162315246.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211106162315246.png)
 
-![Loss Function](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211106163024432.png)
+![Loss Function](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211106163024432.png)
 
 #### Evaluation
 
   - **Environment**:   
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211106163204508.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211106163204508.png)
 
 > visualization of the results, where the background, cloth body, edges are denoted in black, green, blue respectively.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211106163303339.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211106163303339.png)
 
 
 

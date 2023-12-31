@@ -3,15 +3,15 @@
 
 ### 1. 挑战杯
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210323105730866.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210323105730866.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210323112037989.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210323112037989.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210323153637118.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210323153637118.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210323154558145.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210323154558145.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210323155328360.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210323155328360.png)
 
 ### 2. SWOT 分析法
 
@@ -25,7 +25,7 @@
 -  按照通用矩阵或类似的方式打分评价
 - 区分公司的现状与前景；对公司的优势与劣势有客观的认识；考虑全面; 与竞争对手进行比较，比如优于或是劣于你的竞争对手； 避免复杂化与过度分析；
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331203916.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331203916.png)
 
 **1.杠杆效应（优势+机会）。**杠杆效应产生于`内部优势与外部机会相互一致和适应时`。在这种情形下，企业可以用自身内部优势撬起外部机会，使机会与优势充分结合发挥出来。然而，机会往往是稍瞬即逝的，因此企业必须敏锐地捕捉机会，把握时机，以寻求更大的发展。
 
@@ -37,23 +37,23 @@
 
 ### 3. 5W2H 分析法
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331204022.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331204022.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331213021.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331213021.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331220205.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331220205.png)
 
 ### 4. 鱼骨分析法
 
 >问题的特性总是受到一些因素的影响，通过头脑风暴`找出这些因素`，并将它们与特性值一起，按相互关联性整理而成的层次分明、条理清楚，因其形状如鱼骨，所以叫鱼骨图。`怎么去找这些因素`
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331211755.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331211755.png)
 
 ### 5. **顶思考帽法**
 
 >强调的是“能够成为什么”，而非 “本身是什么”，是寻求一条向前发展的路，而不是争论谁对谁错。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331210840.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331210840.png)
 
 ### 6. 金字塔原理
 
@@ -64,17 +64,17 @@
 - 金字塔帮助达到沟通目的：重点突出，思路清晰，主次分明，让受众有兴趣、能理解、能接受、记得住。
 - 搭建金字塔的具体做法是：`自上而下表达，自下而上思考`，纵向疑问回答／总结概括，横向归类分组／演绎归纳，序言讲故事，标题提炼思想精华。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331211535.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331211535.png)
 
 ### 7. **麦肯锡7步分析法**
 
 > 有序的思维工作方式并不会扼杀灵感及创造力，反而会助长灵感及创造力的产生。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331211637.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331211637.png)
 
 ### 8. 思维导图
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331211714.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331211714.png)
 
 ### 9. 思维分析案例
 
@@ -99,15 +99,15 @@
 - 案例二：
   1. 分析前准备
      1. 定义目标，辨别指标；目标是结果，而`指标`是对结果分拆的具体要求，是对目标的衡量。
-     2. 运用结构化思维进行拆解、延伸。![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331220610.png)
+     2. 运用结构化思维进行拆解、延伸。![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331220610.png)
      3. 对每个指标进行细化分析，分析类型包含：描述性分析、预测性分析和规范性分析。类型不同，作用也不同。
         1. **描述性分析**： 数据报表能够帮助我们描述事件发展的情况，但很难解释某种结果发生的原因和未来可能的趋势。
         2. **预测性分析**： 用户相似度及物品相似度计算、用户购买饱和度、用户成交影响因子，为对结果和变量的关系进行预测的过程，包含相似度、相关性分析、回归分析等。
         3. **实证性分析及规范性分析**： A/B实验，实证性分析，指是什么，偏向于客观；规范性分析指应当做什么，偏向于主观。
   2. 分析的长期价值：确定从哪些维度
      1. 用户：
-        1. 基本信息：![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331220935.png)
-        2. 用户画像：![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331221124.png)
+        1. 基本信息：![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331220935.png)
+        2. 用户画像：![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331221124.png)
   3. 分析与收益相关的行为：怎么判断与收益相关的行为呢？有关程度又有多高？数理统计中的一些方法；
 - **提出正确的问题比解决问题本身更重要。**以终为始，可以帮助我们一直提出正确的问题。
 
@@ -207,7 +207,7 @@
 - 面： 话题可涉及的范围，包括人、财、务。
 - 体：架构思维，当所有路径一步步训练出来，`脑子里自然会形成思维导图，也就是战略架构`。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331214631.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331214631.png)
 
 >1、从第一性原理出发
 >
@@ -229,7 +229,7 @@
 
 ### 14. 五维学习
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210408203024.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210408203024.png)
 
 - 学习的那个领域的**最牛逼**的几个人，把他怎么学这个东西的快速过一遍，他的研究路线，发表的文章；比如看他`如何写标题，如何写开头，如何写中间的内容，如何写结尾的推广，以及读者的反馈`，成长极快。
 - **用思维导图对这些知识进行分类，最后再用思维导图把它们系统化。**

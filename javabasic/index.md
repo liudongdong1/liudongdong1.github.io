@@ -6,7 +6,7 @@
 - `Java 虚拟机（JVM）`是运行 Java 字节码的虚拟机。JVM 有针对不同系统的特定实现（Windows，Linux，macOS），目的是使用相同的字节码，它们都会给出相同的结果。
 - `字节码`（即扩展名为 `.class` 的文件），它不面向任何特定的处理器，只面向虚拟机。Java 语言通过字节码的方式，在一定程度上解决了传统解释型语言执行效率低的问题，同时又保留了解释型语言可移植的特点。所以 Java 程序运行时比较高效，而且，由于字节码并不针对一种特定的机器，因此，Java 程序无须重新编译便可在多种不同操作系统的计算机上运行。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210626104620557.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210626104620557.png)
 
 - JDK 是 Java Development Kit 缩写，它是功能齐全的 Java SDK。它拥有 JRE 所拥有的一切，还有编译器（javac）和工具（如 javadoc 和 jdb）。它能够创建和编译程序。
 - JRE 是 Java 运行时环境。它是运行已编译 Java 程序所需的所有内容的集合，包括 Java 虚拟机（JVM），Java 类库，java 命令和其他的一些基础构件。但是，它不能用于创建新程序。
@@ -135,13 +135,13 @@ protected void finalize() throws Throwable { }//实例被垃圾回收器回收�
 
 - 字符流是由 Java 虚拟机将字节转换得到的，问题就出在这个过程还算是非常耗时，并且，如果我们不知道编码类型就很容易出现乱码问题。所以， I/O 流就干脆提供了一个直接操作字符的接口，方便我们平时对字符进行流操作。如果音频文件、图片等媒体文件用字节流比较好，如果涉及到字符的话使用字符流比较好。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210626110425526.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210626110425526.png)
 
 
 
-![IO-操作方式分类](https://gitee.com/github-25970295/blogpictureV2/raw/master/IO-%E6%93%8D%E4%BD%9C%E6%96%B9%E5%BC%8F%E5%88%86%E7%B1%BB.png)
+![IO-操作方式分类](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/IO-%E6%93%8D%E4%BD%9C%E6%96%B9%E5%BC%8F%E5%88%86%E7%B1%BB.png)
 
-![IO-操作对象分类](https://gitee.com/github-25970295/blogpictureV2/raw/master/IO-%E6%93%8D%E4%BD%9C%E5%AF%B9%E8%B1%A1%E5%88%86%E7%B1%BB.png)
+![IO-操作对象分类](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/IO-%E6%93%8D%E4%BD%9C%E5%AF%B9%E8%B1%A1%E5%88%86%E7%B1%BB.png)
 
 #### 7. 反射
 
@@ -420,7 +420,7 @@ aliSmsService.send("java");
 - Java 四种类型引用：强引用、软引用、弱引用、虚引用
   - https://juejin.cn/post/6844903665241686029   
 
-![](https://gitee.com/github-25970295/picture2023/raw/master/image-20230305211217521.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20230305211217521.png)
 
 当**内存空间不足**时，`Java`虚拟机宁愿抛出`OutOfMemoryError`错误，使程序**异常终止**，也不会靠随意**回收**具有**强引用**的**对象**来解决内存不足的问题。 如果强引用对象**不使用时**，需要弱化从而使`GC`能够回收
 
@@ -456,15 +456,15 @@ if(softReference.get() != null) {
 
 ### String&StringBuffer&StringBuilder
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/d8f107d1267915a462bde40c53046ccf.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/d8f107d1267915a462bde40c53046ccf.png)
 
 ### 基本类型&包装类
 
-![img](https://gitee.com/github-25970295/blogimgv2022/raw/master/bbe4b4c9783cf6aa8c4a297fa5c71329.png)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/bbe4b4c9783cf6aa8c4a297fa5c71329.png)
 
 ### Java 集合
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/dc9ac6e16d548e36f1863e8ef2aa6cee.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/dc9ac6e16d548e36f1863e8ef2aa6cee.png)
 
 ### 锁机制
 
@@ -472,7 +472,7 @@ if(softReference.get() != null) {
 
 ### Try&Catch 中的Return
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/9a92e8db3c09aa42f6994686b3350b36.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/9a92e8db3c09aa42f6994686b3350b36.png)
 
 - finaly 中没有return
 

@@ -12,11 +12,11 @@
 - **BACKGROUND：** 表示事件处理函数的线程在后台线程，因此不能进行UI操作。如果发布事件的线程是主线程(UI线程)，那么事件处理函数将会开启一个后台线程，如果果发布事件的线程是在后台线程，那么事件处理函数就使用该线程
 - **ASYNC：** 表示无论事件发布的线程是哪一个，事件处理函数始终会新建一个子线程运行，同样不能进行UI操作
 
-![img](https://gitee.com/github-25970295/blogimgv2022/raw/master/78acb11c50ad4c8ebe156b33c11e16f6tplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/78acb11c50ad4c8ebe156b33c11e16f6tplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/adfb9ac045484820b9c29bdacadb17betplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/adfb9ac045484820b9c29bdacadb17betplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/17ad7672f43541f19b632490360200b1tplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/17ad7672f43541f19b632490360200b1tplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
 
 ### 0. 使用步骤
 

@@ -193,7 +193,7 @@ Train(50)
 Generate(100)
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016211524931.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201016211524931.png)
 
 ---
 

@@ -99,7 +99,7 @@ plt.legend()
 plt.show() 
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/图片1.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/图片1.png)
 
 - 球体分布
 
@@ -218,7 +218,7 @@ plt.show()
 
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210314161451827.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210314161451827.png)
 
 ---
 

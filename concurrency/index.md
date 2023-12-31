@@ -1,7 +1,7 @@
 # Concurrency
 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/java-concurrent-overview-1.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/java-concurrent-overview-1.png)
 
 ### 1. 并发问题的根源
 
@@ -323,7 +323,7 @@ static class ThreadLocalMap {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221129184004085.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221129184004085.png)
 
 - [ThreadLocal 内存泄漏问题](https://blog.51cto.com/haofeiyu/5556056)
 

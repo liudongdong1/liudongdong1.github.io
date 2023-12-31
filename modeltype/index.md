@@ -14,9 +14,9 @@
 
 > 分类问题是用于`将事物打上一个标签`，通常`结果为离散值`。例如判断一幅图片上的动物是一只猫还是一只狗，分类通常是建立在回归之上，`分类的最后一层通常要使用softmax函数进行判断其所属类别`。分类并没有逼近的概念，最终正确结果只有一个，错误的就是错误的，不会有相近的概念。最常见的分类方法是逻辑回归，或者叫逻辑分类。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210523232210127.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523232210127.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523231912750.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523231912750.png)
 
 ### 3. 案例分析
 
@@ -61,7 +61,7 @@ pred = model.predict(test_image)[0]  # 对测试集所有数据进行预测，�
 pred_onehot = model_onehot.predict(train_image[:1,:,:])  # 只对测试集的第1条进行预测
 ```
 
-![image-20210524154737349](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210524154737349.png)
+![image-20210524154737349](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210524154737349.png)
 
 
 

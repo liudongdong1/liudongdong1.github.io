@@ -24,11 +24,11 @@ Kafka Stream的特点如下：
 
 一般流式计算会与批量计算相比较。在流式计算模型中，输入是持续的，可以认为在时间上是无界的，也就意味着，永远拿不到全量数据去做计算。同时，计算结果是持续输出的，也即计算结果在时间上也是无界的。流式计算一般对实时性要求较高，同时一般是先定义目标计算，然后数据到来之后将计算逻辑应用于数据。同时为了提高计算效率，往往尽可能采用增量计算代替全量计算。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/963903-20180823011917613-280268935.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/963903-20180823011917613-280268935.png)
 
 批量处理模型中，一般先有全量数据集，然后定义计算逻辑，并将计算应用于全量数据。特点是全量计算，并且计算结果一次性全量输出。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/963903-20180823011948353-603485187.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/963903-20180823011948353-603485187.png)
 
 ## 3. 为什么要有Kafka Stream
 
@@ -38,7 +38,7 @@ Kafka Stream的特点如下：
 
 第一，`Spark和Storm都是流式处理框架，而Kafka Stream提供的是一个基于Kafka的流式处理类库`**。框架要求开发者按照特定的方式去开发逻辑部分，供框架调用。开发者很难了解框架的具体运行方式，从而使得调试成本高，并且使用受限。而Kafka Stream作为流式处理**类库**，直接提供具体的类给开发者调用，`整个应用的运行方式主要由开发者控制，方便使用和调试。`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/963903-20180823012034870-605607318.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/963903-20180823012034870-605607318.png)
 
 第二，虽然Cloudera与Hortonworks方便了Storm和Spark的部署，但是这些框架的`部署`仍然相对复杂。而Kafka Stream作为类库，可以非常方便的嵌入应用程序中，它对应用的打包和部署基本没有任何要求。更为重要的是，Kafka Stream充分利用了[Kafka的分区机制](http://www.jasongj.com/2015/03/10/KafkaColumn1/#Topic-amp-Partition)和[Consumer的Rebalance机制](http://www.jasongj.com/2015/08/09/KafkaColumn4/#High-Level-Consumer-Rebalance)，使得Kafka Stream可以`非常方便的水平扩展`，`并且各个实例可以使用不同的部署方式`。具体来说，每个运行Kafka Stream的应用程序实例都包含了Kafka Consumer实例，多个同一应用的实例之间并行处理数据集。而不同实例之间的部署方式并不要求一致，比如部分实例可以运行在Web容器中，部分实例可运行在Docker或Kubernetes中。
 
@@ -54,7 +54,7 @@ Kafka Stream的特点如下：
 
 ## 1. Kafka Stream整体架构
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/963903-20180823012221127-657291327.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/963903-20180823012221127-657291327.png)
 
 ```java
 KStream<String, String> stream = builder.stream("words-stream");
@@ -116,19 +116,19 @@ Kafka Stream的并行模型中，`最小粒度为Task`，而`每个Task包含一
 
 下图展示了在一个进程（Instance）中`以2个Topic（Partition数均为4）为数据源的Kafka Stream应用的并行模型。`从图中可以看到，由于Kafka Stream应用的默认线程数为1，所以4个Task全部在一个线程中运行。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/963903-20180823012423201-1891805178.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/963903-20180823012423201-1891805178.png)
 
 为了充分利用多线程的优势，可以设置Kafka Stream的线程数。下图展示了线程数为2时的并行模型。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/963903-20180823012446423-1214824884.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/963903-20180823012446423-1214824884.png)
 
 前文有提到，Kafka Stream可被嵌入任意Java应用（理论上基于JVM的应用都可以）中，下图展示了在`同一台机器的不同进程中同时启动同一Kafka Stream应用时的并行模型`。注意，这里要保证两个进程的StreamsConfig.`APPLICATION_ID_CONFIG完全一样`。因为`Kafka Stream将APPLICATION_ID_CONFIG作为隐式启动的Consumer的Group ID`。只有保证APPLICATION_ID_CONFIG相同，才能保证这两个进程的Consumer属于同一个Group，从而可以通过Consumer Rebalance机制拿到互补的数据集。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/963903-20180823012616004-1473262041.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/963903-20180823012616004-1473262041.png)
 
 既然实现了多进程部署，可以以同样的方式实现多机器部署。该部署方式也要求所有进程的APPLICATION_ID_CONFIG完全一样。从图上也可以看到，每个实例中的线程数并不要求一样。但是无论如何部署，Task总数总会保证一致。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/963903-20180823012703011-1321655264.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/963903-20180823012703011-1321655264.png)
 
 这里对比一下Kafka Stream的Processor Topology与Storm的Topology。
 
@@ -148,7 +148,7 @@ Kafka Stream的并行模型中，`最小粒度为Task`，而`每个Task包含一
 
 以下图为例，假设有一个KStream和KTable，基于同一个Topic创建，并且该Topic中包含如下图所示5条数据。此时遍历KStream将得到与Topic内数据完全一样的所有5条数据，且顺序不变。而此时遍历KTable时，因为这5条记录中有3个不同的Key，所以将得到3条记录，每个Key对应最新的值，并且这三条数据之间的顺序与原来在Topic中的顺序保持一致。这一点与Kafka的日志compact相同。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/963903-20180823012822162-142241598.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/963903-20180823012822162-142241598.png)
 
 此时如果对该KStream和KTable分别基于key做Group，对Value进行Sum，得到的结果将会不同。对KStream的计算结果是<Jack，4>，<Lily，7>，<Mike，4>。而对Ktable的计算结果是<Mike，4>，<Jack，3>，<Lily，5>。
 

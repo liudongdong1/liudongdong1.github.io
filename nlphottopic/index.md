@@ -7,17 +7,17 @@
 
 - Probability& Statistics
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201008165645446.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201008165645446.png)
 
-- **Machine Learning**![](https://gitee.com/github-25970295/blogImage/raw/master/img/ml.png)
+- **Machine Learning**![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ml.png)
 
 - **Text Mining**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/textmining.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/textmining.png)
 
 - **NLP**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/prob.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/prob.png)
 
 ### 1. Model sides
 

@@ -21,11 +21,11 @@
 
 - ###### 类适配器
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210704165911702.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210704165911702.png)
 
 - **对象适配器**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210704170032471.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210704170032471.png)
 
 ```java
 public class Mobile
@@ -176,7 +176,7 @@ class ThrowsAdviceAdapter implements AdvisorAdapter, Serializable {
 
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210704171255301.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210704171255301.png)
 
 #### .2. SpringJPA 适配者模式
 

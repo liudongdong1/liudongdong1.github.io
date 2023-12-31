@@ -1,7 +1,7 @@
 # SmartHome
 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223154456937.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223154456937.png)
 **keyword**:
 
 - Human-centered computing , LoRa
@@ -108,7 +108,7 @@ the communication energy cost</b>
 -  running at a low-power mode. Another approach is to reduce
    network communication traffic to conserve energy
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223135344822.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223135344822.png)
 
 **level**: PACM Interact. Mob
 **keyword**:
@@ -155,23 +155,23 @@ RFID Systems</b>
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223140127333.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223140127333.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223140615510.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223140615510.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223140639969.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223140639969.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223140701477.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223140701477.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223140719264.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223140719264.png)
 
 #### Application
 
-- Light-Assisted Navigation![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223140957214.png)
-- Infrastructure Monitoring![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223140957214.png)
+- Light-Assisted Navigation![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223140957214.png)
+- Infrastructure Monitoring![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223140957214.png)
 - Ambient Contextual Timers: a timer in conjunction with a
   machine to inform a user that a particular activity has completed
-- Prepackaged Content:![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223141341090.png)
+- Prepackaged Content:![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223141341090.png)
 
 #### Conclusion
 
@@ -234,19 +234,19 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223144151381.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223144151381.png)
 
-![image-20191223144225224](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20191223144225224.png)
+![image-20191223144225224](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223144225224.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223144244631.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223144244631.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223144356678.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223144356678.png)
 
 - The common-sense knowledge base contains a collection of semantic concepts and their relationships that are related to the basic understanding of the
   environment.
 - the domain-specific knowledge base is used to represent concepts that are specifically described with respect to a certain domain in order to improve the principal understanding of the environment
-- scenario: ![image-20191223145302558](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20191223145302558.png)
-- infer users’ activities through a description logic rule-based inference system:![image-20191223145426841](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20191223145426841.png)
+- scenario: ![image-20191223145302558](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223145302558.png)
+- infer users’ activities through a description logic rule-based inference system:![image-20191223145426841](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223145426841.png)
 
 **level**: CVPR  
 **author**:Fl´avia Dias Casagrande and Evi Zouganeli
@@ -278,7 +278,7 @@ Homes</b>
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223150443175.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223150443175.png)
 
 #### Notes 
 
@@ -318,7 +318,7 @@ Action Prediction in Smart Homes</b>
 
 - **Application Area**: lifestyle analysis, security and surveillance, and  interaction monitoring
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223151459042.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223151459042.png)
 
 **keyword**:
 
@@ -368,9 +368,9 @@ Social Networks</b>
 - estimate the residual quantity of food items inside a refrigerated container (opaque or transparent)
 - **Previous Works**:  RFID, camera, weight sensors
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223153020345.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223153020345.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191223153126433.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191223153126433.png)
 
 # Paper: Ambient-Assisted Living Tools 
 

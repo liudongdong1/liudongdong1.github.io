@@ -12,14 +12,14 @@
 
 并发问题：
 
-- **脏读（Dirty read）:** 当一个事务正在访问数据并且对数据进行了修改，而这种修改还没有提交到数据库中，这时另外一个事务也访问了这个数据，然后使用了这个数据。因为这个数据是还没有提交的数据，那么另外一个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624181747052.png)
+- **脏读（Dirty read）:** 当一个事务正在访问数据并且对数据进行了修改，而这种修改还没有提交到数据库中，这时另外一个事务也访问了这个数据，然后使用了这个数据。因为这个数据是还没有提交的数据，那么另外一个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210624181747052.png)
 
-![避免脏读](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624181759533.png)
+![避免脏读](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210624181759533.png)
 
 - **丢失修改（Lost to modify）:** 指在一个事务读取一个数据时，另外一个事务也访问了该数据，那么在第一个事务中修改了这个数据后，第二个事务也修改了这个数据。这样第一个事务内的修改结果就被丢失，因此称为丢失修改。	例如：事务1读取某表中的数据A=20，事务2也读取A=20，事务1修改A=A-1，事务2也修改A=A-1，最终结果A=19，事务1的修改被丢失。
-- **不可重复读（Unrepeatableread）:** 指在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624181824421.png)
+- **不可重复读（Unrepeatableread）:** 指在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210624181824421.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210624181839009.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210624181839009.png)
 
 - **幻读（Phantom read）:** 幻读与不可重复读类似。它发生在一个事务（T1）读取了几行数据，接着另一个并发事务（T2）插入了一些数据时。在随后的查询中，第一个事务（T1）就会发现多了一些原本不存在的记录，就好像发生了幻觉一样，所以称为幻读。
 
@@ -102,7 +102,7 @@ public void aMethod {
 
 **`PlatformTransactionManager` 接口的具体实现如下:**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/ae964c2c-7289-441c-bddd-511161f51ee1.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ae964c2c-7289-441c-bddd-511161f51ee1.png)
 
 `PlatformTransactionManager`接口中定义了三个方法：
 
@@ -126,7 +126,7 @@ public interface PlatformTransactionManager {
 
 事务管理器接口 **`PlatformTransactionManager`** 通过 **`getTransaction(TransactionDefinition definition)`** 方法来得到一个事务，这个方法里面的参数是 **`TransactionDefinition`** 类 ，这个类就定义了一些基本的事务属性。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/a616b84d-9eea-4ad1-b4fc-461ff05e951d.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/a616b84d-9eea-4ad1-b4fc-461ff05e951d.png)
 
 `TransactionDefinition` 接口中定义了 5 个方法以及一些表示事务属性的常量比如隔离级别、传播行为等等。
 
@@ -371,7 +371,7 @@ public interface TransactionDefinition {
 
 这些规则定义了哪些异常会导致事务回滚而哪些不会。默认情况下，事务只有遇到运行期异常（RuntimeException 的子类）时才会回滚，Error 也会导致事务回滚，但是，在遇到检查型（Checked）异常时不会回滚。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/f6c6f0aa-0f26-49e1-84b3-7f838c7379d1.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/f6c6f0aa-0f26-49e1-84b3-7f838c7379d1.png)
 
 如果你想要回滚你定义的特定的异常类型的话，可以这样：
 

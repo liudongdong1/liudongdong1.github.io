@@ -38,7 +38,7 @@
 - different people may annotate different keypoints  which need to identify the consensus and patterns;
 - predefined distance threshold fail to identify closely spaced keypoints;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021091359516.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021091359516.png)
 
 previous work:
 
@@ -48,41 +48,41 @@ previous work:
 - **Keypoint Datasets:** 
   - Keypoints for human skeletons:  MPII human pose dataset, MSCOCO keypoint challenge, PoseTrack;
   - Animals: PUB provides 15 part locations on 11788 images from 200 bird categories
-  - 3D objects: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021093151042.png)
+  - 3D objects: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021093151042.png)
 
 #### Methods
 
 - **Problem Formulation**:
 
-given  a valid annotation from c-th person, the keypoint set is:![image-20201021093552067](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021093552067.png)
+given  a valid annotation from c-th person, the keypoint set is:![image-20201021093552067](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021093552067.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021093404099.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021093404099.png)
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021095034963.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021095034963.png)
 
 【Dataset Visualization】
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021093300132.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021093300132.png)
 
 【**Keypoint Saliency**】 assume that the each annotation is allowed to be erroneous within small region. $\Phi$ is the Gaussian kernel, and $Z$ is the normalization function;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021094235010.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021094235010.png)
 
 【**Ground Truth Keypoint Generation】**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021094726837.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021094726837.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021094746679.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021094746679.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021094938673.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021094938673.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021095438254.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021095438254.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021095502755.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021095502755.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021095556538.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021095556538.png)
 
 #### Notes <font color=orange>去加强了解</font>
 

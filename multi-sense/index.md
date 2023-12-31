@@ -21,7 +21,7 @@ Spatiotemporal Convolutional Networks</b>
 
 The REBA model assigns scores to the human poses, within a range of 1–15, on a frame-by-frame basis by accounting for the joints motions and angles, load conditions, and activity repetitions. An action with an overall score of less than 3 is labeled as ergonomically safe, a score between 3–7 is deemed to be medium risk that requires monitoring, and every other action is considered high risk that needs attention. 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191101153604076.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191101153604076.png)
 
 ------
 
@@ -42,9 +42,9 @@ The REBA model assigns scores to the human poses, within a range of 1–15, on a
 </div>
 #### Research Objective
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191101155544019.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191101155544019.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191101155623730.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191101155623730.png)
 
 
 
@@ -56,7 +56,7 @@ The REBA model assigns scores to the human poses, within a range of 1–15, on a
 
 Hybrid user action prediction system for automated home using association rules and ontology：  based on the frequent pattern (FP)-growth and ontology graphs for home automation systems. Their proposed system simulates the human prediction actions by adding common sense data by utilizing the advantages of the ontology graph and the FP-growth to find a better solution in predicting home user actions for automated systems .使用了室内开关数据预测，关联分析，马尔可夫状态转换，聚类
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191101161301257.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191101161301257.png)
 
 ------
 
@@ -87,7 +87,7 @@ Hybrid user action prediction system for automated home using association rules 
 
 size of the block of actions that represents an activity. 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191101163430182.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191101163430182.png)
 
 # Paper:
 
@@ -103,9 +103,9 @@ Action Prediction, Scale Selection, Sliding Window, Dilated Convolution, Skeleto
 
 **Learning Task-Oriented Grasping for Tool Manipulation from Simulated Self-Supervision**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191104134717938.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191104134717938.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20191104134753308.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20191104134753308.png)
 
 
 
@@ -139,7 +139,7 @@ Action Prediction, Scale Selection, Sliding Window, Dilated Convolution, Skeleto
 
 #### Proble Statement
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200312135338379.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200312135338379.png)
 
 previous work:
 
@@ -158,25 +158,25 @@ the stream of data is available in M modalities， and there are M classifier ne
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200312140717210.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200312140717210.png)
 
 【Qustion 1】how to alignment the spatiotemporal semantic multi-modal data?
 
 - assume that different modalities of the input videos are aligned over the time and spatial positions, the networks are expected to have the same understanding and share semantics for spatial positions and frame of the input videos across the different modalities.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200312141904565.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200312141904565.png)
 
 【Qustion 2】 how to avoid Negative Transfer throw multi-modal data?
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200312142405938.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200312142405938.png)
 
 ![](https://cdn.pixabay.com/photo/2015/06/24/16/36/office-820390__340.jpgimage-20200312142343590.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200312142431917.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200312142431917.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200312142521221.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200312142521221.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200312142536425.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200312142536425.png)
 
 #### Evaluation
 
@@ -185,8 +185,8 @@ the stream of data is available in M modalities， and there are M classifier ne
       - VIVA hand gesture dataset: for studying natural human activities in real-world driving settings, 19 hand gesture classes collected from 8 subjects.
       - EgoGesture Dataset: for the task of egocentric gesture recognition, contains 24161 hand gesture clips of 83 classes of gestures performed by 50 subjects, including both static and dynamic gesture.   <font color=red>重点了解下这个数据集</font>
       - NVGestures datasets: multiple sensors and from multiple viewpoints for studying human-computer interfaces, contains 1532 dynamic hand gestures inside a car simulator with artificial lighting conditions.<font color=red>重点了解下这个数据集</font>
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200312143418786.png)
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200312143443999.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200312143418786.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200312143443999.png)
 
 #### Conclusion
 
@@ -249,22 +249,22 @@ the stream of data is available in M modalities， and there are M classifier ne
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313165655037.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313165655037.png)
 
 - build a prototype radar system, with an operational range of <1m, the system measures the range(z) and angular velocity(v) of moving objects in the scene, and estimates their azimuth(x) 方位角and elevation海拔(y) angles.  (FMCW)[27, 28] 重点了解雷达特性
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313170714490.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313170714490.png)
 
 【Radar Relative】
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313170714490.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313170714490.png)
 
 【Calibration】
 
 - assume a rigid transfermation exists between the optical imaging centers of the radar and depth sensors. 
 - experiment: concurrently observe 3D coordinates of the center of a moving spherical ball of radius 3cm with both sensor. Using linear-squares optimization.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313171052341.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313171052341.png)
 
 【Gesture Detection and classifier】
 
@@ -272,20 +272,20 @@ the stream of data is available in M modalities， and there are M classifier ne
 - The duration of a true gesture is assumed to be between 0.3 and 3 seconds. The gesture ends when no motion is observed by the radar continuously for 0.5 seconds. 
 - normalize the depth values of the detected hand region to the range of [0,1], and generate a mask for hand region. And conert RGB image of the hand to a single grayscale image with values in the range[0,1]
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313171445019.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313171445019.png)
 
 - temporally normalize the gestures to 60 frames by re-sampling them via nearest neibor interpolation.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313171637448.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313171637448.png)
 
 #### Evaluation
 
   - **Environment**:   
     - Dataset: 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313171706749.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313171706749.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313171715796.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313171715796.png)
 
 #### Conclusion
 
@@ -295,7 +295,7 @@ the stream of data is available in M modalities， and there are M classifier ne
 
 #### Notes <font color=orange>去加强了解</font>
 
-  - Voronoi diagram ：根据点集划分的区域到点的距离最近的特点，其在地理学、气象学、结晶学、航天、核物理学、机器人等领域具有广泛的应用。如在障碍物点集中，规避障碍寻找最佳路径。![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313181217743.png)
+  - Voronoi diagram ：根据点集划分的区域到点的距离最近的特点，其在地理学、气象学、结晶学、航天、核物理学、机器人等领域具有广泛的应用。如在障碍物点集中，规避障碍寻找最佳路径。![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313181217743.png)
   - FMCW ：即调频连续波。FMCW技术和脉冲雷达技术是两种在高精度雷达测距中使用的技术。其基本原理为发射波为高频连续波，其频率随时间按照三角波规律变化。接收的回波频率与发射的频率变化规律相同，都是三角波规律，只是有一个时间差，利用这个微小的时间差可计算出目标距离。
   - “Monopulse range-doppler FMCW radar signal processing for spatial localization of moving targets
   - https://zhuanlan.zhihu.com/p/77474295  

@@ -3,7 +3,7 @@
 
 > 学习记录javaUtil各种工具使用；
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201216234129227.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201216234129227.png)
 
 ### 1. StringRelative
 
@@ -53,7 +53,7 @@ public static void main(String[] args) {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201216235427883.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201216235427883.png)
 
 ### 学习资源
 

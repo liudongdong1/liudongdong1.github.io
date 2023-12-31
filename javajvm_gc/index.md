@@ -50,7 +50,7 @@ public class ReferenceCountingGC {
 > - FGC、FGCT，老年代垃圾回收次数和耗时
 > - GCT，垃圾回收总耗时
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210706085732787.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210706085732787.png)
 
 **可达性分析算法：**通过一系列的称为“GC Roots”的对象作为起始点，从这些节点开始向下搜索，搜索走过的路径称为引用链，当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。在Java中，可作为GC Root的对象包括以下几种:
 
@@ -59,7 +59,7 @@ public class ReferenceCountingGC {
 - 方法区中`常量引用的对象`。
 - 本地方法栈中`JNI(即一般说的Native方法)引用的对象`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210706085837668.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210706085837668.png)
 
 ### 2. 四种引用
 
@@ -141,7 +141,7 @@ public class FinalizeEscapeGC {
 - **优点**：实现简单，不需要进行对象进行移动。
 - **缺点**：标记、清除过程效率低，产生大量不连续的内存碎片，提高了垃圾回收的频率。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210706091434405.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210706091434405.png)
 
 #### .2. 复制算法
 
@@ -150,7 +150,7 @@ public class FinalizeEscapeGC {
 - **优点**：按顺序分配内存即可，实现简单、运行高效，不用考虑内存碎片。
 - **缺点**：可用的内存大小缩小为原来的一半，对象存活率高时会频繁进行复制。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210706091703794.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210706091703794.png)
 
 #### .3. 标记-整理算法
 
@@ -159,13 +159,13 @@ public class FinalizeEscapeGC {
 - **优点**：解决了标记-清理算法存在的内存碎片问题。
 - **缺点**：仍需要进行局部对象移动，一定程度上降低了效率。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210706091814472.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210706091814472.png)
 
 #### .4. 分代收集算法
 
 当前商业虚拟机都采用**分代收集**的垃圾收集算法。分代收集算法，顾名思义是根据对象的**存活周期**将内存划分为几块。一般包括**年轻代**、**老年代** 和 **永久代**，如图所示：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210706091858163.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210706091858163.png)
 
 > **新生代** 中存在一个`Eden`区和两个`Survivor`区。新对象会首先分配在`Eden`中（如果新对象过大，会直接分配在老年代中）。在`GC`中，`Eden`中的对象会被移动到`Survivor`中，直至对象满足一定的年纪（定义为熬过`GC`的次数），会被移动到**老年代**。
 >

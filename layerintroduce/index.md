@@ -13,7 +13,7 @@
 
 > 功能：用于`对图像进行上采样`，`物体检测任务经常用到`（不可逆过程，转置卷积得到的图像与原图不相等）
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210516232024368.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210516232024368.png)
 
 ```python
 import os
@@ -53,7 +53,7 @@ plt.subplot(121).imshow(img_raw)
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210516232535321.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210516232535321.png)
 
 ### 3. 池化层
 
@@ -61,15 +61,15 @@ plt.show()
 
 ### 4. 反最大值池化
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210516232719790.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210516232719790.png)
 
 ### 5. 全连接层
 
 > 每一个神经元与上一层所有神经元相连，实现对上一层的线性组合。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210516232815261.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210516232815261.png)
 
-### 6. 激活函数![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210516232910664.png)
+### 6. 激活函数![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210516232910664.png)
 
 
 

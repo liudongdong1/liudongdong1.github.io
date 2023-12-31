@@ -11,14 +11,14 @@
 
 > 所谓分布式系统，就`是一个业务拆分成多个子业务`，分布在不同的服务器节点，共同构成的系统称为分 布式系统，同一个分布式系统中的服务器节点在空间部署上是可以随意分布的，这些服务器可能放在不同的机柜 中，也可能在不同的机房中，甚至分布在不同的城市。
 
- ![](https://gitee.com/github-25970295/blogimgv2022/raw/master/987fa93db8c54d0fb426a7620a3d024b~tplv-k3u1fbpfcp-zoom-1.image)
+ ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/987fa93db8c54d0fb426a7620a3d024b~tplv-k3u1fbpfcp-zoom-1.image)
 
 分布式与集群的区别：
 
 - 集群：多个人在一起作同样的事 。
 - 分布式 ：多个人在一起作不同的事 。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/36d06b9545304b6186db256c441b4882~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/36d06b9545304b6186db256c441b4882~tplv-k3u1fbpfcp-zoom-1.image)
 
 **分布式系统的特点：**
 
@@ -42,43 +42,43 @@
 
 - 阶段一：`单应用架构`
 
- ![](https://gitee.com/github-25970295/blogimgv2022/raw/master/c01255f6f4164762915894d083670728~tplv-k3u1fbpfcp-zoom-1.image)
+ ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/c01255f6f4164762915894d083670728~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 阶段二：`应用服务器与数据库服务器分离 `
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/f4884896dc5c442babaed0b0a5c255ce~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/f4884896dc5c442babaed0b0a5c255ce~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 阶段三：`应用服务器集群 `
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/8ed6b99db92d4776bd00c935677c9ff6~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/8ed6b99db92d4776bd00c935677c9ff6~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 阶段四：`应用服务器负载均衡 `
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/6601cdadc33947e2b159949c3f73c0eb~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/6601cdadc33947e2b159949c3f73c0eb~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 阶段五：`数据库读写分离 `
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/aa81ed11c97e48a29a2dbeb0dbff49ea~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/aa81ed11c97e48a29a2dbeb0dbff49ea~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 阶段六：`添加搜索引擎缓解读库的压力 `
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/b73f1b7c42af4e708a012171680cfcee~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/b73f1b7c42af4e708a012171680cfcee~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 阶段七：添加`缓存机制缓解数据库的压力`
 
- ![](https://gitee.com/github-25970295/blogimgv2022/raw/master/d93efb4b61b644ee93bdaffe7e2d06ce~tplv-k3u1fbpfcp-zoom-1.image)
+ ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/d93efb4b61b644ee93bdaffe7e2d06ce~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 阶段八：`数据库水平/垂直拆分 `
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/57dfa0a0b5cc4e30bcc2e71ed1f4303f~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/57dfa0a0b5cc4e30bcc2e71ed1f4303f~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 阶段九：`应用拆分 `
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/18210f6d74b54e1dbc0c38992f90a46a~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/18210f6d74b54e1dbc0c38992f90a46a~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 阶段十：`服务化 `
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/4a4cd47079c848d8b26ae8f073d30a63~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/4a4cd47079c848d8b26ae8f073d30a63~tplv-k3u1fbpfcp-zoom-1.image)
 
 ### 2. 分布式系统面临的问题
 
@@ -111,7 +111,7 @@
 
 分布式系统当中，数据往往会有多个**副本**。如果是一台数据库处理所有的数据请求，那么通过`ACID四原则`，基本 可以保证数据的一致性。而`多个副本`就需要保证数据会有`多份拷贝`。这就带来了同步的问题，因为我们几乎没有办 法保证可以`同时更新所有机器`当中的包括备份所有数据。 `网络延迟`，即使我在同一时间给所有机器发送了更新数据 的请求，也不能保证这些请求被响应的时间保持一致`存在时间差`，就会存在某些机器之间的`数据不一致`的情况。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/04507f96da334e5fb0b972d6ccddb87e~tplv-k3u1fbpfcp-zoom-1.image) 
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/04507f96da334e5fb0b972d6ccddb87e~tplv-k3u1fbpfcp-zoom-1.image) 
 
 总得来说，我们无法找到一种能够满足分布式系统所有系统属性的分布式一致性解决方案。因此，如何既保证数据 的一致性，同时又不影响系统运行的性能，是每一个分布式系统都需要重点考虑和权衡的。于是，一致性级别由此 诞生：
 
@@ -137,7 +137,7 @@
 
 - 就是`根据用户ID计算一个hash值，再通过hash值映射到机器`。`同一个用户不管怎么刷新，都只会被映射到同 一台机器上`。这样就保证了不会读到其他从库的内容，带来用户体验不好的影响。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/66f22a9834064a469e2b75685de07b5a~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/66f22a9834064a469e2b75685de07b5a~tplv-k3u1fbpfcp-zoom-1.image)
 
 #### .5. 因果一致性
 
@@ -147,7 +147,7 @@
 
 > 最终一致性是所有分布式一致性模型当中最弱的。可以认为是没有任何优化的“最”弱一致性，它的意思是说，我不考虑 所有的中间状态的影响，`只保证当没有新的更新之后，经过一段时间之后，最终系统内所有副本的数据是正确的`。 它最大程度上保证了系统的并发能力，也因此，在高并发的场景下，它也是使用最广的一致性模型
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/2b8a9df7b6744113bc1e50596ec3bb58~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/2b8a9df7b6744113bc1e50596ec3bb58~tplv-k3u1fbpfcp-zoom-1.image)
 
 ### 4. 分布式理论：CAP定理
 
@@ -159,13 +159,13 @@
 | A 可用性     | Reads and writes always succeed. 也就是说`系统一直可用`，而且`服务一直保持正常` |
 | P 分区容错性 | 系统`在遇到一些节点或者网络分区故障的时候`，`仍然能够提供满足一致性和可用性的服务` |
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/8ca1a9164ecd4767822a9e6c0e72e324~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/8ca1a9164ecd4767822a9e6c0e72e324~tplv-k3u1fbpfcp-zoom-1.image)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/b81767b5fc0843a08926d9683c37a73d~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/b81767b5fc0843a08926d9683c37a73d~tplv-k3u1fbpfcp-zoom-1.image)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/654000662460482784b3f281eb2bce56~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/654000662460482784b3f281eb2bce56~tplv-k3u1fbpfcp-zoom-1.image)
 
-**假设有一个系统如下：** ![](https://gitee.com/github-25970295/blogimgv2022/raw/master/dd23bc24dd1148ef8969384f9e432f35~tplv-k3u1fbpfcp-zoom-1.image)
+**假设有一个系统如下：** ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/dd23bc24dd1148ef8969384f9e432f35~tplv-k3u1fbpfcp-zoom-1.image)
 
 > 有用户向N1发送了请求更改了数据，将数据库从V0更新成了V1。由于网络断开，所以N2数据库依然是V0，如果这个时候 有一个请求发给了N2，但是N2并没有办法可以直接给出最新的结果V1，这个时候该怎么办呢？
 >
@@ -198,7 +198,7 @@
 但请注意，这`绝不等价于系统不可用`。以下就是两个"基本可用"的例子
 
 - `响应时间上的损失`：正常情况下，一个在线搜索引擎需要在0.5秒之内返回给用户相应的查询结果，但由于出现故障（比如系统部分机房发生断电或断网故障），查询结果的响应时间增加到了1~2秒。
-- `功能上的损失`：正常情况下，在一个电子商务网站（比如淘宝）上购物，消费者几乎能够顺利地完成每一笔订单。但在一些节日大促购物高峰的时候（比如双十一、双十二），由于消费者的购物行为激增，为了保护系统的稳定性（或者保证一致性），部分消费者可能会被引导到一个降级页面，如下 ![](https://gitee.com/github-25970295/blogimgv2022/raw/master/4b29aa951d224617b37dc046c710d410~tplv-k3u1fbpfcp-zoom-1.image)
+- `功能上的损失`：正常情况下，在一个电子商务网站（比如淘宝）上购物，消费者几乎能够顺利地完成每一笔订单。但在一些节日大促购物高峰的时候（比如双十一、双十二），由于消费者的购物行为激增，为了保护系统的稳定性（或者保证一致性），部分消费者可能会被引导到一个降级页面，如下 ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/4b29aa951d224617b37dc046c710d410~tplv-k3u1fbpfcp-zoom-1.image)
 
 #### 2-Soft state（软状态）
 
@@ -230,7 +230,7 @@
 
 > 2PC （ Two-Phase Commit缩写）即两阶段提交协议，是`将整个事务流程分为两个阶段`，`准备阶段（Prepare phase）、提交阶段（commit phase）`，2是指两个阶段，P是指准备阶段，C是指提交阶段。在计算机中部分关系数据库如Oracle、MySQL支持两阶段提交协议.
 
-![img](https://gitee.com/github-25970295/blogimgv2022/raw/master/2fb5b210091a4dd1b15eecd9c9bcc2e4~tplv-k3u1fbpfcp-zoom-1.image)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/2fb5b210091a4dd1b15eecd9c9bcc2e4~tplv-k3u1fbpfcp-zoom-1.image)
 
 **准备阶段（Prepare phase）**：
 
@@ -247,7 +247,7 @@
 
 `注意:必须在最后阶段释放锁资源。 `
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/0a92f1aa17a74721af462f3d4caa1173~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/0a92f1aa17a74721af462f3d4caa1173~tplv-k3u1fbpfcp-zoom-1.image)
 
 > 阶段一: 
 > 1. 事务询问: 协调者向所有的参与者发送事务内容，询问是否可以执行事务提交操作，并开始等待各参与者的响应。 
@@ -264,7 +264,7 @@
 
 **中断事务步骤如下：** 假如任何一个参与者向协调者`反馈了No响应，或者在等待超时`之后，协调者尚无法接收到所有参与者的反馈响 应，那么就会`中断事务 `
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/80f7796ceab8473ba672f17f35657f8b~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/80f7796ceab8473ba672f17f35657f8b~tplv-k3u1fbpfcp-zoom-1.image)
 
 - **缺点**
   - 同步阻塞：二阶段提交协议存在最明显也是最大的一个问题就是`同步阻塞`，在二阶段提交的执行过程中，`所有参与该事务操作的逻辑都处于阻塞状态`，也就是说，各个参与者在等待其他参与者响应的过程中，`无法进行其他操作`。这种同步阻 塞极大的限制了分布式系统的性能。
@@ -276,7 +276,7 @@
 
 > 3PC，全称 “three phase commit”，是 2PC 的改进版，将 2PC 的 “提交事务请求” 过程一分为二，共形成了由`CanCommit、PreCommit和doCommit三个阶段组成的事务处理协议。`
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/fdbfe937597547f9950121a9f47951d7~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/fdbfe937597547f9950121a9f47951d7~tplv-k3u1fbpfcp-zoom-1.image)
 
 #### 阶段一：CanCommit
 

@@ -136,6 +136,7 @@ plot_gallery(eigenfaces, eigenface_titles, h, w)
 plt.show()
 ```
 
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210522203552837.png)
 
 - https://scikit-learn.org/stable/auto_examples/applications/plot_face_recognition.html#sphx-glr-auto-examples-applications-plot-face-recognition-py
 

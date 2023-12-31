@@ -18,7 +18,7 @@
 >
 > 当前Linux上支持unix socket，windows上支持tcp。例如：`unix:///var/run/dockershim.sock`、 `tcp://localhost:373`，默认是`unix:///var/run/dockershim.sock`，即默认使用本地的docker作为容器运行时。
 
-![CRI架构-图片来自kubernetes blog](https://gitee.com/github-25970295/blogimgv2022/raw/master/a51f510f0b990c8babfa6e58d6e7f8f1.png)
+![CRI架构-图片来自kubernetes blog](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/a51f510f0b990c8babfa6e58d6e7f8f1.png)
 
 # CNI - Container Network Interface
 

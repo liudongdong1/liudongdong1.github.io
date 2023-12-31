@@ -192,7 +192,7 @@ pdflatex -v //查看 pdfTeX 的版本信息
 
 `xelatex` - 使用XeTeX程序来编译LaTeX格式的tex文件
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210718153927650.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210718153927650.png)
 
 
 ---

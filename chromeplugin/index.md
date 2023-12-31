@@ -12,7 +12,7 @@
 
 > 从网站获取该页面的`基本颜色配色，一键产生完整调色盘`，是设计师和前端开发人员必备工具。尤其是经常碰到色彩问题，或是喜欢从其他网站来获得色彩灵感，Site Palette 会相当有帮助。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606105201056.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606105201056.png)
 
 #### 3. [CSSPeeper](https://chrome.google.com/webstore/detail/css-peeper/mbnbehikldjhnfehhnaidhjhoofhpehk)
 
@@ -20,19 +20,19 @@
 
 #### 4. [Githunt](https://chrome.google.com/webstore/detail/githunt/khpcnaokfebphakjgdgpinmglconplhp/related?ref=producthunt)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606105428480.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606105428480.png)
 
 #### 5. [Daily.dev](https://daily.dev/)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606110120110.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606110120110.png)
 
 #### 6. [Fast-Github](https://github.com/fhefh2015/Fast-GitHub)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606110218052.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606110218052.png)
 
 #### 7. [Octotree](https://www.octotree.io/)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606110301579.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606110301579.png)
 
 #### 8. [划词翻译](https://hcfy.limingkai.cn/)
 
@@ -42,7 +42,7 @@
 
 > GitHub Plus 是一款可以帮你下载代码仓库单个文件的 Chrome 插件，这款插件可以显示代码仓库的大小，以及其中每个文件的大小和下载链接，这样一来你就不用为了下载某个文件而下载整个项目源码了。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606110600962.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606110600962.png)
 
 #### 11. Grammarly
 
@@ -62,27 +62,27 @@
 
 #### 13. [Bilibili视频下载助手](https://tutorial.pictureknow.com/book?id=d806476f5b524eedb79528177168b48a)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211205144130644.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211205144130644.png)
 
 #### 14. CCFrank
 
 > 在dblp、Google学术、Connected Papers和WoS的搜索结果中显示中国计算机学会推荐的会议和期刊排名。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220106103117574.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220106103117574.png)
 
 #### 15. Tempermonkey
 
 - 脚本网站：[Greasy Fork](https://greasyfork.org/zh-CN/scripts?q=AC-baidu)  [OpenUserJs](https://openuserjs.org/)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220116110509893.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220116110509893.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220125234253956.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220125234253956.png)
 
 #### 16. Brandfetch
 
 > 一键获取任意网站 Logo 配色等品牌信息，其支持的内容有网站标志, 配色信息, 字体特色图片
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220120133644341.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220120133644341.png)
 
 
 ---

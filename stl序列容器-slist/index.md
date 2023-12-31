@@ -7,7 +7,7 @@
 
 ### 1. 数据结构
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411204715391.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411204715391.png)
 
 ```c++
 struct __slist_node_base 
@@ -38,7 +38,7 @@ inline size_t __slist_size(__slist_node_base* node)
 } 
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411205919338.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411205919338.png)
 
 ```c++
 template <class T, class Alloc = alloc> 

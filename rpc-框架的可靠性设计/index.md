@@ -9,7 +9,7 @@
 
 在传统的单体架构中，业务服务调用都是本地方法调用，不会涉及到网络通信、协议栈、消息序列化和反序列化等，当使用 RPC 框架将业务由单体架构改造成分布式系统之后，本地方法调用将演变成跨进程的远程调用，会引入一些新的故障点，如下所示：
 
-![](../../../../../blogimgv2022/c14a780e1f01db6b9503997f546af50e.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/c14a780e1f01db6b9503997f546af50e.jpg)
 
 新引入的潜在故障点包括：
 
@@ -31,7 +31,7 @@ RPC 服务通常会依赖第三方服务，包括数据库服务、文件存储�
 
 典型的第三方依赖示例如下：
 
-![](../../../../../blogimgv2022/46c4a9d2d339111e60931f0aff0fa5d1.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/46c4a9d2d339111e60931f0aff0fa5d1.jpg)
 
 ## 2.  通信层的可靠性设计
 
@@ -51,7 +51,7 @@ RPC 服务通常会依赖第三方服务，包括数据库服务、文件存储�
 
 心跳检测的原理示意图如下：
 
-![](../../../../../blogimgv2022/07c4ae78ff578378b5fe62dcde9699f5.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/07c4ae78ff578378b5fe62dcde9699f5.jpg)
 
 不同的协议，心跳检测机制也存在差异，归纳起来主要分为两类：
 
@@ -127,7 +127,7 @@ future.channel().closeFuture().sync();
 
 当我们调用消息发送接口的时候，`消息并没有真正被写入到 Socket 中，而是先放入 NIO 通信框架的消息发送队列中，由 Reactor 线程扫描待发送的消息队列，异步的发送给通信对端`。假如很不幸，消息队列中积压了部分消息，此时链路中断，这会导致部分消息并没有真正发送给通信对端，示例如下：
 
-![](../../../../../blogimgv2022/edc9e5c52487d729bbf88e6e3870f0a2.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/edc9e5c52487d729bbf88e6e3870f0a2.jpg)
 
 发生此故障时，我们希望 NIO 框架能够自动实现消息缓存和重新发送，遗憾的是作为基础的 NIO 通信框架，无论是 Mina 还是 Netty，都没有提供该功能，需要通信框架自己封装实现，基于 `Netty 的实现策略`如下：
 
@@ -155,7 +155,7 @@ Netty 在创建 NIO 客户端时，支持设置连接超时参数。Netty 的客
 
 以 Netty 的 HTTPS 服务端为例，针对客户端的并发连接数流控原理如下所示：
 
-![](../../../../../blogimgv2022/d689d7f7fbbbc7adce02ab1fbc8ef9d0.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/d689d7f7fbbbc7adce02ab1fbc8ef9d0.jpg)
 
 基于 Netty 的 Pipeline 机制，可以对 SSL 握手成功、SSL 连接关闭做切面拦截（类似于 Spring 的 AOP 机制，但是没采用反射机制，性能更高），通过流控切面接口，对 HTTPS 连接做计数，根据计数器做流控，服务端的流控算法如下：
 
@@ -255,7 +255,7 @@ RPC 框架需要能够针对上述常见的异常做容错处理，以提升业�
 
 `RPC 客户端通常会基于订阅/发布的机制获取服务端的地址列表，并将其缓存到本地`，RPC 调用时，根据负载均衡策略从本地缓存的路由表中获取到一个唯一的服务端节点发起调用，原理如下所示：
 
-![](../../../../../blogimgv2022/03bc4993e7122bdecd717f77764ec229.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/03bc4993e7122bdecd717f77764ec229.jpg)
 
 通过缓存的机制能够提升 RPC 调用的性能，RPC 客户端不需要每次调用都向注册中心查询目标服务的地址信息，但是也可能会发生如下两类潜在故障：
 
@@ -301,7 +301,7 @@ RPC 框架需要能够针对上述常见的异常做容错处理，以提升业�
 
 利用`注册中心对服务端的心跳检测和通知机制`、以及`服务端和客户端针对链路层的双向心跳检测机制`，可以有效检测出故障节点，提升 RPC 调用的可靠性，它的原理如下所示：
 
-![](../../../../../blogimgv2022/81595df9f7d5641613c19e0bde0fc7c3.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/81595df9f7d5641613c19e0bde0fc7c3.jpg)
 
 #### 3.2.2 集群容错策略
 
@@ -375,7 +375,7 @@ Failback 的设计方案如下：RPC 框架获取到服务提供者返回的 RPC
 
 如果对方是私有或者定制化的协议，SDK 没有提供异步接口，则需要采用线程池或者利用一些开源框架实现故障隔离。
 
-![](../../../../../blogimgv2022/e70a0863fe5a09ae5e32fa7ef34bb0e9.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/e70a0863fe5a09ae5e32fa7ef34bb0e9.jpg)
 
 异步化的几个关键技术点：
 
@@ -407,7 +407,7 @@ Failback 的设计方案如下：RPC 框架获取到服务提供者返回的 RPC
 
 总体集成视图如下所示：
 
-![img](../../../../../blogimgv2022/7337ae565cc60946818a2948f7afaa4a.jpg)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/7337ae565cc60946818a2948f7afaa4a.jpg)
 
 
 
@@ -423,7 +423,7 @@ Failback 的设计方案如下：RPC 框架获取到服务提供者返回的 RPC
 
 
 
-![img](../../../../../blogimgv2022/2d4cf3ae61fb0c9da7ca7e2c62cf34be.jpg)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/2d4cf3ae61fb0c9da7ca7e2c62cf34be.jpg)
 
 
 

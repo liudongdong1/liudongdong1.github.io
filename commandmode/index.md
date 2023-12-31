@@ -11,7 +11,7 @@
 > - Thread pools（线程池） 通常一个典型的线程池实现类可能有一个名为addTask()的public方法，用来添加一项工作任务到任务  队列中。该任务队列中的所有任务可以用command对象来封装，通常这些command对象会实现一个通用的  接口比如java.lang.Runnable。 
 > -  Networking 通过网络发送command命令到其他机器上运行。 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210704201001137.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210704201001137.png)
 
 - `Command 命令接口`，`声明执行方法`。
 - `ConcreteCommand 命令接口`的实现对象，是“虚”的实现，`通常会持有接收者，通过调用接收者的方法，来完成命令要执行的操作。`

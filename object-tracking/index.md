@@ -30,25 +30,25 @@ previous work:
 
 - **Problem Formulation**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422120358518.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422120358518.png)
 
 【Qustion 1】for strict translation 
 
 - **the spatial aware sampling strategy** effectively alleviate the break of the strict tranlation invariance property caused by the networks with padding.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422120557975.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422120557975.png)
 
 【Question 2】 how to  transfer a deep network into our tracking algorithms
 
 - propose a SiamRPN++ network.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422120847811.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422120847811.png)
 
 - lay-wise aggregation: compounding and aggregating these representations improve inference of recognition and localization.
   - features from earlier layers mainly foces on low level information such as color, shape, are essential for localization, the latter layers have rich semantic information like motion blur, huge deformation.
   - the output sizes of the three RPN modules have same spatial resolution, weighted sum is adopted directly on the RPN output.$S_all=\sum_{l=5}^5a_i*S_l, B_all=\sum_{l=3}^5b_i*B_l$
 
-- Depthwise cross correlation: the object in the same category have high resppnse on same channels.![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200422121835492.png)
+- Depthwise cross correlation: the object in the same category have high resppnse on same channels.![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200422121835492.png)
 
 #### Notes <font color=orange>去加强了解</font>
 

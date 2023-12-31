@@ -3,7 +3,7 @@
 
 ### 1. 模型[下载](http://www.cxyzjd.com/article/Jorbo_Li/106248808)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210716115238769.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210716115238769.png)
 
 ```python
 import re
@@ -63,13 +63,13 @@ if __name__ == "__main__":
     main()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210716115155027.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210716115155027.png)
 
 ### 2. 模型查看
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210516230215346.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210516230215346.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210516230252202.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210516230252202.png)
 
 ```python
 resnet.fc = torch.nn.Linear(resnet.fc.in_features, 100)
@@ -94,23 +94,23 @@ from torchsummary import summary
 summary(model50, (3, 224, 224)) #模型参数，输入数据的格式
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211011104049510.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211011104049510.png)
 
 ### 3. 模型初始化
 
 > 适当的权值初始化可以加速模型的训练和模型的收敛，而错误的权值初始化会导致梯度消失/爆炸，从而无法完成网络的训练，因此需要控制网络输出值的尺度范围。torch.nn.init中提供了常用的初始化方法函数，1. Xavier，kaiming系列；2. 其他方法分布
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210517095212696.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210517095212696.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210517095258942.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210517095258942.png)
 
 > **从上图中的公式可以看出，\**每传播一层，输出值数据的方差就会扩大n\**** ***\*倍\**，要想控制输出H的尺度范围，只需要控制H的方差为1，则无论经过多少层都可以维持在初始输入X的方差附近，因此\**权重w需要初始化方差为1/n\**（n为神经元的个数）**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210517100543137.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210517100543137.png)
 
 ##### .1. Xavier 均匀分布
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210517095432537.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210517095432537.png)
 
 ```python
 import os
@@ -211,7 +211,7 @@ if flag:
 >
 > nn.init.kaiming_uniform_(w, mode='fan_in', nonlinearity='relu')
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210517100453509.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210517100453509.png)
 
 ```python
 import os
@@ -691,7 +691,7 @@ new_dict_name = list(change_model_dict)
 print('after change:\n',change_model_dict['classifier.5.bias'])
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210716225130620.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210716225130620.png)
 
 ```python
 import torch.nn as nn
@@ -853,7 +853,7 @@ class FeatureExtractor(torch.nn.Module):
 > - `requires_grad`为False来冻结网络参数
 > - **filter(lambda p: p.requires_grad, model.parameters())**过滤掉requires_grad=false的层
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210716230659569.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210716230659569.png)
 
 ```python
 #首先自己新定义一个网络
@@ -976,7 +976,7 @@ def get_model(num_kpts,train_kptHead=False,train_fpn=True):
 #model, device, dtype=get_model(2)
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021161049583.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021161049583.png)
 
 
 

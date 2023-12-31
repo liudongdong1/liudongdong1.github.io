@@ -3,13 +3,13 @@
 
 ### Architecture Blueprint
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/mvp-arch.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/mvp-arch.png)
 
-![MvpApp](https://gitee.com/github-25970295/picture2023/raw/master/MvpApp.png)
+![MvpApp](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/MvpApp.png)
 
 ### Project Structure
 
-![Structure](https://gitee.com/github-25970295/blogimgv2022/raw/master/mvp-project-structure-diagram.png)
+![Structure](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/mvp-project-structure-diagram.png)
 
 1. **data**: It contains all the data accessing and manipulating components.
 2. **di**: Dependency providing classes using Dagger2.  
@@ -21,24 +21,24 @@
 
 - 通过AppDataManager 提供数据库，网络数据，本地Preference数据操作
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221215153425170.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221215153425170.png)
 
 #### sqlite数据库
 
 - 使用greenDao 第三方插件实现基本数据操作
 
-![Option](https://gitee.com/github-25970295/blogimgv2022/raw/master/Option.png)
+![Option](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Option.png)
 
 #### 网络操作
 
 - 使用Rx2AndroidNetworking第三方库 封装网络数据请求
 - 基本数据包括 User信息，Blog信息，Repo信息，并且每一个信息都有对应地封装地Response类中，其中ApiHeader 存放网络请求相关的header信息
 
-![Package model](https://gitee.com/github-25970295/blogimgv2022/raw/master/Package%20model.png)
+![Package model](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Package%20model.png)
 
 #### 本地Preferences文件
 
-![image-20221215153126837](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221215153126837.png)
+![image-20221215153126837](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221215153126837.png)
 
 ### UI层面
 
@@ -47,7 +47,7 @@
 3. **Presenter**: It is the decision-making counterpart of the View and is a pure java class, with no access to Android APIs. It `receives the user interactions passed on from its View and then takes the decision based on the business logic`, finally instructing the View to perform specific actions. It also `communicates with the DataManager` for any data it needs to perform business logic.
 4. **MvpPresenter**: It is an interface, that is implemented by the Presenter. It contains `methods that are exposed to its View for the communication`.
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/Package%20base.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Package%20base.png)
 
 #### 登录界面
 
@@ -108,7 +108,7 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221215155241715.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221215155241715.png)
 
 
 

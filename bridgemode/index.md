@@ -14,9 +14,9 @@
 >
 > 实现类的具体实现类（ConcreteImplementor): 就是`该维度变化的各种情况的实现`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705144604350.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705144604350.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705145331862.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705145331862.png)
 
 ```java
 //典型实现类接口代码：
@@ -57,7 +57,7 @@ public class GiantBrand implements InterfaceBrand {
 
 ### 1. JDBC 驱动程序
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705145100863.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705145100863.png)
 
 
 
@@ -88,7 +88,7 @@ itstack-demo-design-7-02
                  └── ApiTest.java
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705145704633.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705145704633.png)
 
 > - 左侧`Pay`是一个抽象类，往下是它的两个支付类型实现；微信支付、支付宝支付。
 > - 右侧`IPayMode`是一个接口，往下是它的两个支付模型；刷脸支付、指纹支付。

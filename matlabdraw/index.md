@@ -3,15 +3,15 @@
 
 ### 1. Matlab 绘图
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201206180344948.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201206180344948.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/20210418201240885.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210418201240885.png)
 
 ###  1.1. Plot 函数
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201206180821136.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201206180821136.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715224005116.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715224005116.png)
 
 ```matlab
 x=-pi:pi/10:pi;                  %以pi/10为步长
@@ -158,7 +158,7 @@ grid on
 
 #### 1.5.bar
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721113314785.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721113314785.png)
 
 ##### .1. twobars-3
 
@@ -193,7 +193,7 @@ set(gca,'linewidth',1.5,'FontName','Times New Roman','FontWeight','Bold','FontSi
 set(gca, 'xtick',index, 'xticklabel', { 'CPM' 'Hourglass' 'Ours'})
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210731195408107.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210731195408107.png)
 
 ```matlab
 figure
@@ -201,7 +201,7 @@ bar3(Z)
 title('Detached Style')
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201219165024052.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201219165024052.png)
 
 ##### .2. 3D bar
 
@@ -221,7 +221,7 @@ b(2).FaceColor = [0.9 0.1 0.5];
 b(3).FaceColor = [0.5 0.9 0.1];
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727151255478.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727151255478.png)
 
 ##### .3. twobars twoY
 
@@ -278,7 +278,7 @@ set(gca,'linewidth',1.5,'FontName','Times New Roman','FontWeight','Bold','FontSi
 % set(gca,'linewidth',1.5,'FontName','Times New Roman','FontWeight','Bold','FontSize',18,'Box','On');
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210729160214117.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210729160214117.png)
 
 ##### .4. twobars twoy-4
 
@@ -319,7 +319,7 @@ set(gca,'OuterPosition',[-0.02,0.052857142857143,1,1],'Position',[0.11,0.1628571
 set(gca,'linewidth',1.5,'FontName','Times New Roman','FontWeight','Bold','FontSize',18,'Box','On','XGrid','on','YGrid','on');
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210731195534119.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210731195534119.png)
 
 ##### .5. twobars twoy-3
 
@@ -347,7 +347,7 @@ set(gca,'linewidth',1.5,'FontName','Times New Roman','FontWeight','Bold','FontSi
 set(gca, 'xtick',index, 'xticklabel', { 'Dataset_1' 'Dataset_2' 'Dataset_3'})
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210731195612266.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210731195612266.png)
 
 ##### .6. stacked bar
 
@@ -381,7 +381,7 @@ set(gca,'linewidth',1.5,'FontName','Times New Roman','FontWeight','Bold','FontSi
 set(gca, 'xtick', 1:length(Y), 'xticklabel', {'Paper' 'Plastic' 'Glass' 'Tape' 'Iron'})
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220107103744216.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220107103744216.png)
 
 #### 1.6. color
 
@@ -405,11 +405,11 @@ figure, imagesc(z);
 colorbar;
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721152503303.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721152503303.png)
 
 #### 2. [Colormaps 颜色图](https://ww2.mathworks.cn/help/matlab/ref/colormap.html)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721152647080.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721152647080.png)
 
 ```matlab
 % 生成 x , y 矩阵 , 
@@ -449,7 +449,7 @@ colormap(cool);
 colormap(gray);
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721152753532.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721152753532.png)
 
 #### 1.7. 散点图
 
@@ -500,7 +500,7 @@ set(gca,'linewidth',1.5,'FontName','Times New Roman','FontWeight','Bold','FontSi
 set(gca, 'xtick',index, 'xticklabel', index)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721201737720.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721201737720.png)
 
 ##### 1.  4plot
 
@@ -613,7 +613,7 @@ set(gca,'linewidth',1.5,'FontName','Times New Roman','FontWeight','Bold','FontSi
 % set(gca, 'xtick',index, 'xticklabel', index)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210731194829619.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210731194829619.png)
 
 ##### 2. 3d 散点图
 
@@ -660,7 +660,7 @@ axis xy
 % set(gca, 'xtick',0:10:70, 'xticklabel', 0:10:70)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210731195901326.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210731195901326.png)
 
 #### 1.8. 3D图
 
@@ -725,13 +725,13 @@ set(gca,'linewidth',1.5,'FontName','Times New Roman','FontWeight','Bold','FontSi
 %set(gca, 'xtick',index, 'xticklabel', { '15' '17.5' '20' '22.5' '25' '27.5' '30' '32.5'})
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210714223054506.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210714223054506.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211201183800038.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211201183800038.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211201183828822.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211201183828822.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211201183858395.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211201183858395.png)
 
 ##### 2. 3d mesh网格
 
@@ -749,7 +749,7 @@ Z = X .* exp (-X .^ 2 - Y .^ 2);
 mesh(X, Y, Z);
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721153026392.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721153026392.png)
 
 ##### 3. [3d surface](https://ww2.mathworks.cn/help/matlab/ref/surf.html)
 
@@ -769,7 +769,7 @@ Z = X .* exp (-X .^ 2 - Y .^ 2);
 surf(X, Y, Z);
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721153145424.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721153145424.png)
 
 ##### 4. 绘制网格 + 等高线
 
@@ -788,7 +788,7 @@ meshc(X, Y, Z);
 grid on;
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721153255033.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721153255033.png)
 
 ##### 5. 绘制平面 + 等高线
 
@@ -807,7 +807,7 @@ surfc(X, Y, Z);
 grid on;
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721153329077.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721153329077.png)
 
 #### 1.9 星空图
 
@@ -850,7 +850,7 @@ r = 1 - sin(theta);
 polar(theta, r);
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721150900686.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721150900686.png)
 
 ##### 2. 29图形图
 
@@ -920,7 +920,7 @@ hold on;
 polar(theta1, r1, 'b');
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721151642398.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721151642398.png)
 
 #### 2.0 gif 动图绘制
 
@@ -971,7 +971,7 @@ for epsilon = 0.01:-0.001:0.005
 end
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/gif_plot_test20210715T221036.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/gif_plot_test20210715T221036.gif)
 
 ```matlab
 %% 计算
@@ -1021,7 +1021,7 @@ for i=-120:2:240
 end  
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/gif_plot_example20210715T220952.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/gif_plot_example20210715T220952.gif)
 
 #### 2.1. 混合图
 
@@ -1096,7 +1096,7 @@ set(gca,'linewidth',1.5,'FontName','Times New Roman','FontWeight','Bold','FontSi
 set(gca, 'xtick',index, 'xticklabel', [1 2 3 4])
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721143234513.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721143234513.png)
 
 ##### 2. OneFigure-Multi
 
@@ -1112,7 +1112,7 @@ set(gca, 'xtick',index, 'xticklabel', [1 2 3 4])
 > - `square 样式`表示的是`坐标轴的 x xx 轴和 y yy 轴长度相同` ;
 > - `equal tight 样式`是在 equal 样式基础上 ,` 贴边切割有效曲线图形`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721145331183.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721145331183.png)
 
 ```matlab
 % 生成 x 轴数据 , -10 ~ 10 , 步长 0.1
@@ -1168,7 +1168,7 @@ axis equal tight
 
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721145717302.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721145717302.png)
 
 ##### 3. Multi-figure
 
@@ -1182,7 +1182,7 @@ axis equal tight
 > - **height 参数 :** 图形对话框高度 ;
 > - 一个figure代表一个图；
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721145102350.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721145102350.png)
 
 ##### 4. 双y轴曲线绘制
 
@@ -1225,7 +1225,7 @@ xlabel('Different Algorithm','FontName','Times New Roman','FontWeight','Bold','F
 set(gca,'linewidth',1.5,'FontName','Times New Roman','FontWeight','Bold','FontSize',18,'Box','On','XGrid','on','YGrid','on');
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721150320538.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721150320538.png)
 
 #### 2.2. Latex
 
@@ -1247,7 +1247,7 @@ x = [1, 2, 5, 4, 8];
 pie(x, [0, 0, 1, 0, 1]);
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721150734974.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721150734974.png)
 
 ```matlab
 % 饼图的数值列表
@@ -1281,7 +1281,7 @@ b.WhiskerLineColor = [0.2 0.6 0.4];
 b.Notch = 'on';
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727150558440.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727150558440.png)
 
 ```matlab
 % 加载数据
@@ -1293,7 +1293,7 @@ load carsmall
 boxplot(MPG, Origin);
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721151325681.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721151325681.png)
 
 ```matlab
 set(0,'defaultfigurecolor','w')
@@ -1350,7 +1350,7 @@ set(gca,'fontsize',10,'fontweight','bold','FontName','Times New Roman','XLim',[0
 grid on;
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727141008591.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727141008591.png)
 
 ```matlab
 clear ;close all; clc;
@@ -1443,7 +1443,7 @@ set(gca,'OuterPosition',[0.024618624088152,0.054709302325581,0.972797100455081,0
 %axis tight
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727133854878.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727133854878.png)
 
 #### 2.5. Error Bar 误差条线图
 
@@ -1459,9 +1459,9 @@ e = std(y) * ones(size(x));
 errorbar(x, y, e);
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727144745498.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727144745498.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727144801702.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727144801702.png)
 
 #### 2.7. stairs阶梯图
 
@@ -1478,7 +1478,7 @@ y = sin(x);
 stairs(y);
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721151846058.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721151846058.png)
 
 #### 2.8. Stem 离散序列数据图
 
@@ -1490,7 +1490,7 @@ y = sin(x);
 stem(y);
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721151922635.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721151922635.png)
 
 ##### .1. 采样图
 
@@ -1511,7 +1511,7 @@ stem(sample_t, sample_y);
 hold off;
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721152024992.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721152024992.png)
 
 #### 2.9. ROC 曲线绘制
 
@@ -1554,7 +1554,7 @@ hh=legend([h1],ROCtitle_1)%,'Location','southeast');
 set(hh,'edgecolor','white')
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721164019932.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721164019932.png)
 
 ##### 2. xy轴颠倒的ROC曲线
 
@@ -1723,7 +1723,7 @@ set(gca, 'xtick',[1,2,3], 'xticklabel', { 'STPP' 'RFscanner'  'RCInv'});
 set(gca,'OuterPosition',[7.085867e-9,0.05770920262021,0.994231804690922,0.445494490189832],'Position',[0.177056272347252,0.14910561274245,0.727943727652748,0.335057177955224]);
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210731195217953.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210731195217953.png)
 
 #### 3.0. Area
 
@@ -1760,9 +1760,9 @@ h(2).FaceColor = [0.6 0.2 0.6];
 xlim([0,pi])
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727150010104.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727150010104.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727145959991.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727145959991.png)
 
 #### 3.1. stackedplot
 
@@ -1787,7 +1787,7 @@ h.LineProperties(3).Color = 'k';
 h.LineProperties(3).LineWidth = 1.5;
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727150149662.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727150149662.png)
 
 #### 3.2. histogram
 
@@ -1806,7 +1806,7 @@ h3 = histogram(c,21);
 xlim([-6,6])
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727150336565.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727150336565.png)
 
 ```matlab
 clc %https://zhuanlan.zhihu.com/p/312069817
@@ -1830,7 +1830,7 @@ h4 = histogram2(a,b,[25,25],'FaceColor','flat');
 axis([-4,4,-4,4])
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727150410027.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727150410027.png)
 
 #### 3.3. binscatter
 
@@ -1853,7 +1853,7 @@ b4 = binscatter(a,b);
 colormap(axes4,'hot');
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727150833248.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727150833248.png)
 
 #### 3.4. wordcloud
 
@@ -1875,7 +1875,7 @@ figure(2)
 wordcloud(name,s,'color',c);
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727151155150.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727151155150.png)
 
 #### 3.5 plot折线图
 
@@ -2000,7 +2000,7 @@ set(axesNew,'linewidth',1.5,'FontName','Times New Roman','FontWeight','Bold','Fo
 legend(axesNew,[p3,p4,p5],{ ' Flex 3' ' Flex 4' ' Flex 5'},'Location','best','Orientation','horizontal','FontName','Times New Roman','FontWeight','Bold','FontSize',14,'Box','On','Color',[0.941 0.941 0.941],'EdgeColor',[0 0 0]);
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211210152734579.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211210152734579.png)
 
 ### 2. 属性编辑器
 
@@ -2046,9 +2046,9 @@ set(gca,'linewidth',1.5,'FontName','Times New Roman','FontWeight','Bold','FontSi
 set(gca, 'xtick',index, 'xticklabel', { 'Bottle' 'Milk' 'Disinfectant'})
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201229195809601.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201229195809601.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210721112908346.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210721112908346.png)
 
 - **图形对象属性**
 
@@ -2194,15 +2194,15 @@ opt.FileName = 'plotMarkers.png';
 setPlotProp(opt);
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727142304340.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727142304340.png)
 
 #### 2. box
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727142846425.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727142846425.png)
 
 #### 3. applyhatch_plusC
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727144151627.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727144151627.png)
 
 #### 4. [gramm](https://github.com/piermorel/gramm)
 
@@ -2229,49 +2229,49 @@ g.set_title('Fuel economy of new cars between 1970 and 1982')
 g.draw()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727154841148.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727154841148.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727154904113.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727154904113.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727154935209.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727154935209.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727155026814.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727155026814.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727155040033.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727155040033.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727155101749.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727155101749.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161134085.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161134085.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161613294.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161613294.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161636279.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161636279.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727160903652.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727160903652.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161159054.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161159054.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161010487.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161010487.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161457723.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161457723.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161511564.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161511564.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161526981.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161526981.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161035333.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161035333.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161048835.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161048835.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161102268.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161102268.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161242377.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161242377.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161258481.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161258481.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161415158.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161415158.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210727161431531.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210727161431531.png)
 
 ### 4. RGB颜色
 

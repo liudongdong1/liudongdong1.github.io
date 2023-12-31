@@ -14,7 +14,7 @@
 - $x_i$: mini-batch with size about N ；
 - $y, \beta$ 的大小为特征长度，与 $x_i$ 相同；
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831152445.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831152445.png)
 
 > BN层通常添加在隐藏层的激活函数之前，线性变换之后。如果我们把(2.4)和之后的激活函数放在一起看，可以将他们视为一层完整的神经网络（线性+激活）。（注意BN的线性变换和一般隐藏层的线性变换仍有区别，前者是element-wise的，后者是矩阵乘法。）
 >

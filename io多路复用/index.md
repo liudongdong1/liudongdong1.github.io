@@ -17,7 +17,7 @@
 - 每个客户端连接到达之后，服务端会分配一个线程给该客户端，该线程会处理包括读取数据，解码，业务计算，编码，以及发送数据整个过程；
 - 同一时刻，服务端的吞吐量与服务器所提供的线程数量是呈线性关系的。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803133056043.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210803133056043.png)
 
 - 服务器的并发量对服务端能够创建的线程数有很大的依赖关系，但是`服务器线程却是不能无限增长的`；
 - 服务端`每个线程不仅要进行IO读写操作，而且还需要进行业务计算`；
@@ -30,7 +30,7 @@
 > - 从模型上来讲，如果仅仅还是只使用一个线程池来处理客户端连接的网络读写，以及业务计算，那么Reactor模型与传统IO模型在效率上并没有什么提升。但是Reactor模型是`以事件进行驱动的，其能够将接收客户端连接，+ 网络读和网络写，以及业务计算进行拆分`，从而极大的提升处理效率；
 > - Reactor模型是`异步非阻塞模型`，工作线程在没有网络事件时可以处理其他的任务，而不用像传统IO那样必须阻塞等待。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803133613944.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210803133613944.png)
 
 ```java
 public class Reactor implements Runnable {
@@ -188,13 +188,13 @@ public class Handler implements Runnable {
 
 ### 3. java对多路复用支持
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/picture/java-io-nio-1.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/picture/java-io-nio-1.png)
 
 #### .1. channel
 
 > 通道，`被建立的一个应用程序和操作系统交互事件、传递内容的渠道`(注意是连接到操作系统)。一个通道会有一个`专属的文件状态描述符`。那么既然是和操作系统进行内容的传递，那么说明应用程序可以通过通道读取数据，也可以通过通道向操作系统写数据。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/java-io-nio-2.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/java-io-nio-2.png)
 
 - ServerSocketChannel: 应用服务器程序的监听通道。只有通过这个通道，应用程序才能向操作系统注册支持“多路复用IO”的端口监听。同时支持UDP协议和TCP协议。
 - ScoketChannel: `TCP Socket套接字的监听通道`，一个Socket套接字对应了一个客户端IP: 端口 到 服务器IP: 端口的通信连接。

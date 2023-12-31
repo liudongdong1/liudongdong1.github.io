@@ -8,7 +8,7 @@
 > - **GroupNorm：**将channel方向分group，然后每个group内做归一化，算(C//G)HW的均值；这样与batchsize无关，不受其约束。
 > - **SwitchableNorm**是将BN、LN、IN结合，赋予权重，让网络自己去学习归一化层应该使用什么方法。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210531082356191.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210531082356191.png)
 
 ```python
 torch.nn.BatchNorm1d(num_features, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
@@ -22,7 +22,7 @@ torch.nn.BatchNorm3d(num_features, eps=1e-05, momentum=0.1, affine=True, track_r
 > affine： 布尔值，当设为true，给该层添加可学习的仿射变换参数。
 > track_running_stats：布尔值，当设为true，记录训练过程中的均值和方差；
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210529193401433.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210529193401433.png)
 
 ```python
 class LayerNorm(Module):

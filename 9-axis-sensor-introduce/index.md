@@ -15,7 +15,7 @@
 
 以手机为例，X、Y、Z轴如下图所示（右手坐标系）：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200428120734264.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200428120734264.png)
 
 当手机平放在桌面时，Z轴指向天空，这时候X、Y轴的数值接近为0，Z轴的重力加速度约为9.81，将手机翻转后，即屏幕面朝向桌面，此时的Z轴重力加速度约为-9.81。
 
@@ -25,11 +25,11 @@ X、Y轴指向天空时，与上面Z轴同理，有兴趣的可以在手机上�
 
 当我们在想象一个加速度计的时候我们可以把它想作一个圆球在一个方盒子中。
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200428121529543.png" alt="image-20200428121529543" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200428121529543.png" alt="image-20200428121529543" style="zoom:50%;" />
 
 
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200428121627605.png" alt="image-20200428121627605" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200428121627605.png" alt="image-20200428121627605" style="zoom:50%;" />
 
 - $R^2=R_x^2+R_y^2+R_z^2$
 
@@ -39,7 +39,7 @@ X、Y轴指向天空时，与上面Z轴同理，有兴趣的可以在手机上�
 
 现在我们得到了惯性力矢量的三个分量，如果设备除了重力外不受任何外力影响，那我们就可以认为这个方向就是重力矢量的方向。如果你想计算设备相对于地面的倾角，可以计算这个矢量和Z轴之间的夹角。如果你对每个轴的倾角都感兴趣，你可以把这个结果分为两个分量：X轴、Y轴倾角，这可以通过计算重力矢量和X、Y轴的夹角得到
 
-<img src="https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20200428122029289.png" alt="image-20200428122029289" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200428122029289.png" alt="image-20200428122029289" style="zoom:50%;" />
 
 - $cos(Axr) = Rx / R $
 - $cos(Ayr) = Ry / R$
@@ -58,7 +58,7 @@ X、Y轴指向天空时，与上面Z轴同理，有兴趣的可以在手机上�
 
 > 原理：陀螺仪，是一种用来感测与维持方向的装置，基于角动量不灭的理论设计出来的。陀螺仪一旦开始旋转，由于轮子的角动量，陀螺仪有抗拒方向改变的趋向。一个旋转物体的旋转轴所指的方向在不受外力影响时，是不会改变的。大家如果玩过陀螺就会知道，旋转的陀螺遇到外力时，它的轴的方向是不会随着外力的方向发生改变的。我们骑自行车其实也是利用了这个原理。轮子转得越快越不容易倒，因为车轴有一股保持水平的力量
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200522165644900.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200522165644900.png)
 
 、1、陀螺转子（常采用同步电机、磁滞电机、三相交流电机等拖动方法来使陀螺转子绕自转轴高速旋转，并见其转速近似为常值）。
 
@@ -71,7 +71,7 @@ X、Y轴指向天空时，与上面Z轴同理，有兴趣的可以在手机上�
 - 一为定轴性
 - 另一是进动性，这两种特性都是建立在角动量守恒的原则下。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200522165805551.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200522165805551.png)
 
 定轴性： 当陀螺转子以高速旋转时，在没有任何外力矩作用在陀螺仪上时，陀螺仪的自转轴在惯性空间中的指向保持稳定不变，即指向一个固定的方向；同时反抗任何改变转子轴向的力量。这种物理现象称为陀螺仪的定轴性或稳定性。
 
@@ -93,7 +93,7 @@ X、Y轴指向天空时，与上面Z轴同理，有兴趣的可以在手机上�
 
 ​		3、转子的角速度愈大，进动角速度愈小。
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200428122341115.png" alt="image-20200428122341115" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200428122341115.png" alt="image-20200428122341115" style="zoom:50%;" />
 
 陀螺仪的每个通道检测一个轴的旋转。例如，一个2轴陀螺仪检测绕X和Y轴的旋转。为了用数字来表达这些旋转，我们先引进一些符号。首先我们定义：
 
@@ -124,11 +124,11 @@ X、Y轴指向天空时，与上面Z轴同理，有兴趣的可以在手机上�
 
 > **原理**:	如下图所示，地球的磁场象一个条形磁体一样由磁南极指向磁北极。在磁极点处磁场和当地的水平面垂直，在赤道磁场和当地的水平面平行，所以在北半球磁场方向倾斜指向地面。用来衡量磁感应强度大小的单位是Tesla或者Gauss（1Tesla=10000Gauss）。随着地理位置的不同，通常地磁场的强度是0.4-0.6 Gauss。需要注意的是，磁北极和地理上的北极并不重合，通常他们之间有11度左右的夹角。
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200428124113951.png" alt="image-20200428124113951" style="zoom: 67%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200428124113951.png" alt="image-20200428124113951" style="zoom: 67%;" />
 
 地磁场是一个矢量，对于一个固定的地点来说，这个矢量可以被分解为两个与当地水平面平行的分量和一个与当地水平面垂直的分量。如果保持电子罗盘和当地的水平面平行，那么罗盘中磁力计的三个轴就和这三个分量对应起来，如下图所示。
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200428124403184.png" alt="image-20200428124403184" style="zoom:67%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200428124403184.png" alt="image-20200428124403184" style="zoom:67%;" />
 
 > 常用磁力计传感器：AKM8963（很经典的一颗，目前停产）、AKM09911、AKM09915、LIS3MDL，磁传感器目前还是AKM一家独大，其他家的性能差距还是比较明显的。
 
@@ -168,7 +168,7 @@ X、Y轴指向天空时，与上面Z轴同理，有兴趣的可以在手机上�
 - misalignment error, due to the misalignment angle along the sensitive axis an gravity acceleration component will be sensed as a part of acceleration
 - computational process errors, such as numerical integration error.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20200620085340958.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200620085340958.png)
 
 > waveform numerical integration methods, such as cumulative rectangle, trapezoidal and Simpson integration methods.
 
@@ -176,11 +176,11 @@ X、Y轴指向天空时，与上面Z轴同理，有兴趣的可以在手机上�
 
 > a high sampling rate should be used when data acquisition is performed to reduce the sampling interval and thus reduce the integrationerror. However,thiswillresultinmorenoiseinthe measured data and increase the calculation burden.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200620090253185.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200620090253185.png)
 
 ### 3.3. Waveform distortion
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200620090545825.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200620090545825.png)
 
 ### 3.4. Velocity waveform correction
 
@@ -203,9 +203,9 @@ $$
 v_c(t)=v(t)+1/T[v(0)-v(T)]-v(0)  \\
 x_c(t)=x(t)+1/(2T)[v(0)-v(T)]t^2-v(0)t-x(0)
 $$
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200620092722253.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200620092722253.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200620093339022.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200620093339022.png)
 
 
 

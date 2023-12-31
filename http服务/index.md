@@ -1,7 +1,7 @@
 # HTTP 服务
 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211010180947816.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211010180947816.png)
 
 ### 1. NettyHTTP编解码器
 

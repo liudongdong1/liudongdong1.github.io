@@ -9,7 +9,7 @@
 
 > 事件监听机制是一种`委派式的事件处理机制`,事件源(组件)事件处理委托给事件监听器,当事件源发生指定事件时,就通知指定事件监听器,执行相应的操作
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108131626359.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108131626359.png)
 
 #### .1. 直接匿名内部类
 
@@ -291,7 +291,7 @@ public class MyButton extends Button{
         android:text="按钮"/> 
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108162001757.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108162001757.png)
 
 ```java
 public class MyActivity extends ActionBarActivity {  
@@ -376,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
 
 ### 4. AsyncTask
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108163130253.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108163130253.png)
 
 ```java
 public class MyAsyncTask extends AsyncTask<Integer,Integer,String>  
@@ -460,7 +460,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221224152519789.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221224152519789.png)
 
 - view， viewgroup，layout，ViewTreeObserver 之间关系： https://blog.csdn.net/HardWorkingAnt/article/details/77408329
 

@@ -3,7 +3,7 @@
 
 >  Use W&B's lightweight, interoperable tools to quickly `track experiments, version and iterate on datasets, evaluate model performance, reproduce models, visualize results and spot regressions, and share findings with colleagues. `
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210816095604114.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210816095604114.png)
 
 ### 0. Command
 
@@ -178,7 +178,7 @@ np_hist_grads = np.histogram(grads, density=True, range=(0., 1.))
 wandb.log({"gradients": wandb.Histogram(np_hist_grads)})
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210816102708235.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210816102708235.png)
 
 ##### 3. 3D visualization
 

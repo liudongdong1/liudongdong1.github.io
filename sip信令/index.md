@@ -20,11 +20,11 @@
 
 #### 2. 会话事务
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201218110509154.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201218110509154.png)
 
 #### 3. SIP 协议栈
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201218110913164.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201218110913164.png)
 
 > RSVP（ Resource ReServation Protocol ）用于`预约网络资源`，
 > RTP（ Real-time Transmit Protocol ）用于传输`实时数据并提供服务质量（ QoS ）反馈`，
@@ -34,7 +34,7 @@
 
 #### 4. SIP 消息
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201218111036570.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201218111036570.png)
 
 请求消息和响应消息的格式，一般由起始行、若干个消息头和消息体构成。
 SIP一般消息 = 起始行
@@ -48,7 +48,7 @@ SIP一般消息 = 起始行
 
 #### 5. SIP 监控域互联结构
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201218111226661.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201218111226661.png)
 
 #### 6. 学习链接
 

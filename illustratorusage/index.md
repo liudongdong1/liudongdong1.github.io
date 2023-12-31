@@ -22,41 +22,41 @@
 
 #### 选择工具库
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715170001947.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715170001947.png)
 
 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715170129514.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715170129514.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715170147512.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715170147512.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715170201860.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715170201860.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715170240658.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715170240658.png)
 
 #### 上色工具
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715170306972.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715170306972.png)
 
 #### 改变形状工具
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715170344817.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715170344817.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715170527453.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715170527453.png)
 
 #### 切片和剪切工具库
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715170613375.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715170613375.png)
 
 #### 符号工具库
 
 > 符号工具使您可创建和修改符号实例集。您可以使用“符号喷枪”工具创建符号集。然后可以使用符号工具更改集内实例的密度、颜色、位置、大小、旋转、透明度和样式。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715170641487.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715170641487.png)
 
 #### [图表工具库](https://helpx.adobe.com/cn/illustrator/using/graphs.html)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715170716912.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715170716912.png)
 
 ####  导航操作
 
@@ -66,9 +66,9 @@
 
 ####  图形操作
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715163714720.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715163714720.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210715165634755.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210715165634755.png)
 
 1. M 矩形
 2. L 椭圆形
@@ -120,7 +120,7 @@
 
 ### 2. 快捷键
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/00012.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/00012.jpg)
 
 ### 3. 打开文件
 

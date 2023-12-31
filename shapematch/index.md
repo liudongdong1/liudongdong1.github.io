@@ -5,7 +5,7 @@
 
 #### 1.1. raw moments
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200815082821286.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200815082821286.png)
 
 
 
@@ -13,19 +13,19 @@
 
 > the central moments are `translation invariant`, no matter where the blob is in the image, if the shape is the same, the moment will be the same.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200815082947566.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200815082947566.png)
 
 #### 1.3. Normalized central moments
 
 > both `translation and scale invariant`.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200815083108353.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200815083108353.png)
 
 ### 2. Hu Moments
 
 > Hu Moments are a set of 7 numbers calculated using central moments that are invariant to image transformations, the first 6 moments have been proved to be invariant to translation,scale and rotation and reflection, while the 7th moments's sign changes for image reflection.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200815085725522.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200815085725522.png)
 
 #### 2.1  calculation using Opencv
 
@@ -60,11 +60,11 @@ d3=cv2.matchShapes(im1,im2,cv2.CONTOURS_MATCH_I3,0)
 >
 > <font color=red>using log transform to translate date to the same range</font>.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200815090912913.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200815090912913.png)
 
 > opencv provides an easy to use a utility function called matchShapes that takes in two images(or contours) and finds the distance between them using Hu Moments,
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200815094311197.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200815094311197.png)
 
 ### 3. Blob
 
@@ -133,7 +133,7 @@ for c in contours:
 
 ### 4. [matchShape methods](https://docs.opencv.org/2.4/modules/imgproc/doc/structural_analysis_and_shape_descriptors.html?highlight=matchshapes)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200815100001467.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200815100001467.png)
 
 ---
 

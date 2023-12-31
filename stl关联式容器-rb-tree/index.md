@@ -7,33 +7,33 @@
 
 ### 1. 单旋转&双旋转
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411221730369.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411221730369.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411221617231.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411221617231.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411221810843.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411221810843.png)
 
 ### 2. RB-Tree
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411221916666.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411221916666.png)
 
 ### 3. 节点插入
 
 - **S为黑色，且X为外侧插入节点，先对P，G做一次单旋转，在更改P，G颜色**
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411222419521.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411222419521.png)
 
 - **S为黑色，且X为内侧插入，先对P，X做一次单旋转，并更改G，X的颜色，在将结果对G做一次单旋转**
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411222557816.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411222557816.png)
 
 - **S为红色，X为外侧插入，先对 P和G做一次单旋转，并改变X的颜色，如果GG为黑色则成功，否则进入第四种情况**
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411222840936.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411222840936.png)
 
 - S为红色，且X为外侧插入，先对PG做一次单旋转，改变X红色，如果GG为红色
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220412111653784.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220412111653784.png)
 
 ### 4. 数据结构
 
@@ -57,7 +57,7 @@ struct __rb_tree_node: public __rb_tree_node_base{
 
 #### .2. 迭代器设计
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411231528032.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411231528032.png)
 
 ```c++
 void increment(){
@@ -136,7 +136,7 @@ void init(){
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220412100924975.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220412100924975.png)
 
 ### 6. 插入节点
 
@@ -331,17 +331,17 @@ _Rb_tree_rotate_right(_Rb_tree_node_base* __x, _Rb_tree_node_base*& __root)
 ```
 #### .7. demo
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220412110231119.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220412110231119.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220412110454831.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220412110454831.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220412110812090.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220412110812090.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220412110857840.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220412110857840.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220412111010428.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220412111010428.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220412111050677.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220412111050677.png)
 
 ### 7. 元素查找
 

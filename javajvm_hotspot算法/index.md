@@ -24,7 +24,7 @@
 >
 > 当用户线程执行到安全区域时，首先会`标识自己已经进入安全区域`，那样当这段时间里虚拟机要发起垃圾收集时就不必去管这些已经声明自己在安全区域内的线程了。当线程要离开安全区域时，会检查虚拟机是否已经完成了根节点枚举，如果完成了，就继续执行，否则一直等待，`直到收到可以离开安全区域的信号为止`
 
-![HotSpot算法实现](https://gitee.com/github-25970295/blogpictureV2/raw/master/HotSpot%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0.png)
+![HotSpot算法实现](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/HotSpot%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0.png)
 
 ### Resource
 

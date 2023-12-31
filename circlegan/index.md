@@ -36,46 +36,46 @@
 - **Cycle Consistency:** using transitivity as a way to regularize structured data.
 - **Neural Style Transfer**: synthesizes a novel image by combining the` content of one image with the style of another image` based on matching the `Gram matrix statistics of pre-trained deep features`. `to capture correspondences between higher-level appearance structures`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211120123435526.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211120123435526.png)
 
 #### Methods
 
 - **Problem Formulation**:
 
-![image-20211120161816552](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211120161816552.png)
+![image-20211120161816552](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211120161816552.png)
 
 - **system overview**:
   - given any two unordered image collections X, Y, our algorithm learns to automatically translate an image from one into the other and vice versa.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211120160938235.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211120160938235.png)
 
 - idt loss的定义在论文的application之中，防止input 与out put之间的color compostion过多
 - **Adversarial loss**:  尽可能让生成器生成的数据分布接近于真实的数据分布
 
-![adversarial loss](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211120163349319.png)
+![adversarial loss](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211120163349319.png)
 
 - **Cycle Consistency Loss:**  due to the factor that the adversarial losses alone cannot guarantee that the learned function can map an individual input x to a desired output y.  `for each image x from domain x, the image translation cycle should be able to bring x back to the original image.`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211120164015832.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211120164015832.png)
 
 - 生成器G的loss： self.loss_G_A + self.loss_G_B + self.loss_cycle_A + self.loss_cycle_B + self.loss_idt_A + self.loss_idt_B
-- 判别器D的loss：![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211121125715426.png)
+- 判别器D的loss：![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211121125715426.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211120163705404.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211120163705404.png)
 
 - **Full Objective**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211120164258463.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211120164258463.png)
 
 #### Evaluation
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211120122855683.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211120122855683.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211120164439195.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211120164439195.png)
 
 #### Code
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211121124249044.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211121124249044.png)
 
 ```python
 import torch
@@ -302,13 +302,13 @@ class CycleGANModel(BaseModel):
 
   - **Application Area**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201018123156008.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201018123156008.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201018142258797.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201018142258797.png)
 
 #### Previous work:
 
-- **Structured losses for image modeling:**  image -to-image translation problems as per-pixel classification or regression that each output pixel is considered conditionally independent from all others given the input image; conditional GANs instead learn a structured loss which penalize the joint configuration of the output.![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211121115016608.png)
+- **Structured losses for image modeling:**  image -to-image translation problems as per-pixel classification or regression that each output pixel is considered conditionally independent from all others given the input image; conditional GANs instead learn a structured loss which penalize the joint configuration of the output.![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211121115016608.png)
 - **Conditional GANs**: used for discrete labels, text, image prediction from a normal map, future frame prediction, product photo generation, image generation from sparse annotations, inpainting, future state prediction, image manipulation guided by user constraints, style transfer, superresolution.
 
 #### Methods
@@ -320,7 +320,7 @@ class CycleGANModel(BaseModel):
   - uncertainty in mapping; many plausible outputs;
     - D only cares about “plausibility”, doesn’t hedge; like **MAD-GAN; BiCycleGAN**
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201018131631479.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201018131631479.png)
 
 - **Problem Formulation**:
 
@@ -330,13 +330,13 @@ class CycleGANModel(BaseModel):
 
 - **cGAN vs Pix2pix**
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20211121115129571.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211121115129571.png)
 
 - **Loss Function Object**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201018121240333.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201018121240333.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201018140505080.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201018140505080.png)
 
 ```python
    def forward(self):
@@ -385,9 +385,9 @@ class CycleGANModel(BaseModel):
 
 > restricting the GAN discriminator to only model high-frequency structure, relying on an L1 term to force low-frequency correctness, term a PatchGAN that only penalizes structure at the scale of patches, like tries to classify if each N*N patch in an image is real or fake.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201018121401145.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201018121401145.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201018131416705.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201018131416705.png)
 
 #### Evaluation
 
@@ -410,16 +410,16 @@ class CycleGANModel(BaseModel):
 
 - **Results**
 
-  - Different Loss ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201018122611607.png)![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201018122709256.png)
+  - Different Loss ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201018122611607.png)![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201018122709256.png)
 
-  - Different Generator architectures:![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201018122741654.png)
+  - Different Generator architectures:![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201018122741654.png)
 
-  - Different receptive field:![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201018122825191.png)
+  - Different receptive field:![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201018122825191.png)
 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201018122931674.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201018122931674.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201018123033271.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201018123033271.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -455,7 +455,7 @@ class CycleGANModel(BaseModel):
 
 #### Research Objective
 
-  - **Application Area**: stylegan inversion; frontalization; inpainting; face generation from segmentation; super resolution; face interpolation for real images;![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201019191118769.png)
+  - **Application Area**: stylegan inversion; frontalization; inpainting; face generation from segmentation; super resolution; face interpolation for real images;![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201019191118769.png)
 
 
 
@@ -488,30 +488,30 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201019200512316.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201019200512316.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201019200645869.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201019200645869.png)
 
 【Loss Function】
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201019200940361.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201019200940361.png)
 
-![image-20201019201025121](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201019201025121.png)
+![image-20201019201025121](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201019201025121.png)
 
-- preserve identity between the input and output images: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201019201156223.png)
+- preserve identity between the input and output images: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201019201156223.png)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201019201248655.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201019201248655.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201019201651904.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201019201651904.png)
 
 #### Evaluation
 
   - **Environment**:   
     - Dataset: CelebA-HQ dataset [20], which contains 30,000 high quality images
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201019201837985.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201019201837985.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201019201918457.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201019201918457.png)
 
 #### Notes <font color=orange>去加强了解</font>
 

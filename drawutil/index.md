@@ -7,7 +7,7 @@
 >
 > Create a `XYChart` instance via `QuickChart`, add a series of data to it, and either display it or save it as a bitmap.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210323164031.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210323164031.png)
 
 ---
 

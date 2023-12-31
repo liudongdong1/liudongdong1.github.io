@@ -3,7 +3,7 @@
 
 ### 1. 基于SpringMVC+mybatis
 
-![【DDD】领域驱动设计实践 ](https://gitee.com/github-25970295/blogpictureV2/raw/master/65ca237b58d18bb266c2301c57def8081603800074467.png)
+![【DDD】领域驱动设计实践 ](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/65ca237b58d18bb266c2301c57def8081603800074467.png)
 
 - **User Interface层**：门面层，`对外以各种协议提供服务`，该层需要`明确定义支持的服务协议、契约等`。包含：
   - `dto`: 包括`request和response两部分`，通过它`定义入参和出参的契约`，在dto层可以`使用基础设施层的validation组件完成入参格式校验；`
@@ -37,7 +37,7 @@
 
 ### 2. [COLA（Clean Object-oriented & Layered Architecture）架构](https://github.com/alibaba/COLA)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230313230393138323933343833382e706e67)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230313230393138323933343833382e706e67)
 
 
 

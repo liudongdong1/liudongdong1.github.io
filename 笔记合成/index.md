@@ -10,9 +10,9 @@
 >
 > 为此，TextStyleBrush首先通过将文本信息和风格作为两个“附加条件”控制模型输出，来解决模型随机生成图像的问题。[TextStyleBrush数据集](https://github.com/facebookresearch/IMGUR5K-Handwriting-Dataset) [论文地址](https://scontent-fml2-1.xx.fbcdn.net/v/t39.8562-6/10000000_944085403038430_3779849959048683283_n.pd)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210831152053710.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210831152053710.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210831152108869.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210831152108869.png)
 
 ---
 

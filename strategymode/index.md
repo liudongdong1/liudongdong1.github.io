@@ -9,7 +9,7 @@
 
 #### 1.案例介绍
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210306112040518.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210306112040518.png)
 
 > 每个角色对应一个名字，每类角色对应一种样子，每个角色拥有一个逃跑、攻击、防御的技能。
 >

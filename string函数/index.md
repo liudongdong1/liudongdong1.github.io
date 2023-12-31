@@ -24,9 +24,9 @@ int main(int argc, char const *argv[])
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/webp.webp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/webp.webp)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/webp-16663192207423.webp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/webp-16663192207423.webp)
 
 - 字符串传递指针情况：https://www.jianshu.com/p/f3fb85b1a647
 

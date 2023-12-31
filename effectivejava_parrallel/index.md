@@ -146,7 +146,7 @@ public class ObservableSet<E> extends ForwardingSet<E> {
 >
 > 不要依赖 `Thread.yield` 或线程优先级。这些工具只是对调度器的提示。线程优先级可以少量地用于提高已经工作的程序的服务质量，但绝不应该用于「修复」几乎不能工作的程序。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210603212220087.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210603212220087.png)
 
 ```java
 public class CountDownLatchDemo {  

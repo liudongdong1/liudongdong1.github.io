@@ -10,7 +10,7 @@
 > - **Self-healing** Kubernetes restarts containers that fail, replaces containers, kills containers that don't respond to your user-defined health check, and doesn't advertise them to clients until they are ready to serve.
 > - **Secret and configuration management** Kubernetes lets you store and manage sensitive information, such as passwords, OAuth tokens, and SSH keys. You can deploy and update secrets and application configuration without rebuilding your container images, and without exposing secrets in your stack configuration.
 
- ![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220504121148438.png)
+ ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220504121148438.png)
 
 ### 1. Control Plane
 
@@ -82,7 +82,7 @@
 
 ### 4. Kubernetes Objects
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220504154924591.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220504154924591.png)
 
 > *Kubernetes objects* are `persistent entities` in the Kubernetes system. Kubernetes uses these entities to represent the state of your cluster.
 >

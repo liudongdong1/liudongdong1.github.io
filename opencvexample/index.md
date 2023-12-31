@@ -64,7 +64,7 @@ cv2.destroyAllWindows()
 
 ## 2. [Color Tracking](https://github.com/gaborvecsei/Color-Tracker)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200830160521.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200830160521.png)
 
 ## 3. .颜色分割或阈值分割 
 
@@ -136,9 +136,9 @@ cap.release()
 cv.destroyAllWindows()
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917182916225.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917182916225.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917183149461.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917183149461.png)
 
 > Side：*a，b，c*和angle：*gamma。*现在，该伽马始终小于90度，因此可以说：如果*伽马*小于90度或*pi / 2*，则将其视为手指。
 

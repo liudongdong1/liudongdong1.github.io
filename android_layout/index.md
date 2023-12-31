@@ -4,11 +4,11 @@
 > - wrap_content 指示您的视图将其大小调整为内容所需的尺寸。
 > - match_parent 指示您的视图尽可能采用其父视图组所允许的最大尺寸。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221116135937289.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221116135937289.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211203124334515.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211203124334515.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211203124426671.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211203124426671.png)
 
 ### 1. 不同布局
 
@@ -155,13 +155,13 @@
         app:layout_constraintTop_toTopOf="@+id/tab0" />
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211203134400291.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211203134400291.png)
 
 #### .2. 线性布局 LinearLayout
 
 >  线性布局是按照水平或垂直的顺序将子元素(可以是控件或布局)依次按照顺序排列，每一个元素都位于前面一个元素之后。线性布局分为两种：水平方向和垂直方向的布局。分别通过属性 android:orientation="vertical" 和  android:orientation="horizontal" 来设置。 android:layout_weight  表示子元素占据的空间大小的比例。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211203134816563.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211203134816563.png)
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -214,7 +214,7 @@
 </LinearLayout>
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211203134636819.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211203134636819.png)
 
 #### .3. 相对布局 RelativeLayout
 
@@ -252,7 +252,7 @@
 | `layout_toEndOf`       | 将控件位于指定id控件的结束位置      |
 | `layout_alignBaseline` | 将控件的基线与指定id控件t的基线对齐 |
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211203134715398.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211203134715398.png)
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -373,13 +373,13 @@
 </FrameLayout>   
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221116142430933.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221116142430933.png)
 
 #### .6. 网格布局GridLayout
 
 - 设置组件所在的行或者列,记得是从0开始算的,不设置默认每个组件占一行一列
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/D07C612B-0DB8-4775-8045-9318F73C0B13.jpeg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/D07C612B-0DB8-4775-8045-9318F73C0B13.jpeg)
 
 ```java
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -441,9 +441,9 @@
 - `padding` +方位
 - `gravity`，  一般作用于 LeanerLayout 和 FrameLayout
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/sic5ujmqe4.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/sic5ujmqe4.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/sic5ujmqe4-16385069395031.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/sic5ujmqe4-16385069395031.png)
 
 #### .1. 属性控制间距
 

@@ -25,7 +25,7 @@
 >
 > `Java 类加载机制的隔离`是通过`不同类加载器加载指定目录`来实现的，类`加载的共享机制`是通过`双亲委派模型来实现`，而` OSGI 实现隔离靠的是每个 Bundle 都自带一个独立的类加载器 ClassLoader。`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210729080551553.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210729080551553.png)
 
 1. 首先`检查包名`是否以 java.* 开头，或者`是否在一个特定的配置文件`（org.osgi.framework.bootdelegation）中定义。`如果是，则 bundle 类加载器立即委托给父类加载器（通常是 Application 类加载器）`，如果不是则进入 2
 2. `检查是否在 Import-Package、Require-Bundle 委派列表里`，如果是委托给对应 Bundle 类加载器，如果不是，进入 3

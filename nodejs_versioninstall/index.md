@@ -7,7 +7,7 @@
 
 ### 0. Nodejs 介绍
 
-![Node-README-01.png](https://gitee.com/github-25970295/picture2023/raw/master/6629b0d130ca43de9dc6fdbc7eeb4960tplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
+![Node-README-01.png](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/6629b0d130ca43de9dc6fdbc7eeb4960tplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
 
 ### 1. Node 版本控制工具
 

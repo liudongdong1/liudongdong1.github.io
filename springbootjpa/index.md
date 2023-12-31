@@ -156,9 +156,9 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
 > **CrudRepository 中的save方法是相当于merge+save ，它会先判断记录是否存在，如果存在则更新，不存在则插入记录**
 
-![JpaRepository](https://gitee.com/github-25970295/blogpictureV2/raw/master/JpaRepository.png)
+![JpaRepository](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/JpaRepository.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619103608467.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210619103608467.png)
 
 ###### .2. 分页查询
 

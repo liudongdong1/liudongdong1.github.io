@@ -3,9 +3,9 @@
 
 > VPN技术通过`密钥交换、封装、认证、加密手段`在公共网络上建立起`私密的隧道`，保障传输数据的完整性、私密性和有效性。OpenVPN是近年来新出现的开放源码项目，实现了SSL VPN的一种解决方案。 传统SSL VPN通过端口代理的方法实现，代理服务器根据应用协议的类型（如http，telnet等）做相应的端口代理，客户端与代理服务器之间建立SSL安全连接，客户端与应用服务器之间的所有数据传输通过代理服务器转发。这种实现方式烦琐，应用范围也比较窄：`仅适用于用TCP固定端口进行通信的应用系统，且对每个需要代理的端口进行单独配置`；对于每个需要用到动态端口的协议都必须重新开发，且在代理中解析应用协议才能实现代理，如FTP协议；不能对TCP以外的其它网络通信协议进行代理；代理服务器前端的防火墙也要根据代理端口的配置变化进行相应调整。 `OpenVPN以一种全新的方式实现了SSL VPN的功能`，克服了传统SSL VPN的一些缺陷，`扩展了应用领域，并且防火墙上只需开放TCP或UDP协议的一个端口`。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201206224201009.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201206224201009.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201206224430365.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201206224430365.png)
 
 ### 0. VPN
 
@@ -35,7 +35,7 @@
 
 >  物理网卡接收数据包，经过核心TCP/IP上传到OpenVPN，OpenVPN通过`link_socket_read()`接收数据包，使用`SSL协议进行解包处理`，经过处理的数据包OpenVPN调用虚拟网卡的字符处理程序`tun_write()写入虚拟网卡的字符设备`，设备驱动程序完成数据`从用户区到核心区的复制`，并将`数据写入skb链表`，然后`调用网卡netif_rx()接收程序`，`数据包再次进入系统TCP/IP协议栈`，传到上层应用程序。如图1所示。 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201206223626554.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201206223626554.png)
 
 #### 1.5. 数据封装
 

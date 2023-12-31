@@ -169,7 +169,7 @@ def replace_md_url_v1(md_file):
             # 多个group整合成一个列表
             for match in list(chain(*matches)) :
                 if match and len(match)>0 and not "https://" in match:
-                    remote_url="https://gitee.com/github-25970295/blogimgv2022/raw/master/"    # 这里使用的时候可能需要进行修改
+                    remote_url="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/"    # 这里使用的时候可能需要进行修改
                     new_url=remote_url+match.split('/')[-1]
                     print(new_url)
                     # 更新MD中的URL

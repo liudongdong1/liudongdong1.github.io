@@ -5,11 +5,11 @@
 
 ## 1. [ThingsBoard](https://github.com/thingsboard/thingsboard-gateway)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200829204245.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200829204245.png)
 
 ### 1.1. ConnectProtocol
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200829204707.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200829204707.png)
 
 ## 2. Features
 
@@ -51,7 +51,7 @@
 - **generate alarms** based on collected data.
 - **forward** data to external systems using Rule Nodes (e.g. Kafka or RabbitMQ Rule Nodes).
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200829212029.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200829212029.png)
 
 【**Event**】
 

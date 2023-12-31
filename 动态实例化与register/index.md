@@ -13,7 +13,7 @@
 
 > 在构建网络结构的过程中，调用一个判断，根据配置文件中的信息，自动做出选择。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023162738614.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211023162738614.png)
 
 ### 2. 自动化实例
 
@@ -120,7 +120,7 @@ value 可以是任何数据类型，重点是value可以是一个 函数的内�
 """
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023163743462.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211023163743462.png)
 
 > 先扫描相关文件，把文件中所有的类、函数都import进来，然后调用getattr动态实例化，这个方法有两个问题：
 >
@@ -194,7 +194,7 @@ LOSS_REGISTRY = Registry('loss')
 METRIC_REGISTRY = Registry('metric')
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211023164336359.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211023164336359.png)
 
 > 1. 写**具体的网络结构 (以_arch.py结尾)**，它往往是一个Class (加上@ARCH_REGISTRY.register()的装饰器)，并且往往是一个单独的文件
 >

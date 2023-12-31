@@ -10,11 +10,11 @@
 
 ### 1. go项目目录结构
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220523233412693.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220523233412693.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220523233543166.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220523233543166.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220528202737022.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220528202737022.png)
 
 ### 2. 命名规则
 

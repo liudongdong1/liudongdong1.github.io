@@ -33,7 +33,7 @@
 
 > 基于`动态数组实现`，支持随机访问。*ArrayList*实现了*List*接口，是顺序容器，即元素存放的数据与放进去的顺序相同，允许放入`null`元素，底层通过**数组实现**。除该类未实现同步外，其余跟*Vector*大致相同。每个*ArrayList*都有一个容量（capacity），表示底层数组的实际大小，容器内存储元素的个数不能多于当前容量。当向容器中添加元素时，如果容量不足，容器会自动增大底层数组的大小。前面已经提过，Java泛型只是编译器提供的语法糖，所以`这里的数组是一个Object数组`，以便能够容纳任何类型的对象。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/ArrayList_base.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ArrayList_base.png)
 
 `size(), isEmpty(), get(), set()方法均能在常数时间内完成`，`add()方法的时间开销跟插入位置有关，addAll()方法的时间开销跟添加元素的个数成正比`。其余方法大都是线性时间。
 
@@ -81,11 +81,11 @@ private void grow(int minCapacity) {
 
 由于Java GC自动管理了内存，这里也就不需要考虑源数组释放的问题。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/ArrayList_grow.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ArrayList_grow.png)
 
 空间的问题解决后，插入过程就显得非常简单。
 
-![ArrayList_add](https://gitee.com/github-25970295/blogpictureV2/raw/master/ArrayList_add.png)
+![ArrayList_add](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ArrayList_add.png)
 
 `add(int index, E e)`需要先对元素进行移动，然后完成插入操作，也就意味着该方法有着线性的时间复杂度。
 
@@ -120,7 +120,7 @@ public E remove(int index) {
 
 > 基于`双向链表`实现，只能顺序访问，但是可以`快速地在链表中间插入和删除元素`。不仅如此，LinkedList 还可以用作`栈、队列和双向队列`。*LinkedList*`同时实现了List接口和Deque接口`，也就是说它既可以看作一个`顺序容器`，又可以看作一个`队列（*Queue*）`，同时又可以看作一个`栈（*Stack*）`。这样看来，*LinkedList*简直就是个全能冠军。当你需要使用栈或者队列时，可以考虑使用*LinkedList*，一方面是因为Java官方已经声明不建议使用*Stack*类，更遗憾的是，Java里根本没有一个叫做*Queue*的类（它是个接口名字）。关于`栈或队列`，现在的`首选是ArrayDeque`，它有着比*LinkedList*（当作栈或队列使用时）有着更好的性能。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/LinkedList_base.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/LinkedList_base.png)
 
 *LinkedList*底层**通过双向链表实现**，双向链表的每个节点用内部类*Node*表示。*LinkedList*通过`first`和`last`引用分别指向链表的第一个和最后一个元素。注意这里没有所谓的哑元，当链表为空的时候`first`和`last`都指向`null`。
 
@@ -251,7 +251,7 @@ public E set(int index, E element) {
 
 > *ArrayDeque*底层通过数组实现，为了满足可以`同时在数组两端插入或删除元素的需求`，该数组还必须是循环的，即**循环数组（circular array）**，也就是说数组的任何一点都可能被看作起点或者终点。*ArrayDeque*是非线程安全的（not thread-safe），当多个线程同时使用的时候，需要程序员手动同步；另外，该容器不允许放入`null`元素。**`head`指向首端第一个有效元素，`tail`指向尾端第一个可以插入元素的空位**。因为是循环数组，所以`head`不一定总等于0，`tail`也不一定总是比`head`大。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/ArrayDeque_base.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ArrayDeque_base.png)
 
 ##### 1. addFirst
 
@@ -376,13 +376,13 @@ public E peekLast() {
 
 > **优先队列的作用是能保证每次取出的元素都是队列中权值最小的**（Java的优先队列每次取最小元素，C++的优先队列每次取最大元素）。这里牵涉到了大小关系，**元素大小的评判可以通过元素本身的自然顺序（\*natural ordering\*），也可以通过构造时传入的比较器**（*Comparator*，类似于C++的仿函数）。Java中*PriorityQueue*实现了*Queue*接口，不允许放入`null`元素；其通过堆实现，具体说是通过完全二叉树（*complete binary tree*）实现的**小顶堆**（任意一个非叶子节点的权值，都不大于其左右子节点的权值），也就意味着可以通过数组来作为*PriorityQueue*的底层实现。*PriorityQueue*的`peek()`和`element`操作是常数时间，`add()`, `offer()`, 无参数的`remove()`以及`poll()`方法的时间复杂度都是*log(N)*。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/PriorityQueue_base.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/PriorityQueue_base.png)
 
 ##### 1. add()和offer()
 
 `add(E e)`和`offer(E e)`的语义相同，都是向优先队列中插入元素，只是`Queue`接口规定二者对插入失败时的处理不同，`前者在插入失败时抛出异常`，后则则会返回`false`。对于*PriorityQueue*这两个方法其实没什么差别。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/PriorityQueue_offer.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/PriorityQueue_offer.png)
 
 新加入的元素可能会破坏小顶堆的性质，因此需要进行必要的调整。
 
@@ -427,7 +427,7 @@ private void siftUp(int k, E x) {
 
 `element()`和`peek()`的语义完全相同，都是`获取但不删除队首元素`，也就是队列中权值最小的那个元素，二者唯一的区别是当方法失败时前者抛出异常，后者返回`null`。根据小顶堆的性质，堆顶那个元素就是全局最小的那个；由于堆用数组表示，根据下标关系，`0`下标处的那个元素既是堆顶元素。所以**直接返回数组`0`下标处的那个元素即可**。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/PriorityQueue_peek.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/PriorityQueue_peek.png)
 
 ```java
 //peek()
@@ -442,7 +442,7 @@ public E peek() {
 
 `remove()`和`poll()`方法的语义也完全相同，都是`获取并删除队首元素`，区别是当方法失败时`前者抛出异常`，后者返回`null`。由于删除操作会改变队列的结构，为维护小顶堆的性质，需要进行必要的调整。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/PriorityQueue_poll.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/PriorityQueue_poll.png)
 
 ```java
 public E poll() {
@@ -486,7 +486,7 @@ private void siftDown(int k, E x) {
 
 `remove(Object o)`方法用于删除队列中跟`o`相等的某一个元素（如果有多个相等，只删除一个），该方法不是*Queue*接口内的方法，而是*Collection*接口的方法。由于删除操作会改变队列结构，所以要进行调整；又由于删除元素的位置可能是任意的，所以调整过程比其它函数稍加繁琐。具体来说，`remove(Object o)`可以分为2种情况：1. 删除的是最后一个元素。直接删除即可，不需要调整。2. 删除的不是最后一个元素，从删除点开始以最后一个元素为参照调用一次`siftDown()`即可。此处不再赘述。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/PriorityQueue_remove2.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/PriorityQueue_remove2.png)
 
 ```java
 //remove(Object o)
@@ -525,7 +525,7 @@ public boolean remove(Object o) {
 >
 > 在树的结构发生改变时（插入或者删除操作），往往会破坏上述条件3或条件4，需要通过调整使得查找树重新满足红黑树的约束条件。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/TreeMap_base.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/TreeMap_base.png)
 
 调整可以分为两类：一类是颜色调整，即改变某个节点的颜色；另一类是结构调整，集改变检索树的结构关系。结构调整过程包含两个基本操作：**左旋（Rotate Left），右旋（RotateRight）**。
 
@@ -533,7 +533,7 @@ public boolean remove(Object o) {
 
 左旋的过程是将`x`的右子树绕`x`逆时针旋转，使得`x`的右子树成为`x`的父亲，同时修改相关节点的引用。旋转之后，二叉查找树的属性仍然满足。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/TreeMap_rotateLeft.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/TreeMap_rotateLeft.png)
 
 ```java
 //Rotate Left
@@ -560,7 +560,7 @@ private void rotateLeft(Entry<K,V> p) {
 
 右旋的过程是将`x`的左子树绕`x`顺时针旋转，使得`x`的左子树成为`x`的父亲，同时修改相关节点的引用。旋转之后，二叉查找树的属性仍然满足。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/TreeMap_rotateRight.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/TreeMap_rotateRight.png)
 
 ```java
 //Rotate Right
@@ -590,7 +590,7 @@ private void rotateRight(Entry<K,V> p) {
 
 后继节点在红黑树的删除操作中将会用到。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/TreeMap_successor.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/TreeMap_successor.png)
 
 ```java
 // 寻找节点后继函数successor()
@@ -618,7 +618,7 @@ static <K,V> TreeMap.Entry<K,V> successor(Entry<K,V> t) {
 
 `get(Object key)`方法根据指定的`key`值返回对应的`value`，该方法调用了`getEntry(Object key)`得到相应的`entry`，然后返回`entry.value`。因此`getEntry()`是算法的核心。算法思想是根据`key`的自然顺序（或者比较器顺序）对二叉查找树进行查找，直到找到满足`k.compareTo(p.key) == 0`的`entry`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/TreeMap_getEntry.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/TreeMap_getEntry.png)
 
 ```java
 //getEntry()方法
@@ -671,7 +671,7 @@ public V put(K key, V value) {
 
 上述代码的插入部分并不难理解：首先在红黑树上找到合适的位置，然后创建新的`entry`并插入（当然，新插入的节点一定是树的叶子）。难点是调整函数`fixAfterInsertion()`，前面已经说过，调整往往需要1.改变某些节点的颜色，2.对某些节点进行旋转。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/TreeMap_put.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/TreeMap_put.png)
 
 调整函数`fixAfterInsertion()`的具体代码如下，其中用到了上文中提到的`rotateLeft()`和`rotateRight()`函数。通过代码我们能够看到，情况2其实是落在情况3内的。情况4～情况6跟前三种情况是对称的，因此图解中并没有画出后三种情况，读者可以参考代码自行理解。
 
@@ -776,7 +776,7 @@ private void deleteEntry(Entry<K,V> p) {
 
 跟上文中讲过的`fixAfterInsertion()`函数一样，这里也要分成若干种情况。记住，**无论有多少情况，具体的调整操作只有两种：1.改变某些节点的颜色，2.对某些节点进行旋转。**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/TreeMap_fixAfterDeletion.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/TreeMap_fixAfterDeletion.png)
 
 上述图解的总体思想是：将情况1首先转换成情况2，或者转换成情况3和情况4。当然，该图解并不意味着调整过程一定是从情况1开始。通过后续代码我们还会发现几个有趣的规则：a).如果是由情况1之后紧接着进入的情况2，那么情况2之后一定会退出循环（因为x为红色）；b).一旦进入情况3和情况4，一定会退出循环（因为x为root）。
 
@@ -890,7 +890,7 @@ while (iter.hasNext()) {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/HashMap_base.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/HashMap_base.png)
 
 从上图容易看出，如果选择合适的哈希函数，`put()`和`get()`方法可以在常数时间内完成。但在对*HashMap*进行迭代时，需要遍历整个table以及后面跟的冲突链表。因此对于迭代比较频繁的场景，不宜将*HashMap*的初始大小设的过大。
 
@@ -974,7 +974,7 @@ final Entry<K,V> removeEntryForKey(Object key) {
 
 > 使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用(LRU)顺序。*LinkedHashMap*实现了*Map*接口，即允许放入`key`为`null`的元素，也允许插入`value`为`null`的元素。从名字上可以看出该容器是*linked list*和*HashMap*的混合体，也就是说它同时满足*HashMap*和*linked list*的某些特性。可将LinkedHashMap看作采用linked list增强的HashMap。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/LinkedHashMap_base.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/LinkedHashMap_base.png)
 
 事实上*LinkedHashMap*是*HashMap*的直接子类，二者唯一的区别是`LinkedHashMap在HashMap的基础上，采用双向链表`（doubly-linked list）的形式将所有`entry`连接起来，这样是为`保证元素的迭代顺序跟插入顺序相同`。上图给出了*LinkedHashMap*的结构图，主体部分跟*HashMap*完全一样，多了`header`指向双向链表的头部（是一个哑元），**该双向链表的迭代顺序就是`entry`的插入顺序**。
 
@@ -995,7 +995,7 @@ final Entry<K,V> removeEntryForKey(Object key) {
 > 1. 从`table`的角度看，新的`entry`需要插入到对应的`bucket`里，当有哈希冲突时，采用头插法将新的`entry`插入到冲突链表的头部。
 > 2. 从`header`的角度看，新的`entry`需要插入到双向链表的尾部。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/LinkedHashMap_addEntry.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/LinkedHashMap_addEntry.png)
 
 ```java
 // LinkedHashMap.addEntry()
@@ -1034,7 +1034,7 @@ private void addBefore(Entry<K,V> existingEntry) {
 > 1. 从`table`的角度看，需要将该`entry`从对应的`bucket`里删除，如果对应的冲突链表不空，需要修改冲突链表的相应引用。
 > 2. 从`header`的角度来看，需要将该`entry`从双向链表中删除，同时修改链表中前面以及后面元素的相应引用。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/LinkedHashMap_removeEntryForKey.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/LinkedHashMap_removeEntryForKey.png)
 
 ```java
 // LinkedHashMap.removeEntryForKey()，删除key值对应的entry

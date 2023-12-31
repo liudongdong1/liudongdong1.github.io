@@ -10,9 +10,9 @@
 >
 > **结论：只要是处理纯文本数据，就优先考虑使用字符流。 除此之外都使用字节流。**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210510205614.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210510205614.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210510210657.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210510210657.png)
 
 ### 1. 字节流&字符流
 
@@ -63,11 +63,11 @@
 > - UTF-8 编码中，中文字符占 3 个字节，英文字符占 1 个字节；
 > - UTF-16be 编码中，中文字符和英文字符都占 2 个字节。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210510211525.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210510211525.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210803120841012.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210803120841012.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210510211618.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210510211618.png)
 
 > **字符流 = 字节流 + 编码表**InputStreamReader将**字节**输入流转为**字符**输入流，继承自Reader。OutputStreamWriter是将**字符**输出流转为**字节**输出流，继承自Writer。
 >

@@ -3,7 +3,7 @@
 
 > [代理模式](https://zh.wikipedia.org/wiki/代理模式)是一种设计模式，提供了对目标对象额外的访问方式，即`通过代理对象访问目标对象`，这样可以在不修改原目标对象的前提下，提供额外的功能操作，扩展目标对象的功能。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221127192433132.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221127192433132.png)
 
 ### 1. 静态代理
 

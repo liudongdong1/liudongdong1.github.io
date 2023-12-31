@@ -19,7 +19,7 @@ dtwvis.plot_warping(s1, s2, path)
 distance = dtw.distance(s1, s2)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211015165822295.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211015165822295.png)
 
 ```python
 d, paths = dtw.warping_paths(s1, s2, window=20)
@@ -27,7 +27,7 @@ best_path = dtw.best_path(paths)
 dtwvis.plot_warpingpaths(s1, s2, paths, best_path)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211015165840041.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211015165840041.png)
 
 - classify
 
@@ -74,7 +74,7 @@ plt.tight_layout()
 classifyNN(k,idx)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211015170025099.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211015170025099.png)
 
 
 ---

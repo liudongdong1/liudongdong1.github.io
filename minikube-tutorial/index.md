@@ -5,9 +5,9 @@
 
 ### 1. Minikube 和 Kubernetes 的区别
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/16254840-44f55035f12879c9.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16254840-44f55035f12879c9.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/16254840-4bec1f9098962451.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16254840-4bec1f9098962451.png)
 
 ### 2. Minikube 基础操作
 
@@ -33,7 +33,7 @@ $ minikube delete --all   #删除本地所有集群和配置
 
 ### 3. kubernetes 基本操作
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220504165556289.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220504165556289.png)
 
 #### .1. create a cluster
 
@@ -93,7 +93,7 @@ $ export NODE_PORT=$(kubectl get services/kubernetes-bootcamp -o go-template='{{
 $ kubectl delete service -l app=kubernetes-bootcamp
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220504181352083.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220504181352083.png)
 
 #### .5. Scale the app
 

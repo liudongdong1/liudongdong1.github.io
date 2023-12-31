@@ -154,7 +154,7 @@ See Also
     dstack : Stack arrays in sequence depth wise (along third dimension)
 ```
 
-![image-20210621112500264](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210621112500264.png)
+![image-20210621112500264](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210621112500264.png)
 
 #### 3.3. 数组转置
 
@@ -208,7 +208,7 @@ c[:2,1:] # 对于二维数组，“:2”表示行：即从第0行开始到第2�
 
 ### 5. 数据维度
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210530063241357.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210530063241357.png)
 
 > einops主要是**rearrange, reduce, repeat**这3个方法，下面介绍如何通过这3个方法如何来起到 stacking, reshape, transposition, squeeze/unsqueeze, repeat, tile, concatenate, view 以及各种reduction操作的效果)
 
@@ -235,7 +235,7 @@ a = np.array([[[[1, 1, 1], [1, 1, 1]],[[2, 2, 2], [2, 2, 2]], [[3, 3, 3], [3, 3,
               [[[4, 4, 4], [4, 4, 4]],[[6, 6, 6], [6, 6, 6]], [[8, 8, 8], [8, 8, 8]]]])
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211028100714171.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211028100714171.png)
 
 
 ---

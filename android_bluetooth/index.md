@@ -190,9 +190,9 @@ builder.build();
 > - 外设必需不停的向外广播，让中心设备知道它的存在。而扫描回复是可选的，中心设备可以向外设请求扫描回复，这里包含一些设备额外的信息。
 > - 外围设备会设定一个广播间隔。每个广播间隔中，它会重新发送自己的广播数据。广播间隔越长，越省电，同时也不太容易扫描到。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211110095808015.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211110095808015.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211110102735026.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211110102735026.png)
 
 `AD Type 类型代码`，Flags：TYPE = **0x01**。用来标识设备LE物理连接。
 
@@ -203,9 +203,9 @@ builder.build();
 - bit 4: 对 Same Device Capable(Host) 同时支持 BLE 和 BR/EDR
 - bit 5..7: 预留
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211110102917775.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211110102917775.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211110102242036.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211110102242036.png)
 
 - Type = 0x01 表示设备LE物理连接。
 - Type = 0x09 表示设备的全名

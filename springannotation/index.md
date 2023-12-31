@@ -107,7 +107,7 @@ private String styleName;
 
 单独使用 `@Controller` 不加 `@ResponseBody`的话一般使用在要返回一个视图的情况，这种情况属于比较传统的 Spring MVC 的应用，对应于前后端不分离的情况。`@Controller` +`@ResponseBody` 返回 JSON 或 XML 形式数据
 
-`@RestController`只返回对象，对象数据直接以 JSON 或 XML 形式写入 HTTP 响应(Response)中，这种情况属于 RESTful Web服务，这也是目前日常开发所接触的最常用的情况（前后端分离）。![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619135625071.png)
+`@RestController`只返回对象，对象数据直接以 JSON 或 XML 形式写入 HTTP 响应(Response)中，这种情况属于 RESTful Web服务，这也是目前日常开发所接触的最常用的情况（前后端分离）。![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210619135625071.png)
 
 [@Controller +@ResponseBody](https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247485544&idx=1&sn=3cc95b88979e28fe3bfe539eb421c6d8&chksm=cea247a3f9d5ceb5e324ff4b8697adc3e828ecf71a3468445e70221cce768d1e722085359907&token=1725092312&lang=zh_CN#rd) 返回JSON 或 XML 形式数据, 如果你需要在Spring4之前开发 RESTful Web服务的话，你需要使用`@Controller` 并结合`@ResponseBody`注解，也就是说`@Controller` +`@ResponseBody`= `@RestController`（Spring 4 之后新加的注解）。
 
@@ -271,7 +271,7 @@ public class UserRegisterRequest {
 
 这样我们的后端就可以直接把 json 格式的数据映射到我们的 `UserRegisterRequest` 类上。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/@RequestBody.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/@RequestBody.png)
 
 👉 需要注意的是：**一个请求方法只可以有一个`@RequestBody`，但是可以有多个`@RequestParam`和`@PathVariable`**。 如果你的方法必须要用两个 `@RequestBody`来接受数据的话，大概率是你的数据库设计或者系统设计出问题了！
 
@@ -351,7 +351,7 @@ class WebSite {
 
 更多内容请查看我的这篇文章：《[10 分钟搞定 SpringBoot 如何优雅读取配置文件？](https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247486181&idx=2&sn=10db0ae64ef501f96a5b0dbc4bd78786&chksm=cea2452ef9d5cc384678e456427328600971180a77e40c13936b19369672ca3e342c26e92b50&token=816772476&lang=zh_CN#rd)》 。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210619140555651.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210619140555651.png)
 
 ### 6. 参数校验
 

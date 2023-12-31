@@ -11,7 +11,7 @@
 
 ### 集群中使用简单的Hash算法
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/99d205ed54b5473d928168ad013977a0~tplv-k3u1fbpfcp-zoom-1.image) 这个时候请求机器和对应服务器的访问关系是
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/99d205ed54b5473d928168ad013977a0~tplv-k3u1fbpfcp-zoom-1.image) 这个时候请求机器和对应服务器的访问关系是
 
 | 客户端   | 服务器   |
 | -------- | -------- |
@@ -23,7 +23,7 @@
 
 一切看起来都那么的美好，直到有台机器蹦了。这里假定是Tomcat3挂了 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/ebebb8d2d87d4820b27d2f01cdaf6724~tplv-k3u1fbpfcp-zoom-1.image) 当这种情况发生的时候，负载均衡服务器，监测到了Tomcat3挂掉了，然后就调整自己的算法，`机器编号=hash(ip) % 节点数量` 这里的节点数量配置为2。这样虽然也能继续负载均衡功能，但是客户端和服务器之间的映射关系已经发生了比较大的变化了。新的映射关系已经变成这样了。
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ebebb8d2d87d4820b27d2f01cdaf6724~tplv-k3u1fbpfcp-zoom-1.image) 当这种情况发生的时候，负载均衡服务器，监测到了Tomcat3挂掉了，然后就调整自己的算法，`机器编号=hash(ip) % 节点数量` 这里的节点数量配置为2。这样虽然也能继续负载均衡功能，但是客户端和服务器之间的映射关系已经发生了比较大的变化了。新的映射关系已经变成这样了。
 
 | 客户端   | 服务器   |
 | -------- | -------- |
@@ -41,7 +41,7 @@
 
 ### 什么是一致性Hash算法？
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/666f29ac3aa3436789ef690233a94700~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/666f29ac3aa3436789ef690233a94700~tplv-k3u1fbpfcp-zoom-1.image)
 
 - **hash环**
 
@@ -55,29 +55,29 @@
 
 如何确定⼀个客户端路由到哪个服务器处理呢？ `按照逆时针⽅向找最近的服务器节点 `
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/5f7a0ca2745540ee891406d051df9571~tplv-k3u1fbpfcp-zoom-1.image) 举个例
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/5f7a0ca2745540ee891406d051df9571~tplv-k3u1fbpfcp-zoom-1.image) 举个例
 
 ### 一致性Hash算法之机器扩容
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/8cf985862d044cd19befb020635d6418~tplv-k3u1fbpfcp-zoom-1.image) 
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/8cf985862d044cd19befb020635d6418~tplv-k3u1fbpfcp-zoom-1.image) 
 
 这个时候，我们在增加了一台服务器，IP经过Hash之后，落在了2,3节点之间，变成了节点5。 那么此时，只有浏览器Ip Hash值落在 3-5之间，5-2之间的才收到影响，其他的所有的用户根本就不会收到影响。
 
 ### 一致性Hash算法之机器缩容
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/946914649c804e5e957ed10b63f3a6c6~tplv-k3u1fbpfcp-zoom-1.image) 当我们机器3蹦了之后，原本浏览器Ip Hash值值在 2-3之间，3-4之间的。直接转移到顺时针的第一台机器，也就是节点4。此时其他的节点之间的机器访问地址不受影响
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/946914649c804e5e957ed10b63f3a6c6~tplv-k3u1fbpfcp-zoom-1.image) 当我们机器3蹦了之后，原本浏览器Ip Hash值值在 2-3之间，3-4之间的。直接转移到顺时针的第一台机器，也就是节点4。此时其他的节点之间的机器访问地址不受影响
 
 ### 一致性Hash算法之虚拟节点
 
 #### 数据倾斜问题
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/24163450b27749288cdcaf3437f57c1c~tplv-k3u1fbpfcp-zoom-1.image) 
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/24163450b27749288cdcaf3437f57c1c~tplv-k3u1fbpfcp-zoom-1.image) 
 
 但是，⼀致性哈希算法在服务节点太少时，容易因为节点分部不均匀⽽造成数据倾斜问题。例如系统中只有两台服务器，其环分布如下，节点2只能负责⾮常⼩的⼀段，⼤量的客户端 请求落在了节点1上，这就是数据（请求)倾斜问题
 
 #### 虚拟节点
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/07f33b5d9f0247f0b61c95348df83971~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/07f33b5d9f0247f0b61c95348df83971~tplv-k3u1fbpfcp-zoom-1.image)
 
 为了解决这种数据倾斜问题，⼀致性哈希算法引⼊了虚拟节点机制，即`对每⼀个服务节点计算多个哈希`，每个计算结果位置都放置⼀个此服务节点，称为`虚拟节点`。
 
@@ -282,7 +282,7 @@ ngx_http_upstream_consistent_hash 模块是⼀个第三⽅模块，需要我们�
 
 1. github下载nginx⼀致性hash负载均衡模块 [github.com/replay/ngx_…](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Freplay%2Fngx_http_consistent_hash)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/c17af46c79a1425eaed538531c5bf610~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/c17af46c79a1425eaed538531c5bf610~tplv-k3u1fbpfcp-zoom-1.image)
 
 1. 将下载的压缩包上传到nginx服务器，并解压
 2. 我们已经编译安装过nginx，此时进⼊当时nginx的源码⽬录，执⾏如下命令
@@ -296,7 +296,7 @@ make install
 
 nginx.conf⽂件中配置 负载均衡策略
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/641e24765325463fadc91e3f26443771~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/641e24765325463fadc91e3f26443771~tplv-k3u1fbpfcp-zoom-1.image)
 
 
 

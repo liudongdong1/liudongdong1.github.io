@@ -5,7 +5,7 @@
 
 > 在工厂方法模式中，抽象产品类Product负责定义产品的共性，事项对事物最抽象的定义，Creator为抽象创建类，也就是抽象工厂，具体如何创建产品类是由具体的实现工厂ConcreteCreator完成的。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/6eb8364ad8984f1bb01fa0b2e551e64dtplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/6eb8364ad8984f1bb01fa0b2e551e64dtplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
 
 - ConcreteCreator 有静态实现，和反射方式实现
 

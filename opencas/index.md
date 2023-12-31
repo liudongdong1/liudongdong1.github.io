@@ -18,18 +18,18 @@ CAS是 Intel® 通过`I/O分类和在高速介质上缓存经常使用的数据�
 > - primarily designed to `cache data from HDD drives on SSDs`
 > -  caching data `from QLC SSD on TLC SSD, Optane drives, RAM memory, or any combination of above including all kinds of multilevel configurations`
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220818152552210.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220818152552210.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220818152723560.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220818152723560.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220818153151138.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220818153151138.png)
 
 ### Cache
 
 > - a component that mediates data exchange between an application and a backend storage.
 > - selectively storing most accessed data on a relatively smaller and faster **cache storage** 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/cache.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/cache.png)
 
 #### cache mode
 
@@ -51,14 +51,14 @@ CAS是 Intel® 通过`I/O分类和在高速介质上缓存经常使用的数据�
 >
 > During normal **cache** operation the **backend storage** is exclusively owned by the **cache** object, and application should never access it directly unless the **core** is removed from the **cache**. That’s it, using the **core** API is the only proper way of accessing the data on the **backend storage**.
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/core.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/core.png)
 
 #### cache line
 
 > - A **cache line** is the smallest portion of data that can be mapped into a [**cache**](https://open-cas.github.io/cache.html). Every mapped **cache line** is associated with a **core line**, which is a corresponding region on a **backend storage**. 
 > - cache line: core id, core line numver, valid and dirty bits 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/cache_line.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/cache_line.png)
 
 #### volume
 
@@ -66,19 +66,19 @@ CAS是 Intel® 通过`I/O分类和在高速介质上缓存经常使用的数据�
 > - OCF uses a **volume** interface for accessing both **backend storage** and **cache storage**
 > - Storage represented by **volume** may be any kind of storage that allows for random block access - it may be HDD or SSD drive, ramdisk, network storage or any other kind of non-volatile or volatile memory.
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/volume.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/volume.png)
 
 ### Caching solutions
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/ocf_examples.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ocf_examples.jpg)
 
 #### OpenCAS Linux
 
 > Open CAS Linux accelerates Linux applications by `caching active (*hot*) data to a local flash device` inside servers.
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/ocf_software_stack_layers.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ocf_software_stack_layers.jpg)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/guide_figure1.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/guide_figure1.jpg)
 
 > - initial read data is retrieved from backend storage and copied to the Open CAS Linux cache. A second read promotes data to system memory. Subsequent reads are returned at high-performance RAM or flash speed. 
 > - In Write-through mode, all data is written synchronously to both the backend storage and the cache. 
@@ -86,7 +86,7 @@ CAS是 Intel® 通过`I/O分类和在高速介质上缓存经常使用的数据�
 
 #### SPDK OCF Block Device
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/spdk_software_stack_layers.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/spdk_software_stack_layers.jpg)
 
 ---
 

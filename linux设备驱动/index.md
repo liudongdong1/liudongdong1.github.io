@@ -3,7 +3,7 @@
 
 ### 1. 内核划分
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221108144636379.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221108144636379.png)
 
  .1. 字符设备
 
@@ -15,7 +15,7 @@
 
 ####  连接一个模块到内核
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221108151129740.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221108151129740.png)
 
 - 应用程序存在于虚拟内存中, 有一个非常大的堆栈区，堆栈。
 -  内核, 相反, 有一个非常小的堆栈; 它可能小到一个, 4096 字节的页. 
@@ -24,7 +24,7 @@
 
 - modprobe工具使用
 
-![image-20221108154002563](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221108154002563.png)
+![image-20221108154002563](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221108154002563.png)
 
 
 
@@ -277,7 +277,7 @@ int scull_release(struct inode *inode, struct file *filp)
 
 #####  scull 内存布局
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221109115252792.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221109115252792.png)
 
 ```c
 struct scull_qset { 
@@ -318,7 +318,7 @@ unsigned long copy_from_user (void *to, const void *from, unsigned long count);
 unsigned long copy_to_user (void *to, const void *from, unsigned long count);
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221109120002014.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221109120002014.png)
 
 -  todo ？ 这里read代码没有完全看明白， quantum这个有什么作用
 
@@ -430,7 +430,7 @@ struct iovec
 };
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-e14e59d101071b1ff39d9854bd248d9b_720w.webp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-e14e59d101071b1ff39d9854bd248d9b_720w.webp)
 
 ### 3. 字符设备驱动
 
@@ -1771,7 +1771,7 @@ irqreturn_t short_sh_interrupt(int irq, void *dev_id, struct pt_regs *regs)
 
 - 不同平台上C语言基本类型大小不一致
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221112094746900.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221112094746900.png)
 
 - 时间间隔：不要假定每秒有 1000 个嘀哒. 尽管当前对 i386 体系是真实的, 不是每个 Linux 平台都以这个速度运行.
 - 页大小： 记住一个内存页是 PAGE_SIZE 字节, 不是 4KB. 被支持的平台显示页大小从 4 KB 到 64 KB, 并且有时它们在相同平台上的不同的实现上不同

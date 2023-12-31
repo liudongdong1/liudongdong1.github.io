@@ -12,7 +12,7 @@
 
 ### 1. Demo1
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210704223811529.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210704223811529.png)
 
 > 煎饼 加一个鸡蛋 加一个鸡蛋 加一根香肠, 销售价格: 12
 
@@ -222,9 +222,9 @@ public class Test
 
 ### 3. Java I/O中的装饰者模式
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210704224507594.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210704224507594.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210704224617505.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210704224617505.png)
 
 如果要**实现一个自己的包装流**，根据上面的类图，需要继承抽象装饰类 FilterInputStream,譬如来实现这样一个操作的装饰者类：将输入流中的所有小写字母变成大写字母
 
@@ -270,7 +270,7 @@ public class UpperCaseInputStream extends FilterInputStream {
 
 ### 4. spring cache 中的装饰者模式
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210704224901969.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210704224901969.png)
 
 ```java
 public class TransactionAwareCacheDecorator implements Cache {
@@ -304,7 +304,7 @@ public class TransactionAwareCacheDecorator implements Cache {
 
 ### 5. spring session 中的装饰者模式
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210704225417971.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210704225417971.png)
 
 ```java
 public class ServletRequestWrapper implements ServletRequest {
@@ -327,7 +327,7 @@ public class ServletRequestWrapper implements ServletRequest {
 
 ### 6. Mybatis 缓存中的装饰者模式
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210704225309124.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210704225309124.png)
 
 ### Resource
 

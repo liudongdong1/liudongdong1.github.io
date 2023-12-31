@@ -11,7 +11,7 @@
 
 #### 1. VM & Docker
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220324133949123-16481004040975.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220324133949123-16481004040975.png)
 
 - **虚拟机：**传统的虚拟机需要模拟整台机器包括硬件，每台虚拟机都需要有自己的操作系统，虚拟机一旦被开启，预分配给他的资源将全部被占用。每一个虚拟机包括应用，必要的二进制和库，以及一个完整的用户操作系统。
 - **Docker容器：**容器技术是和我们的宿主机共享硬件资源及操作系统可以实现资源的动态分配。容器包含应用和其所有的依赖包，但是与其他容器**共享内核**。容器在宿主机操作系统中，在用户空间以分离的进程运行。
@@ -22,7 +22,7 @@
 
 #### 3. Docker 命令
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/4b08513737d74479b14edf3ab5c72979tplv-k3u1fbpfcp-zoom-in-crop-mark1304000.awebp)4. Docker运行原理
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/4b08513737d74479b14edf3ab5c72979tplv-k3u1fbpfcp-zoom-in-crop-mark1304000.awebp)4. Docker运行原理
 
 > Docker 只提供一个运行环境，他跟 VM 不一样，是不需要运行一个独立的 OS，`容器中的系统内核跟宿主机的内核是公用的`。**docker 容器本质上是宿主机的进程**。
 >
@@ -34,9 +34,9 @@
 
 > Linux Namespaces 机制提供一种`进程资源隔离`方案。PID、IPC、Network 等系统资源不再是全局性的，而是属于某个特定的 **Namespace**。每个 **namespace** 下的资源对于其他 **namespace** 下的资源都是透明，不可见的。系统中可以同时存在两个进程号为 0、1、2 的进程，由于属于不同的 namespace，所以它们之间并不冲突。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/5e90882472374f3b93858d5122d3ab16tplv-k3u1fbpfcp-zoom-in-crop-mark1304000.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/5e90882472374f3b93858d5122d3ab16tplv-k3u1fbpfcp-zoom-in-crop-mark1304000.awebp)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/a794f094d2564510a9022470e336b6d4tplv-k3u1fbpfcp-zoom-in-crop-mark1304000.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/a794f094d2564510a9022470e336b6d4tplv-k3u1fbpfcp-zoom-in-crop-mark1304000.awebp)
 
 ##### .2. CGroup 分配资源
 
@@ -44,7 +44,7 @@
 >
 >  **Cgroup** 是 Linux `内核`提供的一种可以`限制、记录、隔离进程组所使用的物理资源 (如 CPU、内存、磁盘 IO 等等) 的机制`，被 LXC (Linux container)、Docker 等很多项目用于实现进程资源控制。Cgroup 本身是提供将进程进行分组化管理的功能和接口的基础结构，I/O 或内存的分配控制等具体的资源管理是通过该功能来实现的，这些具体的资源 管理功能称为 Cgroup 子系统。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/d2dc4aca163144918e25d217c91496b3tplv-k3u1fbpfcp-zoom-in-crop-mark1304000.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/d2dc4aca163144918e25d217c91496b3tplv-k3u1fbpfcp-zoom-in-crop-mark1304000.awebp)
 
 ##### .3. chroot 跟 pivot_root 文件系统
 
@@ -66,7 +66,7 @@
 
 > AUFS 作为联合文件系统，它能够将不同文件夹中的层联合（Union）到了同一个文件夹中，这些文件夹在 AUFS 中称作分支，整个『联合』的过程被称为*联合挂载（Union Mount）
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/2017-11-30-docker-aufs.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/2017-11-30-docker-aufs.png)
 
 #### 5. Docker网络
 
@@ -89,7 +89,7 @@
 > - 容器访问外部：首先 IP 包从容器发往自己的默认网关 docker0，包到达 docker0 后，会查询主机的路由表，发现包应该从主机的 eth0 发往主机的网关 10.10.105.254/24。接着包会转发给 eth0，并从 eth0 发出去。这时 Iptable 规则就会起作用，将源地址换为 eth0 的地址。
 > - 外部访问容器：创建容器并将容器的 80 `端口映射`到主机的 80 端口。当我们对主机 eth0 收到的目的端口为 80 的访问时候，Iptable 规则会进行 `DNAT 转换`，将流量发往 172.17.0.2:80
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/2017-11-30-docker-network-topology.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/2017-11-30-docker-network-topology.png)
 
 #### Resource
 

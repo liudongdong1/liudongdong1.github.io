@@ -3,7 +3,7 @@
 
 > Common functional pieces of autonomous vehicles often fall into sensing, computing, and actuation.The sensing devices or sensor include cameras, laser scanners (LiDAR), milliwave radars, and GNSS/IMU.  Using sensor data , autonomous vehicles perform localization, detection, prediction, planning, and control.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703082515701.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703082515701.png)
 
 ## 1. 常用传感器
 
@@ -11,17 +11,17 @@
 - 摄像头：单目、双目、多目。
 - 惯性传感器
 
-![传感器](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703082557398.png)
+![传感器](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703082557398.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703084255829.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703084255829.png)
 
 ## 2. 发展历程
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703084657334.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703084657334.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703084724687.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703084724687.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211126214043470.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211126214043470.png)
 
 ## 3. slam在AR上挑战
 
@@ -30,23 +30,23 @@
 
 ### 3.1. 提升稳定性
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703085121310.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703085121310.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703085246477.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703085246477.png)
 
 ### 3.2. 提高计算效率
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703085435509.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703085435509.png)
 
 ### 3.3. 云-端协同
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703085737787.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703085737787.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703090321487.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703090321487.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703090446927.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703090446927.png)
 
-![VICON系统](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703090620678.png)
+![VICON系统](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703090620678.png)
 
 - ENFT-SFM or LS_ACTS: http://www.zjucvg.net/ls-acts/la-acts.html
 - RKSLAM: http://www.zjucvg.net/rkslam/rkslam.html
@@ -59,9 +59,9 @@
 
 ![image-20200703091448777](C:/Users/dell/AppData/Roaming/Typora/typora-user-images/image-20200703091448777.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703092235403.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703092235403.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200703092305819.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200703092305819.png)
 
 ## 5.基于GPS+IMU+MM车载多传感器融合
 
@@ -71,19 +71,19 @@
 >
 > MM(Map matching)：指地图匹配。该技术结合用户位置信息和地图数据，推算用户位于地图数据中的哪条道路及道路上的位置。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712110553648.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712110553648.png)
 
 - 偏航重算：是指在高架或城市峡谷，信号遮挡引起位置点漂移；<font color=red>GPS定位精度差和DR航位推算精度差。</font>
 - 无法定位：是指在无信号区域（停车场、隧道）推算的精度低，导致出口误差大；
 - 抓路错误：是指主辅路、高架上下抓路错误。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712110406899.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712110406899.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712110531503.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712110531503.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712110642270.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712110642270.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712110914514.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712110914514.png)
 
 > GPS质量评估模块的功能是计算GPS位置、速度、航向角和全局可靠性指标。根据可靠性指标的大小将其投影到状态空间（GOOD、DOUBT、BAD、ABNORMAL）中，状态空间的值表征GPS数据质量的好坏。第一，决定是否使用GPS数据进行器件误差标定或某些状态的判断（如转弯行为、动静状态等）；第二，在数据融合模块，为设定GPS观测量的方差—协方差阵提供参考。
 
@@ -91,9 +91,9 @@
 
 > DR(DeadReckoning，航位推算)算法是指已知上一时刻导航状态（状态、速度和位置），根据传感器观测值推算到下一时刻的导航状态。DR算法包括姿态编排和位置编排两个部分。姿态编排使用的是AHRS（Attitude andheading reference system ）融合算法，处理后输出车机姿态信息。位置编排是指结合姿态编排结果，对测速仪观测值进行积分后得到车机位置。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712111338207.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712111338207.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200712111400756.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200712111400756.png)
 
 - 高架桥识别；停车场识别；主辅路识别。
 

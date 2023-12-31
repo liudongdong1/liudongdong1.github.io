@@ -241,15 +241,15 @@ print(op.getPoseMapIndex(poseModel))
 
 ### 6.4. Pose Output Format (BODY_25)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200207162959986.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200207162959986.png)
 
 ### 6.5. Pose Output Format (COCO)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200207163106511.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200207163106511.png)
 
 ### 6.6. Face Output Format
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200207163136771.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200207163136771.png)
 
 ## 7. Error Record
 

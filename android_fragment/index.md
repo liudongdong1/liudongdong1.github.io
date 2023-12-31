@@ -5,7 +5,7 @@
 
 ### 1. 基本概念
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/41442282.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/41442282.jpg)
 
 ### 2. Fragment 生命周期
 
@@ -17,13 +17,13 @@
 
 ⑥`退出了Activity的话,那么Fragment将会被完全结束, Fragment会进入销毁状态` **onPause** -> **onStop** -> **onDestoryView** -> **onDestory** -> **onDetach**
 
-![fragment_lifecycle](https://gitee.com/github-25970295/blogpictureV2/raw/master/fragment_lifecycle.jpeg)
+![fragment_lifecycle](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/fragment_lifecycle.jpeg)
 
 ### 3. 创建Fragment
 
 #### .1. 静态加载
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108095652651.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108095652651.png)
 
 - 自定义Fragment 类
 
@@ -51,7 +51,7 @@ public class Fragmentone extends Fragment {
 
 #### .2. 动态加载Fragment类
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108100538891.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108100538891.png)
 
 ```java
 public class MainActivity extends Activity {
@@ -76,9 +76,9 @@ public class MainActivity extends Activity {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108100707502.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108100707502.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108100808883.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108100808883.png)
 
 ### 4. [数据传输](https://carsonho.blog.csdn.net/article/details/75453770)
 
@@ -220,7 +220,7 @@ button.setOnClickListener(new View.OnClickListener() {
 
 ### 5. Adapter 作用
 
-![Package fragment](https://gitee.com/github-25970295/blogimgv2022/raw/master/Package%20fragment-166985985806695.png)
+![Package fragment](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Package%20fragment-166985985806695.png)
 
 #### 1. BaseAdapter
 

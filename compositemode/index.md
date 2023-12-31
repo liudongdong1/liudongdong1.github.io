@@ -11,7 +11,7 @@
 
 ### 1. 文件
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705151004227.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705151004227.png)
 
 ```java
 public abstract class Component {
@@ -126,7 +126,7 @@ public class Folder extends Component {
 > - 基本组件又称构件，诸如按钮、文本框之类的图形界面元素。
 > - 容器是一种比较特殊的组件，可以容纳其他组件，容器如窗口、对话框等。所有的容器类都是 `java.awt.Container` 的直接或间接子类
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705151544734.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705151544734.png)
 
 ### Resource
 

@@ -3,15 +3,15 @@
 
 > 8种基本数据类型并不支持面向对象的特征，它们既不是类，也不能调用方法。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210510095205.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210510095205.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210510215738.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210510215738.png)
 
 ### 1. Number
 
 > `BigDecimal 和 BigInteger 用于高精度计算`。AtomicInteger 和 AtomicLong 用于多线程应用程序。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210510094040.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210510094040.png)
 
 #### 1.1. 类型转化
 

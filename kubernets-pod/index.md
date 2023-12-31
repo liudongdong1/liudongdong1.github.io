@@ -202,7 +202,7 @@ spec:
 
 define one or multiple `topologySpreadConstraint` to` instruct the kube-scheduler how to place each incoming Pod in relation to the existing Pods` across your cluster.
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220505151333060.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220505151333060.png)
 
 - **labelSelector:** 用来查找匹配的 Pod，我们能够计算出每个拓扑域中匹配该 label selector 的 Pod 数量，在上图中，假如 label selector 是 `app:foo`，那么 zone1 的匹配个数为 2， zone2 的匹配个数为 0。
 

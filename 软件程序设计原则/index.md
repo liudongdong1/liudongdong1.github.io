@@ -10,13 +10,13 @@
 - 迪米特法则：一个实体应当尽量少的与其他实体之间发生相互作用，使得系统功能模块相对独立。租户an'li
 - 合成复用原则：尽量使用合成/聚合的方式，而不是使用继承。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210731201119873.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210731201119873.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705180803428.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705180803428.png)
 
-![img](https://gitee.com/github-25970295/blogpictureV2/raw/master/20190426181135886.png)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20190426181135886.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210303225128671.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210303225128671.png)
 
 > 1. 类模式：用于处理`类与子类之间的关系`，这些关系通过`继承`来建立，是静态的，在编译时刻便确定下来了。`工厂方法、（类）适配器、模板方法、解释器属于该模式。`
 > 2. 对象模式：用于`处理对象之间的关系`，这些关系可以通过组合或聚合来实现，在运行时刻是可以变化的，更具动态性。
@@ -26,7 +26,7 @@
 | 类模式    | 工厂方法                  | (类）适配器                                 | 模板方法、解释器                                         |
 | 对象模式  | 单例 原型 抽象工厂 建造者 | 代理 (对象）适配器 桥接 装饰 外观 享元 组合 | 策略 命令 职责链 状态 观察者 中介者 迭代器 访问者 备忘录 |
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210306112549201.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210306112549201.png)
 
 ## 二、通用设计原则
 
@@ -308,25 +308,25 @@ Java中实现高内聚低耦合的常用方式：
 
 > 场景视图用于描述系统的`参与者与功能用例间的关系`，反映系统的`最终需求和交互设计`，通常由用例图表示。
 
-![场景视图](https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-918eb9ec4079d60df7fe3a36aefa6def_b.jpg)
+![场景视图](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-918eb9ec4079d60df7fe3a36aefa6def_b.jpg)
 
 > 逻辑视图用于描述`系统软件功能拆解后的组件关系`，`组件约束和边界`，反映系统整体组成与系统如何构建的过程，通常由UML的组件图和类图来表示。
 
-![逻辑视图](https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-35048eff8e81e8475a9938e1762b542e_b.jpg)
+![逻辑视图](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-35048eff8e81e8475a9938e1762b542e_b.jpg)
 
 > 物理视图用于描述`系统软件到物理硬件的映射关系`，反映出系统的组件是如何部署到一组可计算机器节点上，用于指导软件系统的部署实施过程。
 
-![物理视图](https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-a8c6ab1c74db002d663830bd8a095ffd_b.jpg)
+![物理视图](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-a8c6ab1c74db002d663830bd8a095ffd_b.jpg)
 
 > 处理流程视图用于描述`系统软件组件之间的通信时序`，`数据的输入输出`，反映系统的功能流程与数据流程,通常由时序图和流程图表示。
 
-![处理流程视图](https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-7eb8a69332cd5d446296a09ae9d063ea_b.jpg)
+![处理流程视图](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-7eb8a69332cd5d446296a09ae9d063ea_b.jpg)
 
 > 开发视图用于描述`系统的模块划分和组成`，以及`细化到内部包的组成设计`，服务于开发人员，反映系统开发实施过程。
 
-![开发视图](https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-11c5bf77e69f49176531a7e733fabbba_b.jpg)
+![开发视图](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-11c5bf77e69f49176531a7e733fabbba_b.jpg)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/v2-573b02c705a0d0358f9e604c8f78f545_b.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-573b02c705a0d0358f9e604c8f78f545_b.jpg)
 
 ## Resource
 

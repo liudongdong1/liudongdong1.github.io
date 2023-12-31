@@ -1,9 +1,9 @@
 # NLP_pyspark
 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201113143906394.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201113143906394.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201113144728692.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201113144728692.png)
 
 ## 1. Concept
 
@@ -15,7 +15,7 @@
 
 > The **Transformer** is generally the result of a fitting process and applies changes to the the target dataset.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201113183140301.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201113183140301.png)
 
 ###  1.3. Pipelines
 
@@ -196,7 +196,7 @@ OUTPUT:
 
 ### 1.4. Word Embeddings
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201113193405004.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201113193405004.png)
 
 ### 1.5. Text Classification
 

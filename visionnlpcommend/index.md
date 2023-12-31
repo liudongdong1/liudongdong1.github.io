@@ -48,11 +48,11 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200821222228.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200821222228.png)
 
 【Module One】Generating recipes from images
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200822110938.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200822110938.png)
 
 #### Evaluation
 
@@ -91,7 +91,7 @@ previous work:
 #### Proble Statement
 - most of the existing methods for this caption-to-video retrieval problem don't fully exploit cross-modal cues present in video;
 - most aggregate per-frame visual features with limited or no temporal information;
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200906191856.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200906191856.png)
 previous work:
 - **Language representations:** Word2Vec[18], LSTM[7], BERT[3]
 - **Video representations:** S3D, VideoBERT, CBT;
@@ -111,14 +111,14 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200906192207.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200906192207.png)
 
 **【Module one】Video Representation**
 $$
 \Omega(v)=F(v)+E(v)+T(v)
 $$
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201016164807866.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201016164807866.png)
 
 **【Module two】Caption Representation**: obtain an embedding h(c) of the caption, and then project it with a function g into N different spaces as $\varphi=g*h$;
 $$

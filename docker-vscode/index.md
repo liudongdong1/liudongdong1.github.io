@@ -46,7 +46,7 @@ sudo docker run -it imagename /bin/bash
    sudo docker exec -it 317348660bba /bin/bash
    ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210116095339646.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210116095339646.png)
 
 > 之前docker container 已经在运行了，所以可以直接远程登录;
 >
@@ -54,11 +54,11 @@ sudo docker run -it imagename /bin/bash
 
 项目文件夹所在云服务器目录： ~/zjw/;       项目所在docker 容器目录： /root/rfid/
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210116095637184.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210116095637184.png)
 
 存在一个问题ssh进入找的python环境没有torch，经过分析应该是环境变量丢失的问题。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210116132014806.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210116132014806.png)
 
 ---
 

@@ -78,23 +78,23 @@
 
 > 是一款基于惯性传感器的高级无线动作捕捉系统，具有全身无线数据传输、低延迟高精度、高电磁耐受性等多种特性。凭借其专有的嵌入式数据融合系统、人体动力学系统和物理引擎算法，可以捕捉大型动态运动，为使用者提供平滑而准确的动作捕捉数据。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200907084835.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200907084835.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200907084912.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200907084912.png)
 
 - [**专业级高精度光惯混合动作捕捉系统 Perception Neuron Studio**](https://shopcdn.noitom.com.cn/html/190.html#top)
 
 > 效易用。在纯惯性模式下，Perception NeuronTM
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200907084445.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200907084445.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200907084515.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200907084515.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200907084128.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200907084128.png)
 
 其中**PNS手套**： 每一只手套内置6枚高精度惯性传感器，分别置于手部关节点文职，可精确捕捉手部完整动作。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200907084424.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200907084424.png)
 
 - [Noitom Hi5 VR手套](https://shop.noitom.com.cn/product/list/85.jhtml)
   - 9-DOF IMU for 5 fingers and the back of hand 
@@ -108,17 +108,17 @@
   - automatic channel-switching to avoid RF interference
   - [vivi tracker](https://shopcdn.noitom.com.cn/html/137.html)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200907091312.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200907091312.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200907093639.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200907093639.png)
 
 - position, rotation;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200907094023.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200907094023.png)
 
 ### 4.2. [VRTRIX](http://vrtrix.com.cn/product/data-gloves/)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200907090150.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200907090150.png)
 
 ## 5. 手语识别发展历程
 
@@ -144,19 +144,19 @@
 >
 > 成品：https://www.microsoft.com/en-us/research/video/haptic-pivot-on-demand-handhelds-in-vr-2/
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606195020773.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606195020773.png)
 
 ### 6.2. ShapeHandPlus
 
 > ​	由ShapeHand捕捉系统与手臂跟踪系统ShapeTape组合而成，可跟踪整个手和手臂的动作和姿态，包括旋转和偏移等。而ShapeHand本身也是一款无线便携式轻型手部动作捕捉系统，用于捕获手和手指的动作。虚拟现实，动画人物手捕捉，MRI研究，动作识别，机器人设计，动作分析，3D输入，手语。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606195111690.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606195111690.png)
 
 ### 6.3. 动作捕捉全身
 
 [Perception Neuron Pro惯性无线全身动作捕捉系统传感器](https://detail.tmall.com/item.htm?spm=a1z10.5-b-s.w4011-21214616185.233.7ec436d3pBMVYJ&id=586316188617&rn=5242faf4e90ade70dfadaf80da5f95f6&abbucket=15)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624213929633.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624213929633.png)
 
 ## 7. 相关Sensor
 
@@ -166,9 +166,9 @@
 
 > [Leap Motion](https://developer.leapmotion.com/setup/desktop)是一种检测和跟踪hands, fingers and finger-like tools的设备。该设备在一个较近的环境中操作，精度高，跟踪帧速率高。Leap Motion 视野是集中在设备上方的一个倒置的金字塔。Leap Motion检测的有效范围是约25毫米至600毫米（1英寸到2英尺）。可以识别出四种特定的动作: Circle，Swipe，Key Taps，Screen Taps; 通过持续跟踪动作流，Leap Motion还可以将一个区域内的动作理解为三种基本元素：scaling, translation, and rotation。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624210009611.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624210009611.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624214110152.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624214110152.png)
 
 #### 7.0.1.  **动作跟踪数据**
 
@@ -189,7 +189,7 @@
 > - sphere radius球半径，拟合球的半径
 > - API 提供动作有： SreenTapGesture; KeyTapGesture;SwipeGesture;CircleGesture.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624212951397.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624212951397.png)
 
 > leap motion首次识别出一个手势后将其加入帧，如果这是一个持续性动作，leap motion将一个更新的手势对象加入后续帧。画圆和挥扫是持续性动作，leap motion在每一帧中更新这些手势，tap轻击是不连续的动作，所以每次敲击只需一个手势对象。
 >
@@ -197,27 +197,27 @@
 
 ### 7.1.  大鸟智能虚拟手套
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108091204926.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108091204926.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108091223036.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108091223036.png)
 
 ### 7.2. 基于Flex Sensor IMU手套
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108091446439.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108091446439.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108091525951.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108091525951.png)
 
 ### 7.3. Flex Sensor
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108092208496.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108092208496.png)
 
 ### 7.4. 2D-BF系列薄膜弯曲传感器
 
 > ​		BF系列薄膜弯曲传感器基本功能是可以对物体弯曲度进行测试，可用于多种应用环境和场景；传感器为电阻式，当感应的弯曲度发生变化，传感器的电阻也随之发生变化。主要用于弯曲和弯曲身体运动装置诸如机器人手指弯曲、竞技游戏虚拟动作、医疗设备、计算机外设、乐器等领域。原理简单、使用方便，可直接采集弯曲传感器电阻值或经过模块转换成标准信号电压数据进行采集。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108095332518.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108095332518.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108092306247.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108092306247.png)
 
 
 
@@ -225,17 +225,17 @@
 
 > BEND LABS的柔性传感器由医用级有机硅构成的，可以满足精确，多轴，柔软，灵活的弯曲角度传感需求，并且具有高精度、低功耗、无漂移等优点。柔性传感器采用差分电容原理，是一种角度输出与弯曲路径无关的创新传感技术。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108100434645.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108100434645.png)
 
 ### 7.6. Bebop[数据手套传感器](http://www.cnbytec.com/productshow.asp?id=237)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108100117268.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108100117268.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108100237698.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108100237698.png)
 
 ### 7.7. Pickit
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108095819117.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108095819117.png)
 
 ### 7.8. 光纤传感器
 
@@ -247,13 +247,13 @@
 
 大小：体积：15.24mm X 15.24mm X 2mm
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108184307876.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108184307876.png)
 
 
 
 ### 7.10. 智能穿戴数据手套
 
-![image-20200108093636846](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108093636846.png)
+![image-20200108093636846](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108093636846.png)
 
 - [UNITY3D骨骼动画数据手套](http://v.youku.com/v_show/id_XMzgwNDU5ODcy.html?from=y1.7-2 )
 - [数据手套演示代码[wiseglove.com]](http://v.youku.com/v_show/id_XMzgwMzc1MzQw.html?from=y1.7-2 )
@@ -268,9 +268,9 @@
 
 > 装了 548 个传感器，戴上它就能测到物体、物体的重量等，而且仅需 10 美元成本
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108165030828.png" alt="image-20200108165030828" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108165030828.png" alt="image-20200108165030828" style="zoom:50%;" />
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108165158012.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108165158012.png)
 
 ### 10.2. Google Soli
 
@@ -287,29 +287,29 @@
 - 同时因为毫米波雷达的频率远低于红外线和可见光，相比基于红外线的时间飞行技术，毫米波雷达可以计算相移（Phase shift）和多普勒效应（Doppler Effect），从而以很低的计算量获取物体的运动与方向。
 - 毫米波雷达对于一些材料还有很好的穿透性，不受光路遮挡的影响。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108135045567.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108135045567.png)
 
 **目前应用：**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606200433588.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606200433588.png)
 
 毫米波雷达对部分材质有一定的穿透作用，反射信号也有一些差别，有开发者据此设计出材质探测器，不仅可以塑料和多种金属，还能识别水跟牛奶。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606200449526.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606200449526.png)
 
 车内手势是一项有意思的应用，相比可见光和红外光的技术，Soli可以完美解决不同光照环境下传统技术不稳定的问题，而且雷达对捕捉细微运动有很强的优势。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606200509593.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606200509593.png)
 
 Hover在屏幕上的手指现在也可以精确的捕捉和预测了。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606201450732.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606201450732.png)
 
 Soli可以扫描和计算出深度图，为何不拿来做成3D扫描与成像的应用
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606201620067.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606201620067.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606201634228.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606201634228.png)
 
 1. 捕捉原始反射信号
 2. 将接收的时序信号处理和转换到Range Doppler Map
@@ -318,27 +318,27 @@ Soli可以扫描和计算出深度图，为何不拿来做成3D扫描与成像�
 
 ### 10.3.光纤传感器
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108132310530.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108132310530.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108132412661.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108132412661.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108132448860.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108132448860.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108132504727.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108132504727.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108132533125.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108132533125.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108132558023.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108132558023.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108132641409.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108132641409.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108132658145.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108132658145.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108132716952.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108132716952.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108132234631.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108132234631.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200108132212222.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200108132212222.png)
 
 
 

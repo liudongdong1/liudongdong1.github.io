@@ -5,16 +5,16 @@
 
 ### 1. 显示隐藏文件
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210126084818634.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210126084818634.png)
 
 ### 2. 查看网络情况
 
 - 主机存在对内网网段大量主机的某些端口（常见如22，445，3389，6379等端口）或者全端口发起网络连接尝试，这种情况一般是当前主机被攻击者当作跳板机对内网实施端口扫描或者口令暴力破解等攻击。
 - 主机和外网IP已经建立连接（ESTABLISHED状态）或者尝试建立连接（SYN_SENT状态），可以先查询IP所属地，如果IP为国外IP或者归属各种云厂商，则需要重点关注。进一步可以通过威胁情报（https://x.threatbook.cn/等）查询IP是否已经被标注为恶意IP。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210126090124013.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210126090124013.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210126090139140.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210126090139140.png)
 
 - 通过任务管理程序查看网络异常对应程序id， 找到对应程序文件，上传至virustotal（https://www.virustotal.com）进行检测。如上面截图中对内网扫描的进程ID是2144，在任务管理器中发现对应的文件是svchost.exe。
 

@@ -30,9 +30,9 @@
 
 #### Chart&Analyse:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566095227527.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566095227527.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566095563830.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566095563830.png)
 
 > Yang, J., Zhang, L., & Wang, X. A. (2015, November). On Cloud Computing Middleware Architecture. In *2015 10th International Conference on P2P, Parallel, Grid, Cloud and Internet Computing (3PGCIC)* (pp. 832-835). IEEE.
 
@@ -54,19 +54,19 @@
 
 #### Chart&Analyse:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566907225904.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566907225904.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566907354393.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566907354393.png)
 
 #  OpenFog:雾计算联盟
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566910129634.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566910129634.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566910189211.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566910189211.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566910242151.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566910242151.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/1566910316727.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1566910316727.png)
 
 1. **OpenFog Fabric** is composed of building blocks which allow the construction of a homogenous computational infrastructure on which usefulservices can be delivered to the surrounding ecosystem (e.g. devices,protocol gateways and other fog nodes). The homogenous infrastructure is
    generally built upon heterogeneous hardware and platforms supplied bymultiple vendors.
@@ -144,7 +144,7 @@
 - 数据服务:核心数据服务, 包括数据分析、数据存储等;
 - 管理运作服务:企业联盟分布式账本的部署、管理、运作工具.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210113071817004.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210113071817004.png)
 
 ##### **IBM Hyperledger架构**
 
@@ -152,21 +152,21 @@
 -  链码服务(chaincode):该服务提供一种安全且轻量级的沙盒运行模式, 是运营智能合约的机制, 用于在确认节点(validating nodes)之间的沟通服务;
 - 成员权限管理(membership):该服务用于管理节点身份, 保护用户隐私, 保证网络上的机密性和可审计性.该服务基于公钥基础设施, 引入交易认证授权, 利用证书对接入节点和客户端能力进行了限制.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210113071932867.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210113071932867.png)
 
 ##### **以太坊架构**
 
 > 以太坊的核心部分也是区块链协议, 包括共识、点到点(P2P)网络、区块链.区块链负责维护基础的数据记录存储服务, P2P网络负责节点之间的交互, 共识负责保证网络节点状态的一致性.为了支持分布式应用, 增强以太坊的平台功能, 以太坊还定义了以太坊协议.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210113072154712.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210113072154712.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210113072320465.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210113072320465.png)
 
-![产业生态](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210112220144824.png)
+![产业生态](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210112220144824.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210112220232114.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210112220232114.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210112220244246.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210112220244246.png)
 
 > Ghosh, A. M., & Grolinger, K. (2020). Edge-Cloud Computing for Internet of Things Data Analytics: Embedding Intelligence in the Edge With Deep Learning. *IEEE Transactions on Industrial Informatics*, *17*(3), 2191-2200.
 
@@ -183,11 +183,11 @@ in the Edge With Deep Learning</b>
 
 - Reversible: the approaches that reduce data with ability to reproduce the original data from the reduced representations.
 
-![Edge-cloud ML system](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210113094034748.png)
+![Edge-cloud ML system](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210113094034748.png)
 
-![Location-based data reduction](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210113094329700.png)
+![Location-based data reduction](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210113094329700.png)
 
-![Similarity-based data reduction](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210113094347561.png)
+![Similarity-based data reduction](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210113094347561.png)
 
 # Resource
 

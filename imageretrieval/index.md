@@ -18,27 +18,27 @@
   - improving retrival scalability: ` domain shift`
   - balancing` retrieval accuracy and efficiency`:  high dimensional anc contain more semantic-aware information
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006104414562.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006104414562.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006104630732.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006104630732.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006105237367.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006105237367.png)
 
 - **single feedforward pass methods:** take the whole image and feed it into model to extract features.   lacks geometric invariance and spatial information.
 - **multiple feedforward pass methods:** using sliding windows or spatial pyramid model to create multi-scale image patches, and each patch is fed into the model before being encodeded as a final global feature.  instead of generating multi-scale image patches randomly and densely, `region proposal methods` are introduced like RPNs, CKNs.
 
 > (a)-(b) `Non-parametric mechanisms:` The attention is based on convolutional feature maps x with size H ×W ×C. `Channel-wise attention in (a)` produces a C-dimensional importance vector α1 [10], [30]. `Spatial-wise attention in (b) `computes a 2-dimensional attention map α2 [10], [28], [59], [79]. (c)-(d) `Parametric mechanisms`: The attention weights β are provided by a sub-network with trainable parameters (e.g. θ in (c)) [97], [98]. Likewise, some off-the-shelf models [91], [99] can predict the attention maps from the input image directly.  
 
-![Attention mechanisms](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006122356475.png)
+![Attention mechanisms](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006122356475.png)
 
 
 
 > Representative methods in single feedforward frameworks, focusing on convolutional feature maps x with
 > size H ×W ×C: MAC [47], R-MAC [27], GeM pooling [41], SPoC with the Gaussian weighting scheme [7], CroW [10], and CAM+CroW [28]. Note that g1(·) and g2(·) represent spatialwise and channel-wise weighting functions, respectively.  
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006110245921.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006110245921.png)
 
-![Image patch generation](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006111137946.png)
+![Image patch generation](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006111137946.png)
 
 - **Deep feature selection:**
   - a fully-connected layer has a global receptive field, but` lack of spatial information (using multiple feedforward passes)`; ` lack of local geometric invariance (leverage intermediate convolutional layers)`
@@ -65,9 +65,9 @@
     - a triplet constraint, associated with triplet netwroks, in which anchor images are paired with both similar and dissimilar samples.
     - glovally supervised approaces(c,d) learn a metric on gloval features by satisfying all constraints, locally supervised approaches focus on local areas by only satisfying the given local constriants.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006124924358.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006124924358.png)
 
-![sample mining strategies](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006125645651.png)
+![sample mining strategies](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006125645651.png)
 
 - **Unsupervised Fine-tuning**: 
   - `mining samples with Manifold learning:` to capture intrinsic correlations on the manifold structure to mine or deduce revelance.
@@ -79,7 +79,7 @@
 > - transition matrix definition: a row-stochastic matrix, determines the probabilities of transiting from one node to another in the graph.
 > - iteration scheme: to re-valuate and update the values in affinity matrix by the manifold similarity until some kind of convergence is achieved.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006130746382.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006130746382.png)
 
 # 2. Paper Reading
 
@@ -106,7 +106,7 @@ by Learning Similarity between Scene Graphs
 
 - the scene graph  S={objects, attributes, relations};  the surrogate relevance measure between two images as the similarity between their captions;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210109154029944.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210109154029944.png)
 
 #### Relative work:
 
@@ -114,7 +114,7 @@ by Learning Similarity between Scene Graphs
 - **Scene Graphs**: image captioning; visual question answering; image-ground dialog;
 - **Graph Similarity learning:** use the learned graph representations of two graph to calculate similarity;
 
-![image-20210109153411093](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210109153411093.png)
+![image-20210109153411093](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210109153411093.png)
 
 > Teichmann, Marvin, et al. "Detect-to-retrieve: Efficient regional aggregation for image search." *Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition*. 2019.
 
@@ -134,7 +134,7 @@ by Learning Similarity between Scene Graphs
 2. leverage the trained detector and produce more efficient regional search systems, which improves accuracy for small objects with only a modest increase to the databases size;
 3. propose regional aggregated match kernels to leverage selected image regions and produce a discriminative image representation.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210110083533162.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110083533162.png)
 
 > Deep local features and object regions are extracted from an image.   Regional aggregation proceeds in two steps, using a large codebook of visual words: first, per-region `VLAD description`; second, sum pooling and per-visual word normalization.
 
@@ -149,17 +149,17 @@ by Learning Similarity between Scene Graphs
 - **Regional Search&&Aggregation: ** `build on top of deep local features(DELF) and aggregated selective match kernels(ASMK)`;
 
   - match kernel framework: 
-    - Image X with M local descriptors: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210110084612921.png)
+    - Image X with M local descriptors: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110084612921.png)
     - code book C comprising C visual words, learned using k-means, is used to quantize the descriptors;
-    - ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210110084743327.png)
-    - encompasses popular local feature aggregation techniques such as Bag-of-Words, VLAD, and ASMK. Similarity: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210110084818574.png)
-    - an aggregated vector representation: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210110085056545.png)
-    - a scalar selectivity function: $\sigma(.)$;![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210110085307986.png)
-    - normalization factor: ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210110085732839.png)
+    - ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110084743327.png)
+    - encompasses popular local feature aggregation techniques such as Bag-of-Words, VLAD, and ASMK. Similarity: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110084818574.png)
+    - an aggregated vector representation: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110085056545.png)
+    - a scalar selectivity function: $\sigma(.)$;![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110085307986.png)
+    - normalization factor: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110085732839.png)
 
 - **Regional Search:** query image X && database image $Y^{(n)}$;
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210110090030382.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110090030382.png)
 
 - **Regional Aggregated Match Kernels:**
 
@@ -167,13 +167,13 @@ by Learning Similarity between Scene Graphs
 
   - utilizing the detected bounding boxes to instead improve the aggregated representations of database images--producing discriminative descriptors at no additional cost.
 
-    ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210110090415987.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110090415987.png)
 
-    ![For VLAD](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210110090445547.png)
+    ![For VLAD](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110090445547.png)
 
-    ![R-ASMK](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210110090613560.png)
+    ![R-ASMK](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110090613560.png)
 
-    ![R-AMK](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210110090643427.png)
+    ![R-AMK](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110090643427.png)
 
 > Weyand, Tobias, et al. "Google Landmarks Dataset v2-A Large-Scale Benchmark for Instance-Level Recognition and Retrieval." *Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition*. 2020.
 
@@ -193,9 +193,9 @@ by Learning Similarity between Scene Graphs
   - class distribution;  intra-class variation;  out-of-domain query images;
 - introduce the Google Landmarks Dataset v2, a new large-scale dataset for instance-level recognition and retrieval, includes over 5M images of over 200k human-made and natural landmarks.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210110093703863.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110093703863.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210110094638916.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210110094638916.png)
 
 >Caron M, Touvron H, Misra I, et al. Emerging properties in self-supervised vision transformers[J]. arXiv preprint arXiv:2104.14294, 2021.
 
@@ -226,7 +226,7 @@ by Learning Similarity between Scene Graphs
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211007135531081.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211007135531081.png)
 
 # 3. project Code
 
@@ -243,7 +243,7 @@ by Learning Similarity between Scene Graphs
 4. for each grid point, compute an 8-element array whose elements give a comparision of the average gray level of the grid point square with those of its eight neighbors.
 5. the signature of an image is simply the concatenation of the 8-element arrays corresponding to the grid points, ordered left-right, top-bottom. 9\*9\*8=648;
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006135153568.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006135153568.png)
 
 ```python
 from image_match.goldberg import ImageSignature
@@ -282,7 +282,7 @@ ses.search_image('https://pixabay.com/static/uploads/photo/2012/11/28/08/56/mona
 - propose the first open sourve framework to unify the pipeline of deep learning based unsupervised image retrieval.
 - provide high quality implementations of CBIR algorithms to solve retrieval tasks with emphasis on usaility
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006140532252.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006140532252.png)
 
 #### .1. Pre-processing methods
 
@@ -332,11 +332,11 @@ ses.search_image('https://pixabay.com/static/uploads/photo/2012/11/28/08/56/mona
 
 > CLIP pre-trains an image encoder and a text encoder to predict which images were paired with which texts in our dataset. We then use this behavior to turn CLIP into a zero-shot classifier. We convert all of a dataset’s classes into captions such as “a photo of a *dog*” and predict the class of the caption CLIP estimates best pairs with a given image.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006141807218.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006141807218.png)
 
 ### 5. [sis](https://github.com/matsui528/sis)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211006142200903.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211006142200903.png)
 
 ```python
 from tensorflow.keras.preprocessing import image

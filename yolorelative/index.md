@@ -11,11 +11,11 @@
 
 #### **1.2. Yolox个版本网络结构图**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210816084242907.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210816084242907.png)
 
 > 将**各个模型文件转换成onnx格式**，再用**netron工具打开的方式，** 对网络结构进行可视化学习。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210816084252074.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210816084252074.png)
 
 ##### 1.2.1 Netron工具
 
@@ -24,7 +24,7 @@
 > - 在线版本： https://lutzroeder.github.io/netron/
 > - app版本： **https://github.com/lutzroeder/netron**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210816084558971.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210816084558971.png)
 
 ##### 1.2.2 各个Yolox的onnx文件
 
@@ -43,11 +43,11 @@
 
 #### **2.1 Yolov3&Yolov4&Yolov5网络结构图**
 
-![YoloV3](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210816085213132.png)
+![YoloV3](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210816085213132.png)
 
-![YoloV4](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210816085420553.png)
+![YoloV4](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210816085420553.png)
 
-![YoloV5](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210816085704126.png)
+![YoloV5](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210816085704126.png)
 
 **（1）标准网络结构：** Yolox-s、Yolox-m、Yolox-l、Yolox-x、Yolox-Darknet53。
 

@@ -50,7 +50,7 @@
 - 百度网盘
 - picgo图床上传， 使用gitee uploader1.1.2
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210306165732084.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210306165732084.png)
 
 ### 3. 语言类
 

@@ -32,13 +32,13 @@ on ImageNet without Tricks∗</b>
    4. no extra data augmentation;
    5. no label smoothing;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200919085240930.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200919085240930.png)
 
 #### Methods
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200919085120551.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200919085120551.png)
 
 **【Module One】Teachers Ensemble**: adopt the average of softmax probabilities from multiple pre-trained teachers as an ensemble;
 
@@ -55,7 +55,7 @@ $$
 - $p^{s_\theta}(x_i)$: the student output probability;
 - N: the number of samples;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200919090331634.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200919090331634.png)
 
 **【Module Three】Discriminator**: a binary classifier to distinguish the input feature are from teacher ensemble or student network, consist of a sigmoid function following the binary cross entropy loss:
 
@@ -71,9 +71,9 @@ $$
 
 #### Evaluation
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200919091306706.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200919091306706.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200919091319708.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200919091319708.png)
 
 #### Notes <font color=orange>去加强了解</font>
 

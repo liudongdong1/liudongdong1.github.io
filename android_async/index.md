@@ -573,7 +573,7 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211204150235461.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211204150235461.png)
 
 ### 6. 使用线程池处理异步
 

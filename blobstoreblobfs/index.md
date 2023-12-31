@@ -3,7 +3,7 @@
 
 > Blobstore是位于SPDK bdev之上的Blob管理层，用于与用户态文件系统Blobstore Filesystem （BlobFS）集成，从而代替传统的文件系统，支持更上层的服务，如[数据库](https://cloud.tencent.com/solution/database?from=10680)[MySQL](https://cloud.tencent.com/product/cdb?from=10680)、K-V存储引擎Rocksdb以及[分布式存储](https://cloud.tencent.com/product/cos?from=10680)系统Ceph、Cassandra等。**以Rocksdb为例，通过BlobFS作为Rocksdb的存储后端的优势在于，I/O经由BlobFS与Blobstore下发到bdev，随后由SPDK用户态driver写入磁盘。整个I/O流从发起到落盘均在用户态操作，完全bypass内核。**此外，可以充分利用SPDK所提供的异步、无锁化、Zero Copy、轮询等机制，大幅度减少额外的系统开销。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1620.jpeg) 
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1620.jpeg) 
 
 ### BlobStore 架构
 
@@ -36,16 +36,16 @@ BlobStore在BlueStore的工作上简化了许多功能，同时也增加了分�
 - Cluster：`由多个连续的Page构成`，通常一个Cluster的大小默认为1MiB，因此一个Cluster由256个Page构成。Cluster与Page一样，是连续的，即从SSD的LBA 0开始的位置依次为Cluster 0到Cluster N。
 - Blob：Blobstore中主要的操作对象为Blob，与BlobFS中的文件相对应，提供read、write、create、delete等操作。`一个Blob由多个Cluster构成，但构成Blob中的Cluster并不一定是连续的`。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867444690747.jpeg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1620-165867444690747.jpeg)
 
 ### Blobstore 块管理与分配
 
 -  在Blobstore中，会将cluster 0作为一个特殊的cluster。该cluster用于存放`Blobtore的所有信息以及元数据`，对每个blob数据块的查找、分配都是依赖cluster 0中所记录的元数据所进行的。
 - Cluster 0中的第一个page作为super block，Blobstore初始化后的一些基本信息都存放在super block中，例如cluster的大小、已使用page的起始位置、已使用page的个数、已使用cluster的起始位置、已使用cluster的个数、Blobstore的大小等信息。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867459322749.jpeg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1620-165867459322749.jpeg)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867464209851.jpeg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1620-165867464209851.jpeg)
 
 - Metadata Page Allocation：用于记录`所有元数据页的分配`情况。在分配或释放元数据页后，将会对metadata page allocation中的数据做相应的修改。
 - Cluster Allocation：用于记录`所有cluster的分配`情况。在分配新的cluster或释放cluster后会对cluster allocation中的数据做相应的修改。
@@ -86,7 +86,7 @@ class BlobStore {
 
 #### 文件读取
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867507473253.jpeg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1620-165867507473253.jpeg)
 
 - 在文件读写时，首先会进行read ahead操作，将一部分数据从磁盘预先读取到内存的buffer中。
 - 根据cache buffer的大小，对文件的I/O进行切分，使每个I/O的最大长度不超过一个cache buffer的大小。
@@ -96,7 +96,7 @@ class BlobStore {
 
 #### 文件写入
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1620-165867527828855.jpeg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1620-165867527828855.jpeg)
 
 - 在进行文件写入时，首先会根据文件当前的写入位置检查是否符合cache buffer写入需求，若满足，则直接将数据写入到cache buffer中，同时触发异步的flush操作。在flush的过程中，BlobFS触发Blob的写操作，将cache buffer中的数据，写入到文件对应blob的相应位置。若不满足cache buffer的写入需求，BlobFS则直接触发文件对应的blob的写操作。
 

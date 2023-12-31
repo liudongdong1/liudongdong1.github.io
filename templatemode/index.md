@@ -8,7 +8,7 @@
 
 ### 1. 基本案例
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210704164447171.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210704164447171.png)
 
 ```java
 public abstract class AbastractCourse {

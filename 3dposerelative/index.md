@@ -7,13 +7,13 @@
 >
 > - 利用`相机的姿势`、`检测到的平面`、`估计的照明`，来生成物理上可能的位置以及具有与场景匹配的照明位置 。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/fe7664fd36314781844b67377e46a3b3)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/fe7664fd36314781844b67377e46a3b3)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/c5841dc3fa794b4fa86f9dafd0cba1c2)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/c5841dc3fa794b4fa86f9dafd0cba1c2)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/dc2a5b20865b4369a90cc088a79236eb)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/dc2a5b20865b4369a90cc088a79236eb)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210726141438375.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210726141438375.png)
 
 > 对于`形状任务`，根据可用的ground truth注释(如分割)来预测对象的形状信号；对于`检测任务`，使用`带注释的边界框，并将高斯分布拟合到框中，以框形质心为中心，并与框的大小成比例的标准差。`
 >
@@ -26,7 +26,7 @@
 > - 给定一张彩色图片，通过两个网络模块分别预测手部姿态和人体姿态。
 > - 然后再通过整合模块将手和身体组合在一起，得到最终的3D全身模型
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/ai-1-7.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ai-1-7.png)
 
 ### 3. [PIFuHD](https://github.com/facebookresearch/pifuhd)
 
@@ -35,23 +35,23 @@
 - 项目地址：https://shunsukesaito.github.io/PIFuHD/
 - Demo地址：https://colab.research.google.com/drive/11z58bl3meSzo6kFqkahMa35G5jmh2Wgt?usp=sharing#scrollTo=afwL_-ROCmDf
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210726142508042.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210726142508042.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210726142540661.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210726142540661.png)
 
 ### 4. [Deep_Object_Pose](https://github.com/NVlabs/Deep_Object_Pose)
 
 > DOPE ROS package for detection and 6-DoF pose estimation of **known objects** from an `RGB camera`. The network has been trained on the following YCB objects: cracker box, sugar box, tomato soup can, mustard bottle, potted meat can, and gelatin box. For more details, see our [CoRL 2018 paper](https://arxiv.org/abs/1809.10790) and [video](https://youtu.be/yVGViBqWtBI).
 
-![DOPE Objects](https://gitee.com/github-25970295/blogpictureV2/raw/master/dope_objects.png)
+![DOPE Objects](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/dope_objects.png)
 
 <iframe width="1280" height="720" src="https://www.youtube.com/embed/yVGViBqWtBI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### 5. keypose
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210726144514747.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210726144514747.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210726144535552.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210726144535552.png)
 
 <iframe width="1154" height="783" src="https://www.youtube.com/embed/DBY4gycGzXM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 

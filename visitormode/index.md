@@ -17,7 +17,7 @@
 
 > 年底，CEO和CTO开始评定员工一年的工作绩效，员工分为工程师和经理，CTO关注工程师的代码量、经理的新产品数量；CEO关注的是工程师的KPI和经理的KPI以及新产品数量。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/webp.webp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/webp.webp)
 
 ```java
 // 员工基类

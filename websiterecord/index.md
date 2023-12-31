@@ -3,7 +3,7 @@
 
 ### 1. 公司介绍网页
 
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210331114657.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210331114657.png)
 - https://e.huawei.com/cn/solutions/industries/transportation
 
 ---

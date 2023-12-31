@@ -10,7 +10,7 @@
 - **非检查性异常(unchecked Exceptions)** 是不需要在throws子句中声明的异常。由于`程序错误，JVM并不会强制你处理它们，因为它们大多数是在运行时生成的。它们扩展了 RuntimeException`。最常见的例子是 NullPointerException， 未经检查的异常可能不应该重试，正确的操作通常`应该是什么都不做，并让它从你的方法和执行堆栈中出来。`
 - **错误(errors)** 是严重的运行时环境问题，肯定无法恢复。例如 `OutOfMemoryError，LinkageError 和 StackOverflowError，通常会让程序崩溃。`
 
-![1](https://gitee.com/github-25970295/blogpictureV2/raw/master/1.jpg)
+![1](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1.jpg)
 
 ### 2. 实践
 
@@ -104,7 +104,7 @@ public static void main(String[] args) throws IOException {
 
 - **千万不要用异常处理机制代替判断**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210510092135.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210510092135.png)
 
 - **不要盲目地过早捕获异常**
 

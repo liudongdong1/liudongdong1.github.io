@@ -22,13 +22,13 @@
 - 分条宽度: `指在一个分条中数据成员盘的个数`；
 - 分条深度: `指一个条带的容量大小`。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409144633868.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409144633868.png)
 
 > - RAID 技术通常有 2 种不同的方式进行数据保护。
 >   - 一种方法是在另一块冗余的硬盘上保存数据的副本。
 >   - 二是使用奇偶校验算法。奇偶校验码是使用用户数据计算出的额外信息。对于使用奇偶校验的 RAID 类型，它意味着需要额外的校验硬盘。奇偶校验采用的是异或（XOR 的计算符号⊕）算法。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409144755832.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409144755832.png)
 
 ### 2. RAID 技术与应用
 
@@ -40,9 +40,9 @@
 - 优点：在读的过程中是多块硬盘同时进行工作。读写性能是最高的。磁盘利用率最高。
 - 缺点：`没有冗余。阵列中某一个驱动器发生故障，将导致其中的数据丢失`。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409151509514.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409151509514.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409152001252.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409152001252.png)
 
 - 一个 `JBOD（Just a Bundle OfDisks，简称一堆硬盘）`是一组硬盘组合成一个虚拟的大硬盘。与 RAID 0 最大的区别是，一个 JBOD 的数据块不是同时并行写入不同硬盘的。在 JBOD 中，只有将第一块硬盘的存储空间使用完，才会使用第二块硬盘。所以 `JBOD 总的可用容量是所有个硬盘容量的总和，但性能是单个硬盘的性能！`
 
@@ -53,7 +53,7 @@
 - 优点：可以允许有一份数据可丢失。
 - 缺点：读写性能不如 RAID 0。但读性能与 RAID 0 相似。写的性能比 RAID 0 有很大差距。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409152231502.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409152231502.png)
 
 #### .3. RAID 3
 
@@ -67,7 +67,7 @@
 >
 > - RAID 3 的写入性能取决于更改数据的数量、硬盘的数目、以及计算和存储奇偶校验信息所需的时间。假定一个 RAID 3 的硬盘数为 N，当所有成员盘的转速相同时，在不考虑写惩罚，满分条写的情况下，RAID 3 的顺序 IO 写性能理论上略小于 N-1 倍单个硬盘的性能（计算冗余校验需要额外的计算时间）。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409152247592.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409152247592.png)
 
 #### .4. RAID 5
 
@@ -77,7 +77,7 @@
 - 优点：`校验信息在每块盘上，相对出故障的概率更小`。数据写入相对比较快，所有盘都参与进来做校验。数据读取相对以比较快，采用条带化存储。可靠性高。
 - 缺点：`当有两块磁盘出现故障时，磁盘失效`。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409152421886.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409152421886.png)
 
 #### .5. RAID 6
 
@@ -94,7 +94,7 @@
 >
 > 缺点：因为要做两次校验，所需写入性能相对一般。数据读取比较快。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409145532027.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409145532027.png)
 
 - **RAID 6 DP**: DP－DoubleParity，就是在 RAID4 所`使用的一个行 XOR 校验磁盘的基础上又增加了一个磁盘用于存放斜向的 XOR 校验信息`。
 
@@ -109,23 +109,23 @@
 >
 > 缺点：数据写入过程比较慢。读取比较快。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409145658749.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409145658749.png)
 
 #### .6. RAID 10
 
 - 是将镜像和条带进行组合的 RAID 级别，`先进行 RAID1 镜像然后再做 RAID0`。RAID10 也是一种应用比较广泛的 RAID 级别。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409150014451.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409150014451.png)
 
 #### .7. RAID 50
 
 - 将 RAID5 和 RAID0 进行两级组合的 RAID 级别，第一级是 RAID5，第二级为 RAID0。至少需要 6 块硬盘。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409152850571.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409152850571.png)
 
 ### 3. RAID 技术比较
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409145309578.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409145309578.png)
 
 ### 4. RAID 数据保护，RAID 与 LUN
 
@@ -158,28 +158,28 @@
 - RAID2.0+：在 RAID 2.0 的基础上提供了`更细粒度（可以达几十 KB 粒度）的资源颗粒，形成存储资源的标准分配及回收单位`，类似计算虚拟化中的虚拟机，我们称之为虚拟块技术。
 - 华为 RAID2.0+：是华为针对传统 RAID 的缺点，设计的一种满足存储技术虚拟化架构发展趋势的全新的 RAID 技术，其变传统固定管理模式为两层虚拟化管理模式，在底层块级虚拟化（Virtual for Disk）硬盘管理的基础之上，通过一系列 Smart 效率提升软件，实现了上层虚拟化（Virtual for Pool）的高效资源管理。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409150451098.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409150451098.png)
 
 > 1. 将硬盘划分成`若干个连续的固定大小的存储空间`，称为`存储块（chunk）简称 CK`。
 > 2. Ck `按 RAID 策略组合成 RAID 组`，称为`存储块组（chunkgroup）简称 CKG`。
 > 3. `在 CKG 中划分若干小数据块（extent）`，L`UN 就是由来自不同 CKG 的 extent 组成`。
 > 4. `用作热备空间的 CK 也是分散在各个盘上的`。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409150706502.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409150706502.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409150755267.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409150755267.png)
 
 #### .2. 优势
 
 - 提升LUM单元
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409150855163.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409150855163.png)
 
 - 系统可靠性高
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409150943247.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409150943247.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220409150954087.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220409150954087.png)
 
 ---
 

@@ -276,7 +276,7 @@ public class DocumentDemo {
 
 > `Java所有注解都继承了Annotation接口`，也就是说　Java使用Annotation接口代表注解元素，该接口是所有Annotation类型的父接口。同时为了运行时能准确获取到注解的相关信息，`Java在java.lang.reflect 反射包下新增了AnnotatedElement接口`，它主要用于`表示目前正在 VM 中运行的程序中已使用注解的元素`，通过该接口提供的方法可以利用反射技术地读取注解的信息，如反射包的Constructor类、Field类、Method类、Package类和Class类都实现了AnnotatedElement接口
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210627162038525.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210627162038525.png)
 
 ```java
 package com.zejian.annotationdemo;

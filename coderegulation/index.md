@@ -28,7 +28,7 @@
 > - `面向对象的实质是实现对数据的封装`，开发程序时应该以数据为重心进行考虑问题，`在过程类的模块中，与类的成员变量无关的函数，应该作为一个独立的函数放在类的外面`，不作为类的方法，这样方便复用和扩展。
 > - 系统中多态和继承（最好不要超过3层）都应谨慎使用。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/naming-mindmap.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/naming-mindmap.png)
 
 #### 1. 使用空行分割逻辑
 

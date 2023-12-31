@@ -27,7 +27,7 @@
 
 > Time Series Subsequences must be Normalized ，or tiny changes we made are completely dwarfed by changes we might expect to see in a real world deployment. ,but  it is not sufficient to normalize the entire dataset.  
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526152414354.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526152414354.png)
 
 > Arbitrary Query Lengths cannot be Indexed.
 
@@ -44,11 +44,11 @@
     ED(Q,C)=\sqrt{\sum_{i=1}^n(q_i-c_i)^2}
     $$
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526153507470.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526153507470.png)
 
 - **ED&&DTW**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228095803776.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200228095803776.png)
 
 **【Opinion 1】 Using the Squared Distance** 
 $$
@@ -62,7 +62,7 @@ $$
 
   通过计算两个序列的1,2,3,4四个点对应的ED距离，来计算两个序列的相似性，其中1,2点为首尾点，3,4点表示函数的最小点和最大点。其时间复杂度为O(n)。还有些改进版的，再在这四个点的基础上多取一些点来进行计算。公式：$LB_{Kim}(Q,C)=Max_{(i=1,2,3,4)}d(f_i^Q,f_i^C)$ , 经过Z-normalization 后，影响不大
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154124354.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526154124354.png)
 
   **b）LB_Yi**
 
@@ -74,7 +74,7 @@ $$
 
   如下图所示：
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154326770.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526154326770.png)
 
   **c) LB_Keogh**
 
@@ -82,15 +82,15 @@ $$
 $$
   LBFKeogh(Q,C)=\sum_{i=1}^n\begin {cases} (q_i-u_i)^2,q_i>u_i\\(q_i-l_i)^2,q_i<l_i\\0 \end{cases}
 $$
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526154828729.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526154828729.png)
 
 **【Opinion 3】 Using Early Abandoning of ED and LB_Keogh  **
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026101815567.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201026101815567.png)
 
 **【Opinion 3】 Using Early Abandoning of DTW**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155211203.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526155211203.png)
 
 对于右图，从左边开始DTW匹配，右边使用之前计算地LB_keogh 代码如下：
 
@@ -171,43 +171,43 @@ $$
 
 - **Early Abandoning Z-Normalization** 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155315097.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526155315097.png)
 
 -  **Reordering Early Abandoning**
 
 > in the picture below, different orderings produce different speedups, an the author use an universal optimal ordering that to sort the index based on the absolute values of the Z-normalized Q, based on the intuition that the value at $Q_I$ will be compared to many $C_i$ during a search;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100422959.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200228100422959.png)
 
 - **Reversing the Query/Data Role in LB_Keogh** 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100547809.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200228100547809.png)
 
 对应代码：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526202120154.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526202120154.png)
 
 
 
 - **Cascading Lower Bounds**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200228100626971.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200228100626971.png)
 
 #### Experiment
 
 - Random works of length 20 million with increasing long query
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155630301.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526155630301.png)
 
 - **EEG Query:**
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201026105256644.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201026105256644.png)
 
 - **Supporting Very Long queries: DNA**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155729346.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526155729346.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526155755980.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526155755980.png)
 
 - Application:  Online Time serial motifs,  classification of historical musical scores, classification of ancient coins, clustering of star light curves
 
@@ -284,7 +284,7 @@ $$
         }
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/Figure_1.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Figure_1.png)
 
 ```c#
  /// LB_Keogh 1: Create Envelop for the query
@@ -318,9 +318,9 @@ $$
         }
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526191916114.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526191916114.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526203936526.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526203936526.png)
 
 **level**: 
 **author**:  François Petitjean   Faculty of IT, Monash University
@@ -380,31 +380,31 @@ $$
     - Consider  $\vec{T}$   fixed and find the best multiple alignment  M   of the set of sequences D   consistently with  $\vec{T}$
     - consider the M fixed and update $\vec{T}$ as the best average sequence consistent with M
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122636067.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305122636067.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305122617085.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305122617085.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123050110.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305123050110.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123133018.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305123133018.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123625681.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305123625681.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305123304559.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305123304559.png)
 
 #### Evaluation
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305120253517.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305120253517.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222446448.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526222446448.png)
 
 - Left) NN has error-rate of 12.60%, while the Nearest Centroid classifier (right) with the same instances achieves an error-rate of just 5.22%
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222631759.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526222631759.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526222804005.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526222804005.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200526225000764.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200526225000764.png)
 
 #### Notes 
 
@@ -453,7 +453,7 @@ based information
 
 - in some cases, it can be easier to experss our knowledge of the problem by generating synthetic data than by modifying the classifier itself. For instance, images containing street numbers on houses can be slightly rotated without changing what number they actually are. Voice can be slightly accelerated or slowed down without modifying the meaning. we can replace some words in a sentence by a close synonym without completely altering its meaning.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305110536197.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305110536197.png)
 
 previous work:
 
@@ -491,7 +491,7 @@ $$
 
 **[Weighted average of time series for DTW]**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305111507465.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305111507465.png)
 
 DTW_alignment:   找到DTW匹配时的path所对应的序列对，  将序列对D中对应元素值相加，然后统计个数取平均,其中代码片段如下：
 
@@ -561,13 +561,13 @@ private static int approximateMedoidIndex(double[][] sequences, double[][] mat) 
 
 [ Average Selected (AS) ]
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112112422.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305112112422.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112129474.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305112129474.png)
 
 [ Average Selected with Distance (ASD)]
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305112407656.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305112407656.png)
 
 #### Notes 
 
@@ -575,7 +575,7 @@ private static int approximateMedoidIndex(double[][] sequences, double[][] mat) 
 
 - ##### Dirichlet distribution
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200305113855885.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200305113855885.png)
 
 **level**: 2017 PMLR  , Sydney Australia
 **author**:  Macro Cuturi, Mathieu Blondel
@@ -612,9 +612,9 @@ private static int approximateMedoidIndex(double[][] sequences, double[][] mat) 
 
 **【Opinion 1】DTW and soft-DTW loss function**
 
-![image-20200527092022176](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092022176.png)
+![image-20200527092022176](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200527092022176.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091952121.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200527091952121.png)
 
 【Wait to read clearly】don't understand the follows.
 
@@ -624,15 +624,15 @@ private static int approximateMedoidIndex(double[][] sequences, double[][] mat) 
     - Dataset: 
 - Average with soft-DTW loss
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092731729.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200527092731729.png)
 
 - Clustering with the soft-DTW geometry
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527092811040.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200527092811040.png)
 
 - Multi-step-ahead prediction
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200527091559497.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200527091559497.png)
 
 #### Notes <font color=orange>去加强了解</font>
 

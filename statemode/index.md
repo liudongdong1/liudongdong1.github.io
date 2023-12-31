@@ -7,7 +7,7 @@
 >
 > - 当一个对象的内在状态改变时，允许改变其行为，这个对象看起来像是改变其类。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705084330703.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705084330703.png)
 
 - Context 类为环境角色，用于维护State 实例，这个实例定义当前状态。
 - State 是抽象状态角色，定义一个`接口封装与Context 的一个特点接口相关行为`。
@@ -21,13 +21,13 @@
 >
 > 2、然后为机器中的每个状态实现状态类。这些类将负责在对应的状态下进行机器的行为。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705090327404.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705090327404.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705091701818.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705091701818.png)
 
 ### 1. java Demo1
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705084625384.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705084625384.png)
 
 ```java
 package com.example.demo.state;

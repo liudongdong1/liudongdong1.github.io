@@ -21,9 +21,9 @@
 4. using overlapNet2020 model;
 5. 开源代码：**https://github.com/PRBonn/overlap_localization**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201203185627048.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201203185627048.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201203190024140.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201203190024140.png)
 
 ---
 

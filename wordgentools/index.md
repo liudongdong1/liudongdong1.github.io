@@ -14,7 +14,7 @@
 
 - 运行： python main.py
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210707112850635.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210707112850635.png)
 
 - [ ] UI 界面有待修改
 - [ ] 翻译语言 在UI中提供，并打包exe

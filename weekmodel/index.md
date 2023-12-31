@@ -7,25 +7,25 @@
 
 > 识别字符中的俩个关键点。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021182442366.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021182442366.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021182723440.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021182723440.png)
 
 ### 1.2. Facial-keypoints-detection
 
 > 用于检测人脸的68个关键点示例。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021183012603.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021183012603.png)
 
 ### 1.3. Hourglass-facekeypoints
 
 > 使用基于论文Hourglass 的模型实现人体关键点检测。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021183120052.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021183120052.png)
 
 ### 1.4. [Realtime-Action-Recognition](https://github.com/felixchenfy/Realtime-Action-Recognition)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210317162813547.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210317162813547.png)
 
 
 
@@ -61,7 +61,7 @@
 
 > 使用pretain resnet系列模型进行五种花卉识别。结果比较清晰。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201021183309747.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201021183309747.png)
 
 ### 2.2. yolo5_helmetDetect
 
@@ -71,7 +71,7 @@
 
 ### 2.3. pytorch_classification
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201122163550833.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201122163550833.png)
 
 ### 2.4. 驾驶员状态检测
 
@@ -95,7 +95,7 @@ c9: talking to passenger
 
 #### 2.5.1. CNN_LSTM
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210119143253282.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210119143253282.png)
 
 > 下次进行代码开发，可以采用这种方式。
 
@@ -105,7 +105,7 @@ c9: talking to passenger
 
 - G:\weakmodel\weeklystudy\faceRecognition
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210203103640953.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210203103640953.png)
 
 #### 2.6.2. SeetaFace6
 
@@ -119,7 +119,7 @@ c9: talking to passenger
 
 ### 2.1. textclassify
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201119221751378.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201119221751378.png)
 
 - 学习了 通过gensin库训练 word2Vec模型；
 - 学习了通过sklearn.linear_model进行ML相关操作；
@@ -139,37 +139,37 @@ c9: talking to passenger
 - 后续自己编写相关系统的时候可以具体在学习 block 块使用规则。
 - 项目效果； 如果做`物联网可以添加卡片式的那种显示效果`；
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201115094825916.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201115094825916.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201115095655445.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201115095655445.png)
 
 ## 3.2. BookManageSystem
 
 - https://github.com/withstars/Books-Management-System
 - 技术选择： spring+ spring mvc+ jdbc template
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201205110513614.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201205110513614.png)
 
 ## 3.3  LibrayManageSystem
 
 - [LibrarySystem](https://github.com/cckevincyh/LibrarySystem)
 - 前端用bootstrap框架搭建ui+ajax异步请求，后台用SSH+Quartz框架搭建的图书管理系统。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201205124206468.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201205124206468.png)
 
 ## 3.4. 电子相册
 
 #### 1.  3Dalbum-master
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210109095231005.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210109095231005.png)
 
 #### 2. 3DRotatePhote
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210109095333755.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210109095333755.png)
 
 ## 3.5. python qt 教程
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210109101543347.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210109101543347.png)
 
 ### 1. qt UI 主题
 
@@ -177,7 +177,7 @@ c9: talking to passenger
 
 ### 2. TCP&UDP通信
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210312220032756.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210312220032756.png)
 
 ### 3. [基于PyQt 电影天堂 爬虫](https://github.com/LeetaoGoooo/MovieHeavens)
 
@@ -189,19 +189,19 @@ c9: talking to passenger
 
 - 目录结构功能如下：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201129145649893.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201129145649893.png)
 
 ## 4.2. fruitnanny
 
 - 基于树莓派婴儿监控系统
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201130160315923.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201130160315923.png)
 
 - 通过解析print数据实现python和js通信；
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201130154815852.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201130154815852.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201130160236011.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201130160236011.png)
 
 ## 4.3. [cortex-license-plate-reader-client](D:\work_OneNote\OneDrive - tju.edu.cn\work_project\hardware\cortex-license-plate-reader-client)
 
@@ -210,15 +210,15 @@ c9: talking to passenger
 > - gps模块处理函数，使用线程的方式进行处理
 > - 使用若干worker并行处理，多线程方式的使用
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210615181233476.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210615181233476.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210615185933117.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210615185933117.png)
 
 # 5. GAN 
 
 ## 5.1. GAN_Minist_keras-master
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210109094625595.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210109094625595.png)
 
 ---
 

@@ -5,7 +5,7 @@
 
 ### 0. [mmWave](https://mp.weixin.qq.com/s/9LlyFbDhhklXEjOM9QHCRQ)
 
-![image-20210430193129883](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210430193129883.png)
+![image-20210430193129883](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210430193129883.png)
 
 > Wei T, Zhang X. mtrack: High-precision passive tracking using millimeter wave radios[C]//Proceedings of the 21st Annual International Conference on Mobile Computing and Networking. 2015: 117-129.
 
@@ -14,9 +14,9 @@
   - export and control mouse of a PC
   - Myscript styles for word detection
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210430193735.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210430193735.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210826191314733.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210826191314733.png)
 
 - E-Mi: 
   - model the environment as a sparse set of geometrical structures;
@@ -24,9 +24,9 @@
     - recover geometries of each path: AoA, AoD, length;
   - search for best topology to achieve best covery;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210430193900.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210430193900.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210430194109.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210430194109.png)
 
 - mmWave Imaging:
   - estimating object distance, curvature, boundary, and surface material;
@@ -35,7 +35,7 @@
   - UIysses: leveraging beamforming to improve signal diversity;
     - moving co-located Tx/Rx following predefined trajectory;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210430194534.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210430194534.png)
 
 ### 1. DCA1000EVM
 
@@ -51,32 +51,32 @@
 - **Raw mode:** all LVDS data is captured and streamed over ethernet;
 - **Data separated mode:** add specific headers to different data types; FPGA separates out different data types based on the header and streams it over ethernet interface;
 
-![Function block diagram](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201124222514337.png)
+![Function block diagram](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201124222514337.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201124222957554.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201124222957554.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210628154716896.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210628154716896.png)
 
 - The DCA1000EVM should be `connected to TI's xWR1xxx EVM` through a 60-pin HD connector by using a 60-pin Samtec ribbon cable
 - The DCA1000EVM should be `connected to a PC through a USB cable (J1-Radar FTDI) for configuring the xWR1xxx EVM if the mmWave Studio is used to configure the radar device`. If an embedded application is used to configure the xWR1xxx EVM, then this is not required.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201124221913724.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201124221913724.png)
 
 ### 2. *IW  mmSensor
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201124213955559.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201124213955559.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201124220548701.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201124220548701.png)
 
 #### 2.1. IWR1843
 
 > The IWR1843 is an ideal solution for `low-power, self-monitored, ultra-accurate radar systems` in industrial applications, such as, `building automation, factory automation, drones, material handling, traffic monitoring, and surveillance`. Contains a TI high-performance `C674x DSP` for the radar signal processing. The device includes an `ARM R4F-based processor subsystem`, which is responsible for `front-end configuration, control, and calibration`. 
 
-![IWR1843](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201124214058201.png)
+![IWR1843](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201124214058201.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201124214846565.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201124214846565.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210628155422935.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210628155422935.png)
 
 - **Transmit Subsystem:** 
   -  three parallel transmit chains, each with independent phase and amplitude control;
@@ -98,11 +98,11 @@
   - [Code Composer Studio™ (CCS) Integrated Development Environment (IDE)](http://www.ti.com/tool/ccstudio):  develop and debug embedded applications. It includes an optimizing C/C++ compiler, source code editor, project build environment, debugger, profiler, and many other features.
   - [some experiment and labs](http://dev.ti.com/tirex/explore/node?node=AE0hA69g.mclu0y.xMWklg__VLyFKFf__LATEST)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201125122221538.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201125122221538.png)
 
 #### .1. mmWave Studio GUI
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210826192051238.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210826192051238.png)
 
 ### 4. Application
 
@@ -142,7 +142,7 @@
 
 #### 4.2. Industrial
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201125112702533.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201125112702533.png)
 
 - [Smart/Automatic door openers Industrial sensor for measuring range, velocity, and angle](http://www.ti.com/sensors/mmwave/iwr/applications/automated-doors-gates.html)
 - [Tank level probing radar](http://www.ti.com/sensors/mmwave/iwr/applications/level-transmitter.html)
@@ -167,11 +167,11 @@
 > - 对外部电磁干扰(EMI)是高度免疫的;
 > - 降低供电电压不仅减少了高密度集成电路的功率消耗，而且减少了芯片内部的散热，有助于提高集成度。LVDS减少供电电压和逻辑电压摆幅，降低了功耗。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201124213059569.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201124213059569.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201124213109265.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201124213109265.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201124212942225.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201124212942225.png)
 
 ### 6. 学习资源
 

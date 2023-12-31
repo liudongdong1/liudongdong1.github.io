@@ -94,7 +94,7 @@ DIR *.* /B >施工图列表.TXT
  #start + 空格 + 引号 +空格+ 程序目录
 ```
 
-![image-20210309000356985](https://gitee.com/github-25970295/blogimgv2022/raw/master/raw/master/img/image-20210309000356985.png)
+![image-20210309000356985](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/raw/master/img/image-20210309000356985.png)
 
 - [APK 签名](https://github1s.com/dailey007/WindowsBatUtils/blob/HEAD/ShowApkMainActivity/README.md)
 

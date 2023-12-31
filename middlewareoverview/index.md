@@ -9,7 +9,7 @@
 
 **消息队列** 是指利用 **高效可靠** 的 **消息传递机制** 进行与平台无关的 **数据交流**，并基于 **数据通信** 来进行分布式系统的集成。通过提供 **消息传递** 和 **消息排队** 模型，它可以在 **分布式环境** 下提供 **应用解耦**、**弹性伸缩**、**冗余存储**、**流量削峰**、**异步通信**、**数据同步** 等等功能，其作为 **分布式系统架构** 中的一个重要组件，有着举足轻重的地位。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8e7c77109d)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8e7c77109d)
 
 ### 2. 消息队列的特点
 
@@ -30,7 +30,7 @@
 
 消息队列的 **传递服务模型** 如下图所示：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8e7c831340)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8e7c831340)
 
 
 
@@ -42,7 +42,7 @@
 
 传统的点对点消息中间件通常由 **消息队列服务**、**消息传递服务**、**消息队列** 和 **消息应用程序接口** `API` 组成，其典型的结构如下图所示。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8e7c97b0c3)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8e7c97b0c3)
 
 **特点：**
 
@@ -52,7 +52,7 @@
 
 **示意图如下所示：**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8e7c89962f)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8e7c89962f)
 
 
 
@@ -62,7 +62,7 @@
 
 在这种情况下，在订阅者 **未连接时**，发布的消息将在订阅者 **重新连接** 时 **重新发布**，如下图所示：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8e7faf60a5)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8e7faf60a5)
 
 
 
@@ -89,7 +89,7 @@
 
 - **应用案例**:  网站用户注册，注册成功后会过一会发送邮件确认或者短息。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8e800ce905)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8e800ce905)
 
 #### .2. 系统解耦
 
@@ -109,7 +109,7 @@
 
 > **生产者/消费者** 模式，只需要关心消息是否 **送达队列**，至于谁希望订阅和需要消费，是 **下游** 的事情，无疑极大地减少了开发和联调的工作量。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8ea267f536)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8ea267f536)
 
 #### .5. 流量削峰和流控
 
@@ -124,7 +124,7 @@
 1. 把消息队列当成可靠的 **消息暂存地**，进行一定程度的 **消息堆积**；
 2. 定时进行消息投递，比如模拟 **用户秒杀** 访问，进行 **系统性能压测**。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8ea3e6231a)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8ea3e6231a)
 
 
 
@@ -134,7 +134,7 @@
 
 -  **应用案例**:  把日志进行集中收集，用于计算 `PV`、**用户行为分析** 等等。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8ea41e864b)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8ea41e864b)
 
 #### .7. 消息通讯
 
@@ -152,7 +152,7 @@
 
 #### .3. 两种类型的区别
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8ea4b19ea9)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8ea4b19ea9)
 
 ### 7. 消息队列技术对比
 
@@ -160,7 +160,7 @@
 
 > `ActiveMQ` 是由 `Apache` 出品，`ActiveMQ` 是一个完全支持`JMS1.1` 和 `J2EE 1.4` 规范的 `JMS Provider` 实现。它非常快速，支持 **多种语言的客户端** 和 **协议**，而且可以非常容易的嵌入到企业的应用环境中，并有许多高级功能。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8ea7cdc2c0)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8ea7cdc2c0)
 
 **(a) 主要特性**
 
@@ -200,7 +200,7 @@
 
 > `RabbitMQ` 于 `2007` 年发布，是一个在 `AMQP` (**高级消息队列协议**)基础上完成的，可复用的企业消息系统，是当前最主流的消息中间件之一。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8ece3b5d7a)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8ece3b5d7a)
 
 **(a) 主要特性**
 
@@ -241,7 +241,7 @@
 
  **(a) 主要特性**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8ec333c809)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8ec333c809)
 
 
 
@@ -284,7 +284,7 @@
 
 > `Apache Kafka` 是一个 **分布式消息发布订阅** 系统。它最初由 `LinkedIn` 公司基于独特的设计实现为一个 **分布式的日志提交系统** (`a distributed commit log`)，之后成为 `Apache` 项目的一部分。`Kafka` **性能高效**、**可扩展良好** 并且 **可持久化**。它的 **分区特性**，**可复制** 和 **可容错** 都是其不错的特性。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8ec4ba760a)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8ec4ba760a)
 
 
 
@@ -327,9 +327,9 @@
 
 #### .5. 几种消息队列对比
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16479c8ecf7ad3ef)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16479c8ecf7ad3ef)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210714105746218.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210714105746218.png)
 
 `Kafka` 在于 **分布式架构**，`RabbitMQ` 基于 `AMQP` **协议** 来实现，`RocketMQ` 的思路来源于 `Kafka`，改成了 **主从结构**，在 **事务性** 和 **可靠性** 方面做了优化。广泛来说，**电商**、**金融** 等对 **事务一致性** 要求很高的，可以考虑 `RabbitMQ` 和 `RocketMQ`，对 **性能要求高** 的可考虑 `Kafka`。
 

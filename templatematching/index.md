@@ -5,7 +5,7 @@
 
 > 如果使用模板匹配，`轻微倾斜/移动`，就很难找到这种方法。我们需要多个不同尺寸的模板来捕获这张图片中的所有空货架区域。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210528092130181.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210528092130181.png)
 
 ```python
 import cv2

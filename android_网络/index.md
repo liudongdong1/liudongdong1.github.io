@@ -143,7 +143,7 @@ public class MainActivity extends Activity
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221118205459399.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221118205459399.png)
 
 ### 2. 基于URL
 

@@ -12,7 +12,7 @@
 
 #### .2. 阶段
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210527091704854.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210527091704854.png)
 
 
 
@@ -29,13 +29,13 @@
 >
 > - `了解公司的一个角度`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210527091944059.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210527091944059.png)
 
 ### 2. 数据分析思路
 
 #### .1. 基本步骤
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210527092315598.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210527092315598.png)
 
 1. 要先`挖掘业务含义`，理解数据分析的`背景`、`前提`以及想要`关联的业务场景结果是什么`。`想要优化什么，如何用数据进行量化`
 2. 需要`制定分析计划`，如何`对场景拆分`，`如何推断`。
@@ -54,7 +54,7 @@
 
 #### .2. 内外因素分解法
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210527092830787.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210527092830787.png)
 
 - 内部可控因素：产品近期上线更新、市场投放渠道变化、产品粘性、新老用户留存问题、核心目标的转化。
 - 外部可控因素：市场竞争对手近期行为、用户使用习惯的变化、招聘需求随时间的变化。
@@ -63,7 +63,7 @@
 
 #### .3. Doss 思路
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210527093000369.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210527093000369.png)
 
 > 某在线教育平台提供免费课程视频，同时售卖付费会员，为付费会员提供更多高阶课程内容。如果我想将一套计算机技术的付费课程，推送给一群持续在看 C++ 免费课程的用户，那么数据分析应该如何支持呢？
 >
@@ -74,7 +74,7 @@
 
 ### 3. 经典方法
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210527094913315.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210527094913315.png)
 
 #### .1. 数字和趋势
 
@@ -112,9 +112,9 @@
 
 ### 4. 行业
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210527094538682.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210527094538682.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210527094558235.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210527094558235.png)
 
 #### 5. Resource
 

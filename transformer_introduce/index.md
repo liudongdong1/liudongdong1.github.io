@@ -5,11 +5,11 @@
 
 - 代码讲解地址：http://nlp.seas.harvard.edu/2018/04/03/attention.html
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715201421532.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715201421532.png)
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715172733519.png" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715172733519.png" style="zoom:50%;" />
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715173110289.png" alt="image-20200715173110289" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715173110289.png" alt="image-20200715173110289" style="zoom:50%;" />
 
 ## 1. Embedding
 
@@ -17,7 +17,7 @@
 >
 > The word in each position flows through its own path in the encoder. There are dependencies between these paths in the self-attention layer. The feed-forward layer does not have those dependencies, however, and thus the various paths can be executed in parallel while flowing through the feed-forward layer.
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715173416418.png" style="zoom:50%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715173416418.png" style="zoom:50%;" />
 
 ## 2. **Encode**
 
@@ -27,16 +27,16 @@
 
   - create vectors from each of the encoder’s input vectors (in this case, the embedding of each word). <font color=red>For each word, we create a Query vector, a Key vector, and a Value vector.</font>
 
-  <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715174741652.png" style="zoom:50%;" />
+  <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715174741652.png" style="zoom:50%;" />
 
   - calculating self-attention is to calculate a score <font color=red>这一步具体是怎么实现的</font>
 
-  <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715175054672.png" style="zoom:67%;" />
+  <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715175054672.png" style="zoom:67%;" />
 
   > Say we’re calculating the self-attention for the first word in this example, “Thinking”. We need to score each word of the input sentence against this word. The score determines how much focus to place on other parts of the input sentence as we encode a word at a certain position.
   - **third and forth steps** are to divide the scores by 8 (the square root of the dimension of the key vectors used in the paper – 64. This leads to having more stable gradients. There could be other possible values here, but this is the default), then pass the result through a softmax operation. Softmax normalizes the scores so they’re all positive and add up to 1.
 
-  <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/20200831200422.png" style="zoom:67%;" />
+  <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831200422.png" style="zoom:67%;" />
 
   - **fifth step** is to multiply each value vector by the softmax score (in preparation to sum them up). The intuition here is to keep intact the values of the word(s) we want to focus on, and drown-out irrelevant words (by multiplying them by tiny numbers like 0.001, for example).
   - **sixth step** is to sum up the weighted value vectors. This produces the output of the self-attention layer at this position (for the first word).
@@ -45,11 +45,11 @@
 
 - **the first step** is to calculate the Query, Key, and Value matrices. We do that by packing our embeddings into a matrix X, and multiplying it by the weight matrices we’ve trained (WQ, WK, WV).
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715175943680.png" alt="Every row in the X matrix corresponds to a word in the input sentence. We again see the difference in size of the embedding vector (512, or 4 boxes in the figure), and the q/k/v vectors (64, or 3 boxes in the figure)" style="zoom:67%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715175943680.png" alt="Every row in the X matrix corresponds to a word in the input sentence. We again see the difference in size of the embedding vector (512, or 4 boxes in the figure), and the q/k/v vectors (64, or 3 boxes in the figure)" style="zoom:67%;" />
 
 -  condense steps two through six in one formula to calculate the outputs of the self-attention layer.
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715180124848.png" alt="The self-attention calculation in matrix form" style="zoom:67%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715180124848.png" alt="The self-attention calculation in matrix form" style="zoom:67%;" />
 
 
 
@@ -62,57 +62,57 @@
 > 1. <font color=red>It expands the model’s ability to focus on different positions.</font> Yes, in the example above, z1 contains a little bit of every other encoding, but it could be dominated by the the actual word itself. It would be useful if we’re translating a sentence like “The animal didn’t cross the street because it was too tired”, we would want to know which word “it” refers to.
 > 2. <font color=red>It gives the attention layer multiple “representation subspaces”.</font> As we’ll see next, with multi-headed attention we have not only one, but multiple sets of Query/Key/Value weight matrices (the Transformer uses eight attention heads, so we end up with eight sets for each encoder/decoder). Each of these sets is randomly initialized. Then, after training, each set is used to project the input embeddings (or vectors from lower encoders/decoders) into a different representation subspace.
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715180348165.png" style="zoom:67%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715180348165.png" style="zoom:67%;" />
 
 > If we do the same self-attention calculation we outlined above, just eight different times with different weight matrices, we end up with eight different Z matrices
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715180613767.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715180613767.png)
 
 - concat the matrices then multiple them by an additional weights matrix WO.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715180644829.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715180644829.png)
 
 - Multi-Headed self-attention visualization
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715180725827.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715180725827.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715180900704.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715180900704.png)
 
 > As we encode the word "it", <font color=red>one attention head</font> is focusing most on "the animal", while another is focusing on "tired" -- in a sense, the model's representation of the word "it" bakes in some of the representation of both "animal" and "tired".
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715181015153.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715181015153.png)
 
 ## 5. Representing The Order of The Sequence Using Positional Encoding
 
 > helps it determine the position of each word, or the distance between different words in the sequence. 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715181211222.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715181211222.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715181250522.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715181250522.png)
 
 > In the following figure, each row corresponds the a positional encoding of a vector. So the first row would be the vector we’d add to the embedding of the first word in an input sequence. Each row contains 512 values – each with a value between 1 and -1. We’ve color-coded them so the pattern is visible.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715181350421.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715181350421.png)
 
 ## 6. Residuals
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715181554087.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715181554087.png)
 
-![Transformer of 2 stacked encoders and decoders](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715181715394.png)
+![Transformer of 2 stacked encoders and decoders](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715181715394.png)
 
 ## 7. Decoder Side
 
-![transformer_decoding_1](https://gitee.com/github-25970295/blogImage/raw/master/img/transformer_decoding_1.gif)
+![transformer_decoding_1](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/transformer_decoding_1.gif)
 
 > The following steps repeat the process until a special symbol is reached indicating the transformer decoder has completed its output. The output of each step is fed to the bottom decoder in the next time step, and the decoders bubble up their decoding results just like the encoders did. And just like we did with the encoder inputs, we embed and add positional encoding to those decoder inputs to indicate the position of each word.
 
-![transformer_decoding_2](https://gitee.com/github-25970295/blogImage/raw/master/img/transformer_decoding_2.gif)
+![transformer_decoding_2](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/transformer_decoding_2.gif)
 
 ## 8. Final Linear and Softmax Layer
 
 > The decoder stack outputs a vector of floats.The Linear layer is a simple fully connected neural network that projects the vector produced by the stack of decoders, into a much, much larger vector called a logits vector.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715182513674.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715182513674.png)
 
 ## 9.Go Forth And Transform
 
@@ -163,7 +163,7 @@ Follow-up works:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715201421532.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715201421532.png)
 
 **【Module One】 Encoder and Decoder Stacks**
 
@@ -181,7 +181,7 @@ Follow-up works:
 
 **【Attention】**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200901102523.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200901102523.png)
 
 - **Scaled Dot-Product Attention**
 

@@ -3,7 +3,7 @@
 
 ## Docker插件机制-架构&评价
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220724085742161.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220724085742161.png)
 
 ### Docker volumn 插件
 
@@ -44,7 +44,7 @@
 - K8S中的`普通Volume`提供了在容器中挂卷的能力，它不是独立的K8S资源对象，`不能通过k8s去管理（创建、删除等）`，只能在创建Pod时去引用。
 - Pod需要设置`卷来源（ spec.volume ） 和挂载点（ spec.containers.volumeMounts ）` 两个信息后才可以使用相应的Volume。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/rBAADF80YMSAFuccAAGVhqcxzgU330.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/rBAADF80YMSAFuccAAGVhqcxzgU330.png)
 
 ### K8S 存储能力： In-Tree Volume Plugins
 
@@ -89,15 +89,15 @@
 > - `FlexVolume: 此Volume Driver允许不同厂商去开发他们自己的驱动来挂载卷到计算节点`
 > - PersistentVolumeClaim： K8提供的资源抽象的Volume Driver，让用户不用关心具体的Volume的实现细节
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/rBAADF80YMWAPt5SAAHnN6RtcJw960.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/rBAADF80YMWAPt5SAAHnN6RtcJw960.png)
 
 ### K8S FlexVolume存储扩展机制
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/rBAADF80YMeAcOhmAAIU1aMDRxU941.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/rBAADF80YMeAcOhmAAIU1aMDRxU941.png)
 
 #### Flex Volume Driver部署脚本和配置
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/rBAADF80YMiAQ_4JAAK-YG1tcjA886.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/rBAADF80YMiAQ_4JAAK-YG1tcjA886.png)
 
 #### Flex Volume CLI API
 
@@ -135,9 +135,9 @@
 
 #### 优势
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/rBAADF80YMuAYLgxAAPBh01e6ho175.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/rBAADF80YMuAYLgxAAPBh01e6ho175.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/rBAADF80YM6AYc2MAAOZ2lzpExk611.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/rBAADF80YM6AYc2MAAOZ2lzpExk611.png)
 
 ### CSI通用架构
 
@@ -145,21 +145,21 @@
 > • Node Plugin： 需要`运行在使用Volume的Node上`，主要负责V`olume Mount/Unmount等操作`
 > • Controller Plugin：可以`运行在任何节点`上，主要负责`Volume Creation/Deletion、 Attach/Detach等操作`
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/rBAADF80YM-AZl2pAAGOv1eyoAM156.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/rBAADF80YM-AZl2pAAGOv1eyoAM156.png)
 
 #### CO与Plugin的交互过程
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/rBAADF80YNGAXx2hAAJgsrqp3tI355.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/rBAADF80YNGAXx2hAAJgsrqp3tI355.png)
 
-![img](https://gitee.com/github-25970295/blogimgv2022/raw/master/rBAADF80YNOAT6hLAAMXkmm6Yd4767.png)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/rBAADF80YNOAT6hLAAMXkmm6Yd4767.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/rBAADF80YNWAV8XtAAKAk8WL-NM148.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/rBAADF80YNWAV8XtAAKAk8WL-NM148.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/rBAADF80YNaAa6uwAAJWvv4dhwk488.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/rBAADF80YNaAa6uwAAJWvv4dhwk488.png)
 
 #### 卷生命周期
 
-![img](https://gitee.com/github-25970295/blogimgv2022/raw/master/rBAADF80YNeABj33AADssTtyNGc569.png)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/rBAADF80YNeABj33AADssTtyNGc569.png)
 
 ### RPC 接口集合
 
@@ -175,7 +175,7 @@
 
 ## K8S CSI架构
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/rBAADF80YN-ADt2aAAP1iSVfOCM122.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/rBAADF80YN-ADt2aAAP1iSVfOCM122.png)
 
 为了部署一个容器化的第三方CSI volume driver，存储提供商需要执行如下操作：
 

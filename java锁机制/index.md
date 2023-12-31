@@ -263,7 +263,7 @@ namespace LockTest
 }
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210308105950668.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210308105950668.png)
 
 ##### .2. 锁静态私有变量
 
@@ -341,7 +341,7 @@ namespace LockTest
 }
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210308110059148.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210308110059148.png)
 
 ##### .3.总结
 

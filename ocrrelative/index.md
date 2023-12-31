@@ -18,11 +18,11 @@ Multilingual OCR
 
 - 遗留问题：对于识别低的词怎么合理去掉的，如何将知识图谱相关的知识融入进去。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210203154201326.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210203154201326.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210203154754219.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210203154754219.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210203160214969.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210203160214969.png)
 
 
 
@@ -30,7 +30,7 @@ Multilingual OCR
 
 - [效果](https://github.com/1024210879/unet-denoising-dirty-documents)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200830094005.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200830094005.png)
 
 ## 2. 开源工具
 

@@ -29,7 +29,7 @@
 
 　　EasyLiving系统是基于计算机视觉的定位系统，采用高性能的照相机，准确性比较高;但当室内环境复杂时，很难一直保持高精度。通过<font color=red>移动机器人同步定位和制图(simultaneous location and mapping，SLAM)的原理</font>，可以引入视觉传感器。文献[25]通过基于参考图像使用低分辨率相机实现SLAM算法，从而精度可以到亚米级。2012年提出的EV-Loc室内定位系统是一个以视觉信号作为辅助定位来提高精度的定位系统。基于视觉定位原理的谷歌视觉定位服务(visual positioning　service，VPS)技术，其理论精度可达厘米级别。
 
-![slam](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521104141366.png)
+![slam](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521104141366.png)
 
 ### 1.2. 基于射频信号的室内定位技术
 
@@ -69,21 +69,21 @@
 
 ### 1.3　融合定位技术(Mobile sensors)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521105103954.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521105103954.png)
 
 　　不同传感器进行位置信息融合，称为融合定位。融合多种定位技术进行室内定位是目前研究的热点。武汉大学的陈锐志教授把融合定位方法分为紧耦合和松耦合，北京邮电大学的邓中亮教授提出室内融合WiFi、蓝牙、惯性、视觉等多种手段创建多元紧耦合定位模型，同时结合室外的GNSS实现大型建筑物内外人的“米”级无缝定位。把多种技术的优势结合以达到更高的精度从而提高定位的鲁棒性，是融合定位的一大优势。
 
 　　现有的室内定位融合研究方案有多种。文献[39]提出结合WiFi、磁场强度和蜂窝信号来构建混合定位系统。文献[40]中WiFi测量结合PDR来实现更高的准确性。文献[41]使用蓝牙RSSI测量和智能手机上的加速度计和气压计进行融合室内三维定位。文献[42]实现了地磁场定位和惯性传感器结合的方案，提供不需要基础设施的可靠的定位方法。文献[43]提出只根据自身携带的惯性测量单元(inertial measurement unit，IMU)、气压计、超声波、摄像头，采用开发粒子滤波的方法而不需要基础设施进行融合，实验结果精度可达到3m。这些都可以说明不论是稳定性还是精度方面，融合后的定位系统均优于单一的定位系统。
 
-![Mobile Sensor IndoorLocation](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521104415002.png)
+![Mobile Sensor IndoorLocation](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521104415002.png)
 
 ### 1.4　其他定位技术
 
 　　<font color=red>地磁定位技术确定室内位置是利用室内环境中不同点位地磁场强度不同的特点，与WiFi指纹方法相似。</font>芬兰奥卢大学的IndoorAtlas是应用地磁定位技术的代表系统，精度可达到0.1～2m。NFC技术是通过距离接近的方法来实现定位的，通过布设感应标签，得知感应标签的位置从而确定移动设备的位置，优势在于简单快速，劣势在于无法感知行人在各个标签之间的状态，要实现广域覆盖必须跟运动传感器融合。<font color=red>LED可见光通信采用的主要技术有相机技术、图像捕获技术、移动终端等。</font>基于终端的LED光定位技术是该领域的研究热点，主要有光网技术以及多模式融合技术。Bytelight定位系统就是基于对光源调制特定光信号来实现定位的，可达米级的定位精度，Ubeacon系统也是采用LED定位研发的。多用户协同定位指用户之间通过接受信号强度进行互相测量，从而获取相互距离，可以把信息利用得更充分，稳定性更好。
 
-![Magnetic indoorlocation](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521103932273.png)
+![Magnetic indoorlocation](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521103932273.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521103031471.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521103031471.png)
 
 <iframe width="640" height="360" src="https://www.youtube.com/embed/X6SYJUglXB4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 

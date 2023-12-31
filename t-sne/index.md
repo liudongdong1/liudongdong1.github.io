@@ -3,27 +3,27 @@
 
 ### 1. SNE 基本原理
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211015190943631.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211015190943631.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211015191128786.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211015191128786.png)
 
 ### 2. 目标函数求解
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211015191359660.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211015191359660.png)
 
 ### 3. 对称 SNE
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211015191735104.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211015191735104.png)
 
 ### 4. t-SNE
 
 >  ![[公式]](https://www.zhihu.com/equation?tex=t%5Ctext%7B-%7DSNE) 在对称 ![[公式]](https://www.zhihu.com/equation?tex=SNE) 的改进是，首先通过在`高维空间中使用高斯分布将距离转换为概率分布`，然后`在低维空间中，使用更加偏重长尾分布的方式来将距离转换为概率分布`，使得`高维度空间中的中低等距离在映射后能够有一个较大的距离。`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211015191857272.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211015191857272.png)
 
 > 在没有异常点时， ![[公式]](https://www.zhihu.com/equation?tex=t) 分布与高斯分布的拟合结果基本一致。而在第二张图中，出现了部分异常点，由于高斯分布的尾部较低，对异常点比较敏感，为了照顾这些异常点，高斯分布的拟合结果偏离了大多数样本所在位置，方差也较大。相比之下， ![[公式]](https://www.zhihu.com/equation?tex=t) 分布的尾部较高，对异常点不敏感，保证了其鲁棒性，因此拟合结果更为合理，较好的捕获了数据的全局特征。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211015192027831.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211015192027831.png)
 
 ### 5. 代码
 
@@ -105,7 +105,7 @@ scatter(digits_proj, y)
 plt.savefig('images/digits_tsne-generated.png', dpi=120)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211015192420776.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211015192420776.png)
 
 #### .2. t-SNE gif
 
@@ -281,7 +281,7 @@ animation = mpy.VideoClip(make_frame_mpl,
 animation.write_gif("./animation-94a2c1ff.gif", fps=20)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/animation-94a2c1ff.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/animation-94a2c1ff.gif)
 
 #### .3. t-SNE &PCA
 
@@ -320,7 +320,7 @@ plt.clim(-0.5, 9.5)
 plt.tight_layout()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211015192206679.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211015192206679.png)
 
 ###  Resource
 

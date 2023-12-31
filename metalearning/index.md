@@ -48,67 +48,67 @@
 
 ### 1. Introdce
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607221116253.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607221116253.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607221151526.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607221151526.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607221218773.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607221218773.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607221238574.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607221238574.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607221250503.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607221250503.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607221318618.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607221318618.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607221355339.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607221355339.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607221439417.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607221439417.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607221635156.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607221635156.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607221805199.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607221805199.png)
 
 Triplet loss
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607221955803.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607221955803.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607222025711.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607222025711.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607222116977.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607222116977.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607222622898.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607222622898.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607222705125.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607222705125.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607222741142.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607222741142.png)
 
-![image-20210607222802846](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607222802846.png)
+![image-20210607222802846](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607222802846.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607223003197.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607223003197.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607223133699.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607223133699.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607223305277.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607223305277.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607223349000.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607223349000.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607223413399.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607223413399.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210607223454513.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210607223454513.png)
 
 ### 2. Base Model
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210608143334567.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210608143334567.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210608143813515.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210608143813515.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210608145114206.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210608145114206.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210608145154925.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210608145154925.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210608145833634.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210608145833634.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210608145846609.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210608145846609.png)
 
 ### Resource
 

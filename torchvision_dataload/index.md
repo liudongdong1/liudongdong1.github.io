@@ -73,7 +73,7 @@ class Dataset(Generic[T_co]):
 > All the datasets have almost similar API. They all have two common arguments: `transform` and `target_transform` to transform the input and target respectively.
 Take MNIST for example:
 
-![image-20201017124252716](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124252716.png)
+![image-20201017124252716](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201017124252716.png)
 
 ```python
 from .vision import VisionDataset
@@ -211,7 +211,7 @@ from .utils import download_url, download_and_extract_archive, extract_archive, 
 > A generic data loader where the images are arranged in this way:
 >
 > torchvision.datasets.ImageFolder(*root*, *transform=None*, *target_transform=None*, *loader=<function default_loader>*, *is_valid_file=None*)
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017124740466.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201017124740466.png)
 
 `__getitem__`(*index*)
 
@@ -251,7 +251,7 @@ def load_data(root_path, dir, batch_size, phase):
 ### 2.2. DatasetFolder
 
 > `torchvision.datasets.``DatasetFolder`(*root*, *loader*, *extensions=None*, *transform=None*, *target_transform=None*, *is_valid_file=None*)
-![image-20201017125057711](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017125057711.png)
+![image-20201017125057711](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201017125057711.png)
 
 ### 3. Examples
 

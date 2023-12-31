@@ -11,7 +11,7 @@
 > 　　Volumetric，将空间划分成三维网格，栅格化。
 > 　　Multi-View，用多个角度的图片表示物体。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606100309507.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606100309507.png)
 
 > 点云数据是一种不规则的数据，在空间上和数量上可以任意分布，之前的研究者在点云上会先把它转化成一个规则的数据，比如栅格让其均匀分布，然后再用3D-cnn 来处理栅格数据。
 > **挑战和难点：**
@@ -20,41 +20,41 @@
 > 对于点云的corruption, outlier noise的鲁棒性; partial data局部数据；large-scale data保持高效
 ## 1. 研究领域
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/3Dcloud.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/3Dcloud.png)
 
 ### 1.1. 三维重建
 
 > 将点云的多视匹配放在这里，比如人体的三维重建，点云的多视重建不仅强调逐帧的匹配，还需要考虑不同角度观测产生误差累积，因此也存在一个优化或者平差的过程在里面。通常是通过观测形成闭环进行整体平差实现，多视图重建强调整体优化。可以只使用图像，或者点云，也可以两者结合（深度图像）实现。重建的结果通常是Mesh网格。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606100958028.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606100958028.png)
 
 ### 1.2. 3D Slam
 
 > 点云匹配（最近点迭代算法 ICP、正态分布变换方法 NDT）+位姿图优化（[g2o](https://link.jianshu.com?t=http://www.cnblogs.com/yhlx125/p/5417246.html)、LUM、ELCH、Toro、SPA）；实时3D SLAM算法 （LOAM）；Kalman滤波方法。3D SLAM通常产生3D点云，或者Octree Map。基于视觉（单目、双目、鱼眼相机、深度相机）方法的SLAM，比如orbSLAM，lsdSLAM.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606100923607.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606100923607.png)
 
 ### 1.3. 目标识别
 
 > 无人驾驶汽车中基于激光数据检测场景中的行人、汽车、自行车、以及道路和道路附属设施（行道树、路灯、斑马线等）。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606095913925.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606095913925.png)
 
 ### 1.4.  形状检测分类
 
 > 点云技术在逆向工程中有很普遍的应用。构建大量的几何模型之后，如何有效的管理，检索是一个很困难的问题。需要对点云（Mesh）模型进行特征描述，分类。根据模型的特征信息进行模型的检索。同时包括如何从场景中检索某类特定的物体，这类方法关注的重点是模型。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200102151219418.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200102151219418.png)
 
 ### 1.5. 语义分类
 
 > 获取场景点云之后，如何有效的利用点云信息，如何理解点云场景的内容，进行点云的分类很有必要，需要为每个点云进行Labeling。可以分为基于点的方法，基于分割的分类方法。从方法上可以分为基于监督分类的技术或者非监督分类技术，深度学习也是一个很有希望应用的技术。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606100747400.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606100747400.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606100014333.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606100014333.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200606094256838.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200606094256838.png)
 
 
 
@@ -66,7 +66,7 @@
 
 - https://github.com/nicolas-chaulet/torch-points3d
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210202132017461.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210202132017461.png)
 
 ## 4. 应用领域
 

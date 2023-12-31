@@ -12,7 +12,7 @@
 
 ### System Overview
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200921084842252.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200921084842252.png)
 
  <p align="center">
 <img src="https://static1.squarespace.com/static/57f6d51c9f74566f55ecf271/t/5cca272524a69435c3251c40/1556752170424/flowfig.jpg?format=1000w" >

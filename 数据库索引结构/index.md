@@ -76,10 +76,10 @@
 
 事务的commit分为prepare和commit两个阶段：
 1、`prepare阶段：redo持久化到磁盘（redo group commit），并将回滚段置为prepared状态，此时binlog不做操作。`
-[![](https://gitee.com/github-25970295/blogimgv2022/raw/master/prepare.png)]
+[![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/prepare.png)]
 2、`commit阶段：innodb释放锁，释放回滚段，设置提交状态，binlog持久化到磁盘，然后存储引擎层提交。`
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220730235130369.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220730235130369.png)
 
 ---
 

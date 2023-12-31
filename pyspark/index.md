@@ -6,17 +6,17 @@
 > - **Resilient Distributed Dataset (RDD)**: RDD is an immutable (read-only), fundamental `collection of elements or items` that can be operated on many devices at the same time (parallel processing). Each dataset in an RDD can be divided into logical portions, which are then executed on different nodes of a cluster.
 > - **Directed Acyclic Graph (DAG)**: DAG is the `scheduling layer of the Apache Spark architecture` that implements **stage-oriented scheduling**. Compared to MapReduce that creates a graph in two stages, Map and Reduce, Apache Spark can create DAGs that contain many stages.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201119211239377.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201119211239377.png)
 
 ## 0. Architecture
 
-![Basic](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201119211608027.png)
+![Basic](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201119211608027.png)
 
-![standalone](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201119211639658.png)
+![standalone](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201119211639658.png)
 
-![Yarn](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201119211701746.png)
+![Yarn](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201119211701746.png)
 
-![component](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201119211800146.png)
+![component](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201119211800146.png)
 
 ## 1. core class
 
@@ -32,7 +32,7 @@
 
 [`pyspark.sql.DataFrame`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame)A distributed collection of data grouped into named columns.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210225232741569.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210225232741569.png)
 
 ```shell
 #连接spark cluster
@@ -541,7 +541,7 @@ color_df.sort('column',ascending=False).show()
 df.goupby('columnname').count().show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20201119164459904.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201119164459904.png)
 
 ##### 7. SQL
 
@@ -595,7 +595,7 @@ df = df.withColumn("height", df["height"].cast(IntegerType()))
 
 ##### 9. collect
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201119220742676.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201119220742676.png)
 
 ```python
 print(data1[0]["words"])
@@ -794,7 +794,7 @@ print " Number of non-zero values: {}".format(summary.numNonzeros()[0])
 - **mllib.recommendation**: This algorithm is used for recommender systems to fill in the missing entries in any dataset.
 - **spark.mllib**: This supports collaborative filtering, where Spark uses ALS (Alternating Least Squares) to predict the missing entries in the sets of descriptions of users and products.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201119215234237.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201119215234237.png)
 
 - [ ] https://spark.apache.org/docs/latest/ml-features  后期学习使用这里面的api，但是ML基本算法必须熟练掌握；
 - [ ] 后面遇到比较好的代码，案例可以多多积累；
@@ -868,7 +868,7 @@ print tree_model.toDebugString()
 
 ![](https://intellipaat.com/mediaFiles/2019/03/spark-and-rdd-cheat-sheet-1.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201119212743127.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201119212743127.png)
 
 - https://github.com/jadianes/spark-py-notebooks
 - https://www.cnblogs.com/sight-tech/p/12990579.html

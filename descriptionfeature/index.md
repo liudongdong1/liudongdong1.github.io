@@ -16,11 +16,11 @@
 >
 > - `数值型数据`可计算更多`统计量、进行参数估计和假设检`验等
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210526102351902.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210526102351902.png)
 
 ### 2. 描述指标
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210526101810039.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210526101810039.png)
 
 > - `最大值、最小值`可用来检验数据是否存在`异常情况`。
 > - `平均值、中位数`是用于描述数据的`集中趋势指标`。
@@ -39,13 +39,13 @@
 
 - **峰度系数**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210526103135923.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210526103135923.png)
 
 - **偏度系数**
 
 > 当数据的总体分布为正态分布时，峰度系数近似为0；当分布较正态分布的尾部更分散时，峰度系数为正；否则为负。当峰度系数为正时，两侧极端数据较多；当峰度系数为负时，两侧极端数据较少。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210526103156238.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210526103156238.png)
 
 ### 3. 数据分布
 
@@ -59,7 +59,7 @@
 >
 > `生成正态分布随机数函数`rnorm(n, mean = 0, sd = 1)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210526103453568.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210526103453568.png)
 
 #### .2. 直方图&经验分布&QQ图
 
@@ -69,25 +69,25 @@
 >
 > 核密度估计函数density()，其目的是用已知样本，估计其密度。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210526103738012.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210526103738012.png)
 
 - **经验分布**
 
 > 直方图的制作`适合于总体为连续型分布的场合`。若对于`一般的总体分布`，若`要它的总体分布函数F(x)，可以用经验分布函数`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210526103909986.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210526103909986.png)
 
 - **QQ图**
 
 > QQ图可以帮助我们~`鉴别样本的分布是否近似于某种类型的分布`~。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210526104026930.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210526104026930.png)
 
 #### .3. 箱型图&五数
 
 - **箱型图**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210526104053656.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210526104053656.png)
 
 > 中位数，下四分位数、上四分位数、最小值、最大值。这五个数称为样本数据的`五数总结`。
 
@@ -146,7 +146,7 @@ cov(data, bias=1)
 corrcoef(data)
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210526104851021.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210526104851021.png)
 
 ### 5. matlab 图分析案例
 

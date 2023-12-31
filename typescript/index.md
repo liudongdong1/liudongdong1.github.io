@@ -7,7 +7,7 @@
 
 > Node.js is an open source, cross-platform runtime environment for server-side JavaScript. Node.js is required to run JavaScript without a browser support. It uses Google V8 JavaScript engine to execute code. 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201130202850477.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201130202850477.png)
 
 ```shell
 npm install -g typescript
@@ -17,7 +17,7 @@ node app.js
 
 ### 2. code
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201130203446809.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201130203446809.png)
 
 ```Typescript
 // declare a variable

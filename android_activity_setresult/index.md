@@ -3,7 +3,7 @@
 
 > 在一个主界面(主Activity)通过意图跳转至多个不同子Activity上去，当子模块的代码执行完毕后再次返回主页面，将`子activity中得到的数据显示在主界面/完成的数据交给主Activity处理`。这种带数据的意图跳转需要使用activity的onActivityResult()方法。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211204195533006.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211204195533006.png)
 
 ### 1. 相关函数
 

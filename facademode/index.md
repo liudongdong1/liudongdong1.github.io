@@ -12,17 +12,17 @@
 > - 其次，在开发阶段，子系统往往因为不断的重构演化而变得越来越复杂，大多数的模式使用时也都会产生很多很小的类，这本是好事，但也给外部调用它们的用户程序带来使用上的困难，增加外观Facade可以提供一个简单接口，减少它们之间的依赖
 > - 在维护一个遗留的大型系统时，可能这个系统已经非常难以维护和扩展了，但因为它包含非常重要的功能，新的需求开发必须依赖它，此时用外观模式Facade也是非常合适的，你可以为新系统开发一个外观Facade类，给设计粗糙或高度复杂的遗留代码提供比较清晰简单的接口，让新系统与Facade对象进行交互，Facade完成与遗留代码交互所有复杂的工作
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705082237371.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705082237371.png)
 
 > - **外观（Facade）角色**：为多个子系统对外提供一个共同的接口。
 > - **子系统（Sub System）角色**：实现系统的部分功能，客户可以通过外观角色访问它。
 > - **客户（Client）角色**：通过一个外观角色访问各个子系统的功能。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705082636479.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705082636479.png)
 
 ### 1. java Demo
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705082733354.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705082733354.png)
 
 
 
@@ -158,7 +158,7 @@ public class Client {
 
 ### 2. Mybatis
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705083055289.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705083055289.png)
 
 ### Resource
 

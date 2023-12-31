@@ -62,7 +62,7 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917093314039.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917093314039.png)
 
 - **Attentional Graph Neural Network:** sift through tentative matching keypoints, examine each, and look for contextual cues that help disambiguate the true match from other self-similarities;
 
@@ -88,13 +88,13 @@ previous work:
     f_i^A=W*x_i^{A(L)}+b, \forall i\epsilon A;
     $$
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917101808583.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917101808583.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917105811099.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917105811099.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917090251965.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917090251965.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917090538654.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917090538654.png)
 
 #### Evaluation
 
@@ -106,32 +106,32 @@ previous work:
 
 - Dataset: 1M distractor images in Oxford and Paris dataset[42];   DLT: directed linear transformation
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917102406299.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917102406299.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917105710761.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917105710761.png)
 
 **【Indoor Position】**
 
 - lack of texture, the abundance of self-similarities, the complex 3D geometry of scenes, and large view changes;
 - Dataset: ScanNet[13],  indoor dataset composed of monocular sequences with ground truth poses and depth images and well-define training,  validation, and test splits corresponding to different scenes.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917103336668.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917103336668.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917105550177.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917105550177.png)
 
 **【Outdoor position estimation】**
 
 - dataset: PhotoTourism dataset: YFCC100M dataset[56] , with ground truth poses and sparse 3D models obtained from SfM tool;
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20200917103743941.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917103743941.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917104006795.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917104006795.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917105632954.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917105632954.png)
 
 **【Ablation of SuperGlue】**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200917104118772.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200917104118772.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -192,7 +192,7 @@ $$
 
 - **the case of diagonal A**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913102622569.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913102622569.png)
 
 - **The case of Full A**
 
@@ -206,9 +206,9 @@ $$
 
   
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913102806610.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913102806610.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913103321326.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913103321326.png)
 
 #### Notes <font color=orange>去加强了解</font>
 

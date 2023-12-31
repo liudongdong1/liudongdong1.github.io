@@ -28,7 +28,7 @@
 
 #### Proble Statement
 
-- self-occlusion due to articulation, view-point, grasped object.![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313092350789.png)
+- self-occlusion due to articulation, view-point, grasped object.![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313092350789.png)
 
 previous work:
 
@@ -47,7 +47,7 @@ $$
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200307172658147.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200307172658147.png)
 
 **【Multiview Bootstrapped Training】**
 
@@ -90,7 +90,7 @@ Multiview Bootrstrap:
 - using architecture of CPMs with some modification.  <font color=red>CPMs predict a confidence map for each keypoint, representing the keypoint's location as a Gaussian centered at the true position</font>
 - using pre-trained VGG-19 network
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200307174424118.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200307174424118.png)
 
 #### Evaluation
 
@@ -99,9 +99,9 @@ Multiview Bootrstrap:
     - the MPII human pose dataset[2] <font color=red>reflect every-day human activities</font> 
     - Images from the New Zealand Sign Language Exercised os the Victoria University of Wellington <font color=red>contains a variety of hand poses found in conversation</font>
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200307171832277.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200307171832277.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200307175621323.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200307175621323.png)
 
 #### Conclusion
 
@@ -123,14 +123,14 @@ Multiview Bootrstrap:
     \vec{\alpha}=Mean(\alpha_i...)
     $$
 
-  - ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200607110758736.png)
+  - ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200607110758736.png)
 
 - **[RANSAC:](http://www.cse.yorku.ca/~kosta/CompVis_Notes/ransac.pdf)** robust estimation techniques such as M-estimators and least-median squares that have been adopted by the computer vision community from the statistics literature, RANSAC was developed from within the computer vision community
 
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200307183024378.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200307183024378.png)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200307183041127.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200307183041127.png)
 
   
 
@@ -170,7 +170,7 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309194734899.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309194734899.png)
 
 **【Heat-map guided feature extraction】**
 
@@ -178,28 +178,28 @@ previous work:
 - apply the feature pyramid structure to merge different feature layers.
 - the heat maps are only used as the constraints to guide the feature extraction and will not be passed to the subsequent module.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309194817022.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309194817022.png)
 
 **【Baseline feature refinement architecture】**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309195036333.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309195036333.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309195052036.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309195052036.png)
 
 **【New Feature refinement architecture】**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309195142885.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309195142885.png)
 
 **【Loss Functions Defines】**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309195243947.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309195243947.png)
 
 #### Evaluation
 
   - **Environment**:   
     - Dataset:  ICVL datasets, NYU datasets, MSRA datasets, Hands 2017 Challenge Frame-based Dataset.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200309195412451.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200309195412451.png)
 
 #### Conclusion
 
@@ -222,7 +222,7 @@ previous work:
 
 #### Summary
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200314105007698.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200314105007698.png)
 
 ## Paper: Gesture To Speech
 
@@ -237,8 +237,8 @@ previous work:
 #### Summary
 
 - Arduino Uno, Flex Sensors, MPU6050 an accelerometer gyroscope sensor which is used to detect the alignment of an object.
-- To recognise the ALS Sign Language ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200314105349781.png)
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200314105446162.png)
+- To recognise the ALS Sign Language ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200314105349781.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200314105446162.png)
 
 
 
@@ -253,7 +253,7 @@ previous work:
 - Flex Sensors from Spectra-Symbol for angle displacement measuremetns.
 - apply a linear response delay filter to the raw sensors output for noise reduction and signal smoothing.
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200314110009115.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200314110009115.png)
 
 ## Paper: Survey on Hand Pose Estimation
 
@@ -264,11 +264,11 @@ previous work:
 </div>
 #### Summary
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200314110451195.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200314110451195.png)
 
 - 详细介绍了基于视觉基于传感器方法
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200314110640684.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200314110640684.png)
 
 ## Paper: Flex&Gyroscopes
 
@@ -286,9 +286,9 @@ previous work:
   - magnetoresistive sensors for measuring the magnetic field for deriving the hand orientation
 - presents a Thai sign language recognition framework using  a glove-based device with flex sensors and gyro-scops.
 - the measurements from the sensors are processed using finite Legendre and Linear Discriminant Analysis, then classified using k-nearest neighbors. 
-- Handware design:![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200314111857761.png)
+- Handware design:![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200314111857761.png)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200314112748401.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200314112748401.png)
 - the gyroscopes can return values in three different types of measurement
   - the quaternions are the raw data returned from the sensor. This measurement yields a four-dimensional output.
   - Euler angles are data converted from the four quaternion values. The Euler angles consist of three values, matching x, y, and z axis.
@@ -296,9 +296,9 @@ previous work:
 - Date processing 
   - segment and normalize the data  ???how to segment data unclear??
   - the value from flex sensors differ greatly depend on person, by requiring a calibration phase which the user clenches and releases his hands at least 3 times to determine th e maximum and minimum values of each flex sensor, and quantize the data to 3 possible values(0,1,2)
-  - 这部分不理解：![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200314140333583.png)
+  - 这部分不理解：![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200314140333583.png)
   
-    ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200314140348967.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200314140348967.png)
 
 # Human-Machine-Interaction
 
@@ -322,15 +322,15 @@ previous work:
 2. using MoCap markers to fit the full 3D body shape and pose, including the articulated face and hands, as well as the 3D object pose.
 3. adapt MoSh++ to solve for the body, face, and hands of SMPL-X to obtain detailed moving 3D meshes, and according to the meshes and tracked 3D objects, we compute plausible contact on the object and the human and provide an analysis of observed patterns.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210224170220204.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210224170220204.png)
 
-![Contact Annotation](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210224170341797.png)
+![Contact Annotation](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210224170341797.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210224170455822.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210224170455822.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210224170556522.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210224170556522.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210224170611285.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210224170611285.png)
 
 #### Relative 
 
@@ -370,9 +370,9 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612092238443.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612092238443.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612092928609.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612092928609.png)
 
 【Question 1】how to discover the latent feature embedding the Zpose between the human hand and robot hand?
 
@@ -394,7 +394,7 @@ previous work:
 >
 > using Perception Neuron device to control the arm of the robot.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612095958385.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612095958385.png)
 
 #### Evaluation
 
@@ -402,7 +402,7 @@ previous work:
 
     - Dataset:  dataset of paired human-robot images, contains 400k pairs of simulated robot depth images and human hand depth images, the ground trush are 19 joint angles of the robot hand, record the 9 depth images of the robot hand from different viewpoints simultaneously corresponding to one human pose.
 
-    ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200612100328537.png)
+    ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200612100328537.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -446,7 +446,7 @@ previous work:
 
 - **system overview**:
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200407165820138.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200407165820138.png)
 
 1. speaker-independent system of automatic continuous Russian speech recognition
 2. speaker-independent system of Russian sign language recognition with video processing using Kinect2.0 device
@@ -454,9 +454,9 @@ previous work:
 4. dialogue and data manager that access an application database, generates multi modal output and synchronizes input modalities fusion and output modalities fission
 5. modules for audio-visual speech synthesis to be applied for a talking avatar
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200407171743516.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200407171743516.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200407171910822.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200407171910822.png)
 
 #### Conclusion
 
@@ -515,7 +515,7 @@ previous work:
   - 2DCNN by Narayana et al.2018  (学习下，多模态的,只了解多模态部分) fuses multi-channels(global/left-hand/right-hand/for RGB/depth/RGB-flow/Depth-flow modalities)
   - combines 3DCNN， bidirectional ConvLSTM and 2DCNN into a unified framework. ( 学习下如何整合到一个框架中)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313162234686.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313162234686.png)
 
 #### Methods
 
@@ -528,22 +528,22 @@ previous work:
 - unlike 3DCNNs, performing convolutional operation for both spatial and temporal dimension jointly, the MTKB decouples the joint spatial-temporal modeling process and focuses on learning the temporal information.
 - the design of multi-kernel works well on shaping the pyramidal and discriminative temporal features.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313162921564.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313162921564.png)
 
 - define feature maps from layer $l$ of 2DCNN(ResNet-50) as $F_s\epsilon R^{(B*T)*C*H*W}$
 - reduce the channels of $F_s$  via convolution layer with kernel size of 1*1, denoted as  $F_s^‘ \epsilon R^{ ( B * T) * C^‘ * H * W}$
-- ![image-20200313163941544](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313163941544.png) using depthwise temporal conv [Chollet,2017]
+- ![image-20200313163941544](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313163941544.png) using depthwise temporal conv [Chollet,2017]
 
 【Global Refinement Block】
 
 - MKTB mainly focuses on the local neighborhoods,but the global temporal features across channels are not sufficiently attended.
 - GRB is designed to perform the weighted temporal aggregation, in which it allows distant temporal features to contribute to the filtered temporal features according to the cross-similarity.  <font color=red>遗留问题，如何计算similarity， MKTB 中如何sum</font>
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313164405173.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313164405173.png)
 
 #### Evaluation
 
-- ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200313164608764.png)
+- ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200313164608764.png)
 
 #### Conclusion
 
@@ -612,13 +612,13 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200301140035643.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200301140035643.png)
 
 【Basic PointNet】 [23] directly takes a set of points as the input and is able to extract discriminative features of the point cloud.   <font color=red>cannot capture local structures of the point cloud in a hierarchical way</font>.
 
 > basic architecture of PointNet takes N points as the input, Each D-dim input point is mapped into a C-dim feature through MLP. Per-point features are aggregated into a global feature by max-pooling, and mapped into F-dim output vector.
 
-![pointnet classification](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211002200807400.png)
+![pointnet classification](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211002200807400.png)
 
 **【Hierarchical PointNet】**[25]: 
 
@@ -628,32 +628,32 @@ previous work:
 > - **grouping layer**: constructs local region sets by fining "neighboring" points around the centroids. N`*K*(d+C): d-dim coordinates, and C-dim point feature, K is the number of points in the neighborhood of centroid points. Ball query finds all points that are within a radius to the query point.
 > - **PointNet alyer:**  uses a mini-PointNet to encode local region patterns into feaature vectors.
 
-![PointNet++](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211002105943638.png)
+![PointNet++](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211002105943638.png)
 
 > - 分类网络是逐层提取特征，最后总结出全局特征。
 > - 分割网络先将点云提取一个全局特征，在通过这个全局特征逐步上采样。每层新的中心点都是从上一层抽取的特征子集，中心点的个数就是成组的点集数，随着层数增加，中心点的个数也会逐渐降低，抽取到点云的局部结构特征。`当点云不均匀时`，每个子区域中如果在分区的时候使用相同的球半径，会导致部分稀疏区域采样点过小。多尺度成组 (MSG)**和**多分辨率成组 (MRG)
 >   - **多尺度成组（MSG）：**对于选取的一个中心点设置多个半径进行成组，并将经过PointNet对每个区域抽取后的特征进行拼接（concat）来当做该中心点的特征.
 >   - **多分辨率成组（MRG）：**对不同特征层上（分辨率）提取的特征再进行concat，以上图右图为例，最后的concat包含左右两个部分特征，分别来自底层和高层的特征抽取，对于low level点云成组后经过一个pointnet和high level的进行concat，思想是特征的抽取中的跳层连接。当局部点云区域较稀疏时，上层提取到的特征可靠性可能比底层更差，因此考虑对底层特征提升权重。当然，点云密度较高时能够提取到的特征也会更多。这种方法优化了直接在稀疏点云上进行特征抽取产生的问题，且相对于MSG的效率也较高。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211002201356244.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211002201356244.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211002201115350.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211002201115350.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211002200643224.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211002200643224.png)
 
 【**OBB-based Point Cloud Normalization**】to deal with large variation in global orientation of the hand. normalization the hand point cloud into a canonical coordinate system in which the global orientations of the transformed hand point clouds are as consistent as possible. <font color=red>normalization step ensures that our method is robust to variations in hand global orientations</font>
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211002170627689.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211002170627689.png)
 
 > `each column corresponds to the same local region`, and `each row correspnd to the same filter. `Following pictures show the sensitivity of points in three loacl regions to two fitlers at each of the first two levels.
 
-![image-20211002170941689](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211002170941689.png)
+![image-20211002170941689](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211002170941689.png)
 
 【**Refine the Fingertip**】
 
 Based on the obervation: the fingertip location of straightened finger is usually easy to be fined, since K nearest neighboring points of the fingertip will not change a lot even if the estimated location deviates from the ground truth location to some extent when <font color=red>K is relatively large</font> 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211002171012560.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211002171012560.png)
 
 
 
@@ -1339,7 +1339,7 @@ $$
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200711170646863.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200711170646863.png)
 
 【Pre-training the 3D-CNN】
 
@@ -1373,21 +1373,21 @@ $$
     - **ChaLearn 2014 dataset** contains more than 13K RGBD videos of 20 upper-body Italian sign language gestures performed by 20 subjects
 - **Results**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200711173946207.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200711173946207.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200711174007019.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200711174007019.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200711174023573.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200711174023573.png)
 
-![predictions with various modalities](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200711174040803.png)
+![predictions with various modalities](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200711174040803.png)
 
-![Comparison of 2D-CNN and 3D-CNN trained with different architectures](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200711174056380.png)
+![Comparison of 2D-CNN and 3D-CNN trained with different architectures](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200711174056380.png)
 
-![Gesture Detection](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200711174220754.png)
+![Gesture Detection](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200711174220754.png)
 
-![SKIG RGBD gesture dataset](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200711174344337.png)
+![SKIG RGBD gesture dataset](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200711174344337.png)
 
-![Chalearn 2014 dataset](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200711174326620.png)
+![Chalearn 2014 dataset](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200711174326620.png)
 
 #### Conclusion
 

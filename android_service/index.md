@@ -5,9 +5,9 @@
 
 ### 1. 生命周期
 
-![线程生命周期](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108205619410.png)
+![线程生命周期](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108205619410.png)
 
-![Service 生命周期](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108211727096.png)
+![Service 生命周期](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108211727096.png)
 
 - **onCreate()**：当Service第一次被创建后立即回调该方法，该方法在`整个生命周期中只会调用一次`,并且它的调用在`onStartCommand()`以及`onBind()`之前，我们可以在这个方法中进行一些一次性的初始化工作。
 - **onDestory()**：当Service被关闭时会回调该方法，该方法只会回调一次！
@@ -383,7 +383,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 ### 6. Binder 机制
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108214916019.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108214916019.png)
 
 #### .1. 定义基本类
 

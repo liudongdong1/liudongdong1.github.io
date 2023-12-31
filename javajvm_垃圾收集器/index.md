@@ -11,7 +11,7 @@
 > - **新生代GC（Minor GC）**：指发生在新生代的垃圾收集动作，因为Java对象大多都具备朝生夕灭的特性，所以Minor GC非常频繁，一般回收速度也比较快。
 > - **老年代GC（Major GC / Full GC）**：指发生在老年代的GC，出现了Major GC，经常会伴随至少一次的Minor GC（但非绝对的，在Parallel Scavenge收集器的收集策略里就有直接进行Major GC的策略选择过程）。Major GC的速度一般会比Minor GC慢10倍以上。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210706095413203.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210706095413203.png)
 
 #### 一、Serial收集器
 
@@ -19,7 +19,7 @@
 
 Serial收集器是最基本、发展历史最悠久的收集器，曾经（在JDK 1.3.1之前）是虚拟机新生代收集的唯一选择。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210706095448230.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210706095448230.png)
 
 - **特性：** 这个收集器是一个`单线程`的收集器，但它的“单线程”的意义并不仅仅说明它只会使用一个CPU或一条收集线程去完成垃圾收集工作，更重要的是在它进行垃圾收集时，必须暂停其他所有的工作线程，直到它收集结束。`Stop The World`
 - **应用场景：** Serial收集器是虚拟机运行`在Client模式下的默认新生代收集器`。
@@ -29,7 +29,7 @@ Serial收集器是最基本、发展历史最悠久的收集器，曾经（在JD
 
 ------
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210706095549964.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210706095549964.png)
 
 - **特性：** ParNew收集器其实就是Serial收集器的**多线程版本**，除了使用多条线程进行垃圾收集之外，其余行为包括Serial收集器可用的所有控制参数、收集算法、Stop The World、对象分配规则、回收策略等都与Serial收集器完全一样，在实现上，这两种收集器也共用了相当多的代码。
 - **应用场景：**ParNew收集器是许多`运行在Server模式下的虚拟机中首选的新生代收集器`。
@@ -57,7 +57,7 @@ Serial收集器是最基本、发展历史最悠久的收集器，曾经（在JD
 
 ------
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210706095921277.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210706095921277.png)
 
 - **特性：** Serial Old是Serial收集器的**老年代版本**，它同样是一个**单线程收集器**，使用**标记－整理**算法。
 - **应用场景：**
@@ -68,7 +68,7 @@ Serial收集器是最基本、发展历史最悠久的收集器，曾经（在JD
 
 ------
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210706095951807.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210706095951807.png)
 
 - **特性：**Parallel Old是Parallel Scavenge收集器的**老年代版本**，使用**多线程**和**“标记－整理”**算法。
 - **应用场景：**在注重吞吐量以及CPU资源敏感的场合，都可以优先考虑Parallel Scavenge加Parallel Old收集器。
@@ -79,7 +79,7 @@ Serial收集器是最基本、发展历史最悠久的收集器，曾经（在JD
 
 ------
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210706101105616.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210706101105616.png)
 
 - 特性：CMS（Concurrent Mark Sweep）收集器是一种`以获取最短回收停顿时间为目标的收集器`。目前很大一部分的`Java应用集中在互联网站或者B/S系统的服务端上`，这类应用尤其重视服务的响应速度，希望系统停顿时间最短，以给用户带来较好的体验。CMS收集器就非常符合这类应用的需求。
 - CMS收集器是`基于“标记—清除”算法实现的`，它的运作过程相对于前面几种收集器来说更复杂一些，整个过程分为4个步骤：
@@ -100,7 +100,7 @@ Serial收集器是最基本、发展历史最悠久的收集器，曾经（在JD
 
 ------
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210706101939958.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210706101939958.png)
 
 - **特性：** G1（Garbage-First）是一款面向**服务端应用**的垃圾收集器。HotSpot开发团队赋予它的使命是未来可以替换掉JDK 1.5中发布的CMS收集器。与其他GC收集器相比，G1具备如下特点。
   - **并行与并发**:  G1能充分利用多CPU、多核环境下的硬件优势，使用多个CPU来缩短Stop-The-World停顿的时间，部分其他收集器原本需要停顿Java线程执行的GC动作，G1收集器仍然可以通过并发的方式让Java程序继续执行。

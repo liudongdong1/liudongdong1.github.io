@@ -1,7 +1,7 @@
 # Code_InputStream
 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210803121102170.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210803121102170.png)
 
 ### 1. InputStream 抽象类
 

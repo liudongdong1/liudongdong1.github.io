@@ -16,9 +16,9 @@
 
 ##### .1. 自定义观察者
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210304000518763.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210304000518763.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210303232630378.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210303232630378.png)
 
 ```java
 //定义主题
@@ -110,7 +110,7 @@ public static void main(String[] args) {
 
 ##### .2. java自带类
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210304000650643.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210304000650643.png)
 
 ```java
 public class NewspaperOffice extends Observable {  //主题

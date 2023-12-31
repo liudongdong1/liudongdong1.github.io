@@ -31,7 +31,7 @@
 > - `本地过程调用(LPC)`用在多任务操作系统中，使得同时运行的任务能互相会话。这些任务共享内存空间使任务同步和互相发送信息。
 > - `远程过程调用(RPC)`类似于LPC，只是在网上工作。RPC开始是出现在Sun微系统公司和HP公司的运行UNIX操作系统的计算机中。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210725122130536.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210725122130536.png)
 
 - 服务消费者(Client 客户端)通过本地调用的方式调用服务。
 - 客户端存根(Client Stub)接收到调用请求后负责将方法、入参等信息序列化(组装)成能够进行网络传输的消息体。
@@ -53,7 +53,7 @@
 >
 > - RPC 服务端接收器 RpcAcceptor 接收客户端的调用请求，同样使用RpcProtocol 执行协议解(decode)。解码后的调用信息传递给RpcProcessor 去控制处理调用过程，最后再`委托调用给RpcInvoker 去实际执行并返回调用结果。`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210725124707440.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210725124707440.png)
 
 1. RpcServer: 负责`导出（export）远程接口`
 2. RpcClient: 负责`导入（import）远程接口的代理实现`
@@ -65,13 +65,13 @@
 8. RpcProcessor: 负责在服务方控制调用过程，包括管理调用线程池、超时时间等
 9. RpcChannel: 数据传输通道
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210725123019972.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210725123019972.png)
 
 ##### 2. 服务调用方式
 
 > RPC服务调用方式 分为  同步阻塞调用； 异步非阻塞调用
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210725124540929.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210725124540929.png)
 
 ###### .1. 导出远程接口
 
@@ -115,7 +115,7 @@ demo.hi("how are you?");
 >    2. 返回码：  异常返回码
 >    3. 返回异常信息：调用异常信息
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210725130101867.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210725130101867.png)
 
 > - 消息头 
 >   - magic      : 协议魔数，为解码设计
@@ -150,13 +150,13 @@ demo.hi("how are you?");
 
 ##### 1. Dubbo
 
-![img](https://gitee.com/github-25970295/blogpictureV2/raw/master/16caf43c8f281580)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16caf43c8f281580)
 
 > 从图中你能看到，Dubbo 的架构主要包含四个角色，其中 Consumer 是服务消费者，Provider 是服务提供者，Registry 是注册中心，Monitor 是监控系统。具体的交互流程是` Consumer 一端通过注册中心获取到 Provider 节点后`，`通过 Dubbo 的客户端 SDK 与 Provider 建立连接，并发起调用。`Provider 一端通过 Dubbo 的服务端 SDK 接收到 Consumer 的请求，处理后再把结果返回给 Consumer。
 
 ##### 2. Motan
 
-![img](https://gitee.com/github-25970295/blogpictureV2/raw/master/16caf43c8ce67a63)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16caf43c8ce67a63)
 
 > Motan 与 Dubbo 的架构类似，都需要在 Client 端（服务消费者）和 Server 端（服务提供者）引入 SDK，其中 Motan 框架主要包含下面几个功能模块。
 >
@@ -170,7 +170,7 @@ demo.hi("how are you?");
 
 Tars 是腾讯根据内部多年使用微服务架构的实践，总结而成的开源项目，仅支持 C++ 语言，它的架构图如下。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16caf43c8de17c70)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16caf43c8de17c70)
 
 > Tars 的架构交互主要包括以下几个流程：
 >
@@ -184,7 +184,7 @@ Tars 是腾讯根据内部多年使用微服务架构的实践，总结而成的
 
 Spring Cloud 利用 Spring Boot 特性整合了开源行业中优秀的组件，整体对外提供了一套在微服务架构中服务治理的解决方案。只支持 Java 语言平台，它的架构图可以用下面这张图来描述。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/16caf43c8f2215fd)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16caf43c8f2215fd)
 
 由此可见，Spring Cloud 微服务架构是由多个组件一起组成的，各个组件的交互流程如下。
 
@@ -197,7 +197,7 @@ Spring Cloud 利用 Spring Boot 特性整合了开源行业中优秀的组件，
 
 先来看下 gRPC，它的原理是`通过 IDL（Interface Definition Language）文件定义服务接口的参数和返回值类型，然后通过代码生成程序生成服务端和客户端的具体实现代码`，这样在 gRPC 里，客户端应用可以像调用本地对象一样调用另一台服务器上对应的方法。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/16caf43c8e5b851e)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16caf43c8e5b851e)
 
 它的主要特性包括三个方面。
 
@@ -209,7 +209,7 @@ Spring Cloud 利用 Spring Boot 特性整合了开源行业中优秀的组件，
 
 再来看下 Thrift，`Thrift 是一种轻量级的跨语言 RPC 通信方案`，支持多达 25 种编程语言。为了支持多种语言，跟 gRPC 一样，Thrift 也有一套自己的接口定义语言 IDL，`可以通过代码生成器，生成各种编程语言的 Client 端和 Server 端的 SDK 代码`，这样就保证了不同语言之间可以相互通信。它的架构图可以用下图来描述。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/16caf43c8d711952)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16caf43c8d711952)
 
 从这张图上可以看出 Thrift RPC 框架的特性。
 
@@ -232,7 +232,7 @@ Spring Cloud 利用 Spring Boot 特性整合了开源行业中优秀的组件，
 
 当服务消费者需要进行远程调用时，它就查一下这个表，找出对应的 ID，然后把它传给服务端，服务端也通过查表，来确定客户端需要调用的函数，然后执行相应函数的代码。要调用服务，首先你需要一个服务注册中心去查询对方服务都有哪些实例，然后根据负载均衡策略择优选一。
 
-![](../../../../../blogimgv2022/f52de3a5c920b0baa36845f8719f810e.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/f52de3a5c920b0baa36845f8719f810e.jpg)
 
 ##### .2. **数据编解码(序列化和反序列化)**
 

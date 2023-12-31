@@ -5,7 +5,7 @@
 
 #### .1. 各设备在linux中的文件名
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408100703112.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408100703112.png)
 
 #### .2. MSDOS（MBR）
 
@@ -13,20 +13,20 @@
   - 主要开机记录区（Master Boot Record, MBR）：可以`安装开机管理程序`的地方，有446 Bytes 
   - 分区表（partition table）：记录`整颗硬盘分区的状态`，有64 Bytes 由于分区表所在区块仅有64 Bytes容量，因此最多仅能有四组记录区，每组记录区记录了该区段的启始与结束的柱面号码。(可以采用延申分区来划分多个磁盘)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101141509.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408101141509.png)
 
 > 延伸分区的目的是使用额 外的扇区来记录分区信息，延伸分区本身并不能被拿来格式化。 然后我们可以通过延伸分区所指向的那个区块继续作分区的记录。这五个由延伸分区继续切出来的分区，就被称为逻辑分区（logical partition）。
 >
 > `主要分区与延伸分区最多可以有四笔（硬盘的限制） 延伸分区最多只能有一个（操作系统的限制）`
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408101535803.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408101535803.png)
 
 #### .3. GPT 磁盘分区表（（partition table）
 
 - 与 MBR 仅使用第一个 512Bytes 区块来纪录不同， GPT 使用了 34 个 LBA 区块来纪录分区信息！
 - GPT 除了前面 34 个 LBA 之外，整个磁盘的最后 33 个 LBA 也拿来作为另一个备份！
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408104340830.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408104340830.png)
 
 - **LBA0(MBR相容区块)：** 与 MBR 模式相似的，这个相容区块也分为两个部份，一个就是跟之前 446 Bytes 相似的区块，储存了第一阶段的开机管理程序！ 而在原本的分区表的纪录区内，这个相容模式仅放入一个特殊标志的分区，用来表示此磁盘为 GPT 格式之意。
 - **LBA1 （GPT 表头纪录）**： 纪录了`分区表本身的位置与大小`，`同时纪录了备份用的 GPT 分区` （就是前面谈到的在最后 34 个 LBA 区块）` 放置的位 置`， 同时放置了`分区表的检验机制码` （CRC32），操作系统可以根据这个检验码来判断 GPT 是否正确
@@ -46,7 +46,7 @@
 
 - UEFI主要是想要取代 BIOS 这个固件界面，因此我们也称 UEFI为 UEFIBIOS 就是了。UEFI使用 C 程序语言，比起使用组合语言的传 统 BIOS 要更容易开发！也因为使用 C 语言来撰写，因此如果开发者够厉害，甚至可以在 UEFI开机阶段就让该系统了解 TCP/IP 而直接上 网！
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408110430346.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408110430346.png)
 
 ### 2. Linux操作
 
@@ -94,23 +94,23 @@ I will shutdown after 10 mins The system is going down for power-off at Tue 2015
 
 #### .2. 文件目录配置依据-FHS
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408112433082.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408112433082.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134247976.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408134247976.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134307088.png)![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134745707.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408134307088.png)![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408134745707.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408134807939.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408134807939.png)
 
 #### .3. /usr & /val
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135042584.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408135042584.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135209162.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408135209162.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408135253015.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408135253015.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408195806304.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408195806304.png)
 
 ### 3. 文件
 
@@ -158,7 +158,7 @@ $find /etc -name '*httpd*'
 
 - **由文件找出正在使用该文件的程序fuser**
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408200040194.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408200040194.png)
 
 - **列出被程序所打开的文件文件名 lsof**
 
@@ -168,16 +168,16 @@ $find /etc -name '*httpd*'
 - ` inode`：记录文件的属性，一个文件占用一个inode，同时记录此文件的数据所在的 block 号码；
 - ` block`：实际`记录文件的内容，若文件太大时，会占用多个 block` 。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160045309.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408160045309.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160147950.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408160147950.png)
 
 - 原则上，block 的大小与数量在格式化完就不能够再改变了（除非重新格式化）；
 -  每个 block 内最多只能够放置一个文件的数据；
 -  承上，如果文件大于 block 的大小，则一个文件会占用多个 block 数量；
 -  承上，若文件小于 block ，则该 block 的剩余容量就不能够再被使用了（磁盘空间会浪费）。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408160522848.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408160522848.png)
 
 - 将 inode 记录 block 号码的区域定义为12个直接，一个间接, 一个双间接与一个三间接记 录区。
 
@@ -228,15 +228,15 @@ vda 252:0 0 40G 0 disk # 一整颗磁盘
 
 ##### 1. gdisk
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162713811.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408162713811.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408162913242.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408162913242.png)
 
 - **partprobe 更新 Linux 核心的分区表信息**
 
 > 不要去处理一个正在使用中的分区！例如，我们的系统现在已经使用了 /dev/vda2 ，那如果你要删除 /dev/vda2 的话， 必须要先 将 /dev/vda2 卸载，否则直接删除该分区的话，虽然磁盘还是慧写入正确的分区信息，但是核心会无法更新分区表的信息的！
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408163124586.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408163124586.png)
 
 ##### 2. 格式化 & 挂载
 
@@ -254,27 +254,27 @@ mount UUID="e0a6af55-26e7-4cb7-a515-826a8bd29e90" /data/xfs
 
 #### 6. 使用实体分区创建 swap
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164109135.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408164109135.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164217554.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408164217554.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164237875.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408164237875.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164258020.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408164258020.png)
 
 #### 7. LVM 相关介绍
 
 - LVM 的作法是`将几个实体的 partitions （或 disk） 通过软件组合成为一块看起来是独立的大磁盘 （VG） ，然后将这块大 磁盘再经过分区成为可使用分区 （LV）`， 最终就能够挂载使用了。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408194314913.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408194314913.png)
 
 ### 4. 软件相关
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171534087.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408171534087.png)
 
 - 通常不同的 distribution 所释出的 RPM 文件，并不能用在其他的 distributions 上。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408171734001.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408171734001.png)
 
 ### 5. 服务systemctl
 
@@ -302,11 +302,11 @@ is-enable ：开机时有没有默认要启用这个 unit
 
 #### .2. 核心代码目录
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408164733509.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408164733509.png)
 
 #### .3. 单一模块编译
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220408165238691.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220408165238691.png)
 
 ---
 

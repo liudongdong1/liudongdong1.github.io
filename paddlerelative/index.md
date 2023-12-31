@@ -3,7 +3,7 @@
 
 ### 1. [PaddleX](https://github.com/PaddlePaddle/PaddleX)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210625110542480.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210625110542480.png)
 
 **●工业领域：**
 
@@ -31,7 +31,7 @@ b.  车辆、行人、交通标示检测及计数等
 
 **● 智慧医疗领域：**CT影像分割、肺炎筛查、眼底病变筛查等
 
-![image-20210625110709142](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210625110709142.png)
+![image-20210625110709142](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210625110709142.png)
 
 ### 2. **[PaddleClas](https://github.com/PaddlePaddle/PaddleClas)**
 

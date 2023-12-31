@@ -5,7 +5,7 @@
 
 > **PySOT** is a software system designed by SenseTime Video Intelligence Research team. It implements state-of-the-art single object tracking algorithms, including [SiamRPN](http://openaccess.thecvf.com/content_cvpr_2018/html/Li_High_Performance_Visual_CVPR_2018_paper.html) and [SiamMask](https://arxiv.org/abs/1812.05050). It is written in Python and powered by the [PyTorch](https://pytorch.org) deep learning framework. This project also contains a Python port of toolkit for evaluating trackers.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/bag_demo.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/bag_demo.gif)
 
 The goal of PySOT is to provide a high-quality, high-performance codebase for visual tracking *research*. It is designed to be flexible in order to support rapid implementation and evaluation of novel research. PySOT includes implementations of the following visual tracking algorithms:
 
@@ -42,16 +42,16 @@ using the following backbone network architectures:
 
 2. 提供了一些深度学习编译好的动态链接库，  (这里我搭建时出现 dll 加载格式不正确，我同学搭建正确，问题还没有解决）
 
-   ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200418095136902.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+   ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200418095136902.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 
 ​     ![img](https://img-blog.csdnimg.cn/20200417110721630.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWRvbmdkb25nMTk=,size_16,color_FFFFFF,t_70)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 ​       ![img](https://img-blog.csdnimg.cn/20200417110744289.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWRvbmdkb25nMTk=,size_16,color_FFFFFF,t_70)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210312222554975.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210312222554975.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210312222726190.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210312222726190.png)
 
 #### 4. videoAnalyse
 
@@ -65,9 +65,9 @@ using the following backbone network architectures:
 
 >  Super fast and lightweight anchor-free object detection model. Real-time on mobile devices.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210321142731.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210321142731.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210321143238.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210321143238.png)
 
 #### 6.  [quickDraw](https://github.com/uvipen/QuickDraw)
 
@@ -409,13 +409,13 @@ if __name__ == '__main__':
 
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/quickdraw.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/quickdraw.gif)
 
 #### 7. video-object-remove
 
 > 使用pysot库中 [SiamMask](https://github.com/foolwood/SiamMask) 对每个图片处理，找到每个图片的mask不存储到目录中，然后使用 [Deep-Video-Inpainting](https://github.com/mcahny/Deep-Video-Inpainting) 工具对图片进行恢复处理。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/skate.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/skate.gif)
 
 
 

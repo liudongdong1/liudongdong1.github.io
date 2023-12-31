@@ -129,25 +129,25 @@ The [`sklearn.metrics.cluster`](https://scikit-learn.org/stable/modules/classes.
 | [`metrics.PrecisionRecallDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.PrecisionRecallDisplay.html#sklearn.metrics.PrecisionRecallDisplay)(precision, …) | Precision Recall visualization. |
 | [`metrics.RocCurveDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.RocCurveDisplay.html#sklearn.metrics.RocCurveDisplay)(*, fpr, tpr[, …]) | ROC Curve visualization.        |
 
-![image-20210523215145923](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210523215145923.png)
+![image-20210523215145923](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523215145923.png)
 
 ### 1. IOU
 
 > 预测框与标注框的交集与并集之比，数值越大表示该检测器的性能越好。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523213155615.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523213155615.png)
 
 ### 2. Precision
 
 > 查准率或者是精确率,是指在所有系统判定的“真”的样本中，确实是真的的占比
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523215727400.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523215727400.png)
 
 ### 3. Accuracy
 
 > accuracy针对所有样本
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210523213453110.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523213453110.png)
 
 ### 4. Recall
 
@@ -157,17 +157,17 @@ The [`sklearn.metrics.cluster`](https://scikit-learn.org/stable/modules/classes.
 
 > 以查准率为Y轴，、查全率为X轴做的图。它是综合评价整体结果的评估指标。所以，哪总类型（正或者负）样本多，权重就大。在进行比较时，若一个学习器的PR曲线被另一个学习器的曲线完全包住，则可断言后者的性能优于前者。`比较PR曲线下的面积`，该指标在一定程度上表征了学习器在查准率和查全率上取得相对“双高”的比例。因为这个值不容易估算，所以人们引入`“平衡点”(BEP)`来度量，他表示“查准率=查全率”时的取值，`值越大表明分类器性能越好`
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210523213628048.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523213628048.png)
 
 > F1-score 就是一个综合考虑precision和recall的指标，比BEP更为常用。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210523213914515.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523213914515.png)
 
 ### 6. ROC&AUC&K-S曲线
 
 > ROC全称是“受试者工作特征”（Receiver Operating Characteristic）曲线，ROC曲线以“真正例率”（TPR）为Y轴，以“假正例率”（FPR）为X轴，对角线对应于“随机猜测”模型，而（0,1）则对应“理想模型”。ROC形式如下图所示。**针对二分类**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523214430826.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523214430826.png)
 
 > 若一个学习器的ROC曲线被另一个学习器的曲线包住，那么我们可以断言后者性能优于前者；若两个学习器的ROC曲线发生交叉，则难以一般性断言两者孰优孰劣。此时若要进行比较，那么可以比较ROC曲线下的面积，即AUC，面积大的曲线对应的分类器性能更好。
 
@@ -177,11 +177,11 @@ The [`sklearn.metrics.cluster`](https://scikit-learn.org/stable/modules/classes.
 
 > 先将实例`按照模型输出值进行排序`，通过`改变不同的阈值得到小于（或大于）某个阈值时`，对应实例集合中正（负）样本占全部正（负）样本的`比例`（即TPR 和 FPR，和 ROC 曲线使用的指标一样，只是两者的横坐标不同）。由`小到大改变阈值从而得到多个点`，将这些点连接后分别得到`正、负实例累积曲线`。正、负实例累积曲线相减得到KS曲线， KS曲线的最高点即KS值，该点所对应的阈值划分点即模型最佳划分能力的点。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523222157838.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523222157838.png)
 
 ### 7. Confusion Matrix
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210523214926412.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523214926412.png)
 
 ### 8. 泛化能力
 
@@ -203,11 +203,11 @@ The [`sklearn.metrics.cluster`](https://scikit-learn.org/stable/modules/classes.
 >
 > - **模型过于简单** 即模型形式太简单，以致于无法捕捉到数据特征，无法很好的拟合数据
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523221850819.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523221850819.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523221348618.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523221348618.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523221554551.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523221554551.png)
 
 ### 10. [偏差和方差](https://machine-learning-from-scratch.readthedocs.io/zh_CN/latest/模型评估与模型调优.html#id47)
 
@@ -217,7 +217,7 @@ The [`sklearn.metrics.cluster`](https://scikit-learn.org/stable/modules/classes.
 >
 > **噪音：**度量了在当前任务上任何学习算法所能达到的期望泛化误差的下界，刻画了学习问题本身的难度。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523221808263.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523221808263.png)
 
 ### 11. 回归度量
 
@@ -225,17 +225,17 @@ The [`sklearn.metrics.cluster`](https://scikit-learn.org/stable/modules/classes.
 
 > 缺点是该误差形式没有二阶导数，导致不能用某些方法优化。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523222358303.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523222358303.png)
 
 #### .2. 均方根误差RMSE
 
 > 对大误差的样本有更多的惩罚，因此也对离群点更敏感。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523222434448.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523222434448.png)
 
 #### .3. 均方根对数误差RMSLE
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523222538084.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523222538084.png)
 
 > 当真实值的分布范围比较广时（如：年收入可以从 0 到非常大的数），如果使用`MAE、MSE、RMSE` 等误差，这将使得模型更`关注于那些真实标签值较大的样本`。而`RMSLE` 关注的是预测误差的比例，使得`真实标签值较小的样本也同等重要`。当数据中存在标签较大的异常值时，`RMSLE` 能够降低这些异常值的影响。
 
@@ -243,9 +243,9 @@ The [`sklearn.metrics.cluster`](https://scikit-learn.org/stable/modules/classes.
 
 > 稳定度指标(population stability index ,PSI)可衡量测试样本及模型开发样本评分的的分布差异，为最常见的模型稳定度评估指针。其实PSI表示的就是按分数分档后，针对不同样本，或者不同时间的样本.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523230309877.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523230309877.png)
 
-![image-20210523230436644](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210523230436644.png)
+![image-20210523230436644](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210523230436644.png)
 
 ### 13. 验证测试集
 

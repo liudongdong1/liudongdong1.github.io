@@ -9,7 +9,7 @@
 > - SQL查询引擎:Drill,Presto，Druid
 > - 内存数据库:ignite，CouchBase
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629112813645.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629112813645.png)
 
 ```xml
 <modules>

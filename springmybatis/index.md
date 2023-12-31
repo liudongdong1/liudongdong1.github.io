@@ -5,7 +5,7 @@
 >
 > **ORM模型** ，简单来说，就是数据库的表和简单 Java 对象的映射关系模型。采用ORM框架后，应用程序不再直接访问底层数据库，而是以 **面向对象** 的方式来操作持久化对象，而ORM框架则将这些面向对象的操作转换成底层SQL操作。ORM框架实现的效果：把对持久化对象的保存、修改、删除 等操作，转换为对数据库的操作。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629102208490.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629102208490.png)
 
 ### 1. SqlSessionFactory
 
@@ -117,7 +117,7 @@ try (SqlSession session = sqlSessionFactory.openSession()) {
 
 #### .1.simple maven
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629104221600.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629104221600.png)
 
 - 创建表
 

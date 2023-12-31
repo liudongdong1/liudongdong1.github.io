@@ -41,9 +41,9 @@ previous work:
 > - an initial estimate of the point cloud, and the camera parameters.
 > - the output  are synthesized images from arbitrary camera poses.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211025084206355.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211025084206355.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211025090611976.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211025090611976.png)
 
 
 

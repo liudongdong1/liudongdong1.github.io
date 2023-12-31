@@ -66,7 +66,7 @@ def imageloadCV(path,resize):
     return resize/orig_w,resize/orig_h,img_gray
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210516154604079.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210516154604079.png)
 
 #### 1.5. numpy
 
@@ -144,9 +144,9 @@ io.show()
 >
 > 注意： 一般是以左上方为原点，也可能是左下方
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027093952408.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027093952408.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201027132339343.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201027132339343.png)
 
 ### 4. 颜色空间
 
@@ -162,19 +162,19 @@ io.show()
 
 > **RGB**将颜色描述为由三个部分组成的元组。每个部分都可以取0到255之间的值，其中元组`(0,0,0)表示黑色`，元组`(255,255,255)表示白色`。元组的第0、第1和第2个部分分别表示红、绿、蓝的分量。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213103931034.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213103931034.png)
 
 #### 4.2.  HSL
 
 > HSL的一般含义是色调、饱和度和明度。你可以将HSL以圆柱体的形式可视化，如图2(a)所示。围绕圆柱体的是不同的颜色，比如绿色、黄色、红色等等(我们真正想要的颜色)。饱和度是指颜色的多少，而明度是指颜色有多暗或多亮。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213104224305.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213104224305.png)
 
 #### 4.3. HSV
 
 > HSV这个名字来自于颜色模型的三个坐标，即`色相、饱和度和值`。它也是一个圆柱形的颜色模型，圆柱体的半径表示饱和度，垂直轴表示值，角度表示色调。对于观察者，`色调是占主导地位的`，饱和度是混合到色调中的白光的数量，value是chrome的强度，value较低颜色变得更加类似于黑色，value越高，颜色变得更加像颜色本身。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201213104334553.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201213104334553.png)
 
 ---
 

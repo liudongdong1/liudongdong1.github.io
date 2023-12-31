@@ -5,19 +5,19 @@
 
 > Perlin Noise is an extremely powerful algorithm that is used often in procedural content generation. It is especially useful for games and other visual media such as movies.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011200726085.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201011200726085.png)
 
-1. Input x, y, z coordinates, and [x,y,z]%1 to find the coordinate's location within the cube.                                                             ![image-20201011200936597](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011200936597.png)
+1. Input x, y, z coordinates, and [x,y,z]%1 to find the coordinate's location within the cube.                                                             ![image-20201011200936597](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201011200936597.png)
 
 2. on each of the 4 unit coordinates(for 2d), generate a pseudorandom gradient vector, and define a positive direction( in the direction that it points to). The reasoning behind these specific gradient vectors is described in [Ken Perlin's SIGGRAPH 2002 paper: *Improving Noise*](http://mrl.nyu.edu/~perlin/paper445.pdf).
 
-   ![Gradient Vector](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011201315531.png)
+   ![Gradient Vector](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201011201315531.png)
 
-3. calculate the 4 vectors from given point to the 4 surrounding points on the grid.![distance vector](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011202243159.png)
+3. calculate the 4 vectors from given point to the 4 surrounding points on the grid.![distance vector](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201011202243159.png)
 
 4. take the [dot product](http://en.wikipedia.org/wiki/Dot_product) between the two vectors (the gradient vector and the distance vector). This gives us our final *influence* values: grad.x * dist.x + grad.y * dist.y + grad.z * dist.z
 
-5.  interpolate between these 4 values so that we get a sort of weighted average in between the 4 grid points (8 in 3D). he fade function for the improved perlin noise implementation is this:$6*t*5-15*t*4+10*t*3![image-20201011205309630](C:/Users/dell/AppData/Roaming/Typora/typora-user-images/image-20201011205309630.png)$![image-20201011205309630](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201011205309630.png)
+5.  interpolate between these 4 values so that we get a sort of weighted average in between the 4 grid points (8 in 3D). he fade function for the improved perlin noise implementation is this:$6*t*5-15*t*4+10*t*3![image-20201011205309630](C:/Users/dell/AppData/Roaming/Typora/typora-user-images/image-20201011205309630.png)$![image-20201011205309630](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201011205309630.png)
 
 ###    2. [Filters](https://nbviewer.jupyter.org/github/rlabbe/Kalman-and-Bayesian-Filters-in-Python/blob/master/table_of_contents.ipynb)
 

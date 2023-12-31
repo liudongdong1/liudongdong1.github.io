@@ -5,11 +5,11 @@
 
 > From: https://www.pdai.tech/md/db/nosql-mongo/mongo-x-basic.html
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210710221942311.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210710221942311.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210710222212524.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210710222212524.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210710222422472.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210710222422472.png)
 
 #### 1. 概念介绍
 
@@ -30,7 +30,7 @@
 - **文档** - MongoDB集合中的记录基本上称为文档。文档包含`字段名称`和`值`。
 - **字段** - 文档中的名称/值对。一个文档具有零个或多个字段。字段类似于关系数据库中的列。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210710223113335.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210710223113335.png)
 
 ### 2. 安装使用
 

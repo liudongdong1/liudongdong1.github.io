@@ -33,7 +33,7 @@
   Consumer读消息也是从Leader读取，只有被commit过的消息（offset低于HW的消息）才会暴露给Consumer。
   Kafka Replication的数据流如下图所示
 
-![Kafka Replication Data Flow](https://gitee.com/github-25970295/blogpictureV2/raw/master/Replication.png)
+![Kafka Replication Data Flow](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Replication.png)
 
 ##### 2. ACK前需要保证有多少个备份
 
@@ -72,7 +72,7 @@
    4. 3.1至3.3的过程中无变化时才会执行，否则跳转到3.1
 4. 直接通过RPC向set_p相关的Broker发送LeaderAndISRRequest命令。Controller可以在一个RPC操作中发送多个命令从而提高效率。
 
-![broker failover sequence diagram ](https://gitee.com/github-25970295/blogpictureV2/raw/master/kafka_broker_failover.png)
+![broker failover sequence diagram ](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/kafka_broker_failover.png)
 
 
 

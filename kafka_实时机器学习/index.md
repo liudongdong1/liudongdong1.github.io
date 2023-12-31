@@ -10,7 +10,7 @@
 
 > 从`应用程序`到`模型服务器`的交流经常通过`请求-响应协议（HTTP）`或者谷歌`RPC（gRPC）等RPC框架`来完成。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210720230001510.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210720230001510.png)
 
 ```java
 import org.apache.kafka.common.serialization.Serdes;
@@ -61,7 +61,7 @@ streams.start();
 
 > 嵌入模型可以`通过Kafka本地处理的数据流应用`，以Kafka数据流为杠杆。该模型还可以`通过KSQL（一种SQL方言）或者Java、Scala、Python、Go.等Kafka客户端应用程序接口`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/v2-46a3ba1ed4fa72cd41bee6207a269da6_720w.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-46a3ba1ed4fa72cd41bee6207a269da6_720w.jpg)
 
 ```java
 //输入Kafka和TensorFlowAPI
@@ -110,11 +110,11 @@ streams.start();
 
 > 在云原生框架中，两种方法都可以获得好处。即使其他的云原生技术有相似的特征，下面仍用Kubernetes作为云原生环境。`将模型嵌入到Kafka应用中`，可以`获得独立pod数据结构的所有优势`。独立的pod数据结构是流式数据处理和模型推导的容器，不依赖外部的模型服务器。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/v2-96591db76d443c192e445a5772b85a0a_720w.jpg)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-96591db76d443c192e445a5772b85a0a_720w.jpg)
 
 > `边车设计模式`。Kubernetes支持将具有特定任务的其他容器添加到Pod中。在以下示例中，将Kafka Streams应用程序部署在一个容器中，而模型服务器作为边车部署在同一pod内的另一个容器中。
 
-![img](https://gitee.com/github-25970295/blogpictureV2/raw/master/v2-86630da7c459e79bdb504641c9a31e5a_720w.jpg)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/v2-86630da7c459e79bdb504641c9a31e5a_720w.jpg)
 
 ### 4. **边缘模型部署**
 

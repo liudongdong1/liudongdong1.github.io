@@ -3,7 +3,7 @@
 
 > **迭代器模式：** 把在元素之间游走的责任交给迭代器，而不是聚合对象。`简化了聚合的接口和实现`，让聚合更专注在它所应该专注的事情上，这样做更加符合单一责任原则。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705152510354.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705152510354.png)
 
 > - **Iterator（抽象迭代器）：** `具体迭代器`需要实现的接口，提供了游走聚合对象元素之间的方法
 > - **ConcreteIterator（具体迭代器）：** 对具体的聚合对象进行遍历，每一个聚合对象都应该对应一个具体的迭代器。
@@ -12,7 +12,7 @@
 
 ### 1. Java Demo
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210705152844513.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210705152844513.png)
 
 ```java
 interface Iterator<E> {
@@ -86,7 +86,7 @@ public class Client {
 - android中的有序广播消息处理
 - 多级领导处理
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/6e0466ef3ba3458797f4a27d4476c957tplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/6e0466ef3ba3458797f4a27d4476c957tplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
 
 ```java
 public abstract class AbstractOrderHandler {

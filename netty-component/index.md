@@ -63,7 +63,7 @@ public class NettyServer  {
 > - `EventLoop`用于`控制流、多线程处理以及并发处理；`
 > - `ChannelFuture` `异步事件通知`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/11930f8cded8499694d24b607c5ff925tplv-k3u1fbpfcp-watermark.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/11930f8cded8499694d24b607c5ff925tplv-k3u1fbpfcp-watermark.awebp)
 
 #### .1. Channel
 
@@ -81,9 +81,9 @@ public class NettyServer  {
 6. Channel 可写状态变化事件 fireChannelWritabilityChanged。
 7. 连接关闭事件 fireChannelInactive。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008210632014.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008210632014.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008210824805.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008210824805.png)
 
 ##### 1. channelRead
 
@@ -116,7 +116,7 @@ public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception 
 >
 > io.netty.channel 包中的类，为了与Channel 的事件进行交互，扩展了这些接口/类。一个EventLoop 将由一个永远都不会改变的Thread 驱动，同时任务（Runnable 或者Callable）可以直接提交给EventLoop 实现，以立即执行或者调度执行。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008211125000.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008211125000.png)
 
 ```java
 //NIO处理时间事件方式
@@ -206,13 +206,13 @@ ctx.channel().eventLoop().schedule(new Runnable() {
 
 > 在内部，当提交任务到如果 `（ 当前）调用线程正是支撑EventLoop 的线程，那么所提交的代码块将会被（直接）执行`。否则，EventLoop 将调度该任务以便稍后执行，并将它放入到内部队列中。当EventLoop下次处理它的事件时，它会执行队列中的那些任务/事件。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008211430464.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008211430464.png)
 
 ##### .3.   线程分配
 
 > EventLoopGroup 负责为每个新创建的Channel 分配一个EventLoop。在当前实现中，使用顺序循环（round-robin）的方式进行分配以获取一个均衡的分布，并且相同的EventLoop可能会被分配给多个Channel。`一旦一个Channel 被分配给一个EventLoop，它将在它的整个生命周期中都使用这个EventLoop（以及相关联的Thread）。` `因为一个EventLoop 通常会被用于支撑多个Channel，所以对于所有相关联的Channel 来说，ThreadLocal 都将是一样的。`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008211659256.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008211659256.png)
 
 #### .3. ChannelFuture
 
@@ -245,15 +245,15 @@ channelFuture.addListener(new ChannelFutureListener() {
 >
 > 接口 ChannelHandler 定义的生命周期操作，在ChannelHandler被添加到ChannelPipeline 中或者被从ChannelPipeline 中移除时会调用这些操作。这些方法中的`每一个都接受一个ChannelHandlerContext 参数`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008212138781.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008212138781.png)
 
 >  ChannelInboundHandler 的生命周期方法。这些方法将会在`数据被接收时或者与其对应的Channel 状态发生改变时被调用`。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008212255420.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008212255420.png)
 
 > `出站操作和数据`将由ChannelOutboundHandler 处理。它的方法将被Channel、Channel-Pipeline 以及ChannelHandlerContext 调用。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008212350016.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008212350016.png)
 
 #### .2. **ChannelPipeline**
 
@@ -267,9 +267,9 @@ channelFuture.addListener(new ChannelFutureListener() {
 >
 > 出站指的是`通过Netty的Channel来操作底层的java NIO Channel。`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008212732407.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008212732407.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008212834279.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008212834279.png)
 
 #### .3. ChannelHandlerContext
 
@@ -281,7 +281,7 @@ channelFuture.addListener(new ChannelFutureListener() {
 >
 > ChannelHandlerContext 和ChannelHandler 之间的`关联（绑定）是永远不会改变的`，所以缓存对它的引用是安全的；
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008213237221.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008213237221.png)
 
 ```java
 //ChannelPipeline实现类DefaultChannelPipeline的构造器方法
@@ -298,9 +298,9 @@ protected DefaultChannelPipeline(Channel channel) {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008213340873.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008213340873.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008213405599.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008213405599.png)
 
 ### 4. Bootstrap
 
@@ -310,9 +310,9 @@ protected DefaultChannelPipeline(Channel channel) {
 >
 > `服务器需要两组不同的Channel`。第一组将`只包含一个ServerChannel，代表服务器自身的已绑定到某个本地端口的正在监听的套接字`。而第二组将`包含所有已创建的用来处理传入客户端连接（对于每个服务器已经接受的连接都有一个）的Channel。`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008213530159.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008213530159.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211008213650025.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211008213650025.png)
 
 > 向Bootstrap 或ServerBootstrap 的实例提供你的ChannelInitializer 实现即可，并且一旦Channel 被注册到了它的EventLoop 之后，就会调用你的initChannel()版本。在`该方法返回之后，ChannelInitializer 的实例将会从ChannelPipeline 中移除它自己。`
 
@@ -327,7 +327,7 @@ bootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
 });
 ```
 
-![image.png](https://gitee.com/github-25970295/blogpictureV2/raw/master/ae5c6ed3008d4323aaa817e9cb46437a.png)
+![image.png](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/ae5c6ed3008d4323aaa817e9cb46437a.png)
 
 ### 5. 通信传输模式
 

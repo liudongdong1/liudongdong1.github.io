@@ -44,7 +44,7 @@
 - 单线程 | K-V键值对 | 默认端口6379 | 共有16个数据库，且索引从零开始
 - 命令参考大全:http://redisdoc.com
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210707224001891.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210707224001891.png)
 
 ### .0. 应用场景
 
@@ -395,7 +395,7 @@ georadius china:city 110 30 1000 km			#以 100,30 这个坐标为中心, 寻找�
 
 ##### 1. 结构
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210708075818540.png
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210708075818540.png
 
 - `Consumer Group` ：消费组，使用 XGROUP CREATE 命令创建，一个消费组有多个消费者(Consumer), 这些消费者之间是竞争关系。
 - `last_delivered_id` ：游标，每个消费组会有个游标 last_delivered_id，`任意一个消费者读取了消息都会使游标 last_delivered_id 往前移动。`

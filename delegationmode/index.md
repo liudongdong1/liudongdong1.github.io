@@ -7,7 +7,7 @@
 >
 > 缺点：任务委派方式需要根据任务的复杂程度进行不同的改变，在任务比较复杂的情况下可能需要进行多 重委派，容易造成索乱。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210704163135767.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210704163135767.png)
 
 > 抽象任务角色( Task ) : 定义一个抽象接口， 它有若干实现类。
 >
@@ -23,9 +23,9 @@
 > - `委托机制`：先让parent（父）类加载器 寻找，只有在parent找不到的时候才从自己的类路径中去寻找。
 > - 类加载还采用了`cache机制`：如果cache中保存了这个Class就直接返回它，如果没有才从文件中读取和转换成Class，并存入cache，`这就是为什么修改了Class但是必须重新启动JVM才能生效，并且类只加载一次的原因`。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210302215456394.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210302215456394.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210302215901836.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210302215901836.png)
 
 ```java
 public abstract class ClassLoader {

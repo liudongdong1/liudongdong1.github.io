@@ -7,7 +7,7 @@
 >
 > 有序广播：发出广播后，同一时刻，`只有一个广播接收者能收到、一个接收者处理完后之后，可以选择继续向下传递给其它接收者，也可以拦截掉广播`。[不常用、不推荐使用了]
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108224217036.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108224217036.png)
 
 ### 1. 自定义广播接收者
 
@@ -123,7 +123,7 @@ sendBroadcast(intent);
 > - Android中内置了多个系统广播：只要涉及到手机的基本操作（如开机、网络状态变化、拍照等等），都会发出相应的广播
 > - 每个广播都有特定的Intent - Filter（包括具体的action）
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211108225811137.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211108225811137.png)
 
 #### .3. 有序广播
 
@@ -203,7 +203,7 @@ public class MyReceiver extends BroadcastReceiver
 - MainActivity.java 启动播放音乐服务，并通过按钮注册监听事件，在处理事件中发送对应的广播到服务中
 - MusicService.java 服务类定义广播接受类，接受UI传来的指令，并在播放完的时候，通过广播发送信息通知UI界面更新信息
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221118143538185.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221118143538185.png)
 
 
 

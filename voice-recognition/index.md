@@ -17,7 +17,7 @@
 
 ​	 语音识别的本质是一种基于语音特征参数的模式识别，即通过学习，系统能够把输入的语音按一定模式进行分类，进而依据判定准则找出最佳匹配结果。目前，模式匹配原理已经被应用于大多数语音识别系统中。如图1是基于模式匹配原理的语音识别系统框图。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200516100437806.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200516100437806.png)
 
 ​        一般的模式识别包括预处理，特征提取，模式匹配等基本模块。如图所示首先对输入语音进行预处理，其中预处理包括`分帧，加窗，预加重`等。其次是特征提取，因此选择合适的特征参数尤为重要。常用的特征参数包括：`基音周期，共振峰，短时平均能量或幅度，线性预测系数（LPC），感知加权预测系数（PLP），短时平均过零率，线性预测倒谱系数（LPCC），自相关函数，梅尔倒谱系数（MFCC），小波变换系数，经验模态分解系数（EMD），伽马通滤波器系数（GFCC）`等。在进行实际识别时，要对测试语音按训练过程产生模板，最后根据失真判决准则进行识别。常用的失真判决准则有欧式距离，协方差矩阵与贝叶斯距离等。
 
@@ -31,13 +31,13 @@
 
 ### 2.1. DTW 模板匹配
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200516101044749.png" alt="DTW 孤立词语音识别" style="zoom:80%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200516101044749.png" alt="DTW 孤立词语音识别" style="zoom:80%;" />
 
 
 
 ## 应用场景
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20200516101518518.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200516101518518.png)
 
 智能语音识别技术可以应用在很多领域中，如果聚焦到家庭，当前的应用主要集中在智慧家庭。通过支持语音识别的智能语音设备，如`智能音箱、家庭媒体网关、机顶盒等`，我们可以绕过复杂的按键、文字输入搜索等操作，以语音控制的方式实现很多事情：
 
@@ -55,13 +55,13 @@
 
 ### 3.1. 搜狗语音
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410214110104.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410214110104.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715165723248.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715165723248.png)
 
 随着搜狗语音识别、多模态识别（语音+唇语）、OCR、机器翻译、语音合成、图像生成等应用场景和需求的扩展，它们对算力资源的需求是根据不同任务而定的。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715165737439.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715165737439.png)
 
 
 

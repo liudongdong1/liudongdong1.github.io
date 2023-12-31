@@ -280,7 +280,7 @@ public void set(String name, String value, String source) {
 
 ##### 3.1. MR1
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201216215846266.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201216215846266.png)
 
 ##### 3.2  MR2
 
@@ -289,7 +289,7 @@ public void set(String name, String value, String source) {
 - NM(Node Manager)
 - CLC(Container Launch Context)：CLC发给ResourceManager，提供了资源需求（内存/CPU）、作业文件、安全令牌以及在节点上启动ApplicationMaster需要的其他信息。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201216220947566.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201216220947566.png)
 
 1. client向RM提交申请，包括CLC所需的信息。
 
@@ -307,7 +307,7 @@ public void set(String name, String value, String source) {
 
 7. AM从RM上注销，RM清理AM所在容器。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201216221243225.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201216221243225.png)
 
 ##### 3.3. InputFormat
 

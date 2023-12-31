@@ -10,15 +10,15 @@
 >    1. `确定方法是否需要被缓存以及其缓存策略`；
 >    2. `从缓存中读取之前缓存存储的数据；`
 
-![image.png](https://gitee.com/github-25970295/blogpictureV2/raw/master/a6d7f13c4f224addab71c9c4351b180ctplv-k3u1fbpfcp-watermark.awebp)
+![image.png](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/a6d7f13c4f224addab71c9c4351b180ctplv-k3u1fbpfcp-watermark.awebp)
 
 ### 1. 代码解读
 
-![Package cache](https://gitee.com/github-25970295/blogpictureV2/raw/master/Package%20cache.png)
+![Package cache](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Package%20cache.png)
 
 #### .1. 开启缓存
 
-![启动缓存时序图](https://gitee.com/github-25970295/blogpictureV2/raw/master/dae4b93c1ee54336b03099e685baf95etplv-k3u1fbpfcp-watermark.awebp)
+![启动缓存时序图](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/dae4b93c1ee54336b03099e685baf95etplv-k3u1fbpfcp-watermark.awebp)
 
 ```java
 public class CachingConfigurationSelector extends AdviceModeImportSelector<EnableCaching> {
@@ -69,9 +69,9 @@ public class CachingConfigurationSelector extends AdviceModeImportSelector<Enabl
 
 #### .2. 缓存通知配置
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/83bc1ecfa3dc40078f052f7e05f78705tplv-k3u1fbpfcp-watermark.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/83bc1ecfa3dc40078f052f7e05f78705tplv-k3u1fbpfcp-watermark.awebp)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/be4e6981acd4495683669f301c335c4etplv-k3u1fbpfcp-watermark.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/be4e6981acd4495683669f301c335c4etplv-k3u1fbpfcp-watermark.awebp)
 
 > 首先把`注解元数据属性解析出来`,然后把用户自定义的缓存组件装配进来(CacheManager,KeyGenerator和异常处理器)
 
@@ -143,11 +143,11 @@ public class ProxyCachingConfiguration extends AbstractCachingConfiguration {
 
 #### .3. 缓存代理设置
 
-![image.png](https://gitee.com/github-25970295/blogpictureV2/raw/master/508199deed0440c5a29e228e535b66b0tplv-k3u1fbpfcp-watermark.awebp)
+![image.png](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/508199deed0440c5a29e228e535b66b0tplv-k3u1fbpfcp-watermark.awebp)
 
 #### .4. 缓存设置
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/2ccab15c70414b5fac0ff03176cadb0atplv-k3u1fbpfcp-watermark-16315113172578.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/2ccab15c70414b5fac0ff03176cadb0atplv-k3u1fbpfcp-watermark-16315113172578.awebp)
 
 ```java
 final class CacheConfigurations {

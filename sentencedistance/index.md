@@ -82,7 +82,7 @@ for string in strings:
 
 > 杰卡德系数，英文叫做 Jaccard index，又称为 Jaccard 相似系数，用于`比较有限样本集之间的相似性与差异性`。`Jaccard 系数值越大，样本相似度越高`.实际上它的计算方式非常简单，`就是两个样本的交集除以并集得到的数值`，当两个样本完全一致时，结果为 1，当两个样本完全不同时，结果为 0
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211005195526760.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211005195526760.png)
 
 ```python
 from sklearn.feature_extraction.text import CountVectorizer

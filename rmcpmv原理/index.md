@@ -5,7 +5,7 @@
 >
 > 当我们读写文件时，通常是以流的形式，即认为文件的内容是连续的。但是在磁盘上，一个文件的内容通常是由多个固定大小的数据块即 block 构成的，并且这些数据块通常是不连续的。这时就需要一个额外的数据结构来保存各数据块的位置、数据块之间的顺序关系、文件大小、文件访问权限、文件的拥有者及修改时间等信息，即文件的元信息，而维护这些元信息的数据结构就被称为 i 结点。可以说，一个 i 节点中包含了进程访问文件时所需要的所有信息。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403145939452.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403145939452.png)
 
 #### 1. 硬链接
 
@@ -95,7 +95,7 @@ open("dest_data", O_WRONLY|O_CREAT, 0100644) = 4
 
 - 当目标文件存在
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403151202436.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403151202436.png)
 
 > 如果`目标文件存在`，在执行 cp 命令之后，文件的` inode 号并没有改变`，并且可以看出，`cp 使用了 open 及 O_TRUNC 参数打开了目标文件`。因而当目标文件已经存在时，`cp 命令实际是清空了目标文件内容，之后把新的内容写入目标文件。`
 
@@ -128,13 +128,13 @@ int main(void) {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403152758774.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403152758774.png)
 
 > `当一个进程开始运行时，操作系统会在 /proc/*pid* 目录下建立一个名为 exe 的符号链接`，`这一链接指向磁盘上的可执行文件`。通过这一符号链接我们就可以观察到当可执行文件被删除时，程序的表现。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403153001119.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403153001119.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220403153103281.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220403153103281.png)
 
 - 如果一个可执行文件正在运行，当我们把它删除后，删除的也只是文件名，操作系统依然保留了可执行文件的内容，这一点从 ls -ilL /proc/20295/exe 的结果中可以看出，其 i 节点号与删除前 pr_pid 文件的 i 节点号完全相同，执行 md5sum /proc/20295/exe 的结果与之前 pr_pid 的 md5 值也完全相同。
 - `删除原可执行文件后，如果我们重建一个同名文件，会发现新文件与被删除的 pr_pid 文件的 i 节点号不一样`。重建文件后，原程序的输出也没有变化，说明重建的文件与原 pr_pid 无关。这种机制与删除被打开文件的机制类似。

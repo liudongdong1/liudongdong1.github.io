@@ -7,11 +7,11 @@
 
 > Three Infrared Light emmitters and two cameras which received the IR lights.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200803183730104.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200803183730104.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624210009611.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624210009611.png)
 
-![image-20200624214110152](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624214110152.png)
+![image-20200624214110152](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624214110152.png)
 
 ### 1.2.  **动作跟踪数据**
 
@@ -32,9 +32,9 @@
 > - sphere radius球半径，拟合球的半径
 > - API 提供动作有： SreenTapGesture; KeyTapGesture;SwipeGesture;CircleGesture.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200803183941605.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200803183941605.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200624212951397.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200624212951397.png)
 
 > leap motion首次识别出一个手势后将其加入帧，如果这是一个持续性动作，leap motion将一个更新的手势对象加入后续帧。画圆和挥扫是持续性动作，leap motion在每一帧中更新这些手势，tap轻击是不连续的动作，所以每次敲击只需一个手势对象。
 >
@@ -79,9 +79,9 @@ Shao, Lin. "Hand movement and gesture recognition using Leap Motion Controller."
   - $D_i$: distances between fingertips $F_{pos}^i$ and palm center $P_pos$;
   - distance between two fingers which are adjacent.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200803200943810.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200803200943810.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200803201534310.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200803201534310.png)
 
 - **Dynamic Gesture:** using the velocity of fingertips and palm to detect the movement patterns.
 
@@ -98,26 +98,26 @@ Shao, Lin. "Hand movement and gesture recognition using Leap Motion Controller."
 
 **Index Key Tapping and Index Swipe:**  <font color=red> calculate the cross correlation between direction of index finger velocity $F_v^1$ and the palm normal $P_N$. By considering the absolute cross correlation  with threshold.</font>
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200803204623569.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200803204623569.png)
 
 **Index Circling Direction Features:** <font color=red>predict the circle direction whether it is clockwise or counter clockwise when the index is moving along a circle</font>. calculate the first order difference of the index finger velocity between $F_{vt}^1$ and $F_{v(t-1)}^1$denoted by  $DF_{vt}^1$  denoted by CP. 通过三角形内积。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200803205125973.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200803205125973.png)
 
 > - When important fingers of regions are self-occluded by other hand parts, tracking data quality will be greatly reduced.
 > - **Detection Region:**  tracking data becomes unstable when hands are near the region boundaries.
 > - **Parameters:** if the hand sizes and corresponding parameters are not matching, failures cases happen
 > - **Error accumulation:**  for hand movement gestures, using the first order differences cause errors.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200803205202860.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200803205202860.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200803205358787.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200803205358787.png)
 
 #### Evaluation
 
   - **Environment**:   
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200803210006896.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200803210006896.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -144,13 +144,13 @@ Shao, Lin. "Hand movement and gesture recognition using Leap Motion Controller."
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200803210601000.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200803210601000.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200803210629531.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200803210629531.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200803210655529.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200803210655529.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200803210715223.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200803210715223.png)
 
 **level**: IEEE TRANSACTIONS ON INDUSTRIAL INFORMATICS
 **author**: Hua Li, Member, IEEE

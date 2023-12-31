@@ -94,7 +94,7 @@ pysark
 
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201205234240178.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201205234240178.png)
 
 - `不知道为什么，在source 后没有在最终的path中生成相应的环境变量；`
 

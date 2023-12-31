@@ -18,15 +18,15 @@
 > - **The scale** is inversely proportional to the frequency of the mother wavelet (the window).
 > - The approximation, or scaling, coefficients are the `lowpass representation of the signal `and `the details are the wavelet coefficients.` At each subsequent level,` the approximation coefficients` are divided into a coarser `approximation (lowpass) and highpass (detail) part`.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521104151612.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521104151612.png)
 
 ![Scale](https://miro.medium.com/max/1600/1*QaiFGKiYrmkpe6Ihc9Xg0g.gif)
 
 ![Transition](https://miro.medium.com/max/1600/1*WywGvOeBt2-koSp4UqME3w.gif)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521093253737.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521093253737.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521093323523.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521093323523.png)
 
 ### 2. Wavelet Transform
 
@@ -45,41 +45,41 @@
 
 - Morlet Wavelet
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521095350793.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521095350793.png)
 
 - Meyer Wavelet
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521095404161.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521095404161.png)
 
 - Mexican Hat Wavelet
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521095418433.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521095418433.png)
 
 #### .2. **Discrete Wavelet Transform (DWT)**
 
 > DWT is a kind of wavelets that **restrict the value of scale and translation**. The restriction is like the scale is increasing in the power of 2 (a = 1, 2, 4, 8,…) and the translation is the integer (b = 1, 2, 3, 4, …). 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521103558404.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521103558404.png)
 
 - Haar Wavelet
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521095526979.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521095526979.png)
 
 - Daubechies Wavelet
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521095535899.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521095535899.png)
 
 ##### .1. .1. Wavelet Denoising(Fast Wavelet Transform)
 
 - perform a multilevel wavelet decomposition
 
-  ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521100657986.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521100657986.png)
 
-  ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521104408077.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521104408077.png)
 
-  ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521104423063.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521104423063.png)
 
-  ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521100854377.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521100854377.png)
 
 - Identify a thresholding technique
   - the universal threshold
@@ -89,15 +89,15 @@
 - threshold and reconstruction
   - soft and hard thresholding
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521101137602.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521101137602.png)
 
 ##### .2. 2D discrete wavelet transform
 
-![image-20210521104806366](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521104806366.png)
+![image-20210521104806366](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521104806366.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521104730761.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521104730761.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521104741237.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521104741237.png)
 
 ### 3. Application
 
@@ -118,7 +118,7 @@
 
 >  selection of wavelets, level of transform, threshold calculations, selection of neural network of appropriate level and availability of data to train the network to achieve a desired accuracy.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210521105302276.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210521105302276.png)
 
 ##### .2. cancer detection
 

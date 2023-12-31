@@ -79,15 +79,15 @@ if __name__ == "__main__":
 
 > 人像分割的相关应用非常广，例如基于人像分割可以实现背景的替换做出各种非常酷炫的效果。我们将训练数据扩充到人体分割，那么我们就是对人体做美颜特效处理，同时对背景做其他的特效处理，这样整张画面就会变得更加有趣，更加提高颜值了，这里我们对人体前景做美颜调色处理，对背景做了以下特效：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200708093528787.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200708093528787.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200708093555801.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200708093555801.png)
 
 > UNet网络，类型于一个U字母：首先进行Conv（两次）+Pooling下采样；然后Deconv反卷积进行上采样（部分采用resize+线性插值上采样），crop之前的低层feature map，进行融合；然后再次上采样。重复这个过程，直到获得输出388x388x2的feature map，最后经过softmax获得output segment map。
 >
 > 代码地址: https://github.com/milesial/Pytorch-UNet;  https://github.com/leijue222/portrait-matting-unet-flask
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200708093934749.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200708093934749.png)
 
 ```python
 class DoubleConv(nn.Module):

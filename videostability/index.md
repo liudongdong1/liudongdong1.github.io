@@ -9,7 +9,7 @@
 >
 > 基于CNN优化的深度估计三维视频稳定我们提出了一种新的基于深度的三维视频稳定学习方法Deep3D稳定器。我们的方法不需要预训练数据，而是直接通过三维重建来稳定输入视频。校正阶段结合三维场景深度和摄像机运动，平滑摄像机轨迹，合成稳定的视频。与大多数基于学习的方法不同，我们的平滑算法允许用户有效地操纵视频的稳定性。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210528095408041.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210528095408041.png)
 
 推荐方法的pipeline：pipeline由两个阶段组成。首先，三维几何优化阶段通过测试时训练，分别用PoseNet和DepthNet估计输入RGB序列的三维摄像机轨迹和稠密场景深度。优化阶段以输入序列和相应的光流作为学习3D场景的引导信号。其次，视频帧校正阶段以估计的摄像机轨迹和场景深度作为输入，在平滑后的轨迹上进行视点合成。平滑过程使用户可以通过操纵平滑滤波器的参数来获得不同程度的稳定度，然后对得到的视频进行包装和裁剪，得到稳定的视频。
 
@@ -17,7 +17,7 @@
 
 > [论文](https://arxiv.org/pdf/2102.01279.pdf) [项目](https://zhmeishi.github.io/dvs/)  提出了一种利用传感器数据（陀螺仪）和图像内容（光流）通过无监督学习来稳定视频的深度神经网络（DNN）。该网络将光流与真实/虚拟摄像机姿态历史融合成关节运动表示。接下来，LSTM块推断出新的虚拟相机姿势，并使用该虚拟姿势生成一个扭曲网格，以稳定帧。提出了一种新的相对运动表示方法和多阶段的训练过程来优化模型。据我们所知，这是第一个DNN解决方案，采用传感器数据和图像稳定。我们通过烧蚀研究验证了所提出的框架，并通过定量评估和用户研究证明了所提出的方法优于现有的替代解决方案。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210528095802371.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210528095802371.png)
 
 <iframe width="1182" height="665" src="https://www.youtube.com/embed/LF_JVdUFIw8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 

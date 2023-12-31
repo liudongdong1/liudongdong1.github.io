@@ -117,7 +117,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
 
 #### 1.0. Transform 变化
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201020213213586.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201020213213586.png)
 
 > 其中`ToTensor操作会将PIL.Image或形状为H×W×D，数值范围为[0, 255]的np.ndarray转换为形状为D×H×W`，数值范围为[0.0, 1.0]的torch.Tensor。  Normalize 需要注意数据的维度，否则容易报错。
 

@@ -7,11 +7,11 @@
 
 > 当移动鼠标器时，它把移动距离及方向的信息转换成脉冲送到计算机，计算机再把脉冲转换成鼠标器光标的坐标数据，从而达到指示位置的目的。
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521120714740.png" align=center/>
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521120714740.png" align=center/>
 
 ​       1968年12月9日，全世界第一个鼠标诞生于美国加州斯坦福大学，它的发明者是Douglas Englebart博士。Englebart博士设计鼠标的初衷就是为了使计算机的操作更加简便，来代替键盘那繁琐的指令。他制作的鼠标是一只小木头盒子，<font color=red>工作原理是由它底部的小球带动枢轴转动，并带动变阻器改变阻值来产生位移信号，信号经计算机处理，屏幕上的光标就可以移动</font>。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521123055366.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521123055366.png)
 
 > 光电机械鼠标工作原理 1：移动鼠标带动滚球。2：X方向和Y方转杆传递鼠标移动。3：旋转编码器的光电刻度盘。4：晶体管发射红外线可穿过刻度盘的小孔。5：光电传感器接收红外线并转换为平面移动速度。
 
@@ -21,9 +21,9 @@
 
 ## 2. 光电鼠标
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521121612762.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521121612762.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521123225851.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521123225851.png)
 
 > 光电鼠标的工作原理是：在光电鼠标内部有一个发光二极管，通过该发光二极管发出的光线，照亮光电鼠标底部表面。然后将光电鼠标底部表面反射回的一部分光线，经过一组光学透镜，传输到一个光感应器件（微成像器）内成像。这样，当光电鼠标移动时，其移动轨迹便会被记录为一组高速拍摄的连贯图像。这种图像是一种很小的鼠标操作表面的黑白照片。当鼠标移动时，传感器会连续拍照。传感器会快速地拍照——速度高达每秒1500张照片或更快，拍照速度要足够快，以便让连续的照片重叠起来。其余的工作由光学导航引擎负责。光学导航引擎通过一种专有的图像处理算法，识别捕获照片之间的共同特征并确定它们之间的距离。然后将这些信息转换为X和Y坐标，以指示鼠标的移动。
 >
@@ -33,9 +33,9 @@
 
 ## 3. 激光鼠标
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521122034116.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521122034116.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521123311684.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521123311684.png)
 
 > 激光鼠标其实也是光电鼠标，只不过是用激光代替了普通的LED光．好处是可以通过更多的表面，因为激光是 Coherent Light（相干光），几乎单一的波长，即使经过长距离的传播依然能保持其强度和波形；而LED 光则是Incoherent Light（非相干光）。
 
@@ -53,7 +53,7 @@
 >
 > 通常情况下，传统机械式鼠标的扫描精度都在200dpi以下，而光电鼠标则能达到400甚至800dpi，这就是为什么光电鼠标在定位精度上能够轻松超过机械式鼠标的主要原因。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521122541516.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521122541516.png)
 
 ## 4. 多点触控鼠标
 
@@ -61,7 +61,7 @@
 
 ### 4.1. 电容式触摸屏
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200521122408709.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200521122408709.png)
 
 > 电容式触摸屏是一块四层的复合玻璃屏，玻璃屏的内表面和夹层各涂有一层ITO（纳米铟锡金属氧化物，具有很好的导电性和透明性）。屏幕四个角上引出四个电极，当手指触摸在金属层上时，由于人体电场，用户和触摸屏表面形成以一个耦合电容，对于高频电流来说，电容是直接导体，于是手指从接触点吸走一个很小的电流。这个电流分从触摸屏的四角上的电极中流出，并且流经这四个电极的电流与手指到四角的距离成正比，控制器通过对这四个电流比例的精确计算，得出触摸点的位置。
 

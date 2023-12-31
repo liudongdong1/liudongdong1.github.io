@@ -3,20 +3,20 @@
 
 #### 1. DFT
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606123257246.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606123257246.png)
 
 > - **k**表示每N个样本的循环次数；
 > - **N**表示信号的长度；
 > - $x_n$: 表示信号在样本n处的值。
 > - $y_k$: 是一个复值，它给出了信号x中频率为k的正弦信号的信息；从$y_k$: 我们可以计算正弦的振幅和相位。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606123359667.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606123359667.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606123409975.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606123409975.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606123531609.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606123531609.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210606123539877.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210606123539877.png)
 
 -  用傅里叶权重计算傅里叶变换
 

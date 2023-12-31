@@ -12,27 +12,27 @@
   - the image may come from a scanned document, photo of a document, a scene-photo
 - **Scene Text Recognition:** recognizing text in natural scene.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200802085017178.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200802085017178.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200802085325293.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200802085325293.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200802085427659.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200802085427659.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200802090607760.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200802090607760.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200802095248267.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200802095248267.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200802095717531.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200802095717531.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200802095815004.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200802095815004.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200802095916880.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200802095916880.png)
 
 - https://mp.weixin.qq.com/s/F1d_pZQoVeUd9Uy5Z0Hc1Q
 
 ## 1. 基于RNN文字识别框架
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200711220418971.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200711220418971.png)
 
 1. CNN+RNN+CTC(CRNN+CTC)
 2. CNN+Seq2Seq+Attention

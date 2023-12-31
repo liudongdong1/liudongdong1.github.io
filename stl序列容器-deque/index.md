@@ -29,13 +29,13 @@ class deque {
 };
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411185045109.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411185045109.png)
 
 #### .2. 迭代器
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411190400286.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411190400286.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411190547730.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411190547730.png)
 
 ```c++
 void set_node(map_pointer new_node) { 
@@ -70,7 +70,7 @@ class deque {
 
 ### 2. 元素操作
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220411191622049.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220411191622049.png)
 
 ```c++
 void pop_back() { 
@@ -196,7 +196,7 @@ template <class T, class Alloc, size_t BufSize>
 
 ### 3. 常用函数思维导图
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/a2c6bf9652194dae142914fb1d2d6653.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/a2c6bf9652194dae142914fb1d2d6653.png)
 
 ### Resource
 

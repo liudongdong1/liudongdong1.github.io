@@ -34,7 +34,7 @@ ToPILImage(mode=None)#Converts a torch.*Tensor of shape C x H x W or a numpy nda
 ToTensor #Convert a PIL Image or numpy.ndarray to tensor.
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017150852446.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201017150852446.png)
 
 ### 3. TORCHVISION.UTILS
 
@@ -44,7 +44,7 @@ ToTensor #Convert a PIL Image or numpy.ndarray to tensor.
 torchvision.utils.make_grid(tensor: Union[torch.Tensor, List[torch.Tensor]], nrow: int = 8, padding: int = 2, normalize: bool = False, range: Optional[Tuple[int, int]] = None, scale_each: bool = False, pad_value: int = 0) → torch.Tensor
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201017151754444.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201017151754444.png)
 
 ```python
 torchvision.utils.save_image(tensor: Union[torch.Tensor, List[torch.Tensor]], fp: Union[str, pathlib.Path, BinaryIO], nrow: int = 8, padding: int = 2, normalize: bool = False, range: Optional[Tuple[int, int]] = None, scale_each: bool = False, pad_value: int = 0, format: Optional[str] = None) → None

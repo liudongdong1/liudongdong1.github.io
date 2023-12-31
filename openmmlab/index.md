@@ -78,7 +78,7 @@
 > - 与2D目标检测自然融合
 > - 高效率
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/微信图片_20200715090523.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/微信图片_20200715090523.gif)
 
 ## 4. [MMSegmentation](https://github.com/open-mmlab/mmsegmentation)
 
@@ -91,7 +91,7 @@
 > - 支持开箱即用的多方法
 > - 高效率
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/微信图片_20200715090734.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/微信图片_20200715090734.gif)
 
 支持的骨干网:
 
@@ -126,7 +126,7 @@
 > - 大规模训练配置
 > - 高效率与可扩展性
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/微信图片_20200715090827.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/微信图片_20200715090827.gif)
 
 支持的骨干网:
 
@@ -144,7 +144,7 @@
 
 > MMPose是一个基于PyTorch的开源姿势估计工具箱。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/微信图片_20200715090944.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/微信图片_20200715090944.gif)
 
 ## 7. [MMAction](https://github.com/open-mmlab/mmaction)
 
@@ -175,7 +175,7 @@
 >
 > MMAction2比MMAction支持的算法更多，速度更快，开发者也更活跃。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/微信图片_20200715091056.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/微信图片_20200715091056.gif)
 
 支持的动作识别算法:
 
@@ -202,7 +202,7 @@
 > - 高扩展性
 > - 多任务
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20200715091133.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20200715091133.gif)
 
 ## 10. [MMFashion](https://github.com/open-mmlab/mmfashion)
 
@@ -222,7 +222,7 @@
 > - 服饰解析和分割
 > - 服饰搭配推荐
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/微信图片_20200715091208.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/微信图片_20200715091208.gif)
 
 ## 11. MMEditing
 
@@ -234,13 +234,13 @@
 > - 在编辑中支持多任务
 > - SOTA
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715091256696.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715091256696.png)
 
 ## 12.**OpenPCDet**
 
 > OpenPCDet 是一个清晰，简单，自成体系的开源项目，用于基于LiDAR的3D目标检测。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715091336543.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715091336543.png)
 
 ---
 

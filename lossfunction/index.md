@@ -10,7 +10,7 @@
 > - **dim** ([*int*](https://docs.python.org/3/library/functions.html#int)) – A dimension along which LogSoftmax will be computed.
 >   - 参数dim=1表示对每一行求softmax，那么每一行的值加起来都等于1。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210531074733359.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210531074733359.png)
 
 ```python
 class LogSoftmax(Module):
@@ -47,9 +47,9 @@ class LogSoftmax(Module):
 > - The target that this loss expects should be a class index in the range [0, C-1][0,*C*−1] where C = number of classes
 > - nn.NLLLoss的输入target是类别值，并不是one-hot编码格式
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210531075700185.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210531075700185.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210531080334224.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210531080334224.png)
 
 > Softmax计算出来的值范围在[0, 1]，`值的含义表示对应类别的概率`，也就是说，每行（代表每张图）中最接近于1的值对应的类别，就是该图片概率最大的类别，那么`经过log求值取绝对值之后，就是最接近于0的值`，如果此时`每行中的最小值对应的类别值与Target中的类别值相同`，那么`每行中的最小值求和取平均就是最小`，极端的情况就是0。总结一下就是，`input的预测值与Target的值越接近，NLLLoss求出来的值就越接近于0`，这不正是损失值的本意所在吗，所以NLLLoss可以用来求损失值。
 
@@ -85,7 +85,7 @@ class LogSoftmax(Module):
 > -  input is expected to contain raw, unnormalized scores for each class., input has to be a Tensor of size either (minibatch, C) or (minibatch, C, d_1, d_2, ..., d_K)with  K*≥1 for the K-dimensional case (described later)
 > - a class index in the range [0, C-1][0,*C*−1] as the target for each value of a 1D tensor of size minibatch;
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210531080926887.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210531080926887.png)
 
 ### 4. One-Hot 编码orNot
 

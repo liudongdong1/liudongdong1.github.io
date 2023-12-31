@@ -7,7 +7,7 @@ The encoder processes each item in the input sequence, it compiles the informati
 
 <video src="https://jalammar.github.io/images/seq2seq_3.mp4" width="100%" height="auto" loop="" autoplay="" controls="" style="box-sizing: border-box; display: inline-block; vertical-align: baseline; margin: 0px; padding: 0px; border: 0px; font: inherit;"></video>
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715211325677.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715211325677.png)
 
 ## 1. RNN step
 

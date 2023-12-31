@@ -11,7 +11,7 @@
 
 > `htbp` 选项用来指定插图的理想位置，这几个字母分别代表 here, top, bottom, float page，也就是就这里、页顶、页尾、浮动页（专门放浮动体的单独页面或分栏）。`\centering` 用来使插图居中；`\caption` 命令设置插图标题，LaTeX 会自动给浮动体的标题加上编号。注意 `\label` 应该放在标题命令之后。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630150535933.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630150535933.png)
 
 #### .1. 位置
 
@@ -26,7 +26,7 @@
 \usepackage[选项]{caption2}
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630150744380.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630150744380.png)
 
 - normal 标题文本两边对齐，其中最后一行为左对齐。
 - center 标题文本居中。
@@ -89,7 +89,7 @@ Figure \ref{Fig.main} has two sub figures, fig. \ref{Fig.sub.1} is the travel de
 \end{document}
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630145101730.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630145101730.png)
 
 ### 3. 多图横排+自定义编号
 
@@ -126,7 +126,7 @@ Figure \ref{Fig.main} has two sub-figures, fig. \ref{Fig.main}\ref{Fig.sub.1} is
 \end{document}
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630145302450.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630145302450.png)
 
 ### 4. 多图并排显示非子图
 
@@ -166,7 +166,7 @@ Figure \ref{Fig.main} has two sub-figures, fig. \ref{Fig.main}\ref{Fig.sub.1} is
 \end{document}
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630145439643.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630145439643.png)
 
 ### .5. 多排插入多张图片
 
@@ -188,7 +188,7 @@ Figure \ref{Fig.main} has two sub-figures, fig. \ref{Fig.main}\ref{Fig.sub.1} is
 \end{figure}
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630145812667.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630145812667.png)
 
 ### .6. 垂直（竖向）插入多张图片
 
@@ -217,13 +217,13 @@ Figure \ref{Fig.main} has two sub-figures, fig. \ref{Fig.main}\ref{Fig.sub.1} is
 \end{figure}
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630150112827.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630150112827.png)
 
 ### .7. 问题
 
 #### .1. 标题图片不居中
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630151734030.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630151734030.png)
 
 ```latex
 \documentclass[UTF8]{ctexart}
@@ -250,7 +250,7 @@ Figure \ref{Fig.main} has two sub-figures, fig. \ref{Fig.main}\ref{Fig.sub.1} is
 
 > 可以使用 `graphbox` 宏包。它给 `\includegraphics[]{}` 增加了几个选项，其中就有控制纵向对齐的 `align=t|c|b` 选项。
 
-<!-- ```latex
+```latex
 \documentclass{article}
 %\usepackage{graphicx}
 \usepackage{graphbox} % loads graphicx
@@ -268,7 +268,7 @@ Figure \ref{Fig.main} has two sub-figures, fig. \ref{Fig.main}\ref{Fig.sub.1} is
 \test{align=t}
 \test{align=c}
 \end{document}
-``` -->
+```
 
 > 在`minipage`内容的最前面加上 `\vspace{0pt}` 这样，`\vspace{0pt}` 就是 `minipage`内容的第一行，他们是零高度，图片自然就顶部对齐了。
 

@@ -11,15 +11,15 @@ From: https://juejin.cn/post/6874218041136300040
 
 在一个集群环境中，要求所有机器上的状态是一致的，其中有2台机器想修改某个状态，`机器A 想把状态改为 A，机器 B 想把状态改为 B`，那么到底听谁的呢？
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/6fdaf662c0a947b8b6a5ab3aa4a16cc9~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/6fdaf662c0a947b8b6a5ab3aa4a16cc9~tplv-k3u1fbpfcp-zoom-1.image)
 
 那么要是协调者蹦了呢？ 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/9586cf6a00864f99a1cffab42f3585d3~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/9586cf6a00864f99a1cffab42f3585d3~tplv-k3u1fbpfcp-zoom-1.image)
 
 所以需要对协调者也做备份，也要做集群。这时候，问题来了，这么`多协调者，听谁的`呢？ 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/e9eae1dc32fb4827a98a5051d7a7d5ef~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/e9eae1dc32fb4827a98a5051d7a7d5ef~tplv-k3u1fbpfcp-zoom-1.image)
 
 #### 基本概念-提案（Proposal）
 
@@ -38,7 +38,7 @@ From: https://juejin.cn/post/6874218041136300040
 
 这里需要说明的是，Proposer，Acceptor，Learners 会存在多份实例，一个进程可能充当不只一种角色
 
-他们之间协作的流程是： `Proposer提出提案，Accepter接收建议，然后Accepter之间 选定出一个最终提案Proposal `![](https://gitee.com/github-25970295/blogimgv2022/raw/master/00b22161571541db81502f899cb2df9d~tplv-k3u1fbpfcp-zoom-1.image)
+他们之间协作的流程是： `Proposer提出提案，Accepter接收建议，然后Accepter之间 选定出一个最终提案Proposal `![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/00b22161571541db81502f899cb2df9d~tplv-k3u1fbpfcp-zoom-1.image)
 
 ### 问题描述
 
@@ -52,17 +52,17 @@ From: https://juejin.cn/post/6874218041136300040
 
 #### 最简单的方案——只有一个Acceptor
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/4ba0d722b8a6412aa98dd7f9ede4fdf6~tplv-k3u1fbpfcp-zoom-1.image) 
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/4ba0d722b8a6412aa98dd7f9ede4fdf6~tplv-k3u1fbpfcp-zoom-1.image) 
 
 #### 多个Proposer和多个Acceptor
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/4990354c31984466985e1bf957153310~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/4990354c31984466985e1bf957153310~tplv-k3u1fbpfcp-zoom-1.image)
 
 > P1：一个Acceptor必须接受它收到的第一个提案 【An acceptor must accept the first proposal that it receives.】
 
 但是，这又会引出另一个问题：如果每个Proposer分别提出不同的value，发给不同的Acceptor。根据P1， Acceptor分别接受自己收到的第一个提案，就导致不同的value被选定。出现了不一致。如下图： 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/507b58cbaeb141bb8e86856d7670960b~tplv-k3u1fbpfcp-zoom-1.image) 
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/507b58cbaeb141bb8e86856d7670960b~tplv-k3u1fbpfcp-zoom-1.image) 
 
 > 规定：`一个提案被选定需要被半数以上的Acceptor接受`
 >
@@ -74,7 +74,7 @@ From: https://juejin.cn/post/6874218041136300040
 
 > P2a：如果`某个value为v的提案被选定了，那么每个编号更高的被Acceptor接受的提案的value必须也是v`【If a proposal with value v is chosen, then every higher-numbered proposal accepted by any acceptor has value v.】
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/2bf6e71f98ff4bb081656a325cd7f87d~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/2bf6e71f98ff4bb081656a325cd7f87d~tplv-k3u1fbpfcp-zoom-1.image)
 
 但是，考虑如下的情况：假设总的有5个Acceptor。
 
@@ -128,7 +128,7 @@ Acceptor做出如下响应（response）
 
 分别从Proposer和Acceptor对提案的生成和批准两方面来讲解了Paxos算法在提案选定过程中的算 法细节，同时也在提案的编号全局唯一的前提下，获得了一个提案选定算法，接下来我们再对这个初步算法做一个 小优化，尽可能的忽略Prepare请求
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/819c429750bf46d0b75d84908d76ce78~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/819c429750bf46d0b75d84908d76ce78~tplv-k3u1fbpfcp-zoom-1.image)
 
 > 如果`Acceptor收到一个编号为N的Prepare请求`，`在此之前它已经响应过编号大于N的Prepare请求`。根据P1a，`该 Acceptor不可能接受编号为N的提案。因此，该Acceptor可以忽略编号为N的Prepare请求。`
 
@@ -138,7 +138,7 @@ Acceptor做出如下响应（response）
 
 综合前面的讲解，我们来对Paxos算法的提案选定过程进行下总结，那结合Proposer和Acceptor对提案的处理逻 辑，就可以得到类似于两阶段提交的算法执行过程
 
-Paxos算法分为两个阶段。具体如下： ![](https://gitee.com/github-25970295/blogimgv2022/raw/master/f70ca5f479734db29e0166dcd03f9761~tplv-k3u1fbpfcp-zoom-1.image)
+Paxos算法分为两个阶段。具体如下： ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/f70ca5f479734db29e0166dcd03f9761~tplv-k3u1fbpfcp-zoom-1.image)
 
 - **阶段一**：
 
@@ -192,7 +192,7 @@ Paxos算法分为两个阶段。具体如下： ![](https://gitee.com/github-259
 
 而影响他们身份变化的则是 选举。
 
- ![](https://gitee.com/github-25970295/blogimgv2022/raw/master/16b28da0e98f4468975ba2b51271c919~tplv-k3u1fbpfcp-zoom-1.image)
+ ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/16b28da0e98f4468975ba2b51271c919~tplv-k3u1fbpfcp-zoom-1.image)
 
 **Raft使用心跳机制来触发选举**
 
@@ -218,27 +218,27 @@ Paxos算法分为两个阶段。具体如下： ![](https://gitee.com/github-259
 
 ➢ 一般情况下，`leader 节点定时发送 heartbeat 到 follower 节点。 `
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/bb5d47699bc148119aadf0d555b3d3b5~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/bb5d47699bc148119aadf0d555b3d3b5~tplv-k3u1fbpfcp-zoom-1.image)
 
 ➢ 由于某些异常导致 leader 不再发送 heartbeat ，或 follower 无法收到 heartbeat 。 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/6fdf6509439641a3ab58091b09415b8e~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/6fdf6509439641a3ab58091b09415b8e~tplv-k3u1fbpfcp-zoom-1.image)
 
 ➢ 当某一 follower 发生 election timeout 时，其状态变更为 candidate，并向其他 follower 发起投票。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/92ebcc0e21054e3987064156685e2eee~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/92ebcc0e21054e3987064156685e2eee~tplv-k3u1fbpfcp-zoom-1.image)
 
 ➢ 当超过半数的 follower 接受投票后，这一节点将成为新的 leader，leader 的`步进数加 1 `并开始向 follower 同 步日志。 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/f392dc714a834f1aa758c60d63b16ce7~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/f392dc714a834f1aa758c60d63b16ce7~tplv-k3u1fbpfcp-zoom-1.image)
 
 ➢ 当一段时间之后，如果之前的 leader 再次加入集群，`则两个 leader 比较彼此的步进数`，`步进数低的 leader 将 切换自己的状态为 follower。` 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/808e0dabb56c43db9ea4d5e2eeb173ff~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/808e0dabb56c43db9ea4d5e2eeb173ff~tplv-k3u1fbpfcp-zoom-1.image)
 
 ➢ 较早前 leader 中不一致的日志将被清除，并与现有 leader 中的日志保持一致。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/7e4cf3847fad4a2a8e01f7bc8890e48b~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/7e4cf3847fad4a2a8e01f7bc8890e48b~tplv-k3u1fbpfcp-zoom-1.image)
 
 ##### follower 节点不可用
 
@@ -246,21 +246,21 @@ Paxos算法分为两个阶段。具体如下： ![](https://gitee.com/github-259
 
 ➢ 集群中的某个 follower 节点发生异常，不再同步日志以及接收 heartbeat
 
- ![](https://gitee.com/github-25970295/blogimgv2022/raw/master/e495806909c645bea55d0448ed959bc1~tplv-k3u1fbpfcp-zoom-1.image)
+ ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/e495806909c645bea55d0448ed959bc1~tplv-k3u1fbpfcp-zoom-1.image)
 
 ➢ 经过一段时间之后，原来的 follower 节点重新加入集群。这个时候他很懵逼，究竟发生了什么？我是谁，我在哪里？
 
- ![](https://gitee.com/github-25970295/blogimgv2022/raw/master/d17550c4847e42da9b14989443f723d4~tplv-k3u1fbpfcp-zoom-1.image)
+ ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/d17550c4847e42da9b14989443f723d4~tplv-k3u1fbpfcp-zoom-1.image)
 
 ➢ 这一节点的日志将从当时的 leader 处同步。直接认当前的君主为王就行了，别的也不考虑这么多
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/626a69c3d9b8412ab0ef75128e5031dd~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/626a69c3d9b8412ab0ef75128e5031dd~tplv-k3u1fbpfcp-zoom-1.image)
 
 ### 日志复制（保证数据一致性）
 
 Leader选出后，就开始接收客户端的请求。`Leader把请求作为日志条目（Log entries）加入到它的日志中， 然后并行的向其他服务器发起 AppendEntries RPC复制日志条目`。当这条日志被复制到大多数服务器上，Leader 将这条日志应用到它的状态机并向客户端返回执行结果。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/c9326506c4694dab8a8dc9dce0d26b33~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/c9326506c4694dab8a8dc9dce0d26b33~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 客户端的`每一个请求都包含被复制状态机执行的指令`。
 - leader把这个指令作为一条新的日志条目添加到日志中，然后`并行发起 RPC 给其他的服务器`，让他们复制这条信息。

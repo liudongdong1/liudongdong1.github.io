@@ -15,21 +15,21 @@ dependencies {
 }
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211203135444006.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211203135444006.png)
 
 #### 1.  本地单元测试
 
 ##### .1.  相关注解
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211203135714960.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211203135714960.png)
 
 ##### .2.  断言
 
 - 可以使用断言，可以时用System.out.println() 进行输出查看
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211203135850363.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211203135850363.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211203135916205.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211203135916205.png)
 
 ##### .3. demo
 

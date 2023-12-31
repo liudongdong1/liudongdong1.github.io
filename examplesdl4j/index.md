@@ -22,7 +22,7 @@
 >   - all major operating systems: win/linux/osx/android.
 >   - architectures: x86, arm, ppc.
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20210720191735969.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210720191735969.png)
 
 ### 2. Importing TensorFlow models
 

@@ -5,11 +5,11 @@
 
 ### 1. 骨传导
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210430191316825.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210430191316825.png)
 
 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210430190838885.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210430190838885.png)
 
 ---
 

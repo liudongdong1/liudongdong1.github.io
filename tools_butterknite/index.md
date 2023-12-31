@@ -17,11 +17,11 @@ dependencies {
 
 ### 1. 注解说明
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211119154900163.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211119154900163.png)
 
 ### 2. 事件注解说明
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211119154945321.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211119154945321.png)
 
 ### 3. 具体使用
 

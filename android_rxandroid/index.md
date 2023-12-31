@@ -144,7 +144,7 @@ readAllRecords().subscribe(new Consumer<List<Record>>() {
 
 - https://www.cnblogs.com/andy-loong/p/11307436.html
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1113592-20190809194736255-190276033.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1113592-20190809194736255-190276033.png)
 
 ```java
 // 下列方法一般用于测试使用
@@ -216,7 +216,7 @@ public void timer() {
 
 - https://www.cnblogs.com/andy-loong/p/11308956.html
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1113592-20190809194625132-1468988107.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1113592-20190809194625132-1468988107.png)
 
 ```java
 public static void map() {
@@ -258,7 +258,7 @@ flatMap:
 - 新建的、总的`Observable` 对象 将 新合并的事件序列 发送给观察者（`Observer`）
 - 新合并生成的事件序列顺序是无序的，即 与旧序列发送事件的顺序无关
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1113592-20190806150642728-1362518972.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1113592-20190806150642728-1362518972.png)
 
 ```java
 public static void flatMap() {
@@ -299,7 +299,7 @@ public static void flatMap() {
 
 #### 3. 功能性操作符
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1113592-20190809194255877-1255003866.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1113592-20190809194255877-1255003866.png)
 
 ```java
 public static void onErrorReturn() {
@@ -345,7 +345,7 @@ public static void onErrorReturn() {
 
 - https://www.cnblogs.com/andy-loong/p/11328568.html
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1113592-20190809193847317-29445171.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1113592-20190809193847317-29445171.png)
 
 ```java
 public static void filter() {
@@ -397,7 +397,7 @@ public static void throttleFirst() {
 
 ##### 2. 联想搜索优化
 
-![img](https://gitee.com/github-25970295/blogimgv2022/raw/master/1113592-20190812165558707-1208776469.png)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1113592-20190812165558707-1208776469.png)
 
 ```java
 public static void search() {
@@ -418,7 +418,7 @@ public static void search() {
 
 - https://www.cnblogs.com/andy-loong/p/11329331.html
 
-![img](https://gitee.com/github-25970295/blogimgv2022/raw/master/1113592-20190812115023836-2082195042.png)
+![img](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1113592-20190812115023836-2082195042.png)
 
 ```java
 public static void all() {
@@ -452,7 +452,7 @@ public static void all() {
 
 - https://www.cnblogs.com/andy-loong/p/11310218.html
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1113592-20190809194432313-1619474051.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1113592-20190809194432313-1619474051.png)
 
 ##### 1. 联合判断
 

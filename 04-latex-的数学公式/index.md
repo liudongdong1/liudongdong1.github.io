@@ -70,7 +70,7 @@ $\sqrt{x}$, $\frac{1}{2}$.
 \begin{Vmatrix} a&b\\c&d \end{Vmatrix} \]
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630144044800.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630144044800.png)
 
 > 使用 `smallmatrix` 环境，可以生成行内公式的小矩阵。
 
@@ -78,7 +78,7 @@ $\sqrt{x}$, $\frac{1}{2}$.
 Marry has a little matrix $ ( \begin{smallmatrix} a&b\\c&d \end{smallmatrix} ) $.
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630144118024.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630144118024.png)
 
 #### .6.公式对齐
 
@@ -102,13 +102,13 @@ x,\quad x>0
 
 #### 2. 特殊符号
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630142225077.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630142225077.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630142328962.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630142328962.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630142507570.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630142507570.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210630142514882.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210630142514882.png)
 
 
 

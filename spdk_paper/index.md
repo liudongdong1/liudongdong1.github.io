@@ -19,7 +19,7 @@
 
 ### Proble Statement
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220427141726878.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220427141726878.png)
 
 -  strong demand on building high performance storage service upon emerging fast storage devices.
 - most storage software stack become the bottle neck for developing high performance storage applications.
@@ -28,13 +28,13 @@
 
 ### System Design and implementaion
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220427152603792.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220427152603792.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220428153019098.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220428153019098.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220428155416570.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220428155416570.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220428155558990.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220428155558990.png)
 
 - **App scheduling:**  event framework for writing asynchronous, polled-mode, shared-nothing server applications
 - **Drivers:** user space pooled mode NVMe driver, providing zero copy, highly parallel and direct access to NVMe SSDs.
@@ -43,7 +43,7 @@
 
 #### App scheduling
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220427143747174.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220427143747174.png)
 
 ##### 1. Events
 
@@ -112,9 +112,9 @@ for Application-specific Optimization on NVMe SSDs
 
 ### Proble Statement
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503151514674.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503151514674.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503151737965.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503151737965.png)
 
 - as the storage devices are getting faster, the overhead of the legacy kernel I/O stack becomes noticeable since it has been optimized for slow HDDs.
   - the kernel should be general, so as to provides an abstraction layer for applications, managing all the hardware resources.
@@ -123,15 +123,15 @@ for Application-specific Optimization on NVMe SSDs
 
 ### System Design
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503150031783.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503150031783.png)
 
 - Admin tool: controls the kernel driver with the root privilege to manage the access permission of I/O queues.
 - the kernal checks the premisions, and then creates the required submission queue and completion queue, and maps their memory regions and the associated doorbell registers to the user-space memory region of the application.
 - a thread can create one or more I/O handles to access the queues and each handle can be bound to a dedicated queue or a shared queue. Each handle can be configured to use different features such as caching, I/O scheduling, and I/O completion.  (todo when a handle bound to a shared queue, how to solve data )
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503152204762.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503152204762.png)
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220503152303769.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220503152303769.png)
 
 > Yang Z, Liu C, Zhou Y, et al. Spdk vhost-nvme: Accelerating i/os in virtual machines on nvme ssds via user space vhost target[C]//2018 IEEE 8th International Symposium on Cloud and Service Computing (SC2). IEEE, 2018: 67-76. [[pdf](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8567374&tag=1)]
 

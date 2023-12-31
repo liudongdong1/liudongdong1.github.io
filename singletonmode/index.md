@@ -117,7 +117,7 @@ public class SingletonLanHan {
 (2）调用Singleton()的构造函数，初始化成员字段;
 (3）将sInstance对象指向分配的内存空间（此时sInstance就不是null 了)。
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20221126095057580.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20221126095057580.png)
 
 #### 4. 容器管理单例模式
 

@@ -33,7 +33,7 @@ else:
 plt.show()
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210412232942812.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210412232942812.png)
 
 ### 2. 自定义函数拟合
 
@@ -77,7 +77,7 @@ invcube = inversefunc(cube, y_values=3)
 
 - https://docs.huihoo.com/scipy/scipy-zh-cn/scipy_intro.html
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210412233301.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210412233301.png)
 
 ---
 

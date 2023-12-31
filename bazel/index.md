@@ -129,7 +129,7 @@ xdot <(bazel query --notool_deps --noimplicit_deps "deps(//main:hello-world)" \
   --output graph)
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200828200445.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200828200445.png)
 
 ### 2.2. Multi-build
 
@@ -183,7 +183,7 @@ cc_binary(
 )
 ```
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200828201159.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200828201159.png)
 
 > //path//to/package: target-name
 >

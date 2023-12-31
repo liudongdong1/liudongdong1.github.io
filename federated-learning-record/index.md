@@ -62,7 +62,7 @@ $$
 >
 > - variable number of local updates to be applied on each machine in parallel at each communication round,
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831230510.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831230510.png)
 
 - **Compression schemes**
 
@@ -76,11 +76,11 @@ $$
 
 - **Decentralized training**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200831231146.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200831231146.png)
 
 **【Systems Heterogeneity】**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200901083436.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200901083436.png)
 
 - **Asynchronous Communication**: 
 
@@ -102,7 +102,7 @@ $$
 
 **【Statistical Heterogeneity】**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200901090728.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200901090728.png)
 
 > the data is not identically distributed across devices, both in terms of modeling the data and in analyzing the convergence behavior of associated training procedures.
 
@@ -128,7 +128,7 @@ $$
 > - homomorphic encryption to operate on encrypted data;
 > - secure function evaluation or multi-party computation;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200901091216.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200901091216.png)
 
 - **Privacy in FL**
 
@@ -223,7 +223,7 @@ $$
 
 - **system overview**:
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410084647545.png" height=250 width=100%>
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410084647545.png" height=250 width=100%>
 
 【**Challenge** 1】<font color=red>client availability and unbalanced and non-IID data</font>
 
@@ -231,11 +231,11 @@ $$
 
 - propose Federated Averaging algorithm
 
-  - <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200409171050998.png" height=350 width=80%>
+  - <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200409171050998.png" height=350 width=80%>
 
   - Federated SGD &&Federated AVG
 
-    <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200409184754940.png" height=280 width=100%>
+    <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200409184754940.png" height=280 width=100%>
 
   
 
@@ -248,27 +248,27 @@ $$
 
   【**Challenge** 3】Non-Convex的问题，会得到任意坏的结果 **每一轮**的**各个客户端**的**起始参数值相同**（也就是**前一轮的全局参数值**）
 
-  <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200409171145966.png" height=500 width=80%>
+  <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200409171145966.png" height=500 width=80%>
 
 #### Evaluation
 
 - Accuracy&&Communication rounds
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200409174338562.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200409174338562.png)
 
 - local epoch test:
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200409174644230.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200409174644230.png)
 
 - CIFAR experiments:
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200409173229481.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200409173229481.png)
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200409173127571.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200409173127571.png)
 
 - Large-scaleLSTMexperiments
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200409173430010.png) 
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200409173430010.png) 
 
 #### Conclusion
 
@@ -279,7 +279,7 @@ $$
 #### Notes 
 
 - [x] 传统的分布式优化问题的独立同分布假设
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200409184415543.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200409184415543.png)
 
 **level**:  SysML Conference
 **author**: Keith Bonawitz
@@ -334,7 +334,7 @@ $$
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200327114728675.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200327114728675.png)
 
 - clients process their local data and share model updates with the server, weights from a large population of clients are aggregated by the server and combined to create an improved global model.
   - for every client: learnign rate $\epsilon $,the local client update $w_{t+1}^k=w_t-\epsilon g_k$ , $g_k$ is the average gradient.
@@ -395,23 +395,23 @@ $$
 
   - communication cost in transmitting data.
 
-    <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410170818514.png" width=80% height=250>
+    <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410170818514.png" width=80% height=250>
 
 #### Methods
 
 - **system overview**: HFL （horizontal federated learning)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410171127248.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410171127248.png)
 
 **【Module 1】 Crowdsourced Image Annotation**
 
 - use annotate the picture with { label, x, y, w, h}
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410171228763.png" width=60% height=250>
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410171228763.png" width=60% height=250>
 
 **【Module 2】Federated ModelTraining**
 
-<img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410171556656.png" width=100% height=300>
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410171556656.png" width=100% height=300>
 
 - Configuration： configure training information, eg. number of iterations, reconnections, the server URL for uploading...
 - Task Scheduler: global dispatch scheduling, coordinate communications between the server and clients to balance the utilization of local computational resources.
@@ -426,7 +426,7 @@ $$
 
 - Using Cloud Object Storage(COS) to store practically limitless amounts of data easily and at an affordable cost
 
-  ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410172540671.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410172540671.png)
 
 **【Module 3】Computer Vision Object Detect FedYOLOv3**
 
@@ -435,13 +435,13 @@ $$
   - Predicting the positions of B bounding boxes<x,y,w,h>
   - Estimating the confidence score for the B predicted bounding boxes, whether a bounding box contains the target object $p(obj)=1$ meaning contain object else 0; how precise the boundary of box is. $\theta=p(obj)*IOU$, IOU meaning the intersection-over-union.
   - computing the class conditional probability,$p(c_i|obj)\epsilon[0,1]$ for each of the C classes.
-  - The loss function:![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410173637335.png)
+  - The loss function:![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410173637335.png)
 
 **【Module 4】Model Compression**
 
 - $M^{i,k}$ define the i-th user after the k-th iteration of FL training, $M_j^{i,k}$ define the j-th layer of $M^{i,k}$, $|\sum M_j^{i,k}|$  the sum of the absolute values of parameters in the j-th layer, the j-th layer to the overall model perfomance: $v(j)=|\sum M_j^{i,k}-\sum M_j^{i,k-1}|$, the larger the value of $v(j)$ , the greater the impact of layer j on the model, FL_CLIENT ranks the $v(j) values of ally layers in the model in descending order and selects only the parameters of  first n layers to upload for aggregation. 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200410173826315.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200410173826315.png)
 
 #### Evaluation
 
@@ -494,9 +494,9 @@ previous work:
 
 - **Problem Formulation**:  <font color=red>这里不懂，先记录着</font>
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200705163648667.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200705163648667.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200705164501351.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200705164501351.png)
 
 - **system overview**:
 
@@ -504,20 +504,20 @@ previous work:
 >
 > FedMA with communication, where local clients receive the matched global model at the beginning of a new round and reconstruct their local models with the size equal to the original local models based on the matching results of the previous round.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200705165047111.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200705165047111.png)
 
 #### Evaluation
 
   - **Environment**:   
     - Dataset: 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200705165157271.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200705165157271.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200705165215850.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200705165215850.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200705165252982.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200705165252982.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200705165314632.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200705165314632.png)
 
 #### Conclusion
 
@@ -600,45 +600,45 @@ $$
 
     
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913184242778.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913184242778.png)
 
 - $w^0$: the initial model and weights generated on a remote server;
 - $E$: local epochs;
 - $B$: the local training batch size;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200913185949.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200913185949.png)
 
 #### Evaluation
 
 - **Effects of maximum entropy regularization with different distribution of synthetic data**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200913190823.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200913190823.png)
 
 - **Comparison of $L^2$-norm against Maximum Entropy**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913191102135.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913191102135.png)
 
 - **Different Dataset Comparison**
 
-![3000 rounds](https://gitee.com/github-25970295/blogImage/raw/master/img/20200913191304.png)
+![3000 rounds](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200913191304.png)
 
-![600 round](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913191408146.png)
+![600 round](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913191408146.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913191609259.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913191609259.png)
 
 - **Medical data experiment-**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913191758843.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913191758843.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913191829604.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913191829604.png)
 
 - **Mitigating Activation Divergence**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913192202686.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913192202686.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913192226909.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913192226909.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200913192251229.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200913192251229.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -683,7 +683,7 @@ previous work:
 
 #### Methods
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200705204644162.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200705204644162.png)
 
 - <font color=red>没有看懂</font>
 

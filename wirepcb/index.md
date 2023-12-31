@@ -10,8 +10,8 @@
 > 5.`集成库`，元器件库与PCB封装库的集存（其实这个库可以不需要，有原理图库与PCB库就能画了，第一步迈出就好了）
 > 6.**PCB板**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327212902.png)
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210326220721.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327212902.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210326220721.png)
 
 - BOM（Bill of Materials）是`指元器件清单`，我们设计的PCB图中有很多元器件，`如电容、电阻、电感等`，BOM文件就列出了我们所有用到的元器件的类型以及相关信息（阻值、容值、封装类型），`BOM文件一般是在我们设计结束后自动生成的`，不需要我们新建；
 - `Schematic library文件`：顾名思义，就是`原理图库文件`，我们用到的一些元器件`可能在默认的原理图库中没有相对应的元件图`，需要我们自己设计，这时就要新建一个Schematic library文件；
@@ -19,7 +19,7 @@
 
 封装就是指一个实际的元器件在PCB板上的表现，一般由焊盘、轮廓线、标识符等等部分，比如这就是一个三极管的封装：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210326221646.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210326221646.png)
 
 > - `原理图中的元件来自原理图库文件`，`PCB文件中的PCB封装图一般由原理图文件导入`，`原理图库文件中的每个元件符号都在PCB库文件中对应着一个封装图形`。根据这种对应关系，当从原理图文件中将原理图导入到PCB文件中时，`Altium Designer根据原理图中的连接方式用每个元件符号对应的PCB封装图代替元件符号到PCB文件中，供开板者进行布局和布线`。
 >
@@ -49,9 +49,9 @@
 
 > **网络表的默认后缀名为.NET，它是一个简单的ASCII码文本文件，由多行文本组成。内容分成两大部分：一部分是元件的信息，一部分是网络信息。**红色框出来的部分从上到下，从左到右依次为：元件封装、元件标识、元件管脚。
 >
-> ![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210326222759.png)
+> ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210326222759.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327175418.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327175418.png)
 
 #### 1.1. 电路板层
 
@@ -86,7 +86,7 @@ Altium Designer一般有以下六种类型的工作层：
 
 ### 2. 库导入
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327175216.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327175216.png)
 
 ### [3. 实验教程](https://www.bilibili.com/video/BV1ei4y1L7TU?p=10&spm_id_from=pageDriver)
 
@@ -108,11 +108,11 @@ Altium Designer一般有以下六种类型的工作层：
 >   每个元器件双击点出来，`点FootPrint，就可以操作出来`
 >   如果元器件比较多，可以用封装管理器，以列表形式检查每个元器件有没有对应的封装
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327191656.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327191656.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327191940.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327191940.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327194016.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327194016.png)
 
 - Design-> Make Schematic Library： 把元器件原理图 添加到自己的原理图库；
 
@@ -139,23 +139,23 @@ Altium Designer一般有以下六种类型的工作层：
 >
 > 7.为这`两个焊盘画上边框，线宽正常情况下用0.2mm`
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327194802.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327194802.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327195242.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327195242.png)
 
 #### 3.3. 原理图操作
 
 在Properties 设计原理图界面相关属性，搜索时后根据Header2, Res2这类的标识，先找器件，然后放置走线，使用wire    `按空格键进行器件旋转`，点击连线后，右击鼠标可以取消继续连线；标识批量修改：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327190346.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327190346.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327190716.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327190716.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327175635.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327175635.png)
 
 - 设计好原理图后，通过design update PCB document， 然后validate changes and execute changes ；`选中需要旋转的元器件，鼠标左键选中后不放，并移动元器件，同时按下键盘空格键space，此时元器件便逆向旋转90度；` `其中在原理图中可以使用X，Y进行镜像，但是在PCB中不能使用镜像；`
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327181843.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327181843.png)
 
 #### 3.4. PCB 封装操作
 
@@ -203,11 +203,11 @@ Altium Designer一般有以下六种类型的工作层：
 - 焊盘：绿色的部分是空的；灰色的部分是铜箔，用焊锡丝将引脚与焊盘固定连接；紫色的部分是阻焊层；
 - https://item.szlcsc.com/15549.html  使用现成的；
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327223142.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327223142.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327183152.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327183152.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327185225.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327185225.png)
 
 #### 3.5. 打样
 
@@ -242,21 +242,21 @@ Altium Designer一般有以下六种类型的工作层：
 
 #### 3.6. 焊接
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328104901.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328104901.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328105101.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328105101.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328105252.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328105252.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328105211.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328105211.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328105440.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328105440.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328104227.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328104227.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328104132.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328104132.png)
 
-![吸枪](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328105731.png)
+![吸枪](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328105731.png)
 
 #### 3.7. 注意事项
 
@@ -297,29 +297,29 @@ Altium Designer一般有以下六种类型的工作层：
 - 排线的时候可以使用软件分屏工具，模块化进行布局；
 - 连线的时候有限信号线，然后5v，3.3V电源线，GND最后通过底层和顶层铺铜，通过打孔增加导电性；
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328101752.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328101752.png)
 
 - 电器检查--》design-rule check; 除GND外没有问题后，开始补泪滴（可以全局设置）；
 - 如果出现问题，则去铜，去泪滴，去铜孔，修改PCB库和原理图库，保存更新；`注意不同的商城器件封装可能不一样；`
 - 焊接的时候以最小系统为单位；
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327213114.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327213114.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327215223.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327215223.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210327215348.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210327215348.png)
 
 ### 4.1. Multisim 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328123658.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328123658.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328124652.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328124652.png)
 
-![元件库](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328124828.png)
+![元件库](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328124828.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328125830.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328125830.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20210328125137.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20210328125137.png)
 
 - 进行仿真的时候务必加入GND；
 

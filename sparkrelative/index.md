@@ -21,7 +21,7 @@
 > - Driver：是一个进程，我们编写的Spark应用程序就运行在Driver上
 > - Executor: 是一个进程，一个Worker可以运行多个Executor,Executor通过启动多个线程(task)来执行对RDD的partition进行并行计算。
 
-![standalone-client](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210219095555023.png)
+![standalone-client](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210219095555023.png)
 
 ```shell
 # Run on a Spark standalone cluster in client deploy mode
@@ -35,7 +35,7 @@
 1000
 ```
 
-![standalone-cluster](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210219095555023.png)
+![standalone-cluster](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210219095555023.png)
 
 ```shell
 # Run on a Spark standalone cluster in cluster deploy mode with supervise
@@ -67,9 +67,9 @@
 >
 > 　④. Cluster适合生产环境，Client适合交互和调试。
 
-![Client](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210219101359930.png)
+![Client](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210219101359930.png)
 
-![cluster](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210219101430442.png)
+![cluster](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210219101430442.png)
 
 | Master URL（主节点参数） | Meaning（含义）                                           |
 | ------------------------ | --------------------------------------------------------- |
@@ -1479,13 +1479,13 @@ display(result_df)
 > - Submarine-installer：在你的服务器环境中安装Submarine和 YARN，轻松解决Docker、Parallel network和nvidia驱动的安装部署难题，以便你更轻松地尝试强大的工具集。
 > -  Apache Hadoop 3.1 的 YARN 可以完全无误的支持 Hadoop 2.7 + 以上的 HDFS 系统。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210227083551241.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210227083551241.png)
 
 ##### 4.3.  SparkDL
 
 - https://github.com/databricks/spark-deep-learning  sparkdl 支持spark版本如下：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210226212016988.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210226212016988.png)
 
 4.4. **[Distributed TensorFlow on Apache Spark 3.0](https://github.com/tensorflow/ecosystem/tree/master/spark/spark-tensorflow-distributor.)**
 

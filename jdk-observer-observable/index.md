@@ -1,7 +1,7 @@
 # observer/observable
 
 
-![](https://gitee.com/github-25970295/picture2023/raw/master/88f2cd998e3246bb9f44126f8c48fb90tplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/88f2cd998e3246bb9f44126f8c48fb90tplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png)
 
 ### 1. JDK-Observable 可观察对象类
 

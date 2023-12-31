@@ -30,7 +30,7 @@
             7.scripts：一些脚本，如下载coco数据集，将voc格式的数据集转换为训练所需格式的脚本等<br>
 		</p>
 	</div>
-    <div style="float:right; width:20%; height:120%"><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200426191818182.png"></div>
+    <div style="float:right; width:20%; height:120%"><img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200426191818182.png"></div>
 </div>
 
 
@@ -58,7 +58,7 @@
 其中：cfg文件：中括号+网络层的名字定义当前网络属于什么层。输入图像的信息；训练过程用到的信息；数据增强的一些信息；
 
 <center class="half">
-    <img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200426193451234.png" width=35%/><img src="https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200426193954588.png" width=35%/>
+    <img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200426193451234.png" width=35%/><img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200426193954588.png" width=35%/>
 </center>
 
 
@@ -76,23 +76,23 @@ YOLOv3的目标识别的源代码流程大致如下：
 
 （1）设置缺省值并初始化：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200514101324454.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200514101324454.png)
 
 （2）detect_image()将图片缩放成416x416大小，调用<font color=red>yolo_model()，生成13x13、26x26与52x52等3个feature map的输出</font>，对这3个feature map进行预测，调用<font color=red>yolo_eval()函数得到目标框、目标框得分和类别</font>，然后使用Pillow对发现的每一类对象的每一个目标框，绘制标签、框和文字：
 
-###### ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200514101345475.png)
+###### ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200514101345475.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200514101414591.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200514101414591.png)
 
 （3）在yolo_eval()函数中调用<font color=red>yolo_boxes_and_scores()得到目标框、目标框得分和类别</font>。而在yolo_boxes_and_scores()函数中，先调用yolo_head()函数计算每一个网格的目标对象的中心点坐标box_xy和目标框的宽与高box_wh，以及目标框的置信度box_confidence和类别置信度box_class_probs；然后调用<font color=red>yolo_correct_boxes（），将box_xy, box_wh转换为输入图片上的真实坐标，输出boxes是框的左下、右上两个坐标(y_min, x_min, y_max, x_max)：</font>
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200514101442195.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200514101442195.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200514101458697.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200514101458697.png)
 
 （4）完整的代码流程图如下图所示：
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200514101559843.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200514101559843.png)
 
 #### 2.4 Darknet 安装使用
 
@@ -234,7 +234,7 @@ if __name__ == "__main__":
 
 ### 3. Papar Record
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200426200103526.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200426200103526.png)
 
 **level**: CVPR  CCF_A
 **author**:  Zhi Zhang, Tong He     amazon web services
@@ -274,18 +274,18 @@ previous work:
 
 #### Methods
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200426201633444.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200426201633444.png)
 
 **【Function1】Visually Coherant Image Mixup for object detection**
 
 - continues increasing the blending ratio used in the mixup, the objects in resulting frames are more vibrant and coherent to the natural  presentations.
 - use geometry preserved alignment for image mixup to avoid distort image at the initial steps.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200425103925238.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200425103925238.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200425104052552.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200425104052552.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200425104025525.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200425104025525.png)
 
 【**Function 2**】 **Classification head label smoothing**
 
@@ -307,7 +307,7 @@ previous work:
 - **Cosine Schedule** scales the learning rate according to the value of cosine function on 0 to Pi, it starts with slowly reducing large learning rate, then reduces the learning rate quickly halfway ad finally ends up with tiny slope reducing small learning rate until it reaches 0.
 - **Warm up learning rate**: to avoid gradient explosion during the initial training iterations.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200425110046052.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200425110046052.png)
 
 **【Function 4】** **Synchronized Batch Normalization**
 
@@ -351,13 +351,13 @@ previous work:
 - We put forward an efficient `multi-task network that can jointly handle three crucial tasks in autonomous driving`: `object detection, drivable area segmentation and lane detection` to save computational costs, reduce inference time as well as improve the performance of each task. Our work is the first to reach real-time on embedded devices while maintaining state-of-the-art level performance on the `BDD100K `dataset.
 - The works we has use for reference including `Multinet` ([paper](https://arxiv.org/pdf/1612.07695.pdf?utm_campaign=affiliate-ir-Optimise media( South East Asia) Pte. ltd._156_-99_national_R_all_ACQ_cpa_en&utm_content=&utm_source= 388939),[code](https://github.com/MarvinTeichmann/MultiNet)）,`DLT-Net` ([paper](https://ieeexplore.ieee.org/abstract/document/8937825)）,`Faster R-CNN` ([paper](https://proceedings.neurips.cc/paper/2015/file/14bfa6bb14875e45bba028a21ed38046-Paper.pdf),[code](https://github.com/ShaoqingRen/faster_rcnn)）,`YOLOv5s`（[code](https://github.com/ultralytics/yolov5)) ,`PSPNet`([paper](https://openaccess.thecvf.com/content_cvpr_2017/papers/Zhao_Pyramid_Scene_Parsing_CVPR_2017_paper.pdf),[code](https://github.com/hszhao/PSPNet)) ,`ENet`([paper](https://arxiv.org/pdf/1606.02147.pdf),[code](https://github.com/osmr/imgclsmob)) `SCNN`([paper](https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/download/16802/16322),[code](https://github.com/XingangPan/SCNN)) `SAD-ENet`([paper](https://openaccess.thecvf.com/content_ICCV_2019/papers/Hou_Learning_Lightweight_Lane_Detection_CNNs_by_Self_Attention_Distillation_ICCV_2019_paper.pdf),[code](https://github.com/cardwing/Codes-for-Lane-Detection)). Thanks for their wonderful works.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211016201750735.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211016201750735.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211016201802960.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211016201802960.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20211016200912351.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20211016200912351.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/output1.gif)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/output1.gif)
 
 
 ---

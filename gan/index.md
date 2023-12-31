@@ -30,7 +30,7 @@
     generated_images = g.predict(noise, verbose=0)
    ```
 
-3. train the discriminator for one or more epochs using both fake and real images, and update only the discriminator's weights by labeling all the real images as 1 and the fake images as 0;![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010160249272.png)
+3. train the discriminator for one or more epochs using both fake and real images, and update only the discriminator's weights by labeling all the real images as 1 and the fake images as 0;![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201010160249272.png)
 
    ```python
    #将真实的图片和生成的图片以数组的形式拼接再一起，真实图片在上，生成图片在下
@@ -48,7 +48,7 @@
     noise = np.random.uniform(-1,1,(Batch_size,100))
    ```
 
-5. train the full GAN model for one or more epochs using only fake images, and update only the generator's weights by labeling all fake images as 1;![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010160430793.png)
+5. train the full GAN model for one or more epochs using only fake images, and update only the generator's weights by labeling all fake images as 1;![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201010160430793.png)
 
    ```python
    #固定D
@@ -61,9 +61,9 @@
 
 > by making the latent space more predictable, more continuous, less sparse. By forcing latent variables to become normally distributed, VAEs gain control over the latent space. [Dataset](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)
 
-![[人脸数据](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010162729990.png)
+![[人脸数据](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201010162729990.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20201010163053088.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20201010163053088.png)
 
 Learning From:
 

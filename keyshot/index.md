@@ -16,7 +16,7 @@
 
 - **常用功能带：**KeyShot常用功能带提供快速访问常用设置、工具、命令和窗口的功能，如图1所示。可以通过右键单击功能带空白区域弹出下拉菜单，通过是否勾选来启用或停用相关工具/命令，如图2所示。这里为功能全部开启状态，后期可以根据习惯和需要选择功能
 
-  ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210817205000762.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210817205000762.png)
 
 - **工具栏：**能够快速访问常见的窗口和功能，面板如图所示。例如，单击“库”按钮打开库窗口，单击“项目”按钮打开项目窗口，单击“渲染”按钮打开渲染窗口等。
 
@@ -25,9 +25,9 @@
 
 - **新闻窗口：**每次打开KeyShot都会弹出新闻窗口，如图所示。新闻窗口里显示了最近打开的场景、新闻、技巧教学等，如果要快速打开最近保存的场景，直接点击场景即可。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210817204731970.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210817204731970.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210817204752627.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210817204752627.png)
 
 ### Resource
 

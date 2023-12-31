@@ -60,9 +60,9 @@ public static void init() {
 - 优点：非常`方便实现多个周期性的定时任务`，并且支`持延迟执行`，还支持`在指定时间之后`支持，功能还算强大。
 - 缺点：如果其中一个任务耗时非常长，会影响其他任务的执行。并且如果`TimerTask`抛出`RuntimeException`，`Timer`会停止所有任务的运行。
 
-<img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/Callable.png" style="zoom:67%;" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Callable.png" style="zoom:67%;" />
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210831092852884.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210831092852884.png)
 
 ```java
 public class TimerTest {
@@ -91,7 +91,7 @@ public class TimerTest {
 - 优点：基于多线程的定时任务，多个任务之间不会相关影响，支持周期性的执行任务，并且带延迟功能。
 - 缺点：不支持一些较复杂的定时规则。
 
-![Executors](https://gitee.com/github-25970295/blogimgv2022/raw/master/Executors.png)
+![Executors](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/Executors.png)
 
 `ScheduledExecutorService`是基于多线程的，设计的初衷是为了解决`Timer`单线程执行，多个任务之间会互相影响的问题。它主要包含4个方法：
 
@@ -146,7 +146,7 @@ public class ScheduleExecutorTest {
 - 优点：默认是多线程异步执行，单个任务时，在上一个调度未完成时，下一个调度时间到时，会另起一个线程开始新的调度，多个任务之间互不影响。支持复杂的`cron`表达式，它能被集群实例化，支持分布式部署。
 - 缺点：相对于spring task实现定时任务成本更高，需要手动配置`QuartzJobBean`、`JobDetail`和`Trigger`等。需要引入了第三方的`quartz`包，有一定的学习成本。不支持并行调度，不支持失败处理策略和动态分片的策略等。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210831094757042.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210831094757042.png)
 
 - `Scheduler` 代表调度容器，一个调度容器中可以注册多个JobDetail和Trigger。
 - `Job` 代表工作，即要执行的具体内容。
@@ -228,7 +228,7 @@ sue.spring.quartz.cron=*/5 * * * * ?
 > - 优点：有界面管理定时任务，支持弹性扩容缩容、动态分片、故障转移、失败报警等功能。它的功能非常强大，很多大厂在用，可以满足绝大多数业务场景。
 > - 缺点：和`quartz`一样，通过数据库分布式锁，来控制任务不能重复执行。在任务非常多的情况下，有一些性能问题。
 
-![image-20210831095238867](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210831095238867.png)
+![image-20210831095238867](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210831095238867.png)
 
 #### .2. [elastic-job](https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect)
 
@@ -239,7 +239,7 @@ sue.spring.quartz.cron=*/5 * * * * ?
 > - 优点：支持分布式调度协调，支持分片，`适合高并发`，和一些业务相对来说较复杂的场景。
 > - 缺点：需要依赖于zookeeper，实现定时任务相对于`xxl-job`要复杂一些，要对分片规则非常熟悉。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210831095354308.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210831095354308.png)
 
 #### .3. [TBSchedule](https://github.com/taobao/TBSchedule)
 

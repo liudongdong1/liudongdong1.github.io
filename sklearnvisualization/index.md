@@ -3,7 +3,7 @@
 
 ### 1. [cross-validation（ROC)](https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc_crossval.html#sphx-glr-auto-examples-model-selection-plot-roc-crossval-py)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210522103359116.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210522103359116.png)
 
 ```python
 print(__doc__)

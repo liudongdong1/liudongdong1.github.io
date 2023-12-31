@@ -3,7 +3,7 @@
 
 > Styles sheets are textual specifications that can be set on the whole application using [QApplication::setStyleSheet](https://doc.qt.io/archives/qt-4.8/qapplication.html#styleSheet-prop)() or on a specific widget (and its children) using [QWidget::setStyleSheet](https://doc.qt.io/archives/qt-4.8/qwidget.html#styleSheet-prop)(). If several style sheets are set at different levels, Qt derives the effective style sheet from all of those that are set. This is called cascading.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210717091042787.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210717091042787.png)
 
 > 样式表使用方式：
 >
@@ -26,7 +26,7 @@
 
 ### 0. 选择器
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210717093643291.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210717093643291.png)
 
 ```css
 QPushButton:hover { color: white }  /*当鼠标悬停在QPushButton上时*/
@@ -35,11 +35,11 @@ QCheckBox:hover:checked { color: red } /*鼠标悬停在已检查的QCheckBox上
 QPushButton:hover:!pressed { color: blue } /*悬停在未按下的QPushButton上时*/
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210717094054711.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210717094054711.png)
 
 ### 1. 盒子模型
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210717091717631.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210717091717631.png)
 
 - `border-style`: dotted;(点线) dashed;(虚线) solid; double;(双线) groove;(槽线) ridge;(脊状) inset;(凹陷) outset;
 - `border-width`:; 边框宽度
@@ -243,11 +243,11 @@ background-position : center; /*居中对齐*/
 - [style-sheet-usage:](https://doc.qt.io/archives/qt-4.8/stylesheet-examples.html#style-sheet-usage)
 - https://github.com/892768447/PyQtUiLibrary
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210717101650815.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210717101650815.png)
 
 - https://github.com/daodaoliang/NBaseUiKit  pyqt 组件
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210717101400458.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210717101400458.png)
 
 - https://github.com/TheOpenDevProject/QssUI
 

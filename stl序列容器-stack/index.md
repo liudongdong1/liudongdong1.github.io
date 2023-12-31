@@ -39,7 +39,7 @@ template <class T, class Sequence>
 }
 ```
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1fa7f105ae486bd748e447abe4cee65a.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1fa7f105ae486bd748e447abe4cee65a.png)
 
 ### Resource
 

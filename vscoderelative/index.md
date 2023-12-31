@@ -59,7 +59,7 @@ Host remotetank
 
 ### 8. **[Remote - Containers](https://link.zhihu.com/?target=https%3A//marketplace.visualstudio.com/items%3FitemName%3Dms-vscode-remote.remote-containers)**  docker
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/image-20220511201615991.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20220511201615991.png)
 
 - register: 用于连接dockerhub
 - images:  支持 run, run interative, inspect, pull, push, tag, copy full tag, remove 操作
@@ -80,7 +80,7 @@ Host remotetank
 > Mac： Shift + Option + F
 > Ubuntu： Ctrl + Shift + I
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610221552174.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610221552174.png)
 
 ### 10. vscode-pdf
 
@@ -88,7 +88,7 @@ Host remotetank
 
 > 类似函数大纲
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610221905656.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610221905656.png)
 
 ### 12. jupyter
 
@@ -111,7 +111,7 @@ Host remotetank
 
 ### 快捷键
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210121233910973.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210121233910973.png)
 
 - 要操作光标所在`文件`中的所有代码块：
   - 折叠所有 `Ctrl+K+0`
@@ -120,7 +120,7 @@ Host remotetank
   - 折叠 `Ctrl+Shift+[`
   - 展开 `Ctrl+Shift+]`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210610220957222.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210610220957222.png)
 
 ### 14. cpp 环境配置
 

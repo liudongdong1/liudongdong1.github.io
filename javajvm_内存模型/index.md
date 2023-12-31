@@ -5,7 +5,7 @@
 
 From: https://www.pdai.tech/md/java/jvm/java-jvm-jmm.html
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801181642869.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801181642869.png)
 
 ###  1. 并发编程模型的分类
 
@@ -29,7 +29,7 @@ From: https://www.pdai.tech/md/java/jvm/java-jvm-jmm.html
 
 Java 线程之间的通信由 Java 内存模型（本文简称为 JMM）控制，`JMM 决定一个线程对共享变量的写入何时对另一个线程可见`。从抽象的角度来看，JMM 定义了线程和主内存之间的抽象关系：线程之间的共享变量存储在主内存（main memory）中，每个线程都有一个私有的本地内存（local memory），本地内存中存储了该线程以读 / 写共享变量的副本。本地内存是 JMM 的一个抽象概念，并不真实存在。它涵盖了缓存，写缓冲区，寄存器以及其他的硬件和编译器优化。Java 内存模型的抽象示意图如下：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801161852750.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801161852750.png)
 
 从上图来看，线程 A 与线程 B 之间如要通信的话，必须要经历下面 2 个步骤：
 
@@ -38,7 +38,7 @@ Java 线程之间的通信由 Java 内存模型（本文简称为 JMM）控制�
 
 下面通过示意图来说明这两个步骤：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801162453600.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801162453600.png)
 
 如上图所示，本地内存 A 和 B 有主内存中共享变量 x 的副本。假设初始时，这三个内存中的 x 值都为 0。线程 A 在执行时，把更新后的 x 值（假设值为 1）临时存放在自己的本地内存 A 中。当线程 A 和线程 B 需要通信时，线程 A 首先会把自己本地内存中修改后的 x 值刷新到主内存中，此时主内存中的 x 值变为了 1。随后，线程 B 到主内存中去读取线程 A 更新后的 x 值，此时线程 B 的本地内存的 x 值也变为了 1。
 
@@ -54,7 +54,7 @@ Java 线程之间的通信由 Java 内存模型（本文简称为 JMM）控制�
 
 从 java 源代码到最终实际执行的指令序列，会分别经历下面三种重排序：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801162820503.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801162820503.png)
 
 上述的 1 属于编译器重排序，2 和 3 属于处理器重排序。这些重排序都可能会导致多线程程序出现内存可见性问题。对于编译器，JMM 的编译器重排序规则会禁止特定类型的编译器重排序（不是所有的编译器重排序都要禁止）。对于处理器重排序，JMM 的处理器重排序规则会要求 java 编译器在生成指令序列时，插入特定类型的内存屏障（memory barriers，intel 称之为 memory fence）指令，通过内存屏障指令来禁止特定类型的处理器重排序（不是所有的处理器重排序都要禁止）。
 
@@ -76,7 +76,7 @@ y = a; //B2
 
 假设处理器 A 和处理器 B 按程序的顺序并行执行内存访问，最终却可能得到 x = y = 0 的结果。具体的原因如下图所示：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801163156944.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801163156944.png)
 
 这里处理器 A 和处理器 B 可以同时把共享变量写入自己的写缓冲区（A1，B1），然后从内存中读取另一个共享变量（A2，B2），最后才把自己写缓存区中保存的脏数据刷新到内存中（A3，B3）。当以这种时序执行时，程序就可以得到 x = y = 0 的结果。
 
@@ -132,7 +132,7 @@ StoreLoad Barriers 是一个“全能型”的屏障，它同时具有其他三�
 
 happens-before 与 JMM 的关系如下图所示：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801175034478.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801175034478.png)
 
 如上图所示，一个 happens-before 规则通常对应于多个编译器重排序规则和处理器重排序规则。对于 java 程序员来说，happens-before 规则简单易懂，它避免程序员为了理解 JMM 提供的内存可见性保证而去学习复杂的重排序规则以及这些规则的具体实现。
 
@@ -198,7 +198,7 @@ public class Jmm03_CodeVisibility {
 
 执行过程如下图：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/1460000037799983)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1460000037799983)
 
 **线程B启动后**：
 
@@ -209,7 +209,7 @@ public class Jmm03_CodeVisibility {
 - 第五步：执行store操作，**作用于工作内存**，将工作内存中的变量 `initFlag = true` 传递给主内存；
 - 第六步：执行write操作，**作用于工作内存**，将变量写入到主内存中。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/1460000037799987)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1460000037799987)
 
 #### .5. volatile 无法保证原子性
 
@@ -243,7 +243,7 @@ public class Jmm04_CodeAtomic {
 } 
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/view)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/view)
 
 ### .3. 重排序
 
@@ -275,11 +275,11 @@ double area = pi * r * r; //C
 
 上面三个操作的数据依赖关系如下图所示：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801175222341.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801175222341.png)
 
 如上图所示，A 和 C 之间存在数据依赖关系，同时 B 和 C 之间也存在数据依赖关系。因此在最终执行的指令序列中，C 不能被重排序到 A 和 B 的前面（C 排到 A 和 B 的前面，程序的结果将会被改变）。但 A 和 B 之间没有数据依赖关系，编译器和处理器可以重排序 A 和 B 之间的执行顺序。下图是该程序的两种执行顺序：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801175237919.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801175237919.png)
 
 as-if-serial 语义把单线程程序保护了起来，遵守 as-if-serial 语义的编译器，runtime 和处理器共同为编写单线程程序的程序员创建了一个幻觉：单线程程序是按程序的顺序来执行的。as-if-serial 语义使单线程程序员无需担心重排序会干扰他们，也无需担心内存可见性问题。
 
@@ -324,7 +324,7 @@ flag 变量是个标记，用来标识变量 a 是否已被写入。这里假设
 
 由于操作 1 和操作 2 没有数据依赖关系，编译器和处理器可以对这两个操作重排序；同样，操作 3 和操作 4 没有数据依赖关系，编译器和处理器也可以对这两个操作重排序。让我们先来看看，当操作 1 和操作 2 重排序时，可能会产生什么效果? 请看下面的程序执行时序图：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801175918377.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801175918377.png)
 
 如上图所示，操作 1 和操作 2 做了重排序。程序执行时，线程 A 首先写标记变量 flag，随后线程 B 读这个变量。由于条件判断为真，线程 B 将读取变量 a。此时，变量 a 还根本没有被线程 A 写入，在这里多线程程序的语义被重排序破坏了！
 
@@ -332,7 +332,7 @@ flag 变量是个标记，用来标识变量 a 是否已被写入。这里假设
 
 下面再让我们看看，当操作 3 和操作 4 重排序时会产生什么效果（借助这个重排序，可以顺便说明控制依赖性）。下面是操作 3 和操作 4 重排序后，程序的执行时序图：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801175956315.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801175956315.png)
 
 在程序中，操作 3 和操作 4 存在控制依赖关系。当代码中存在控制依赖性时，会影响指令序列执行的并行度。为此，编译器和处理器会采用猜测（Speculation）执行来克服控制相关性对并行度的影响。以处理器的猜测执行为例，执行线程 B 的处理器可以提前读取并计算 a*a，然后把计算结果临时保存到一个名为重排序缓冲（reorder buffer ROB）的硬件缓存中。当接下来操作 3 的条件判断为真时，就把该计算结果写入变量 i 中。
 
@@ -362,7 +362,7 @@ JMM 对正确同步的多线程程序的内存一致性做了如下保证：
 
 - `一个线程中的所有操作必须按照程序的顺序来执行`。 +（不管程序是否同步）所有线程都只能看到一个单一的操作执行顺序。在顺序一致性内存模型中，每个操作都必须原子执行且立刻对所有线程可见。 顺序一致性内存模型为程序员提供的视图如下：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801180259762.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801180259762.png)
 
 在概念上，顺序一致性模型有一个单一的全局内存，这个内存通过一个左右摆动的开关可以连接到任意一个线程。同时，`每一个线程必须按程序的顺序来执行内存读 / 写操作`。从上图我们可以看出，在任意时间点最多只能有一个线程可以连接到内存。当多个线程并发执行时，图中的开关装置能把所有线程的所有内存读 / 写操作串行化。
 
@@ -370,11 +370,11 @@ JMM 对正确同步的多线程程序的内存一致性做了如下保证：
 
 假设这两个线程使用监视器来正确同步：A 线程的三个操作执行后释放监视器，随后 B 线程获取同一个监视器。那么程序在顺序一致性模型中的执行效果将如下图所示：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801180352070.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801180352070.png)
 
 现在我们再假设这两个线程没有做同步，下面是这个未同步程序在顺序一致性模型中的执行示意图：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801180403710.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801180403710.png)
 
 未同步程序在顺序一致性模型中虽然整体执行顺序是无序的，但所有线程都只能看到一个一致的整体执行顺序。以上图为例，线程 A 和 B 看到的执行顺序都是：B1->A1->A2->B2->A3->B3。之所以能得到这个保证是因为`顺序一致性内存模型中的每个操作必须立即对任意线程可见。`
 
@@ -403,7 +403,7 @@ class SynchronizedExample {
 
 上面示例代码中，假设 A 线程执行 writer() 方法后，B 线程执行 reader() 方法。这是一个正确同步的多线程程序。根据 JMM 规范，该程序的执行结果将与该程序在顺序一致性模型中的执行结果相同。下面是该程序在两个内存模型中的执行时序对比图：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801180651898.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801180651898.png)
 
 在顺序一致性模型中，所有操作完全按程序的顺序串行执行。而在 JMM 中，临界区内的代码可以重排序（但 JMM 不允许临界区内的代码“逸出”到临界区之外，那样会破坏监视器的语义）。JMM 会在退出监视器和进入监视器这两个关键时间点做一些特别处理，使得线程在这两个时间点具有与顺序一致性模型相同的内存视图（具体细节后文会说明）。虽然线程 A 在临界区内做了重排序，但由于监视器的互斥执行的特性，这里的线程 B 根本无法“观察”到线程 A 在临界区内的重排序。这种重排序既提高了执行效率，又没有改变程序的执行结果。
 
@@ -421,7 +421,7 @@ JMM 不保证未同步程序的执行结果与该程序在顺序一致性模型�
 - `顺序一致性模型保证所有线程只能看到一致的操作执行顺序`，`而 JMM 不保证所有线程能看到一致的操作执行顺序`。
 - `JMM 不保证对 64 位的 long 型和 double 型变量的读 / 写操作具有原子性，而顺序一致性模型保证对所有的内存读 / 写操作都具有原子性。`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801180916903.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801180916903.png)
 
 如上图所示，假设处理器 A，B 和 C 同时向总线发起总线事务，这时总线仲裁（bus arbitration）会对竞争作出裁决，这里我们假设总线在仲裁后判定处理器 A 在竞争中获胜（总线仲裁会确保所有处理器都能公平的访问内存）。此时处理器 A 继续它的总线事务，而其它两个处理器则要等待处理器 A 的总线事务完成后才能开始再次执行内存访问。假设在处理器 A 执行总线事务期间（不管这个总线事务是读事务还是写事务），处理器 D 向总线发起了总线事务，此时处理器 D 的这个请求会被总线禁止。
 
@@ -431,7 +431,7 @@ JMM 不保证未同步程序的执行结果与该程序在顺序一致性模型�
 
 当单个内存操作不具有原子性，将可能会产生意想不到后果。请看下面示意图：
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210801181033956.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210801181033956.png)
 
 如上图所示，假设处理器 A 写一个 long 型变量，同时处理器 B 要读这个 long 型变量。处理器 A 中 64 位的写操作被拆分为两个 32 位的写操作，且这两个 32 位的写操作被分配到不同的写事务中执行。同时处理器 B 中 64 位的读操作被拆分为两个 32 位的读操作，且这两个 32 位的读操作被分配到同一个的读事务中执行。当处理器 A 和 B 按上图的时序来执行时，处理器 B 将看到仅仅被处理器 A“写了一半“的无效值。
 

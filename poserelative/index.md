@@ -3,7 +3,7 @@
 
 > Meng, Zhen, et al. "Gait recognition for co-existing multiple people using millimeter wave sensing." *Proceedings of the `AAAI Conference on Artificial Intelligence`*. Vol. 34. No. 01. `2020`.  `CCF -A`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629134431230.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629134431230.png)
 
 ------
 
@@ -58,9 +58,9 @@
 
 - `Time Synchronization`:   run time synchronization NTP on two computers, use the client computer to synchronize with the time of the server.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629170334401.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629170334401.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629170831328.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629170831328.png)
 
 > Figure 2: The number of mmWave `reflection points`. In scene1 (a) and scene2 (c), as `the number of volunteers walking increases simultaneously`, `the number of points in the point cloud increases slowly.` In scene1 (b) and scene2 (d), as the number of walking volunteers increases simultaneously,` the number of points for a volunteer in the point cloud decreases. `
 >
@@ -72,9 +72,9 @@
 - remove noise points reflected by static objects utilizing static clutter removal [CFAR](https://zhuanlan.zhihu.com/p/269840008).
 - adopt [DBSCAN](https://github.com/choffstein/dbscan) clustering to remove the noise points in the point cloud. the closet distance between two side-by-side people is about 0.3m.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629184431564.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629184431564.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629184538151.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629184538151.png)
 
 ##### 【Module 3】 Data Merge
 
@@ -83,7 +83,7 @@
   - rotate the coordinate system of the two devices clockwise to make the two coordinate systems in the same direction.
   - translate the coordinate system of IWR6843 consistent with IWR1443.
 
-  ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629185105205.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629185105205.png)
 
 - **merge the point cloud from two devices who's time difference is less than specific threshold**
 
@@ -92,27 +92,27 @@
 - input: point clouds' five attributes: spatial location(x,y,z), radial speed, signal strength of the points. the input of each attribute network is a p*t matrix, p: number of points(128), t: time(3s).
 - output: the jth person;
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629185510729.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629185510729.png)
 
 #### Evaluation
 
   - **Environment**:   
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629152330692.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629152330692.png)
 
 > the two devices are configured to use all their three transmitter antennas and four receiver antennas to generate 3D point cloud data, outputing a frame of 3D point cloud in every 0.1s.
 
 - Result
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629190024594.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629190024594.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629190137949.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629190137949.png)
 
 #### Notes
 
 ##### [NTP 时间同步：](https://zhuanlan.zhihu.com/p/138339057)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629191006843.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629191006843.png)
 
 ##### [CFAR](https://zhuanlan.zhihu.com/p/269840008)
 
@@ -121,9 +121,9 @@
 - 噪声和信号同时存在： $x(t)=s(t)+n(t)$;
 - 只有噪声存在： $x(t)=n(t)$
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629191850177.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629191850177.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629192052515.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629192052515.png)
 
 ```matlab
 %--------------------------------------------------------------------------
@@ -150,7 +150,7 @@ hold off
 legend('回波信号','判决门限','判决结果')
 ```
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629192251178.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629192251178.png)
 
 - [radar tools/TOF camera tools/Optimization Tools工具箱](https://github.com/qwe14789cn/radar_tools)
 
@@ -166,17 +166,17 @@ legend('回波信号','判决门限','判决结果')
 
 　　可以发现，密度可达是直接密度可达的传递闭包，并且这种关系是非对称的。密度相连是对称关系。DBSCAN目的是找到密度相连对象的最大集合。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629193050758.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629193050758.png)
 
 ##### **Hungarian algorithm**
 
 > 匈牙利算法是一种在多项式时间内O(n3)求解任务分配问题的组合优化算法。它之所以被称作匈牙利算法，是因为算法很大一部分是基于以前匈牙利数学家的工作之上创建起来的。此后该算法被称为Kuhn–Munkres算法或Munkres分配算法（The Munkres Assignment Algorithm）。
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210629193522634.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210629193522634.png)
 
 > Li, Ziheng, et al. "`ThuMouse`: A micro-gesture cursor input through mmWave radar-based interaction." *2020 IEEE International Conference on Consumer Electronics (`ICCE`)*. IEEE, 2020. 国际消费电子年会 B类  [[pdf](https://ieeexplore.ieee.org/document/9043082)] [[code](https://github.com/ApocalyVec/mGesf/tree/21e0bf37a9d11a3cdde86a8d54e2f6c6a2211ab5)] [[video](https://drive.google.com/file/d/1wNtAK8W8OSPjI1Kx1LN0ByB2U8i-aJUJ/view)]
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712092918103.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712092918103.png)
 
 ------
 
@@ -203,7 +203,7 @@ legend('回波信号','判决门限','判决结果')
 
 - **Purpose**:  meet the demand for` mobile interaction`, with `hands-free gadgets` such as `virtual reality`, `augmented reality`;
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712123923396.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712123923396.png)
 
 #### Proble Statement
 
@@ -220,7 +220,7 @@ legend('回波信号','判决门限','判决结果')
 
 #### Methods
 
-![image-20210712094958230](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712094958230.png)
+![image-20210712094958230](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712094958230.png)
 
 ##### 【Module 1】 Data Processing
 
@@ -235,7 +235,7 @@ legend('回波信号','判决门限','判决结果')
   - the output points are `clustered` and `filtered to focus only on the hand`, the filter points are then` rasterized in a 3D voxel space, forming a 3D feature`;
   - radar frame: consists of n detected points, defined as n*4 matrix, each row is the `Cartesian coordiantes `and `Doppler` of the detected points;
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712102200001.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712102200001.png)
 
 ##### 【Module 2】 Data Augmentation
 
@@ -243,15 +243,15 @@ legend('回波信号','判决门限','判决结果')
 - scale: meant for simulating individuals with different shaped hands;
 - rotation: cover the case where participants may perform the gesture at varying tilted angle;
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712103805381.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712103805381.png)
 
 ##### 【Module 3】 Model
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712105642772.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712105642772.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712105709879.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712105709879.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712123847405.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712123847405.png)
 
 - user move his/her thumb against the planar surface of the index finger, the temporal displacement of the thumb is reflected in cursor movement; the index finger is emulating the mouse pad;
 
@@ -269,7 +269,7 @@ legend('回波信号','判决门限','判决结果')
   - using two camera to get the location information of the fingertip;( `not detailed explained`, `time synchronization problem`)
   - according to times tamp, using linearly interpolate the position given by the two photos to get the location of the fingertip at the time when that radar frame is recorded;
 
-  ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712113422762.png)
+  ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712113422762.png)
 
 #### Evaluation
 
@@ -279,30 +279,30 @@ legend('回波信号','判决门限','判决结果')
 >
 >- all trials are carried out with the hand `at the same relative position to the top camera`
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712113537061.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712113537061.png)
 
   - **Device:** `IWR6843`; `IWR6843ISK` antenna module (long range on-board antenna with 108 azimuth field of view(FoV) and 44 inclination FoV);
   - **Quantitative Results**
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712113811623.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712113811623.png)
 
 
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712113928275.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712113928275.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712113958109.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712113958109.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210712114028065.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210712114028065.png)
 
 
 
 > Sengupta, Arindam, et al. "mm-Pose: Real-time human skeletal posture estimation using mmWave radars and CNNs." *IEEE Sensors Journal* 20.17 (2020): 10032-10044.
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210718113700271.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210718113700271.png)
 
 - **[Siyang Cao](https://scholar.google.com/citations?hl=en&user=dQvEspMAAAAJ&view_op=list_works&sortby=pubdate):** The [University of Arizona](https://scholar.google.com/citations?view_op=view_org&hl=en&org=12195049151929734221)
   - Sengupta A, Jin F, Cao S.` NLP based Skeletal Pose Estimation using mmWave Radar Point-Cloud: A Simulation Approach`[C]//2020 IEEE Radar Conference (RadarConf20). IEEE, 2020: 1-6.
-  - Cao S, Sengupta `A. Systems and methods of remote extraction of skeletal information using millimeter wave radar`: U.S. Patent Application 17/065,476[P]. 2021-4-8.
+  - Cao S, Sengupta `A. Systems and methods of remote extraction of skeletal information using millimeter wave radar`: U.S. Patent Application 17/065,476[P]. 2021-04-08.
   - Jin F, Sengupta A, Cao S. `mmFall: Fall Detection Using 4-D mmWave Radar and a Hybrid Variational RNN AutoEncoder`[J]. IEEE Transactions on Automation Science and Engineering, 2020.
   - Zhang R, Cao S. `Robust and Adaptive Radar Elliptical Density-Based Spatial Clustering and labeling for mmWave Radar Point Cloud Data`[C]//2019 53rd Asilomar Conference on Signals, Systems, and Computers. IEEE, 2019: 919-924.
   - Sengupta, Arindam, et al. "`mm-Pose: Real-time human skeletal posture estimation using mmWave radars and CNNs`." *IEEE Sensors Journal* 20.17 (2020): 10032-10044.
@@ -330,27 +330,27 @@ legend('回波信号','判决门限','判决结果')
 
   - **Application Area**:
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210718133527018.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210718133527018.png)
 
 - **Radar-To-Image Data Representation**
   - assign an RGB weighted pixel value to the points, resulting in a 3-D heatmap; maping the reflection power-levels,
-  - gray-scale representation: ![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210718134338740.png)
+  - gray-scale representation: ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210718134338740.png)
   - solving the problem for extremely sparse data, and reduce the CNN size and parameters;
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210718133814943.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210718133814943.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210718134557183.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210718134557183.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210718135024044.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210718135024044.png)
 
 #### Experiment
 
 - Texas Instruments AWR 1462 boost mmWave radar transceiver;
 - using Microsoft Kinect to get 25 joint positoin as wel the UTC time-stamp;
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210718135126473.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210718135126473.png)
 
-![](https://gitee.com/github-25970295/blogpictureV2/raw/master/image-20210718135152715.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210718135152715.png)
 
 
 

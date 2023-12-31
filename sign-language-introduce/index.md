@@ -3,17 +3,17 @@
 
 > 手语是聋哑人士的主要沟通工具，它是利用手部和身体的动作来传达意义。虽然手语帮助它的使用者之间互相沟通，但聋哑人士与一般人的沟通却十分困难，这个沟通障碍是源于大部分人不懂得手语。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210222232624578.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210222232624578.png)
 
 ## 1. 手势&&手语
 
 - **手势**：手的姿势 ，通常称作手势。它指的是人在运用手臂时，所出现的具体动作与体位。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200713095739826.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200713095739826.png)
 
 - **手语：**手语是用手势比量动作，根据手势的变化模拟形象或者音节以构成的一定意思或词语。
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200713095832667.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200713095832667.png)
 
 ## 2. 手语分类
 
@@ -111,7 +111,7 @@
 - the vocabulary of signs in daily use is large and usually in the magnitude of thousands,( gesture recognition and action recognition only contains at most a few hundred categories).
 - a word in sign language may have multiple counterparts in natural languages depending on the context.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715103232337.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715103232337.png)
 
 #### Methods
 
@@ -131,9 +131,9 @@
 
 > select top-K glosses with K = {100, 300, 1000, 2000}, and organize them to four subsets, named WLASL100, WLASL300, WLASL1000 and WLASL2000
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715103334772.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715103334772.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715104553269.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715104553269.png)
 
 **【Method Comparison】Image-appearance**
 
@@ -143,7 +143,7 @@
 
 - **3D Convolutional Networks:**  employ the network of I3D as image-appearance base baseline, <font color=red>focusing on the hand shapes and orientations as well as arm movements.</font>,to better capture the spatio-temporal information of signs.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715105724235.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715105724235.png)
 
 **【Method Comparison】Pose-based Baselines**
 
@@ -163,7 +163,7 @@
 
 > view human body as a fully-connected graph with K vertices and represent the edges in the graph as a weighted adjacency matric$A \epsilon R^{K*K}$ 
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200829170303.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200829170303.png)
 
 #### Evaluation
 
@@ -175,9 +175,9 @@
 
 - **Evaluation Metric:** using the mean scores of top-K classification accuracy with K={1,5,10}
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715111050347.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715111050347.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715111127599.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715111127599.png)
 
 #### Notes
 
@@ -232,11 +232,11 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915204915815.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915204915815.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915211644483.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915211644483.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915211931856.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915211931856.png)
 
 **【Model one】Dataset Prepare**
 
@@ -288,11 +288,11 @@ previous work:
   39. dinosaur: hand pose mimicking a dinosaur. 
   40. middle finger: hand sign language that has an offensive meaning
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200916185336884.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200916185336884.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200916185414522.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200916185414522.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200916185437395.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200916185437395.png)
 
 - **ROM of single hand sequence**  ROM represents conversational gestures with minimal instructions.
   - five count: count from one to five. 
@@ -310,7 +310,7 @@ previous work:
   -  cash money: rub thumb on the index and middle fingertips. 
   - snap all: snap each finger on the thumb.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200916185530746.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200916185530746.png)
 
 - **Interacting hand sequences**
   - right clasp left: two hands clasp each other, right hand is on top of the left hand.
@@ -327,7 +327,7 @@ previous work:
   - interlocked finger spread: fingers of the right and left hands are interlocked yet spread. 
   - finger squeeze: squeeze all five fingers with the other hand.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200916185555201.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200916185555201.png)
 
 - **ROM of Interacting hand sequence**
   - palmerrub: rub palm of one hand with opposite hand’s thumb. 
@@ -348,11 +348,11 @@ previous work:
   - left finger count index point: using left pointer finger, count up to five on the right hand, starting with the pinky. 
   -  single relaxed finger: this consists of a series of actions: (1) touch each fingertip to the center of the palm for the same hand, do this for both hands, (2) interlock fingers and press palms out, (3) with the opposite hand, hold wrist, (4) with the opposite hand, bend wrist down and back, (5) point at watch on both wrists, (6) circle wrists, (7) look at nails, and (8) point at yourself with thumbs then with index fingers
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200916185619762.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200916185619762.png)
 
 **【Module Two】Exact Methods**
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915212634843.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915212634843.png)
 
 - **Handedness estimation:** takes the image feature F , using two fully-connected layers with hidden activation size 512 followed by the ReLU activation function, and the last is sigmoid activation function;
 - **2.5D right and left hand pose estimation:**     用到时再看网络结构
@@ -364,7 +364,7 @@ previous work:
   - https://github.com/facebookresearch/InterHand2.6M/releases  下载地址。
   - facebookAI lab:   https://v.qq.com/x/page/j0956p2juqp.html
 
-![Oculus Connect](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200916193851551.png)
+![Oculus Connect](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200916193851551.png)
 
 **level**: 
 **author**: Nicolas Pugeault & Richard Bowden
@@ -398,21 +398,21 @@ previous work:
   - the differences between people's hands and natural dexterity leads to differences in the execution of signs between different signers;
   - need to run in real-time;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915084116179.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915084116179.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915084158379.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915084158379.png)
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915083100309.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915083100309.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915083755524.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915083755524.png)
 
-![features](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915084527995.png)
+![features](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915084527995.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915084833977.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915084833977.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915084945109.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915084945109.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -457,7 +457,7 @@ American Sign Language</b>
   - **Devisign:** a chinese sign language data set featuring isolated single signs perform by 8 non-natives in a laboratory environment, covering a vocabulary of up to 2000 isolated signs and provides RGB with depth information in 24000 recordings.
   - **Finish S-pot:** base on lexicon, covers 1211 isolated citation form signs that need to be spotted in 4328 continuous sign language videos.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915095247256.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915095247256.png)
 
 #### Methods
 
@@ -467,7 +467,7 @@ American Sign Language</b>
   - includes large number of signers and is a signer independent data set;
   - they are larege visual variabilities in the videos such as background, lighting, clothing and camera view point;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915100200887.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915100200887.png)
 
 【**Evaluation Scheme** 】using average per class accuracy; using average per class top-five accuracy;
 
@@ -482,13 +482,13 @@ American Sign Language</b>
 
 > 3D-CNN: using C3D, and I3D network;
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915102058478.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915102058478.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915102149811.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915102149811.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915102239850.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915102239850.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200915102321944.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200915102321944.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -534,11 +534,11 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200827104715.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200827104715.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200827105016.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200827105016.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200827104944.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200827104944.png)
 
 **【Module One】Spatial and Word Embeddings**
 $$
@@ -566,7 +566,7 @@ $$
 
 #### Evaluation
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/20200827111159.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/20200827111159.png)
 
 #### Notes <font color=orange>去加强了解</font>
 
@@ -608,11 +608,11 @@ $$
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715162316328.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715162316328.png)
 
 【Transformer Model】
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715163955352.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715163955352.png)
 
 #### Evaluation
 
@@ -620,9 +620,9 @@ $$
   - **RWTH-PHOENIX-Weather 2014T**: the only publicly available dataset with both gloss level annotations and spoken language translations for sign language videos that is of sufficient size and challenge for deep learning.
   - **ASLG-PC12**: SLT on this dataset has only been performed using RNN-based sequence-to-sequence attention networks.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715164236920.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715164236920.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200715212229107.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200715212229107.png)
 
 #### Conclusion
 
@@ -677,9 +677,9 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200716161409107.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200716161409107.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200716230416733.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200716230416733.png)
 
 - Spatial and Word Embedding: to transform the sparse one-hot vector representations. Given a sing video x, using 2D CNN learns  to extract non-linear frame level spatial representation as:
 
@@ -741,14 +741,14 @@ $$
   - **Environment**:   
     - Dataset: RWTH-PHOENIX-Weather 2014
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200717083519814.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200717083519814.png)
 
 - **Quantitative Experiments:**
   - Gloss2Text: simulate having perfect SLR system as an intermediate tokenization.
   - sign2Text: covers the end-to-end pipeline translating directly from frame level sign language video into spoken language.
   - Sign2Gloss2Text: uses SLR system as tokenization layer to add intermediate supervision.
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200717085452987.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200717085452987.png)
 
 #### Conclusion
 
@@ -765,7 +765,7 @@ $$
 > BLEU(Bilingual Evaluation understudy)方法由IBM提出，这种方法认为如果熟译系统魏译文越接近人工翻翻译结果，那么它的翻译质量越高。所以，<font color=red>评测关键就在于如何定义系统译文与参考译文之间的相似度。</font>BLEU 采用的方式是比较并统计共同出现的n元词的个数，即<font color=red>统计同时出现在系统译文和参考译文中的n元词的个数，最后把匹配到的n元词的数目除以系统译文的单词数目，得到评测结果。</font>
 >
 > - $Count(n-gram)$是某个n元词在候选译文中的出现次数，而$MaxRefCount(n-gram)$是该n元词在参考译文中出现的最大次数。
-> - ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200717085120019.png)
+> - ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200717085120019.png)
 >
 > $$
 > Count_{clip}(n-gram)=min{Count(n-gram),MaxRefCount(n-gram)}\\
@@ -779,7 +779,7 @@ $$
 
 > NIST(National Institute of standards and Technology)方法是在BLEU方法上的一种改进。它并不是简单的将匹配的n—gram片段数目累加起来，而是求出每个n-gram的信息量(information)，然后累加起来再除以整个译文的n-gram片段数目。
 >
-> ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200717085318749.png)
+> ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200717085318749.png)
 
 **level**: CCF_A
 **author**: Simon Alexanderson, Gustav Eje Henter, Taras Kucherenc
@@ -831,7 +831,7 @@ previous work:
 
 - **system overview**:
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200717173653914.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200717173653914.png)
 
 【Function 1】Normalising flows and glow
 
@@ -851,9 +851,9 @@ $$
 > - $x_{t-i:t-1}$: the previous poses.
 > - $c_t$: a current control signal.
 >
-> ![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200717205409444.png)
+> ![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200717205409444.png)
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20200717174844348.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20200717174844348.png)
 
 #### Evaluation
 

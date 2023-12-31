@@ -18,7 +18,7 @@
 5. CPU将应用缓冲区中数据拷贝到socket缓冲区
 6. DMA控制器把数据从socket缓冲区拷贝到网卡，上下文从内核态切换回用户态，`write()`返回
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210320223909633.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210320223909633.png)
 
 ### 2. 零拷贝
 
@@ -37,7 +37,7 @@
 5. **CPU将读缓冲区中数据拷贝到socket缓冲区**
 6. DMA控制器把数据从socket缓冲区拷贝到网卡，上下文从内核态切换回用户态，`write()`返回
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210320224021132.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210320224021132.png)
 
 #### 2.2. sendfile
 
@@ -50,7 +50,7 @@
 3. CPU将读缓冲区中数据拷贝到socket缓冲区
 4. DMA控制器把数据从socket缓冲区拷贝到网卡，上下文从内核态切换回用户态，`sendfile`调用返回
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210320224108385.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210320224108385.png)
 
 #### 2.3. sendfile+DMA Scatter/Gather
 
@@ -64,7 +64,7 @@
 4. DMA控制器根据文件描述符和数据长度，使用scatter/gather把数据从内核缓冲区拷贝到网卡
 5. `sendfile()`调用返回，上下文从内核态切换回用户态
 
-![](https://gitee.com/github-25970295/blogImage/raw/master/img/image-20210320224219006.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20210320224219006.png)
 
 ---
 

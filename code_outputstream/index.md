@@ -1,7 +1,7 @@
 # Code_OutputStream
 
 
-![](https://gitee.com/github-25970295/picture2023/raw/master/image-20230312100228460.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20230312100228460.png)
 
 ### 1. OutputStream抽象类
 

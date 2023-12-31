@@ -1,7 +1,7 @@
 # Docker-Command
 
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/4b08513737d74479b14edf3ab5c72979tplv-k3u1fbpfcp-zoom-in-crop-mark1304000.awebp)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/4b08513737d74479b14edf3ab5c72979tplv-k3u1fbpfcp-zoom-in-crop-mark1304000.awebp)
 
 ### 1. 帮助命令
 
