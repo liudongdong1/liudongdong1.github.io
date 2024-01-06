@@ -3,7 +3,7 @@
 
 ### 1. 系统架构
 
-![](https://gitee.com/github-25970295/blogimgv2022/raw/master/1.png)
+![](https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/1.png)
 
 **内核层**
 
@@ -120,7 +120,7 @@
 
 #### .2. API类型
 
-<img src="https://gitee.com/github-25970295/blogimgv2022/raw/master/API-Category.png" width="800" />
+<img src="https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/API-Category.png" width="800" />
 
 * Public API：OpenHarmony对所有应用开发者公开的API。
 * Test API：测试专用的API，仅在测试阶段使用。

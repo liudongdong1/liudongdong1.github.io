@@ -222,7 +222,7 @@ if __name__ == '__main__':
 
 ### 2. 博客主题更改
 
-![](../../../../picture2023/image-20230920235854269.png)
+![](../../https://lddpicture.oss-cn-beijing.aliyuncs.com/picture/image-20230920235854269.png)
 
 
 
